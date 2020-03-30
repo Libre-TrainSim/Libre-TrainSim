@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/NormalTree3.obj-a6868279b66a4b7bcd0c93f2b851fe39.mesh"
+
+[deps]
+
+files=[ "res://.import/NormalTree3.obj-a6868279b66a4b7bcd0c93f2b851fe39.mesh" ]
+
+source_file="res://Ressourcen/Basic/NormalTree3.obj"
+dest_files=[ "res://.import/NormalTree3.obj-a6868279b66a4b7bcd0c93f2b851fe39.mesh", "res://.import/NormalTree3.obj-a6868279b66a4b7bcd0c93f2b851fe39.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,267 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Ressourcen/Basic/Screens/ScreenLeft/ScreenLeft.png" type="Texture" id=2]
+[ext_resource path="res://Ressourcen/Basic/Screens/ScreenLeft/ScreenLeft.gd" type="Script" id=3]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0.0470588, 0.741176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=4]
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.741176, 0.364706, 0, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
+font_data = ExtResource( 1 )
+
+[node name="ScreenLeft" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 600, 400 )
+texture = ExtResource( 2 )
+
+[node name="Oberspannung" type="ProgressBar" parent="."]
+margin_left = -132.619
+margin_top = 396.381
+margin_right = 206.381
+margin_bottom = 469.381
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = 8.0
+max_value = 30.0
+value = 30.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK10" type="ProgressBar" parent="."]
+margin_left = 164.116
+margin_top = 432.882
+margin_right = 589.116
+margin_bottom = 458.882
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK9" type="ProgressBar" parent="."]
+margin_left = 236.164
+margin_top = 432.715
+margin_right = 661.164
+margin_bottom = 458.715
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK8" type="ProgressBar" parent="."]
+margin_left = 201.283
+margin_top = 433.284
+margin_right = 626.283
+margin_bottom = 459.284
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK7" type="ProgressBar" parent="."]
+margin_left = 273.031
+margin_top = 432.715
+margin_right = 698.031
+margin_bottom = 458.715
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK6" type="ProgressBar" parent="."]
+margin_left = 311.613
+margin_top = 432.715
+margin_right = 736.613
+margin_bottom = 458.715
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK1" type="ProgressBar" parent="."]
+margin_left = 163.934
+margin_top = 432.984
+margin_right = 588.934
+margin_bottom = 458.984
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK2" type="ProgressBar" parent="."]
+margin_left = 235.982
+margin_top = 432.818
+margin_right = 660.982
+margin_bottom = 458.818
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK3" type="ProgressBar" parent="."]
+margin_left = 201.101
+margin_top = 433.386
+margin_right = 626.101
+margin_bottom = 459.386
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK4" type="ProgressBar" parent="."]
+margin_left = 272.849
+margin_top = 432.818
+margin_right = 697.849
+margin_bottom = 458.818
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZK5" type="ProgressBar" parent="."]
+margin_left = 311.431
+margin_top = 432.818
+margin_right = 736.431
+margin_bottom = 458.818
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Oberstrom" type="ProgressBar" parent="."]
+margin_left = 631.975
+margin_top = 432.715
+margin_right = 1056.98
+margin_bottom = 458.715
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 249.119, 36.5 )
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+min_value = -0.01
+max_value = 1000.0
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="."]
+margin_left = 1036.35
+margin_top = 18.5062
+margin_right = 1171.35
+margin_bottom = 78.5062
+custom_fonts/font = SubResource( 6 )
+text = "12:00:00"
+__meta__ = {
+"_edit_use_anchors_": false
+}

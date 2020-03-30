@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/GrassHalms.obj-5d25a8a7dd32fa89288d6939e8593407.mesh"
+
+[deps]
+
+files=[ "res://.import/GrassHalms.obj-5d25a8a7dd32fa89288d6939e8593407.mesh" ]
+
+source_file="res://Ressourcen/Basic/GrassHalms.obj"
+dest_files=[ "res://.import/GrassHalms.obj-5d25a8a7dd32fa89288d6939e8593407.mesh", "res://.import/GrassHalms.obj-5d25a8a7dd32fa89288d6939e8593407.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

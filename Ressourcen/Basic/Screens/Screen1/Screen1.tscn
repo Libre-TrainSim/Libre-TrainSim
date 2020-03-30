@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Zeiger.png" type="Texture" id=3]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/DoorRight.png" type="Texture" id=4]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
+
+[node name="Screen1" type="Node2D"]
+script = ExtResource( 1 )
+SpeedPointerRotationAt100 = 40.0
+CommandPointerRotationAt100 = 190.0
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 650, 450 )
+texture = ExtResource( 2 )
+
+[node name="SpeedPointer" type="Sprite" parent="."]
+modulate = Color( 0.729412, 0.0352941, 0.0352941, 1 )
+position = Vector2( 362.007, 326.524 )
+rotation = -1.0472
+texture = ExtResource( 3 )
+offset = Vector2( -96.0201, 0.240082 )
+
+[node name="CommandPointer" type="Sprite" parent="."]
+modulate = Color( 1, 0.545098, 0.0156863, 1 )
+position = Vector2( 954.832, 326.524 )
+rotation = 1.5708
+texture = ExtResource( 3 )
+offset = Vector2( -96.0201, 0.240082 )
+
+[node name="Doors" type="Node2D" parent="."]
+position = Vector2( 650, 600 )
+
+[node name="Door" type="Sprite" parent="Doors"]
+texture = ExtResource( 6 )
+
+[node name="Left" type="Sprite" parent="Doors"]
+texture = ExtResource( 5 )
+
+[node name="Right" type="Sprite" parent="Doors"]
+texture = ExtResource( 4 )

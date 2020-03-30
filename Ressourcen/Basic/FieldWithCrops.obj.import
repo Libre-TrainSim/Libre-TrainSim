@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh"
+
+[deps]
+
+files=[ "res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh" ]
+
+source_file="res://Ressourcen/Basic/FieldWithCrops.obj"
+dest_files=[ "res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh", "res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/EasyTree_big.obj-77429b1a380c3eaccb774a0e14ddc984.mesh"
+
+[deps]
+
+files=[ "res://.import/EasyTree_big.obj-77429b1a380c3eaccb774a0e14ddc984.mesh" ]
+
+source_file="res://Ressourcen/Basic/EasyTree_big.obj"
+dest_files=[ "res://.import/EasyTree_big.obj-77429b1a380c3eaccb774a0e14ddc984.mesh", "res://.import/EasyTree_big.obj-77429b1a380c3eaccb774a0e14ddc984.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

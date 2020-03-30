@@ -1,0 +1,426 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailBuilder/RailBuilder.gd" type="Script" id=1]
+
+[node name="Rail Builder" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentRail" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 24.0
+
+[node name="Name" type="LineEdit" parent="CurrentRail"]
+margin_right = 897.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Rename" type="Button" parent="CurrentRail"]
+margin_left = 901.0
+margin_right = 965.0
+margin_bottom = 24.0
+text = "Rename"
+
+[node name="Delete" type="Button" parent="CurrentRail"]
+margin_left = 969.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Delete"
+
+[node name="Rotations" type="HBoxContainer" parent="."]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+
+[node name="LabelStart" type="Label" parent="Rotations"]
+margin_top = 5.0
+margin_right = 90.0
+margin_bottom = 19.0
+size_flags_horizontal = 9
+text = "Start Rotation:"
+
+[node name="StartRotation" type="LineEdit" parent="Rotations"]
+margin_left = 94.0
+margin_right = 509.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="VSeparator" type="VSeparator" parent="Rotations"]
+margin_left = 513.0
+margin_right = 517.0
+margin_bottom = 24.0
+
+[node name="LabelEnd" type="Label" parent="Rotations"]
+margin_left = 521.0
+margin_top = 5.0
+margin_right = 605.0
+margin_bottom = 19.0
+size_flags_horizontal = 9
+text = "End Rotation:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndRotation" type="LineEdit" parent="Rotations"]
+margin_left = 609.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParallelDistance" type="HBoxContainer" parent="."]
+visible = false
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="ParallelDistance"]
+margin_top = 5.0
+margin_right = 111.0
+margin_bottom = 19.0
+text = "Parallel Distance:"
+
+[node name="LineEdit" type="LineEdit" parent="ParallelDistance"]
+margin_left = 115.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="AddRail2" type="HBoxContainer" parent="."]
+margin_top = 56.0
+margin_right = 1024.0
+margin_bottom = 76.0
+
+[node name="Mode" type="OptionButton" parent="AddRail2"]
+margin_right = 510.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "After Rail"
+items = [ "After Rail", null, false, 0, null, "Parallel To", null, false, 1, null, "Before Rail", null, false, 2, null ]
+selected = 0
+
+[node name="AddRail" type="Button" parent="AddRail2"]
+margin_left = 514.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "New Rail"
+
+[node name="Settings" type="VBoxContainer" parent="."]
+visible = false
+margin_top = 52.0
+margin_right = 1024.0
+margin_bottom = 348.0
+
+[node name="RailType" type="HBoxContainer" parent="Settings"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="Settings/RailType"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Rail Type:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/RailType"]
+margin_right = 58.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Rail"
+
+[node name="OptionButton" type="OptionButton" parent="Settings"]
+margin_right = 1024.0
+margin_bottom = 20.0
+text = "Length - Radius"
+items = [ "Length - Radius", null, false, 0, null, "Radius - Angle", null, false, 1, null, "Length - Angle", null, false, 2, null ]
+selected = 0
+
+[node name="Length" type="HBoxContainer" parent="Settings"]
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 48.0
+
+[node name="Label" type="Label" parent="Settings/Length"]
+margin_top = 5.0
+margin_right = 47.0
+margin_bottom = 19.0
+text = "Length:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Length"]
+margin_left = 51.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "100"
+
+[node name="Radius" type="HBoxContainer" parent="Settings"]
+margin_top = 52.0
+margin_right = 1024.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="Settings/Radius"]
+margin_top = 5.0
+margin_right = 46.0
+margin_bottom = 19.0
+text = "Radius:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Radius"]
+margin_left = 50.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Angle" type="HBoxContainer" parent="Settings"]
+visible = false
+margin_top = 112.0
+margin_right = 1024.0
+margin_bottom = 152.0
+
+[node name="Label" type="Label" parent="Settings/Angle"]
+margin_top = 13.0
+margin_right = 40.0
+margin_bottom = 27.0
+text = "Angle:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Angle"]
+margin_left = 44.0
+margin_right = 944.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Update" type="Button" parent="Settings"]
+margin_left = 483.0
+margin_top = 80.0
+margin_right = 541.0
+margin_bottom = 100.0
+size_flags_horizontal = 4
+text = "Update"
+
+[node name="Shift" type="VBoxContainer" parent="Settings"]
+margin_top = 104.0
+margin_right = 1024.0
+margin_bottom = 198.0
+
+[node name="ShiftRail" type="Label" parent="Settings/Shift"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Shift Rail:"
+align = 1
+
+[node name="Shift" type="HBoxContainer" parent="Settings/Shift"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Settings/Shift/Shift"]
+margin_top = 5.0
+margin_right = 32.0
+margin_bottom = 19.0
+text = "Shift:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Shift/Shift"]
+margin_left = 36.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "2.25"
+
+[node name="Radius" type="HBoxContainer" parent="Settings/Shift"]
+margin_top = 46.0
+margin_right = 1024.0
+margin_bottom = 70.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Settings/Shift/Radius"]
+margin_top = 5.0
+margin_right = 46.0
+margin_bottom = 19.0
+text = "Radius:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Shift/Radius"]
+margin_left = 50.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "500"
+
+[node name="ShiftButton" type="Button" parent="Settings/Shift"]
+margin_left = 492.0
+margin_top = 74.0
+margin_right = 532.0
+margin_bottom = 94.0
+size_flags_horizontal = 4
+text = "Shift"
+
+[node name="Shift2" type="VBoxContainer" parent="Settings"]
+margin_top = 202.0
+margin_right = 1024.0
+margin_bottom = 296.0
+
+[node name="ShiftRail" type="Label" parent="Settings/Shift2"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Shift Rail:"
+align = 1
+
+[node name="Shift" type="HBoxContainer" parent="Settings/Shift2"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Settings/Shift2/Shift"]
+margin_top = 5.0
+margin_right = 32.0
+margin_bottom = 19.0
+text = "Shift:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Shift2/Shift"]
+margin_left = 36.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "2.25"
+
+[node name="LengthForward" type="HBoxContainer" parent="Settings/Shift2"]
+margin_top = 46.0
+margin_right = 1024.0
+margin_bottom = 70.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Settings/Shift2/LengthForward"]
+margin_top = 5.0
+margin_right = 101.0
+margin_bottom = 19.0
+text = "Length Forward:"
+
+[node name="LineEdit" type="LineEdit" parent="Settings/Shift2/LengthForward"]
+margin_left = 105.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "500"
+
+[node name="ShiftButton" type="Button" parent="Settings/Shift2"]
+margin_left = 492.0
+margin_top = 74.0
+margin_right = 532.0
+margin_bottom = 94.0
+size_flags_horizontal = 4
+text = "Shift"
+
+[node name="RailConnector" type="VBoxContainer" parent="."]
+margin_top = 80.0
+margin_right = 1024.0
+margin_bottom = 174.0
+
+[node name="Label" type="Label" parent="RailConnector"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Rail Connector:"
+align = 1
+
+[node name="FirstRail" type="HBoxContainer" parent="RailConnector"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="RailConnector/FirstRail"]
+margin_top = 5.0
+margin_right = 55.0
+margin_bottom = 19.0
+text = "First Rail"
+
+[node name="LineEdit" type="LineEdit" parent="RailConnector/FirstRail"]
+margin_left = 59.0
+margin_right = 873.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Select_FirstRail" type="Button" parent="RailConnector/FirstRail"]
+margin_left = 877.0
+margin_right = 928.0
+margin_bottom = 24.0
+text = "Select"
+
+[node name="OptionButton" type="OptionButton" parent="RailConnector/FirstRail"]
+margin_left = 932.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Beginning"
+items = [ "Beginning", null, false, 0, null, "End", null, false, 1, null ]
+selected = 0
+
+[node name="SecondRail" type="HBoxContainer" parent="RailConnector"]
+margin_top = 46.0
+margin_right = 1024.0
+margin_bottom = 70.0
+
+[node name="Label" type="Label" parent="RailConnector/SecondRail"]
+margin_top = 5.0
+margin_right = 77.0
+margin_bottom = 19.0
+text = "Second Rail:"
+
+[node name="LineEdit" type="LineEdit" parent="RailConnector/SecondRail"]
+margin_left = 81.0
+margin_right = 873.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Select_SecondRail" type="Button" parent="RailConnector/SecondRail"]
+margin_left = 877.0
+margin_right = 928.0
+margin_bottom = 24.0
+text = "Select"
+
+[node name="OptionButton" type="OptionButton" parent="RailConnector/SecondRail"]
+margin_left = 932.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Beginning"
+items = [ "Beginning", null, false, 0, null, "End", null, false, 1, null ]
+selected = 0
+
+[node name="Button" type="Button" parent="RailConnector"]
+margin_left = 480.0
+margin_top = 74.0
+margin_right = 544.0
+margin_bottom = 94.0
+size_flags_horizontal = 4
+text = "Connect"
+[connection signal="pressed" from="CurrentRail/Rename" to="." method="_on_Rename_pressed"]
+[connection signal="pressed" from="CurrentRail/Delete" to="." method="_on_Delete_pressed"]
+[connection signal="text_entered" from="ParallelDistance/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="item_selected" from="AddRail2/Mode" to="." method="_on_Mode_item_selected"]
+[connection signal="pressed" from="AddRail2/AddRail" to="." method="_on_AddRail_pressed"]
+[connection signal="item_selected" from="Settings/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="text_entered" from="Settings/Length/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="text_entered" from="Settings/Radius/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="text_entered" from="Settings/Angle/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="pressed" from="Settings/Update" to="." method="_on_Update_pressed"]
+[connection signal="text_entered" from="Settings/Shift/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="text_entered" from="Settings/Shift/Radius/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="pressed" from="Settings/Shift/ShiftButton" to="." method="_on_ShiftButton_pressed"]
+[connection signal="text_entered" from="Settings/Shift2/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="text_entered" from="Settings/Shift2/LengthForward/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="pressed" from="Settings/Shift2/ShiftButton" to="." method="_on_Shift2Button_pressed"]
+[connection signal="pressed" from="RailConnector/FirstRail/Select_FirstRail" to="." method="_on_Select_FirstRail_pressed"]
+[connection signal="pressed" from="RailConnector/SecondRail/Select_SecondRail" to="." method="_on_Select_SecondRail_pressed"]
+[connection signal="pressed" from="RailConnector/Button" to="." method="_on_Connect_pressed"]

@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Ressourcen/Basic/Grass.material" type="Material" id=3]
+[ext_resource path="res://Ressourcen/Basic/grass.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Forest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Ressourcen/Basic/EasyTree.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://Ressourcen/Basic/House1.tres" type="Material" id=8]
+[ext_resource path="res://Ressourcen/Basic/house1.obj" type="ArrayMesh" id=9]
+
+
+
+
+
+[sub_resource type="MultiMesh" id=3]
+transform_format = 1
+instance_count = 34
+mesh = ExtResource( 7 )
+transform_array = PoolVector3Array( 0.75383, 0, 0.413938, 0, 0.860003, 0, -0.413938, 0, 0.75383, 3.08459, 0, -1.83368, 0.819906, 0, 0.133469, 0, 0.830699, 0, -0.133469, 0, 0.819906, 0.546677, 0, 9.3774, 0.86139, 0, 0.162878, 0, 0.876654, 0, -0.162878, 0, 0.86139, 0.681454, 0, 22.0793, 0.740776, 0, 0.502848, 0, 0.895324, 0, -0.502848, 0, 0.740776, 3.00026, 0, 37.1215, 1.18686, 0, 0.101296, 0, 1.19118, 0, -0.101296, 0, 1.18686, 11.2068, 0, 0.145159, 0.72264, 0, 0.423954, 0, 0.837822, 0, -0.423954, 0, 0.72264, 13.1894, 0, 14.4429, 0.939535, 0, 0.296628, 0, 0.985249, 0, -0.296628, 0, 0.939535, 14.3952, 0, 23.1088, 0.544215, 0, 0.75783, 0, 0.932993, 0, -0.75783, 0, 0.544215, 12.3488, 0, 39.0763, 0.879055, 0, 0.0525764, 0, 0.880626, 0, -0.0525764, 0, 0.879055, 23.9568, 0, -3.4246, 1.11925, 0, 0.0491131, 0, 1.12032, 0, -0.0491131, 0, 1.11925, 25.1014, 0, 14.7204, 0.629365, 0, 0.572345, 0, 0.850693, 0, -0.572345, 0, 0.629365, 26.2831, 0, 21.6918, 0.813794, 0, 0.457526, 0, 0.933591, 0, -0.457526, 0, 0.813794, 27.4458, 0, 39.3571, 1.09919, 0, 0.00505015, 0, 1.09921, 0, -0.00505015, 0, 1.09919, 38.9159, 0, 2.87169, 0.89277, 0, 0.656772, 0, 1.10833, 0, -0.656772, 0, 0.89277, 37.3325, 0, 8.83722, 1.12219, 0, 0.232354, 0, 1.14599, 0, -0.232354, 0, 1.12219, 37.2598, 0, 24.5346, 1.13736, 0, 0.247346, 0, 1.16395, 0, -0.247346, 0, 1.13736, 33.4541, 0, 38.6112, 0.793484, 0, 0.705146, 0, 1.06153, 0, -0.705146, 0, 0.793484, 45.0386, 0, 3.1174, 1.00214, 0, 0.509301, 0, 1.12413, 0, -0.509301, 0, 1.00214, 50.7052, 0, 13.7263, 0.661787, 0, 0.475218, 0, 0.814736, 0, -0.475218, 0, 0.661787, 49.5817, 0, 21.9333, 0.939556, 0, 0.406274, 0, 1.02363, 0, -0.406274, 0, 0.939556, 50.7017, 0, 35.737, 1.04668, 0, 0.487426, 0, 1.15461, 0, -0.487426, 0, 1.04668, 60.6094, 0, -3.16959, 0.883269, 0, 0.710905, 0, 1.13382, 0, -0.710905, 0, 0.883269, 59.6045, 0, 11.2182, 0.960306, 0, 0.543072, 0, 1.10323, 0, -0.543072, 0, 0.960306, 57.5539, 0, 25.8766, 0.95408, 0, 0.107581, 0, 0.960126, 0, -0.107581, 0, 0.95408, 58.0876, 0, 36.2074, 0.830423, 0, 0.0318423, 0, 0.831033, 0, -0.0318423, 0, 0.830423, 69.2826, 0, 0.883841, 0.804296, 0, 0.813444, 0, 1.14393, 0, -0.813444, 0, 0.804296, 73.8767, 0, 14.1249, 1.01249, 0, 0.105907, 0, 1.01802, 0, -0.105907, 0, 1.01249, 69.0548, 0, 24.1897, 0.953354, 0, 0.378169, 0, 1.02562, 0, -0.378169, 0, 0.953354, 69.5242, 0, 35.8686, 0.757343, 0, 0.5932, 0, 0.962006, 0, -0.5932, 0, 0.757343, 85.2558, 0, -1.70565, 0.705997, 0, 0.52345, 0, 0.87888, 0, -0.52345, 0, 0.705997, 86.7924, 0, 14.0002, 0.647218, 0, 0.855955, 0, 1.0731, 0, -0.855955, 0, 0.647218, 82.6178, 0, 23.5319, 0.723718, 0, 0.63765, 0, 0.964554, 0, -0.63765, 0, 0.723718, 84.0129, 0, 32.7964, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[sub_resource type="MultiMesh" id=2]
+transform_format = 1
+instance_count = 2
+mesh = ExtResource( 9 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0 )
+
+[node name="World" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.848954, -0.121668, -0.51427, 0.5, 0.5, 0.707106, 0.171103, -0.857436, 0.485311, 0, 80.3552, 0 )
+light_color = Color( 1, 0.941176, 0.796078, 1 )
+light_bake_mode = 2
+
+[node name="Players" type="Spatial" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource( 2 )]
+route_ = "Rail"
+speedLimit = 200.0
+acceleration = 1.0
+brakeAcceleration = 1.5
+friction = 0.005
+length = 125.0
+startPosition = 10.0
+
+[node name="Grass" type="Spatial" parent="."]
+
+[node name="grass" type="MeshInstance" parent="Grass"]
+material_override = ExtResource( 3 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="Rails" type="Spatial" parent="."]
+
+[node name="Rail" parent="Rails" instance=ExtResource( 5 )]
+otherLength = 1000
+
+[node name="Buildings" type="Spatial" parent="."]
+
+[node name="Flora" type="Spatial" parent="."]
+
+[node name="Forest" parent="Flora" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -55 )
+multimesh = SubResource( 3 )
+spacing = 12.0
+randomLocation = true
+randomRotation = true
+randomScale = true
+
+[node name="Houses" parent="Flora" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
+material_override = ExtResource( 8 )
+multimesh = SubResource( 2 )
+z = 45.0
+spacing = 45.0
+randomLocationFactor = 0.1
+
+[node name="TrackObjects" type="Spatial" parent="."]

@@ -1,0 +1,163 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Ressourcen/Basic/Sounds/DoorsClosing2.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Ressourcen/Basic/Sounds/DoorsOpening.ogg" type="AudioStream" id=3]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Sound.gd" type="Script" id=5]
+[ext_resource path="res://Ressourcen/Basic/Sounds/Base.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Ressourcen/Basic/Sounds/Drive.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Ressourcen/Basic/Sounds/Acceleration.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Ressourcen/Basic/Sounds/Acceleration2.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Ressourcen/Basic/Sounds/AccelerationTransition.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Ressourcen/Basic/Sounds/Test.wav" type="AudioStream" id=11]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Screen1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Screen1.png" type="Texture" id=13]
+[ext_resource path="res://Ressourcen/Basic/ICE4.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://Ressourcen/Basic/Materials/Blue_Plastic.tres" type="Material" id=15]
+[ext_resource path="res://Ressourcen/Basic/Materials/Red_Plastic.tres" type="Material" id=16]
+[ext_resource path="res://Ressourcen/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=17]
+[ext_resource path="res://Ressourcen/Basic/Materials/Black_Plastic.tres" type="Material" id=18]
+[ext_resource path="res://Ressourcen/Basic/Materials/ScreenBook.tres" type="Material" id=19]
+[ext_resource path="res://Ressourcen/Basic/Screens/ScreenLeft/ScreenLeft.png" type="Texture" id=20]
+[ext_resource path="res://Ressourcen/Basic/Screens/ScreenLeft/ScreenLeft.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Ressourcen/Basic/Control-Roll.obj" type="ArrayMesh" id=22]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/StartUpGuide.gd" type="Script" id=23]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0, 0, 0, 1 )
+metallic = 0.1
+roughness = 0.9
+emission_enabled = true
+emission = Color( 0.603922, 0.603922, 0.603922, 1 )
+emission_energy = 1.0
+emission_operator = 1
+emission_on_uv2 = false
+emission_texture = ExtResource( 13 )
+
+[sub_resource type="QuadMesh" id=2]
+size = Vector2( 1.3, 0.9 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0, 0, 0, 1 )
+metallic = 0.1
+roughness = 0.9
+emission_enabled = true
+emission = Color( 0.603922, 0.603922, 0.603922, 1 )
+emission_energy = 1.0
+emission_operator = 1
+emission_on_uv2 = false
+emission_texture = ExtResource( 20 )
+
+[sub_resource type="QuadMesh" id=4]
+size = Vector2( 1.2, 0.8 )
+
+[node name="Player" type="Spatial"]
+script = ExtResource( 1 )
+speedLimit = 160.0
+acceleration = 0.3
+brakeAcceleration = 1.0
+friction = 0.01
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Sound" type="Node2D" parent="."]
+script = ExtResource( 5 )
+AccelerationTransitionTime = 6.0
+AccelerationTransitionSpeed = 10.0
+
+[node name="Base" type="AudioStreamPlayer2D" parent="Sound"]
+position = Vector2( 0, -1 )
+stream = ExtResource( 6 )
+attenuation = 0.0824692
+
+[node name="Drive" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 7 )
+volume_db = 15.0
+autoplay = true
+bus = "Drive"
+
+[node name="Acceleration1" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 8 )
+autoplay = true
+bus = "Acceleration"
+
+[node name="Acceleration2" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 9 )
+bus = "Acceleration"
+
+[node name="AccelerationTransition" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 10 )
+
+[node name="Timer" type="Timer" parent="Sound"]
+one_shot = true
+
+[node name="Test" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 11 )
+
+[node name="DoorsOpen" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 3 )
+volume_db = -9.922
+
+[node name="DoorsClose" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource( 2 )
+volume_db = -9.229
+
+[node name="Screen" type="MeshInstance" parent="."]
+transform = Transform( -3.82021e-08, 0.177615, -0.797131, 2.89372e-08, 0.234483, 0.603806, 0.294159, 0, -1.62921e-07, 2.04538, 2.65065, 0 )
+material_override = SubResource( 1 )
+cast_shadow = 0
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1300, 900 )
+usage = 0
+render_target_v_flip = true
+
+[node name="Display" parent="Viewport" instance=ExtResource( 12 )]
+
+[node name="ScreenLeft" type="MeshInstance" parent="."]
+transform = Transform( 0.108196, 0.165164, -0.741251, 2.89372e-08, 0.234483, 0.603806, 0.273538, -0.0653296, 0.293198, 1.98013, 2.65065, -0.559107 )
+material_override = SubResource( 3 )
+cast_shadow = 0
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="DisplayLeft" type="Viewport" parent="."]
+size = Vector2( 1200, 800 )
+usage = 0
+render_target_v_flip = true
+
+[node name="ScreenLeft2" parent="DisplayLeft" instance=ExtResource( 21 )]
+
+[node name="Camera2" type="Camera" parent="."]
+transform = Transform( -1.62921e-07, 0.0770497, -0.997027, 0, 0.997027, 0.0770497, 1, 1.2553e-08, -1.62436e-07, 0.529, 3.044, 0 )
+current = true
+fov = 42.7
+far = 1000.0
+
+[node name="Cabin" type="MeshInstance" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+mesh = ExtResource( 14 )
+material/0 = ExtResource( 16 )
+material/1 = ExtResource( 15 )
+material/2 = ExtResource( 17 )
+material/3 = ExtResource( 19 )
+material/4 = ExtResource( 18 )
+
+[node name="BrakeRoll" type="MeshInstance" parent="."]
+transform = Transform( 0.810062, -0.586344, 0, 0.586344, 0.810062, 0, 0, 0, 1, 1.77239, 2.47729, 0.191648 )
+mesh = ExtResource( 22 )
+material/0 = ExtResource( 17 )
+material/1 = ExtResource( 18 )
+
+[node name="AccRoll" type="MeshInstance" parent="."]
+transform = Transform( 0.810062, -0.586344, 0, 0.586344, 0.810062, 0, 0, 0, 1, 1.77239, 2.47729, -0.236009 )
+mesh = ExtResource( 22 )
+material/0 = ExtResource( 17 )
+material/1 = ExtResource( 18 )
+
+[node name="StartUpGuide" type="Node" parent="."]
+script = ExtResource( 23 )
+[connection signal="timeout" from="Sound/Timer" to="Sound" method="_on_Timer_timeout"]

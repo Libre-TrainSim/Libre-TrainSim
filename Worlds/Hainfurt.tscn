@@ -1,0 +1,1020 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
+[ext_resource path="res://Ressourcen/Basic/Textures/Sky.png" type="Texture" id=2]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Ressourcen/Basic/Grass.material" type="Material" id=4]
+[ext_resource path="res://Ressourcen/Basic/grass.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Ressourcen/Basic/platform.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Station.tscn" type="PackedScene" id=13]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit.tscn" type="PackedScene" id=14]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit.tscn" type="PackedScene" id=15]
+
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 2 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+fog_enabled = true
+fog_sun_color = Color( 0.980392, 1, 0.803922, 1 )
+fog_sun_amount = 1.0
+dof_blur_far_distance = 200.0
+dof_blur_far_transition = 100.0
+
+[sub_resource type="GDScript" id=3]
+script/source = "tool
+extends Spatial
+
+
+export (float) var length 
+export (float) var radius 
+export (float) var buildDistance = 1
+export (int) var visibleSegments
+# warning-ignore:unused_class_variable
+export (bool) var update setget _update
+
+var MAX_LENGTH = 1000 
+
+var Math = self ## TODO
+
+export (float) var startrot 
+export (float) var endrot
+export (Vector3) var startpos
+export (Vector3) var endpos 
+
+export (float) var othersDistance = -4.5
+export (float) var otherRadius 
+export (float) var otherLength
+# warning-ignore:unused_class_variable
+export (bool) var calculate setget calcParallelRail
+
+export (float) var InShift = 2.25
+export (float) var Outlength
+# warning-ignore:unused_class_variable
+export (bool) var calculateShift setget calcShift
+
+var attachedSignals = {}
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_update(false)
+	if not Engine.is_editor_hint():
+		$Beginning.visible = false
+		$Ending.visible = false
+	pass # Replace with function body.
+
+#func _process(delta):
+#	pass
+
+# warning-ignore:unused_argument
+func _update(newvar):
+	if length > MAX_LENGTH:
+		length = MAX_LENGTH
+		print(self.name + \": The max length is \" + String(MAX_LENGTH) + \". Shrinking the length to maximal length.\")
+	startrot = self.rotation_degrees.y
+	endrot = Math.getNextDeg(radius, 0, length) + self.rotation_degrees.y
+	startpos = self.get_translation()
+	endpos = startpos + Math.getNextPos(radius, Vector3(0,0,0), self.rotation_degrees.y, length)
+	visibleSegments = length / buildDistance +1
+	buildRail()
+	$Ending.translation = getNextPos(radius, Vector3(0,0,0), 0, length-1)
+
+func buildRail():
+	var distance = 0
+	var currentrot = 0
+	var currentpos = Vector3(0,0,0)
+	get_node(\"MultiMeshInstance\").set_multimesh(get_node(\"MultiMeshInstance\").multimesh.duplicate(false))
+	var multimesh = get_node(\"MultiMeshInstance\").multimesh
+	var idx = 0
+	multimesh.instance_count = length / buildDistance + 1
+	multimesh.visible_instance_count = visibleSegments
+	while distance < length:
+		multimesh.set_instance_transform(idx, Transform(Basis().rotated(Vector3(0,1,0), deg2rad(currentrot)), currentpos))
+		currentpos = Math.getNextPos(radius, currentpos, currentrot, buildDistance)
+		currentrot = Math.getNextDeg(radius, currentrot, buildDistance)
+		distance += buildDistance
+		idx += 1
+		
+###################################################################################
+## Circle:
+# warning-ignore:shadowed_variable
+func getNextPos(radius, pos, worldRot, distance):#  Vector3 position, float worldRot, float distance):
+	# Straigt
+	if radius == 0:
+		return pos + Vector3(cos(deg2rad(worldRot))*distance, 0, -sin(deg2rad(worldRot))*distance) ##!!!!
+	# Curve
+	var extend = radius * 2.0 * PI
+	var degree = distance / extend * 360    + worldRot
+	return degreeToCoordinate(radius, pos, degree, worldRot)
+
+# warning-ignore:shadowed_variable
+func getNextDeg(radius, worldRot, distance):
+	# Straight:
+	if radius == 0: 
+		return worldRot
+	# Curve:
+	var extend = radius * 2.0 * PI
+	return distance / extend * 360    + worldRot
+
+
+# warning-ignore:shadowed_variable
+func degreeToCoordinate(radius, pos, degree, worldRot):
+	degree = float(degree)
+	var mittelpunkt = pos - Vector3(sin(deg2rad(worldRot)) * radius,0,cos(deg2rad(worldRot)) * radius)
+	var a = cos(deg2rad(degree)) * radius
+	var b = sin(deg2rad(degree)) * radius
+	return mittelpunkt + Vector3(b, 0, a)
+	
+func speedToKmH(speed):
+	return speed*3.6
+	
+# warning-ignore:unused_argument
+func calcParallelRail(newvar):
+	_update(true)
+	if radius == 0:
+		otherRadius = 0
+		otherLength = length
+		return
+	var U = 2.0* PI * radius
+	otherRadius = radius + othersDistance
+	if U == 0:
+		otherLength = length
+	else:
+		otherLength = (length / U) * (2.0 * PI * otherRadius)
+	
+# warning-ignore:unused_argument
+func calcShift(newvar):
+	_update(true)
+	if radius == 0:
+		Outlength = length
+		return
+	var angle = rad2deg(acos((radius-InShift)/radius))
+
+	if String(angle) == \"nan\":
+		Outlength = length
+		return
+	Outlength = 2.0 * PI * radius * angle / 360.0
+
+func register_signal(name, distance):
+	attachedSignals[name] = distance
+	
+func get_pos_at_RailDistance(distance):
+	return getNextPos(radius, self.translation, self.rotation_degrees.y, distance)
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "tool
+extends Spatial
+
+
+export (float) var length 
+export (float) var radius 
+export (float) var buildDistance = 1
+export (int) var visibleSegments
+# warning-ignore:unused_class_variable
+export (bool) var update setget _update
+
+var MAX_LENGTH = 1000 
+
+var Math = self ## TODO
+
+export (float) var startrot 
+export (float) var endrot
+export (Vector3) var startpos
+export (Vector3) var endpos 
+
+export (float) var othersDistance = -4.5
+export (float) var otherRadius 
+export (float) var otherLength
+# warning-ignore:unused_class_variable
+export (bool) var calculate setget calcParallelRail
+
+export (float) var InShift = 2.25
+export (float) var Outlength
+# warning-ignore:unused_class_variable
+export (bool) var calculateShift setget calcShift
+
+var attachedSignals = {}
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_update(false)
+	if not Engine.is_editor_hint():
+		$Beginning.visible = false
+		$Ending.visible = false
+	pass # Replace with function body.
+
+#func _process(delta):
+#	pass
+
+# warning-ignore:unused_argument
+func _update(newvar):
+	if length > MAX_LENGTH:
+		length = MAX_LENGTH
+		print(self.name + \": The max length is \" + String(MAX_LENGTH) + \". Shrinking the length to maximal length.\")
+	startrot = self.rotation_degrees.y
+	endrot = Math.getNextDeg(radius, 0, length) + self.rotation_degrees.y
+	startpos = self.get_translation()
+	endpos = startpos + Math.getNextPos(radius, Vector3(0,0,0), self.rotation_degrees.y, length)
+	visibleSegments = length / buildDistance +1
+	buildRail()
+	$Ending.translation = getNextPos(radius, Vector3(0,0,0), 0, length-1)
+
+func buildRail():
+	var distance = 0
+	var currentrot = 0
+	var currentpos = Vector3(0,0,0)
+	get_node(\"MultiMeshInstance\").set_multimesh(get_node(\"MultiMeshInstance\").multimesh.duplicate(false))
+	var multimesh = get_node(\"MultiMeshInstance\").multimesh
+	var idx = 0
+	multimesh.instance_count = length / buildDistance + 1
+	multimesh.visible_instance_count = visibleSegments
+	while distance < length:
+		multimesh.set_instance_transform(idx, Transform(Basis().rotated(Vector3(0,1,0), deg2rad(currentrot)), currentpos))
+		currentpos = Math.getNextPos(radius, currentpos, currentrot, buildDistance)
+		currentrot = Math.getNextDeg(radius, currentrot, buildDistance)
+		distance += buildDistance
+		idx += 1
+		
+###################################################################################
+## Circle:
+# warning-ignore:shadowed_variable
+func getNextPos(radius, pos, worldRot, distance):#  Vector3 position, float worldRot, float distance):
+	# Straigt
+	if radius == 0:
+		return pos + Vector3(cos(deg2rad(worldRot))*distance, 0, -sin(deg2rad(worldRot))*distance) ##!!!!
+	# Curve
+	var extend = radius * 2.0 * PI
+	var degree = distance / extend * 360    + worldRot
+	return degreeToCoordinate(radius, pos, degree, worldRot)
+
+# warning-ignore:shadowed_variable
+func getNextDeg(radius, worldRot, distance):
+	# Straight:
+	if radius == 0: 
+		return worldRot
+	# Curve:
+	var extend = radius * 2.0 * PI
+	return distance / extend * 360    + worldRot
+
+
+# warning-ignore:shadowed_variable
+func degreeToCoordinate(radius, pos, degree, worldRot):
+	degree = float(degree)
+	var mittelpunkt = pos - Vector3(sin(deg2rad(worldRot)) * radius,0,cos(deg2rad(worldRot)) * radius)
+	var a = cos(deg2rad(degree)) * radius
+	var b = sin(deg2rad(degree)) * radius
+	return mittelpunkt + Vector3(b, 0, a)
+	
+func speedToKmH(speed):
+	return speed*3.6
+	
+# warning-ignore:unused_argument
+func calcParallelRail(newvar):
+	_update(true)
+	if radius == 0:
+		otherRadius = 0
+		otherLength = length
+		return
+	var U = 2.0* PI * radius
+	otherRadius = radius + othersDistance
+	if U == 0:
+		otherLength = length
+	else:
+		otherLength = (length / U) * (2.0 * PI * otherRadius)
+	
+# warning-ignore:unused_argument
+func calcShift(newvar):
+	_update(true)
+	if radius == 0:
+		Outlength = length
+		return
+	var angle = rad2deg(acos((radius-InShift)/radius))
+
+	if String(angle) == \"nan\":
+		Outlength = length
+		return
+	Outlength = 2.0 * PI * radius * angle / 360.0
+
+func register_signal(name, distance):
+	attachedSignals[name] = distance
+	
+func get_pos_at_RailDistance(distance):
+	return getNextPos(radius, self.translation, self.rotation_degrees.y, distance)
+
+
+	
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "tool
+extends Spatial
+
+
+export (float) var length 
+export (float) var radius 
+export (float) var buildDistance = 1
+export (int) var visibleSegments
+# warning-ignore:unused_class_variable
+export (bool) var update setget _update
+
+var MAX_LENGTH = 1000 
+
+var Math = self ## TODO
+
+export (float) var startrot 
+export (float) var endrot
+export (Vector3) var startpos
+export (Vector3) var endpos 
+
+export (float) var othersDistance = -4.5
+export (float) var otherRadius 
+export (float) var otherLength
+# warning-ignore:unused_class_variable
+export (bool) var calculate setget calcParallelRail
+
+export (float) var InShift = 2.25
+export (float) var Outlength
+# warning-ignore:unused_class_variable
+export (bool) var calculateShift setget calcShift
+
+var attachedSignals = {}
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_update(false)
+	if not Engine.is_editor_hint():
+		$Beginning.visible = false
+		$Ending.visible = false
+	pass # Replace with function body.
+
+#func _process(delta):
+#	pass
+
+# warning-ignore:unused_argument
+func _update(newvar):
+	if length > MAX_LENGTH:
+		length = MAX_LENGTH
+		print(self.name + \": The max length is \" + String(MAX_LENGTH) + \". Shrinking the length to maximal length.\")
+	startrot = self.rotation_degrees.y
+	endrot = Math.getNextDeg(radius, 0, length) + self.rotation_degrees.y
+	startpos = self.get_translation()
+	endpos = startpos + Math.getNextPos(radius, Vector3(0,0,0), self.rotation_degrees.y, length)
+	visibleSegments = length / buildDistance +1
+	buildRail()
+	$Ending.translation = getNextPos(radius, Vector3(0,0,0), 0, length-1)
+
+func buildRail():
+	var distance = 0
+	var currentrot = 0
+	var currentpos = Vector3(0,0,0)
+	get_node(\"MultiMeshInstance\").set_multimesh(get_node(\"MultiMeshInstance\").multimesh.duplicate(false))
+	var multimesh = get_node(\"MultiMeshInstance\").multimesh
+	var idx = 0
+	multimesh.instance_count = length / buildDistance + 1
+	multimesh.visible_instance_count = visibleSegments
+	while distance < length:
+		multimesh.set_instance_transform(idx, Transform(Basis().rotated(Vector3(0,1,0), deg2rad(currentrot)), currentpos))
+		currentpos = Math.getNextPos(radius, currentpos, currentrot, buildDistance)
+		currentrot = Math.getNextDeg(radius, currentrot, buildDistance)
+		distance += buildDistance
+		idx += 1
+		
+###################################################################################
+## Circle:
+# warning-ignore:shadowed_variable
+func getNextPos(radius, pos, worldRot, distance):#  Vector3 position, float worldRot, float distance):
+	# Straigt
+	if radius == 0:
+		return pos + Vector3(cos(deg2rad(worldRot))*distance, 0, -sin(deg2rad(worldRot))*distance) ##!!!!
+	# Curve
+	var extend = radius * 2.0 * PI
+	var degree = distance / extend * 360    + worldRot
+	return degreeToCoordinate(radius, pos, degree, worldRot)
+
+# warning-ignore:shadowed_variable
+func getNextDeg(radius, worldRot, distance):
+	# Straight:
+	if radius == 0: 
+		return worldRot
+	# Curve:
+	var extend = radius * 2.0 * PI
+	return distance / extend * 360    + worldRot
+
+
+# warning-ignore:shadowed_variable
+func degreeToCoordinate(radius, pos, degree, worldRot):
+	degree = float(degree)
+	var mittelpunkt = pos - Vector3(sin(deg2rad(worldRot)) * radius,0,cos(deg2rad(worldRot)) * radius)
+	var a = cos(deg2rad(degree)) * radius
+	var b = sin(deg2rad(degree)) * radius
+	return mittelpunkt + Vector3(b, 0, a)
+	
+func speedToKmH(speed):
+	return speed*3.6
+	
+# warning-ignore:unused_argument
+func calcParallelRail(newvar):
+	_update(true)
+	if radius == 0:
+		otherRadius = 0
+		otherLength = length
+		return
+	var U = 2.0* PI * radius
+	otherRadius = radius + othersDistance
+	if U == 0:
+		otherLength = length
+	else:
+		otherLength = (length / U) * (2.0 * PI * otherRadius)
+	
+# warning-ignore:unused_argument
+func calcShift(newvar):
+	_update(true)
+	if radius == 0:
+		Outlength = length
+		return
+	var angle = rad2deg(acos((radius-InShift)/radius))
+
+	if String(angle) == \"nan\":
+		Outlength = length
+		return
+	Outlength = 2.0 * PI * radius * angle / 360.0
+
+func register_signal(name, distance):
+	attachedSignals[name] = distance
+	
+func get_pos_at_RailDistance(distance):
+	return getNextPos(radius, self.translation, self.rotation_degrees.y, distance)
+
+
+	
+"
+
+[sub_resource type="CubeMesh" id=6]
+
+[node name="World" type="Spatial"]
+script = ExtResource( 1 )
+FileName = "Hainfurt"
+timeHour = 12
+timeSecond = 40
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.824479, -0.269395, -0.497655, 0.512389, 0.728653, 0.454448, 0.240192, -0.629676, 0.738794, 0, 80.3552, 0 )
+light_color = Color( 0.980392, 1, 0.803922, 1 )
+light_bake_mode = 2
+
+[node name="Players" type="Spatial" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource( 3 )]
+route_ = "Rail RailConnector Hainfurt2F7Connector Hainfurt2F7 Hainfurt2F6 Hainfurt2F5 Hainfurt2F3 ST1 ST2 ST3 ST4"
+speedLimit = 200.0
+acceleration = 0.7
+brakeAcceleration = 1.2
+friction = 0.005
+length = 1.0
+startPosition = 95.0
+startUpGuide = true
+pantographTime = 1.0
+doorRight = true
+
+[node name="Grass" type="Spatial" parent="."]
+
+[node name="grass" type="MeshInstance" parent="Grass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47826, 0 )
+material_override = ExtResource( 4 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="Rails" type="Spatial" parent="."]
+
+[node name="Hainfurt2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.4 )
+length = 70.0
+visibleSegments = 78.7778
+startpos = Vector3( 0, 0, 8.4 )
+endpos = Vector3( 70, 0, 8.4 )
+otherLength = 70.0
+Outlength = 70.0
+
+[node name="Hainfurt2F" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 8.4 )
+length = 62.46
+radius = 1000.0
+visibleSegments = 70.4
+endrot = 3.57869
+startpos = Vector3( 70, 0, 8.4 )
+endpos = Vector3( 132.419, 0, 6.44999 )
+otherRadius = 995.5
+otherLength = 62.1789
+InShift = 1.95
+Outlength = 62.4601
+
+[node name="Hainfurt2F3" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 194.838, 0, 4.5 )
+length = 305.162
+visibleSegments = 340.069
+startpos = Vector3( 194.838, 0, 4.5 )
+endpos = Vector3( 500, 0, 4.5 )
+otherLength = 305.162
+InShift = 1.95
+Outlength = 305.162
+
+[node name="ST1P" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0 )
+length = 1000.0
+radius = -2000.0
+visibleSegments = 1112.11
+endrot = -28.6479
+startpos = Vector3( 500, 0, 0 )
+endpos = Vector3( 1458.85, 0, 244.835 )
+othersDistance = 4.5
+otherRadius = -1995.5
+otherLength = 997.75
+Outlength = 1000.0
+
+[node name="ST2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.877582, 0, -0.479427, 0, 1, 0, 0.479427, 0, 0.877582, 1456.69, 0, 248.784 )
+length = 1000.0
+visibleSegments = 1112.11
+startrot = -28.648
+endrot = -28.648
+startpos = Vector3( 1456.69, 0, 248.784 )
+endpos = Vector3( 2334.27, 0, 728.211 )
+othersDistance = 4.5
+otherLength = 1000.0
+Outlength = 1000.0
+
+[node name="ST2P" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.877582, 0, -0.479427, 0, 1, 0, 0.479427, 0, 0.877582, 1458.85, 0, 244.835 )
+length = 900.0
+visibleSegments = 1001.0
+startrot = -28.648
+endrot = -28.648
+startpos = Vector3( 1458.85, 0, 244.835 )
+endpos = Vector3( 2248.67, 0, 676.319 )
+othersDistance = 4.5
+otherLength = 900.0
+Outlength = 900.0
+
+[node name="ST3" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.877582, 0, -0.479427, 0, 1, 0, 0.479427, 0, 0.877582, 2334.28, 0, 728.211 )
+length = 1000.0
+radius = 2000.0
+visibleSegments = 1112.11
+startrot = -28.648
+endrot = -8.99798e-05
+startpos = Vector3( 2334.28, 0, 728.211 )
+endpos = Vector3( 3293.13, 0, 973.047 )
+otherRadius = 1995.5
+otherLength = 997.75
+Outlength = 94.8772
+
+[node name="ST3P" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.877582, 0, -0.479427, 0, 1, 0, 0.479427, 0, 0.877582, 2336.43, 0, 724.262 )
+length = 997.75
+radius = 1995.5
+visibleSegments = 1109.61
+startrot = -28.648
+endrot = -8.99798e-05
+startpos = Vector3( 2336.43, 0, 724.262 )
+endpos = Vector3( 3293.12, 0, 968.548 )
+othersDistance = -5.0
+otherRadius = 1990.5
+otherLength = 995.25
+Outlength = 94.7704
+
+[node name="ST4" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3293.13, 0, 973.048 )
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 3293.13, 0, 973.048 )
+endpos = Vector3( 4293.13, 0, 973.048 )
+otherLength = 1000.0
+Outlength = 1000.0
+
+[node name="ST4P" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3293.13, 0, 968.548 )
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 3293.13, 0, 968.548 )
+endpos = Vector3( 4293.13, 0, 968.548 )
+otherLength = 1000.0
+Outlength = 1000.0
+
+[node name="ST4P5" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4293.13, 0, 968.548 )
+length = 1000
+visibleSegments = 1112.11
+startpos = Vector3( 4293.13, 0, 968.548 )
+endpos = Vector3( 5293.13, 0, 968.548 )
+
+[node name="ST3PP" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.877582, 0, -0.479427, 0, 1, 0, 0.479427, 0, 0.877582, 2338.83, 0, 719.874 )
+script = SubResource( 3 )
+length = 995.25
+radius = 1990.5
+visibleSegments = 1106.83
+update = false
+startrot = -28.648
+endrot = -8.99798e-05
+startpos = Vector3( 2338.83, 0, 719.874 )
+endpos = Vector3( 3293.13, 0, 963.547 )
+othersDistance = -4.5
+otherRadius = 1986.0
+otherLength = 993.0
+calculate = false
+InShift = 2.25
+Outlength = 94.6517
+calculateShift = false
+
+[node name="ST3PP2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( -0.877582, 0, 0.479427, 0, 1, 0, -0.479427, 0, -0.877582, 2338.83, 0, 719.874 )
+script = SubResource( 3 )
+length = 50.0833
+radius = 501.25
+visibleSegments = 56.6481
+update = false
+startrot = 151.352
+endrot = 157.077
+startpos = Vector3( 2338.83, 0, 719.874 )
+endpos = Vector3( 2293.75, 0, 698.097 )
+othersDistance = -4.5
+otherRadius = 496.75
+otherLength = 49.6337
+calculate = false
+InShift = 2.5
+Outlength = 50.0833
+calculateShift = false
+
+[node name="ST2P2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.877582, 0, -0.479427, 0, 1, 0, 0.479427, 0, 0.877582, 2248.67, 0, 676.319 )
+script = SubResource( 3 )
+radius = 0.0
+update = false
+startrot = -28.648
+endrot = -28.648
+startpos = Vector3( 2248.67, 0, 676.319 )
+endpos = Vector3( 2336.43, 0, 724.262 )
+othersDistance = -4.5
+otherRadius = 0
+calculate = false
+InShift = 2.25
+calculateShift = false
+
+[node name="ST3PP4" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, -1.57044e-06, 0, 1, 0, 1.57044e-06, 0, 1, 3293.12, 0, 963.548 )
+script = SubResource( 3 )
+length = 200.0
+radius = 0.0
+visibleSegments = 223.222
+update = false
+startrot = -8.99796e-05
+endrot = -8.99796e-05
+startpos = Vector3( 3293.12, 0, 963.548 )
+endpos = Vector3( 3493.12, 0, 963.548 )
+othersDistance = -4.5
+otherRadius = 0
+otherLength = 200.0
+calculate = false
+InShift = 2.25
+Outlength = 200.0
+calculateShift = false
+
+[node name="Hainfurt2F4" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 194.838, 0, 4.5 )
+length = 62.46
+radius = 1000.0
+visibleSegments = 70.4
+startrot = -180.0
+endrot = -176.421
+startpos = Vector3( 194.838, 0, 4.5 )
+endpos = Vector3( 132.419, 0, 6.45001 )
+otherRadius = 995.5
+otherLength = 62.1789
+Outlength = 67.0946
+
+[node name="ST3PP3" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( -0.921028, 0, 0.389496, 0, 1, 0, -0.389496, 0, -0.921028, 2293.75, 0, 698.097 )
+script = SubResource( 4 )
+length = 50.0209
+radius = -500.0
+visibleSegments = 56.5788
+update = false
+startrot = 157.077
+endrot = 151.345
+startpos = Vector3( 2293.75, 0, 698.097 )
+endpos = Vector3( 2248.73, 0, 676.344 )
+othersDistance = -4.5
+otherRadius = -504.5
+otherLength = 50.4711
+calculate = false
+InShift = 2.25
+Outlength = 50.0209
+calculateShift = false
+
+[node name="Hainfurt2F5" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 194.838, 0, 4.5 )
+script = SubResource( 4 )
+length = 50.0675
+radius = -556.681
+visibleSegments = 56.6306
+update = false
+startrot = -180.0
+endrot = -185.153
+startpos = Vector3( 194.838, 0, 4.5 )
+endpos = Vector3( 144.838, 0, 2.25 )
+othersDistance = -4.5
+otherRadius = -561.181
+otherLength = 50.4722
+calculate = false
+InShift = 2.25
+Outlength = 50.0675
+calculateShift = false
+
+[node name="Hainfurt2F6" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( -0.995958, 0, 0.0898181, 0, 1, 0, -0.0898181, 0, -0.995958, 144.838, 0, 2.25 )
+script = SubResource( 4 )
+length = 50.0675
+radius = 556.681
+visibleSegments = 56.6306
+update = false
+startrot = 174.847
+endrot = 180.0
+startpos = Vector3( 144.838, 0, 2.25 )
+endpos = Vector3( 94.838, 0, -6.10352e-05 )
+othersDistance = -4.5
+otherRadius = 552.181
+otherLength = 49.6628
+calculate = false
+InShift = 2.25
+Outlength = 50.0675
+calculateShift = false
+
+[node name="Hainfurt2F7" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 94.838, 0, 0 )
+script = SubResource( 4 )
+radius = 0.0
+update = false
+startrot = 180.0
+endrot = 180.0
+startpos = Vector3( 94.838, 0, 0 )
+endpos = Vector3( -5.162, 0, -2.66316e-05 )
+othersDistance = -4.5
+otherRadius = 0
+calculate = false
+InShift = 2.25
+calculateShift = false
+
+[node name="Hainfurt2F8" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 94.838, 0, 0 )
+script = SubResource( 4 )
+radius = 0.0
+update = false
+startrot = 1.00179e-05
+endrot = 1.00179e-05
+startpos = Vector3( 94.838, 0, 0 )
+endpos = Vector3( 194.838, 0, -1.74846e-05 )
+othersDistance = -4.5
+otherRadius = 0
+calculate = false
+InShift = 2.25
+calculateShift = false
+
+[node name="Rail" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -371.713, 0, -15.591 )
+startpos = Vector3( -371.713, 0, -15.591 )
+endpos = Vector3( -271.713, 0, -15.591 )
+
+[node name="Hainfurt2F8Connector" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 194.838, 0, -1.74846e-05 )
+script = SubResource( 5 )
+length = 152.581
+radius = -1.33151e+09
+visibleSegments = 170.534
+update = false
+startrot = 1.00179e-05
+endrot = 3.45227e-06
+startpos = Vector3( 194.838, 0, -1.74846e-05 )
+endpos = Vector3( 347.419, 0, -1.74846e-05 )
+othersDistance = -4.5
+otherRadius = -1.33151e+09
+otherLength = 152.581
+calculate = false
+InShift = 2.25
+Outlength = 152.581
+calculateShift = false
+
+[node name="ST1PConnector" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 6.02537e-08, 0, 1, 0, -6.02537e-08, 0, 1, 347.419, 0, -1.74846e-05 )
+script = SubResource( 5 )
+length = 152.581
+radius = 1.33151e+09
+visibleSegments = 170.534
+update = false
+startrot = 3.45228e-06
+endrot = 1.00179e-05
+startpos = Vector3( 347.419, 0, -1.74846e-05 )
+endpos = Vector3( 500, 0, -1.74846e-05 )
+othersDistance = -4.5
+otherRadius = 1.33151e+09
+otherLength = 152.581
+calculate = false
+InShift = 2.25
+Outlength = 77406.7
+calculateShift = false
+
+[node name="RailConnector" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -271.713, 0, -15.591 )
+script = SubResource( 5 )
+length = 133.579
+radius = -1143.17
+visibleSegments = 149.421
+update = false
+startrot = 0.0
+endrot = -6.69499
+startpos = Vector3( -271.713, 0, -15.591 )
+endpos = Vector3( -138.438, 0, -7.79547 )
+othersDistance = -4.5
+otherRadius = -1147.67
+otherLength = 134.105
+calculate = false
+InShift = 2.25
+Outlength = 133.579
+calculateShift = false
+
+[node name="Hainfurt2F7Connector" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 0.993181, 0, -0.116584, 0, 1, 0, 0.116584, 0, 0.993181, -138.438, 0, -7.79559 )
+script = SubResource( 5 )
+length = 133.579
+radius = 1143.17
+visibleSegments = 149.421
+update = false
+startrot = -6.69499
+endrot = -3.86513e-06
+startpos = Vector3( -138.438, 0, -7.79559 )
+endpos = Vector3( -5.16278, 0, -5.76973e-05 )
+othersDistance = -4.5
+otherRadius = 1138.67
+otherLength = 133.053
+calculate = false
+InShift = 2.25
+Outlength = 71.7353
+calculateShift = false
+
+[node name="ST1PP" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 4.5 )
+length = 997.75
+radius = -1995.5
+visibleSegments = 1109.61
+endrot = -28.6479
+startpos = Vector3( 500, 0, 4.5 )
+endpos = Vector3( 1456.69, 0, 248.784 )
+otherRadius = -2000.0
+otherLength = 1000.0
+Outlength = 997.75
+
+[node name="Signals" type="Spatial" parent="."]
+
+[node name="TrainStationHainfurt" parent="Signals" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.4 )
+stationName = "Hainfurt"
+beginningStation = true
+regularStop = true
+stationLength = 70
+stopTime = 15
+departureH = 12
+departureM = 1
+attachedRail = "Hainfurt2"
+
+[node name="TrainStationHainfurtNord" parent="Signals" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3603.13, 0, 973.048 )
+stationName = "Hainfurt Nord"
+regularStop = true
+endStation = true
+stationLength = 120
+stopTime = 15
+attachedRail = "ST4"
+onRailPosition = 310
+
+[node name="SpeedLimit" parent="Signals" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3313.13, 0, 973.048 )
+attachedRail = "ST4"
+onRailPosition = 20
+
+[node name="SpeedLimit2" parent="Signals" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 4.5 )
+speed = 160
+attachedRail = "ST1"
+
+[node name="WarnSpeedLimit" parent="Signals" instance=ExtResource( 15 )]
+transform = Transform( 0.955336, 0, -0.295522, 0, 1, 0, 0.295522, 0, 0.955336, 2702.09, 0, 883.719 )
+attachedRail = "ST3"
+onRailPosition = 400
+
+[node name="TrainStation" parent="Signals" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -271.713, 0, -15.5909 )
+stationName = "Test"
+regularStop = true
+stationLength = 200
+stopTime = 20
+departureH = 11
+departureM = 59
+attachedRail = "RailConnector"
+
+[node name="Platforms" type="Spatial" parent="."]
+
+[node name="Buildings" type="Spatial" parent="."]
+
+[node name="platformHainfurt1" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.69 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformHainfurt2" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 7.69 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL1" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3601.68, 0, 967.701 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL2" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3631.68, 0, 967.7 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL3" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3661.68, 0, 967.7 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL4" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3691.68, 0, 967.7 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL7" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3601.68, 0, 980.843 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL6" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3631.68, 0, 980.842 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL5" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3661.68, 0, 980.842 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="platformNeustadtL8" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3691.68, 0, 980.842 )
+mesh = ExtResource( 7 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+
+[node name="MeshInstance" type="MeshInstance" parent="Buildings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 108.4 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="Flora" type="Spatial" parent="."]
+
+[node name="TrackObjects" type="Spatial" parent="."]

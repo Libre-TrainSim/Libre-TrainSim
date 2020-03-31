@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/DriverStand.png-30fedfbb311a08ec4e6a4d4abc2e9122.s3tc.stex"
-path.etc2="res://.import/DriverStand.png-30fedfbb311a08ec4e6a4d4abc2e9122.etc2.stex"
+path.s3tc="res://.import/DriverStand.png-04249e4d51e26ce71b1cd069ea2c7145.s3tc.stex"
+path.etc2="res://.import/DriverStand.png-04249e4d51e26ce71b1cd069ea2c7145.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/DriverStand.png"
-dest_files=[ "res://.import/DriverStand.png-30fedfbb311a08ec4e6a4d4abc2e9122.s3tc.stex", "res://.import/DriverStand.png-30fedfbb311a08ec4e6a4d4abc2e9122.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/DriverStand.png"
+dest_files=[ "res://.import/DriverStand.png-04249e4d51e26ce71b1cd069ea2c7145.s3tc.stex", "res://.import/DriverStand.png-04249e4d51e26ce71b1cd069ea2c7145.etc2.stex" ]
 
 [params]
 

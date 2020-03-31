@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh"
+path="res://.import/FieldWithCrops.obj-267f43d386b006d981351ef5dbbd0032.mesh"
 
 [deps]
 
-files=[ "res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh" ]
+files=[ "res://.import/FieldWithCrops.obj-267f43d386b006d981351ef5dbbd0032.mesh" ]
 
-source_file="res://Ressourcen/Basic/FieldWithCrops.obj"
-dest_files=[ "res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh", "res://.import/FieldWithCrops.obj-c161a1720e6051bac7f572888aa3ea19.mesh" ]
+source_file="res://Resources/Basic/FieldWithCrops.obj"
+dest_files=[ "res://.import/FieldWithCrops.obj-267f43d386b006d981351ef5dbbd0032.mesh", "res://.import/FieldWithCrops.obj-267f43d386b006d981351ef5dbbd0032.mesh" ]
 
 [params]
 

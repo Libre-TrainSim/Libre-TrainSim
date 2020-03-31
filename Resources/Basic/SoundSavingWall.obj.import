@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/SoundSavingWall.obj-b29856ac6320c109c228548a688d14cf.mesh"
+path="res://.import/SoundSavingWall.obj-e51b02746f36909b5df1d19508ddde4e.mesh"
 
 [deps]
 
-files=[ "res://.import/SoundSavingWall.obj-b29856ac6320c109c228548a688d14cf.mesh" ]
+files=[ "res://.import/SoundSavingWall.obj-e51b02746f36909b5df1d19508ddde4e.mesh" ]
 
-source_file="res://Ressourcen/Basic/SoundSavingWall.obj"
-dest_files=[ "res://.import/SoundSavingWall.obj-b29856ac6320c109c228548a688d14cf.mesh", "res://.import/SoundSavingWall.obj-b29856ac6320c109c228548a688d14cf.mesh" ]
+source_file="res://Resources/Basic/SoundSavingWall.obj"
+dest_files=[ "res://.import/SoundSavingWall.obj-e51b02746f36909b5df1d19508ddde4e.mesh", "res://.import/SoundSavingWall.obj-e51b02746f36909b5df1d19508ddde4e.mesh" ]
 
 [params]
 

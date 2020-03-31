@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Dark_Blue_Plastic.png-a23e542de70ebb25bb967989f20227c9.s3tc.stex"
-path.etc2="res://.import/Dark_Blue_Plastic.png-a23e542de70ebb25bb967989f20227c9.etc2.stex"
+path.s3tc="res://.import/Dark_Blue_Plastic.png-8bc81adbaae7f863801729d26276a01a.s3tc.stex"
+path.etc2="res://.import/Dark_Blue_Plastic.png-8bc81adbaae7f863801729d26276a01a.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/Dark_Blue_Plastic.png"
-dest_files=[ "res://.import/Dark_Blue_Plastic.png-a23e542de70ebb25bb967989f20227c9.s3tc.stex", "res://.import/Dark_Blue_Plastic.png-a23e542de70ebb25bb967989f20227c9.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/Dark_Blue_Plastic.png"
+dest_files=[ "res://.import/Dark_Blue_Plastic.png-8bc81adbaae7f863801729d26276a01a.s3tc.stex", "res://.import/Dark_Blue_Plastic.png-8bc81adbaae7f863801729d26276a01a.etc2.stex" ]
 
 [params]
 

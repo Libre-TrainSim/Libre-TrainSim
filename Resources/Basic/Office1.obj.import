@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/Office1.obj-0d42d2ab70bc9498f26555584e8acfb2.mesh"
+path="res://.import/Office1.obj-304ee482373934938dab55da9f1d04fe.mesh"
 
 [deps]
 
-files=[ "res://.import/Office1.obj-0d42d2ab70bc9498f26555584e8acfb2.mesh" ]
+files=[ "res://.import/Office1.obj-304ee482373934938dab55da9f1d04fe.mesh" ]
 
-source_file="res://Ressourcen/Basic/Office1.obj"
-dest_files=[ "res://.import/Office1.obj-0d42d2ab70bc9498f26555584e8acfb2.mesh", "res://.import/Office1.obj-0d42d2ab70bc9498f26555584e8acfb2.mesh" ]
+source_file="res://Resources/Basic/Office1.obj"
+dest_files=[ "res://.import/Office1.obj-304ee482373934938dab55da9f1d04fe.mesh", "res://.import/Office1.obj-304ee482373934938dab55da9f1d04fe.mesh" ]
 
 [params]
 

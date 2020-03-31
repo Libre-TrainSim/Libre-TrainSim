@@ -23,6 +23,10 @@ var sollChunks = []
 
 var activeChunk = string2Chunk("0,0")
 
+export (String) var author = ""
+export (String) var picturePath = "res://screenshot.png"
+export (String) var description = ""
+
 var initProcessorTime = 0
 var processorTime = 0
 func _ready():
@@ -35,6 +39,7 @@ func _ready():
 		load_response = config.load(save_path)
 		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
 			save_world(true)
+		allChunks = config.get_value("Chunks", "allChunks", null)
 		istChunks = allChunks.duplicate()
 		configure_soll_chunks(activeChunk)
 

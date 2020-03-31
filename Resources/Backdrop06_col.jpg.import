@@ -9,7 +9,7 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Backdrop06_col.jpg"
+source_file="res://Resources/Backdrop06_col.jpg"
 dest_files=[ "res://.import/Backdrop06_col.jpg-9b4e2f58be28c24d8061466500c85dcc.stex" ]
 
 [params]

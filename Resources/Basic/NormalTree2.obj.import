@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/NormalTree2.obj-3ed5cfd2f5a4b4fcbfbb2fbca0f3b2bf.mesh"
+path="res://.import/NormalTree2.obj-bede244d1872f31f4794cbe04a3d04c4.mesh"
 
 [deps]
 
-files=[ "res://.import/NormalTree2.obj-3ed5cfd2f5a4b4fcbfbb2fbca0f3b2bf.mesh" ]
+files=[ "res://.import/NormalTree2.obj-bede244d1872f31f4794cbe04a3d04c4.mesh" ]
 
-source_file="res://Ressourcen/Basic/NormalTree2.obj"
-dest_files=[ "res://.import/NormalTree2.obj-3ed5cfd2f5a4b4fcbfbb2fbca0f3b2bf.mesh", "res://.import/NormalTree2.obj-3ed5cfd2f5a4b4fcbfbb2fbca0f3b2bf.mesh" ]
+source_file="res://Resources/Basic/NormalTree2.obj"
+dest_files=[ "res://.import/NormalTree2.obj-bede244d1872f31f4794cbe04a3d04c4.mesh", "res://.import/NormalTree2.obj-bede244d1872f31f4794cbe04a3d04c4.mesh" ]
 
 [params]
 

@@ -6,7 +6,7 @@ path="res://.import/AccelerationTransition.wav-880056a7a1c62876060685069e71f9df.
 
 [deps]
 
-source_file="res://Ressourcen/Sound/AccelerationTransition.wav"
+source_file="res://Resources/Sound/AccelerationTransition.wav"
 dest_files=[ "res://.import/AccelerationTransition.wav-880056a7a1c62876060685069e71f9df.sample" ]
 
 [params]

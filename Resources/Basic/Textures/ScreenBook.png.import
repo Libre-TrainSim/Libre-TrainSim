@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/ScreenBook.png-4a8ec31c4826ff21b5ea5186e0835edb.s3tc.stex"
-path.etc2="res://.import/ScreenBook.png-4a8ec31c4826ff21b5ea5186e0835edb.etc2.stex"
+path.s3tc="res://.import/ScreenBook.png-705afdb225556beed9762798c242cd58.s3tc.stex"
+path.etc2="res://.import/ScreenBook.png-705afdb225556beed9762798c242cd58.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/ScreenBook.png"
-dest_files=[ "res://.import/ScreenBook.png-4a8ec31c4826ff21b5ea5186e0835edb.s3tc.stex", "res://.import/ScreenBook.png-4a8ec31c4826ff21b5ea5186e0835edb.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/ScreenBook.png"
+dest_files=[ "res://.import/ScreenBook.png-705afdb225556beed9762798c242cd58.s3tc.stex", "res://.import/ScreenBook.png-705afdb225556beed9762798c242cd58.etc2.stex" ]
 
 [params]
 

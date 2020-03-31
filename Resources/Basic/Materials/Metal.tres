@@ -1,6 +1,6 @@
 [gd_resource type="SpatialMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://Ressourcen/Basic/Textures/LightBlue_Plastic.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Basic/Textures/Plastic.png" type="Texture" id=1]
 
 [resource]
 params_cull_mode = 2

@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/KS-Sig.obj-e16d9c9cf7bb9e5aa8fd687261d1c07d.mesh"
+path="res://.import/KS-Sig.obj-e99a2a9e822bbe503fc298c08a96ca84.mesh"
 
 [deps]
 
-files=[ "res://.import/KS-Sig.obj-e16d9c9cf7bb9e5aa8fd687261d1c07d.mesh" ]
+files=[ "res://.import/KS-Sig.obj-e99a2a9e822bbe503fc298c08a96ca84.mesh" ]
 
-source_file="res://Ressourcen/Basic/KS-Sig.obj"
-dest_files=[ "res://.import/KS-Sig.obj-e16d9c9cf7bb9e5aa8fd687261d1c07d.mesh", "res://.import/KS-Sig.obj-e16d9c9cf7bb9e5aa8fd687261d1c07d.mesh" ]
+source_file="res://Resources/Basic/KS-Sig.obj"
+dest_files=[ "res://.import/KS-Sig.obj-e99a2a9e822bbe503fc298c08a96ca84.mesh", "res://.import/KS-Sig.obj-e99a2a9e822bbe503fc298c08a96ca84.mesh" ]
 
 [params]
 

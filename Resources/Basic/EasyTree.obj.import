@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/EasyTree.obj-3be0ec8b8246b045622dc63b7d41c647.mesh"
+path="res://.import/EasyTree.obj-18b808253d7be8123502082201ec9739.mesh"
 
 [deps]
 
-files=[ "res://.import/EasyTree.obj-3be0ec8b8246b045622dc63b7d41c647.mesh" ]
+files=[ "res://.import/EasyTree.obj-18b808253d7be8123502082201ec9739.mesh" ]
 
-source_file="res://Ressourcen/Basic/EasyTree.obj"
-dest_files=[ "res://.import/EasyTree.obj-3be0ec8b8246b045622dc63b7d41c647.mesh", "res://.import/EasyTree.obj-3be0ec8b8246b045622dc63b7d41c647.mesh" ]
+source_file="res://Resources/Basic/EasyTree.obj"
+dest_files=[ "res://.import/EasyTree.obj-18b808253d7be8123502082201ec9739.mesh", "res://.import/EasyTree.obj-18b808253d7be8123502082201ec9739.mesh" ]
 
 [params]
 

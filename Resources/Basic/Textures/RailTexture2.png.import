@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/RailTexture2.png-24ce2938365d2a7877e9ab6875c7cd4e.s3tc.stex"
-path.etc2="res://.import/RailTexture2.png-24ce2938365d2a7877e9ab6875c7cd4e.etc2.stex"
+path.s3tc="res://.import/RailTexture2.png-65818c6745ad0181e9c8fb3928fde47e.s3tc.stex"
+path.etc2="res://.import/RailTexture2.png-65818c6745ad0181e9c8fb3928fde47e.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/RailTexture2.png"
-dest_files=[ "res://.import/RailTexture2.png-24ce2938365d2a7877e9ab6875c7cd4e.s3tc.stex", "res://.import/RailTexture2.png-24ce2938365d2a7877e9ab6875c7cd4e.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/RailTexture2.png"
+dest_files=[ "res://.import/RailTexture2.png-65818c6745ad0181e9c8fb3928fde47e.s3tc.stex", "res://.import/RailTexture2.png-65818c6745ad0181e9c8fb3928fde47e.etc2.stex" ]
 
 [params]
 

@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/Speed_Sign.obj-fbf361885bcc6670727c162defe83ec1.mesh"
+path="res://.import/Speed_Sign.obj-6879d1fd47f2c202042b95203ce2bfd4.mesh"
 
 [deps]
 
-files=[ "res://.import/Speed_Sign.obj-fbf361885bcc6670727c162defe83ec1.mesh" ]
+files=[ "res://.import/Speed_Sign.obj-6879d1fd47f2c202042b95203ce2bfd4.mesh" ]
 
-source_file="res://Ressourcen/Basic/Speed_Sign.obj"
-dest_files=[ "res://.import/Speed_Sign.obj-fbf361885bcc6670727c162defe83ec1.mesh", "res://.import/Speed_Sign.obj-fbf361885bcc6670727c162defe83ec1.mesh" ]
+source_file="res://Resources/Basic/Speed_Sign.obj"
+dest_files=[ "res://.import/Speed_Sign.obj-6879d1fd47f2c202042b95203ce2bfd4.mesh", "res://.import/Speed_Sign.obj-6879d1fd47f2c202042b95203ce2bfd4.mesh" ]
 
 [params]
 

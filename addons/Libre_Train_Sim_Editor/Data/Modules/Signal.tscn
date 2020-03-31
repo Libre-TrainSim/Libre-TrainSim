@@ -1,10 +1,10 @@
 [gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://Ressourcen/Basic/KS-Sig.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Ressourcen/Basic/Textures/KS-Signal.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Basic/KS-Sig.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Resources/Basic/Textures/KS-Signal.png" type="Texture" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Signal.gd" type="Script" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://Ressourcen/Basic/Textures/Black.png" type="Texture" id=5]
+[ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=5]
 
 
 [sub_resource type="SpatialMaterial" id=2]

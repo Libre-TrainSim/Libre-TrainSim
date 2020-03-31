@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Ressourcen/Basic/Speed_Sign.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Resources/Basic/Speed_Sign.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Ressourcen/Basic/Materials/White_Plastic.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/SpeedLimit.gd" type="Script" id=4]
-[ext_resource path="res://Ressourcen/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=5]
-[ext_resource path="res://Ressourcen/Basic/Textures/White.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=5]
+[ext_resource path="res://Resources/Basic/Textures/White.png" type="Texture" id=6]
 
 
 [sub_resource type="ViewportTexture" id=2]

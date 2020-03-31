@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/Road.obj-7beb435cdd93858545eb4ef664b1b3b9.mesh"
+path="res://.import/Road.obj-2f632ca8f772efe0d83c0d05bb5bbf8a.mesh"
 
 [deps]
 
-files=[ "res://.import/Road.obj-7beb435cdd93858545eb4ef664b1b3b9.mesh" ]
+files=[ "res://.import/Road.obj-2f632ca8f772efe0d83c0d05bb5bbf8a.mesh" ]
 
-source_file="res://Ressourcen/Basic/Road.obj"
-dest_files=[ "res://.import/Road.obj-7beb435cdd93858545eb4ef664b1b3b9.mesh", "res://.import/Road.obj-7beb435cdd93858545eb4ef664b1b3b9.mesh" ]
+source_file="res://Resources/Basic/Road.obj"
+dest_files=[ "res://.import/Road.obj-2f632ca8f772efe0d83c0d05bb5bbf8a.mesh", "res://.import/Road.obj-2f632ca8f772efe0d83c0d05bb5bbf8a.mesh" ]
 
 [params]
 

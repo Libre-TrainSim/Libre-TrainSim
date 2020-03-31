@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/DriversStand.obj-199d7576a830e92e1566c696a56feb3f.mesh"
+path="res://.import/DriversStand.obj-67567428724d8a2b372060ead5140402.mesh"
 
 [deps]
 
-files=[ "res://.import/DriversStand.obj-199d7576a830e92e1566c696a56feb3f.mesh" ]
+files=[ "res://.import/DriversStand.obj-67567428724d8a2b372060ead5140402.mesh" ]
 
-source_file="res://Ressourcen/Basic/DriversStand.obj"
-dest_files=[ "res://.import/DriversStand.obj-199d7576a830e92e1566c696a56feb3f.mesh", "res://.import/DriversStand.obj-199d7576a830e92e1566c696a56feb3f.mesh" ]
+source_file="res://Resources/Basic/DriversStand.obj"
+dest_files=[ "res://.import/DriversStand.obj-67567428724d8a2b372060ead5140402.mesh", "res://.import/DriversStand.obj-67567428724d8a2b372060ead5140402.mesh" ]
 
 [params]
 

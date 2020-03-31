@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Crops.png-76aa62c9e582722ac83c910093eb57f9.s3tc.stex"
-path.etc2="res://.import/Crops.png-76aa62c9e582722ac83c910093eb57f9.etc2.stex"
+path.s3tc="res://.import/Crops.png-440919ab46c60290ab953142e1af07c1.s3tc.stex"
+path.etc2="res://.import/Crops.png-440919ab46c60290ab953142e1af07c1.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/Crops.png"
-dest_files=[ "res://.import/Crops.png-76aa62c9e582722ac83c910093eb57f9.s3tc.stex", "res://.import/Crops.png-76aa62c9e582722ac83c910093eb57f9.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/Crops.png"
+dest_files=[ "res://.import/Crops.png-440919ab46c60290ab953142e1af07c1.s3tc.stex", "res://.import/Crops.png-440919ab46c60290ab953142e1af07c1.etc2.stex" ]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/ScreenLeft.png-f31583af76a4c84f35923662958284af.s3tc.stex"
-path.etc2="res://.import/ScreenLeft.png-f31583af76a4c84f35923662958284af.etc2.stex"
+path.s3tc="res://.import/ScreenLeft.png-eb2c9c197a1546658ed5981cf10ae362.s3tc.stex"
+path.etc2="res://.import/ScreenLeft.png-eb2c9c197a1546658ed5981cf10ae362.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Screens/ScreenLeft/ScreenLeft.png"
-dest_files=[ "res://.import/ScreenLeft.png-f31583af76a4c84f35923662958284af.s3tc.stex", "res://.import/ScreenLeft.png-f31583af76a4c84f35923662958284af.etc2.stex" ]
+source_file="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.png"
+dest_files=[ "res://.import/ScreenLeft.png-eb2c9c197a1546658ed5981cf10ae362.s3tc.stex", "res://.import/ScreenLeft.png-eb2c9c197a1546658ed5981cf10ae362.etc2.stex" ]
 
 [params]
 

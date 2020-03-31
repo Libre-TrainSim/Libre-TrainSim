@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Test.wav-2c51bb8baa4d3016f723088ce1830fb9.sample"
+path="res://.import/Test.wav-2dbee96b87c0d797fb61ed71b9cd3a4d.sample"
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Sounds/Test.wav"
-dest_files=[ "res://.import/Test.wav-2c51bb8baa4d3016f723088ce1830fb9.sample" ]
+source_file="res://Resources/Basic/Sounds/Test.wav"
+dest_files=[ "res://.import/Test.wav-2dbee96b87c0d797fb61ed71b9cd3a4d.sample" ]
 
 [params]
 

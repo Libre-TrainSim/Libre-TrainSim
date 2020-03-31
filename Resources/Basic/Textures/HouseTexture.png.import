@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/HouseTexture.png-39f32d8f8f037d43af2c7f2817c28a71.s3tc.stex"
-path.etc2="res://.import/HouseTexture.png-39f32d8f8f037d43af2c7f2817c28a71.etc2.stex"
+path.s3tc="res://.import/HouseTexture.png-4b5f0962fb4de901b97ba7a5461e020f.s3tc.stex"
+path.etc2="res://.import/HouseTexture.png-4b5f0962fb4de901b97ba7a5461e020f.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/HouseTexture.png"
-dest_files=[ "res://.import/HouseTexture.png-39f32d8f8f037d43af2c7f2817c28a71.s3tc.stex", "res://.import/HouseTexture.png-39f32d8f8f037d43af2c7f2817c28a71.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/HouseTexture.png"
+dest_files=[ "res://.import/HouseTexture.png-4b5f0962fb4de901b97ba7a5461e020f.s3tc.stex", "res://.import/HouseTexture.png-4b5f0962fb4de901b97ba7a5461e020f.etc2.stex" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="ogg_vorbis"
 type="AudioStreamOGGVorbis"
-path="res://.import/AccelerationTransition.ogg-e2d127775a66fc1516edf0c4f1c3bfa4.oggstr"
+path="res://.import/AccelerationTransition.ogg-0f5a2f5f2c9b91e1844d7b0ce00604b4.oggstr"
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Sounds/AccelerationTransition.ogg"
-dest_files=[ "res://.import/AccelerationTransition.ogg-e2d127775a66fc1516edf0c4f1c3bfa4.oggstr" ]
+source_file="res://Resources/Basic/Sounds/AccelerationTransition.ogg"
+dest_files=[ "res://.import/AccelerationTransition.ogg-0f5a2f5f2c9b91e1844d7b0ce00604b4.oggstr" ]
 
 [params]
 

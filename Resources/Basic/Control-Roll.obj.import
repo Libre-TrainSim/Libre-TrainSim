@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/Control-Roll.obj-b4e2cb39301e39d7e6aac71e0c7ef66e.mesh"
+path="res://.import/Control-Roll.obj-8a9c19d842190086c766e7cf6c207694.mesh"
 
 [deps]
 
-files=[ "res://.import/Control-Roll.obj-b4e2cb39301e39d7e6aac71e0c7ef66e.mesh" ]
+files=[ "res://.import/Control-Roll.obj-8a9c19d842190086c766e7cf6c207694.mesh" ]
 
-source_file="res://Ressourcen/Basic/Control-Roll.obj"
-dest_files=[ "res://.import/Control-Roll.obj-b4e2cb39301e39d7e6aac71e0c7ef66e.mesh", "res://.import/Control-Roll.obj-b4e2cb39301e39d7e6aac71e0c7ef66e.mesh" ]
+source_file="res://Resources/Basic/Control-Roll.obj"
+dest_files=[ "res://.import/Control-Roll.obj-8a9c19d842190086c766e7cf6c207694.mesh", "res://.import/Control-Roll.obj-8a9c19d842190086c766e7cf6c207694.mesh" ]
 
 [params]
 

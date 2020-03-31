@@ -8,27 +8,17 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "ResourceFormatLoader",
-"class": "HTerrainDataLoader",
-"language": "GDScript",
-"path": "res://addons/zylann.hterrain/hterrain_resource_loader.gd"
-}, {
-"base": "ResourceFormatSaver",
-"class": "HTerrainDataSaver",
-"language": "GDScript",
-"path": "res://addons/zylann.hterrain/hterrain_resource_saver.gd"
-} ]
+_global_script_classes=[  ]
 _global_script_class_icons={
-"HTerrainDataLoader": "",
-"HTerrainDataSaver": ""
+
 }
 
 [application]
 
-config/name="ZugDemoProjektNr5"
-run/main_scene="res://Worlds/Wolfratshausen.tscn"
-config/icon="res://Ressourcen/Basic/icon.png"
+config/name="Libre TrainSim"
+config/description="Train Simulator"
+run/main_scene="res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn"
+config/icon="res://Resources/Basic/icon.png"
 
 [autoload]
 

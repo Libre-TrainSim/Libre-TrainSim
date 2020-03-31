@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Transparent.png-68856cdc74977cea3a612af57377b270.stex"
+path="res://.import/Transparent.png-5cc9f2b8861dd57c96892e5c9f4118ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/Transparent.png"
-dest_files=[ "res://.import/Transparent.png-68856cdc74977cea3a612af57377b270.stex" ]
+source_file="res://Resources/Basic/Textures/Transparent.png"
+dest_files=[ "res://.import/Transparent.png-5cc9f2b8861dd57c96892e5c9f4118ad.stex" ]
 
 [params]
 

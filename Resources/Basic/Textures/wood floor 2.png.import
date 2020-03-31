@@ -9,7 +9,7 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Textures/wood floor 2.png"
+source_file="res://Resources/Basic/Textures/wood floor 2.png"
 dest_files=[ "res://.import/wood floor 2.png-addb31df7aad425dd8015f72262d165b.stex" ]
 
 [params]

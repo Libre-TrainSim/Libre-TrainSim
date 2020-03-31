@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Ressourcen/Basic/Sounds/Test.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Resources/Basic/Sounds/Test.ogg" type="AudioStream" id=1]
 [ext_resource path="res://DelMe.gd" type="Script" id=2]
 
 

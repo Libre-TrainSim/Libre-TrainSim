@@ -9,7 +9,7 @@ metadata={
 
 [deps]
 
-source_file="res://Ressourcen/cloudy.png"
+source_file="res://Resources/cloudy.png"
 dest_files=[ "res://.import/cloudy.png-7fc10af5c2f90b4fefcfb4deff7028e7.stex" ]
 
 [params]

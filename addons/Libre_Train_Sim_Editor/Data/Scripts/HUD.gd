@@ -71,3 +71,10 @@ func _on_OkTextBox_pressed():
 func check_ingameHUD(delta):
 	if Input.is_action_just_pressed("ingameHUD"):
 		$Speed.visible = !$Speed.visible
+
+
+
+func _on_QuitMenu_pressed():
+	get_tree().paused = false
+	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+	pass # Replace with function body.

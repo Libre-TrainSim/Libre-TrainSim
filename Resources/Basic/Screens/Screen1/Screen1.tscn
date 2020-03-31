@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
-[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
-[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Zeiger.png" type="Texture" id=3]
-[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/DoorRight.png" type="Texture" id=4]
-[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
-[ext_resource path="res://Ressourcen/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/Zeiger.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/DoorRight.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
 
 [node name="Screen1" type="Node2D"]
 script = ExtResource( 1 )

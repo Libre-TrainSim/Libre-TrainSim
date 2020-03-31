@@ -1,6 +1,6 @@
 [gd_resource type="SpatialMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://Ressourcen/Basic/Textures/platform.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Basic/Textures/platform.png" type="Texture" id=1]
 
 [resource]
 albedo_color = Color( 0.564706, 0.576471, 0.658824, 1 )

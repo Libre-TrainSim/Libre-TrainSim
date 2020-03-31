@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/grass.dae-c4865add46d0088213fb7b062848789d.scn"
+path="res://.import/grass.dae-10c860f7bf67d397050899e7020bab08.scn"
 
 [deps]
 
-source_file="res://Ressourcen/Basic/grass.dae"
-dest_files=[ "res://.import/grass.dae-c4865add46d0088213fb7b062848789d.scn" ]
+source_file="res://Resources/Basic/grass.dae"
+dest_files=[ "res://.import/grass.dae-10c860f7bf67d397050899e7020bab08.scn" ]
 
 [params]
 

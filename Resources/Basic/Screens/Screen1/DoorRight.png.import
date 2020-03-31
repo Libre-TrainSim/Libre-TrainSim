@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DoorRight.png-ea136ede295f34836e2bb33fd3d40dd3.stex"
+path="res://.import/DoorRight.png-1db9a3fccc8af4b4474ef662bcb28398.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Screens/Screen1/DoorRight.png"
-dest_files=[ "res://.import/DoorRight.png-ea136ede295f34836e2bb33fd3d40dd3.stex" ]
+source_file="res://Resources/Basic/Screens/Screen1/DoorRight.png"
+dest_files=[ "res://.import/DoorRight.png-1db9a3fccc8af4b4474ef662bcb28398.stex" ]
 
 [params]
 

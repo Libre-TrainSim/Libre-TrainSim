@@ -2,14 +2,14 @@
 
 importer="wavefront_obj"
 type="Mesh"
-path="res://.import/Rail.obj-a76ec40c4f5465fe13570c5f3891acdc.mesh"
+path="res://.import/Rail.obj-84d07ddafbc0f5e177d9748e8344ede2.mesh"
 
 [deps]
 
-files=[ "res://.import/Rail.obj-a76ec40c4f5465fe13570c5f3891acdc.mesh" ]
+files=[ "res://.import/Rail.obj-84d07ddafbc0f5e177d9748e8344ede2.mesh" ]
 
-source_file="res://Ressourcen/Basic/Rail.obj"
-dest_files=[ "res://.import/Rail.obj-a76ec40c4f5465fe13570c5f3891acdc.mesh", "res://.import/Rail.obj-a76ec40c4f5465fe13570c5f3891acdc.mesh" ]
+source_file="res://Resources/Basic/Rail.obj"
+dest_files=[ "res://.import/Rail.obj-84d07ddafbc0f5e177d9748e8344ede2.mesh", "res://.import/Rail.obj-84d07ddafbc0f5e177d9748e8344ede2.mesh" ]
 
 [params]
 

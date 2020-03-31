@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Command.png-40e9c8235bf7529e610f531ec31bc941.stex"
+path="res://.import/Command.png-7d444b449194688084187aec3a21a9f4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Screens/Screen1/Command.png"
-dest_files=[ "res://.import/Command.png-40e9c8235bf7529e610f531ec31bc941.stex" ]
+source_file="res://Resources/Basic/Screens/Screen1/Command.png"
+dest_files=[ "res://.import/Command.png-7d444b449194688084187aec3a21a9f4.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Doors.png-e1263dc0ee5a253703c796531c4fcb0e.stex"
+path="res://.import/Doors.png-923795f424c52279c510f004171ff863.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Ressourcen/Basic/Screens/Screen1/Doors.png"
-dest_files=[ "res://.import/Doors.png-e1263dc0ee5a253703c796531c4fcb0e.stex" ]
+source_file="res://Resources/Basic/Screens/Screen1/Doors.png"
+dest_files=[ "res://.import/Doors.png-923795f424c52279c510f004171ff863.stex" ]
 
 [params]
 

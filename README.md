@@ -14,8 +14,8 @@ This project is created by Jean28518 from germany in his free time, who is study
 ![Screenshot](screenshot.png)
 
 ## Roadmap:
-- Menu System with integrated Game Content Packages
-- More Routes per Track
-- Changing Trains per Scenario
+- Menu System with integrated Game Content Packages **(done)**
+- More Routes per Track **(in progress)**
+- Changing Trains per Scenario **(in progress)**
 - More Features such as adding Rail steep, Train Functionality, Editor, Website, Landscape Editor..
-- Train Simulator written in Godot Engine - Free for everyone.
+

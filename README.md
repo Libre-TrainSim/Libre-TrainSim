@@ -25,6 +25,6 @@ Did you already play? -> It would be great, if you could answer a survey, which 
 - More Features such as adding Rail steep, Train Functionality, Editor, Website, Landscape Editor..
 
 ## Links:
-Github: https://github.com/Jean28518/Libre-TrainSim
-YouTube: https://www.youtube.com/channel/UCsPsL_AkVUZMmKOKJgm7xsQ
+- Github: https://github.com/Jean28518/Libre-TrainSim
+- YouTube: https://www.youtube.com/channel/UCsPsL_AkVUZMmKOKJgm7xsQ
 

@@ -29,4 +29,5 @@ Did you already play? -> It would be great, if you could answer a survey, which 
 ## Links:
 - Github: https://github.com/Jean28518/Libre-TrainSim
 - YouTube: https://www.youtube.com/channel/UCsPsL_AkVUZMmKOKJgm7xsQ
+- Itch: https://jean28518.itch.io/libre-train-sim
 

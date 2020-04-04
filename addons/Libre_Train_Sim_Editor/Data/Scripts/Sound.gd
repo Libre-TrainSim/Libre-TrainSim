@@ -1,4 +1,4 @@
-extends Node2D
+extends Spatial
 
 onready var drivePitchShift = AudioServer.get_bus_effect(2, 0)
 

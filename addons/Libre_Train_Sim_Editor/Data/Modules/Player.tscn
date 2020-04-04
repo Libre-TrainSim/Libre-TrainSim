@@ -185,45 +185,43 @@ friction = 0.01
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
 
-[node name="Sound" type="Node2D" parent="."]
+[node name="Sound" type="Spatial" parent="."]
 script = ExtResource( 5 )
 AccelerationTransitionTime = 6.0
 AccelerationTransitionSpeed = 10.0
 
-[node name="Base" type="AudioStreamPlayer2D" parent="Sound"]
-position = Vector2( 0, -1 )
+[node name="Base" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 6 )
-attenuation = 0.0824692
 
-[node name="Drive" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="Drive" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 7 )
 volume_db = 15.0
 autoplay = true
 bus = "Drive"
 
-[node name="Acceleration1" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="Acceleration1" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 8 )
 autoplay = true
 bus = "Acceleration"
 
-[node name="Acceleration2" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="Acceleration2" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 9 )
 bus = "Acceleration"
 
-[node name="AccelerationTransition" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="AccelerationTransition" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 10 )
 
 [node name="Timer" type="Timer" parent="Sound"]
 one_shot = true
 
-[node name="Test" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="Test" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 11 )
 
-[node name="DoorsOpen" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="DoorsOpen" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 3 )
 volume_db = -9.922
 
-[node name="DoorsClose" type="AudioStreamPlayer2D" parent="Sound"]
+[node name="DoorsClose" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource( 2 )
 volume_db = -9.229
 

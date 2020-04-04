@@ -39,7 +39,7 @@ onready var cameraNode = $Camera2
 
 export (bool) var startUpGuide = false
 
-func _ready():
+func ready(): ## Called by World!
 	$StartUpGuide.enable = startUpGuide
 	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	var texture = $Viewport.get_texture()
@@ -246,6 +246,7 @@ func change_to_next_rail():
 	
 	if possibleRails.size() == 0: ## If no Rail was found
 		print("NO ONGOING RAIL FOUND! GAME ABORTED: LAST RAIL: "+currentRail.name)
+		get_tree().quit()
 	elif possibleRails.size() == 1: ## If only one Rail is possible to switch
 		currentRail = possibleRails[0]
 	else: ## if more Rails are available:
@@ -460,3 +461,5 @@ func check_doors(delta):
 		doorsClosingTimer = 0
 		
 		
+func show_textbox_message(string):
+	$HUD.show_textbox_message(string)

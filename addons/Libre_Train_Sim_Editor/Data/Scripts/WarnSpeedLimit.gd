@@ -47,3 +47,8 @@ func setToRail(newvar):
 		self.rotation_degrees.y = rail.getNextDeg(rail.radius, rail.rotation_degrees.y, onRailPosition)
 		if not forward:
 			self.rotation_degrees.y += 180
+
+func set_scenario_data(d):
+	return
+func get_scenario_data():
+	return null

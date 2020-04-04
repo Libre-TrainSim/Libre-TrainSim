@@ -123,3 +123,24 @@ func update_screen1():
 		$Screen1.visible = true
 	else:
 		$Screen1.visible = false
+		
+func get_scenario_data():
+	var d = {}
+	d.status = status
+	d.signalAfter = signalAfter
+	d.setPassAtH = setPassAtH
+	d.setPassAtM = setPassAtM
+	d.setPassAtS = setPassAtS 
+	d.speed = speed
+	d.warnSpeed = warnSpeed
+	return d
+
+func set_scenario_data(d):
+	status = d.status
+	signalAfter = d.signalAfter
+	setPassAtH = d.setPassAtH
+	setPassAtM = d.setPassAtM
+	setPassAtS = d.setPassAtS 
+	speed = d.speed
+	warnSpeed = d.warnSpeed
+	

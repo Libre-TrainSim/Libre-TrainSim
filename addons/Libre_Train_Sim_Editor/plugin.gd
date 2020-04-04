@@ -3,8 +3,11 @@ extends EditorPlugin
 
 var railBuilder
 var railAttachements
+var configuration
 var eds = get_editor_interface().get_selection()
 
+func _process(delta):
+	configuration.world = get_editor_interface().get_edited_scene_root()
 
 func _enter_tree():
 	# Initialization of the plugin goes here
@@ -22,6 +25,10 @@ func _enter_tree():
 	railAttachements.eds = eds
 	
 	eds.connect("selection_changed", self, "_on_selection_changed")
+	
+	configuration = preload("res://addons/Libre_Train_Sim_Editor/Docks/Configuration/Configuration.tscn").instance()
+	add_control_to_dock(DOCK_SLOT_RIGHT_UL, configuration)
+	configuration.world = get_editor_interface().get_edited_scene_root()
 
 	pass
 
@@ -31,6 +38,9 @@ func _exit_tree():
 	
 	remove_control_from_docks(railAttachements)
 	railAttachements.free()
+	
+	remove_control_from_docks(configuration)
+	configuration.free()
 	
 	# Clean-up of the plugin goes here
 	pass

@@ -98,14 +98,32 @@ func update_track_list():
 
 # Play Page:
 func _on_PlayPlay_pressed():
+	if currentScenario == "" or currentTrack == "": return
 	var index = $Play/Selection/Tracks/ItemList.get_selected_items()[0]
+	Root.currentScenario = currentScenario
 	get_tree().change_scene("res://Worlds/" + foundTracks[index])
 
 func _on_ItemList_itemTracks_selected(index):
-	currentTrack = load("res://Worlds/"+foundTracks[index]).instance()
-	if currentTrack == null: print("HUHU")
-	$Play/Info/Description.text = currentTrack.description
-	$Play/Info/Screenshot.texture = load(currentTrack.picturePath)
+	var save_path = "res://Worlds/" + foundTracks[index].get_basename() + "-scenarios.cfg"
+	var config = ConfigFile.new()
+	var load_response = config.load(save_path)
+	
+	var wData = config.get_value("WorldConfig", "Data", null)
+	if wData == null: 
+		print(save_path)
+		$Play/Info/Description.text = "No Scenario data could be found. This Track is obsolete. Sadly you cant play it."
+		$Play/Selection/Scenarios.hide()
+		return
+	$Play/Info/Description.text = wData["TrackDesciption"]
+	$Play/Info/Info/Author.text = " Author: "+ wData["Author"] + " "
+	$Play/Info/Info/ReleaseDate.text = " Release: " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
+	$Play/Info/Screenshot.texture = load(wData["ThumbnailPath"])
+	
+	$Play/Selection/Scenarios.show()
+	$Play/Selection/Scenarios/ItemList.clear()
+	var scenarios = config.get_value("Scenarios", "List", [])
+	for scenario in scenarios:
+		$Play/Selection/Scenarios/ItemList.add_item(scenario)
 
 ## Content Page:
 func update_content():
@@ -142,6 +160,15 @@ func _on_BackSettings_pressed():
 	$Settings.hide()
 	$MenuBackground.hide()
 	$Front.show()
+	
 
 
 
+var currentScenario
+func _on_ItemList_scenario_selected(index):
+	currentScenario = $Play/Selection/Scenarios/ItemList.get_item_text(index)
+	var save_path = "res://Worlds/" + foundTracks[$Play/Selection/Tracks/ItemList.get_selected_items()[0]].get_basename() + "-scenarios.cfg"
+	var config = ConfigFile.new()
+	var load_response = config.load(save_path)
+	var sData = config.get_value("Scenarios", "sData", {})
+	$Play/Info/Description.text = sData[currentScenario]["Description"]

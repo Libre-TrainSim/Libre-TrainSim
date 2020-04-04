@@ -23,6 +23,7 @@ config/icon="res://Resources/Basic/icon.png"
 [autoload]
 
 Math="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Math.gd"
+Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Root.gd"
 
 [editor_plugins]
 

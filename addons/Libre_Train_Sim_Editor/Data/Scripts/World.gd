@@ -12,6 +12,7 @@ export (int) var timeSecond
 var timeMSeconds = 0
 onready var time = [timeHour,timeMinute,timeSecond]
 
+var currentScenario = ""
 
 var save_path = "res://Worlds/" + FileName + ".cfg"
 var config = ConfigFile.new()
@@ -22,6 +23,7 @@ var istChunks = []
 var sollChunks = []
 
 var activeChunk = string2Chunk("0,0")
+
 
 export (String) var author = ""
 export (String) var picturePath = "res://screenshot.png"
@@ -34,12 +36,14 @@ func _ready():
 		pass
 		# Code to execute in editor.
 	if not Engine.editor_hint:
+		currentScenario = Root.currentScenario
+		set_scenario_to_world()
 		save_path = "res://Worlds/" + FileName + ".cfg"
 		config = ConfigFile.new()
 		load_response = config.load(save_path)
 		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
 			save_world(true)
-		allChunks = config.get_value("Chunks", "allChunks", null)
+		allChunks = config.get_value("Chunks", "allChunks", [])
 		istChunks = allChunks.duplicate()
 		configure_soll_chunks(activeChunk)
 
@@ -291,13 +295,13 @@ func load_chunk(position):
 				signalInstance.transform = Signals[signalN].transform
 				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
 				signalInstance.forward = Signals[signalN].forward
-				signalInstance.status = Signals[signalN].status
-				signalInstance.signalAfter = Signals[signalN].signalAfter
-				signalInstance.setPassAtH = Signals[signalN].setPassAtH
-				signalInstance.setPassAtM = Signals[signalN].setPassAtM
-				signalInstance.setPassAtS = Signals[signalN].setPassAtS
-				signalInstance.speed = Signals[signalN].speed
-				signalInstance.warnSpeed = Signals[signalN].warnSpeed
+				#signalInstance.status = Signals[signalN].status
+				#signalInstance.signalAfter = Signals[signalN].signalAfter
+				#signalInstance.setPassAtH = Signals[signalN].setPassAtH
+				#signalInstance.setPassAtM = Signals[signalN].setPassAtM
+				#signalInstance.setPassAtS = Signals[signalN].setPassAtS
+				#signalInstance.speed = Signals[signalN].speed
+				#signalInstance.warnSpeed = Signals[signalN].warnSpeed
 				signalInstance.attachedRail = Signals[signalN].attachedRail
 				signalInstance.onRailPosition = Signals[signalN].onRailPosition
 				signalsNode.add_child(signalInstance)
@@ -309,14 +313,14 @@ func load_chunk(position):
 				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
 				signalInstance.forward = Signals[signalN].forward
 				signalInstance.stationName = Signals[signalN].stationName
-				signalInstance.beginningStation = Signals[signalN].beginningStation
-				signalInstance.regularStop = Signals[signalN].regularStop
-				signalInstance.endStation = Signals[signalN].endStation
-				signalInstance.stationLength = Signals[signalN].stationLength
-				signalInstance.stopTime = Signals[signalN].stopTime
-				signalInstance.departureH = Signals[signalN].departureH
-				signalInstance.departureM = Signals[signalN].departureM
-				signalInstance.departureS = Signals[signalN].departureS
+				#signalInstance.beginningStation = Signals[signalN].beginningStation
+				#signalInstance.regularStop = Signals[signalN].regularStop
+				#signalInstance.endStation = Signals[signalN].endStation
+				#signalInstance.stationLength = Signals[signalN].stationLength
+				#signalInstance.stopTime = Signals[signalN].stopTime
+				#signalInstance.departureH = Signals[signalN].departureH
+				#signalInstance.departureM = Signals[signalN].departureM
+				#signalInstance.departureS = Signals[signalN].departureS
 				signalInstance.attachedRail = Signals[signalN].attachedRail
 				signalInstance.onRailPosition = Signals[signalN].onRailPosition
 				signalsNode.add_child(signalInstance)
@@ -423,6 +427,8 @@ func apply_soll_chunks():
 		if not istChunks.has(a):
 			load_chunk(string2Chunk(a))
 			istChunks.append(a)
+	if $ScenarioManager != null:
+		$ScenarioManager.apply_scenario_to_enviroment()
 			
 var lastchunk
 func handle_chunk():
@@ -487,5 +493,51 @@ func updateWorldTransform_bchunk(deltachunk):
 		
 
 
+func apply_scenario_to_signals(signals):
+	## Apply Scenario Data
+	for signalN in  $Signals.get_children():
+		if signals.has(signalN.name):
+			signalN.set_scenario_data(signals[signalN.name])
+			
+func get_signal_data_for_scenario():
+	var signals = {}
+	for s in $Signals.get_children():
+		signals[s.name] = s.get_scenario_data()
+	return signals
+	
+func set_scenario_to_world():
+	var Ssave_path = "res://Worlds/" + FileName + "-scenarios.cfg"
+	var sConfig = ConfigFile.new()
+	var load_response = sConfig.load(Ssave_path)
+	var sData = sConfig.get_value("Scenarios", "sData", {})
+	var scenario = sData[currentScenario]
+	# set world Time:
+	timeHour = scenario["TimeH"]
+	timeMinute = scenario["TimeM"]
+	timeMSeconds = scenario["TimeS"]
+	
+	## Player: # TO CHANGE IF ADDING AI PLAYERS
+	var player = get_node("Players/Player")
+	player.length = scenario["TrainLength"]
+	player.route = scenario["Trains"]["Player"]["Route"]
+	player.route.insert(0, scenario["Trains"]["Player"]["StartRail"])
+	player.forward = bool(scenario["Trains"]["Player"]["Direction"])
+	player.startPosition = scenario["Trains"]["Player"]["StartRailPosition"]
+	
+	var doorStatus = scenario["Trains"]["Player"]["DoorConfiguration"]
+	match doorStatus:
+		0:
+			pass
+		1: 
+			player.doorLeft = true
+		2:
+			player.doorRight = true
+		3:
+			player.doorLeft = true
+			player.doorRight = true
+	
+	apply_scenario_to_signals(scenario["Signals"])
+	player.ready()
+	player.show_textbox_message(scenario["Description"])
 
 

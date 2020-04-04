@@ -40,3 +40,24 @@ func setToRail(newvar):
 		rail = get_parent().get_parent().get_node("Rails/"+attachedRail)
 		rail.register_signal(self.name, onRailPosition)
 		self.translation = rail.getNextPos(rail.radius, rail.translation, rail.rotation_degrees.y, onRailPosition)
+		
+		
+func get_scenario_data():
+	var d = {}
+	d.beginningStation = beginningStation
+	d.regularStop = regularStop
+	d.endStation = endStation 
+	d.stopTime = stopTime
+	d.departureH = departureH
+	d.departureM = departureM
+	d.departureS = departureS
+	return d
+func set_scenario_data(d):
+	beginningStation = d.beginningStation
+	regularStop = d.regularStop
+	endStation = d.endStation 
+	stopTime = d.stopTime
+	departureH = d.departureH
+	departureM = d.departureM
+	departureS = d.departureS
+	

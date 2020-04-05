@@ -27,6 +27,14 @@ var voltage = 0 # If this value = 0, the train wont drive unless you press ingam
 var command = -1 # If Command is < 0 the train will brake, if command > 0 the train will accelerate. Set by the player with Arrow Keys.
 var currentAcceleration = 0 # Current Acceleration in m/(s*s)
 
+var stationIndex = 0
+var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "passed" : []} ## set by the world scneario manager
+## StopType:
+# 0: Dont halt at this station
+# 1: Halt at this station
+# 2: Beginning Station
+# 3: End Station
+ 
 
 
 var world # Node Reference to the world node.
@@ -48,6 +56,10 @@ func ready(): ## Called by World!
 	$DisplayLeft.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	texture = $DisplayLeft.get_texture()
 	$ScreenLeft.material_override.emission_texture = texture
+	
+	$DisplayRight.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+	texture = $DisplayRight.get_texture()
+	$ScreenRight.material_override.emission_texture = texture
 	
 	cameratZeroTranslation = cameraNode.translation
 	route = route_.split(" ")
@@ -111,6 +123,8 @@ func _process(delta):
 	$DisplayLeft/ScreenLeft2.update_time(time)
 	$DisplayLeft/ScreenLeft2.update_voltage(voltage)
 	$DisplayLeft/ScreenLeft2.update_command(command)
+	
+	$DisplayRight/ScreenRight.update_display(stations["arrivalTime"], stations["departureTime"], stations["stationName"], stations["stopType"], stations["passed"], isInStation)
 	
 	check_signals()
 	
@@ -283,17 +297,40 @@ func handle_signal(signalname):
 			send_message("You overrun a red signal. The game is over!")
 		signal.status = 0
 	elif signal.type == "Station": ## Station
-		print("Station: "+signal.stationName)
-		if signal.regularStop:
-			currentStation = signal.stationName
-			isInStation = false
-			stationTimer = 0
-			stationBeginning = signal.beginningStation
-			stationHaltTime = signal.stopTime
-			distanceOnStationBeginning = distance
-			endStation = signal.endStation
-			stationLength = signal.stationLength
-			depatureTime = [signal.departureH, signal.departureM, signal.departureS]
+		if not stations["nodeName"].has(signal.name):
+			print("Station not found in repository, ingoring station. Maybe you are at the wrong track...")
+			return
+		var index = stations["nodeName"].find(signal.name)
+		match stations["stopType"][index]:
+			0:
+				stations["passed"][index] = true
+			1:
+				endStation = false
+				stationBeginning = false
+			2:
+				endStation = false
+				stationBeginning = true
+			3:
+				endStation = true
+				stationBeginning = false
+		currentStationName = stations["stationName"][index]		
+		isInStation = false
+		stationHaltTime = stations["haltTime"][index]
+		stationLength = signal.stationLength
+		distanceOnStationBeginning = distance
+		depatureTime = stations["departureTime"][index]
+		
+
+#		if signal.regularStop:
+#			currentStation = signal.stationName
+#			isInStation = false
+#			stationTimer = 0
+#			stationBeginning = signal.beginningStation
+#			stationHaltTime = signal.stopTime
+#			distanceOnStationBeginning = distance
+#			endStation = signal.endStation
+#			stationLength = signal.stationLength
+#			depatureTime = [signal.departureH, signal.departureM, signal.departureS]
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
@@ -302,29 +339,29 @@ func handle_signal(signalname):
 	pass
 
 ## For Station:
-var currentStation = ""
-var arrivalTime = time
+var currentStationName = ""
+var realArrivalTime = time
 var isInStation = false
-var stationTimer
-var stationHaltTime
-var stationLength
+var stationTimer = 0
+var stationHaltTime = 0
+var stationLength = 0
 var distanceOnStationBeginning = 0
 var endStation = false
-var depatureTime
-var stationBeginning
-var wholeTrainNotInStation
+var depatureTime = 0
+var stationBeginning = 0
+var wholeTrainNotInStation = false
 func check_station(delta):
-	if currentStation != "":
+	if currentStationName != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation:
 			wholeTrainNotInStation = true
 			send_message("The End of your Train haven't already reached the Station. Please drive a bit forward, and try it again.")
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight)) or (stationBeginning and not isInStation):
-			arrivalTime = time
+			realArrivalTime = time
 			var lateMessage = "."
-			var minutesLater = -depatureTime[1] + arrivalTime[1] + (-depatureTime[0] + arrivalTime[0])*60
+			var minutesLater = -depatureTime[1] + realArrivalTime[1] + (-depatureTime[0] + realArrivalTime[0])*60
 			if minutesLater > 0:
 				lateMessage = ". You are " + String(minutesLater) + " minutes later." 
-			send_message("Welcome to " + currentStation + lateMessage)
+			send_message("Welcome to " + currentStationName + lateMessage)
 			stationTimer = 0
 			
 			isInStation = true
@@ -332,20 +369,26 @@ func check_station(delta):
 			if stationTimer > stationHaltTime:
 				if endStation:
 					send_message("Scenario successfully finished!")
-					currentStation = ""
+					stations["passed"][stations["stationName"].find(currentStationName)] = true
+					currentStationName = ""
 					nextStation = ""
+					isInStation = false
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= depatureTime[2]:
 					send_message("You can now depart")
-					currentStation = ""
+					stations["passed"][stations["stationName"].find(currentStationName)] = true
+					currentStationName = ""
 					nextStation = ""
-		elif (stationLength<distance-distanceOnStationBeginning) and currentStation != "":
+					isInStation = false
+		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
 				send_message("You departed earlier than allowed! Plese wat for the depart message next time!")
 			else:
 				send_message("You missed a station! Please drive further on.")
-			currentStation = ""
+			stations["passed"][stations["stationName"].find(currentStationName)] = true
+			currentStationName = ""
 			nextStation = ""
+			isInStation = false
 		stationTimer += delta
 		if (speed != 0):
 			wholeTrainNotInStation = false
@@ -562,12 +605,12 @@ func check_for_next_station(delta):
 			stationMessageSent = false
 		
 		
-		var station = world.get_node("Signals").get_node(nextStation)
-		print("The next station is: "+ station.stationName+ ". It is "+ String(int(get_distance_to_signal(nextStation))) + "m away.")
+		#var station = world.get_node("Signals").get_node(nextStation)
+		#print("The next station is: "+ stations["stationName"][stations["nodeName"].find(nextStation)]+ ". It is "+ String(int(get_distance_to_signal(nextStation))) + "m away.")
 		
-		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001:
-			station = world.get_node("Signals").get_node(nextStation)
+		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and stations["nodeName"].has(nextStation) and stations["stopType"][stations["nodeName"].find(nextStation)] != 0:
+			var station = world.get_node("Signals").get_node(nextStation)
 			stationMessageSent = true
-			send_message("The next station is: "+ station.stationName+ ". It is "+ String(int(get_distance_to_signal(nextStation)/100)*100+100) + "m away.")
+			send_message("The next station is: "+ stations["stationName"][stations["nodeName"].find(nextStation)]+ ". It is "+ String(int(get_distance_to_signal(nextStation)/100)*100+100) + "m away.")
 		
 	

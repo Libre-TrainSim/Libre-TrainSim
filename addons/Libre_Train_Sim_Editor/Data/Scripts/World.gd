@@ -517,6 +517,7 @@ func set_scenario_to_world():
 	player.route.insert(0, scenario["Trains"]["Player"]["StartRail"])
 	player.forward = bool(scenario["Trains"]["Player"]["Direction"])
 	player.startPosition = scenario["Trains"]["Player"]["StartRailPosition"]
+	player.stations = scenario["Trains"]["Player"]["Stations"]
 	
 	var doorStatus = scenario["Trains"]["Player"]["DoorConfiguration"]
 	match doorStatus:

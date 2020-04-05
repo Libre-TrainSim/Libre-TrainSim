@@ -65,4 +65,15 @@ func sort_signals(signalTable, forward = true):
 		exportT.invert()
 		return exportT
 		
+func time2String(time):
+	var hour = String(time[0])
+	var minute = String(time[1])
+	var second = String(time[2])
+	if hour.length() == 1:
+		hour = "0" + hour
+	if minute.length() == 1:
+		minute = "0" + minute
+	if second.length() == 1:
+		second = "0" + second
+	return (hour + ":" + minute +":" + second)
 		

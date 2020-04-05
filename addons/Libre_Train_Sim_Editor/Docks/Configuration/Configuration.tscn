@@ -11,6 +11,7 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -160,7 +161,6 @@ size_flags_horizontal = 4
 text = "! Save and crreate Chunks !"
 
 [node name="Scenarios" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -248,13 +248,14 @@ caret_blink_speed = 0.5
 [node name="Settings" type="VBoxContainer" parent="Scenarios"]
 margin_top = 178.0
 margin_right = 1016.0
-margin_bottom = 440.0
+margin_bottom = 672.0
 
 [node name="Tab" type="TabContainer" parent="Scenarios/Settings"]
 margin_right = 1016.0
-margin_bottom = 262.0
+margin_bottom = 494.0
 
 [node name="General" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -378,7 +379,6 @@ size_flags_horizontal = 4
 text = "Save General"
 
 [node name="Trains" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -387,7 +387,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="ItemList2" type="ItemList" parent="Scenarios/Settings/Tab/Trains"]
-margin_right = 1016.0
+margin_right = 1008.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
 items = [ "Player", null, false ]
@@ -434,28 +434,35 @@ text = "Delete"
 
 [node name="HSeparator3" type="HSeparator" parent="Scenarios/Settings/Tab/Trains"]
 margin_top = 104.0
-margin_right = 1016.0
+margin_right = 1008.0
 margin_bottom = 108.0
 
-[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains"]
+[node name="Route" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
 margin_top = 112.0
-margin_right = 1016.0
-margin_bottom = 126.0
+margin_right = 1008.0
+margin_bottom = 136.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/Route"]
+margin_top = 5.0
+margin_right = 41.0
+margin_bottom = 19.0
 text = "Route:"
 align = 1
 
-[node name="Route" type="TextEdit" parent="Scenarios/Settings/Tab/Trains"]
-margin_top = 130.0
-margin_right = 1016.0
-margin_bottom = 230.0
-rect_min_size = Vector2( 0, 100 )
+[node name="Route" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/Route"]
+margin_left = 45.0
+margin_right = 1008.0
+margin_bottom = 24.0
 hint_tooltip = "Here you define all rail names, over them the train have defintelty to drive. Commonly here are only rails at splitting switches.Seperate the Railnames with a blank."
 size_flags_horizontal = 3
 
 [node name="GridContainer" type="GridContainer" parent="Scenarios/Settings/Tab/Trains"]
-margin_top = 234.0
-margin_right = 1016.0
-margin_bottom = 282.0
+margin_top = 140.0
+margin_right = 1008.0
+margin_bottom = 188.0
 columns = 4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -472,22 +479,22 @@ __meta__ = {
 
 [node name="StartRail" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
 margin_left = 67.0
-margin_right = 455.0
+margin_right = 451.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_speed = 0.5
 
 [node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 459.0
+margin_left = 455.0
 margin_top = 5.0
-margin_right = 623.0
+margin_right = 619.0
 margin_bottom = 19.0
 text = "Start Rail Position:"
 
 [node name="StartRailPosition" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 627.0
-margin_right = 1015.0
+margin_left = 623.0
+margin_right = 1007.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 max_value = 1000.0
@@ -505,7 +512,7 @@ text = "Direction:"
 [node name="Direction" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
 margin_left = 67.0
 margin_top = 28.0
-margin_right = 455.0
+margin_right = 451.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 text = "Forward"
@@ -513,16 +520,16 @@ items = [ "Backwards", null, false, 0, null, "Forward", null, false, 1, null ]
 selected = 1
 
 [node name="Label9" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 459.0
+margin_left = 455.0
 margin_top = 31.0
-margin_right = 623.0
+margin_right = 619.0
 margin_bottom = 45.0
 text = "Door Configration at Start:"
 
 [node name="DoorConfiguration" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 627.0
+margin_left = 623.0
 margin_top = 28.0
-margin_right = 1015.0
+margin_right = 1007.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 text = "No Doors opened"
@@ -530,23 +537,184 @@ align = 1
 items = [ "No Doors opened", null, false, 0, null, "Left Doors opened", null, false, 1, null, "Right Doors opened", null, false, 2, null, "Both Doors opened", null, false, 3, null ]
 selected = 0
 
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 192.0
+margin_right = 1008.0
+margin_bottom = 206.0
+text = "Stations:"
+align = 1
+
+[node name="Stations" type="ScrollContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 210.0
+margin_right = 1008.0
+margin_bottom = 410.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="Stations" type="GridContainer" parent="Scenarios/Settings/Tab/Trains/Stations"]
+margin_right = 1008.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 100 )
+size_flags_horizontal = 3
+columns = 6
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_right = 164.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Node Name"
+align = 1
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 168.0
+margin_right = 332.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Station Name"
+align = 1
+
+[node name="Label3" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 336.0
+margin_right = 500.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Arrival Time"
+align = 1
+
+[node name="Label4" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 504.0
+margin_right = 668.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Departure Time"
+align = 1
+
+[node name="Label5" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 672.0
+margin_right = 836.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Minimal Halt Time"
+align = 1
+
+[node name="Label6" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 840.0
+margin_right = 1004.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Stop Type"
+align = 1
+
+[node name="nodeName0" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 132.0
+margin_bottom = 42.0
+
+[node name="stationName0" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 132.0
+margin_bottom = 42.0
+
+[node name="arrivalTime0" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 230.0
+margin_bottom = 42.0
+
+[node name="H" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/arrivalTime0"]
+margin_right = 74.0
+margin_bottom = 24.0
+max_value = 23.0
+
+[node name="M" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/arrivalTime0"]
+margin_left = 78.0
+margin_right = 152.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="S" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/arrivalTime0"]
+margin_left = 156.0
+margin_right = 230.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="departureTime0" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 230.0
+margin_bottom = 42.0
+
+[node name="H" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/departureTime0"]
+margin_right = 74.0
+margin_bottom = 24.0
+max_value = 23.0
+
+[node name="M" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/departureTime0"]
+margin_left = 78.0
+margin_right = 152.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="S" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/departureTime0"]
+margin_left = 156.0
+margin_right = 230.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="haltTime0" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 164.0
+margin_bottom = 42.0
+
+[node name="stopType0" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 164.0
+margin_bottom = 38.0
+text = "Do not halt"
+items = [ "Do not halt", null, false, 0, null, "Regular Stop", null, false, 1, null, "Beginning Station", null, false, 2, null, "End Station", null, false, 3, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StationButtons" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 414.0
+margin_right = 1008.0
+margin_bottom = 434.0
+
+[node name="Remove" type="Button" parent="Scenarios/Settings/Tab/Trains/StationButtons"]
+margin_right = 502.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Remove Entry"
+
+[node name="Add" type="Button" parent="Scenarios/Settings/Tab/Trains/StationButtons"]
+margin_left = 506.0
+margin_right = 1008.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Add Entry"
+
 [node name="SaveTrain" type="Button" parent="Scenarios/Settings/Tab/Trains"]
-margin_left = 470.0
-margin_top = 286.0
-margin_right = 546.0
-margin_bottom = 306.0
+margin_left = 466.0
+margin_top = 438.0
+margin_right = 542.0
+margin_bottom = 458.0
 size_flags_horizontal = 4
 text = "Save Train"
 
 [node name="HSeparator" type="HSeparator" parent="Scenarios"]
-margin_top = 444.0
+margin_top = 676.0
 margin_right = 1016.0
-margin_bottom = 448.0
+margin_bottom = 680.0
 
 [node name="Label2" type="Label" parent="Scenarios"]
-margin_top = 452.0
+margin_top = 684.0
 margin_right = 1016.0
-margin_bottom = 466.0
+margin_bottom = 698.0
 text = "World (Signals and Stations):"
 align = 1
 __meta__ = {
@@ -554,16 +722,16 @@ __meta__ = {
 }
 
 [node name="Write" type="Button" parent="Scenarios"]
-margin_top = 470.0
+margin_top = 702.0
 margin_right = 1016.0
-margin_bottom = 490.0
+margin_bottom = 722.0
 size_flags_horizontal = 3
 text = "Save current Signal Data to scenario"
 
 [node name="Load" type="Button" parent="Scenarios"]
-margin_top = 494.0
+margin_top = 726.0
 margin_right = 1016.0
-margin_bottom = 514.0
+margin_bottom = 746.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
 text = "Load Signal Data from current Scenario"
@@ -575,6 +743,8 @@ text = "Load Signal Data from current Scenario"
 [connection signal="pressed" from="Scenarios/HBoxContainer/Duplicate" to="." method="_on_DuplicateScenario_pressed"]
 [connection signal="pressed" from="Scenarios/HBoxContainer/Delete" to="." method="_on_DeleteScenario_pressed"]
 [connection signal="pressed" from="Scenarios/Settings/Tab/General/Save" to="." method="_on_SaveGeneral_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/StationButtons/Remove" to="." method="_on_RemoveStationEntry_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/StationButtons/Add" to="." method="_on_AddStationEntry_pressed"]
 [connection signal="pressed" from="Scenarios/Settings/Tab/Trains/SaveTrain" to="." method="_on_SaveTrain_pressed"]
 [connection signal="pressed" from="Scenarios/Write" to="." method="_on_WriteData_pressed"]
 [connection signal="pressed" from="Scenarios/Load" to="." method="_on_LoadScenario_pressed"]

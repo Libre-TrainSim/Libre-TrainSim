@@ -360,6 +360,19 @@ rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "Back"
+
+[node name="Loading" type="Label" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -372.0
+margin_top = -151.0
+margin_right = 189.0
+margin_bottom = 120.0
+custom_fonts/font = ExtResource( 4 )
+text = "Loading..."
 [connection signal="pressed" from="Front/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/Content" to="." method="_on_Content_pressed"]
 [connection signal="pressed" from="Front/Settings" to="." method="_on_SettingsFrong_pressed"]

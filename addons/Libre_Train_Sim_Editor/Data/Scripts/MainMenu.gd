@@ -16,8 +16,8 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	load_scene(delta)
 
 var foundTracks = []
 var foundContentPacks = []
@@ -101,7 +101,19 @@ func _on_PlayPlay_pressed():
 	if currentScenario == "" or currentTrack == "": return
 	var index = $Play/Selection/Tracks/ItemList.get_selected_items()[0]
 	Root.currentScenario = currentScenario
-	get_tree().change_scene("res://Worlds/" + foundTracks[index])
+	$MenuBackground.hide()
+	$Play.hide()
+	$Loading.show()
+	$Background.texture = $Play/Info/Screenshot.texture
+	loadScenePath = "res://Worlds/" + foundTracks[index]
+
+var loadScenePath = ""
+var load_scene_timer = 0
+func load_scene(delta):
+	if loadScenePath != "":
+		load_scene_timer += delta
+		if load_scene_timer > 0.2:
+			get_tree().change_scene(loadScenePath)
 
 func _on_ItemList_itemTracks_selected(index):
 	var save_path = "res://Worlds/" + foundTracks[index].get_basename() + "-scenarios.cfg"

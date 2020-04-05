@@ -18,7 +18,7 @@ func _process(delta):
 				next_step()
 		2:
 			send_message("Now we are able to drive.\nOur departure is at 12:01. Let's wait for the depart message in the bottom left corner.")
-			if player.currentStation == "":
+			if player.currentStationName == "":
 				next_step()
 		3:
 			send_message("Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\tPress the left arrow key to set acceleration and brakes to zero.\n\tPress the right arrow key to set to max power\n\nHint: You can see your current command at the right tachometer.")
@@ -34,7 +34,7 @@ func _process(delta):
 				next_step()
 		6:
 			send_message("Let me explain the speed limits:\nThe signs are showing the limits divided by 10. So for example '9' means 90 km/h.\nOrange signs / numbers are announcing, that after them (commonly about after 1000m) the announced speed limit will apply.\nAt the white signs / numbers the new speed limit is effective\n\n That was it. Have fun!\n\nHint: Now youw current Speed Limit is 100 kmh.")
-			if player.currentStation == "Buchenhain" and player.isInStation:
+			if player.currentStationName == "Buchenhain" and player.isInStation:
 				next_step()
 		7:
 			send_message("Thank you for playing!\nIf you had any problems or have suggestions for improvement, let me know it at https://github.com/Jean28518/LibreTrainSim\n\n(Press 'Esc' to exit the Game)")

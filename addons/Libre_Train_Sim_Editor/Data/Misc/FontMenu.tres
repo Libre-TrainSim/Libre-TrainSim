@@ -3,5 +3,5 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 100
+size = 60
 font_data = ExtResource( 1 )

@@ -167,19 +167,21 @@ func get_train_settings():
 	if not trains.has(currentTrain): return
 	var train = trains[currentTrain]
 	
-	$Scenarios/Settings/Tab/Trains/Route.text = train["Route"]
+	$Scenarios/Settings/Tab/Trains/Route/Route.text = train["Route"]
 	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
 	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
 	$Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected = train["Direction"]
 	$Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = train["DoorConfiguration"]
+	prepare_station_table(train["Stations"])
 
 func set_train_settings():
 	var train = {}
-	train["Route"] = $Scenarios/Settings/Tab/Trains/Route.text
+	train["Route"] = $Scenarios/Settings/Tab/Trains/Route/Route.text
 	train ["StartRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text
 	train["StartRailPosition"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value
 	train["Direction"] = $Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected
 	train["DoorConfiguration"] = $Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected
+	train["Stations"] = get_station_array()
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario):
 		sData[currentScenario] = {}
@@ -250,170 +252,86 @@ func get_world_configuration():
 	$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
 	$"World Configuration/GridContainer/ThumbnailPath".text = d["ThumbnailPath"]
 
+
+
+### Station Editing: #################################
+
+var entriesCount = 0
+
+
+func _on_RemoveStationEntry_pressed():
+	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+	var children = grid.get_children()
+	if entriesCount == 0:
+		return
+	children.invert()
+	for i in range (0,6):
+		children[i].queue_free()
+	entriesCount -= 1
+
+
+func _on_AddStationEntry_pressed():
+	entriesCount += 1
+	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+	var a
 	
+	a = grid.get_node("nodeName0").duplicate()
+	grid.add_child(a)
+	a.show()
+	
+	a = grid.get_node("stationName0").duplicate()
+	grid.add_child(a)
+	a.show()
+	
+	a = grid.get_node("arrivalTime0").duplicate()
+	grid.add_child(a)
+	a.show()
+	
+	a = grid.get_node("departureTime0").duplicate()
+	grid.add_child(a)
+	a.show()
+	
+	a = grid.get_node("haltTime0").duplicate()
+	grid.add_child(a)
+	a.show()
+	
+	a = grid.get_node("stopType0").duplicate()
+	grid.add_child(a)
+	a.show()
+	pass # Replace with function body.
 
-## Called when the node enters the scene tree for the first time.
-#func _ready():
-#	pass # Replace with function body.
-#var oldworld
-#
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	if world == null:
-#		return
-#	if oldworld != world:
-#		update_display()
-#	oldworld = world
-#	var activeWorld = world.name == "World"
-#	for child in get_children():
-#		child.visible =  activeWorld
-#	if not activeWorld: return
-#
-#	if $Configuration/ItemList.get_selected_items().size() > 0:
-#		currentScenario = $Configuration/ItemList.get_item_text($Configuration/ItemList.get_selected_items()[0])
-#
-#	#update_display()
-#
-#func update_display():
-#	print("Updating...")
-#	if world == null: return
-#	if world.name != "World":
-#		$Configuration/ItemList.clear()
-#		$Scenarios/Settings.visible = false
-#		return
-#	var sm = world.get_node("ScenarioManager")
-#	if sm == null:
-#		print ("Scenario Manger not found")
-#		return
-#	$Configuration/ItemList.clear()
-#	var scenarios = sm.get_all_scenarios()
-#	for scenario in scenarios:
-#		$Configuration/ItemList.add_item(scenario)
-#
-#	$Scenarios/Settings.visible = currentScenario == loadedCurrentScenario and currentScenario != ""
-#
-#
-#
-#
-#
-#func _on_NewScenario_pressed():
-#	var sName = $Configuration/HBoxContainer/LineEdit.text
-#	if sName == "": return
-#	var sm = world.get_node("ScenarioManager")
-#	var scenarios = sm.get_all_scenarios()
-#	for scenario in scenarios:
-#		if scenario == sName:
-#			print("There already exists a scenario with the given name! Aborting..")
-#			return
-#	sm.add_scenario(sName)
-#	update_display()
-#
-#
-#func _on_RenameScenario_pressed():
-#	var sName = $Configuration/HBoxContainer/LineEdit.text
-#	if sName == "": return
-#	var sm = world.get_node("ScenarioManager")
-#	var scenarios = sm.get_all_scenarios()
-#	for scenario in scenarios:
-#		if scenario == sName:
-#			print("There already exists a scenario with the given name! Aborting..")
-#			return
-#	sm.rename_scenario(currentScenario, sName)
-#	update_display()
-#
-#
-#func _on_DuplicateScenario_pressed():
-#	if currentScenario == "": return
-#	var sm = world.get_node("ScenarioManager")
-#	var newSName = currentScenario + " (Duplicate)"
-#	sm.copy_scenario(currentScenario, newSName)#
-#	update_display()
-#
-#
-#
-#func _on_DeleteScenario_pressed():
-#	if currentScenario == "": return
-#	var sm = world.get_node("ScenarioManager")
-#	sm.delete_scenario(currentScenario)
-#	currentScenario = ""
-#	update_display()
-#
-#
-#func _on_LoadScenario_pressed():
-#	if currentScenario == "": return
-#	var sm = world.get_node("ScenarioManager")
-#	sm.apply_scenario_to_enviroment(currentScenario)
-#	print("Scenario successfully loaded into world.")
-#	var i = sm.get_inspector_data(currentScenario)
-#	$Scenarios/Settings/Tab/General/Time/TimeHour.value = i["Time"][0]
-#	$Scenarios/Settings/Tab/General/Time/TimeMinute.value = i["Time"][1]
-#	$Scenarios/Settings/Tab/General/Time/TimeSecond.value = i["Time"][2]
-#	$Scenarios/Settings/Tab/General/Route.text = i["Route"]
-#	$Scenarios/Settings/Tab/General/TrainLength/SpinBox.value = i["TrainLength"]
-#	$Scenarios/Settings/Tab/General/GridContainer/StartRail.text = i["StartInformation"]["StartRail"]
-#	$Scenarios/Settings/Tab/General/GridContainer/StartRailPosition.value = i["StartInformation"]["RailPostion"]
-#	$Scenarios/Settings/Tab/General/GridContainer/Direction.selected = i["StartInformation"]["Direction"]
-#	$Scenarios/Settings/Tab/General/GridContainer/DoorConfiguration.selected = i["StartInformation"]["DoorConfiguration"]
-#	$Scenarios/Settings/Tab/General/Description.text = i["Description"]
-#	loadedCurrentScenario = currentScenario
-#	update_display()
-#
-#
-#
-#func _on_WriteScenario_pressed():
-#	if not $Scenarios/Settings.visible: return
-#	if currentScenario == "": return
-#	var sm = world.get_node("ScenarioManager")
-#	var i = {}
-#	i["Time"] = {}
-#	i["Time"][0] = $Scenarios/Settings/Tab/General/Time/TimeHour.value 
-#	i["Time"][1] = $Scenarios/Settings/Tab/General/Time/TimeMinute.value 
-#	i["Time"][2] = $Scenarios/Settings/Tab/General/Time/TimeSecond.value 
-#	i["Route"] = $Scenarios/Settings/Tab/General/Route.text 
-#	i["TrainLength"] = $Scenarios/Settings/Tab/General/TrainLength/SpinBox.value 
-#	i["StartInformation"] = {}
-#	i["StartInformation"]["StartRail"] = $Scenarios/Settings/Tab/General/GridContainer/StartRail.text 
-#	i["StartInformation"]["RailPostion"] = $Scenarios/Settings/Tab/General/GridContainer/StartRailPosition.value 
-#	i["StartInformation"]["Direction"] = $Scenarios/Settings/Tab/General/GridContainer/Direction.selected 
-#	i["StartInformation"]["DoorConfiguration"] = $Scenarios/Settings/Tab/General/GridContainer/DoorConfiguration.selected 
-#	i["Description"] = $Scenarios/Settings/Tab/General/Description.text 
-#	sm.save_scenario(currentScenario, i)
-#	print("Current Scenario saved successfully")
-#
-#
-#func _on_ItemList_itemScenario_selected(index):
-#	var sm = world.get_node("ScenarioManager")
-#	currentScenario = sm.get_all_scenarios()[index]
-#	$Scenarios/Settings.visible = currentScenario == loadedCurrentScenario
-#
+func get_station_array():
+	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+	var children = grid.get_children()
+	var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "passed" : []}
+	for i in range(2, entriesCount+2):
+		stations["nodeName"].append(children[6*i+0].text)
+		stations["stationName"].append(children[6*i+1].text)
+		stations["arrivalTime"].append([children[6*i+2].get_node("H").value, children[6*i+2].get_node("M").value, children[6*i+2].get_node("S").value])
+		stations["departureTime"].append([children[6*i+3].get_node("H").value, children[6*i+3].get_node("M").value, children[6*i+3].get_node("S").value])
+		stations["haltTime"].append(children[6*i+4].value)
+		stations["stopType"].append(children[6*i+5].selected)
+		stations["passed"].append(false)
+	return stations
 
+func prepare_station_table(stations):
+	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+	for i in range(12, grid.get_children().size()):
+		grid.get_children()[i].queue_free()
+	entriesCount = 0
+	for i in range (0,stations["nodeName"].size()):
+		_on_AddStationEntry_pressed()
+	var children = grid.get_children()
+	for i in range(2, entriesCount+2):
+		children[6*i+0].text = stations["nodeName"][i-2]
+		children[6*i+1].text = stations["stationName"][i-2]
+		children[6*i+2].get_node("H").value = stations["arrivalTime"][i-2][0]
+		children[6*i+2].get_node("M").value = stations["arrivalTime"][i-2][1]
+		children[6*i+2].get_node("S").value = stations["arrivalTime"][i-2][2]
+		children[6*i+3].get_node("H").value = stations["departureTime"][i-2][0]
+		children[6*i+3].get_node("M").value = stations["departureTime"][i-2][1]
+		children[6*i+3].get_node("S").value = stations["departureTime"][i-2][2]
+		children[6*i+4].value = stations["haltTime"][i-2]
+		children[6*i+5].selected = stations["stopType"][i-2]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	

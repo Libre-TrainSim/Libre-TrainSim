@@ -46,3 +46,23 @@ func normDeg(degree):
 	while degree < 0.0:
 		degree += 360.0
 	return degree
+
+
+func sort_signals(signalTable, forward = true):
+	var signalT = [signalTable.values(), signalTable.keys()]
+	var exportT = [] 
+	for a in range(0, signalT[0].size()):
+		var minimum = 0
+		for i in range(0, signalT[0].size()):
+			if signalT[0][i] < signalT[0][minimum]:
+				minimum = i
+		exportT.append(signalT[1][minimum])
+		signalT[0].remove(minimum)
+		signalT[1].remove(minimum)
+	if forward:
+		return exportT
+	else:
+		exportT.invert()
+		return exportT
+		
+		

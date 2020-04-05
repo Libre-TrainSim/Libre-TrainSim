@@ -122,6 +122,8 @@ func _process(delta):
 	
 	checkSpeedLimit(delta)
 	
+	check_for_next_station(delta)
+	
 	
 func get_time():
 	time = world.time
@@ -278,7 +280,7 @@ func handle_signal(signalname):
 		if signal.warnSpeed != -1: 
 			nextSpeedLimit = signal.warnSpeed
 		if signal.status == 0:
-			$HUD.send_Message("You overrun a red signal. The game is over!")
+			send_message("You overrun a red signal. The game is over!")
 		signal.status = 0
 	elif signal.type == "Station": ## Station
 		print("Station: "+signal.stationName)
@@ -315,29 +317,35 @@ func check_station(delta):
 	if currentStation != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation:
 			wholeTrainNotInStation = true
-			$HUD.send_Message("The End of your Train haven't already reached the Station. Please drive a bit forward, and try it again.")
+			send_message("The End of your Train haven't already reached the Station. Please drive a bit forward, and try it again.")
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight)) or (stationBeginning and not isInStation):
 			arrivalTime = time
 			var lateMessage = "."
 			var minutesLater = -depatureTime[1] + arrivalTime[1] + (-depatureTime[0] + arrivalTime[0])*60
 			if minutesLater > 0:
 				lateMessage = ". You are " + String(minutesLater) + " minutes later." 
-			$HUD.send_Message("Welcome to " + currentStation + lateMessage)
+			send_message("Welcome to " + currentStation + lateMessage)
 			stationTimer = 0
 			
 			isInStation = true
 		elif (speed == 0 and isInStation ) :
 			if stationTimer > stationHaltTime:
 				if endStation:
-					$HUD.send_Message("Scenario successfully finished!")
+					send_message("Scenario successfully finished!")
 					currentStation = ""
+					nextStation = ""
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= depatureTime[2]:
-					$HUD.send_Message("You can now depart")
+					send_message("You can now depart")
 					currentStation = ""
+					nextStation = ""
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStation != "":
-			$HUD.send_Message("You missed a station! Please drive further on.")
+			if isInStation:
+				send_message("You departed earlier than allowed! Plese wat for the depart message next time!")
+			else:
+				send_message("You missed a station! Please drive further on.")
 			currentStation = ""
+			nextStation = ""
 		stationTimer += delta
 		if (speed != 0):
 			wholeTrainNotInStation = false
@@ -386,12 +394,15 @@ func update_Acc_Roll(command, node):
 var checkSpeedLimitTimer = 0
 func checkSpeedLimit(delta):
 	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer <= 0:
-		$HUD.send_Message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
+		send_message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
 		checkSpeedLimitTimer = 10
 		print(String(currentSpeedLimit) + " " + String(Math.speedToKmH(speed)))
 	if checkSpeedLimitTimer > 0:
 		checkSpeedLimitTimer -= delta
-		
+	
+func send_message(string):
+	print("Sending Message: " + string )
+	$HUD.send_Message(string)
 		
 
 ## Doors:
@@ -429,11 +440,14 @@ func show_textbox_message(string):
 	
 var baked_route ## Route, which will be generated at start of the game.
 var baked_route_direction
+var baked_route_railLength
 func bake_route(): ## Generate the whole route for the train.
 	baked_route = []
 	baked_route_direction = [forward]
+	
 	baked_route.append(route[0])
 	var currentR = world.get_node("Rails").get_node(baked_route[baked_route.size()-1]) ## imagine: current rail, which the train will drive later
+	baked_route_railLength = [currentR.length]
 	var currentpos
 	var currentrot
 	var currentF = forward
@@ -445,7 +459,6 @@ func bake_route(): ## Generate the whole route for the train.
 		currentrot = currentR.startrot - 180.0
 	
 	while(true): ## Find next Rail
-		
 		var possibleRails = []
 		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
 			if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.startrot)) < 1 and rail.name != currentR.name:
@@ -473,6 +486,7 @@ func bake_route(): ## Generate the whole route for the train.
 		else:
 			currentF = false
 		baked_route_direction.append(currentF)
+		baked_route_railLength.append(currentR.length)
 		if currentF: ## Forward
 			currentpos = currentR.endpos
 			currentrot = currentR.endrot
@@ -485,4 +499,75 @@ func bake_route(): ## Generate the whole route for the train.
 	
 	
 	
+func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray with the names of the signals. The first entry is the nearest.
+	var returnValue = []
+	var index = routeIndex
+	while(index != baked_route.size()):
+		var rail = world.get_node("Rails").get_node(baked_route[index])
+		var signalsAtRail = {}
+		for signalName in rail.attachedSignals.keys():
+			var signalN = world.get_node("Signals").get_node(signalName)
+			if signalN.type == type:
+				if rail != currentRail:
+					signalsAtRail[signalName] = signalN.onRailPosition
+				else:
+					if forward and signalN.onRailPosition > distanceOnRail:
+						signalsAtRail[signalName] = signalN.onRailPosition
+					elif not forward and  signalN.onRailPosition < distanceOnRail:
+						signalsAtRail[signalName] = signalN.onRailPosition
+						
+		var sortedSignals = Math.sort_signals(signalsAtRail, baked_route_direction[index])
+		for signalName in sortedSignals:
+			returnValue.append(signalName)
+		index += 1
+	return returnValue
+
+func get_distance_to_signal(signalName):
+	var returnValue = 0
+	if forward:
+		returnValue += currentRail.length - distanceOnRail
+	else:
+		returnValue += distanceOnRail
+	var index = routeIndex +1 
+	var signalN = world.get_node("Signals").get_node(signalName)
+	var searchedRailName =  signalN.attachedRail
+	while(index != baked_route.size()):
+#		print (String(baked_route[index]) + "  " + String(searchedRailName))
+		if baked_route[index] != searchedRailName:
+			returnValue += baked_route_railLength[index]
+		else: ## End Rail Found (where Signal is Standing)
+			if baked_route_direction[index]:
+				returnValue += signalN.onRailPosition
+			else:
+				returnValue += baked_route_railLength[index] - signalN.onRailPosition
+			break
+		index += 1
+	return returnValue
+
+var nextStation = ""
+var check_for_next_stationTimer = 0
+var stationMessageSent = false
+func check_for_next_station(delta):
+	check_for_next_stationTimer += delta
+	if check_for_next_stationTimer < 1: return
+	else:
+		check_for_next_stationTimer = 0
+		if nextStation == "":
+			var nextStations = get_all_upcoming_signalPoints_of_one_type("Station")
+			print(nextStations)
+			if nextStations.size() == 0:
+				stationMessageSent = true
+				return
+			nextStation = nextStations[0]
+			stationMessageSent = false
+		
+		
+		var station = world.get_node("Signals").get_node(nextStation)
+		print("The next station is: "+ station.stationName+ ". It is "+ String(int(get_distance_to_signal(nextStation))) + "m away.")
+		
+		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001:
+			station = world.get_node("Signals").get_node(nextStation)
+			stationMessageSent = true
+			send_message("The next station is: "+ station.stationName+ ". It is "+ String(int(get_distance_to_signal(nextStation)/100)*100+100) + "m away.")
+		
 	

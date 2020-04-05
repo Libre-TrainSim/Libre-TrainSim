@@ -60,7 +60,6 @@ func _ready():
 	
 func _process(delta):
 	if not Engine.editor_hint:
-		print(time)
 		time(delta)
 		handle_chunk()
 		checkBigChunk()
@@ -512,7 +511,8 @@ func set_scenario_to_world():
 	
 	## Player: # TO CHANGE IF ADDING AI PLAYERS
 	var player = get_node("Players/Player")
-	player.length = scenario["TrainLength"]
+	if player.length  +25 > scenario["TrainLength"]:
+		player.length = scenario["TrainLength"] -25
 	player.route = scenario["Trains"]["Player"]["Route"]
 	player.route.insert(0, scenario["Trains"]["Player"]["StartRail"])
 	player.forward = bool(scenario["Trains"]["Player"]["Direction"])

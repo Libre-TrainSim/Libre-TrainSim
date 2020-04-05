@@ -40,12 +40,23 @@ var attachedSignals = {}
 func _ready():
 	_update(false)
 	if not Engine.is_editor_hint():
-		$Beginning.visible = false
-		$Ending.visible = false
+		$Beginning.queue_free()
+		$Ending.queue_free()
+		$Types.hide()
 	pass # Replace with function body.
 
+#var test = false
+#var testtimer = 0
 #func _process(delta):
-#	pass
+#	testtimer += delta
+#	if testtimer > 2:
+#		print("PLING")
+#		if test:
+#			unload_visible_Instance()
+#		else: 
+#			load_visible_Instance()
+#		test = !test
+#		testtimer = 0
 
 # warning-ignore:unused_argument
 func _update(newvar):
@@ -62,12 +73,15 @@ func _update(newvar):
 	endpos = startpos + Math.getNextPos(radius, Vector3(0,0,0), self.rotation_degrees.y, length)
 	visibleSegments = length / buildDistance +1
 	buildRail()
-	$Ending.translation = getNextPos(radius, Vector3(0,0,0), 0, length-1)
+	if Engine.is_editor_hint():
+		$Ending.translation = getNextPos(radius, Vector3(0,0,0), 0, length-1)
 
 func buildRail():
 	var distance = 0
 	var currentrot = 0
 	var currentpos = Vector3(0,0,0)
+	if get_node("MultiMeshInstance") == null:
+		return
 	get_node("MultiMeshInstance").set_multimesh(get_node("MultiMeshInstance").multimesh.duplicate(false))
 	var multimesh = get_node("MultiMeshInstance").multimesh
 	multimesh.mesh = $Types.get_node(railType).mesh.duplicate(true)
@@ -153,4 +167,19 @@ func get_deg_at_RailDistance(distance):
 func get_shifted_pos_at_RailDistance(distance, shift):
 	var railpos = get_pos_at_RailDistance(distance)
 	return railpos + (Vector3(1, 0, 0).rotated(Vector3(0,1,0), deg2rad(get_deg_at_RailDistance(distance)+90))*shift)
+	
+func unload_visible_Instance():
+	print("Unloading visible Instance for Rail "+name)
+	$MultiMeshInstance.queue_free()
 
+func load_visible_Instance():
+	if get_node("MultiMeshInstance") != null: return
+	print("Loading visible Instance for Rail "+name)
+	var multimeshI = MultiMeshInstance.new()#
+	multimeshI.multimesh = MultiMesh.new().duplicate(true)
+	multimeshI.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	multimeshI.name = "MultiMeshInstance"
+	add_child(multimeshI)
+	multimeshI.owner = self
+	_update(true)
+	

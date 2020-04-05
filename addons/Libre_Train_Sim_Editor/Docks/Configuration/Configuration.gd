@@ -122,16 +122,17 @@ func get_scenario_settings(): # fills the settings field with saved values
 
 func set_scenario_settings():
 	if currentScenario == "": return
-	var s = {}
-	s["TimeH"] = $Scenarios/Settings/Tab/General/Time/TimeHour.value 
-	s["TimeM"] = $Scenarios/Settings/Tab/General/Time/TimeMinute.value 
-	s["TimeS"] = $Scenarios/Settings/Tab/General/Time/TimeSecond.value 
-	s["TrainLength"] = $Scenarios/Settings/Tab/General/TrainLength/SpinBox.value 
-	s["Description"] = $Scenarios/Settings/Tab/General/Description.text 
-	s["Duration"] = $Scenarios/Settings/Tab/General/Duration/SpinBox.value 
-	
 	var sData = config.get_value("Scenarios", "sData", {})
-	sData[currentScenario] = s
+	if sData == null:
+		sData = {}
+	sData[currentScenario]["TimeH"] = $Scenarios/Settings/Tab/General/Time/TimeHour.value 
+	sData[currentScenario]["TimeM"] = $Scenarios/Settings/Tab/General/Time/TimeMinute.value 
+	sData[currentScenario]["TimeS"] = $Scenarios/Settings/Tab/General/Time/TimeSecond.value 
+	sData[currentScenario]["TrainLength"] = $Scenarios/Settings/Tab/General/TrainLength/SpinBox.value 
+	sData[currentScenario]["Description"] = $Scenarios/Settings/Tab/General/Description.text 
+	sData[currentScenario]["Duration"] = $Scenarios/Settings/Tab/General/Duration/SpinBox.value 
+	
+
 	config.set_value("Scenarios", "sData", sData)
 	config.save(save_path)
 	print("Scenario General Settings saved")

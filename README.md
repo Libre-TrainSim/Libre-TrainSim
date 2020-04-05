@@ -24,8 +24,8 @@ Did you already play? -> It would be great, if you could answer a survey, which 
 - Menu System with integrated Game Content Packages **(done)**
 - More Routes per Track **(done)**
 - Changing Trains per Scenario
-- Changing the way how the upcoming rails, signals, and stations are loaded ingame. *(Rails and Signals wont be unloaded during the game anymore, so they will be available the whole game. The route for the train will be compiled at beginning of the game. That makes predicting of signals and stations possible)* **(in progress)**
-- Adding prediction of Stations
+- Changing the way how the upcoming rails, signals, and stations are loaded ingame. *(Rails and Signals wont be unloaded during the game anymore, so they will be available the whole game. The route for the train will be compiled at beginning of the game. That makes predicting of signals and stations possible)* **(done)**
+- Adding prediction of Stations **(in progress)**
 - Adding visible timetable in train
 - Releasing v0.6
 - More Features such as adding Rail steep, Train Functionality, Editor, Website, Landscape Editor..

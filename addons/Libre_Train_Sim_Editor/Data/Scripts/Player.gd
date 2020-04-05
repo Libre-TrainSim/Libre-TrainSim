@@ -53,7 +53,7 @@ func ready(): ## Called by World!
 	route = route_.split(" ")
 	world = get_parent().get_parent()
 
-
+	bake_route()
 	
 	## Get driving handled
 	## Set the Train at the beginning of the rail, and after that set the distance on the Rail forward, which is standing in var startPosition
@@ -222,55 +222,18 @@ var signals
 
 func change_to_next_rail():
 	print("Changing Rail..")
+	routeIndex += 1
+	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
+	forward = baked_route_direction[routeIndex]
 	
-	var possibleRails = []
-	var currentpos
-	var currentrot
 	if forward:
-		currentpos = currentRail.endpos
-		currentrot = currentRail.endrot
-	else:
-		currentpos = currentRail.startpos 
-		currentrot = currentRail.startrot - 180.0
-		
-	
-	
-	for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
-		if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.startrot)) < 1 and rail.name != currentRail.name:
-			possibleRails.append(rail)
-		elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.endrot+180.0)) < 1 and rail.name != currentRail.name:
-			possibleRails.append(rail)
-			print(currentrot)
-			print(rail.endrot)
-	
-	
-	if possibleRails.size() == 0: ## If no Rail was found
-		print("NO ONGOING RAIL FOUND! GAME ABORTED: LAST RAIL: "+currentRail.name)
-		get_tree().quit()
-	elif possibleRails.size() == 1: ## If only one Rail is possible to switch
-		currentRail = possibleRails[0]
-	else: ## if more Rails are available:
-		currentRail = possibleRails[0]
-		for rail in possibleRails:
-			for routeName in route:
-				if routeName == rail.name:
-					currentRail = rail
-					break
-		
-	print("New Rail: " + currentRail.name)
-	
-		
-		
-	if translation.distance_to(currentRail.translation) < translation.distance_to(currentRail.endpos):
 		##forward:
 		distanceOnRail = 0
-		forward = true
 		self.translation = currentRail.translation
 		self.rotation_degrees = currentRail.rotation_degrees
 	else:
 		##backward:
 		distanceOnRail = currentRail.length
-		forward = false
 		self.translation = currentRail.endpos
 		self.rotation_degrees = Vector3(0, currentRail.endrot+180,0)
 
@@ -463,3 +426,63 @@ func check_doors(delta):
 		
 func show_textbox_message(string):
 	$HUD.show_textbox_message(string)
+	
+var baked_route ## Route, which will be generated at start of the game.
+var baked_route_direction
+func bake_route(): ## Generate the whole route for the train.
+	baked_route = []
+	baked_route_direction = [forward]
+	baked_route.append(route[0])
+	var currentR = world.get_node("Rails").get_node(baked_route[baked_route.size()-1]) ## imagine: current rail, which the train will drive later
+	var currentpos
+	var currentrot
+	var currentF = forward
+	if currentF: ## Forward
+		currentpos = currentR.endpos
+		currentrot = currentR.endrot
+	else: ## Backward
+		currentpos = currentR.startpos
+		currentrot = currentR.startrot - 180.0
+	
+	while(true): ## Find next Rail
+		
+		var possibleRails = []
+		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
+			if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.startrot)) < 1 and rail.name != currentR.name:
+				possibleRails.append(rail.name)
+			elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.endrot+180.0)) < 1 and rail.name != currentR.name:
+				possibleRails.append(rail.name)
+		
+		if possibleRails.size() == 0: ## If no Rail was found
+			break
+		elif possibleRails.size() == 1: ## If only one Rail is possible to switch
+			baked_route.append(possibleRails[0])
+		else: ## if more Rails are available:
+			var selectedRail = possibleRails[0]
+			for rail in possibleRails:
+				for routeName in route:
+					if routeName == rail:
+						selectedRail = rail
+						break
+			baked_route.append(selectedRail)
+		
+		## Set Rail to "End" of newly added Rail
+		currentR = world.get_node("Rails").get_node(baked_route[baked_route.size()-1]) ## Get "current Rail"
+		if translation.distance_to(currentR.translation) < translation.distance_to(currentR.endpos):
+			currentF = true
+		else:
+			currentF = false
+		baked_route_direction.append(currentF)
+		if currentF: ## Forward
+			currentpos = currentR.endpos
+			currentrot = currentR.endrot
+		else: ## Backward
+			currentpos = currentR.startpos
+			currentrot = currentR.startrot - 180.0
+	print("Baking Route finished.")
+	print("Baked Route: "+ String(baked_route))
+	print("Baked Route: Direction "+ String(baked_route_direction))
+	
+	
+	
+	

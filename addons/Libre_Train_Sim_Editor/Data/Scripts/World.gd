@@ -29,8 +29,8 @@ export (String) var author = ""
 export (String) var picturePath = "res://screenshot.png"
 export (String) var description = ""
 
-var initProcessorTime = 0
-var processorTime = 0
+#var initProcessorTime = 0
+#var processorTime = 0
 func _ready():
 	if Engine.editor_hint:
 		pass
@@ -48,8 +48,8 @@ func _ready():
 		configure_soll_chunks(activeChunk)
 
 		apply_soll_chunks()
-		processorTime = OS.get_ticks_msec() / 1000
-		print("Processor Time 2: " + String(processorTime - initProcessorTime))
+#		processorTime = OS.get_ticks_msec() / 1000
+#		print("Processor Time 2: " + String(processorTime - initProcessorTime))
 		print(load_response)
 		var player = $Players/Player
 		lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
@@ -60,6 +60,7 @@ func _ready():
 	
 func _process(delta):
 	if not Engine.editor_hint:
+		print(time)
 		time(delta)
 		handle_chunk()
 		checkBigChunk()
@@ -105,12 +106,13 @@ func save_chunk(position):
 	var chunk = {} #"position" : position, "Rails" : {}, "Buildings" : {}, "Flora" : {}}
 	chunk.position = position
 	chunk.Rails = {}
-	processorTime = OS.get_ticks_msec() / 1000
-	print("Processor Time 2: " + String(processorTime - initProcessorTime))	
+#	processorTime = OS.get_ticks_msec() / 1000
+#	print("Processor Time 2: " + String(processorTime - initProcessorTime))	
 	var Rails = get_node("Rails").get_children()
+	chunk.Rails = []
 	for rail in Rails:
 		if compareChunks(pos2Chunk(rail.translation), position):
-			chunk.Rails[rail.name] = {name = rail.name, transform = rail.transform, length = rail.length, radius = rail.radius, buildDistance = rail.buildDistance, railType = rail.railType }
+			chunk.Rails.append(rail.name)
 
 	
 	chunk.Buildings = {}
@@ -131,18 +133,18 @@ func save_chunk(position):
 #		if compareChunks(pos2Chunk(to.translation), position):
 #			chunk.TO[to.name] = to
 	
-	chunk.Signals = {}
-	var Signals = get_node("Signals").get_children()
-	for signalN in Signals:
-		if compareChunks(pos2Chunk(signalN.translation), position):
-			if signalN.type == "Signal":
-				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, status = signalN.status, signalAfter=signalN.signalAfter, setPassAtH=signalN.setPassAtH, setPassAtM=signalN.setPassAtM, setPassAtS=signalN.setPassAtS, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, speed=signalN.speed, warnSpeed=signalN.warnSpeed }
-			elif signalN.type == "Station":
-				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, stationName=signalN.stationName, beginningStation=signalN.beginningStation, regularStop=signalN.regularStop, endStation=signalN.endStation, stationLength=signalN.stationLength, stopTime=signalN.stopTime, departureH=signalN.departureH, departureM=signalN.departureM, departureS=signalN.departureS}
-			elif signalN.type == "Speed":
-				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, speed=signalN.speed}
-			elif signalN.type == "WarnSpeed":
-				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, warnSpeed=signalN.warnSpeed}
+#	chunk.Signals = {}
+#	var Signals = get_node("Signals").get_children()
+#	for signalN in Signals:
+#		if compareChunks(pos2Chunk(signalN.translation), position):
+#			if signalN.type == "Signal":
+#				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, status = signalN.status, signalAfter=signalN.signalAfter, setPassAtH=signalN.setPassAtH, setPassAtM=signalN.setPassAtM, setPassAtS=signalN.setPassAtS, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, speed=signalN.speed, warnSpeed=signalN.warnSpeed }
+#			elif signalN.type == "Station":
+#				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, stationName=signalN.stationName, beginningStation=signalN.beginningStation, regularStop=signalN.regularStop, endStation=signalN.endStation, stationLength=signalN.stationLength, stopTime=signalN.stopTime, departureH=signalN.departureH, departureM=signalN.departureM, departureS=signalN.departureS}
+#			elif signalN.type == "Speed":
+#				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, speed=signalN.speed}
+#			elif signalN.type == "WarnSpeed":
+#				chunk.Signals[signalN.name] = {type = signalN.type, forward = signalN.forward, name = signalN.name, transform = signalN.transform, attachedRail=signalN.attachedRail, onRailPosition=signalN.onRailPosition, warnSpeed=signalN.warnSpeed}
 	
 
 	
@@ -151,8 +153,8 @@ func save_chunk(position):
 	for trackObject in trackObjects:
 		if compareChunks(pos2Chunk(trackObject.translation), position):
 			chunk.TrackObjects[trackObject.name] = {name = trackObject.name, transform = trackObject.transform, data = trackObject.get_data()}
-	processorTime = OS.get_ticks_msec() / 1000
-	print("Processor Time 3: " + String(processorTime - initProcessorTime))	
+#	processorTime = OS.get_ticks_msec() / 1000
+#	print("Processor Time 3: " + String(processorTime - initProcessorTime))	
 	config.set_value("Chunks", chunk2String(position), null)
 	config.set_value("Chunks", chunk2String(position), chunk)
 	print("Saved Chunk " + chunk2String(position))
@@ -168,9 +170,7 @@ func unload_chunk(position):
 	for rail in Rails:
 		if compareChunks(pos2Chunk(rail.translation), position):
 			if chunk.Rails.has(rail.name):
-				rail.queue_free()
-			else:
-				print("Object not saved! I wont unload this for you...")
+				rail.unload_visible_Instance()
 	
 	var Buildings = get_node("Buildings").get_children()
 	for building in Buildings:
@@ -188,13 +188,13 @@ func unload_chunk(position):
 			else:
 				print("Object not saved! I wont unload this for you...")
 	
-	var Signals = get_node("Signals").get_children()
-	for signalN in Signals:
-		if compareChunks(pos2Chunk(signalN.translation), position):
-			if chunk.Signals.has(signalN.name):
-				signalN.queue_free()
-			else:
-				print("Object not saved! I wont unload this for you...")
+#	var Signals = get_node("Signals").get_children()
+#	for signalN in Signals:
+#		if compareChunks(pos2Chunk(signalN.translation), position):
+#			if chunk.Signals.has(signalN.name):
+#				signalN.queue_free()
+#			else:
+#				print("Object not saved! I wont unload this for you...")
 	
 	var TrackObjects = get_node("TrackObjects").get_children()
 	for node in TrackObjects:
@@ -217,24 +217,24 @@ func load_chunk(position):
 		print("Chunk "+chunk2String(position) + " not found in Save File. Chunk not loaded!")
 		return
 	## Rails:
-	var railsNode = get_node("Rails")
 	var Rails = chunk.Rails
-	var railNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
+#	var railNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 	for rail in Rails:
-		if railsNode.find_node(rail) == null:
-			var railInstance = railNode.instance()
-			railInstance.set_name(Rails[rail].name)
-			railInstance.buildDistance = Rails[rail].buildDistance
-			railInstance.length = Rails[rail].length
-			railInstance.radius = Rails[rail].radius
-			railInstance.transform = Rails[rail].transform
-			railInstance.translation = getNewPos_bchunk(railInstance.translation)
-			railInstance.railType = Rails[rail].railType
-			railsNode.add_child(railInstance)
-			railInstance.set_owner(self)
-			print(rail)
-		else:
-			print("Node " + rail + " already loaded!") 
+		$Rails.get_node(rail).load_visible_Instance()
+#		if railsNode.find_node(rail) == null:
+#			var railInstance = railNode.instance()
+#			railInstance.set_name(Rails[rail].name)
+#			railInstance.buildDistance = Rails[rail].buildDistance
+#			railInstance.length = Rails[rail].length
+#			railInstance.radius = Rails[rail].radius
+#			railInstance.transform = Rails[rail].transform
+#			railInstance.translation = getNewPos_bchunk(railInstance.translation)
+#			railInstance.railType = Rails[rail].railType
+#			railsNode.add_child(railInstance)
+#			railInstance.set_owner(self)
+#			print(rail)
+#		else:
+#			print("Node " + rail + " already loaded!") 
 			
 		
 	
@@ -280,75 +280,75 @@ func load_chunk(position):
 		else:
 			print("Node " + forest + " already loaded!") 
 			
-	## Signals:
-	var signalsNode = get_node("Signals")
-	var Signals = chunk.Signals
-	var signalNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn")
-	var stationNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Station.tscn")
-	var speedNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit.tscn")
-	var warnSpeedNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit.tscn")
-	for signalN in Signals:
-		if signalsNode.find_node(signalN) == null:
-			if Signals[signalN].type == "Signal":
-				var signalInstance = signalNode.instance()
-				signalInstance.set_name(Signals[signalN].name)
-				signalInstance.transform = Signals[signalN].transform
-				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
-				signalInstance.forward = Signals[signalN].forward
-				#signalInstance.status = Signals[signalN].status
-				#signalInstance.signalAfter = Signals[signalN].signalAfter
-				#signalInstance.setPassAtH = Signals[signalN].setPassAtH
-				#signalInstance.setPassAtM = Signals[signalN].setPassAtM
-				#signalInstance.setPassAtS = Signals[signalN].setPassAtS
-				#signalInstance.speed = Signals[signalN].speed
-				#signalInstance.warnSpeed = Signals[signalN].warnSpeed
-				signalInstance.attachedRail = Signals[signalN].attachedRail
-				signalInstance.onRailPosition = Signals[signalN].onRailPosition
-				signalsNode.add_child(signalInstance)
-				signalInstance.set_owner(self)
-			if Signals[signalN].type == "Station":
-				var signalInstance = stationNode.instance()
-				signalInstance.set_name(Signals[signalN].name)
-				signalInstance.transform = Signals[signalN].transform
-				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
-				signalInstance.forward = Signals[signalN].forward
-				signalInstance.stationName = Signals[signalN].stationName
-				#signalInstance.beginningStation = Signals[signalN].beginningStation
-				#signalInstance.regularStop = Signals[signalN].regularStop
-				#signalInstance.endStation = Signals[signalN].endStation
-				#signalInstance.stationLength = Signals[signalN].stationLength
-				#signalInstance.stopTime = Signals[signalN].stopTime
-				#signalInstance.departureH = Signals[signalN].departureH
-				#signalInstance.departureM = Signals[signalN].departureM
-				#signalInstance.departureS = Signals[signalN].departureS
-				signalInstance.attachedRail = Signals[signalN].attachedRail
-				signalInstance.onRailPosition = Signals[signalN].onRailPosition
-				signalsNode.add_child(signalInstance)
-				signalInstance.set_owner(self)
-			if Signals[signalN].type == "Speed":
-				var signalInstance = speedNode.instance()
-				signalInstance.set_name(Signals[signalN].name)
-				signalInstance.transform = Signals[signalN].transform
-				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
-				signalInstance.forward = Signals[signalN].forward
-				signalInstance.speed = Signals[signalN].speed
-				signalInstance.attachedRail = Signals[signalN].attachedRail
-				signalInstance.onRailPosition = Signals[signalN].onRailPosition
-				signalsNode.add_child(signalInstance)
-				signalInstance.set_owner(self)
-			if Signals[signalN].type == "WarnSpeed":
-				var signalInstance = warnSpeedNode.instance()
-				signalInstance.set_name(Signals[signalN].name)
-				signalInstance.transform = Signals[signalN].transform
-				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
-				signalInstance.forward = Signals[signalN].forward
-				signalInstance.warnSpeed = Signals[signalN].warnSpeed
-				signalInstance.attachedRail = Signals[signalN].attachedRail
-				signalInstance.onRailPosition = Signals[signalN].onRailPosition
-				signalsNode.add_child(signalInstance)
-				signalInstance.set_owner(self)
-		else:
-			print("Node " + signalN + " already loaded!") 
+#	## Signals:
+#	var signalsNode = get_node("Signals")
+#	var Signals = chunk.Signals
+#	var signalNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn")
+#	var stationNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Station.tscn")
+#	var speedNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit.tscn")
+#	var warnSpeedNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit.tscn")
+#	for signalN in Signals:
+#		if signalsNode.find_node(signalN) == null:
+#			if Signals[signalN].type == "Signal":
+#				var signalInstance = signalNode.instance()
+#				signalInstance.set_name(Signals[signalN].name)
+#				signalInstance.transform = Signals[signalN].transform
+#				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
+#				signalInstance.forward = Signals[signalN].forward
+#				#signalInstance.status = Signals[signalN].status
+#				#signalInstance.signalAfter = Signals[signalN].signalAfter
+#				#signalInstance.setPassAtH = Signals[signalN].setPassAtH
+#				#signalInstance.setPassAtM = Signals[signalN].setPassAtM
+#				#signalInstance.setPassAtS = Signals[signalN].setPassAtS
+#				#signalInstance.speed = Signals[signalN].speed
+#				#signalInstance.warnSpeed = Signals[signalN].warnSpeed
+#				signalInstance.attachedRail = Signals[signalN].attachedRail
+#				signalInstance.onRailPosition = Signals[signalN].onRailPosition
+#				signalsNode.add_child(signalInstance)
+#				signalInstance.set_owner(self)
+#			if Signals[signalN].type == "Station":
+#				var signalInstance = stationNode.instance()
+#				signalInstance.set_name(Signals[signalN].name)
+#				signalInstance.transform = Signals[signalN].transform
+#				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
+#				signalInstance.forward = Signals[signalN].forward
+#				signalInstance.stationName = Signals[signalN].stationName
+#				#signalInstance.beginningStation = Signals[signalN].beginningStation
+#				#signalInstance.regularStop = Signals[signalN].regularStop
+#				#signalInstance.endStation = Signals[signalN].endStation
+#				#signalInstance.stationLength = Signals[signalN].stationLength
+#				#signalInstance.stopTime = Signals[signalN].stopTime
+#				#signalInstance.departureH = Signals[signalN].departureH
+#				#signalInstance.departureM = Signals[signalN].departureM
+#				#signalInstance.departureS = Signals[signalN].departureS
+#				signalInstance.attachedRail = Signals[signalN].attachedRail
+#				signalInstance.onRailPosition = Signals[signalN].onRailPosition
+#				signalsNode.add_child(signalInstance)
+#				signalInstance.set_owner(self)
+#			if Signals[signalN].type == "Speed":
+#				var signalInstance = speedNode.instance()
+#				signalInstance.set_name(Signals[signalN].name)
+#				signalInstance.transform = Signals[signalN].transform
+#				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
+#				signalInstance.forward = Signals[signalN].forward
+#				signalInstance.speed = Signals[signalN].speed
+#				signalInstance.attachedRail = Signals[signalN].attachedRail
+#				signalInstance.onRailPosition = Signals[signalN].onRailPosition
+#				signalsNode.add_child(signalInstance)
+#				signalInstance.set_owner(self)
+#			if Signals[signalN].type == "WarnSpeed":
+#				var signalInstance = warnSpeedNode.instance()
+#				signalInstance.set_name(Signals[signalN].name)
+#				signalInstance.transform = Signals[signalN].transform
+#				signalInstance.translation = getNewPos_bchunk(signalInstance.translation)
+#				signalInstance.forward = Signals[signalN].forward
+#				signalInstance.warnSpeed = Signals[signalN].warnSpeed
+#				signalInstance.attachedRail = Signals[signalN].attachedRail
+#				signalInstance.onRailPosition = Signals[signalN].onRailPosition
+#				signalsNode.add_child(signalInstance)
+#				signalInstance.set_owner(self)
+#		else:
+#			print("Node " + signalN + " already loaded!") 
 			
 	##TrackObjects:
 	var ParentNode = get_node("TrackObjects")
@@ -374,8 +374,6 @@ func save_world(newvar):
 	save_path = "res://Worlds/" + FileName + ".cfg"
 	config = ConfigFile.new()
 	load_response = config.load(save_path)
-	
-	initProcessorTime = OS.get_ticks_msec() / 1000
 	allChunks = []
 	## Get all chunks of the world
 	var railNode = get_node("Rails")
@@ -383,12 +381,9 @@ func save_world(newvar):
 		print("Rail Node not found. World not saved!")
 		return
 	for rail in railNode.get_children():
-		processorTime = OS.get_ticks_msec() / 1000
-		print("Processor Time 1: " + String(processorTime - initProcessorTime))	
 		var railChunk = pos2Chunk(rail.translation)
 		allChunks = add_single_to_array(allChunks, chunk2String(railChunk))
-		processorTime = OS.get_ticks_msec() / 1000
-		print("Processor Time 10: " + String(processorTime - initProcessorTime))	
+
 		for chunk in getChunkeighbours(railChunk):
 			allChunks = add_single_to_array(allChunks, chunk2String(chunk))
 	
@@ -427,8 +422,6 @@ func apply_soll_chunks():
 		if not istChunks.has(a):
 			load_chunk(string2Chunk(a))
 			istChunks.append(a)
-	if $ScenarioManager != null:
-		$ScenarioManager.apply_scenario_to_enviroment()
 			
 var lastchunk
 func handle_chunk():
@@ -515,6 +508,7 @@ func set_scenario_to_world():
 	timeHour = scenario["TimeH"]
 	timeMinute = scenario["TimeM"]
 	timeMSeconds = scenario["TimeS"]
+	time = [timeHour,timeMinute,timeSecond]
 	
 	## Player: # TO CHANGE IF ADDING AI PLAYERS
 	var player = get_node("Players/Player")

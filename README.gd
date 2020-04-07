@@ -2,7 +2,7 @@ extends Node
 ## Hosted on github: ###
 
 ## Hobby Project which was startedd christmas 2019.
-## Code Licensed unter GNU 3.0 License
+## Code Licensed unter GPL 3.0 License
 ## Materials, Objects and Content seen Ingame is Licensed unter CC0 License
 
 ## What works:
@@ -21,28 +21,29 @@ extends Node
 ## All objects where made whith gimp and blender.
 ## Most Textures are from OpenGameArt
 ## Code is completely self written. Thanks to the GoDot Discord Community, which helped me out with one or two problems.
-
-
-
-
-## To be implemented for Version 1.0
 ## Signals
 ## Real Train Stations
 ## Some more Objects And Tracks.
 ## Main Menu
+## More scenarios per Track
+## 
 ## Addon Support
 ## Sound
 ## Detailed Cockpits
 ## Helpers for e.g. Walls near the Tracks, electric Rails...
+## Easier Track Building
+## Real Drinving Plans
+
+
+
+## To be implemented for Version 1.0
 ## Rails and Driving whith grades.
 ## 3D Outer view of the Train
 ## Content Database hosted in the web and accesible for every one. (For Tracks, Objects, and Trains)
 
 ## Further Ideas:
-## KI Trains
+## AI Trains
 ## Moving Persons at the Platforms.
-## Easier Track Building
 ## Some 3D Effects. (Shadows tested, but they are ripping of the Performance)
 ## Ground Editor (maybe implementing that plugin from zylan ;) )
-## Real Drinving Plans
 ## Importing Rail Data from Open Street Map

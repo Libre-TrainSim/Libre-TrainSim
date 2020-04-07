@@ -1,0 +1,248 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame.tres" type="DynamicFont" id=2]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/DotRed.png" type="Texture" id=3]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/TrainInfo.gd" type="Script" id=4]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/DotGreen.png" type="Texture" id=5]
+
+[node name="TrainInfo" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -416.0
+margin_top = 15.4327
+margin_right = 394.0
+margin_bottom = 583.433
+color = Color( 0.0352941, 0.0823529, 0.196078, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -391.0
+margin_top = 15.4327
+margin_right = 375.0
+margin_bottom = 565.433
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeadLine" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 766.0
+margin_bottom = 45.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HeadLine"]
+margin_right = 529.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Train Information:"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HeadLine"]
+margin_left = 533.0
+margin_top = 7.0
+margin_right = 766.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 2 )
+text = "(Press 'F2' to close this window)"
+
+[node name="Pantograpgh" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 49.0
+margin_right = 766.0
+margin_bottom = 79.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Pantograpgh"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Pantograpgh"]
+margin_left = 34.0
+margin_right = 375.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 2 )
+text = "Pantograph (press B and wait for few seconds)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SiFa" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 83.0
+margin_right = 766.0
+margin_bottom = 113.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/SiFa"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/SiFa"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "SiFa (every 30 seconds you have to press 'space')"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnforcedBreaking" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 117.0
+margin_right = 766.0
+margin_bottom = 147.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/EnforcedBreaking"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/EnforcedBreaking"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Enforced Breaking: (check pantograpgh, red signal, speed limit, SiFa"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Brakes-0" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 151.0
+margin_right = 766.0
+margin_bottom = 181.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Brakes-0"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Brakes-0"]
+margin_left = 34.0
+margin_right = 457.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 2 )
+text = "Brakes: (release with left arrow; check Enforced Breaking)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Brakes-1" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 185.0
+margin_right = 766.0
+margin_bottom = 215.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Brakes-1"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Brakes-1"]
+margin_left = 34.0
+margin_right = 506.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 2 )
+text = "Brakes: (release with 'a', apply with 'd', check Enforced Breaking)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Doors" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 219.0
+margin_right = 766.0
+margin_bottom = 249.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Doors"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Doors"]
+margin_left = 34.0
+margin_right = 451.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 2 )
+text = "Doors (close with 'o', open right with 'p', open left with 'i\""
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Acceleration-0" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 253.0
+margin_right = 766.0
+margin_bottom = 316.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Acceleration-0"]
+margin_right = 30.0
+margin_bottom = 63.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Acceleration-0"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 63.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Acceleration: (apply with up arrow key, left arrow key; release with left arrow key or down arrow key; check doors)"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Acceleration-1" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 320.0
+margin_right = 766.0
+margin_bottom = 383.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Acceleration-1"]
+margin_right = 30.0
+margin_bottom = 63.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Acceleration-1"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 63.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Acceleration: (apply with 'w'; release with 's'; check brakes; check brakes, doors) (try with releasing full acceleration first/setting acceleration to zero)"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Horn" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 387.0
+margin_right = 766.0
+margin_bottom = 417.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Horn"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Horn"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Horn (Press 'h')"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

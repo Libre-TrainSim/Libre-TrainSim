@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/DoorRight.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=7]
 
 [node name="Screen1" type="Node2D"]
 script = ExtResource( 1 )
@@ -41,3 +42,51 @@ texture = ExtResource( 5 )
 
 [node name="Right" type="Sprite" parent="Doors"]
 texture = ExtResource( 4 )
+
+[node name="EnforcedBraking" type="ColorRect" parent="."]
+margin_left = 738.296
+margin_top = 686.163
+margin_right = 1255.3
+margin_bottom = 741.163
+color = Color( 0.866667, 0.054902, 0.054902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="EnforcedBraking"]
+margin_left = 55.0
+margin_right = 465.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+text = "Enforced Breaking"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sifa" type="ColorRect" parent="."]
+margin_left = 41.5861
+margin_top = 686.163
+margin_right = 558.59
+margin_bottom = 741.163
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Sifa"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 55.0
+margin_right = 465.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+text = "SiFa"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

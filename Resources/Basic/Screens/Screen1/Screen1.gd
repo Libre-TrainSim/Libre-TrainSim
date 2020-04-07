@@ -37,10 +37,19 @@ func _process(delta):
 
 	
 
-func update_display(speed, command, doorLeft, doorRight, doorsClosing):
+func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedBreaking, sifa):
 	## Tachos:
 	$SpeedPointer.rotation_degrees = SpeedPointerZero+SpeedPerKmH*speed 
 	SollCommandPointer = CommandPointerZero+CommandPerPercent*command*100 
+	
+	## Enforced Breaking
+	if enforcedBreaking:
+		$EnforcedBraking.visible = blinkStatus
+	else:
+		$EnforcedBraking.visible = false
+	
+	## Sifa:
+	$Sifa.visible = sifa
 	
 	## Doors:
 	if doorsClosing:

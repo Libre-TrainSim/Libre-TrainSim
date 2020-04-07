@@ -36,6 +36,11 @@ func _ready():
 		pass
 		# Code to execute in editor.
 	if not Engine.editor_hint:
+		var playerI = load(Root.currentTrain).instance()
+		playerI.name = "Player"
+		$Players.add_child(playerI)
+		playerI.owner = self
+		
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
 		save_path = "res://Worlds/" + FileName + ".cfg"
@@ -514,7 +519,7 @@ func set_scenario_to_world():
 	if player.length  +25 > scenario["TrainLength"]:
 		player.length = scenario["TrainLength"] -25
 	player.route = scenario["Trains"]["Player"]["Route"]
-	player.route.insert(0, scenario["Trains"]["Player"]["StartRail"])
+	player.startRail = scenario["Trains"]["Player"]["StartRail"]
 	player.forward = bool(scenario["Trains"]["Player"]["Direction"])
 	player.startPosition = scenario["Trains"]["Player"]["StartRailPosition"]
 	player.stations = scenario["Trains"]["Player"]["Stations"]

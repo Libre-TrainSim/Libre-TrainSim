@@ -1,5 +1,9 @@
 extends CanvasLayer
 
+################################################################################
+## To Content-Creators: DO NOT EDIT THIS SCRIPT!! This Script will be overwritten by the game.
+################################################################################
+
 func _ready():
 	pass
 	
@@ -8,6 +12,8 @@ func _process(delta):
 	
 	check_ingameHUD(delta)
 	
+	check_trainInfo(delta)
+	
 	if sending:
 		messaget += delta
 		if messaget > 4:
@@ -15,23 +21,15 @@ func _process(delta):
 			sending = false
 	$FPS.text = String(Engine.get_frames_per_second())
 	
-	$Speed.text = "Speed: " + String(int(Math.speedToKmH((get_parent().speed)))) + " km/h"
-
-func _on_Direction_pressed():
-	pass
-#	if Root.directionPositive == true && get_parent().speed == 0:
-#		Root.directionPositive = false
-#		print("Backwards")
-#	elif Root.directionPositive == false && get_parent().speed == 0:
-#		Root.directionPositive = true
-#		print("Forwards")
-#	else:
-#		pass
+	$HBoxContainer/Speed.text = "Speed: " + String(int(Math.speedToKmH((get_parent().speed)))) + " km/h"
+	$HBoxContainer/CurrentLimit.text = "Speed Limit: " + String(get_parent().currentSpeedLimit) + " km/h"
 	
-#	if Root.directionPositive == true:
-#		$Direction.text = "Forwards"
-#	else:
-#		$Direction.text = "Reverse"
+	var alpha = (Math.speedToKmH(get_parent().speed)/get_parent().currentSpeedLimit)*2 -1
+	if alpha < 0:
+		alpha = 0
+	$HBoxContainer/CurrentLimit.modulate.a = alpha
+
+
 var sending = false
 var messaget = 0
 func send_Message(text):
@@ -70,7 +68,7 @@ func _on_OkTextBox_pressed():
 	
 func check_ingameHUD(delta):
 	if Input.is_action_just_pressed("ingameHUD"):
-		$Speed.visible = !$Speed.visible
+		$HBoxContainer.visible = !$HBoxContainer.visible
 
 
 
@@ -78,3 +76,9 @@ func _on_QuitMenu_pressed():
 	get_tree().paused = false
 	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 	pass # Replace with function body.
+
+func check_trainInfo(delta):
+	if Input.is_action_just_pressed("trainInfo"):
+		$TrainInfo.visible = not $TrainInfo.visible
+	if $TrainInfo.visible:
+		$TrainInfo.update_info(get_parent())

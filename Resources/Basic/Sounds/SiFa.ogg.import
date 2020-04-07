@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SiFa.ogg-53732919139c3c48da8299f28bc8a216.oggstr"
+
+[deps]
+
+source_file="res://Resources/Basic/Sounds/SiFa.ogg"
+dest_files=[ "res://.import/SiFa.ogg-53732919139c3c48da8299f28bc8a216.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

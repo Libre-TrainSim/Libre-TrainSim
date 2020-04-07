@@ -1,80 +1,131 @@
 extends Spatial
 
-## Variables for the train.
-export (String) var route_ # Insert here the Names of the RailNodes seperated by a blank. For example: "Rail1 Rail2 Rail3". THe train will first drive Rail1, then it will drive on Rail2, and in the end at Rail3.
-export (float) var speedLimit # Maximum Speed, the train can drive. (Unit: km/h)
+################################################################################
+## To Content-Creators: DO NOT EDIT THIS SCRIPT!! This Script will be overwritten by the game.
+## For your own scripting please use the attached Node "SpecificScripting"
+################################################################################
+
+################################################################################
+## Interesting Variables for addOn Creators, which could be read out, (or set).
+var soll_command = -1 # The input by the player. (0: Nothing, 1: Full acceleration, -1: Full Break). Shouldnt be lesser or greater than absolute 1
 export (float) var acceleration # Unit: m/(s*s)
 export (float) var brakeAcceleration # Unit: m/(s*s)
 export (float) var friction # (-> Speed = Speed - Speed * fritction (*delta) )
-export (float) var length # Train length. Currently not used
-export (float) var startPosition # on rail.
-export var cameraFactor = 0.1
-
-export (bool) var forward = true
-
-export (bool) var debug 
-
-var route = route_.split(" ") # Turns the String to a readable Array.
-var speed = 0 # Initiats the speed. (Unit: m/s)
-var distance = 0 # Initiates the Start Position of the Ride. Used for example the TrainStations.
-var distanceOnRail  # It is the current position on the rail.
-var currentRail # Node Reference to the current Rail on which we are driving.
-var routeIndex = 0 # Index of the route Array.
-onready var currentSpeedLimit = speedLimit # Unit: km/h
+export (float) var length # Train length. # Used in Train Stations for example
+export (float) var speedLimit # Maximum Speed, the train can drive. (Unit: km/h)
+export (int) var controlType = 0 # 0: Arrowkeys (Combi Control), 1: WASD (Separate brake and speed (1 Currently not implemented))
+export (bool) var electric = true
+var pantograph = false   ## Please just use this variable, if to check, if pantograph is up or down. true: up
+var pantographUp = false ## is true, if pantograph is rising.
+var voltage = 0 # If this value = 0, the train wont drive unless you press ingame "B". If voltage is "here", then its at 15. Unit (kV)
+export (float) var pantographTime = 5
+var speed = 0 # Initiats the speed. (Unit: m/s) ## You can convert it with var kmhSpeed = Math.speed2kmh(speed)
+var distance = 0 # Initiates the complete driven distance since the startposition of the Ride. Used for example the TrainStations.
+onready var currentSpeedLimit = speedLimit # Unit: km/h # holds the current speedlimit
+var hardOverSpeeding = false # If Speed > speedlimit + 10 this is set to true
 var nextSpeedLimit = -1 # it stores the value of the last "Warn Speed Limit Node". Currently not further used. Unit: km/h
-var voltage = 0 # If this value = 0, the train wont drive unless you press ingame b
-
 var command = -1 # If Command is < 0 the train will brake, if command > 0 the train will accelerate. Set by the player with Arrow Keys.
-var currentAcceleration = 0 # Current Acceleration in m/(s*s)
+var technicalSoll = 0 # Soll Command. This variable describes the "aim" of command
+var blockedAcceleration = false ## If true, then acceleration is blocked. e.g.  brakes
+var accRoll = 0 # describes the user input, (0 to 1)
+var brakeRoll = -1 # describes the user input (0 to -1)
+var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive)
+var time = [23,59,59] ## actual time Indexes: [0]: Hour, [1]: Minute, [2]: Second
+var ai = false # Currently not used. It will set by the scenario manger from world node.
+var enforcedBreaking = false 
+var overrunRedSignal = false
+## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
+var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "passed" : []} 
+## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
 
-var stationIndex = 0
-var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "passed" : []} ## set by the world scneario manager
-## StopType:
-# 0: Dont halt at this station
-# 1: Halt at this station
-# 2: Beginning Station
-# 3: End Station
- 
+## For current Station:
+var currentStationName = "" # If we are in a station, this variable stores the current station name
+var wholeTrainNotInStation = false # true if speed = 0, and the train is not fully in the station
+var isInStation = false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
+var realArrivalTime = time # Time is set if train successfully arrived
+var stationLength = 0 # stores the stationlength
+var stationHaltTime = 0 # stores the minimal halt time from station 
+var arrivalTime = time # stores the arrival time. (from the timetable)
+var depatureTime = time # stores the departure time. (from the timetable)
+var platformSide = 0 # Stores where the plaform is. #0: No platform, 1: at left side, 2: at right side, 3: at both sides
+
+export var doors = true
+export var doorsClosingTime = 7
+var doorRight = false # If Door is Open, then its true
+var doorLeft = false
+var doorsClosing = false
+
+export var brakingSpeed = 0.3
+export var brakeReleaseSpeed = 0.2
+export var accelerationSpeed = 0.2
+export var accerationReleaseSpeed = 0.5
+
+export var sifaEnabled = true
+var sifa = false # If this is true, the player has to press the sifa key (Space)
+
+export (String) var description = ""
+export (String) var author = ""
+export (String) var releaseDate = ""
+export (String) var screenshotPath = ""
+
+## callable functions:
+# send_message()
+# show_textbox_message(string)
+################################################################################
 
 
 var world # Node Reference to the world node.
 
+export var cameraFactor = 0.1 ## The Factor, how much the camaere moves at acceleration and braking
+var startPosition # on rail, given by scenario manager in world node
+var forward = true # does the train drive at the rail direction, or against it? 
+var debug  ## used for driving fast at the track, if true.
+var route # String conataining all importand Railnames for e.g. switches. Set by the scenario manager of the world
+var distanceOnRail  # It is the current position on the rail.
+var currentRail # Node Reference to the current Rail on which we are driving.
+var routeIndex = 0 # Index of the baked route Array.
+var startRail # Rail, on which the train is starting. Set by the scenario manger of the world
+
+
+
+
+
+onready var cameraNode = $Camera
 var cameratZeroTranslation # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
-var time = []
 
-onready var cameraNode = $Camera2
-
-export (bool) var startUpGuide = false
 
 func ready(): ## Called by World!
-	$StartUpGuide.enable = startUpGuide
-	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	var texture = $Viewport.get_texture()
-	$Screen.material_override.emission_texture = texture
-	
-	$DisplayLeft.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	texture = $DisplayLeft.get_texture()
-	$ScreenLeft.material_override.emission_texture = texture
-	
-	$DisplayRight.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	texture = $DisplayRight.get_texture()
-	$ScreenRight.material_override.emission_texture = texture
-	
 	cameratZeroTranslation = cameraNode.translation
-	route = route_.split(" ")
 	world = get_parent().get_parent()
-
+	
+	route = route.split(" ")
 	bake_route()
+	
+	if Root.EasyMode:
+		pantograph = true
+		controlType = 0
+		sifaEnabled = false
+
+	if not doors:
+		doorLeft = false
+		doorRight = false
+		doorsClosing = false
+	
+	if not electric:
+		pantograph = true
+	
+	if sifaEnabled:
+		$Sound/SiFa.play()
 	
 	## Get driving handled
 	## Set the Train at the beginning of the rail, and after that set the distance on the Rail forward, which is standing in var startPosition
 	distanceOnRail = startPosition#
-	currentRail = get_parent().get_parent().get_node("Rails/"+route[routeIndex])
+	currentRail = world.get_node("Rails/"+startRail)
 	if currentRail == null:
 		print("Error: can't find Rail. Check the route of the Train "+ self.name)
 		return
-	print(currentRail)
+
 	## Set Train to Route:
 	if forward:
 		rotation_degrees.y = currentRail.rotation_degrees.y
@@ -94,43 +145,33 @@ func ready(): ## Called by World!
 		soll_command = 0
 	
 	## get chunks handled:
-	world.activeChunk = world.pos2Chunk(self.translation) 
-
-var signalsforRail # Just stores the name of the Rail, which signals are loaded into "signals"
+	if not ai:
+		world.activeChunk = world.pos2Chunk(self.translation) 
 
 func _process(delta):
-	#print(translation)
-	if signalsforRail != currentRail.name:
-		get_all_signals()
-		signalsforRail = currentRail.name
-	
+	if world == null:
+		return
 	getCommand(delta)
 	
 	getSpeed(delta)
+	
 	if speed != 0:
 		drive(delta)
 	
-	get_time()
-	
 	handleCamera(delta)
 	
-	check_pantograph(delta)
+	get_time()
 	
-	check_doors(delta)
+	if electric:
+		check_pantograph(delta)
 	
-	$Viewport/Display.update_display(Math.speedToKmH(speed), soll_command, doorLeft, doorRight, doorsClosing)
+	if not debug:
+		check_security()
 	
-	$DisplayLeft/ScreenLeft2.update_time(time)
-	$DisplayLeft/ScreenLeft2.update_voltage(voltage)
-	$DisplayLeft/ScreenLeft2.update_command(command)
-	
-	$DisplayRight/ScreenRight.update_display(stations["arrivalTime"], stations["departureTime"], stations["stationName"], stations["stopType"], stations["passed"], isInStation)
+	if doors:
+		check_doors(delta)
 	
 	check_signals()
-	
-	update_Brake_Roll(soll_command, $BrakeRoll)
-	
-	update_Acc_Roll(soll_command, $AccRoll)
 	
 	check_station(delta)
 	
@@ -138,56 +179,87 @@ func _process(delta):
 	
 	check_for_next_station(delta)
 	
+	check_for_player_help(delta)
+	
+	check_horn()
+	
+	if sifaEnabled:
+		check_sifa(delta)
 	
 func get_time():
 	time = world.time
 
-	
-		
 
-	
-	
 
-var soll_command = -1
 func getCommand(delta):
-	
-	
-	if Input.is_action_pressed("ui_up"):
-		soll_command += 0.7 * delta
-	if Input.is_action_pressed("ui_down"):
-		soll_command -= 0.7 * delta
-	if soll_command >= 1:
-		soll_command = 1
-	if soll_command <= -1:
-		soll_command = -1
-	if Input.is_action_pressed("ui_left"):
-		soll_command = 0
-	if Input.is_action_pressed("ui_right"):
-		soll_command = 1
-	
-	if not pantograph and not debug:
-		if command > 0:
-			command = 0
-		soll_command = -1
-	elif (doorRight or doorLeft):
-		if soll_command > 0:
+	if controlType == 0: ## Combi Roll
+		if Input.is_action_pressed("ui_up"):
+			soll_command += 0.7 * delta
+		if Input.is_action_pressed("ui_down"):
+			soll_command -= 0.7 * delta
+		if soll_command >= 1:
+			soll_command = 1
+		if soll_command <= -1:
+			soll_command = -1
+		if Input.is_action_pressed("ui_left"):
 			soll_command = 0
+		if Input.is_action_pressed("ui_right"):
+			soll_command = 1
+		if soll_command > 1: soll_command = 1
+		if soll_command < -1: soll_command = -1
+		
+	elif controlType == 1: ## Seperate Brake and Acceleration
+		if Input.is_action_pressed("acc+"):
+			accRoll += 0.7 * delta
+		if Input.is_action_pressed("acc-"):
+			accRoll -= 0.7 * delta
+		if accRoll > 1: accRoll = 1
+		if accRoll < 0: accRoll = 0
+		if Input.is_action_pressed("brake+"):
+			brakeRoll -= 0.7 * delta
+		if Input.is_action_pressed("brake-"):
+			brakeRoll += 0.7 * delta
+		if brakeRoll > 0: brakeRoll = 0
+		if brakeRoll < -1: brakeRoll = -1
+		
+		soll_command = accRoll
+		if brakeRoll != 0: soll_command = brakeRoll
+		
+	if soll_command == 0 or Root.EasyMode and not enforcedBreaking:
+		blockedAcceleration = false
+	if command < 0 and not Root.EasyMode:
+		blockedAcceleration = true
+	if (doorRight or doorLeft):
+		blockedAcceleration = true
+		
+	technicalSoll = soll_command
 	
-	var missing_value = (soll_command-command)
-	if missing_value > 0.2:
-		missing_value = 0.2
-	if missing_value < -0.3:
-		missing_value = -0.3
+	if technicalSoll > 0 and blockedAcceleration:
+		technicalSoll = 0
+	
+	if enforcedBreaking and not debug:
+		technicalSoll = -1
+	
+	
+	var missing_value = (technicalSoll-command)
+	if missing_value == 0: return
+	if command > 0:
+		if missing_value > 0:
+			missing_value = accelerationSpeed
+		if missing_value < 0:
+			missing_value = -accerationReleaseSpeed
+	if command < 0:
+		if missing_value > 0:
+			missing_value = brakeReleaseSpeed
+		if missing_value < 0:
+			missing_value = -brakingSpeed
 	command = command + missing_value*delta
+	if ((technicalSoll-command) > 0 and missing_value < 0) or ((technicalSoll-command) < 0 and missing_value > 0):
+		command = technicalSoll
+
 	
-	if (doorRight or doorLeft ) and command > 1:
-		command 
 	
-	
-		
-		
 func getSpeed(delta):
-	
 	var sollAcceleration
 	if command < 0:
 		sollAcceleration = brakeAcceleration * command
@@ -208,7 +280,6 @@ func getSpeed(delta):
 		speed = 200*command
 
 func drive(delta):
-	#print("Distance " + String(distanceOnRail))
 	var drivenDistance
 	if forward:
 		drivenDistance = speed * delta
@@ -217,7 +288,6 @@ func drive(delta):
 		if distanceOnRail > currentRail.length:
 			drivenDistance = distanceOnRail - currentRail.length
 			change_to_next_rail()
-			
 	else:
 		drivenDistance = speed * delta
 		distanceOnRail -= drivenDistance
@@ -225,16 +295,13 @@ func drive(delta):
 		if distanceOnRail < 0:
 			drivenDistance = 0 - distanceOnRail
 			change_to_next_rail()
-
-
+	
 	if forward:
 		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
 		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, drivenDistance)
 	else:
 		self.translation = Math.getNextPos(-currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
 		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, drivenDistance)
-
-var signals
 
 func change_to_next_rail():
 	print("Changing Rail..")
@@ -260,22 +327,15 @@ func handleCamera(delta):
 		sollCameraPosition = cameratZeroTranslation.x
 	var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
 	cameraNode.translation.x -= missingCameraPosition * delta
-	
-	## Camera Rotation
-#	var sollCameraRotation
-#	if currentRail.radius == 0:
-#		sollCameraRotation = -90
-#	else:
-#		sollCameraRotation = -1/currentRail.radius*3000.0 - 90.0
-#	var missingCameraRotation = cameraNode.rotation_degrees.y - sollCameraRotation
-#	cameraNode.rotation_degrees.y -= missingCameraRotation * 0.7 * delta
 
-func get_all_signals():
-	signals = currentRail.attachedSignals.duplicate(true)
-	print(signals)
-
+## Signals:
+var signalsRailName # Just stores the name of the Rail, which signals are loaded into "signals"
+var signals # name of the signals, which are on the current track
 func check_signals():
-
+	if signalsRailName != currentRail.name:
+		signals = currentRail.attachedSignals.duplicate(true)
+	signalsRailName = currentRail.name
+		
 	for signalname in signals.keys():
 		if forward and signalname != "" and signals[signalname] < distanceOnRail:
 			handle_signal(signalname)
@@ -295,6 +355,7 @@ func handle_signal(signalname):
 			nextSpeedLimit = signal.warnSpeed
 		if signal.status == 0:
 			send_message("You overrun a red signal. The game is over!")
+			overrunRedSignal = true
 		signal.status = 0
 	elif signal.type == "Station": ## Station
 		if not stations["nodeName"].has(signal.name):
@@ -315,22 +376,14 @@ func handle_signal(signalname):
 				stationBeginning = false
 		currentStationName = stations["stationName"][index]		
 		isInStation = false
+		platformSide = signal.platformSide
 		stationHaltTime = stations["haltTime"][index]
 		stationLength = signal.stationLength
 		distanceOnStationBeginning = distance
+		arrivalTime = stations["arrivalTime"][index]
 		depatureTime = stations["departureTime"][index]
-		
-
-#		if signal.regularStop:
-#			currentStation = signal.stationName
-#			isInStation = false
-#			stationTimer = 0
-#			stationBeginning = signal.beginningStation
-#			stationHaltTime = signal.stopTime
-#			distanceOnStationBeginning = distance
-#			endStation = signal.endStation
-#			stationLength = signal.stationLength
-#			depatureTime = [signal.departureH, signal.departureM, signal.departureS]
+		doorOpenMessageSentTimer = 0
+		doorOpenMessageSent = false
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
@@ -338,29 +391,33 @@ func handle_signal(signalname):
 		print("Next Speed Limit: "+String(nextSpeedLimit))
 	pass
 
-## For Station:
-var currentStationName = ""
-var realArrivalTime = time
-var isInStation = false
-var stationTimer = 0
-var stationHaltTime = 0
-var stationLength = 0
-var distanceOnStationBeginning = 0
+
+
+
+## For Station: 
 var endStation = false
-var depatureTime = 0
-var stationBeginning = 0
-var wholeTrainNotInStation = false
+var stationBeginning = true
+var stationTimer = 0
+var distanceOnStationBeginning = 0
+var doorOpenMessageSentTimer = 0
+var doorOpenMessageSent = false
 func check_station(delta):
 	if currentStationName != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation:
 			wholeTrainNotInStation = true
 			send_message("The End of your Train haven't already reached the Station. Please drive a bit forward, and try it again.")
+		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and not (doorLeft or doorRight)):
+			doorOpenMessageSentTimer += delta
+			if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
+				send_message("Hint: You have to open the doors with 'i' or 'p', to arrive at the station.")
+				doorOpenMessageSent = true
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight)) or (stationBeginning and not isInStation):
 			realArrivalTime = time
 			var lateMessage = "."
-			var minutesLater = -depatureTime[1] + realArrivalTime[1] + (-depatureTime[0] + realArrivalTime[0])*60
-			if minutesLater > 0:
-				lateMessage = ". You are " + String(minutesLater) + " minutes later." 
+			if not stationBeginning:
+				var minutesLater = -arrivalTime[1] + realArrivalTime[1] + (-arrivalTime[0] + realArrivalTime[0])*60
+				if minutesLater > 0:
+					lateMessage = ". You are " + String(minutesLater) + " minutes later." 
 			send_message("Welcome to " + currentStationName + lateMessage)
 			stationTimer = 0
 			
@@ -382,7 +439,7 @@ func check_station(delta):
 					isInStation = false
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
-				send_message("You departed earlier than allowed! Plese wat for the depart message next time!")
+				send_message("You departed earlier than allowed! Please wait for the depart message next time!")
 			else:
 				send_message("You missed a station! Please drive further on.")
 			stations["passed"][stations["stationName"].find(currentStationName)] = true
@@ -394,11 +451,8 @@ func check_station(delta):
 			wholeTrainNotInStation = false
 
 
-# Pantograph
+## Pantograph
 var pantographTimer = 0
-var pantograph = false
-var pantographUp = false
-export (float) var pantographTime = 5
 
 func check_pantograph(delta):
 	if Input.is_action_just_pressed("pantograph"):
@@ -415,24 +469,7 @@ func check_pantograph(delta):
 	else:
 		voltage = voltage + (0-voltage)*delta*2.0
 		
-func update_Combi_Roll(command, node):
-	node.rotation_degrees.z = 45*command+1
 
-func update_Brake_Roll(command, node):
-	var rotation
-	if command > 0:
-		rotation = 45
-	else:
-		rotation = 45 + command*90
-	node.rotation_degrees.z = rotation
-
-func update_Acc_Roll(command, node):
-	var rotation
-	if command < 0:
-		rotation = 45
-	else:
-		rotation = 45 - command*90
-	node.rotation_degrees.z = rotation
 
 var checkSpeedLimitTimer = 0
 func checkSpeedLimit(delta):
@@ -440,6 +477,7 @@ func checkSpeedLimit(delta):
 		send_message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
 		checkSpeedLimitTimer = 10
 		print(String(currentSpeedLimit) + " " + String(Math.speedToKmH(speed)))
+	hardOverSpeeding = Math.speedToKmH(speed) > currentSpeedLimit + 10
 	if checkSpeedLimitTimer > 0:
 		checkSpeedLimitTimer -= delta
 	
@@ -449,14 +487,12 @@ func send_message(string):
 		
 
 ## Doors:
-var doorsClosing = false
+
 var doorsClosingTimer = 0
-export var doorsClosingTime = 7
-export var doorRight = false # If Door is Open, then its true
-export var doorLeft = false
+
 func check_doors(delta):
 	if Input.is_action_just_pressed("doorClose"):
-		if not doorsClosing:
+		if not doorsClosing and (doorLeft or doorRight):
 			doorsClosing = true
 			$Sound/DoorsClose.play()
 	if Input.is_action_just_pressed("doorLeft"):
@@ -478,8 +514,7 @@ func check_doors(delta):
 		doorsClosingTimer = 0
 		
 		
-func show_textbox_message(string):
-	$HUD.show_textbox_message(string)
+
 	
 var baked_route ## Route, which will be generated at start of the game.
 var baked_route_direction
@@ -488,8 +523,9 @@ func bake_route(): ## Generate the whole route for the train.
 	baked_route = []
 	baked_route_direction = [forward]
 	
-	baked_route.append(route[0])
-	var currentR = world.get_node("Rails").get_node(baked_route[baked_route.size()-1]) ## imagine: current rail, which the train will drive later
+	baked_route.append(startRail)
+	print("BAKED ROUTE:"  +String(baked_route))
+	var currentR = world.get_node("Rails").get_node(baked_route[0]) ## imagine: current rail, which the train will drive later
 	baked_route_railLength = [currentR.length]
 	var currentpos
 	var currentrot
@@ -540,7 +576,8 @@ func bake_route(): ## Generate the whole route for the train.
 	print("Baked Route: "+ String(baked_route))
 	print("Baked Route: Direction "+ String(baked_route_direction))
 	
-	
+func show_textbox_message(string):
+	$HUD.show_textbox_message(string)
 	
 func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray with the names of the signals. The first entry is the nearest.
 	var returnValue = []
@@ -613,4 +650,43 @@ func check_for_next_station(delta):
 			stationMessageSent = true
 			send_message("The next station is: "+ stations["stationName"][stations["nodeName"].find(nextStation)]+ ". It is "+ String(int(get_distance_to_signal(nextStation)/100)*100+100) + "m away.")
 		
+
+func check_security():#
+	var oldEnforcedBrake = 	enforcedBreaking
+	enforcedBreaking = hardOverSpeeding or overrunRedSignal or not pantograph or sifaTimer > 33 
+	if not oldEnforcedBrake and enforcedBreaking and speed > 0:
+		$Sound/EnforcedBrake.play()
+
+var check_for_player_helpTimer = 0
+var check_for_player_helpTimer2 = 0
+var check_for_player_helpSent = false
+func check_for_player_help(delta):
+	if not check_for_player_helpSent and speed == 0:
+		check_for_player_helpTimer += delta
+		if check_for_player_helpTimer > 8 and not pantographUp and not check_for_player_helpSent:
+			send_message("Hint: Problems with the train? Under 'F2' you can see what is wrong")
+			check_for_player_helpSent = true
+		if check_for_player_helpTimer > 15 and command < -0.5 and not check_for_player_helpSent:
+			send_message("Hint: Problems with the train? Under 'F2' you can see what is wrong")
+			check_for_player_helpSent = true
+	else:
+		check_for_player_helpTimer = 0
 	
+	check_for_player_helpTimer2 += delta
+	if blockedAcceleration and accRoll > 0 and not (doorRight or doorLeft) and not overrunRedSignal and check_for_player_helpTimer2 > 10:
+		send_message("Hint: Try to set the acceleration to zero with 's', and give speed (=acceleration) with 'w' again.")
+		check_for_player_helpTimer2 = 0
+		
+
+func check_horn():
+	if Input.is_action_just_pressed("Horn"):
+		$Sound/Horn.play()
+
+var sifaTimer = 0
+func check_sifa(delta):
+	sifaTimer += delta
+	if speed == 0 or Input.is_action_just_pressed("SiFa"):
+		sifaTimer = 0
+	sifa =  sifaTimer > 25
+	$Sound/SiFa.stream_paused = not sifaTimer > 30
+		

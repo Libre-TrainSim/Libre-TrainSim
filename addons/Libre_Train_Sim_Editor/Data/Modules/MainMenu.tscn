@@ -13,6 +13,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+version = "0.6"
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -23,14 +24,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Feedback" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -197.62
+margin_top = 13.2964
+margin_right = -16.6205
+margin_bottom = 49.2964
+custom_fonts/font = ExtResource( 3 )
+text = "Your Feedback wanted!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Front" type="HBoxContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 19.0
-margin_top = -78.0
+margin_top = -90.2773
 margin_right = -19.0
-margin_bottom = -19.0
+margin_bottom = -31.2773
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -168,7 +182,7 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="Play/Selection/Trains"]
 margin_right = 322.0
 margin_bottom = 75.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 text = "Train:"
 align = 1
 __meta__ = {
@@ -181,7 +195,7 @@ margin_right = 322.0
 margin_bottom = 274.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 5 )
 items = [ "Strecke 1", null, false ]
 
 [node name="Info" type="HBoxContainer" parent="Play"]
@@ -214,6 +228,15 @@ custom_fonts/font = ExtResource( 3 )
 margin_top = 68.0
 margin_bottom = 98.0
 custom_fonts/font = ExtResource( 3 )
+
+[node name="EasyMode" type="CheckBox" parent="Play/Info/Info"]
+visible = false
+margin_top = 102.0
+margin_right = 96.0
+margin_bottom = 126.0
+custom_fonts/font = ExtResource( 3 )
+pressed = true
+text = "Easy Mode"
 
 [node name="Screenshot" type="TextureRect" parent="Play/Info"]
 margin_left = 614.0
@@ -373,15 +396,88 @@ margin_right = 189.0
 margin_bottom = 120.0
 custom_fonts/font = ExtResource( 4 )
 text = "Loading..."
+
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -201.0
+margin_top = -33.0
+margin_right = -6.0
+margin_bottom = -3.0
+grow_horizontal = 0
+custom_fonts/font = ExtResource( 3 )
+text = "Version: 0.0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FeedBack" type="WindowDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -227.5
+margin_top = -80.5
+margin_right = 227.5
+margin_bottom = 80.5
+window_title = "Feedback"
+resizable = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FeedBack"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="FeedBack/VBoxContainer"]
+margin_right = 455.0
+margin_bottom = 121.0
+size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 3 )
+text = "   
+   Do you have 2 minutes left for answerng a quick survey?
+   You would help the project a lot!"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FeedBack/VBoxContainer"]
+margin_top = 125.0
+margin_right = 455.0
+margin_bottom = 161.0
+size_flags_horizontal = 3
+
+[node name="Later" type="Button" parent="FeedBack/VBoxContainer/HBoxContainer"]
+margin_right = 225.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Later"
+
+[node name="OpenWebBrowser" type="Button" parent="FeedBack/VBoxContainer/HBoxContainer"]
+margin_left = 229.0
+margin_right = 455.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Open Web-Browser"
+[connection signal="pressed" from="Feedback" to="." method="_on_ButtonFeedback_pressed"]
 [connection signal="pressed" from="Front/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/Content" to="." method="_on_Content_pressed"]
 [connection signal="pressed" from="Front/Settings" to="." method="_on_SettingsFrong_pressed"]
 [connection signal="pressed" from="Front/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="item_selected" from="Play/Selection/Tracks/ItemList" to="." method="_on_ItemList_itemTracks_selected"]
 [connection signal="item_selected" from="Play/Selection/Scenarios/ItemList" to="." method="_on_ItemList_scenario_selected"]
+[connection signal="item_selected" from="Play/Selection/Trains/ItemList" to="." method="_on_ItemList_Train_selected"]
 [connection signal="pressed" from="Play/Buttons/Back" to="." method="_on_BackPlay_pressed"]
 [connection signal="pressed" from="Play/Buttons/Play" to="." method="_on_PlayPlay_pressed"]
 [connection signal="pressed" from="Content/Buttons/Back" to="." method="_on_BackContent_pressed"]
 [connection signal="pressed" from="Content/Buttons/Reload" to="." method="_on_ReloadContent_pressed"]
 [connection signal="pressed" from="Settings/GridContainer/Fullscreen" to="." method="_on_FullscreenSettings_pressed"]
 [connection signal="pressed" from="Settings/Buttons/Back" to="." method="_on_BackSettings_pressed"]
+[connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/Later" to="." method="_on_Later_pressed"]
+[connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/OpenWebBrowser" to="." method="_on_OpenWebBrowser_pressed"]

@@ -1,6 +1,8 @@
 extends Node
 
 var currentScenario
+var currentTrain
+var EasyMode = true
 
 # Declare member variables here. Examples:
 # var a = 2

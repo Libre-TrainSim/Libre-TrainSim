@@ -37,7 +37,10 @@ func _on_NewScenario_pressed():
 	var scenarioList = get_all_scenarios()
 	scenarioList.append(sName)
 	config.set_value("Scenarios", "List", scenarioList)
-	config.save(save_path)
+	var sData = config.get_value("Scenarios", "sData", {})
+	sData[sName] = {}
+	config.set_value("Scenarios", "sData", sData)	
+	config.save(save_path)	
 	currentScenario = sName
 	update_scenario_list()
 	print("Scenario added.")
@@ -139,6 +142,7 @@ func set_scenario_settings():
 	
 func update_scenario_list():
 	$Scenarios/ItemList.clear()
+	if config == null: return
 	var scenarios = config.get_value("Scenarios", "List", {})
 	for scenario in scenarios:
 		$Scenarios/ItemList.add_item(scenario)
@@ -243,6 +247,7 @@ func _on_SaveWorldConfig_pressed():
 	print("World Config saved.")
 
 func get_world_configuration():
+	if config == null: return
 	var d = config.get_value("WorldConfig", "Data", null)
 	if d == null: return
 	$"World Configuration/GridContainer/ReleaseDate/Day".value = d["ReleaseDate"][0]
@@ -315,9 +320,10 @@ func get_station_array():
 	return stations
 
 func prepare_station_table(stations):
+	print(stations)
 	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-	for i in range(12, grid.get_children().size()):
-		grid.get_children()[i].queue_free()
+	while (grid.get_children().size() > 12):
+		grid.get_children()[grid.get_children().size()-1].free()
 	entriesCount = 0
 	for i in range (0,stations["nodeName"].size()):
 		_on_AddStationEntry_pressed()
@@ -335,3 +341,9 @@ func prepare_station_table(stations):
 		children[6*i+5].selected = stations["stopType"][i-2]
 
 	
+
+
+func _on_ResetSignals_pressed():
+	for child in world.get_node("Signals").get_children():
+		if child.type == "Signal":
+			child.reset()

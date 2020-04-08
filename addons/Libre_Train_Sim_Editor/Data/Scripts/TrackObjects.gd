@@ -124,6 +124,9 @@ func _update(newvar):
 	if world == null: return
 	if wholeRail:
 		var rail = world.get_node("Rails").get_node(attachedRail)
+		if rail == null:
+			queue_free()
+			return
 		onRailPosition = 0
 		length = rail.length
 	attach_to_rail()

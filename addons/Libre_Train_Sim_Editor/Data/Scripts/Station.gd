@@ -21,6 +21,15 @@ export var forward = true
 
 var rail
 func _ready():
+	if Engine.is_editor_hint():
+		if get_parent().name == "Signals":
+			return
+		if get_parent().is_in_group("Rail"):
+			attachedRail = get_parent().name
+		var signals = find_parent("World").get_node("Signals")
+		get_parent().remove_child(self)
+		signals.add_child(self)
+		setToRail(true)
 	if not Engine.is_editor_hint():
 		$MeshInstance.queue_free()
 		setToRail(true)

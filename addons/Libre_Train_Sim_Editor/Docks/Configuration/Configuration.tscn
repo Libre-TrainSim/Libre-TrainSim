@@ -11,7 +11,6 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -161,6 +160,7 @@ size_flags_horizontal = 4
 text = "! Save and crreate Chunks !"
 
 [node name="Scenarios" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -248,14 +248,13 @@ caret_blink_speed = 0.5
 [node name="Settings" type="VBoxContainer" parent="Scenarios"]
 margin_top = 178.0
 margin_right = 1016.0
-margin_bottom = 672.0
+margin_bottom = 440.0
 
 [node name="Tab" type="TabContainer" parent="Scenarios/Settings"]
 margin_right = 1016.0
-margin_bottom = 494.0
+margin_bottom = 262.0
 
 [node name="General" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -379,6 +378,7 @@ size_flags_horizontal = 4
 text = "Save General"
 
 [node name="Trains" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -707,14 +707,14 @@ size_flags_horizontal = 4
 text = "Save Train"
 
 [node name="HSeparator" type="HSeparator" parent="Scenarios"]
-margin_top = 676.0
+margin_top = 444.0
 margin_right = 1016.0
-margin_bottom = 680.0
+margin_bottom = 448.0
 
 [node name="Label2" type="Label" parent="Scenarios"]
-margin_top = 684.0
+margin_top = 452.0
 margin_right = 1016.0
-margin_bottom = 698.0
+margin_bottom = 466.0
 text = "World (Signals and Stations):"
 align = 1
 __meta__ = {
@@ -722,19 +722,27 @@ __meta__ = {
 }
 
 [node name="Write" type="Button" parent="Scenarios"]
-margin_top = 702.0
+margin_top = 470.0
 margin_right = 1016.0
-margin_bottom = 722.0
+margin_bottom = 490.0
 size_flags_horizontal = 3
 text = "Save current Signal Data to scenario"
 
 [node name="Load" type="Button" parent="Scenarios"]
-margin_top = 726.0
+margin_top = 494.0
 margin_right = 1016.0
-margin_bottom = 746.0
+margin_bottom = 514.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
 text = "Load Signal Data from current Scenario"
+
+[node name="ResetSignals" type="Button" parent="Scenarios"]
+margin_top = 518.0
+margin_right = 1016.0
+margin_bottom = 538.0
+hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
+size_flags_horizontal = 3
+text = "Reset Signal Data"
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
 [connection signal="pressed" from="World Configuration/SaveChunks" to="." method="_on_SaveChunks_pressed"]
 [connection signal="item_selected" from="Scenarios/ItemList" to="." method="_on_ItemList_item_selected"]
@@ -748,3 +756,4 @@ text = "Load Signal Data from current Scenario"
 [connection signal="pressed" from="Scenarios/Settings/Tab/Trains/SaveTrain" to="." method="_on_SaveTrain_pressed"]
 [connection signal="pressed" from="Scenarios/Write" to="." method="_on_WriteData_pressed"]
 [connection signal="pressed" from="Scenarios/Load" to="." method="_on_LoadScenario_pressed"]
+[connection signal="pressed" from="Scenarios/ResetSignals" to="." method="_on_ResetSignals_pressed"]

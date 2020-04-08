@@ -1,14 +1,12 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
-[ext_resource path="res://Trains/JFR1/JFR1_White.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Basic/Grass.material" type="Material" id=3]
 [ext_resource path="res://Resources/Basic/grass.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/SkyBox.tres" type="Environment" id=7]
 [ext_resource path="res://Resources/Basic/Materials/EasyTree.tres" type="Material" id=8]
-
-
 
 [sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {
@@ -40,16 +38,10 @@ transform = Transform( 0.848954, -0.121668, -0.51427, 0.5, 0.5, 0.707106, 0.1711
 light_color = Color( 1, 0.941176, 0.796078, 1 )
 light_bake_mode = 2
 
-[node name="Players" type="Spatial" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 7 )
 
-[node name="Player" parent="Players" instance=ExtResource( 2 )]
-route_ = "Rail"
-speedLimit = 200.0
-acceleration = 1.0
-brakeAcceleration = 1.5
-friction = 0.005
-length = 125.0
-startPosition = 10.0
+[node name="Players" type="Spatial" parent="."]
 
 [node name="Grass" type="Spatial" parent="."]
 
@@ -76,24 +68,15 @@ otherLength = 1000
 multimesh = SubResource( 2 )
 description = "Tree"
 attachedRail = "Rail"
-onRailPosition = 0
 length = 100.0
 objectPath = "res://Resources/Basic/EasyTree_big.obj"
 materialPaths = [ "res://Resources/Basic/Materials/EasyTree.tres", "", "", "", "" ]
 sides = 1
-spawnRate = 1.0
 rows = 5.0
-distanceLength = 10.0
 distanceRows = 10.0
 shift = 20.0
-height = 0.0
-rotationObjects = 0.0
 randomLocation = true
-randomLocationFactor = 0.3
 randomRotation = true
 randomScale = true
-randomScaleFactor = 0.2
-placeLast = false
 wholeRail = true
-update = false
 meshSet = true

@@ -3,7 +3,7 @@ extends Spatial
 var type = "Signal"
 export var status = 0# 0: Red, 1: Green, -1: Off
 export var signalAfter = ""
-onready var signalAfterNode = get_parent().get_parent().get_node("Signals/"+signalAfter)
+onready var signalAfterNode = get_parent().get_parent().get_node("Signals/"+String(signalAfter))
 onready var world = find_parent("World")
 export var setPassAtH = 25
 export var setPassAtM = 0
@@ -31,6 +31,14 @@ func _process(delta):
 
 
 func _ready():
+	if Engine.is_editor_hint() and not get_parent().name == "Signals":
+		if get_parent().is_in_group("Rail"):
+			attachedRail = get_parent().name
+		var signals = find_parent("World").get_node("Signals")
+		get_parent().remove_child(self)
+		signals.add_child(self)
+		update()
+		
 	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	var texture = $Viewport.get_texture()
 	$Screen1.material_override = $Screen1.material_override.duplicate(true)
@@ -89,7 +97,8 @@ func off():
 func setToRail(newvar):
 	var world = find_parent("World")
 	if world == null:
-		queue_free()
+		print("Signal CANT FIND WORLD NODE!")
+		return
 	if world.has_node("Rails/"+attachedRail) and attachedRail != "":
 		var rail = get_parent().get_parent().get_node("Rails/"+attachedRail)
 		rail.register_signal(self.name, onRailPosition)
@@ -143,4 +152,15 @@ func set_scenario_data(d):
 	setPassAtS = d.setPassAtS 
 	speed = d.speed
 	warnSpeed = d.warnSpeed
+
+func reset():
+	signalAfter = ""
+	status = 0
+	setPassAtH = 25
+	setPassAtM = 0
+	setPassAtS = 0
+	speed = -1
+	warnSpeed = -1
+	
+	
 	

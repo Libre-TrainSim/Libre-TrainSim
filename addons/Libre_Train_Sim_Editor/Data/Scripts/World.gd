@@ -2,13 +2,13 @@ tool
 extends Spatial
 
 export (String) var FileName = "Name Me!"
-export (int) var chunkSize = 1000
+var chunkSize = 1000
 
-export (bool) var createChunksAndSaveWorld = false setget save_world
+var createChunksAndSaveWorld = false setget save_world
 
-export (int) var  timeHour 
-export (int)  var timeMinute
-export (int) var timeSecond 
+var  timeHour 
+var timeMinute
+var timeSecond 
 var timeMSeconds = 0
 onready var time = [timeHour,timeMinute,timeSecond]
 
@@ -25,9 +25,9 @@ var sollChunks = []
 var activeChunk = string2Chunk("0,0")
 
 
-export (String) var author = ""
-export (String) var picturePath = "res://screenshot.png"
-export (String) var description = ""
+var author = ""
+var picturePath = "res://screenshot.png"
+var description = ""
 
 #var initProcessorTime = 0
 #var processorTime = 0
@@ -511,7 +511,7 @@ func set_scenario_to_world():
 	# set world Time:
 	timeHour = scenario["TimeH"]
 	timeMinute = scenario["TimeM"]
-	timeMSeconds = scenario["TimeS"]
+	timeSecond = scenario["TimeS"]
 	time = [timeHour,timeMinute,timeSecond]
 	
 	## Player: # TO CHANGE IF ADDING AI PLAYERS

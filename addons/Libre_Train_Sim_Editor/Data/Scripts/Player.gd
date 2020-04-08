@@ -560,7 +560,7 @@ func bake_route(): ## Generate the whole route for the train.
 		
 		## Set Rail to "End" of newly added Rail
 		currentR = world.get_node("Rails").get_node(baked_route[baked_route.size()-1]) ## Get "current Rail"
-		if translation.distance_to(currentR.translation) < translation.distance_to(currentR.endpos):
+		if currentpos.distance_to(currentR.translation) < currentpos.distance_to(currentR.endpos):
 			currentF = true
 		else:
 			currentF = false
@@ -587,7 +587,7 @@ func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray w
 		var signalsAtRail = {}
 		for signalName in rail.attachedSignals.keys():
 			var signalN = world.get_node("Signals").get_node(signalName)
-			if signalN.type == type:
+			if signalN.type == type and signalN.forward == baked_route_direction[index]:
 				if rail != currentRail:
 					signalsAtRail[signalName] = signalN.onRailPosition
 				else:
@@ -673,7 +673,7 @@ func check_for_player_help(delta):
 		check_for_player_helpTimer = 0
 	
 	check_for_player_helpTimer2 += delta
-	if blockedAcceleration and accRoll > 0 and not (doorRight or doorLeft) and not overrunRedSignal and check_for_player_helpTimer2 > 10:
+	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and not (doorRight or doorLeft) and not overrunRedSignal and check_for_player_helpTimer2 > 10 and not isInStation:
 		send_message("Hint: Try to set the acceleration to zero with 's', and give speed (=acceleration) with 'w' again.")
 		check_for_player_helpTimer2 = 0
 		

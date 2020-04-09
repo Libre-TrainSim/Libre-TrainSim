@@ -587,6 +587,8 @@ func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray w
 		var signalsAtRail = {}
 		for signalName in rail.attachedSignals.keys():
 			var signalN = world.get_node("Signals").get_node(signalName)
+			if signalN == null:
+				continue
 			if signalN.type == type and signalN.forward == baked_route_direction[index]:
 				if rail != currentRail:
 					signalsAtRail[signalName] = signalN.onRailPosition

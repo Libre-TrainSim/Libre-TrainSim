@@ -97,7 +97,6 @@ func update_config():
 	crawlDirectory("res://Worlds",foundFiles,"tscn")
 	print(foundFiles)
 	foundTracks = foundFiles["Array"].duplicate(true)
-	print(foundTracks[0].get_file().get_basename())
 	
 	## Get all Trains
 	foundFiles = {"Array": []}
@@ -223,7 +222,7 @@ func _on_ItemList_scenario_selected(index):
 	
 func crawlDirectory(directoryPath,foundFiles,fileExtension):
 	var dir = Directory.new()
-	dir.open(directoryPath)
+	if dir.open(directoryPath) != OK: return
 	dir.list_dir_begin()
 	while(true):
 		var file = dir.get_next()

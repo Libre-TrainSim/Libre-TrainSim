@@ -45,7 +45,7 @@ func setToRail(newvar):
 	
 	
 	if not find_parent("World"):
-		queue_free()
+		print("WarnSpeedSign can't find World Parent!'")
 		return
 	
 	if find_parent("World").has_node("Rails/"+attachedRail) and attachedRail != "":

@@ -134,7 +134,7 @@ func _update(newvar):
 	if world == null: return
 	if world.has_node("Rails/"+attachedRail) and attachedRail != "":
 		rail = world.get_node("Rails/"+attachedRail)
-		translation = rail.getNextPos(rail.radius, rail.translation, rail.rotation_degrees.y, onRailPosition)
+		translation = rail.get_pos_at_RailDistance(onRailPosition)
 		#rotation_degrees.y = rail.getNextDeg(rail.radius, rail.rotation_degrees.y, onRailPosition)
 	for x in range(materialPaths.size()):
 		if materialPaths[x] != "":

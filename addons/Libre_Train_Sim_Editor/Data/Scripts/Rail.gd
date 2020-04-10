@@ -14,8 +14,6 @@ var trackObjects = []
 
 var MAX_LENGTH = 1000 
 
-var Math = self ## TODO
-
 export (float) var startrot 
 export (float) var endrot
 export (Vector3) var startpos
@@ -34,6 +32,19 @@ export (float) var Outlength
 # warning-ignore:unused_class_variable
 export (bool) var calculateShift setget calcShift
 
+## Steep
+export (float) var startSlope = 0 # Degree
+export (float) var endSlope = 0 # Degree
+
+export (float) var startTend = 0
+export (float) var tend1Pos = -1
+export (float) var tend1 = 0
+export (float) var tend2Pos = 0
+export (float) var tend2 = 0
+export (float) var endTend
+
+
+
 var attachedSignals = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -45,20 +56,6 @@ func _ready():
 		$Types.hide()
 	pass # Replace with function body.
 
-#var test = false
-#var testtimer = 0
-#func _process(delta):
-#	testtimer += delta
-#	if testtimer > 2:
-#		print("PLING")
-#		if test:
-#			unload_visible_Instance()
-#		else: 
-#			load_visible_Instance()
-#		test = !test
-#		testtimer = 0
-
-# warning-ignore:unused_argument
 func _update(newvar):
 	if $Types.get_node(railType) == null:
 		railType = "Rail"
@@ -67,63 +64,38 @@ func _update(newvar):
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
 		print(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
-	startrot = self.rotation_degrees.y
-	endrot = Math.getNextDeg(radius, 0, length) + self.rotation_degrees.y
 	startpos = self.get_translation()
-	endpos = startpos + Math.getNextPos(radius, Vector3(0,0,0), self.rotation_degrees.y, length)
+	startrot = self.rotation_degrees.y
+	endrot = get_deg_at_RailDistance(length)
+	endpos = get_pos_at_RailDistance(length)
+	print(endrot)
+	print(endpos)
 	visibleSegments = length / buildDistance +1
 	buildRail()
 	if Engine.is_editor_hint():
-		$Ending.translation = getNextPos(radius, Vector3(0,0,0), 0, length-1)
+		$Ending.translation = get_local_pos_at_RailDistance(length)
 
 func buildRail():
-	var distance = 0
-	var currentrot = 0
-	var currentpos = Vector3(0,0,0)
 	if get_node("MultiMeshInstance") == null:
 		return
 	get_node("MultiMeshInstance").set_multimesh(get_node("MultiMeshInstance").multimesh.duplicate(false))
 	var multimesh = get_node("MultiMeshInstance").multimesh
 	multimesh.mesh = $Types.get_node(railType).mesh.duplicate(true)
-	var idx = 0
+	
 	multimesh.instance_count = length / buildDistance + 1
 	multimesh.visible_instance_count = visibleSegments
-	while distance < length:
-		multimesh.set_instance_transform(idx, Transform(Basis().rotated(Vector3(0,1,0), deg2rad(currentrot)), currentpos))
-		currentpos = Math.getNextPos(radius, currentpos, currentrot, buildDistance)
-		currentrot = Math.getNextDeg(radius, currentrot, buildDistance)
+	var distance = 0
+	for i in range(0, multimesh.instance_count):
+		multimesh.set_instance_transform(i, get_local_transform_at_rail_distance(distance))
 		distance += buildDistance
-		idx += 1
-		
-###################################################################################
-## Circle:
-# warning-ignore:shadowed_variable
-func getNextPos(radius, pos, worldRot, distance):#  Vector3 position, float worldRot, float distance):
-	# Straigt
-	if radius == 0:
-		return pos + Vector3(cos(deg2rad(worldRot))*distance, 0, -sin(deg2rad(worldRot))*distance) ##!!!!
-	# Curve
-	var extend = radius * 2.0 * PI
-	var degree = distance / extend * 360    + worldRot
-	return degreeToCoordinate(radius, pos, degree, worldRot)
 
-# warning-ignore:shadowed_variable
-func getNextDeg(radius, worldRot, distance):
-	# Straight:
-	if radius == 0: 
-		return worldRot
-	# Curve:
-	var extend = radius * 2.0 * PI
-	return distance / extend * 360    + worldRot
-
-
-# warning-ignore:shadowed_variable
-func degreeToCoordinate(radius, pos, degree, worldRot):
-	degree = float(degree)
-	var mittelpunkt = pos - Vector3(sin(deg2rad(worldRot)) * radius,0,cos(deg2rad(worldRot)) * radius)
-	var a = cos(deg2rad(degree)) * radius
-	var b = sin(deg2rad(degree)) * radius
-	return mittelpunkt + Vector3(b, 0, a)
+func get_transform_at_rail_distance(distance):
+	return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance)+startrot)), get_pos_at_RailDistance(distance) ) 
+	
+func get_local_transform_at_rail_distance(distance):
+	return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) ) 
+	#return Transform(Basis().rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))).rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))), get_local_pos_at_RailDistance(distance) ) 
+#	return Transform(Basis().rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) ) 
 	
 func speedToKmH(speed):
 	return speed*3.6
@@ -159,10 +131,17 @@ func register_signal(name, distance):
 	attachedSignals[name] = distance
 	
 func get_pos_at_RailDistance(distance):
-	return getNextPos(radius, self.translation, self.rotation_degrees.y, distance)
+	var circlePos = circle_get_pos(radius, distance)
+	return(Vector3(circlePos.x, get_height(distance), -circlePos.y)).rotated(Vector3(0,1,0), deg2rad(startrot))+startpos
 
+func get_local_pos_at_RailDistance(distance):
+	var circlePos = circle_get_pos(radius, distance)
+	return(Vector3(circlePos.x, get_height(distance), -circlePos.y))
+	
 func get_deg_at_RailDistance(distance):
-	return getNextDeg(radius, rotation_degrees.y, distance)
+	return circle_get_deg(radius, distance) + startrot
+func get_local_deg_at_RailDistance(distance):
+	return circle_get_deg(radius, distance)
 	
 func get_shifted_pos_at_RailDistance(distance, shift):
 	var railpos = get_pos_at_RailDistance(distance)
@@ -182,4 +161,56 @@ func load_visible_Instance():
 	add_child(multimeshI)
 	multimeshI.owner = self
 	_update(true)
+
+
+################################################### Easy Circle Functions:
+func circle_get_pos(radius, distance):
+	if radius == 0:
+		return Vector2(distance, 0)
+	## Calculate: Coordinate:
+	var degree = circle_get_deg(radius, distance)
+	var middleOfCircle = Vector2(0, radius)
+	var a = cos(deg2rad(degree)) * radius
+	var b = sin(deg2rad(degree)) * radius
+	return middleOfCircle + Vector2(b, -a)  ## See HowACircleIsCalculated.pdf in github repository
+
+
+func circle_get_deg(radius, distance):
+	if radius == 0:
+		return 0
+
+	# Calculate needed degree:
+	var extend = radius * 2.0 * PI
+	return float(distance / extend * 360)
+
+#### Height Functions:
+func get_height(distance):
+	var startGradient = rad2deg(atan(startSlope/100))
+	var endGradient = rad2deg(atan(endSlope/100))
 	
+	var basicHeight = tan(deg2rad(startGradient)) * distance
+	if endGradient - startGradient == 0:
+		return basicHeight
+	var heightRadius = (360*length)/(2*PI*(endGradient - startGradient))
+	return circle_get_pos(heightRadius, distance).y + basicHeight
+
+func get_heightRot(distance):
+	var startGradient = rad2deg(atan(startSlope/100))
+	var endGradient = rad2deg(atan(endSlope/100))
+	
+	var basicRot = startGradient
+	if endGradient - startGradient == 0:
+		return basicRot
+	var heightRadius = (360*length)/(2*PI*(endGradient - startGradient))
+	return circle_get_deg(heightRadius, distance) + basicRot
+
+
+func get_tend_at_rail_distance(distance):
+	if distance >= tend1Pos and distance < tend2Pos:
+		return -(tend1 + (tend2-tend1) * (distance - tend1Pos)/(tend2Pos - tend1Pos))
+	if distance <= tend1Pos:
+		return -(startTend + (tend1-startTend) * (distance)/(tend1Pos))
+	if tend2Pos > 0 and distance >= tend2Pos:
+		return -(tend2 + (endTend-tend2) * (distance -tend2Pos)/(length-tend2Pos))
+	return -(startTend + (endTend-startTend) * (distance/length))
+	return 0

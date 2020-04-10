@@ -102,8 +102,8 @@ func setToRail(newvar):
 	if world.has_node("Rails/"+attachedRail) and attachedRail != "":
 		var rail = get_parent().get_parent().get_node("Rails/"+attachedRail)
 		rail.register_signal(self.name, onRailPosition)
-		self.translation = rail.getNextPos(rail.radius, rail.translation, rail.rotation_degrees.y, onRailPosition)
-		self.rotation_degrees.y = rail.getNextDeg(rail.radius, rail.rotation_degrees.y, onRailPosition)
+		self.translation = rail.get_pos_at_RailDistance(onRailPosition)
+		self.rotation_degrees.y = rail.get_deg_at_RailDistance(onRailPosition)
 		if not forward:
 			self.rotation_degrees.y += 180
 

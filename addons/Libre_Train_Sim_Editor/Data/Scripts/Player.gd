@@ -128,18 +128,21 @@ func ready(): ## Called by World!
 
 	## Set Train to Route:
 	if forward:
-		rotation_degrees.y = currentRail.rotation_degrees.y
-		self.translation = currentRail.translation
-		# (For drinving on the rail or setting a object on the rail both functions getNextPos and getNextDeg mmust be called.
-		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, distanceOnRail)
-		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, distanceOnRail)
+		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
+#		rotation_degrees.y = currentRail.rotation_degrees.y
+#		self.translation = currentRail.translation
+#		# (For drinving on the rail or setting a object on the rail both functions getNextPos and getNextDeg mmust be called.
+#		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, distanceOnRail)
+#		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, distanceOnRail)
 	else:
-		rotation_degrees.y = currentRail.endrot + 180.0
-		self.translation = currentRail.startpos
-		distanceOnRail = startPosition
-		# (For drinving on the rail or setting a object on the rail both functions getNextPos and getNextDeg mmust be called.
-		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y+180, distanceOnRail)
-		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, distanceOnRail)
+		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
+		rotate_object_local(Vector3(0,1,0), deg2rad(180))
+#		rotation_degrees.y = currentRail.endrot + 180.0
+#		self.translation = currentRail.startpos
+#		distanceOnRail = startPosition
+#		# (For drinving on the rail or setting a object on the rail both functions getNextPos and getNextDeg mmust be called.
+#		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y+180, distanceOnRail)
+#		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, distanceOnRail)
 	if debug: 
 		command = 0
 		soll_command = 0
@@ -297,11 +300,14 @@ func drive(delta):
 			change_to_next_rail()
 	
 	if forward:
-		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
-		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, drivenDistance)
+		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
+#		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
+#		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, drivenDistance)
 	else:
-		self.translation = Math.getNextPos(-currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
-		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, drivenDistance)
+		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
+		rotate_object_local(Vector3(0,1,0), deg2rad(180))
+#		self.translation = Math.getNextPos(-currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
+#		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, drivenDistance)
 
 func change_to_next_rail():
 	print("Changing Rail..")

@@ -8,7 +8,7 @@ extends Spatial
 ################################################################################
 ## Interesting Variables for addOn Creators, which could be read out, (or set).
 var soll_command = -1 # The input by the player. (0: Nothing, 1: Full acceleration, -1: Full Break). Shouldnt be lesser or greater than absolute 1
-export (float) var acceleration # Unit: m/(s*s)
+export (float) var acceleration # Unit: m/(s*s) 
 export (float) var brakeAcceleration # Unit: m/(s*s)
 export (float) var friction # (-> Speed = Speed - Speed * fritction (*delta) )
 export (float) var length # Train length. # Used in Train Stations for example
@@ -29,7 +29,8 @@ var technicalSoll = 0 # Soll Command. This variable describes the "aim" of comma
 var blockedAcceleration = false ## If true, then acceleration is blocked. e.g.  brakes
 var accRoll = 0 # describes the user input, (0 to 1)
 var brakeRoll = -1 # describes the user input (0 to -1)
-var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive)
+var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive) - JJust from brakes and engines
+var currentRealAcceleration = 0
 var time = [23,59,59] ## actual time Indexes: [0]: Hour, [1]: Minute, [2]: Second
 var ai = false # Currently not used. It will set by the scenario manger from world node.
 var enforcedBreaking = false 
@@ -129,20 +130,9 @@ func ready(): ## Called by World!
 	## Set Train to Route:
 	if forward:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
-#		rotation_degrees.y = currentRail.rotation_degrees.y
-#		self.translation = currentRail.translation
-#		# (For drinving on the rail or setting a object on the rail both functions getNextPos and getNextDeg mmust be called.
-#		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, distanceOnRail)
-#		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, distanceOnRail)
 	else:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
-#		rotation_degrees.y = currentRail.endrot + 180.0
-#		self.translation = currentRail.startpos
-#		distanceOnRail = startPosition
-#		# (For drinving on the rail or setting a object on the rail both functions getNextPos and getNextDeg mmust be called.
-#		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y+180, distanceOnRail)
-#		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, distanceOnRail)
 	if debug: 
 		command = 0
 		soll_command = 0
@@ -152,6 +142,7 @@ func ready(): ## Called by World!
 		world.activeChunk = world.pos2Chunk(self.translation) 
 
 func _process(delta):
+	var osTime0 = OS.get_ticks_msec()
 	if world == null:
 		return
 	getCommand(delta)
@@ -188,6 +179,9 @@ func _process(delta):
 	
 	if sifaEnabled:
 		check_sifa(delta)
+	
+#	var osTime1 = OS.get_ticks_msec()
+#	print(float(osTime1-osTime0))
 	
 func get_time():
 	time = world.time
@@ -263,9 +257,20 @@ func getCommand(delta):
 	
 	
 func getSpeed(delta):
+	var lastspeed = speed
+	## Slope:
+	var currentSlope = currentRail.get_heightRot(distanceOnRail)
+	if not forward:
+		currentSlope = - currentSlope
+	var slopeAcceleration = -currentSlope/10
+	speed += slopeAcceleration *delta
+	
 	var sollAcceleration
 	if command < 0:
+		## Brake:
 		sollAcceleration = brakeAcceleration * command
+		if speed < 0:
+			sollAcceleration = -sollAcceleration
 	else:
 		sollAcceleration = acceleration * command
 	
@@ -274,11 +279,14 @@ func getSpeed(delta):
 	
 	speed -= speed *friction * delta
 	
-	if speed < 0:
+	if abs(speed) < 0.2 and command < 0 and abs(sollAcceleration) > abs(slopeAcceleration):
 		speed = 0
+	
+#	if speed < 0:
+#		speed = 0
 	if Math.speedToKmH(speed) > speedLimit:
 		speed = Math.kmHToSpeed(speedLimit)
-		
+	currentRealAcceleration = (speed - lastspeed) * 1/delta
 	if debug:
 		speed = 200*command
 
@@ -289,25 +297,21 @@ func drive(delta):
 		distanceOnRail += drivenDistance
 		distance += drivenDistance
 		if distanceOnRail > currentRail.length:
-			drivenDistance = distanceOnRail - currentRail.length
+#			drivenDistance = distanceOnRail - currentRail.length
 			change_to_next_rail()
 	else:
 		drivenDistance = speed * delta
 		distanceOnRail -= drivenDistance
 		distance += drivenDistance
 		if distanceOnRail < 0:
-			drivenDistance = 0 - distanceOnRail
+#			drivenDistance = 0 - distanceOnRail
 			change_to_next_rail()
 	
 	if forward:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
-#		self.translation = Math.getNextPos(currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
-#		self.rotation_degrees.y = Math.getNextDeg(currentRail.radius, self.rotation_degrees.y, drivenDistance)
 	else:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
-#		self.translation = Math.getNextPos(-currentRail.radius, self.get_translation(), self.rotation_degrees.y, drivenDistance)
-#		self.rotation_degrees.y = Math.getNextDeg(-currentRail.radius, self.rotation_degrees.y, drivenDistance)
 
 func change_to_next_rail():
 	print("Changing Rail..")
@@ -318,19 +322,17 @@ func change_to_next_rail():
 	if forward:
 		##forward:
 		distanceOnRail = 0
-		self.translation = currentRail.translation
-		self.rotation_degrees = currentRail.rotation_degrees
+#		self.translation = currentRail.translation
+#		self.rotation_degrees = currentRail.rotation_degrees
 	else:
 		##backward:
 		distanceOnRail = currentRail.length
-		self.translation = currentRail.endpos
-		self.rotation_degrees = Vector3(0, currentRail.endrot+180,0)
+#		self.translation = currentRail.endpos
+#		self.rotation_degrees = Vector3(0, currentRail.endrot+180,0)
 
 func handleCamera(delta):
 	## Camera x Position
-	var sollCameraPosition = cameratZeroTranslation.x + (currentAcceleration * -cameraFactor)
-	if speed == 0:
-		sollCameraPosition = cameratZeroTranslation.x
+	var sollCameraPosition = cameratZeroTranslation.x + (currentRealAcceleration * -cameraFactor)
 	var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
 	cameraNode.translation.x -= missingCameraPosition * delta
 

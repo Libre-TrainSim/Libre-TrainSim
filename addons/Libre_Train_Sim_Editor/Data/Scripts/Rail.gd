@@ -1,6 +1,10 @@
 tool
 extends Spatial
 
+## Documentation Notes:
+# Please be aware of the parallel Mode:
+# If 'parallelRail != ""' All local train Settings apart from 'railType' and 'distanceToParallelRail' are deprecated. The Rail gets the rest information from parallel rail.
+
 
 export (String) var railType = "Rail"
 export (float) var length 
@@ -43,6 +47,10 @@ export (float) var tend2Pos = 0
 export (float) var tend2 = 0
 export (float) var endTend
 
+export (String) var parallelRail = ""
+export (float) var distanceToParallelRail = 0
+var parRail
+var world
 
 
 var attachedSignals = {}
@@ -57,6 +65,23 @@ func _ready():
 	pass # Replace with function body.
 
 func _update(newvar):
+	world = find_parent("World")
+	if world == null: return
+	if parallelRail != "":
+		parRail = world.get_node("Rails").get_node(parallelRail)
+		if parRail == null:
+			print("Cant find parallel rail. Updating Rail canceled..")
+			return
+		
+		if parRail.radius == 0:
+			radius = 0
+			length = parRail.length
+		else:
+			radius = parRail.radius + distanceToParallelRail
+			length = parRail.length * ((radius)/(parRail.radius))
+		translation = parRail.get_shifted_pos_at_RailDistance(0, distanceToParallelRail) ## Hier verstehe ich das minus nicht
+		rotation_degrees.y = parRail.rotation_degrees.y
+			
 	if $Types.get_node(railType) == null:
 		railType = "Rail"
 	buildDistance = $Types.get_node(railType).buildDistance
@@ -68,12 +93,11 @@ func _update(newvar):
 	startrot = self.rotation_degrees.y
 	endrot = get_deg_at_RailDistance(length)
 	endpos = get_pos_at_RailDistance(length)
-	print(endrot)
-	print(endpos)
 	visibleSegments = length / buildDistance +1
 	buildRail()
 	if Engine.is_editor_hint():
-		$Ending.translation = get_local_pos_at_RailDistance(length)
+		$Ending.translation = get_local_transform_at_rail_distance(length).origin
+	$Types.hide()
 
 func buildRail():
 	if get_node("MultiMeshInstance") == null:
@@ -85,17 +109,19 @@ func buildRail():
 	multimesh.instance_count = length / buildDistance + 1
 	multimesh.visible_instance_count = visibleSegments
 	var distance = 0
-	for i in range(0, multimesh.instance_count):
+	for i in range(0, multimesh.visible_instance_count):
 		multimesh.set_instance_transform(i, get_local_transform_at_rail_distance(distance))
 		distance += buildDistance
 
 func get_transform_at_rail_distance(distance):
-	return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance)+startrot)), get_pos_at_RailDistance(distance) ) 
-	
+	var locTransform = get_local_transform_at_rail_distance(distance)
+	return Transform(locTransform.basis.rotated(Vector3(0,1,0), deg2rad(rotation_degrees.y)) ,translation + locTransform.origin.rotated(Vector3(0,1,0), deg2rad(rotation_degrees.y)))
 func get_local_transform_at_rail_distance(distance):
-	return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) ) 
-	#return Transform(Basis().rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))).rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))), get_local_pos_at_RailDistance(distance) ) 
-#	return Transform(Basis().rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) ) 
+	if parallelRail == "":
+		return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) ) 
+	else:
+		var parDistance = distance/length * parRail.length
+		return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(parRail.get_tend_at_rail_distance(parDistance))).rotated(Vector3(0,0,1), deg2rad(parRail.get_heightRot(parDistance))).rotated(Vector3(0,1,0), deg2rad(parRail.circle_get_deg(parRail.radius, parDistance))), parRail.get_shifted_local_pos_at_RailDistance(parDistance, distanceToParallelRail)+ ((parRail.startpos-startpos).rotated(Vector3(0,1,0), deg2rad(-rotation_degrees.y))))#+(-translation+parRail.translation).rotated(Vector3(0,1,0), deg2rad(rotation_degrees.y)) )
 	
 func speedToKmH(speed):
 	return speed*3.6
@@ -144,8 +170,15 @@ func get_local_deg_at_RailDistance(distance):
 	return circle_get_deg(radius, distance)
 	
 func get_shifted_pos_at_RailDistance(distance, shift):
-	var railpos = get_pos_at_RailDistance(distance)
-	return railpos + (Vector3(1, 0, 0).rotated(Vector3(0,1,0), deg2rad(get_deg_at_RailDistance(distance)+90))*shift)
+	return get_shifted_local_pos_at_RailDistance(distance, shift).rotated(Vector3(0,1,0),deg2rad(rotation_degrees.y)) + startpos
+#	var railpos = get_pos_at_RailDistance(distance)
+#	return railpos + (Vector3(1, 0, 0).rotated(Vector3(0,1,0), deg2rad(get_deg_at_RailDistance(distance)+90))*shift)
+
+func get_shifted_local_pos_at_RailDistance(distance, shift):
+	var newRadius = radius + shift
+	var newDistance = distance * ((newRadius)/(radius))
+	var circlePos = circle_get_pos(newRadius, newDistance)
+	return(Vector3(circlePos.x, get_height(distance), -circlePos.y+shift))  
 	
 func unload_visible_Instance():
 	print("Unloading visible Instance for Rail "+name)
@@ -185,16 +218,24 @@ func circle_get_deg(radius, distance):
 
 #### Height Functions:
 func get_height(distance):
+	if parRail != null:
+		var newRadius = radius - distanceToParallelRail
+		var newDistance = distance * ((newRadius)/(radius))
+		return parRail.get_height(newDistance)
 	var startGradient = rad2deg(atan(startSlope/100))
 	var endGradient = rad2deg(atan(endSlope/100))
 	
-	var basicHeight = tan(deg2rad(startGradient)) * distance
+	var basicHeight = float(tan(deg2rad(startGradient)) * distance)
 	if endGradient - startGradient == 0:
 		return basicHeight
 	var heightRadius = (360*length)/(2*PI*(endGradient - startGradient))
 	return circle_get_pos(heightRadius, distance).y + basicHeight
 
-func get_heightRot(distance):
+func get_heightRot(distance): ## Get Slope
+	if parRail != null:
+		var newRadius = radius - distanceToParallelRail
+		var newDistance = distance * ((newRadius)/(radius))
+		return parRail.get_heightRot(newDistance)
 	var startGradient = rad2deg(atan(startSlope/100))
 	var endGradient = rad2deg(atan(endSlope/100))
 	
@@ -206,6 +247,10 @@ func get_heightRot(distance):
 
 
 func get_tend_at_rail_distance(distance):
+	if parRail != null:
+		var newRadius = radius - distanceToParallelRail
+		var newDistance = distance * ((newRadius)/(radius))
+		return parRail.get_tend_at_rail_distance(newDistance)
 	if distance >= tend1Pos and distance < tend2Pos:
 		return -(tend1 + (tend2-tend1) * (distance - tend1Pos)/(tend2Pos - tend1Pos))
 	if distance <= tend1Pos:
@@ -214,3 +259,28 @@ func get_tend_at_rail_distance(distance):
 		return -(tend2 + (endTend-tend2) * (distance -tend2Pos)/(length-tend2Pos))
 	return -(startTend + (endTend-startTend) * (distance/length))
 	return 0
+	
+func get_tendSlopeData():
+	var d = {}
+	var s = self
+	d.startSlope = s.startSlope
+	d.endSlope = s.endSlope
+	d.startTend = s.startTend
+	d.endTend = s.endTend
+	d.tend1Pos = s.tend1Pos
+	d.tend1 = s.tend1
+	d.tend2Pos = s.tend2Pos
+	d.tend2 = s.tend2
+	return d
+
+func set_tendSlopeData(data):
+	var d = self
+	var s = data
+	d.startSlope = s.startSlope
+	d.endSlope = s.endSlope
+	d.startTend = s.startTend
+	d.endTend = s.endTend
+	d.tend1Pos = s.tend1Pos
+	d.tend1 = s.tend1
+	d.tend2Pos = s.tend2Pos
+	d.tend2 = s.tend2

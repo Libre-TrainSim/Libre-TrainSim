@@ -29,7 +29,6 @@ func _process(delta):
 		update()
 
 
-
 func _ready():
 	if Engine.is_editor_hint() and not get_parent().name == "Signals":
 		if get_parent().is_in_group("Rail"):

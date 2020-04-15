@@ -31,73 +31,12 @@ margin_right = 1024.0
 margin_bottom = 24.0
 text = "Delete"
 
-[node name="Rotations" type="HBoxContainer" parent="."]
+[node name="AddRail" type="HBoxContainer" parent="."]
 margin_top = 28.0
 margin_right = 1024.0
-margin_bottom = 52.0
+margin_bottom = 48.0
 
-[node name="LabelStart" type="Label" parent="Rotations"]
-margin_top = 5.0
-margin_right = 90.0
-margin_bottom = 19.0
-size_flags_horizontal = 9
-text = "Start Rotation:"
-
-[node name="StartRotation" type="LineEdit" parent="Rotations"]
-margin_left = 94.0
-margin_right = 509.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-
-[node name="VSeparator" type="VSeparator" parent="Rotations"]
-margin_left = 513.0
-margin_right = 517.0
-margin_bottom = 24.0
-
-[node name="LabelEnd" type="Label" parent="Rotations"]
-margin_left = 521.0
-margin_top = 5.0
-margin_right = 605.0
-margin_bottom = 19.0
-size_flags_horizontal = 9
-text = "End Rotation:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EndRotation" type="LineEdit" parent="Rotations"]
-margin_left = 609.0
-margin_right = 1024.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ParallelDistance" type="HBoxContainer" parent="."]
-visible = false
-margin_top = 28.0
-margin_right = 1024.0
-margin_bottom = 52.0
-
-[node name="Label" type="Label" parent="ParallelDistance"]
-margin_top = 5.0
-margin_right = 111.0
-margin_bottom = 19.0
-text = "Parallel Distance:"
-
-[node name="LineEdit" type="LineEdit" parent="ParallelDistance"]
-margin_left = 115.0
-margin_right = 1024.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-
-[node name="AddRail2" type="HBoxContainer" parent="."]
-margin_top = 56.0
-margin_right = 1024.0
-margin_bottom = 76.0
-
-[node name="Mode" type="OptionButton" parent="AddRail2"]
+[node name="Mode" type="OptionButton" parent="AddRail"]
 margin_right = 510.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
@@ -105,116 +44,428 @@ text = "After Rail"
 items = [ "After Rail", null, false, 0, null, "Parallel To", null, false, 1, null, "Before Rail", null, false, 2, null ]
 selected = 0
 
-[node name="AddRail" type="Button" parent="AddRail2"]
+[node name="ParallelDistance" type="HBoxContainer" parent="AddRail"]
+visible = false
+margin_left = 342.0
+margin_right = 680.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="AddRail/ParallelDistance"]
+margin_top = 5.0
+margin_right = 111.0
+margin_bottom = 19.0
+text = "Parallel Distance:"
+
+[node name="LineEdit" type="LineEdit" parent="AddRail/ParallelDistance"]
+margin_left = 115.0
+margin_right = 338.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="AddRail" type="Button" parent="AddRail"]
 margin_left = 514.0
 margin_right = 1024.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "New Rail"
 
-[node name="Settings" type="VBoxContainer" parent="."]
-visible = false
+[node name="HSeparator2" type="HSeparator" parent="."]
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 348.0
+margin_bottom = 56.0
 
-[node name="RailType" type="HBoxContainer" parent="Settings"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="RotationHeight" type="GridContainer" parent="."]
+margin_top = 60.0
+margin_right = 1024.0
+margin_bottom = 112.0
+columns = 4
 
-[node name="Label" type="Label" parent="Settings/RailType"]
-margin_right = 40.0
-margin_bottom = 14.0
+[node name="LabelStart" type="Label" parent="RotationHeight"]
+margin_top = 5.0
+margin_right = 90.0
+margin_bottom = 19.0
+size_flags_horizontal = 9
+text = "Start Rotation:"
+
+[node name="StartRotation" type="LineEdit" parent="RotationHeight"]
+margin_left = 94.0
+margin_right = 513.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="LabelEnd" type="Label" parent="RotationHeight"]
+margin_left = 517.0
+margin_top = 5.0
+margin_right = 601.0
+margin_bottom = 19.0
+size_flags_horizontal = 9
+text = "End Rotation:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndRotation" type="LineEdit" parent="RotationHeight"]
+margin_left = 605.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+editable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelStart2" type="Label" parent="RotationHeight"]
+margin_top = 33.0
+margin_right = 90.0
+margin_bottom = 47.0
+size_flags_horizontal = 9
+text = "Start Height:"
+
+[node name="StartHeight" type="LineEdit" parent="RotationHeight"]
+margin_left = 94.0
+margin_top = 28.0
+margin_right = 513.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="LabelEnd2" type="Label" parent="RotationHeight"]
+margin_left = 517.0
+margin_top = 33.0
+margin_right = 601.0
+margin_bottom = 47.0
+size_flags_horizontal = 9
+text = "End Height:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndHeight" type="LineEdit" parent="RotationHeight"]
+margin_left = 605.0
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+editable = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator3" type="HSeparator" parent="."]
+margin_top = 116.0
+margin_right = 1024.0
+margin_bottom = 120.0
+
+[node name="S" type="VBoxContainer" parent="."]
+margin_top = 124.0
+margin_right = 1024.0
+margin_bottom = 328.0
+
+[node name="General" type="VBoxContainer" parent="S"]
+margin_right = 1024.0
+margin_bottom = 52.0
+
+[node name="RailType" type="HBoxContainer" parent="S/General"]
+margin_right = 1024.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="S/General/RailType"]
+margin_top = 5.0
+margin_right = 61.0
+margin_bottom = 19.0
 text = "Rail Type:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/RailType"]
-margin_right = 58.0
+[node name="LineEdit" type="LineEdit" parent="S/General/RailType"]
+margin_left = 65.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "Rail"
 
-[node name="OptionButton" type="OptionButton" parent="Settings"]
+[node name="ParallelRail" type="HBoxContainer" parent="S/General"]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="S/General/ParallelRail"]
+margin_top = 5.0
+margin_right = 78.0
+margin_bottom = 19.0
+text = "Parallel Rail:"
+
+[node name="ParallelRail" type="LineEdit" parent="S/General/ParallelRail"]
+margin_left = 82.0
+margin_right = 519.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="Label2" type="Label" parent="S/General/ParallelRail"]
+margin_left = 523.0
+margin_top = 5.0
+margin_right = 583.0
+margin_bottom = 19.0
+text = "Distance:"
+
+[node name="ParallelDistance" type="LineEdit" parent="S/General/ParallelRail"]
+margin_left = 587.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Settings" type="VBoxContainer" parent="S"]
+margin_top = 56.0
+margin_right = 1024.0
+margin_bottom = 180.0
+
+[node name="OptionButton" type="OptionButton" parent="S/Settings"]
 margin_right = 1024.0
 margin_bottom = 20.0
 text = "Length - Radius"
 items = [ "Length - Radius", null, false, 0, null, "Radius - Angle", null, false, 1, null, "Length - Angle", null, false, 2, null ]
 selected = 0
 
-[node name="Length" type="HBoxContainer" parent="Settings"]
+[node name="Length" type="HBoxContainer" parent="S/Settings"]
 margin_top = 24.0
 margin_right = 1024.0
 margin_bottom = 48.0
 
-[node name="Label" type="Label" parent="Settings/Length"]
+[node name="Label" type="Label" parent="S/Settings/Length"]
 margin_top = 5.0
 margin_right = 47.0
 margin_bottom = 19.0
 text = "Length:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Length"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Length"]
 margin_left = 51.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "100"
 
-[node name="Radius" type="HBoxContainer" parent="Settings"]
+[node name="Radius" type="HBoxContainer" parent="S/Settings"]
 margin_top = 52.0
 margin_right = 1024.0
 margin_bottom = 76.0
 
-[node name="Label" type="Label" parent="Settings/Radius"]
+[node name="Label" type="Label" parent="S/Settings/Radius"]
 margin_top = 5.0
 margin_right = 46.0
 margin_bottom = 19.0
 text = "Radius:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Radius"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Radius"]
 margin_left = 50.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "0"
 
-[node name="Angle" type="HBoxContainer" parent="Settings"]
+[node name="Angle" type="HBoxContainer" parent="S/Settings"]
 visible = false
-margin_top = 112.0
+margin_top = 80.0
 margin_right = 1024.0
-margin_bottom = 152.0
+margin_bottom = 104.0
 
-[node name="Label" type="Label" parent="Settings/Angle"]
-margin_top = 13.0
+[node name="Label" type="Label" parent="S/Settings/Angle"]
+margin_top = 5.0
 margin_right = 40.0
-margin_bottom = 27.0
+margin_bottom = 19.0
 text = "Angle:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Angle"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Angle"]
 margin_left = 44.0
-margin_right = 944.0
-margin_bottom = 40.0
+margin_right = 1024.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "0"
 
-[node name="Update" type="Button" parent="Settings"]
-margin_left = 483.0
+[node name="Slope" type="VBoxContainer" parent="S/Settings"]
 margin_top = 80.0
-margin_right = 541.0
+margin_right = 1024.0
 margin_bottom = 100.0
-size_flags_horizontal = 4
-text = "Update"
 
-[node name="Shift" type="VBoxContainer" parent="Settings"]
+[node name="ShowHideSlope" type="Button" parent="S/Settings/Slope"]
+margin_left = 470.0
+margin_right = 554.0
+margin_bottom = 20.0
+size_flags_horizontal = 4
+text = "Show Slope"
+
+[node name="SlopeGrid" type="GridContainer" parent="S/Settings/Slope"]
+visible = false
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 76.0
+columns = 2
+
+[node name="Label" type="Label" parent="S/Settings/Slope/SlopeGrid"]
+margin_top = 5.0
+margin_right = 142.0
+margin_bottom = 19.0
+text = "Start Slope (per 100m)"
+
+[node name="StartSlope" type="SpinBox" parent="S/Settings/Slope/SlopeGrid"]
+margin_left = 146.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -100.0
+step = 0.001
+
+[node name="Label2" type="Label" parent="S/Settings/Slope/SlopeGrid"]
+margin_top = 33.0
+margin_right = 142.0
+margin_bottom = 47.0
+text = "End Slope (per 100m)"
+
+[node name="EndSlope" type="SpinBox" parent="S/Settings/Slope/SlopeGrid"]
+margin_left = 146.0
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+min_value = -100.0
+step = 0.001
+
+[node name="Tendency" type="VBoxContainer" parent="S/Settings"]
 margin_top = 104.0
 margin_right = 1024.0
-margin_bottom = 198.0
+margin_bottom = 124.0
 
-[node name="ShiftRail" type="Label" parent="Settings/Shift"]
+[node name="ShowHideTendency" type="Button" parent="S/Settings/Tendency"]
+margin_left = 457.0
+margin_right = 567.0
+margin_bottom = 20.0
+size_flags_horizontal = 4
+text = "Show Tendency"
+
+[node name="S" type="GridContainer" parent="S/Settings/Tendency"]
+visible = false
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 76.0
+columns = 2
+
+[node name="Label" type="Label" parent="S/Settings/Tendency/S"]
+margin_top = 5.0
+margin_right = 68.0
+margin_bottom = 19.0
+text = "Start Tend:"
+
+[node name="StartTend" type="SpinBox" parent="S/Settings/Tendency/S"]
+margin_left = 72.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -40.0
+max_value = 40.0
+step = 0.01
+
+[node name="Label2" type="Label" parent="S/Settings/Tendency/S"]
+margin_top = 33.0
+margin_right = 68.0
+margin_bottom = 47.0
+text = "End Tend:"
+
+[node name="EndTend" type="SpinBox" parent="S/Settings/Tendency/S"]
+margin_left = 72.0
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+min_value = -40.0
+max_value = 40.0
+step = 0.01
+
+[node name="S2" type="GridContainer" parent="S/Settings/Tendency"]
+visible = false
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 76.0
+columns = 4
+
+[node name="Label" type="Label" parent="S/Settings/Tendency/S2"]
+margin_top = 5.0
+margin_right = 111.0
+margin_bottom = 19.0
+text = "TendPoint1: Pos:"
+
+[node name="Tend1Pos" type="SpinBox" parent="S/Settings/Tendency/S2"]
+margin_left = 115.0
+margin_right = 550.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1000.0
+step = 0.01
+value = -1.0
+
+[node name="Label2" type="Label" parent="S/Settings/Tendency/S2"]
+margin_left = 554.0
+margin_top = 5.0
+margin_right = 585.0
+margin_bottom = 19.0
+text = "Tend"
+
+[node name="Tend1" type="SpinBox" parent="S/Settings/Tendency/S2"]
+margin_left = 589.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -40.0
+max_value = 40.0
+step = 0.01
+
+[node name="Label4" type="Label" parent="S/Settings/Tendency/S2"]
+margin_top = 33.0
+margin_right = 111.0
+margin_bottom = 47.0
+text = "Tend Point2: Pos:"
+
+[node name="Tend2Pos" type="SpinBox" parent="S/Settings/Tendency/S2"]
+margin_left = 115.0
+margin_top = 28.0
+margin_right = 550.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1000.0
+step = 0.01
+value = -1.0
+
+[node name="Label3" type="Label" parent="S/Settings/Tendency/S2"]
+margin_left = 554.0
+margin_top = 33.0
+margin_right = 585.0
+margin_bottom = 47.0
+text = "Tend"
+
+[node name="Tend2" type="SpinBox" parent="S/Settings/Tendency/S2"]
+margin_left = 589.0
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+min_value = -40.0
+max_value = 40.0
+step = 0.01
+
+[node name="Shift" type="VBoxContainer" parent="S/Settings"]
+visible = false
+margin_top = 152.0
+margin_right = 1024.0
+margin_bottom = 246.0
+
+[node name="ShiftRail" type="Label" parent="S/Settings/Shift"]
 margin_right = 1024.0
 margin_bottom = 14.0
 text = "Shift Rail:"
 align = 1
 
-[node name="Shift" type="HBoxContainer" parent="Settings/Shift"]
+[node name="Shift" type="HBoxContainer" parent="S/Settings/Shift"]
 margin_top = 18.0
 margin_right = 1024.0
 margin_bottom = 42.0
@@ -222,20 +473,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Settings/Shift/Shift"]
+[node name="Label" type="Label" parent="S/Settings/Shift/Shift"]
 margin_top = 5.0
 margin_right = 32.0
 margin_bottom = 19.0
 text = "Shift:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Shift/Shift"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Shift/Shift"]
 margin_left = 36.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "2.25"
 
-[node name="Radius" type="HBoxContainer" parent="Settings/Shift"]
+[node name="Radius" type="HBoxContainer" parent="S/Settings/Shift"]
 margin_top = 46.0
 margin_right = 1024.0
 margin_bottom = 70.0
@@ -243,20 +494,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Settings/Shift/Radius"]
+[node name="Label" type="Label" parent="S/Settings/Shift/Radius"]
 margin_top = 5.0
 margin_right = 46.0
 margin_bottom = 19.0
 text = "Radius:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Shift/Radius"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Shift/Radius"]
 margin_left = 50.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "500"
 
-[node name="ShiftButton" type="Button" parent="Settings/Shift"]
+[node name="ShiftButton" type="Button" parent="S/Settings/Shift"]
 margin_left = 492.0
 margin_top = 74.0
 margin_right = 532.0
@@ -264,18 +515,19 @@ margin_bottom = 94.0
 size_flags_horizontal = 4
 text = "Shift"
 
-[node name="Shift2" type="VBoxContainer" parent="Settings"]
-margin_top = 202.0
+[node name="Shift2" type="VBoxContainer" parent="S/Settings"]
+visible = false
+margin_top = 152.0
 margin_right = 1024.0
-margin_bottom = 296.0
+margin_bottom = 246.0
 
-[node name="ShiftRail" type="Label" parent="Settings/Shift2"]
+[node name="ShiftRail" type="Label" parent="S/Settings/Shift2"]
 margin_right = 1024.0
 margin_bottom = 14.0
 text = "Shift Rail:"
 align = 1
 
-[node name="Shift" type="HBoxContainer" parent="Settings/Shift2"]
+[node name="Shift" type="HBoxContainer" parent="S/Settings/Shift2"]
 margin_top = 18.0
 margin_right = 1024.0
 margin_bottom = 42.0
@@ -283,20 +535,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Settings/Shift2/Shift"]
+[node name="Label" type="Label" parent="S/Settings/Shift2/Shift"]
 margin_top = 5.0
 margin_right = 32.0
 margin_bottom = 19.0
 text = "Shift:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Shift2/Shift"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Shift2/Shift"]
 margin_left = 36.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "2.25"
 
-[node name="LengthForward" type="HBoxContainer" parent="Settings/Shift2"]
+[node name="LengthForward" type="HBoxContainer" parent="S/Settings/Shift2"]
 margin_top = 46.0
 margin_right = 1024.0
 margin_bottom = 70.0
@@ -304,20 +556,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Settings/Shift2/LengthForward"]
+[node name="Label" type="Label" parent="S/Settings/Shift2/LengthForward"]
 margin_top = 5.0
 margin_right = 101.0
 margin_bottom = 19.0
 text = "Length Forward:"
 
-[node name="LineEdit" type="LineEdit" parent="Settings/Shift2/LengthForward"]
+[node name="LineEdit" type="LineEdit" parent="S/Settings/Shift2/LengthForward"]
 margin_left = 105.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "500"
 
-[node name="ShiftButton" type="Button" parent="Settings/Shift2"]
+[node name="ShiftButton" type="Button" parent="S/Settings/Shift2"]
 margin_left = 492.0
 margin_top = 74.0
 margin_right = 532.0
@@ -325,10 +577,23 @@ margin_bottom = 94.0
 size_flags_horizontal = 4
 text = "Shift"
 
-[node name="RailConnector" type="VBoxContainer" parent="."]
-margin_top = 80.0
+[node name="Update" type="Button" parent="S"]
+margin_left = 483.0
+margin_top = 184.0
+margin_right = 541.0
+margin_bottom = 204.0
+size_flags_horizontal = 4
+text = "Update"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 332.0
 margin_right = 1024.0
-margin_bottom = 174.0
+margin_bottom = 336.0
+
+[node name="RailConnector" type="VBoxContainer" parent="."]
+margin_top = 340.0
+margin_right = 1024.0
+margin_bottom = 434.0
 
 [node name="Label" type="Label" parent="RailConnector"]
 margin_right = 1024.0
@@ -407,20 +672,22 @@ size_flags_horizontal = 4
 text = "Connect"
 [connection signal="pressed" from="CurrentRail/Rename" to="." method="_on_Rename_pressed"]
 [connection signal="pressed" from="CurrentRail/Delete" to="." method="_on_Delete_pressed"]
-[connection signal="text_entered" from="ParallelDistance/LineEdit" to="." method="_on_Update_pressed"]
-[connection signal="item_selected" from="AddRail2/Mode" to="." method="_on_Mode_item_selected"]
-[connection signal="pressed" from="AddRail2/AddRail" to="." method="_on_AddRail_pressed"]
-[connection signal="item_selected" from="Settings/OptionButton" to="." method="_on_OptionButton_item_selected"]
-[connection signal="text_entered" from="Settings/Length/LineEdit" to="." method="_on_Update_pressed"]
-[connection signal="text_entered" from="Settings/Radius/LineEdit" to="." method="_on_Update_pressed"]
-[connection signal="text_entered" from="Settings/Angle/LineEdit" to="." method="_on_Update_pressed"]
-[connection signal="pressed" from="Settings/Update" to="." method="_on_Update_pressed"]
-[connection signal="text_entered" from="Settings/Shift/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
-[connection signal="text_entered" from="Settings/Shift/Radius/LineEdit" to="." method="_on_ShiftButton_pressed"]
-[connection signal="pressed" from="Settings/Shift/ShiftButton" to="." method="_on_ShiftButton_pressed"]
-[connection signal="text_entered" from="Settings/Shift2/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
-[connection signal="text_entered" from="Settings/Shift2/LengthForward/LineEdit" to="." method="_on_ShiftButton_pressed"]
-[connection signal="pressed" from="Settings/Shift2/ShiftButton" to="." method="_on_Shift2Button_pressed"]
+[connection signal="item_selected" from="AddRail/Mode" to="." method="_on_Mode_item_selected"]
+[connection signal="text_entered" from="AddRail/ParallelDistance/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="pressed" from="AddRail/AddRail" to="." method="_on_AddRail_pressed"]
+[connection signal="item_selected" from="S/Settings/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="text_entered" from="S/Settings/Length/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="text_entered" from="S/Settings/Radius/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="text_entered" from="S/Settings/Angle/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="pressed" from="S/Settings/Slope/ShowHideSlope" to="." method="_on_ShowHideSlope_pressed"]
+[connection signal="pressed" from="S/Settings/Tendency/ShowHideTendency" to="." method="_on_ShowHideTendency_pressed"]
+[connection signal="text_entered" from="S/Settings/Shift/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="text_entered" from="S/Settings/Shift/Radius/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="pressed" from="S/Settings/Shift/ShiftButton" to="." method="_on_ShiftButton_pressed"]
+[connection signal="text_entered" from="S/Settings/Shift2/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="text_entered" from="S/Settings/Shift2/LengthForward/LineEdit" to="." method="_on_ShiftButton_pressed"]
+[connection signal="pressed" from="S/Settings/Shift2/ShiftButton" to="." method="_on_Shift2Button_pressed"]
+[connection signal="pressed" from="S/Update" to="." method="_on_Update_pressed"]
 [connection signal="pressed" from="RailConnector/FirstRail/Select_FirstRail" to="." method="_on_Select_FirstRail_pressed"]
 [connection signal="pressed" from="RailConnector/SecondRail/Select_SecondRail" to="." method="_on_Select_SecondRail_pressed"]
 [connection signal="pressed" from="RailConnector/Button" to="." method="_on_Connect_pressed"]

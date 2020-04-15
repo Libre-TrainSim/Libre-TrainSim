@@ -70,6 +70,7 @@ func _process(delta):
 		checkBigChunk()
 
 
+
 func time(delta):
 	timeMSeconds += delta
 	if timeMSeconds > 1:

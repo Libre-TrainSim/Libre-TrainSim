@@ -143,6 +143,61 @@ anims/FadeOut = SubResource( 4 )
 [node name="Bling" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 
+[node name="TextBox" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="TextBox"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -540.0
+margin_right = 960.0
+margin_bottom = 540.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextBox"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -424.0
+margin_top = -257.0
+margin_right = 412.0
+margin_bottom = 164.0
+focus_mode = 2
+custom_fonts/normal_font = SubResource( 5 )
+text = "Test Test meine Freunde"
+selection_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="TextBox"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = 189.105
+margin_right = 50.0
+margin_bottom = 225.105
+rect_min_size = Vector2( 100, 36 )
+custom_fonts/font = ExtResource( 4 )
+text = "Ok"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Pause" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
@@ -202,64 +257,9 @@ margin_bottom = 150.0
 custom_fonts/font = ExtResource( 4 )
 text = "Quit to OS"
 
-[node name="TextBox" type="Control" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="TextBox"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -960.0
-margin_top = -540.0
-margin_right = 960.0
-margin_bottom = 540.0
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RichTextLabel" type="RichTextLabel" parent="TextBox"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -424.0
-margin_top = -257.0
-margin_right = 412.0
-margin_bottom = 164.0
-focus_mode = 2
-custom_fonts/normal_font = SubResource( 5 )
-text = "Test Test meine Freunde"
-selection_enabled = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Ok" type="Button" parent="TextBox"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = 189.105
-margin_right = 50.0
-margin_bottom = 225.105
-rect_min_size = Vector2( 100, 36 )
-custom_fonts/font = ExtResource( 4 )
-text = "Ok"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="TrainInfo" parent="." instance=ExtResource( 7 )]
 visible = false
+[connection signal="pressed" from="TextBox/Ok" to="." method="_on_OkTextBox_pressed"]
 [connection signal="pressed" from="Pause/HBox/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="Pause/HBox/QuitMenu" to="." method="_on_QuitMenu_pressed"]
 [connection signal="pressed" from="Pause/HBox/QuitOS" to="." method="_on_Quit_pressed"]
-[connection signal="pressed" from="TextBox/Ok" to="." method="_on_OkTextBox_pressed"]

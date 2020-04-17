@@ -2,14 +2,14 @@ tool
 extends Spatial
 var type = "Signal"
 export var status = 0# 0: Red, 1: Green, -1: Off
-export var signalAfter = ""
-onready var signalAfterNode = get_parent().get_parent().get_node("Signals/"+String(signalAfter))
+var signalAfter = ""
 onready var world = find_parent("World")
+var signalAfterNode
 export var setPassAtH = 25
 export var setPassAtM = 0
 export var setPassAtS = 0
 export var speed = -1
-export var warnSpeed = -1
+var warnSpeed = -1
 export var forward = true
 
 export (String) var attachedRail
@@ -17,7 +17,6 @@ export (int) var onRailPosition
 export (bool) var update setget setToRail
 
 var blinking = false
-
 var timer = 0
 func _process(delta):
 	if not Engine.is_editor_hint():
@@ -53,6 +52,10 @@ func _ready():
 
 		
 func update():
+	if world == null:
+		world = find_parent("World")
+	if signalAfterNode == null and signalAfter != "":
+		signalAfterNode = world.get_node("Signals/"+String(signalAfter))
 	update_screen2()
 	update_screen1()
 	if warnSpeed != -1 and status == 1 and not blinking:
@@ -63,8 +66,8 @@ func update():
 	if status == 0:
 		red()
 	elif status == 1:
-		signalAfterNode = get_parent().get_parent().get_node("Signals/"+signalAfter)
-		if signalAfterNode !=  get_parent().get_parent().get_node("Signals") and signalAfterNode != null and signalAfterNode.status == 0:
+		signalAfterNode = world.get_node("Signals/"+signalAfter)
+		if signalAfterNode !=  world.get_node("Signals") and signalAfterNode != null and signalAfterNode.status == 0:
 			orange()
 			return
 		green()

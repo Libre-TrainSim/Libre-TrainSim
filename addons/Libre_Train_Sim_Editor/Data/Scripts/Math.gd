@@ -48,22 +48,50 @@ func normDeg(degree):
 	return degree
 
 
-func sort_signals(signalTable, forward = true):
-	var signalT = [signalTable.values(), signalTable.keys()]
+#func sort_signals(signalTable, forward = true):
+#	var signalT = [signalTable.values(), signalTable.keys()]
+#	var exportT = [] 
+#	for a in range(0, signalT[0].size()):
+#		var minimum = 0
+#		for i in range(0, signalT[0].size()):
+#			if signalT[0][i] < signalT[0][minimum]:
+#				minimum = i
+#		exportT.append(signalT[1][minimum])
+#		signalT[0].remove(minimum)
+#		signalT[1].remove(minimum)
+#	if forward:
+#		return exportT
+#	else:
+#		exportT.invert()
+#		return exportT
+
+func sort_signals(signalTable, forward = true): # Gets A Dict like {"name": [], "position" : []}, returns the array of the signal	
+	var signalT = signalTable.duplicate(true)
+#	if not signalT.has("position"):
+#		signalT["position"] = []
+#		for signalS in signalT["name"]:
+#			var signalN = Root.world.get_node("Signals").get_node(signalS)
+#			if signalN != null:
+#				signalT["position"].append(signalN.onRailPosition)
+#			else:
+#				signalT["position"] = -1
+#				print("Math.sort_signals: Some Signal not found!")
+
 	var exportT = [] 
-	for a in range(0, signalT[0].size()):
+	for a in range(0, signalT["name"].size()):
 		var minimum = 0
-		for i in range(0, signalT[0].size()):
-			if signalT[0][i] < signalT[0][minimum]:
+		for i in range(0, signalT["name"].size()):
+			if signalT["position"][i] < signalT["position"][minimum]:
 				minimum = i
-		exportT.append(signalT[1][minimum])
-		signalT[0].remove(minimum)
-		signalT[1].remove(minimum)
+		exportT.append(signalT["name"][minimum])
+		signalT["name"].remove(minimum)
+		signalT["position"].remove(minimum)
 	if forward:
 		return exportT
 	else:
 		exportT.invert()
 		return exportT
+
 		
 func time2String(time):
 	var hour = String(time[0])

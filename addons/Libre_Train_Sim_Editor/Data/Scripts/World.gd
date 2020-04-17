@@ -32,6 +32,7 @@ var description = ""
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
+	Root.world = self
 	if Engine.editor_hint:
 		pass
 		# Code to execute in editor.

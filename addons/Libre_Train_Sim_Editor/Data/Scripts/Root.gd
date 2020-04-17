@@ -4,6 +4,8 @@ var currentScenario
 var currentTrain
 var EasyMode = true
 
+var world ## Reference to world
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

@@ -69,6 +69,16 @@ export (String) var author = ""
 export (String) var releaseDate = ""
 export (String) var screenshotPath = ""
 
+var cameraState = 0 ## 0: Cabin View, 1: Outer View
+var cameraMidPoint = Vector3(0,2,0)
+var cameraY = 90
+var cameraX = 0
+var cameraDistance = 20
+var mouseSensitivity = 10
+
+export (Array, NodePath) var wagons
+export var wagonDistance = 0.5
+var wagonsVisible = false
 ## callable functions:
 # send_message()
 # show_textbox_message(string)
@@ -82,22 +92,22 @@ var startPosition # on rail, given by scenario manager in world node
 var forward = true # does the train drive at the rail direction, or against it? 
 var debug  ## used for driving fast at the track, if true.
 var route # String conataining all importand Railnames for e.g. switches. Set by the scenario manager of the world
-var distanceOnRail  # It is the current position on the rail.
+var distanceOnRail = 0  # It is the current position on the rail.
 var currentRail # Node Reference to the current Rail on which we are driving.
 var routeIndex = 0 # Index of the baked route Array.
 var startRail # Rail, on which the train is starting. Set by the scenario manger of the world
 
 
-
+var mouseMotion
+var mouseWheel
 
 
 onready var cameraNode = $Camera
-var cameratZeroTranslation # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
-
+var cameraZeroTransform # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
 
 func ready(): ## Called by World!
-	cameratZeroTranslation = cameraNode.translation
+	cameraZeroTransform = cameraNode.transform
 	world = get_parent().get_parent()
 	
 	route = route.split(" ")
@@ -140,6 +150,13 @@ func ready(): ## Called by World!
 	## get chunks handled:
 	if not ai:
 		world.activeChunk = world.pos2Chunk(self.translation) 
+	
+	spawnWagons()
+	
+	## Prepare Signals:
+	set_signalWarnLimits()
+	
+	set_signalAfters()
 
 func _process(delta):
 	var osTime0 = OS.get_ticks_msec()
@@ -186,7 +203,23 @@ func _process(delta):
 func get_time():
 	time = world.time
 
-
+func _input(event):
+	if event is InputEventMouseMotion:
+		mouseMotion = event.relative
+		
+	if event.is_pressed():
+		# zoom in
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
+			cameraDistance += cameraDistance*0.2
+			# call the zoom function
+		# zoom out
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
+			cameraDistance -= cameraDistance*0.2
+			# call the zoom function
+		if cameraDistance < 5 :
+			cameraDistance = 5
+		if cameraDistance > 200:
+			cameraDistance = 200
 
 func getCommand(delta):
 	if controlType == 0: ## Combi Roll
@@ -314,27 +347,47 @@ func drive(delta):
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
 
 func change_to_next_rail():
+	if forward:
+		distanceOnRail -= currentRail.length
 	print("Changing Rail..")
 	routeIndex += 1
 	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
 	forward = baked_route_direction[routeIndex]
-	
-	if forward:
-		##forward:
-		distanceOnRail = 0
-#		self.translation = currentRail.translation
-#		self.rotation_degrees = currentRail.rotation_degrees
-	else:
-		##backward:
-		distanceOnRail = currentRail.length
-#		self.translation = currentRail.endpos
-#		self.rotation_degrees = Vector3(0, currentRail.endrot+180,0)
+
+	if not forward:
+		distanceOnRail += currentRail.length
+
 
 func handleCamera(delta):
-	## Camera x Position
-	var sollCameraPosition = cameratZeroTranslation.x + (currentRealAcceleration * -cameraFactor)
-	var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
-	cameraNode.translation.x -= missingCameraPosition * delta
+	if Input.is_action_just_pressed("Cabin View"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		cameraState = 0
+		wagonsVisible = false
+		$Cabin.show()
+	if Input.is_action_just_pressed("Outer View"):
+		wagonsVisible = true
+		cameraState = 1
+		$Cabin.hide()
+	if cameraState == 0: # Inner Position
+		cameraNode.transform = cameraZeroTransform
+		## Camera x Position
+		var sollCameraPosition = cameraZeroTransform.origin.x + (currentRealAcceleration * -cameraFactor)
+		var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
+		cameraNode.translation.x -= missingCameraPosition * delta
+	elif cameraState == 1:
+		if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if mouseMotion == null: return
+		cameraY += -mouseMotion.x * delta * mouseSensitivity
+		cameraX += +mouseMotion.y * delta * mouseSensitivity
+		var cameraVector = Vector3(cameraDistance, 0, 0)
+		cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
+		cameraNode.translation = cameraVector + cameraMidPoint
+		cameraNode.rotation_degrees.y = cameraY +90
+		cameraNode.rotation_degrees.x = -cameraX
+		mouseMotion = Vector2(0,0)
+		
+
 
 ## Signals:
 var signalsRailName # Just stores the name of the Rail, which signals are loaded into "signals"
@@ -592,19 +645,22 @@ func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray w
 	var index = routeIndex
 	while(index != baked_route.size()):
 		var rail = world.get_node("Rails").get_node(baked_route[index])
-		var signalsAtRail = {}
+		var signalsAtRail = {"name" : [], "position" : []}
 		for signalName in rail.attachedSignals.keys():
 			var signalN = world.get_node("Signals").get_node(signalName)
 			if signalN == null:
 				continue
 			if signalN.type == type and signalN.forward == baked_route_direction[index]:
 				if rail != currentRail:
-					signalsAtRail[signalName] = signalN.onRailPosition
+					signalsAtRail["name"].append(signalName)
+					signalsAtRail["position"].append(signalN.onRailPosition)
 				else:
 					if forward and signalN.onRailPosition > distanceOnRail:
-						signalsAtRail[signalName] = signalN.onRailPosition
+						signalsAtRail["name"].append(signalName)
+						signalsAtRail["position"].append(signalN.onRailPosition)
 					elif not forward and  signalN.onRailPosition < distanceOnRail:
-						signalsAtRail[signalName] = signalN.onRailPosition
+						signalsAtRail["name"].append(signalName)
+						signalsAtRail["position"].append(signalN.onRailPosition)
 						
 		var sortedSignals = Math.sort_signals(signalsAtRail, baked_route_direction[index])
 		for signalName in sortedSignals:
@@ -613,13 +669,20 @@ func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray w
 	return returnValue
 
 func get_distance_to_signal(signalName):
+	var signalN = world.get_node("Signals").get_node(signalName)
+	
+	if signalN.attachedRail == currentRail.name:
+		if forward:
+			return signalN.onRailPosition - distanceOnRail
+		else:
+			return distanceOnRail - signalN.onRailPosition
+			
 	var returnValue = 0
 	if forward:
 		returnValue += currentRail.length - distanceOnRail
 	else:
 		returnValue += distanceOnRail
 	var index = routeIndex +1 
-	var signalN = world.get_node("Signals").get_node(signalName)
 	var searchedRailName =  signalN.attachedRail
 	while(index != baked_route.size()):
 #		print (String(baked_route[index]) + "  " + String(searchedRailName))
@@ -700,3 +763,48 @@ func check_sifa(delta):
 	sifa =  sifaTimer > 25
 	$Sound/SiFa.stream_paused = not sifaTimer > 30
 		
+func set_signalWarnLimits(): # Called in the beginning of the route
+	var signals = get_all_upcoming_signalPoints_of_one_type("Signal")
+	var speedLimits = get_all_upcoming_signalPoints_of_one_type("Speed")
+	for speedLimit in speedLimits:
+		signals.append(speedLimit)
+	var signalT = {"name" : signals, "position" : []}
+	for signalS in signalT["name"]:
+		signalT["position"].append(get_distance_to_signal(signalS))
+	var sortedSignals = Math.sort_signals(signalT, true)
+	print(signalT)
+	print(sortedSignals)
+	var limit = speedLimit
+	for i in range(0,sortedSignals.size()):
+		var signalN = world.get_node("Signals").get_node(sortedSignals[i])
+		if signalN.speed != -1:
+			if signalN.speed < limit and i > 0:
+				var signalNBefore = world.get_node("Signals").get_node(sortedSignals[i-1])
+				if signalNBefore.type == "Signal":
+					signalNBefore.warnSpeed = signalN.speed
+			limit = signalN.speed
+
+func set_signalAfters():
+	var signals = get_all_upcoming_signalPoints_of_one_type("Signal")
+	for i in range(1,signals.size()):
+		var signalN = world.get_node("Signals").get_node(signals[i-1])
+		signalN.signalAfter = signals[i]
+		
+
+func spawnWagons():
+	var nextWagonPosition = startPosition
+	for wagon in wagons:
+		var wagonNode = get_node(wagon)
+		var newWagon = wagonNode.duplicate()
+		newWagon.owner = self.owner
+		newWagon.show()
+		newWagon.bakedRoute = baked_route
+		newWagon.bakedRouteDirection = baked_route_direction
+		newWagon.forward = forward
+		newWagon.currentRail = currentRail
+		newWagon.distanceOnRail = nextWagonPosition
+		newWagon.player = self
+		newWagon.world = world
+		nextWagonPosition -= wagonNode.length + wagonDistance
+		get_parent().add_child(newWagon)
+	

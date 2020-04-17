@@ -28,6 +28,13 @@ func _process(delta):
 	if alpha < 0:
 		alpha = 0
 	$HBoxContainer/CurrentLimit.modulate.a = alpha
+	
+	if $Pause.visible or $TextBox.visible:
+		get_tree().paused = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		get_tree().paused = false
+		
 
 
 var sending = false

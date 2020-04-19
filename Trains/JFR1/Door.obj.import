@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Door.obj-ac2c2f438c0780f251849352b4ca9b59.mesh"
+
+[deps]
+
+files=[ "res://.import/Door.obj-ac2c2f438c0780f251849352b4ca9b59.mesh" ]
+
+source_file="res://Trains/JFR1/Door.obj"
+dest_files=[ "res://.import/Door.obj-ac2c2f438c0780f251849352b4ca9b59.mesh", "res://.import/Door.obj-ac2c2f438c0780f251849352b4ca9b59.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -122,6 +122,7 @@ func get_scenario_settings(): # fills the settings field with saved values
 	$Scenarios/Settings/Tab/General/TrainLength/SpinBox.value = s["TrainLength"]
 	$Scenarios/Settings/Tab/General/Description.text = s["Description"]
 	$Scenarios/Settings/Tab/General/Duration/SpinBox.value = s["Duration"]
+	print("Scenario Settings loaded")
 
 func set_scenario_settings():
 	if currentScenario == "": return
@@ -134,6 +135,7 @@ func set_scenario_settings():
 	sData[currentScenario]["TrainLength"] = $Scenarios/Settings/Tab/General/TrainLength/SpinBox.value 
 	sData[currentScenario]["Description"] = $Scenarios/Settings/Tab/General/Description.text 
 	sData[currentScenario]["Duration"] = $Scenarios/Settings/Tab/General/Duration/SpinBox.value 
+	print("Scenario Settings saved")
 	
 
 	config.set_value("Scenarios", "sData", sData)
@@ -160,44 +162,9 @@ func update_train_list():
 func _on_SaveGeneral_pressed():
 	set_scenario_settings()
 	
-var currentTrain = "Player"
 
-func get_train_settings():
-	var sData = config.get_value("Scenarios", "sData", {})
-	if not sData.has(currentScenario): return
-	if not sData[currentScenario].has("Trains"): return
-	if not sData[currentScenario]["Trains"].has(currentTrain): return
-	var trains = sData[currentScenario]["Trains"]
-	if not trains.has(currentTrain): return
-	var train = trains[currentTrain]
 	
-	$Scenarios/Settings/Tab/Trains/Route/Route.text = train["Route"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected = train["Direction"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = train["DoorConfiguration"]
-	prepare_station_table(train["Stations"])
 
-func set_train_settings():
-	var train = {}
-	train["Route"] = $Scenarios/Settings/Tab/Trains/Route/Route.text
-	train ["StartRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text
-	train["StartRailPosition"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value
-	train["Direction"] = $Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected
-	train["DoorConfiguration"] = $Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected
-	train["Stations"] = get_station_array()
-	var sData = config.get_value("Scenarios", "sData", {})
-	if not sData.has(currentScenario):
-		sData[currentScenario] = {}
-	if not sData[currentScenario].has("Trains"):
-		sData[currentScenario]["Trains"] = {}
-	sData[currentScenario]["Trains"][currentTrain] = train
-	config.set_value("Scenarios", "sData", sData)
-	config.save(save_path)
-	print("Train Settings saved")
-	
-func _on_SaveTrain_pressed():
-	set_train_settings()
 	
 ## Load Signals
 func _on_LoadScenario_pressed():
@@ -228,6 +195,7 @@ func get_enviroment_data_for_scenario():
 func _on_ItemList_item_selected(index):
 	currentScenario = $Scenarios/ItemList.get_item_text(index)
 	world.currentScenario = currentScenario
+	update_train_list()
 	get_train_settings()
 	get_scenario_settings()
 	
@@ -259,7 +227,56 @@ func get_world_configuration():
 
 
 
+## Trains:
 ### Station Editing: #################################
+
+func _on_SaveTrain_pressed():
+	set_train_settings()
+
+var currentTrain = "Player"
+
+func get_train_settings():
+	var sData = config.get_value("Scenarios", "sData", {})
+	if not sData.has(currentScenario): return
+	if not sData[currentScenario].has("Trains"): return
+	if not sData[currentScenario]["Trains"].has(currentTrain):
+		print("No Train Data for "+ currentTrain + " found. - No data loaded.")
+		return
+	var trains = sData[currentScenario]["Trains"]
+	if not trains.has(currentTrain): return
+	var train = trains[currentTrain]
+	
+	$Scenarios/Settings/Tab/Trains/Route/Route.text = train["Route"]
+	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
+	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
+	$Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected = train["Direction"]
+	$Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = train["DoorConfiguration"]
+	prepare_station_table(train["Stations"])
+	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = train["SpawnTime"][0]
+	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = train["SpawnTime"][1]
+	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = train["SpawnTime"][2]
+	$Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text = train["DespawnRail"]
+	print("Train "+ currentTrain + " loaded.")
+
+func set_train_settings():
+	var train = {}
+	train["Route"] = $Scenarios/Settings/Tab/Trains/Route/Route.text
+	train ["StartRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text
+	train["StartRailPosition"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value
+	train["Direction"] = $Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected
+	train["DoorConfiguration"] = $Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected
+	train["SpawnTime"] = [$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value, $Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value, $Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value]
+	train["DespawnRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text
+	train["Stations"] = get_station_array()
+	var sData = config.get_value("Scenarios", "sData", {})
+	if not sData.has(currentScenario):
+		sData[currentScenario] = {}
+	if not sData[currentScenario].has("Trains"):
+		sData[currentScenario]["Trains"] = {}
+	sData[currentScenario]["Trains"][currentTrain] = train
+	config.set_value("Scenarios", "sData", sData)
+	config.save(save_path)
+	print("Train "+ currentTrain + " saved.")
 
 var entriesCount = 0
 
@@ -320,7 +337,7 @@ func get_station_array():
 	return stations
 
 func prepare_station_table(stations):
-	print(stations)
+#	print(stations)
 	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
 	while (grid.get_children().size() > 12):
 		grid.get_children()[grid.get_children().size()-1].free()
@@ -343,7 +360,62 @@ func prepare_station_table(stations):
 	
 
 
+
 func _on_ResetSignals_pressed():
 	for child in world.get_node("Signals").get_children():
 		if child.type == "Signal":
 			child.reset()
+
+
+func _on_ItemList2_Train_selected(index):
+	currentTrain = $Scenarios/Settings/Tab/Trains/ItemList2.get_item_text(index)
+	get_train_settings()
+	$Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text = currentTrain
+
+
+func _on_NewTrain_pressed():
+	var trainName = $Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
+	if trainName == "": return
+	$Scenarios/Settings/Tab/Trains/ItemList2.add_item(trainName)
+
+
+
+func _on_RenameTrain_pressed():
+	var trainName = $Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
+	if trainName == "": return
+	for  i in range(0, $Scenarios/Settings/Tab/Trains/ItemList2.get_item_count()):
+		if $Scenarios/Settings/Tab/Trains/ItemList2.get_item_text(i) == trainName:
+			print("There already exists a train whith this train name, aborting...")
+			return
+	get_train_settings()
+	currentTrain = trainName
+	set_train_settings()
+
+
+func _on_DuplicateTrain_pressed():
+	if currentTrain == "": return
+	get_train_settings()
+	currentTrain = currentTrain + " (Duplicate)"
+	set_train_settings()
+	
+
+
+
+func _on_DeleteTrain_pressed():
+	if currentTrain == "Player":
+		print ("You cant delete the player train!")
+		return
+	$Scenarios/Settings/Tab/Trains/ItemList2.remove_item($Scenarios/Settings/Tab/Trains/ItemList2.get_selected_items()[0])
+	var sData = config.get_value("Scenarios", "sData", {})
+	if not sData.has(currentScenario): return
+	if not sData[currentScenario].has("Trains"): return
+	if not sData[currentScenario]["Trains"].has(currentTrain):
+		currentTrain = ""
+		return
+	var trains = sData[currentScenario]["Trains"]
+	trains.erase(currentTrain)
+	sData[currentScenario]["Trains"] = trains
+	config.set_value("Scenarios", "sData", sData)
+	config.save(save_path)
+	print("Train deleted.")
+	currentTrain = ""

@@ -23,7 +23,6 @@ var speed = 0 # Initiats the speed. (Unit: m/s) ## You can convert it with var k
 var distance = 0 # Initiates the complete driven distance since the startposition of the Ride. Used for example the TrainStations.
 onready var currentSpeedLimit = speedLimit # Unit: km/h # holds the current speedlimit
 var hardOverSpeeding = false # If Speed > speedlimit + 10 this is set to true
-var nextSpeedLimit = -1 # it stores the value of the last "Warn Speed Limit Node". Currently not further used. Unit: km/h
 var command = -1 # If Command is < 0 the train will brake, if command > 0 the train will accelerate. Set by the player with Arrow Keys.
 var technicalSoll = 0 # Soll Command. This variable describes the "aim" of command
 var blockedAcceleration = false ## If true, then acceleration is blocked. e.g.  brakes
@@ -32,7 +31,6 @@ var brakeRoll = -1 # describes the user input (0 to -1)
 var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive) - JJust from brakes and engines
 var currentRealAcceleration = 0
 var time = [23,59,59] ## actual time Indexes: [0]: Hour, [1]: Minute, [2]: Second
-var ai = false # Currently not used. It will set by the scenario manger from world node.
 var enforcedBreaking = false 
 var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
@@ -75,10 +73,27 @@ var cameraY = 90
 var cameraX = 0
 var cameraDistance = 20
 var mouseSensitivity = 10
+var soundMode = 0 # 0: Interior, 1: Outer   ## Not currently used
 
-export (Array, NodePath) var wagons
-export var wagonDistance = 0.5
+export (Array, NodePath) var wagons 
+export var wagonDistance = 0.5 ## Distance between the wagons
 var wagonsVisible = false
+
+var automaticDriving = false # Autopilot
+var sollSpeed = 0 ## Unit: km/h
+var sollSpeedTolerance = 4 # Unit km/h
+var sollSpeedEnabled = false ## Automatic Speed handlement
+
+var nextSignal = null ## Type: Node (object)
+var distanceToNextSignal = 0
+var nextSpeedLimitNode = null ## Type: Node (object)
+var distanceToNextSpeedLimit = 0
+
+var ai = false # It will be set by the scenario manger from world node.
+var despawnRail = "" ## If the AI Train reaches this Rail, he will despawn.
+var rendering = true
+var despawning = false
+
 ## callable functions:
 # send_message()
 # show_textbox_message(string)
@@ -113,7 +128,7 @@ func ready(): ## Called by World!
 	route = route.split(" ")
 	bake_route()
 	
-	if Root.EasyMode:
+	if Root.EasyMode or ai:
 		pantograph = true
 		controlType = 0
 		sifaEnabled = false
@@ -154,14 +169,37 @@ func ready(): ## Called by World!
 	spawnWagons()
 	
 	## Prepare Signals:
-	set_signalWarnLimits()
-	
-	set_signalAfters()
+	if not ai:
+		set_signalWarnLimits()
+		set_signalAfters()
+		
+	if ai:
+		soundMode = 1
+		wagonsVisible = true
+		automaticDriving = true
+		$Cabin.queue_free()
+		$Camera.queue_free()
+		$HUD.queue_free()
+		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
 
 func _process(delta):
 	var osTime0 = OS.get_ticks_msec()
 	if world == null:
 		return
+	
+	if Root.EasyMode or ai:
+		check_automaticDriving()
+	
+	updateNextSignal(delta)
+	updateNextSpeedLimit(delta)
+	updateNextStation(delta)
+	
+	if automaticDriving:
+		autopilot(delta)
+	
+	if sollSpeedEnabled:
+		handleSollSpeed(delta)
+	
 	getCommand(delta)
 	
 	getSpeed(delta)
@@ -169,7 +207,11 @@ func _process(delta):
 	if speed != 0:
 		drive(delta)
 	
-	handleCamera(delta)
+	if despawning: 
+		queue_free()
+	checkDespawn()
+	if not ai:
+		handleCamera(delta)
 	
 	get_time()
 	
@@ -188,14 +230,15 @@ func _process(delta):
 	
 	checkSpeedLimit(delta)
 	
-	check_for_next_station(delta)
-	
-	check_for_player_help(delta)
-	
-	check_horn()
+	if not ai:
+		check_for_next_station(delta)
+		check_for_player_help(delta)
+		check_horn()
 	
 	if sifaEnabled:
 		check_sifa(delta)
+	
+	checkVisibility(delta)
 	
 #	var osTime1 = OS.get_ticks_msec()
 #	print(float(osTime1-osTime0))
@@ -222,7 +265,7 @@ func _input(event):
 			cameraDistance = 200
 
 func getCommand(delta):
-	if controlType == 0: ## Combi Roll
+	if controlType == 0 and not automaticDriving: ## Combi Roll
 		if Input.is_action_pressed("ui_up"):
 			soll_command += 0.7 * delta
 		if Input.is_action_pressed("ui_down"):
@@ -238,7 +281,7 @@ func getCommand(delta):
 		if soll_command > 1: soll_command = 1
 		if soll_command < -1: soll_command = -1
 		
-	elif controlType == 1: ## Seperate Brake and Acceleration
+	elif controlType == 1 and not automaticDriving: ## Seperate Brake and Acceleration
 		if Input.is_action_pressed("acc+"):
 			accRoll += 0.7 * delta
 		if Input.is_action_pressed("acc-"):
@@ -340,6 +383,7 @@ func drive(delta):
 #			drivenDistance = 0 - distanceOnRail
 			change_to_next_rail()
 	
+	if not rendering: return
 	if forward:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
 	else:
@@ -349,7 +393,8 @@ func drive(delta):
 func change_to_next_rail():
 	if forward:
 		distanceOnRail -= currentRail.length
-	print("Changing Rail..")
+	if not ai:
+		print("Changing Rail...")
 	routeIndex += 1
 	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
 	forward = baked_route_direction[routeIndex]
@@ -363,15 +408,17 @@ func handleCamera(delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		cameraState = 0
 		wagonsVisible = false
+		cameraNode.transform = cameraZeroTransform
 		$Cabin.show()
 	if Input.is_action_just_pressed("Outer View"):
 		wagonsVisible = true
 		cameraState = 1
 		$Cabin.hide()
 	if cameraState == 0: # Inner Position
-		cameraNode.transform = cameraZeroTransform
 		## Camera x Position
 		var sollCameraPosition = cameraZeroTransform.origin.x + (currentRealAcceleration * -cameraFactor)
+		if speed == 0:
+			sollCameraPosition = cameraZeroTransform.origin.x
 		var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
 		cameraNode.translation.x -= missingCameraPosition * delta
 	elif cameraState == 1:
@@ -379,7 +426,9 @@ func handleCamera(delta):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if mouseMotion == null: return
 		cameraY += -mouseMotion.x * delta * mouseSensitivity
-		cameraX += +mouseMotion.y * delta * mouseSensitivity
+		cameraX += +mouseMotion.y * delta * mouseSensitivity 
+		if cameraX > 85: cameraX = 85
+		if cameraX < -85: cameraX = -85
 		var cameraVector = Vector3(cameraDistance, 0, 0)
 		cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
 		cameraNode.translation = cameraVector + cameraMidPoint
@@ -406,6 +455,8 @@ func check_signals():
 			signals.erase(signalname)
 			
 func handle_signal(signalname):
+	nextSignal = null
+	nextSpeedLimitNode = null
 	var signal = world.get_node("Signals/"+signalname)
 	if signal.forward != forward: return
 	print("SIGNAL: " + signalname)
@@ -413,7 +464,7 @@ func handle_signal(signalname):
 		if signal.speed != -1:
 			currentSpeedLimit = signal.speed
 		if signal.warnSpeed != -1: 
-			nextSpeedLimit = signal.warnSpeed
+			pass
 		if signal.status == 0:
 			send_message("You overrun a red signal. The game is over!")
 			overrunRedSignal = true
@@ -448,8 +499,9 @@ func handle_signal(signalname):
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
-		nextSpeedLimit = signal.warnSpeed
-		print("Next Speed Limit: "+String(nextSpeedLimit))
+		print("Next Speed Limit: "+String(signal.warnSpeed))
+	elif signal.type == "ContactPoint":
+		signal.activateContactPoint(name)
 	pass
 
 
@@ -491,13 +543,18 @@ func check_station(delta):
 					currentStationName = ""
 					nextStation = ""
 					isInStation = false
+					nextStationNode = null
+					print("HALLO1")
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= depatureTime[2]:
+					nextStation = null
 					send_message("You can now depart")
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
 					currentStationName = ""
 					nextStation = ""
 					isInStation = false
+					nextStationNode = null
+					print("HALLO2")
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
 				send_message("You departed earlier than allowed! Please wait for the depart message next time!")
@@ -507,6 +564,8 @@ func check_station(delta):
 			currentStationName = ""
 			nextStation = ""
 			isInStation = false
+			nextStationNode = null
+			print("HALLO3")
 		stationTimer += delta
 		if (speed != 0):
 			wholeTrainNotInStation = false
@@ -543,8 +602,9 @@ func checkSpeedLimit(delta):
 		checkSpeedLimitTimer -= delta
 	
 func send_message(string):
-	print("Sending Message: " + string )
-	$HUD.send_Message(string)
+	if not ai:
+		print("Sending Message: " + string )
+		$HUD.send_Message(string)
 		
 
 ## Doors:
@@ -640,7 +700,7 @@ func bake_route(): ## Generate the whole route for the train.
 func show_textbox_message(string):
 	$HUD.show_textbox_message(string)
 	
-func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray with the names of the signals. The first entry is the nearest.
+func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray with the names of the signals. The first entry is the nearest. 
 	var returnValue = []
 	var index = routeIndex
 	while(index != baked_route.size()):
@@ -700,7 +760,7 @@ func get_distance_to_signal(signalName):
 var nextStation = ""
 var check_for_next_stationTimer = 0
 var stationMessageSent = false
-func check_for_next_station(delta):
+func check_for_next_station(delta):  ## Used for displaying (In 1000m there is ...)
 	check_for_next_stationTimer += delta
 	if check_for_next_stationTimer < 1: return
 	else:
@@ -757,6 +817,8 @@ func check_horn():
 
 var sifaTimer = 0
 func check_sifa(delta):
+	if automaticDriving:
+		sifaTimer = 0
 	sifaTimer += delta
 	if speed == 0 or Input.is_action_just_pressed("SiFa"):
 		sifaTimer = 0
@@ -808,3 +870,156 @@ func spawnWagons():
 		nextWagonPosition -= wagonNode.length + wagonDistance
 		get_parent().add_child(newWagon)
 	
+
+func check_automaticDriving():
+	if Input.is_action_just_pressed("autopilot"):
+		automaticDriving = !automaticDriving
+		if not automaticDriving:
+			sollSpeedEnabled = false
+			print("AutomaticDriving disabled")
+		else:
+			print("AutomaticDriving enabled")
+
+var autoPilotInStation = true
+
+var updateNextSignalTimer = 0
+func updateNextSignal(delta):
+	if nextSignal == null:
+		if get_all_upcoming_signalPoints_of_one_type("Signal").size() == 0: return
+		nextSignal = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_one_type("Signal")[0])
+		updateNextSignalTimer = 1 ## Force Update Signal
+	updateNextSignalTimer += delta
+	if updateNextSignalTimer > 0.5:
+		distanceToNextSignal = get_distance_to_signal(nextSignal.name)
+		updateNextSignalTimer = 0
+
+
+var updateNextSpeedLimitTimer = 0
+func updateNextSpeedLimit(delta):
+	if nextSpeedLimitNode == null:
+		if get_all_upcoming_signalPoints_of_one_type("SpeedLimit").size() > 0:
+			var nextSpeedLimitName = get_all_upcoming_signalPoints_of_one_type("SpeedLimit")[0]
+			distanceToNextSpeedLimit = get_distance_to_signal(nextSpeedLimitName)
+			if distanceToNextSignal < distanceToNextSpeedLimit:
+				nextSpeedLimitNode = nextSignal
+			else:
+				nextSpeedLimitNode = world.get_node("Signals").get_node(nextSpeedLimitName)
+		else:
+			nextSpeedLimitNode = nextSignal
+		if nextSpeedLimitNode == null:
+			return
+		updateNextSpeedLimitTimer = 1 ## Force Update Signal
+	updateNextSpeedLimitTimer += delta
+	if updateNextSpeedLimitTimer > 0.5:
+		distanceToNextSpeedLimit = get_distance_to_signal(nextSpeedLimitNode.name)
+		updateNextSpeedLimitTimer = 0
+	
+var nextStationNode = null
+var distanceToNextStation = 0
+var updateNextStationTimer = 0
+func updateNextStation(delta):  ## Used for Autopilot
+	distanceToNextStation -= speed*delta
+	if nextStationNode == null:
+		if get_all_upcoming_signalPoints_of_one_type("Station").size() > 0:
+			nextStationNode = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_one_type("Station")[0])
+			distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
+
+
+var autopilotTimer = 0
+func autopilot(delta):
+	autopilotTimer += delta
+	if autopilotTimer < 0.5: return
+	autopilotTimer = 0
+	if not pantographUp:
+		pantographUp = true
+	if isInStation:
+		sollSpeed = 0
+		return
+	if (doorLeft or doorRight) and not doorsClosing:
+		doorsClosing = true
+	
+	var sollSpeedArr = {}
+	
+	## Red Signal:
+	sollSpeedArr[0] = speedLimit
+	if nextSignal != null and nextSignal.status == 0:
+		sollSpeedArr[0] = min(sqrt(15*distanceToNextSignal+20), (distanceToNextSignal+10)/4.0)
+		if sollSpeedArr[0] < 10:
+			sollSpeedArr[0] = 0
+	## Next SpeedLimit
+	sollSpeedArr[1] = currentSpeedLimit
+	if nextSpeedLimitNode != null and nextSpeedLimitNode.speed != -1:
+		sollSpeedArr[1] = nextSpeedLimitNode.speed + (distanceToNextSpeedLimit-50)/((speed+2)/2)
+		if (distanceToNextSignal < 50):
+			sollSpeedArr[1] = nextSpeedLimitNode.speed
+	
+	## Next Station:
+	sollSpeedArr[2] = speedLimit
+	
+	if nextStationNode != null:
+		print(nextStationNode.name)
+		print(distanceToNextStation)
+		if stations["nodeName"].has(nextStationNode.name):
+			sollSpeedArr[2] = min(sqrt(15*distanceToNextStation+20), (distanceToNextStation+10)/4.0)
+			if sollSpeedArr[2] < 10:
+				sollSpeedArr[2] = 0
+		else:
+			nextStationNode = null
+			print("HALLO4")
+#		if (currentStationName != "" and distance-distanceOnStationBeginning>=length):
+#			sollSpeedArr[2] = 0
+			
+	## Open Doors:
+	if (currentStationName != "" and speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length):
+		if nextStationNode.platformSide == 1:
+			doorLeft = true
+		elif nextStationNode.platformSide == 2:
+			doorRight = true
+		elif nextStationNode.platformSide == 3:
+			doorLeft = true
+			doorRight = true
+	
+	
+	sollSpeedArr[3] = currentSpeedLimit
+	
+#	print("0: "+ String(sollSpeedArr[0]))
+#	print("1: "+ String(sollSpeedArr[1]))
+#	print("2: "+ String(sollSpeedArr[2]))
+#	print("3: "+ String(sollSpeedArr[3]))
+	sollSpeed = sollSpeedArr.values().min()
+	sollSpeedEnabled = true
+	
+
+	
+func handleSollSpeed(delta):
+	var speedDifference = sollSpeed - Math.speedToKmH(speed)
+	if abs(speedDifference) > 4:
+		if speedDifference > 10: 
+			soll_command = 1
+		elif speedDifference < 10 and speedDifference > 0:
+			soll_command = 0.5
+		elif speedDifference > -10 and speedDifference < 0:
+			soll_command = -0.5
+		elif speedDifference < -10:
+			soll_command = -1
+	elif abs(speedDifference) < 1: 
+		soll_command = 0
+	if sollSpeed == 0 and abs(speedDifference) < 10:
+		soll_command = -0.5
+
+func checkDespawn():
+	if ai and currentRail.name == despawnRail:
+		print("Despawning Train: " + name)
+		despawning = true
+
+var checkVisibilityTimer = 0
+func checkVisibility(delta):
+	checkVisibilityTimer += delta
+	if checkVisibilityTimer < 1: return
+	checkSpeedLimitTimer = 0
+	if ai: 
+		var currentChunk = world.pos2Chunk(translation)
+		rendering = world.istChunks.has(world.chunk2String(currentChunk))
+		self.visible = rendering
+		wagonsVisible = rendering
+			 

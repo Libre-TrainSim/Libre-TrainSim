@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
@@ -7,6 +7,23 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=7]
+
+[sub_resource type="Animation" id=1]
+resource_name = "autopilot"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Autopilot:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Screen1" type="Node2D"]
 script = ExtResource( 1 )
@@ -85,6 +102,34 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
 text = "SiFa"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayerAutoPilot" type="AnimationPlayer" parent="."]
+anims/autopilot = SubResource( 1 )
+
+[node name="Autopilot" type="ColorRect" parent="."]
+margin_left = 41.5861
+margin_top = 613.604
+margin_right = 558.59
+margin_bottom = 668.604
+color = Color( 0.290196, 0.909804, 0.92549, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Autopilot"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 55.0
+margin_right = 465.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+text = "Automatic Driving"
 align = 1
 valign = 1
 __meta__ = {

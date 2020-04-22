@@ -36,8 +36,8 @@ func _process(delta):
 		
 
 	
-
-func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedBreaking, sifa):
+var lastAutoPilot = false
+func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedBreaking, sifa, autopilot):
 	## Tachos:
 	$SpeedPointer.rotation_degrees = SpeedPointerZero+SpeedPerKmH*speed 
 	SollCommandPointer = CommandPointerZero+CommandPerPercent*command*100 
@@ -59,6 +59,11 @@ func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedB
 	$Doors/Right.visible = doorRight
 	$Doors/Left.visible = doorLeft
 	$Doors/Door.visible = doorLeft or doorRight
+	
+#	if not lastAutoPilot and autopilot:
+#		$AnimationPlayerAutoPilot.play("autopilot")
+	$Autopilot.visible = autopilot and blinkStatus
+#	lastAutoPilot = autopilot
 	
 		
 		

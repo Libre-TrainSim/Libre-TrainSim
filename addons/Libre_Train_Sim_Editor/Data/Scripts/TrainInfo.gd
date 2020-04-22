@@ -82,4 +82,9 @@ func update_info(player):
 		$VBoxContainer/SiFa/dot.texture = orange
 	else:
 		$VBoxContainer/SiFa/dot.texture = green
-			
+	
+	$VBoxContainer/Autopilot.visible = Root.EasyMode
+	if player.automaticDriving:
+		$VBoxContainer/Autopilot/dot.texture = green
+	else:
+		$VBoxContainer/Autopilot/dot.texture = red

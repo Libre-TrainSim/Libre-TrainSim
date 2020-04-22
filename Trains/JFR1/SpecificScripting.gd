@@ -6,8 +6,10 @@ extends Node
 # var b = "text"
 onready var player = get_parent()
 
+var ready = false
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func ready():
+	if player.ai: return
 	get_node("../Cabin/DisplayMiddle").set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	var texture = get_node("../Cabin/DisplayMiddle").get_texture()
 	get_node("../Cabin/ScreenMiddle").material_override.emission_texture = texture
@@ -25,7 +27,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforcedBreaking, player.sifa)
+	if player.ai: return
+	if not ready: 
+		ready = true
+		ready()
+	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforcedBreaking, player.sifa, player.automaticDriving)
 
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_time(player.time)
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_voltage(player.voltage)

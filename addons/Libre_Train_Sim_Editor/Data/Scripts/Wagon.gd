@@ -32,6 +32,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if player == null or player.despawning: 
+		queue_free()
 	if get_parent().name != "Players": return
 	if distanceToPlayer == -1:
 		distanceToPlayer = abs(player.distanceOnRail - distanceOnRail)
@@ -45,6 +47,13 @@ func _process(delta):
 	
 	if pantographEnabled:
 		check_pantograph()
+	
+	if not visible: return
+	if forward:
+		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
+	else:
+		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
+		rotate_object_local(Vector3(0,1,0), deg2rad(180))
 
 
 
@@ -70,7 +79,7 @@ func drive(delta):
 			distance += drivenDistance
 			if distanceOnRail < 0:
 				change_to_next_rail()
-	
+	if not visible: return
 	if forward:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
 	else:
@@ -91,7 +100,6 @@ func drive(delta):
 func change_to_next_rail():
 	if forward:
 		distanceOnRail -= currentRail.length
-	print("Changing Rail..")
 	routeIndex += 1
 	currentRail =  world.get_node("Rails").get_node(bakedRoute[routeIndex])
 	forward = bakedRouteDirection[routeIndex]
@@ -128,3 +136,4 @@ func check_pantograph():
 		$Pantograph/AnimationPlayer.play_backwards("Up")
 	lastPantograph = player.pantograph
 	lastPantographUp = player.pantographUp
+

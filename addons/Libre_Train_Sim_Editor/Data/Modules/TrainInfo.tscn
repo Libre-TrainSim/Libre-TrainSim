@@ -9,6 +9,10 @@
 [node name="TrainInfo" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -0.950073
+margin_top = 0.949997
+margin_right = -0.950073
+margin_bottom = 0.950012
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -69,10 +73,10 @@ texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Pantograpgh"]
 margin_left = 34.0
-margin_right = 375.0
+margin_right = 368.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 2 )
-text = "Pantograph (press B and wait for few seconds)"
+text = "Pantograph (press 'b' and wait a few seconds)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -225,10 +229,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Horn" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer"]
 margin_top = 387.0
 margin_right = 766.0
-margin_bottom = 417.0
+margin_bottom = 390.0
+rect_min_size = Vector2( 0, 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Horn" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 394.0
+margin_right = 766.0
+margin_bottom = 424.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Horn"]
 margin_right = 30.0
@@ -247,10 +260,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Autopilot" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 421.0
+[node name="FrontLight" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 428.0
 margin_right = 766.0
-margin_bottom = 451.0
+margin_bottom = 458.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/FrontLight"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="VBoxContainer/FrontLight"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Front Light (Press 'L')"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InsideLight" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 462.0
+margin_right = 766.0
+margin_bottom = 492.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/InsideLight"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="VBoxContainer/InsideLight"]
+margin_left = 34.0
+margin_right = 766.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Cabin Light (Press 'ctrl + L')"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Autopilot" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 496.0
+margin_right = 766.0
+margin_bottom = 526.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Autopilot"]
 margin_right = 30.0

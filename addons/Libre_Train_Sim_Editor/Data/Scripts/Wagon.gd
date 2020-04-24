@@ -32,6 +32,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	$MeshInstance.show()
+
 	if player == null or player.despawning: 
 		queue_free()
 	if get_parent().name != "Players": return
@@ -40,6 +42,8 @@ func _process(delta):
 	speed = player.speed
 	visible = player.wagonsVisible
 	
+	if not  initialSet:
+		$MeshInstance.hide()
 	if speed != 0 or not initialSet:
 		drive(delta)
 		initialSet = true
@@ -54,6 +58,11 @@ func _process(delta):
 	else:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
+	
+	if has_node("InsideLight"):
+		$InsideLight.visible = player.insideLight
+	
+	
 
 
 

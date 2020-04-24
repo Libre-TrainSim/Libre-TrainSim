@@ -94,6 +94,8 @@ var despawnRail = "" ## If the AI Train reaches this Rail, he will despawn.
 var rendering = true
 var despawning = false
 
+var frontLight = false
+var insideLight = false
 ## callable functions:
 # send_message()
 # show_textbox_message(string)
@@ -181,6 +183,8 @@ func ready(): ## Called by World!
 		$Camera.queue_free()
 		$HUD.queue_free()
 		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
+		insideLight = true
+		frontLight = true
 
 func _process(delta):
 	var osTime0 = OS.get_ticks_msec()
@@ -239,6 +243,8 @@ func _process(delta):
 		check_sifa(delta)
 	
 	checkVisibility(delta)
+	
+	controlLights(delta)
 	
 #	var osTime1 = OS.get_ticks_msec()
 #	print(float(osTime1-osTime0))
@@ -362,7 +368,8 @@ func getSpeed(delta):
 #		speed = 0
 	if Math.speedToKmH(speed) > speedLimit:
 		speed = Math.kmHToSpeed(speedLimit)
-	currentRealAcceleration = (speed - lastspeed) * 1/delta
+	if delta != 0:
+		currentRealAcceleration = (speed - lastspeed) * 1/delta
 	if debug:
 		speed = 200*command
 
@@ -930,6 +937,7 @@ func autopilot(delta):
 	autopilotTimer += delta
 	if autopilotTimer < 0.5: return
 	autopilotTimer = 0
+	debugLights(self)
 	if not pantographUp:
 		pantographUp = true
 	if isInStation:
@@ -1023,3 +1031,24 @@ func checkVisibility(delta):
 		self.visible = rendering
 		wagonsVisible = rendering
 			 
+
+func debugLights(node):
+	for child in node.get_children():
+		if child.name != "HUD":
+			debugLights(child)
+	if node.has_meta("energy"):
+		node.visible = false
+		node.visible = true
+		print("Spotlight updated")
+
+func controlLights(delta):
+	if ai: return
+	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
+		frontLight = !frontLight
+	if Input.is_action_just_pressed("InsideLight"):
+		insideLight = !insideLight
+	if has_node("FrontLight"):
+		$FrontLight.visible = frontLight
+	if has_node("CabinLight"):
+		$CabinLight.visible = insideLight
+

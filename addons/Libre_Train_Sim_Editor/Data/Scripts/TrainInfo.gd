@@ -88,3 +88,13 @@ func update_info(player):
 		$VBoxContainer/Autopilot/dot.texture = green
 	else:
 		$VBoxContainer/Autopilot/dot.texture = red
+	
+	if player.frontLight:
+		$VBoxContainer/FrontLight/dot.texture = green
+	else:
+		$VBoxContainer/FrontLight/dot.texture = red
+	
+	if player.insideLight:
+		$VBoxContainer/InsideLight/dot.texture = green
+	else:
+		$VBoxContainer/InsideLight/dot.texture = red

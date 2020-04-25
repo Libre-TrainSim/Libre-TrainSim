@@ -176,7 +176,11 @@ func get_shifted_pos_at_RailDistance(distance, shift):
 
 func get_shifted_local_pos_at_RailDistance(distance, shift):
 	var newRadius = radius + shift
-	var newDistance = distance * ((newRadius)/(radius))
+	if radius == 0:
+		newRadius = 0
+	var newDistance = distance
+	if radius != 0:
+		newDistance = distance * ((newRadius)/(radius))
 	var circlePos = circle_get_pos(newRadius, newDistance)
 	return(Vector3(circlePos.x, get_height(distance), -circlePos.y+shift))  
 	
@@ -220,7 +224,11 @@ func circle_get_deg(radius, distance):
 func get_height(distance):
 	if parRail != null:
 		var newRadius = radius - distanceToParallelRail
-		var newDistance = distance * ((newRadius)/(radius))
+		if radius == 0:
+			newRadius = 0
+		var newDistance = distance
+		if radius != 0:
+			newDistance = distance * ((newRadius)/(radius))
 		return parRail.get_height(newDistance)
 	var startGradient = rad2deg(atan(startSlope/100))
 	var endGradient = rad2deg(atan(endSlope/100))
@@ -234,7 +242,11 @@ func get_height(distance):
 func get_heightRot(distance): ## Get Slope
 	if parRail != null:
 		var newRadius = radius - distanceToParallelRail
-		var newDistance = distance * ((newRadius)/(radius))
+		if radius == 0: 
+			newRadius = 0
+		var newDistance = distance
+		if radius != 0:
+			newDistance = distance * ((newRadius)/(radius))
 		return parRail.get_heightRot(newDistance)
 	var startGradient = rad2deg(atan(startSlope/100))
 	var endGradient = rad2deg(atan(endSlope/100))
@@ -249,7 +261,11 @@ func get_heightRot(distance): ## Get Slope
 func get_tend_at_rail_distance(distance):
 	if parRail != null:
 		var newRadius = radius - distanceToParallelRail
-		var newDistance = distance * ((newRadius)/(radius))
+		if radius == 0: 
+			newRadius = 0
+		var newDistance = distance
+		if radius != 0:
+			newDistance = distance * ((newRadius)/(radius))
 		return parRail.get_tend_at_rail_distance(newDistance)
 	if distance >= tend1Pos and distance < tend2Pos:
 		return -(tend1 + (tend2-tend1) * (distance - tend1Pos)/(tend2Pos - tend1Pos))

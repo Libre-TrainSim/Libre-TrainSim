@@ -2,6 +2,7 @@ tool
 extends Spatial
 
 export (String) var FileName = "Name Me!"
+export var debug = false
 var chunkSize = 1000
 
 var createChunksAndSaveWorld = false setget save_world
@@ -445,6 +446,8 @@ func spawnTrain(trainName):
 	player.stations = scenario["Trains"][trainName]["Stations"]
 	player.despawnRail = scenario["Trains"][trainName]["DespawnRail"]
 	player.ai = trainName != "Player"
+	if trainName == "Player":
+		player.debug = debug
 		
 	
 	var doorStatus = scenario["Trains"][trainName]["DoorConfiguration"]

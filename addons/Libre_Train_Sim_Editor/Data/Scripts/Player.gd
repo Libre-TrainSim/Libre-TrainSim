@@ -107,7 +107,7 @@ var world # Node Reference to the world node.
 export var cameraFactor = 0.1 ## The Factor, how much the camaere moves at acceleration and braking
 var startPosition # on rail, given by scenario manager in world node
 var forward = true # does the train drive at the rail direction, or against it? 
-var debug  ## used for driving fast at the track, if true.
+var debug  ## used for driving fast at the track, if true. Set by world node. Set only for Player Train
 var route # String conataining all importand Railnames for e.g. switches. Set by the scenario manager of the world
 var distanceOnRail = 0  # It is the current position on the rail.
 var currentRail # Node Reference to the current Rail on which we are driving.
@@ -424,7 +424,7 @@ func handleCamera(delta):
 	if cameraState == 0: # Inner Position
 		## Camera x Position
 		var sollCameraPosition = cameraZeroTransform.origin.x + (currentRealAcceleration * -cameraFactor)
-		if speed == 0:
+		if speed == 0 or debug:
 			sollCameraPosition = cameraZeroTransform.origin.x
 		var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
 		cameraNode.translation.x -= missingCameraPosition * delta

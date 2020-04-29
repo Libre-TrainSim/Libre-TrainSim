@@ -8,6 +8,9 @@ Get the newest version [here](https://github.com/Jean28518/LibreTrainSim/release
 
 Have fun!
 
+## Comunity:
+Join the official Discord [here](https://discord.gg/AQdAtZZ)!
+
 ## Project:
 This project is created by Jean28518 from germany in his free time, who is studying computer science. The aim is to create a modern fully free Train Simulator for Linux, Mac and Windows.
 
@@ -25,3 +28,4 @@ Did you already play? -> It would be great, if you could answer a survey, which 
 - Github: https://github.com/Jean28518/Libre-TrainSim
 - YouTube: https://www.youtube.com/channel/UCsPsL_AkVUZMmKOKJgm7xsQ
 - Itch: https://jean28518.itch.io/libre-train-sim
+- Discord: https://discord.gg/AQdAtZZ

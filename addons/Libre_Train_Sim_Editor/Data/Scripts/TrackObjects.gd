@@ -170,7 +170,7 @@ func _update(newvar):
 		for b in range(rows):
 			if sides == 1 or sides == 3: ## Left Side
 				if rand_range(0,1) < spawnRate:
-					var position = rail.get_shifted_pos_at_RailDistance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+					var position = rail.get_shifted_pos_at_RailDistance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
@@ -188,7 +188,7 @@ func _update(newvar):
 					idx += 1
 			if sides == 2 or sides == 3: ## Right Side
 				if rand_range(0,1) < spawnRate:
-					var position = rail.get_shifted_pos_at_RailDistance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+					var position = rail.get_shifted_pos_at_RailDistance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)

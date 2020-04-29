@@ -135,7 +135,7 @@ func _on_AddMaterial_pressed():
 
 
 
-func _on_SaveMaterials_pressed():
+func _on_SaveMaterials_pressed(): ## The object path is saved too here
 	if currentTO == null:
 		$"Tab/TrackObjects/Settings".visible = false
 		return
@@ -276,6 +276,7 @@ func _on_PickObject_pressed():
 
 func _on_FileDialog_onject_selected(path):
 	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = path
+	_on_SaveMaterials_pressed()
 	_on_Button_pressed() # update
 
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/RailAttachments.gd" type="Script" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/MaterialSelection.gd" type="Script" id=2]
 
 [node name="Rail Attachments" type="VBoxContainer"]
 anchor_right = 1.0
@@ -189,6 +190,7 @@ visible = false
 margin_right = 1008.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
+script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
 margin_top = 5.0
@@ -207,6 +209,11 @@ size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Pick" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Pick"
 
 [node name="Add" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
 margin_top = 50.0
@@ -568,6 +575,32 @@ margin_right = 537.0
 margin_bottom = 164.0
 size_flags_horizontal = 4
 text = "Update"
+
+[node name="FileDialogObjects" type="FileDialog" parent="."]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 600, 400 )
+popup_exclusive = true
+window_title = "Select Object"
+resizable = true
+mode = 0
+filters = PoolStringArray( "*.obj" )
+current_dir = "res://Resources"
+current_path = "res://Resources/"
+
+[node name="FileDialogMaterials" type="FileDialog" parent="."]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 600, 400 )
+popup_exclusive = true
+window_title = "Select Material"
+resizable = true
+mode = 0
+filters = PoolStringArray( "*.tres" )
+current_dir = "res://Resources"
+current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Copy" to="." method="_on_CopyTrack_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Paste" to="." method="_on_PasteRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Clear" to="." method="_on_ClearTOs_pressed"]
@@ -578,9 +611,13 @@ text = "Update"
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Delete" to="." method="_on_DeleteTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Copy" to="." method="_on_CopyTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Paste" to="." method="_on_PasteTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/Pick" to="." method="_on_PickObject_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0/Pick" to="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0" method="_on_Pick_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add" to="." method="_on_AddMaterial_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Save" to="." method="_on_SaveMaterials_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/Save" to="." method="_on_SavePosition_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Save" to="." method="_on_SavePositioning_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Button" to="." method="_on_Button_pressed"]
+[connection signal="file_selected" from="FileDialogObjects" to="." method="_on_FileDialog_onject_selected"]
+[connection signal="file_selected" from="FileDialogMaterials" to="." method="_on_FileDialogMaterials_file_selected"]

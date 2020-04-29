@@ -11,7 +11,6 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -161,6 +160,7 @@ size_flags_horizontal = 4
 text = "! Save and crreate Chunks !"
 
 [node name="Scenarios" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -255,7 +255,6 @@ margin_right = 1016.0
 margin_bottom = 550.0
 
 [node name="General" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -379,6 +378,7 @@ size_flags_horizontal = 4
 text = "Save General"
 
 [node name="Trains" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -805,6 +805,18 @@ margin_bottom = 826.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
 text = "Reset Signal Data"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -713.0
+margin_bottom = -438.0
+popup_exclusive = true
+window_title = "Select An Object:"
+mode = 0
+filters = PoolStringArray( "*.obj" )
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
 [connection signal="pressed" from="World Configuration/SaveChunks" to="." method="_on_SaveChunks_pressed"]
 [connection signal="item_selected" from="Scenarios/ItemList" to="." method="_on_ItemList_item_selected"]

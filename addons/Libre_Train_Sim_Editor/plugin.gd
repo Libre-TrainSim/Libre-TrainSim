@@ -5,9 +5,19 @@ var railBuilder
 var railAttachements
 var configuration
 var eds = get_editor_interface().get_selection()
+#var fileSelecting = ""
+#var fileResult = ""
+#var fileDialog
 
 func _process(delta):
 	configuration.world = get_editor_interface().get_edited_scene_root()
+	
+#	if fileSelecting != "":
+#		var fileDialog = EditorFileDialog.new()
+#		get_parent().add_child(fileDialog)
+#		fileDialog = 
+#		fileDialog.popup_centered(Vector2(10,10))
+#		fileSelecting = ""
 
 func _enter_tree():
 	# Initialization of the plugin goes here
@@ -23,6 +33,7 @@ func _enter_tree():
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, railAttachements)
 	railAttachements.world = get_editor_interface().get_edited_scene_root()
 	railAttachements.eds = eds
+	railAttachements.pluginRoot = self
 	
 	eds.connect("selection_changed", self, "_on_selection_changed")
 	

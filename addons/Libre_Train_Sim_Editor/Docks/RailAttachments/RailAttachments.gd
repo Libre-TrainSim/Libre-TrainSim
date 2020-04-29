@@ -11,6 +11,7 @@ var copyRail
 var copyTO
 var currentTO
 var eds # Editor Selection
+var pluginRoot
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -127,6 +128,7 @@ func get_materials():
 
 func _on_AddMaterial_pressed():
 	var entry = $"Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0".duplicate()
+	entry.set_script(load("res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/MaterialSelection.gd"))
 	$Tab/TrackObjects/Settings/Tab/Object/GridContainer.add_child(entry)
 	entry.get_node("Label").text = entry.name
 	entry.visible = true
@@ -265,3 +267,25 @@ func _on_PasteRail_pressed():
 	for to in copyRail.trackObjects:
 		duplicate_newTO(to)
 	
+
+
+func _on_PickObject_pressed():
+	$FileDialogObjects.popup_centered()
+	
+
+
+func _on_FileDialog_onject_selected(path):
+	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = path
+	_on_Button_pressed() # update
+
+
+var currentMaterial = 0
+func _on_FileDialogMaterials_file_selected(path):
+	if currentMaterial != 0:
+		get_node("Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material " + String(currentMaterial) + "/LineEdit").text = path
+		_on_SaveMaterials_pressed()
+		_on_Button_pressed() # update
+
+
+func _on_PickMaterial_pressed(): ## Called by material select script.
+	$FileDialogMaterials.popup_centered()

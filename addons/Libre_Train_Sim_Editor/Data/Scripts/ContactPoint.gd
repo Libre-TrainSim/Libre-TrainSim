@@ -6,6 +6,7 @@ var type = "ContactPoint"
 export var affectedSignal = ""
 export var bySpecificTrain = ""
 export var newStatus = 1
+export var newSpeed = -1
 export var affectTime = 0
 
 export (String) var attachedRail
@@ -78,4 +79,9 @@ func _on_Timer_timeout():
 	var signalN = get_parent().get_node(affectedSignal)
 	if signalN == null: 
 		print("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...")
+		return
+	if signalN.type != "Signal":
+		print("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...")
+		return
 	signalN.status = newStatus
+	signalN.speed = newSpeed

@@ -18,7 +18,7 @@ _global_script_class_icons={
 config/name="Libre TrainSim"
 config/description="Train Simulator"
 run/main_scene="res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn"
-config/icon="res://Resources/Basic/icon.png"
+config/icon="res://LibreTrainSimLogo_Quad.png"
 
 [autoload]
 
@@ -136,12 +136,7 @@ InsideLight={
 
 [rendering]
 
-quality/shadow_atlas/quadrant_0_subdiv=2
-quality/shadow_atlas/quadrant_1_subdiv=3
-quality/shadow_atlas/quadrant_2_subdiv=4
-quality/shadow_atlas/quadrant_3_subdiv=5
-quality/shadows/filter_mode=2
-quality/reflections/atlas_size=8192
-quality/reflections/atlas_subdiv=32
+threads/thread_model=2
+quality/directional_shadow/size=16000
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

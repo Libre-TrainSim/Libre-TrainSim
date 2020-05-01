@@ -398,6 +398,15 @@ func drive(delta):
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
 
 func change_to_next_rail():
+	## Handle rest of signals
+	for signalname in signals.keys():
+		if forward and signalname != "":
+			handle_signal(signalname)
+			signals.erase(signalname)
+		if not forward and signalname != "":
+			handle_signal(signalname)
+			signals.erase(signalname)
+	
 	if forward:
 		distanceOnRail -= currentRail.length
 	if not ai:
@@ -408,6 +417,9 @@ func change_to_next_rail():
 
 	if not forward:
 		distanceOnRail += currentRail.length
+		
+	
+	
 
 
 func handleCamera(delta):
@@ -451,7 +463,7 @@ var signals # name of the signals, which are on the current track
 func check_signals():
 	if signalsRailName != currentRail.name:
 		signals = currentRail.attachedSignals.duplicate(true)
-	signalsRailName = currentRail.name
+		signalsRailName = currentRail.name
 		
 	for signalname in signals.keys():
 		if forward and signalname != "" and signals[signalname] < distanceOnRail:

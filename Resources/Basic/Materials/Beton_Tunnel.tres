@@ -4,6 +4,6 @@
 
 [resource]
 params_line_width = 0.1
-albedo_color = Color( 0.396078, 0.396078, 0.396078, 1 )
+albedo_color = Color( 0.329412, 0.329412, 0.329412, 1 )
 albedo_texture = ExtResource( 1 )
 roughness = 0.95

@@ -20,7 +20,7 @@ var blinking = false
 var timer = 0
 func _process(delta):
 	if not Engine.is_editor_hint():
-		if world.time[0] >= setPassAtH and world.time[2] >= setPassAtS and world.time[1] >= setPassAtM:
+		if world.time[0] == setPassAtH and world.time[1] == setPassAtM and world.time[2] == setPassAtS:
 			status = 1
 	timer += delta
 	if timer > 1:

@@ -473,6 +473,20 @@ margin_right = 1008.0
 margin_bottom = 164.0
 size_flags_horizontal = 3
 
+[node name="Label9" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 146.0
+margin_top = 145.0
+margin_right = 281.0
+margin_bottom = 159.0
+text = "Apply Slope Rotation:"
+
+[node name="applySlopeRotation" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 285.0
+margin_top = 140.0
+margin_right = 1008.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+
 [node name="GridContainer2" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
 margin_top = 108.0
 margin_right = 1008.0
@@ -582,7 +596,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Select Object"
+window_title = "Open a File"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.obj" )
@@ -595,7 +609,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Select Material"
+window_title = "Open a File"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres" )

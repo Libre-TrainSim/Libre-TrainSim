@@ -22,6 +22,7 @@ export (bool) var randomRotation
 export (bool) var randomScale 
 export (float) var randomScaleFactor = 0.2
 export (bool) var placeLast = false
+export (bool) var applySlopeRotation = false
 
 export (bool) var wholeRail
 
@@ -60,6 +61,7 @@ func get_data():
 	d.multimesh = multimesh
 	d.rotationObjects = rotationObjects
 	d.placeLast = placeLast
+	d.applySlopeRotation = applySlopeRotation
 	return d
 	
 	
@@ -87,6 +89,8 @@ func set_data(d):
 	multimesh = d.multimesh
 	rotationObjects = d.rotationObjects
 	placeLast = d.placeLast
+	if d.has("applySlopeRotation"):
+		applySlopeRotation = d.applySlopeRotation
 
 func _ready():
 	_update(true)
@@ -180,11 +184,14 @@ func _update(newvar):
 						rot = rand_range(0,360)
 					else:
 						rot += rotationObjects
+					var slopeRot = 0
+					if applySlopeRotation:
+						slopeRot = rail.get_heightRot(railpos)
 					var scale = Vector3(1,1,1)
 					if randomScale:
 						var scaleval = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,1,0), deg2rad(rot)).scaled(scale), position))
+					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), deg2rad(slopeRot)).rotated(Vector3(0,1,0), deg2rad(rot)).scaled(scale), position))
 					idx += 1
 			if sides == 2 or sides == 3: ## Right Side
 				if rand_range(0,1) < spawnRate:
@@ -198,11 +205,14 @@ func _update(newvar):
 						rot = rand_range(0,360)
 					else:
 						rot += rotationObjects
+					var slopeRot = 0
+					if applySlopeRotation:
+						slopeRot = rail.get_heightRot(railpos)
 					var scale = Vector3(1,1,1)
 					if randomScale:
 						var scaleval = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,1,0), deg2rad(rot)).scaled(scale), position))
+					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), deg2rad(slopeRot)).rotated(Vector3(0,1,0), deg2rad(rot)).scaled(scale), position))
 					idx += 1
 		railpos += distanceLength
 		self.multimesh.visible_instance_count = idx

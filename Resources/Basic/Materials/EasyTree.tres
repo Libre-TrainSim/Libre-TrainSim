@@ -7,5 +7,5 @@ flags_transparent = true
 params_cull_mode = 2
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.02
-albedo_color = Color( 0.780392, 0.780392, 0.780392, 1 )
+albedo_color = Color( 0.611765, 0.611765, 0.768627, 1 )
 albedo_texture = ExtResource( 1 )

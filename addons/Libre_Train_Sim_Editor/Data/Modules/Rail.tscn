@@ -93,6 +93,7 @@ mesh = SubResource( 6 )
 material/0 = null
 
 [node name="Types" type="Spatial" parent="."]
+visible = false
 
 [node name="Rail" type="MeshInstance" parent="Types"]
 mesh = SubResource( 7 )
@@ -101,7 +102,6 @@ material/0 = null
 script = ExtResource( 9 )
 
 [node name="Road" type="MeshInstance" parent="Types"]
-visible = false
 mesh = ExtResource( 8 )
 skeleton = NodePath("")
 material/0 = ExtResource( 4 )

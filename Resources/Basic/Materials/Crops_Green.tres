@@ -7,5 +7,5 @@ render_priority = -1
 params_cull_mode = 2
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.02
-albedo_color = Color( 0.223529, 0.658824, 0, 1 )
+albedo_color = Color( 0.245043, 0.41, 0.1189, 1 )
 albedo_texture = ExtResource( 1 )

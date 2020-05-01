@@ -3,7 +3,7 @@
 [ext_resource path="res://Resources/Basic/Textures/White.png" type="Texture" id=1]
 
 [resource]
-albedo_color = Color( 0.239216, 0.243137, 0.423529, 1 )
+albedo_color = Color( 0.101961, 0.101961, 0.176471, 1 )
 albedo_texture = ExtResource( 1 )
 metallic = 0.13
 roughness = 0.11

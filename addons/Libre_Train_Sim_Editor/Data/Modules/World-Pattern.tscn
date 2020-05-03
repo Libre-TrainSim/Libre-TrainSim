@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Basic/BasicSun.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Resources/Basic/Grass.material" type="Material" id=3]
+[ext_resource path="res://Resources/Basic/Materials/Grass.tres" type="Material" id=3]
 [ext_resource path="res://Resources/Basic/grass.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Resources/Basic/BasicWorldEnviroment.tres" type="Environment" id=7]
 [ext_resource path="res://Resources/Basic/Materials/EasyTree.tres" type="Material" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/BuildingsNode.gd" type="Script" id=9]
 
 [sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {
@@ -57,24 +58,22 @@ __meta__ = {
 [node name="Rails" type="Spatial" parent="."]
 
 [node name="Rail" parent="Rails" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-endpos = Vector3( 100, 0, 0 )
 otherRadius = 1995.5
 otherLength = 997.75
 Outlength = 94.8772
 
 [node name="Buildings" type="Spatial" parent="."]
+script = ExtResource( 9 )
 
 [node name="Flora" type="Spatial" parent="."]
 
 [node name="TrackObjects" type="Spatial" parent="."]
 
 [node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.68346, 0 )
 multimesh = SubResource( 2 )
 description = "Tree"
 attachedRail = "Rail"
-length = 1000
+length = 100.0
 objectPath = "res://Resources/Basic/EasyTree_big.obj"
 materialPaths = [ "res://Resources/Basic/Materials/EasyTree.tres", "", "", "", "" ]
 sides = 1

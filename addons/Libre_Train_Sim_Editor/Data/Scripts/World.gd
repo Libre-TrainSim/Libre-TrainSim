@@ -68,6 +68,13 @@ func _process(delta):
 		checkTrainSpawn(delta)
 		handle_chunk()
 		checkBigChunk()
+	else:
+		var buildings = get_node("Buildings")
+		for child in get_children():
+			if child.is_class("MeshInstance"):
+				remove_child(child)
+				buildings.add_child(child)
+				child.owner = self
 
 
 

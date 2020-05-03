@@ -25,6 +25,11 @@ config/icon="res://LibreTrainSimLogo_Quad.png"
 Math="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Math.gd"
 Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Root.gd"
 
+[debug]
+
+settings/fps/force_fps=30
+settings/stdout/verbose_stdout=true
+
 [editor_plugins]
 
 enabled=PoolStringArray( "Libre_Train_Sim_Editor" )
@@ -137,6 +142,6 @@ InsideLight={
 [rendering]
 
 threads/thread_model=2
-quality/directional_shadow/size=16000
+quality/directional_shadow/size=16384
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

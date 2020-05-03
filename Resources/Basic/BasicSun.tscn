@@ -7,3 +7,6 @@ light_bake_mode = 2
 shadow_enabled = true
 shadow_color = Color( 0.603922, 0.603922, 0.603922, 1 )
 directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 0.0
+directional_shadow_bias_split_scale = 0.0
+directional_shadow_max_distance = 200.0

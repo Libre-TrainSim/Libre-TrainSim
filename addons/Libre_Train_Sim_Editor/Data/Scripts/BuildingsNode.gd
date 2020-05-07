@@ -26,6 +26,6 @@ func _process(delta):
 					child.remove_child(child2)
 					add_child(child2)
 					child2.owner = world
-					child2.translation += child.translation
+					child2.translation = child.translation + child2.global_transform.origin
 					
 	pass

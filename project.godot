@@ -143,6 +143,5 @@ InsideLight={
 
 threads/thread_model=2
 quality/directional_shadow/size=16384
-quality/shadows/filter_mode=2
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

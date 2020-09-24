@@ -3,7 +3,7 @@ extends MultiMeshInstance
 
 export (String) var description = ""
 export (String) var attachedRail 
-export (int) var onRailPosition
+export (float) var onRailPosition
 export (float) var length
 
 export (String) var objectPath
@@ -43,7 +43,7 @@ func get_data():
 	d.onRailPosition = onRailPosition
 	d.length = length
 	d.objectPath = objectPath
-	d.materialPaths = materialPaths
+	d.materialPaths = materialPaths.duplicate()
 	d.sides = sides
 	d.spawnRate = spawnRate
 	d.rows = rows
@@ -58,7 +58,7 @@ func get_data():
 	d.randomScaleFactor = randomScaleFactor
 	d.wholeRail = wholeRail
 	d.meshSet = meshSet
-	d.multimesh = multimesh
+	d.multimesh = multimesh.duplicate()
 	d.rotationObjects = rotationObjects
 	d.placeLast = placeLast
 	d.applySlopeRotation = applySlopeRotation

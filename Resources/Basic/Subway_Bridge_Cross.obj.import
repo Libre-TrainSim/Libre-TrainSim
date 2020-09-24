@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Subway_Bridge_Cross.obj-31d3179fc190169f16975be4795a2778.mesh"
+
+[deps]
+
+files=[ "res://.import/Subway_Bridge_Cross.obj-31d3179fc190169f16975be4795a2778.mesh" ]
+
+source_file="res://Resources/Basic/Subway_Bridge_Cross.obj"
+dest_files=[ "res://.import/Subway_Bridge_Cross.obj-31d3179fc190169f16975be4795a2778.mesh", "res://.import/Subway_Bridge_Cross.obj-31d3179fc190169f16975be4795a2778.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

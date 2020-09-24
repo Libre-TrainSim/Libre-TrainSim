@@ -68,25 +68,29 @@ func _on_NewTO_pressed():
 		to.attachedRail = currentRail.name
 		world.get_node("TrackObjects").add_child(to)
 		to.set_owner(world)
-		#currentRail.trackObjects.append(to)
 		update_selected_rail(currentRail)
 
 
 func _on_RenameTO_pressed():
 	if $Tab/TrackObjects/HBoxContainer/LineEdit.text != "":
 		currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].description = $Tab/TrackObjects/HBoxContainer/LineEdit.text
+		currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].name = currentRail.name + " " + $Tab/TrackObjects/HBoxContainer/LineEdit.text
 	update_itemList()
 	pass # Replace with function body.
 
 
 func _on_DuplicateTO_pressed():
-	var dup = currentTO.duplicate()
-	dup.materialPaths = currentTO.materialPaths.duplicate()
-	dup.description = currentTO.description + " (Duplicate)"
-	dup.attachedRail = currentTO.attachedRail
-	world.get_node("TrackObjects").add_child(dup)
-	update_itemList()
-	pass # Replace with function body.
+	var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
+	var to = TO_object.instance()
+	var data = currentTO.get_data()
+	to.set_data(data)
+	to.description = currentTO.description + " (Duplicate)"
+	to.name = currentTO.name + " (Duplicate)"
+	to.attachedRail = currentRail.name
+	world.get_node("TrackObjects").add_child(to)
+	to.set_owner(world)
+	update_selected_rail(currentRail)
+	to._update(true)
 
 
 func _on_DeleteTO_pressed():
@@ -245,18 +249,35 @@ func _on_PasteTO_pressed():
 
 func duplicate_newTO(set):
 	if set != null:
-		var to = set.duplicate()
-		to.materialPaths = set.materialPaths.duplicate()
-		to.attachedRail = currentRail.name
-		to.name = currentRail.name + " " + to.description
-		world.get_node("TrackObjects").add_child(to)
-		to.set_owner(world)
-		currentTO = to
-		_on_SavePosition_pressed() ## Apply Positions and update the the Mesh Instance
-		_on_Button_pressed()
-		update_itemList()
-		print("Track Object pasted")
-		
+			var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
+			var to = TO_object.instance()
+			var data = copyTO.get_data()
+			update_Position()
+			to.set_data(data)
+			to.description = copyTO.description
+			to.name = copyTO.name
+			to.attachedRail = currentRail.name
+			world.get_node("TrackObjects").add_child(to)
+			to.set_owner(world)
+			update_selected_rail(currentRail)
+			currentTO = to
+			_on_SavePosition_pressed()
+			_on_Button_pressed()
+			update_itemList()
+			print("Track Object pasted")
+
+#		var to = set.duplicate()
+#		to.materialPaths = set.materialPaths.duplicate()
+#		to.attachedRail = currentRail.name
+#		to.name = currentRail.name + " " + to.description
+#		world.get_node("TrackObjects").add_child(to)
+#		to.set_owner(world)
+#		currentTO = to
+#		_on_SavePosition_pressed() ## Apply Positions and update the the Mesh Instance
+#		_on_Button_pressed()
+#		update_itemList()
+#		print("Track Object pasted")
+#
 
 
 func _on_CopyTrack_pressed():

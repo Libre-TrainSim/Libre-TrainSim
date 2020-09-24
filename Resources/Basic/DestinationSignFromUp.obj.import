@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/DestinationSignFromUp.obj-6b2297fca2404a4fcfa4d5367d55fdef.mesh"
+
+[deps]
+
+files=[ "res://.import/DestinationSignFromUp.obj-6b2297fca2404a4fcfa4d5367d55fdef.mesh" ]
+
+source_file="res://Resources/Basic/DestinationSignFromUp.obj"
+dest_files=[ "res://.import/DestinationSignFromUp.obj-6b2297fca2404a4fcfa4d5367d55fdef.mesh", "res://.import/DestinationSignFromUp.obj-6b2297fca2404a4fcfa4d5367d55fdef.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

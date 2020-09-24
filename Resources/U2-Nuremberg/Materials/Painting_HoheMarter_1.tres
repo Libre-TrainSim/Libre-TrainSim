@@ -1,0 +1,6 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Resources/U2-Nuremberg/Textures/Painting_HoheMarter_1.png" type="Texture" id=1]
+
+[resource]
+albedo_texture = ExtResource( 1 )

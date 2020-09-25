@@ -213,7 +213,12 @@ func load_chunk(position):
 	var Rails = chunk.Rails
 #	var railNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 	for rail in Rails:
-		$Rails.get_node(rail).load_visible_Instance()
+		## IF YOU GET HERE AN ERROR: Do Save and Create Chunks, and check, if only Rails are assigned to the "Rails" Node
+		if $Rails.get_node(rail) != null:  ##DEBUG
+			$Rails.get_node(rail).load_visible_Instance()
+		else:
+			printerr("WARNING: Rail "+ rail+ " not found in scene tree, but was saved in chunk. That shouldn't be.")
+		
 
 	##buildings:
 	var buildingsNode = get_node("Buildings")

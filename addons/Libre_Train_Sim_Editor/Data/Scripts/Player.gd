@@ -547,9 +547,9 @@ func check_station(delta):
 			realArrivalTime = time
 			var lateMessage = "."
 			if not stationBeginning:
-				var minutesLater = -arrivalTime[1] + realArrivalTime[1] + (-arrivalTime[0] + realArrivalTime[0])*60
-				if minutesLater > 0:
-					lateMessage = ". You are " + String(minutesLater) + " minutes later." 
+				var secondsLater = -arrivalTime[2] + realArrivalTime[2] + (-arrivalTime[1] + realArrivalTime[1])*60 + (-arrivalTime[0] + realArrivalTime[0])*3600
+				if secondsLater > 60:
+					lateMessage = ". You are " + String(int(secondsLater/60)) + " minutes later." 
 			send_message("Welcome to " + currentStationName + lateMessage)
 			stationTimer = 0
 			
@@ -612,13 +612,13 @@ func check_pantograph(delta):
 
 var checkSpeedLimitTimer = 0
 func checkSpeedLimit(delta):
-	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer <= 0:
-		send_message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
-		checkSpeedLimitTimer = 10
-		print(String(currentSpeedLimit) + " " + String(Math.speedToKmH(speed)))
 	hardOverSpeeding = Math.speedToKmH(speed) > currentSpeedLimit + 10
-	if checkSpeedLimitTimer > 0:
-		checkSpeedLimitTimer -= delta
+	print(checkSpeedLimitTimer)
+	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
+		checkSpeedLimitTimer = 0
+		send_message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
+	checkSpeedLimitTimer += delta
+
 	
 func send_message(string):
 	if not ai:
@@ -957,6 +957,7 @@ func autopilot(delta):
 		return
 	if (doorLeft or doorRight) and not doorsClosing:
 		doorsClosing = true
+		$Sound/DoorsClose.play()
 	
 	var sollSpeedArr = {}
 	
@@ -993,11 +994,14 @@ func autopilot(delta):
 	if (currentStationName != "" and speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length):
 		if nextStationNode.platformSide == 1:
 			doorLeft = true
+			$Sound/DoorsOpen.play()
 		elif nextStationNode.platformSide == 2:
 			doorRight = true
+			$Sound/DoorsOpen.play()
 		elif nextStationNode.platformSide == 3:
 			doorLeft = true
 			doorRight = true
+			$Sound/DoorsOpen.play()
 	
 	
 	sollSpeedArr[3] = currentSpeedLimit
@@ -1036,7 +1040,7 @@ var checkVisibilityTimer = 0
 func checkVisibility(delta):
 	checkVisibilityTimer += delta
 	if checkVisibilityTimer < 1: return
-	checkSpeedLimitTimer = 0
+#	checkSpeedLimitTimer = 0
 	if ai: 
 		var currentChunk = world.pos2Chunk(translation)
 		rendering = world.istChunks.has(world.chunk2String(currentChunk))

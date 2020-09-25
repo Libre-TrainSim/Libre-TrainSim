@@ -75,6 +75,7 @@ margin_right = 1016.0
 margin_bottom = 142.0
 rect_min_size = Vector2( 0, 100 )
 items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
+select_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -596,7 +597,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Datei öffnen"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.obj" )
@@ -609,7 +610,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Datei öffnen"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres" )
@@ -619,6 +620,7 @@ current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Paste" to="." method="_on_PasteRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Clear" to="." method="_on_ClearTOs_pressed"]
 [connection signal="item_selected" from="Tab/TrackObjects/ItemList" to="." method="_on_ItemListTO_item_selected"]
+[connection signal="multi_selected" from="Tab/TrackObjects/ItemList" to="." method="_on_ItemList_multi_selected"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/New" to="." method="_on_NewTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Rename" to="." method="_on_RenameTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Duplicate" to="." method="_on_DuplicateTO_pressed"]

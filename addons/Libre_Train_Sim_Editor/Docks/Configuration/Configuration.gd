@@ -241,6 +241,7 @@ func get_train_settings():
 	if not sData[currentScenario].has("Trains"): return
 	if not sData[currentScenario]["Trains"].has(currentTrain):
 		print("No Train Data for "+ currentTrain + " found. - No data loaded.")
+		clear_train_settings_view()
 		return
 	var trains = sData[currentScenario]["Trains"]
 	if not trains.has(currentTrain): return
@@ -337,11 +338,14 @@ func get_station_array():
 	return stations
 
 func prepare_station_table(stations):
+	
 #	print(stations)
 	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
 	while (grid.get_children().size() > 12):
 		grid.get_children()[grid.get_children().size()-1].free()
 	entriesCount = 0
+	if stations == null:
+		return
 	for i in range (0,stations["nodeName"].size()):
 		_on_AddStationEntry_pressed()
 	var children = grid.get_children()
@@ -381,6 +385,10 @@ func _on_NewTrain_pressed():
 
 
 func _on_RenameTrain_pressed():
+	if currentTrain == "Player":
+		print("You can't rename the player train!")
+		return
+	var oldTrain = currentTrain
 	var trainName = $Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
 	if trainName == "": return
 	for  i in range(0, $Scenarios/Settings/Tab/Trains/ItemList2.get_item_count()):
@@ -390,32 +398,53 @@ func _on_RenameTrain_pressed():
 	get_train_settings()
 	currentTrain = trainName
 	set_train_settings()
+	## Delete "Old Train"
+	delete_train(oldTrain)
+	update_train_list()
+	
+	
 
 
 func _on_DuplicateTrain_pressed():
 	if currentTrain == "": return
 	get_train_settings()
 	currentTrain = currentTrain + " (Duplicate)"
+	$Scenarios/Settings/Tab/Trains/ItemList2.add_item(currentTrain)
 	set_train_settings()
 	
 
 
+func delete_train(train):
+	var sData = config.get_value("Scenarios", "sData", {})
+	if not sData.has(currentScenario): return
+	if not sData[currentScenario].has("Trains"): return
+	if not sData[currentScenario]["Trains"].has(train):
+		return
+	var trains = sData[currentScenario]["Trains"]
+	trains.erase(train)
+	sData[currentScenario]["Trains"] = trains
+	config.set_value("Scenarios", "sData", sData)
+	config.save(save_path)
 
 func _on_DeleteTrain_pressed():
 	if currentTrain == "Player":
 		print ("You cant delete the player train!")
 		return
-	$Scenarios/Settings/Tab/Trains/ItemList2.remove_item($Scenarios/Settings/Tab/Trains/ItemList2.get_selected_items()[0])
-	var sData = config.get_value("Scenarios", "sData", {})
-	if not sData.has(currentScenario): return
-	if not sData[currentScenario].has("Trains"): return
-	if not sData[currentScenario]["Trains"].has(currentTrain):
-		currentTrain = ""
-		return
-	var trains = sData[currentScenario]["Trains"]
-	trains.erase(currentTrain)
-	sData[currentScenario]["Trains"] = trains
-	config.set_value("Scenarios", "sData", sData)
-	config.save(save_path)
+	delete_train(currentTrain)
 	print("Train deleted.")
 	currentTrain = ""
+	update_train_list()
+	clear_train_settings_view()
+	
+func clear_train_settings_view(): # Resets the Train settings when adding a new npc for example.
+	$Scenarios/Settings/Tab/Trains/Route/Route.text = ""
+	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = ""
+	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = 0
+	$Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected = 0
+	$Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = 0
+	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = -1
+	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = 0
+	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = 0
+	$Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text = ""
+	prepare_station_table(null)
+

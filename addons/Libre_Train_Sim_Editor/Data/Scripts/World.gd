@@ -485,4 +485,5 @@ func checkTrainSpawn(delta):
 		if pendingTrains["SpawnTime"][i].hash() == time.hash():
 			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
 			spawnTrain(pendingTrains["TrainName"][i])
-	
+
+

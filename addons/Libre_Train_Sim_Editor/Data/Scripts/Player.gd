@@ -115,8 +115,7 @@ var routeIndex = 0 # Index of the baked route Array.
 var startRail # Rail, on which the train is starting. Set by the scenario manger of the world
 
 
-var mouseMotion
-var mouseWheel
+
 
 
 onready var cameraNode = $Camera
@@ -420,27 +419,48 @@ func change_to_next_rail():
 		
 	
 	
+var mouseMotion
+var mouseWheel
+
+func remove_free_camera():
+	if world.get_node("FreeCamera") == null:
+		return
+	world.get_node("FreeCamera").queue_free()
+	get_node("Camera").current = true
 
 
 func handleCamera(delta):
 	if Input.is_action_just_pressed("Cabin View"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		cameraState = 0
+		cameraState = 1
 		wagonsVisible = false
 		cameraNode.transform = cameraZeroTransform
 		$Cabin.show()
+		remove_free_camera()
 	if Input.is_action_just_pressed("Outer View"):
 		wagonsVisible = true
-		cameraState = 1
+		cameraState = 2
 		$Cabin.hide()
-	if cameraState == 0: # Inner Position
+		remove_free_camera()
+	if Input.is_action_just_pressed("FreeCamera"):
+		$Cabin.hide()
+		wagonsVisible = true
+		cameraState = 3
+		get_node("Camera").current = false
+		var cam = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn").instance()
+		cam.current = true
+		world.add_child(cam)
+		cam.owner = world
+		cam.transform = transform
+
+	if cameraState == 1: # Inner Position
 		## Camera x Position
 		var sollCameraPosition = cameraZeroTransform.origin.x + (currentRealAcceleration * -cameraFactor)
 		if speed == 0 or debug:
 			sollCameraPosition = cameraZeroTransform.origin.x
 		var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
 		cameraNode.translation.x -= missingCameraPosition * delta
-	elif cameraState == 1:
+	elif cameraState == 2: ## Outer Position
 		if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if mouseMotion == null: return

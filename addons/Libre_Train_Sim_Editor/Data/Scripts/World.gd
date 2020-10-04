@@ -440,7 +440,8 @@ func spawnTrain(trainName):
 	var load_response = sConfig.load(Ssave_path)
 	var sData = sConfig.get_value("Scenarios", "sData", {})
 	var scenario = sData[currentScenario]
-	if scenario["Trains"][trainName]["SpawnTime"][0] != -1 and scenario["Trains"][trainName]["SpawnTime"].hash() != time.hash():
+	var spawnTime = scenario["Trains"][trainName]["SpawnTime"]
+	if scenario["Trains"][trainName]["SpawnTime"][0] != -1 and not (spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]):
 		print("Spawn Time of "+trainName + " not reached, doing spawn later...")
 		pendingTrains["TrainName"].append(trainName)
 		pendingTrains["SpawnTime"].append(scenario["Trains"][trainName]["SpawnTime"].duplicate())
@@ -473,6 +474,7 @@ func spawnTrain(trainName):
 		3:
 			player.doorLeft = true
 			player.doorRight = true
+	
 	player.ready()
 	
 
@@ -482,7 +484,8 @@ func checkTrainSpawn(delta):
 	if checkTrainSpawnTimer < 0.5: return
 	checkTrainSpawnTimer = 0
 	for i in range (0, pendingTrains["TrainName"].size()):
-		if pendingTrains["SpawnTime"][i].hash() == time.hash():
+		var spawnTime =  pendingTrains["SpawnTime"][i]
+		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
 			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
 			spawnTrain(pendingTrains["TrainName"][i])
 

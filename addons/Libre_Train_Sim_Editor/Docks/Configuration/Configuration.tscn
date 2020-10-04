@@ -814,7 +814,7 @@ margin_top = 32.0
 margin_right = -713.0
 margin_bottom = -438.0
 popup_exclusive = true
-window_title = "Select An Object:"
+window_title = "Open a File"
 mode = 0
 filters = PoolStringArray( "*.obj" )
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]

@@ -111,6 +111,13 @@ func _process(delta):
 	if $Scenarios/ItemList.get_selected_items().size() > 0:
 		currentScenario = $Scenarios/ItemList.get_item_text($Scenarios/ItemList.get_selected_items()[0])
 	
+	$Scenarios/Settings.visible = currentScenario != ""
+	$Scenarios/Label2.visible = currentScenario != ""
+	$Scenarios/Write.visible = currentScenario != ""
+	$Scenarios/Load.visible = currentScenario != ""
+	$Scenarios/ResetSignals.visible = currentScenario != ""
+	
+	
 func get_scenario_settings(): # fills the settings field with saved values
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario): return

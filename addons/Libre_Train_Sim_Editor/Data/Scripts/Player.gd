@@ -150,7 +150,7 @@ func ready(): ## Called by World!
 	distanceOnRail = startPosition#
 	currentRail = world.get_node("Rails/"+startRail)
 	if currentRail == null:
-		print("Error: can't find Rail. Check the route of the Train "+ self.name)
+		printerr("Can't find Rail. Check the route of the Train "+ self.name)
 		return
 
 	## Set Train to Route:
@@ -184,6 +184,7 @@ func ready(): ## Called by World!
 		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
 		insideLight = true
 		frontLight = true
+	print("Train " + name + " spawned sucessfully at " + currentRail.name)
 
 func _process(delta):
 	var osTime0 = OS.get_ticks_msec()
@@ -409,7 +410,7 @@ func change_to_next_rail():
 	if forward:
 		distanceOnRail -= currentRail.length
 	if not ai:
-		print("Changing Rail...")
+		print("Player: Changing Rail...")
 	routeIndex += 1
 	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
 	forward = baked_route_direction[routeIndex]
@@ -498,7 +499,7 @@ func handle_signal(signalname):
 	nextSpeedLimitNode = null
 	var signal = world.get_node("Signals/"+signalname)
 	if signal.forward != forward: return
-	print("SIGNAL: " + signalname)
+	print(name + ": SIGNAL: " + signalname)
 	if signal.type == "Signal": ## Signal
 		if signal.speed != -1:
 			currentSpeedLimit = signal.speed
@@ -510,7 +511,7 @@ func handle_signal(signalname):
 		signal.status = 0
 	elif signal.type == "Station": ## Station
 		if not stations["nodeName"].has(signal.name):
-			print("Station not found in repository, ingoring station. Maybe you are at the wrong track...")
+			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track...")
 			return
 		var index = stations["nodeName"].find(signal.name)
 		match stations["stopType"][index]:
@@ -538,7 +539,7 @@ func handle_signal(signalname):
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
-		print("Next Speed Limit: "+String(signal.warnSpeed))
+		print(name + ": Next Speed Limit: "+String(signal.warnSpeed))
 	elif signal.type == "ContactPoint":
 		signal.activateContactPoint(name)
 	pass
@@ -583,7 +584,7 @@ func check_station(delta):
 					nextStation = ""
 					isInStation = false
 					nextStationNode = null
-					print("HALLO1")
+
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= depatureTime[2]:
 					nextStation = null
@@ -593,7 +594,6 @@ func check_station(delta):
 					nextStation = ""
 					isInStation = false
 					nextStationNode = null
-					print("HALLO2")
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
 				send_message("You departed earlier than allowed! Please wait for the depart message next time!")
@@ -604,7 +604,6 @@ func check_station(delta):
 			nextStation = ""
 			isInStation = false
 			nextStationNode = null
-			print("HALLO3")
 		stationTimer += delta
 		if (speed != 0):
 			wholeTrainNotInStation = false
@@ -633,7 +632,6 @@ func check_pantograph(delta):
 var checkSpeedLimitTimer = 0
 func checkSpeedLimit(delta):
 	hardOverSpeeding = Math.speedToKmH(speed) > currentSpeedLimit + 10
-	print(checkSpeedLimitTimer)
 	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
 		send_message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
@@ -684,7 +682,7 @@ func bake_route(): ## Generate the whole route for the train.
 	baked_route_direction = [forward]
 	
 	baked_route.append(startRail)
-	print("BAKED ROUTE:"  +String(baked_route))
+	print(name + ": BAKED ROUTE:"  +String(baked_route))
 	var currentR = world.get_node("Rails").get_node(baked_route[0]) ## imagine: current rail, which the train will drive later
 	baked_route_railLength = [currentR.length]
 	var currentpos
@@ -732,9 +730,9 @@ func bake_route(): ## Generate the whole route for the train.
 		else: ## Backward
 			currentpos = currentR.startpos
 			currentrot = currentR.startrot - 180.0
-	print("Baking Route finished.")
-	print("Baked Route: "+ String(baked_route))
-	print("Baked Route: Direction "+ String(baked_route_direction))
+	print(name + ": Baking Route finished.")
+	print(name + ": Baked Route: "+ String(baked_route))
+	print(name + ": Baked Route: Direction "+ String(baked_route_direction))
 	
 func show_textbox_message(string):
 	$HUD.show_textbox_message(string)
@@ -784,7 +782,7 @@ func get_distance_to_signal(signalName):
 	var index = routeIndex +1 
 	var searchedRailName =  signalN.attachedRail
 	while(index != baked_route.size()):
-#		print (String(baked_route[index]) + "  " + String(searchedRailName))
+
 		if baked_route[index] != searchedRailName:
 			returnValue += baked_route_railLength[index]
 		else: ## End Rail Found (where Signal is Standing)
@@ -806,7 +804,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 		check_for_next_stationTimer = 0
 		if nextStation == "":
 			var nextStations = get_all_upcoming_signalPoints_of_one_type("Station")
-			print(nextStations)
+			print(name + ": "+String(nextStations))
 			if nextStations.size() == 0:
 				stationMessageSent = true
 				return
@@ -873,8 +871,8 @@ func set_signalWarnLimits(): # Called in the beginning of the route
 	for signalS in signalT["name"]:
 		signalT["position"].append(get_distance_to_signal(signalS))
 	var sortedSignals = Math.sort_signals(signalT, true)
-	print(signalT)
-	print(sortedSignals)
+#	print(signalT)
+#	print(sortedSignals)
 	var limit = speedLimit
 	for i in range(0,sortedSignals.size()):
 		var signalN = world.get_node("Signals").get_node(sortedSignals[i])
@@ -998,15 +996,12 @@ func autopilot(delta):
 	sollSpeedArr[2] = speedLimit
 	
 	if nextStationNode != null:
-		print(nextStationNode.name)
-		print(distanceToNextStation)
 		if stations["nodeName"].has(nextStationNode.name):
 			sollSpeedArr[2] = min(sqrt(15*distanceToNextStation+20), (distanceToNextStation+10)/4.0)
 			if sollSpeedArr[2] < 10:
 				sollSpeedArr[2] = 0
 		else:
 			nextStationNode = null
-			print("HALLO4")
 #		if (currentStationName != "" and distance-distanceOnStationBeginning>=length):
 #			sollSpeedArr[2] = 0
 			

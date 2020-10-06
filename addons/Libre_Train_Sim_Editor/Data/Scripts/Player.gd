@@ -7,17 +7,17 @@ extends Spatial
 
 ################################################################################
 ## Interesting Variables for addOn Creators, which could be read out, (or set).
-var soll_command = -1 # The input by the player. (0: Nothing, 1: Full acceleration, -1: Full Break). Shouldnt be lesser or greater than absolute 1
+var soll_command = -1 # The input by the player. (0: Nothing, 1: Full acceleration, -1: Full Break). |soll_command| should be lesser than 1.
 export (float) var acceleration # Unit: m/(s*s) 
 export (float) var brakeAcceleration # Unit: m/(s*s)
 export (float) var friction # (-> Speed = Speed - Speed * fritction (*delta) )
 export (float) var length # Train length. # Used in Train Stations for example
 export (float) var speedLimit # Maximum Speed, the train can drive. (Unit: km/h)
-export (int) var controlType = 0 # 0: Arrowkeys (Combi Control), 1: WASD (Separate brake and speed (1 Currently not implemented))
+export (int) var controlType = 0 # 0: Arrowkeys (Combi Control), 1: WASD (Separate brake and speed)
 export (bool) var electric = true
 var pantograph = false   ## Please just use this variable, if to check, if pantograph is up or down. true: up
 var pantographUp = false ## is true, if pantograph is rising.
-var voltage = 0 # If this value = 0, the train wont drive unless you press ingame "B". If voltage is "here", then its at 15. Unit (kV)
+var voltage = 0 # If this value = 0, the train wont drive unless you press ingame "B". If voltage is "up", then its at 15 by default. Unit (kV)
 export (float) var pantographTime = 5
 var speed = 0 # Initiats the speed. (Unit: m/s) ## You can convert it with var kmhSpeed = Math.speed2kmh(speed)
 var distance = 0 # Initiates the complete driven distance since the startposition of the Ride. Used for example the TrainStations.
@@ -30,7 +30,7 @@ var accRoll = 0 # describes the user input, (0 to 1)
 var brakeRoll = -1 # describes the user input (0 to -1)
 var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive) - JJust from brakes and engines
 var currentRealAcceleration = 0
-var time = [23,59,59] ## actual time Indexes: [0]: Hour, [1]: Minute, [2]: Second
+var time = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Second
 var enforcedBreaking = false 
 var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
@@ -48,7 +48,7 @@ var arrivalTime = time # stores the arrival time. (from the timetable)
 var depatureTime = time # stores the departure time. (from the timetable)
 var platformSide = 0 # Stores where the plaform is. #0: No platform, 1: at left side, 2: at right side, 3: at both sides
 
-export var doors = true
+export var doors = true 
 export var doorsClosingTime = 7
 var doorRight = false # If Door is Open, then its true
 var doorLeft = false
@@ -67,7 +67,7 @@ export (String) var author = ""
 export (String) var releaseDate = ""
 export (String) var screenshotPath = ""
 
-var cameraState = 0 ## 0: Cabin View, 1: Outer View
+var cameraState = 0 ## 0: Free View 1: Cabin View, 2: Outer View
 var cameraMidPoint = Vector3(0,2,0)
 var cameraY = 90
 var cameraX = 0
@@ -96,6 +96,7 @@ var despawning = false
 
 var frontLight = false
 var insideLight = false
+
 ## callable functions:
 # send_message()
 # show_textbox_message(string)

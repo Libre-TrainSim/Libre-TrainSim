@@ -1,19 +1,20 @@
 tool
 extends Spatial
 
-export (String) var FileName = "Name Me!"
-export var debug = false
-var chunkSize = 1000
-
-var createChunksAndSaveWorld = false setget save_world
-
 var  timeHour 
 var timeMinute
 var timeSecond 
 var timeMSeconds = 0
 onready var time = [timeHour,timeMinute,timeSecond]
 
+################################################################################
 var currentScenario = ""
+
+export (String) var FileName = "Name Me!"
+export var debug = false
+var chunkSize = 1000
+
+var createChunksAndSaveWorld = false setget save_world
 
 var save_path = "res://Worlds/" + FileName + ".cfg"
 var config = ConfigFile.new()

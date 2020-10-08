@@ -13,7 +13,7 @@ This project is created by Jean28518 from germany in his free time, who is study
 
 ### October 2020
 
-Hello all! I hope you had a great summer! So the weather will get colder, and rainy, so I continued the development of Libre TrainSim. We have some news:
+Hello all! I hope you had a great summer! So the weather will get colder, and rainy, so I continued the development of Libre TrainSim.
 
 At first we have now an official website. It doesn't look nice, but is functional enough. So everything now comes together to one site where you can find everything. The domain is: [libre-trainsim.de](https://www.libre-trainsim.de)
 
@@ -28,13 +28,14 @@ Also today I finished the Documentation for making tracks in Libre TrainSim - Be
 
 Also I improved many editor features, and made it more stable. Some small bugfixes where also made.
 
-So when comes the next version?
+**So when comes the next version?**
 
 Currently I can't give you a specific date, but there aren't so much things anymore implementing to 0.7:
 - Improving HUD: Adding more Information
 - Adding Key-Map Settings
 - Adding Main-Menu Music
 - Fixing some small editor-bugs
+
 You can follow the actual progress [here](https://github.com/Jean28518/Libre-TrainSim/projects/3)
 
 In the end I wan't to thank some youtubers, who did a video about libre trainsim. It makes me proud, that so many people like this project, and are following it. Also thank you for 30 stars!

@@ -3,7 +3,7 @@
 ***
 
 
-# Welcome Libre TrainSim
+# Welcome to Libre TrainSim
 
 Train Simulator written in Godot Engine - Free for everyone. Licensed under GPL 3.0
 

@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome Libre Train Sim
 
 You can use the [editor on GitHub](https://github.com/Jean28518/Libre-TrainSim/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
 

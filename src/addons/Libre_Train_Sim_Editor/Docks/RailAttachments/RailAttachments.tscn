@@ -1,0 +1,639 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/RailAttachments.gd" type="Script" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/MaterialSelection.gd" type="Script" id=2]
+
+[node name="Rail Attachments" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentRail" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 24.0
+
+[node name="Name" type="LineEdit" parent="CurrentRail"]
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Tab" type="TabContainer" parent="."]
+visible = false
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 402.0
+tab_align = 0
+
+[node name="TrackObjects" type="VBoxContainer" parent="Tab"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tab/TrackObjects"]
+margin_right = 1016.0
+margin_bottom = 14.0
+text = "Track Objects:"
+align = 1
+
+[node name="CopyPaste" type="HBoxContainer" parent="Tab/TrackObjects"]
+margin_top = 18.0
+margin_right = 1016.0
+margin_bottom = 38.0
+
+[node name="Copy" type="Button" parent="Tab/TrackObjects/CopyPaste"]
+margin_right = 336.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Copy Whole Configuration"
+
+[node name="Paste" type="Button" parent="Tab/TrackObjects/CopyPaste"]
+margin_left = 340.0
+margin_right = 676.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Paste Whole Configuration"
+
+[node name="Clear" type="Button" parent="Tab/TrackObjects/CopyPaste"]
+margin_left = 680.0
+margin_right = 1016.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Clear whole Configuration"
+
+[node name="ItemList" type="ItemList" parent="Tab/TrackObjects"]
+margin_top = 42.0
+margin_right = 1016.0
+margin_bottom = 142.0
+rect_min_size = Vector2( 0, 100 )
+items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
+select_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tab/TrackObjects"]
+margin_top = 146.0
+margin_right = 1016.0
+margin_bottom = 170.0
+
+[node name="New" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 24.0
+text = "New"
+
+[node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 44.0
+margin_right = 706.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Rename" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 710.0
+margin_right = 774.0
+margin_bottom = 24.0
+text = "Rename"
+
+[node name="Duplicate" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 778.0
+margin_right = 851.0
+margin_bottom = 24.0
+text = "Duplicate"
+
+[node name="Delete" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 855.0
+margin_right = 910.0
+margin_bottom = 24.0
+text = "Delete"
+
+[node name="VSeparator" type="VSeparator" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 914.0
+margin_right = 918.0
+margin_bottom = 24.0
+
+[node name="Copy" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 922.0
+margin_right = 965.0
+margin_bottom = 24.0
+text = "Copy"
+
+[node name="Paste" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
+margin_left = 969.0
+margin_right = 1016.0
+margin_bottom = 24.0
+text = "Paste"
+
+[node name="Settings" type="VBoxContainer" parent="Tab/TrackObjects"]
+visible = false
+margin_top = 174.0
+margin_right = 1016.0
+margin_bottom = 338.0
+
+[node name="Tab" type="TabContainer" parent="Tab/TrackObjects/Settings"]
+margin_right = 1016.0
+margin_bottom = 140.0
+
+[node name="Object" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_right = 1008.0
+margin_bottom = 14.0
+text = "Object: (.obj)"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_top = 18.0
+margin_right = 1008.0
+margin_bottom = 42.0
+
+[node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer"]
+margin_right = 966.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Pick" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer"]
+margin_left = 970.0
+margin_right = 1008.0
+margin_bottom = 24.0
+text = "Pick"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_right = 40.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Materials:"
+align = 1
+
+[node name="GridContainer" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_top = 46.0
+margin_right = 1008.0
+margin_bottom = 46.0
+
+[node name="Material 0" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer"]
+visible = false
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
+margin_top = 5.0
+margin_right = 68.0
+margin_bottom = 19.0
+text = "Material 1:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
+margin_left = 72.0
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pick" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Pick"
+
+[node name="Add" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_top = 50.0
+margin_right = 502.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+text = "Add"
+
+[node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_left = 506.0
+margin_top = 50.0
+margin_right = 1008.0
+margin_bottom = 70.0
+text = "Save"
+
+[node name="Position" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="WholeRail" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Position"]
+margin_right = 1008.0
+margin_bottom = 24.0
+text = "Assign Whole Rail"
+
+[node name="StartPos" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Position"]
+margin_top = 28.0
+margin_right = 1008.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Position/StartPos"]
+margin_top = 5.0
+margin_right = 89.0
+margin_bottom = 19.0
+text = "Start Position:"
+
+[node name="SpinBox" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Position/StartPos"]
+margin_left = 93.0
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndPosition" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Position"]
+margin_top = 56.0
+margin_right = 1008.0
+margin_bottom = 80.0
+
+[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Position/EndPosition"]
+margin_top = 5.0
+margin_right = 83.0
+margin_bottom = 19.0
+text = "End Position:"
+
+[node name="SpinBox" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Position/EndPosition"]
+margin_left = 87.0
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Position"]
+margin_left = 483.0
+margin_top = 84.0
+margin_right = 524.0
+margin_bottom = 104.0
+size_flags_horizontal = 4
+text = "Save"
+
+[node name="Object Positioning" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="OptionButton" type="OptionButton" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
+margin_right = 1008.0
+margin_bottom = 20.0
+text = "No Side"
+align = 1
+items = [ "No Side", null, false, 0, null, "Left", null, false, 1, null, "Right", null, false, 2, null, "Both Sides", null, false, 3, null ]
+selected = 0
+
+[node name="GridContainer" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
+margin_top = 24.0
+margin_right = 1008.0
+margin_bottom = 104.0
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_top = 5.0
+margin_right = 104.0
+margin_bottom = 19.0
+text = "Spacing Straight:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Straight" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 108.0
+margin_right = 495.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 499.0
+margin_top = 5.0
+margin_right = 616.0
+margin_bottom = 19.0
+text = "Spacing Left/Right:"
+
+[node name="LeftRight" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 620.0
+margin_right = 1007.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_top = 33.0
+margin_right = 104.0
+margin_bottom = 47.0
+text = "Shift Left/Right:"
+
+[node name="Shift" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 108.0
+margin_top = 28.0
+margin_right = 495.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 499.0
+margin_top = 33.0
+margin_right = 616.0
+margin_bottom = 47.0
+text = "Spawn Rate:"
+
+[node name="SpawnRate" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 620.0
+margin_top = 28.0
+margin_right = 1007.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_top = 61.0
+margin_right = 104.0
+margin_bottom = 75.0
+text = "Rows:"
+
+[node name="Rows" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 108.0
+margin_top = 56.0
+margin_right = 495.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+min_value = 1.0
+step = 0.01
+value = 1.0
+allow_greater = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 499.0
+margin_top = 61.0
+margin_right = 616.0
+margin_bottom = 75.0
+text = "Height:"
+
+[node name="Height" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 620.0
+margin_top = 56.0
+margin_right = 1007.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+min_value = -100.0
+step = 0.01
+allow_greater = true
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label7" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 499.0
+margin_top = 61.0
+margin_right = 616.0
+margin_bottom = 75.0
+text = "Rotation:"
+
+[node name="Rotation" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 620.0
+margin_top = 56.0
+margin_right = 1007.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+max_value = 360.0
+step = 0.01
+allow_greater = true
+allow_lesser = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label8" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 146.0
+margin_top = 145.0
+margin_right = 281.0
+margin_bottom = 159.0
+text = "Place Last:"
+
+[node name="PlaceLast" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 285.0
+margin_top = 140.0
+margin_right = 1008.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+
+[node name="Label9" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 146.0
+margin_top = 145.0
+margin_right = 281.0
+margin_bottom = 159.0
+text = "Apply Slope Rotation:"
+
+[node name="applySlopeRotation" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer"]
+margin_left = 285.0
+margin_top = 140.0
+margin_right = 1008.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+
+[node name="GridContainer2" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
+margin_top = 108.0
+margin_right = 1008.0
+margin_bottom = 188.0
+columns = 4
+
+[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_top = 5.0
+margin_right = 114.0
+margin_bottom = 19.0
+text = "Random Location:"
+
+[node name="CheckBoxRandLoc" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 118.0
+margin_right = 142.0
+margin_bottom = 24.0
+
+[node name="Label6" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 146.0
+margin_top = 5.0
+margin_right = 281.0
+margin_bottom = 19.0
+text = "Max Moved Location:"
+
+[node name="RandomLocation" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 285.0
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+step = 0.01
+allow_greater = true
+
+[node name="Label2" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_top = 33.0
+margin_right = 114.0
+margin_bottom = 47.0
+text = "Random Rotation:"
+
+[node name="CheckBoxRandRot" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 118.0
+margin_top = 28.0
+margin_right = 142.0
+margin_bottom = 52.0
+
+[node name="Label4" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 146.0
+margin_top = 33.0
+margin_right = 281.0
+margin_bottom = 47.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 285.0
+margin_top = 33.0
+margin_right = 1008.0
+margin_bottom = 47.0
+
+[node name="Label3" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_top = 61.0
+margin_right = 114.0
+margin_bottom = 75.0
+text = "Random Scale:"
+
+[node name="CheckBoxRadScal" type="CheckBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 118.0
+margin_top = 56.0
+margin_right = 142.0
+margin_bottom = 80.0
+
+[node name="Label7" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 146.0
+margin_top = 61.0
+margin_right = 281.0
+margin_bottom = 75.0
+text = "Max Scale Factor:"
+
+[node name="RandomScale" type="SpinBox" parent="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2"]
+margin_left = 285.0
+margin_top = 56.0
+margin_right = 1008.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+step = 0.01
+allow_greater = true
+
+[node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
+margin_left = 483.0
+margin_top = 192.0
+margin_right = 524.0
+margin_bottom = 212.0
+size_flags_horizontal = 4
+text = "Save"
+
+[node name="Button" type="Button" parent="Tab/TrackObjects/Settings"]
+margin_left = 479.0
+margin_top = 144.0
+margin_right = 537.0
+margin_bottom = 164.0
+size_flags_horizontal = 4
+text = "Update"
+
+[node name="FileDialogObjects" type="FileDialog" parent="."]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 600, 400 )
+popup_exclusive = true
+window_title = "Datei öffnen"
+resizable = true
+mode = 0
+filters = PoolStringArray( "*.obj" )
+current_dir = "res://Resources"
+current_path = "res://Resources/"
+
+[node name="FileDialogMaterials" type="FileDialog" parent="."]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 600, 400 )
+popup_exclusive = true
+window_title = "Datei öffnen"
+resizable = true
+mode = 0
+filters = PoolStringArray( "*.tres" )
+current_dir = "res://Resources"
+current_path = "res://Resources/"
+[connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Copy" to="." method="_on_CopyTrack_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Paste" to="." method="_on_PasteRail_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Clear" to="." method="_on_ClearTOs_pressed"]
+[connection signal="item_selected" from="Tab/TrackObjects/ItemList" to="." method="_on_ItemListTO_item_selected"]
+[connection signal="multi_selected" from="Tab/TrackObjects/ItemList" to="." method="_on_ItemList_multi_selected"]
+[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/New" to="." method="_on_NewTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Rename" to="." method="_on_RenameTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Duplicate" to="." method="_on_DuplicateTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Delete" to="." method="_on_DeleteTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Copy" to="." method="_on_CopyTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Paste" to="." method="_on_PasteTO_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/Pick" to="." method="_on_PickObject_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0/Pick" to="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0" method="_on_Pick_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add" to="." method="_on_AddMaterial_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Save" to="." method="_on_SaveMaterials_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/Save" to="." method="_on_SavePosition_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Save" to="." method="_on_SavePositioning_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Button" to="." method="_on_Button_pressed"]
+[connection signal="file_selected" from="FileDialogObjects" to="." method="_on_FileDialog_onject_selected"]
+[connection signal="file_selected" from="FileDialogMaterials" to="." method="_on_FileDialogMaterials_file_selected"]

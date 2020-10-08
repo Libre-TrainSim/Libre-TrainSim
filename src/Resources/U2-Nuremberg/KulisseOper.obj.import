@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/KulisseOper.obj-dde904188fe28dc9c2ac5d4ae4b86543.mesh"
+
+[deps]
+
+files=[ "res://.import/KulisseOper.obj-dde904188fe28dc9c2ac5d4ae4b86543.mesh" ]
+
+source_file="res://Resources/U2-Nuremberg/KulisseOper.obj"
+dest_files=[ "res://.import/KulisseOper.obj-dde904188fe28dc9c2ac5d4ae4b86543.mesh", "res://.import/KulisseOper.obj-dde904188fe28dc9c2ac5d4ae4b86543.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

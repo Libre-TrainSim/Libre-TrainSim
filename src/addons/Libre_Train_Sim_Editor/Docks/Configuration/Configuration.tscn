@@ -1,0 +1,838 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
+
+[node name="Configuration" type="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="World Configuration" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="World Configuration" type="Label" parent="World Configuration"]
+margin_right = 1016.0
+margin_bottom = 14.0
+text = "World Configuration:"
+align = 1
+
+[node name="GridContainer" type="GridContainer" parent="World Configuration"]
+margin_top = 18.0
+margin_right = 1016.0
+margin_bottom = 202.0
+columns = 2
+
+[node name="Label" type="Label" parent="World Configuration/GridContainer"]
+visible = false
+margin_top = 5.0
+margin_right = 115.0
+margin_bottom = 19.0
+text = "World Filename: "
+
+[node name="FileName" type="LineEdit" parent="World Configuration/GridContainer"]
+visible = false
+margin_right = 905.0
+margin_bottom = 24.0
+hint_tooltip = "This name is very important. That name will be also shown in the Main Menu. 
+Example:  If you world is named 'World.tscn' then in this field there has to stay 'World'."
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Label2" type="Label" parent="World Configuration/GridContainer"]
+margin_top = 5.0
+margin_right = 115.0
+margin_bottom = 19.0
+text = "Release Date:"
+
+[node name="ReleaseDate" type="HBoxContainer" parent="World Configuration/GridContainer"]
+margin_left = 119.0
+margin_right = 1016.0
+margin_bottom = 24.0
+
+[node name="Day" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
+margin_right = 296.0
+margin_bottom = 24.0
+hint_tooltip = "Day"
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 31.0
+value = 1.0
+suffix = "D"
+
+[node name="Month" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
+margin_left = 300.0
+margin_right = 596.0
+margin_bottom = 24.0
+hint_tooltip = "Month
+"
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 12.0
+value = 1.0
+suffix = "M"
+
+[node name="Year" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
+margin_left = 600.0
+margin_right = 897.0
+margin_bottom = 24.0
+hint_tooltip = "Month
+"
+size_flags_horizontal = 3
+min_value = 2020.0
+max_value = 2300.0
+value = 2020.0
+allow_greater = true
+suffix = "Y"
+
+[node name="Label3" type="Label" parent="World Configuration/GridContainer"]
+margin_top = 33.0
+margin_right = 115.0
+margin_bottom = 47.0
+text = "Author Name(s):"
+
+[node name="Author" type="LineEdit" parent="World Configuration/GridContainer"]
+margin_left = 119.0
+margin_top = 28.0
+margin_right = 1016.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Label4" type="Label" parent="World Configuration/GridContainer"]
+margin_top = 99.0
+margin_right = 115.0
+margin_bottom = 113.0
+text = "Track Description:"
+
+[node name="TrackDescription" type="TextEdit" parent="World Configuration/GridContainer"]
+margin_left = 119.0
+margin_top = 56.0
+margin_right = 1016.0
+margin_bottom = 156.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+
+[node name="Label5" type="Label" parent="World Configuration/GridContainer"]
+margin_top = 165.0
+margin_right = 115.0
+margin_bottom = 179.0
+text = "Thumbnail Path:"
+
+[node name="ThumbnailPath" type="LineEdit" parent="World Configuration/GridContainer"]
+margin_left = 119.0
+margin_top = 160.0
+margin_right = 1016.0
+margin_bottom = 184.0
+hint_tooltip = "To get a path, rightclick in your Godot Filemenager a file, and select get path. Then you can paste it here."
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="SaveWorldConfig" type="Button" parent="World Configuration"]
+margin_left = 445.0
+margin_top = 206.0
+margin_right = 571.0
+margin_bottom = 226.0
+size_flags_horizontal = 4
+text = "Save World Config"
+
+[node name="HSeparator2" type="HSeparator" parent="World Configuration"]
+margin_top = 230.0
+margin_right = 1016.0
+margin_bottom = 234.0
+
+[node name="SaveChunks" type="Button" parent="World Configuration"]
+margin_left = 416.0
+margin_top = 238.0
+margin_right = 599.0
+margin_bottom = 258.0
+hint_tooltip = "This creates the chunksystem for Loading ingame. You should save and create the Chunksystem everytime you changed something in the world, and you wanna test or export the world."
+size_flags_horizontal = 4
+text = "! Save and crreate Chunks !"
+
+[node name="Scenarios" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Label" type="Label" parent="Scenarios"]
+margin_right = 1016.0
+margin_bottom = 14.0
+text = "Scenarios:"
+align = 1
+
+[node name="ItemList" type="ItemList" parent="Scenarios"]
+margin_top = 18.0
+margin_right = 1016.0
+margin_bottom = 118.0
+rect_min_size = Vector2( 0, 100 )
+items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scenarios"]
+margin_top = 122.0
+margin_right = 1016.0
+margin_bottom = 146.0
+
+[node name="New" type="Button" parent="Scenarios/HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 24.0
+text = "New"
+
+[node name="LineEdit" type="LineEdit" parent="Scenarios/HBoxContainer"]
+margin_left = 44.0
+margin_right = 812.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Rename" type="Button" parent="Scenarios/HBoxContainer"]
+margin_left = 816.0
+margin_right = 880.0
+margin_bottom = 24.0
+text = "Rename"
+
+[node name="Duplicate" type="Button" parent="Scenarios/HBoxContainer"]
+margin_left = 884.0
+margin_right = 957.0
+margin_bottom = 24.0
+text = "Duplicate"
+
+[node name="Delete" type="Button" parent="Scenarios/HBoxContainer"]
+margin_left = 961.0
+margin_right = 1016.0
+margin_bottom = 24.0
+text = "Delete"
+
+[node name="CurrentScenario" type="HBoxContainer" parent="Scenarios"]
+margin_left = 422.0
+margin_top = 150.0
+margin_right = 593.0
+margin_bottom = 174.0
+size_flags_horizontal = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Scenarios/CurrentScenario"]
+margin_top = 5.0
+margin_right = 109.0
+margin_bottom = 19.0
+text = "Current Scenario:"
+
+[node name="LineEdit" type="LineEdit" parent="Scenarios/CurrentScenario"]
+margin_left = 113.0
+margin_right = 171.0
+margin_bottom = 24.0
+editable = false
+expand_to_text_length = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Settings" type="VBoxContainer" parent="Scenarios"]
+margin_top = 178.0
+margin_right = 1016.0
+margin_bottom = 728.0
+
+[node name="Tab" type="TabContainer" parent="Scenarios/Settings"]
+margin_right = 1016.0
+margin_bottom = 550.0
+
+[node name="General" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Time" type="HBoxContainer" parent="Scenarios/Settings/Tab/General"]
+margin_right = 1008.0
+margin_bottom = 24.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/General/Time"]
+margin_left = 353.0
+margin_top = 5.0
+margin_right = 389.0
+margin_bottom = 19.0
+text = "Time:"
+
+[node name="TimeHour" type="SpinBox" parent="Scenarios/Settings/Tab/General/Time"]
+margin_left = 393.0
+margin_right = 467.0
+margin_bottom = 24.0
+max_value = 23.0
+suffix = "h"
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/General/Time"]
+margin_left = 471.0
+margin_top = 5.0
+margin_right = 483.0
+margin_bottom = 19.0
+text = " : "
+
+[node name="TimeMinute" type="SpinBox" parent="Scenarios/Settings/Tab/General/Time"]
+margin_left = 487.0
+margin_right = 561.0
+margin_bottom = 24.0
+max_value = 59.0
+suffix = "m"
+
+[node name="Label3" type="Label" parent="Scenarios/Settings/Tab/General/Time"]
+margin_left = 565.0
+margin_top = 5.0
+margin_right = 577.0
+margin_bottom = 19.0
+text = " : "
+
+[node name="TimeSecond" type="SpinBox" parent="Scenarios/Settings/Tab/General/Time"]
+margin_left = 581.0
+margin_right = 655.0
+margin_bottom = 24.0
+max_value = 59.0
+suffix = "s"
+
+[node name="TrainLength" type="HBoxContainer" parent="Scenarios/Settings/Tab/General"]
+margin_top = 28.0
+margin_right = 1008.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/General/TrainLength"]
+margin_top = 5.0
+margin_right = 181.0
+margin_bottom = 19.0
+text = "Minimal Player Train Length:"
+
+[node name="SpinBox" type="SpinBox" parent="Scenarios/Settings/Tab/General/TrainLength"]
+margin_left = 185.0
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+allow_greater = true
+suffix = "m"
+
+[node name="Label3" type="Label" parent="Scenarios/Settings/Tab/General"]
+margin_top = 56.0
+margin_right = 1008.0
+margin_bottom = 70.0
+text = "Description:"
+align = 1
+
+[node name="Description" type="TextEdit" parent="Scenarios/Settings/Tab/General"]
+margin_top = 74.0
+margin_right = 1008.0
+margin_bottom = 174.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="Duration" type="HBoxContainer" parent="Scenarios/Settings/Tab/General"]
+margin_top = 178.0
+margin_right = 1008.0
+margin_bottom = 202.0
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/General/Duration"]
+margin_top = 5.0
+margin_right = 117.0
+margin_bottom = 19.0
+text = "Scenario Duration:"
+
+[node name="SpinBox" type="SpinBox" parent="Scenarios/Settings/Tab/General/Duration"]
+margin_left = 121.0
+margin_right = 948.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 60.0
+allow_greater = true
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/General/Duration"]
+margin_left = 952.0
+margin_top = 5.0
+margin_right = 1008.0
+margin_bottom = 19.0
+text = " Minutes"
+
+[node name="Save" type="Button" parent="Scenarios/Settings/Tab/General"]
+margin_left = 456.0
+margin_top = 206.0
+margin_right = 551.0
+margin_bottom = 226.0
+size_flags_horizontal = 4
+text = "Save General"
+
+[node name="Trains" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="ItemList2" type="ItemList" parent="Scenarios/Settings/Tab/Trains"]
+margin_right = 1008.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+items = [ "Player", null, false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 104.0
+margin_right = 1008.0
+margin_bottom = 128.0
+
+[node name="New" type="Button" parent="Scenarios/Settings/Tab/Trains/HBoxContainer2"]
+margin_right = 40.0
+margin_bottom = 24.0
+text = "New"
+
+[node name="LineEdit" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/HBoxContainer2"]
+margin_left = 44.0
+margin_right = 804.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Rename" type="Button" parent="Scenarios/Settings/Tab/Trains/HBoxContainer2"]
+margin_left = 808.0
+margin_right = 872.0
+margin_bottom = 24.0
+text = "Rename"
+
+[node name="Duplicate" type="Button" parent="Scenarios/Settings/Tab/Trains/HBoxContainer2"]
+margin_left = 876.0
+margin_right = 949.0
+margin_bottom = 24.0
+text = "Duplicate"
+
+[node name="Delete" type="Button" parent="Scenarios/Settings/Tab/Trains/HBoxContainer2"]
+margin_left = 953.0
+margin_right = 1008.0
+margin_bottom = 24.0
+text = "Delete"
+
+[node name="HSeparator3" type="HSeparator" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 132.0
+margin_right = 1008.0
+margin_bottom = 136.0
+
+[node name="Route" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 140.0
+margin_right = 1008.0
+margin_bottom = 164.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/Route"]
+margin_top = 5.0
+margin_right = 41.0
+margin_bottom = 19.0
+text = "Route:"
+align = 1
+
+[node name="Route" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/Route"]
+margin_left = 45.0
+margin_right = 1008.0
+margin_bottom = 24.0
+hint_tooltip = "Here you define all rail names, over them the train have defintelty to drive. Commonly here are only rails at splitting switches.Seperate the Railnames with a blank."
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 168.0
+margin_right = 1008.0
+margin_bottom = 244.0
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_top = 5.0
+margin_right = 80.0
+margin_bottom = 19.0
+text = "Start Rail:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartRail" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 84.0
+margin_right = 460.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 464.0
+margin_top = 5.0
+margin_right = 628.0
+margin_bottom = 19.0
+text = "Start Rail Position:"
+
+[node name="StartRailPosition" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 632.0
+margin_right = 1008.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_top = 31.0
+margin_right = 80.0
+margin_bottom = 45.0
+text = "Direction:"
+
+[node name="Direction" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 84.0
+margin_top = 28.0
+margin_right = 460.0
+margin_bottom = 48.0
+size_flags_horizontal = 3
+text = "Forward"
+items = [ "Backwards", null, false, 0, null, "Forward", null, false, 1, null ]
+selected = 1
+
+[node name="Label9" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 464.0
+margin_top = 31.0
+margin_right = 628.0
+margin_bottom = 45.0
+text = "Door Configration at Start:"
+
+[node name="DoorConfiguration" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 632.0
+margin_top = 28.0
+margin_right = 1008.0
+margin_bottom = 48.0
+size_flags_horizontal = 3
+text = "No Doors opened"
+align = 1
+items = [ "No Doors opened", null, false, 0, null, "Left Doors opened", null, false, 1, null, "Right Doors opened", null, false, 2, null, "Both Doors opened", null, false, 3, null ]
+selected = 0
+
+[node name="Label4" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_top = 57.0
+margin_right = 80.0
+margin_bottom = 71.0
+text = "Spawn Time:"
+
+[node name="SpawnTime" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 84.0
+margin_top = 52.0
+margin_right = 460.0
+margin_bottom = 76.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="H" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
+margin_left = 57.0
+margin_right = 131.0
+margin_bottom = 24.0
+min_value = -1.0
+max_value = 23.0
+value = -1.0
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
+margin_left = 135.0
+margin_top = 5.0
+margin_right = 147.0
+margin_bottom = 19.0
+text = " : "
+
+[node name="M" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
+margin_left = 151.0
+margin_right = 225.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
+margin_left = 229.0
+margin_top = 5.0
+margin_right = 241.0
+margin_bottom = 19.0
+text = " : "
+
+[node name="S" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
+margin_left = 245.0
+margin_right = 319.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="Label5" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 464.0
+margin_top = 57.0
+margin_right = 628.0
+margin_bottom = 71.0
+text = "Despawn Rail:"
+
+[node name="DespawnRail" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 632.0
+margin_top = 52.0
+margin_right = 1008.0
+margin_bottom = 76.0
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 248.0
+margin_right = 1008.0
+margin_bottom = 262.0
+text = "Stations:"
+align = 1
+
+[node name="Stations" type="ScrollContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 266.0
+margin_right = 1008.0
+margin_bottom = 466.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="Stations" type="GridContainer" parent="Scenarios/Settings/Tab/Trains/Stations"]
+margin_right = 1008.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 10, 100 )
+size_flags_horizontal = 3
+columns = 6
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_right = 164.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Node Name"
+align = 1
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 168.0
+margin_right = 332.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Station Name"
+align = 1
+
+[node name="Label3" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 336.0
+margin_right = 500.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Arrival Time"
+align = 1
+
+[node name="Label4" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 504.0
+margin_right = 668.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Departure Time"
+align = 1
+
+[node name="Label5" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 672.0
+margin_right = 836.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Minimal Halt Time"
+align = 1
+
+[node name="Label6" type="Label" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+margin_left = 840.0
+margin_right = 1004.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Stop Type"
+align = 1
+
+[node name="nodeName0" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 132.0
+margin_bottom = 42.0
+
+[node name="stationName0" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 132.0
+margin_bottom = 42.0
+
+[node name="arrivalTime0" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 230.0
+margin_bottom = 42.0
+
+[node name="H" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/arrivalTime0"]
+margin_right = 74.0
+margin_bottom = 24.0
+max_value = 23.0
+
+[node name="M" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/arrivalTime0"]
+margin_left = 78.0
+margin_right = 152.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="S" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/arrivalTime0"]
+margin_left = 156.0
+margin_right = 230.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="departureTime0" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 230.0
+margin_bottom = 42.0
+
+[node name="H" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/departureTime0"]
+margin_right = 74.0
+margin_bottom = 24.0
+max_value = 23.0
+
+[node name="M" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/departureTime0"]
+margin_left = 78.0
+margin_right = 152.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="S" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations/departureTime0"]
+margin_left = 156.0
+margin_right = 230.0
+margin_bottom = 24.0
+max_value = 59.0
+
+[node name="haltTime0" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 164.0
+margin_bottom = 42.0
+
+[node name="stopType0" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/Stations/Stations"]
+visible = false
+margin_top = 18.0
+margin_right = 164.0
+margin_bottom = 38.0
+text = "Do not halt"
+items = [ "Do not halt", null, false, 0, null, "Regular Stop", null, false, 1, null, "Beginning Station", null, false, 2, null, "End Station", null, false, 3, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StationButtons" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 470.0
+margin_right = 1008.0
+margin_bottom = 490.0
+
+[node name="Remove" type="Button" parent="Scenarios/Settings/Tab/Trains/StationButtons"]
+margin_right = 502.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Remove Entry"
+
+[node name="Add" type="Button" parent="Scenarios/Settings/Tab/Trains/StationButtons"]
+margin_left = 506.0
+margin_right = 1008.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Add Entry"
+
+[node name="SaveTrain" type="Button" parent="Scenarios/Settings/Tab/Trains"]
+margin_left = 466.0
+margin_top = 494.0
+margin_right = 542.0
+margin_bottom = 514.0
+size_flags_horizontal = 4
+text = "Save Train"
+
+[node name="HSeparator" type="HSeparator" parent="Scenarios"]
+margin_top = 732.0
+margin_right = 1016.0
+margin_bottom = 736.0
+
+[node name="Label2" type="Label" parent="Scenarios"]
+margin_top = 740.0
+margin_right = 1016.0
+margin_bottom = 754.0
+text = "World (Signals and Stations):"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Write" type="Button" parent="Scenarios"]
+margin_top = 758.0
+margin_right = 1016.0
+margin_bottom = 778.0
+size_flags_horizontal = 3
+text = "Save current Signal Data to scenario"
+
+[node name="Load" type="Button" parent="Scenarios"]
+margin_top = 782.0
+margin_right = 1016.0
+margin_bottom = 802.0
+hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
+size_flags_horizontal = 3
+text = "Load Signal Data from current Scenario"
+
+[node name="ResetSignals" type="Button" parent="Scenarios"]
+margin_top = 806.0
+margin_right = 1016.0
+margin_bottom = 826.0
+hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
+size_flags_horizontal = 3
+text = "Reset Signal Data"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -713.0
+margin_bottom = -438.0
+popup_exclusive = true
+window_title = "Open a File"
+mode = 0
+filters = PoolStringArray( "*.obj" )
+[connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
+[connection signal="pressed" from="World Configuration/SaveChunks" to="." method="_on_SaveChunks_pressed"]
+[connection signal="item_selected" from="Scenarios/ItemList" to="." method="_on_ItemList_item_selected"]
+[connection signal="pressed" from="Scenarios/HBoxContainer/New" to="." method="_on_NewScenario_pressed"]
+[connection signal="pressed" from="Scenarios/HBoxContainer/Rename" to="." method="_on_RenameScenario_pressed"]
+[connection signal="pressed" from="Scenarios/HBoxContainer/Duplicate" to="." method="_on_DuplicateScenario_pressed"]
+[connection signal="pressed" from="Scenarios/HBoxContainer/Delete" to="." method="_on_DeleteScenario_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/General/Save" to="." method="_on_SaveGeneral_pressed"]
+[connection signal="item_selected" from="Scenarios/Settings/Tab/Trains/ItemList2" to="." method="_on_ItemList2_Train_selected"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/HBoxContainer2/New" to="." method="_on_NewTrain_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/HBoxContainer2/Rename" to="." method="_on_RenameTrain_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/HBoxContainer2/Duplicate" to="." method="_on_DuplicateTrain_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/HBoxContainer2/Delete" to="." method="_on_DeleteTrain_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/StationButtons/Remove" to="." method="_on_RemoveStationEntry_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/StationButtons/Add" to="." method="_on_AddStationEntry_pressed"]
+[connection signal="pressed" from="Scenarios/Settings/Tab/Trains/SaveTrain" to="." method="_on_SaveTrain_pressed"]
+[connection signal="pressed" from="Scenarios/Write" to="." method="_on_WriteData_pressed"]
+[connection signal="pressed" from="Scenarios/Load" to="." method="_on_LoadScenario_pressed"]
+[connection signal="pressed" from="Scenarios/ResetSignals" to="." method="_on_ResetSignals_pressed"]

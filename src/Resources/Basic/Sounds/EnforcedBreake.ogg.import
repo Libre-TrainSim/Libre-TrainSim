@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/EnforcedBreake.ogg-548ffa8ee4624bd0e14052caaf382a08.oggstr"
+
+[deps]
+
+source_file="res://Resources/Basic/Sounds/EnforcedBreake.ogg"
+dest_files=[ "res://.import/EnforcedBreake.ogg-548ffa8ee4624bd0e14052caaf382a08.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Crop.obj-40fab6dee317029720bdc2fd68666280.mesh"
+
+[deps]
+
+files=[ "res://.import/Crop.obj-40fab6dee317029720bdc2fd68666280.mesh" ]
+
+source_file="res://Resources/Basic/Crop.obj"
+dest_files=[ "res://.import/Crop.obj-40fab6dee317029720bdc2fd68666280.mesh", "res://.import/Crop.obj-40fab6dee317029720bdc2fd68666280.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

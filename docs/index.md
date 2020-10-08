@@ -1,4 +1,4 @@
-[Home](https://libre-trainsim.de)  -  [Download](https://libre-trainsim.de/download)  -  [Upload Content](https://libre-trainsim.de/upload-content)  -  [Community](https://libre-trainsim.de/community)  -  [How to make tracks](https://github.com/Jean28518/Libre-TrainSim/wiki/Building-Tracks-for-Libre-TrainSim---Official-Documentation)
+**[Home](https://libre-trainsim.de)  -  [Download](https://libre-trainsim.de/download)  -  [Upload Content](https://libre-trainsim.de/upload-content)  -  [Community](https://libre-trainsim.de/community)  -  [How to make tracks](https://github.com/Jean28518/Libre-TrainSim/wiki/Building-Tracks-for-Libre-TrainSim---Official-Documentation)**
 
 ***
 
@@ -21,7 +21,7 @@ Since the last post already many joined our Discord-Channel. This is the easiest
 
 So let's come to Libre TrainSim specific things:
 
-In the last days I finished a complete new track: U2-Nuremberg. It is the first metro track, and has 8 stations. It will come with version 0.7. 
+In the last days I finished a complete new track: U2-Nuremberg. It is the first metro track, and has 8 stations. It will come with version 0.7.
 ![figure](https://cdn.discordapp.com/attachments/704967792763600926/759176648724971520/screenshot.png)
 
 Also today I finished the Documentation for making tracks in Libre TrainSim - Because that will be one of a great new feature in 0.7! You can't actually create one, but have a look to it: [Click me](https://github.com/Jean28518/Libre-TrainSim/wiki/Building-Tracks-for-Libre-TrainSim---Official-Documentation)
@@ -63,13 +63,13 @@ New Discord Channel:
 - Outer View of Trains: You can now see the train from the outside. Animation of doors and of the pantograph where added too:
 ![figure](https://img.itch.zone/aW1nLzM1MDAwOTMucG5n/original/H37i5J.png)
 - Autopilot: From now on you don't have to drive the train yourself. You could press Ctrl + A, sit back, and watch the train driving itself.
-- NPC Trains: You are not anymore alone! 
+- NPC Trains: You are not anymore alone!
 - Intelligent Signals: Signals can now be activated by driving over, and recognize under the hood the signal after them. That makes it a lot easier for track creators.
 - Shadows, better materials, and lights:  From now on the materials of the objects look a bit more realistic. Also lights of the train and shadows of the sun where added:
 ![figure](https://img.itch.zone/aW1nLzM1MDAxMzEucG5n/original/M0zVtC.png)
-- New Metro Track (WIP): Parallel to the writing at the documentation I create a new track: An metro track with 7 stations. Here's a teaser: 
+- New Metro Track (WIP): Parallel to the writing at the documentation I create a new track: An metro track with 7 stations. Here's a teaser:
 ![figure](https://img.itch.zone/aW1nLzM1MDAxMzQucG5n/original/cIOWyv.png)
 
 Also some smaller things where fixed and got improved. But for now that was enough.
 
-Thank you for reading, and hopefully we will see us all in the next version! 
+Thank you for reading, and hopefully we will see us all in the next version!

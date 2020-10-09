@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=2]
@@ -8,10 +8,21 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/HUD.gd" type="Script" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrainInfo.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame_Small.tres" type="DynamicFont" id=9]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/GreenSignal.png" type="Texture" id=10]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Signal.png" type="Texture" id=11]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Station.png" type="Texture" id=12]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Bold.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/SpeedLimit.png" type="Texture" id=14]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/NextTable.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
 font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 18
+font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 30
@@ -79,7 +90,14 @@ font_data = ExtResource( 2 )
 pause_mode = 2
 script = ExtResource( 6 )
 
-[node name="HBoxContainer" type="VBoxContainer" parent="."]
+[node name="IngameInformation" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="VBoxContainer" parent="IngameInformation"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -92,7 +110,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentLimit" type="Label" parent="HBoxContainer"]
+[node name="CurrentLimit" type="Label" parent="IngameInformation/Speed"]
 margin_right = 257.0
 margin_bottom = 45.0
 grow_horizontal = 0
@@ -100,7 +118,7 @@ custom_fonts/font = ExtResource( 8 )
 text = "Current Limit: "
 align = 2
 
-[node name="Speed" type="Label" parent="HBoxContainer"]
+[node name="Speed" type="Label" parent="IngameInformation/Speed"]
 margin_top = 49.0
 margin_right = 257.0
 margin_bottom = 94.0
@@ -111,6 +129,145 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Next" type="Control" parent="IngameInformation"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="IngameInformation/Next"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -260.9
+margin_top = 42.0404
+margin_right = 0.10022
+margin_bottom = 215.04
+texture = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="IngameInformation/Next"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -228.52
+margin_top = 51.3969
+margin_right = -2.51978
+margin_bottom = 187.397
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_right = 72.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 6 )
+text = "Distance"
+align = 1
+
+[node name="Label3" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_left = 76.0
+margin_right = 148.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 6 )
+text = "Type"
+align = 1
+
+[node name="Label2" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_left = 152.0
+margin_right = 224.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 6 )
+text = "Info"
+align = 1
+
+[node name="DistanceToSignal" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_top = 32.0
+margin_right = 72.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 32 )
+custom_fonts/font = ExtResource( 9 )
+text = "-"
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
+margin_left = 76.0
+margin_top = 32.0
+margin_right = 148.0
+margin_bottom = 64.0
+texture = ExtResource( 11 )
+stretch_mode = 4
+
+[node name="Signal" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
+margin_left = 152.0
+margin_top = 32.0
+margin_right = 224.0
+margin_bottom = 64.0
+texture = ExtResource( 10 )
+stretch_mode = 4
+
+[node name="DistanceToSpeedLimit" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_top = 68.0
+margin_right = 72.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 32 )
+custom_fonts/font = ExtResource( 9 )
+text = "-"
+align = 1
+valign = 1
+
+[node name="TextureRect2" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
+margin_left = 76.0
+margin_top = 68.0
+margin_right = 148.0
+margin_bottom = 100.0
+texture = ExtResource( 14 )
+stretch_mode = 4
+
+[node name="SpeedLimit" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_left = 152.0
+margin_top = 68.0
+margin_right = 224.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 32 )
+custom_fonts/font = ExtResource( 9 )
+text = "-"
+align = 1
+valign = 1
+
+[node name="DistanceToStation" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_top = 104.0
+margin_right = 72.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 0, 32 )
+custom_fonts/font = ExtResource( 9 )
+text = "-"
+align = 1
+valign = 1
+
+[node name="TextureRect3" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
+margin_left = 76.0
+margin_top = 104.0
+margin_right = 148.0
+margin_bottom = 136.0
+texture = ExtResource( 12 )
+stretch_mode = 4
+
+[node name="Arrival" type="Label" parent="IngameInformation/Next/GridContainer"]
+margin_left = 152.0
+margin_top = 107.0
+margin_right = 224.0
+margin_bottom = 133.0
+custom_fonts/font = ExtResource( 9 )
+text = "-"
+align = 1
 
 [node name="FPS" type="Label" parent="."]
 visible = false

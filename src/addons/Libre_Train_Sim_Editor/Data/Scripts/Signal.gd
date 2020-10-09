@@ -1,7 +1,7 @@
 tool
 extends Spatial
 var type = "Signal"
-export var status = 0# 0: Red, 1: Green, -1: Off
+export var status = 0# 0: Red, 1: Green, -1: Off,
 var signalAfter = ""
 onready var world = find_parent("World")
 var signalAfterNode
@@ -11,6 +11,8 @@ export var setPassAtS = 0
 export var speed = -1
 var warnSpeed = -1
 export var forward = true
+
+var orange = false
 
 export (String) var attachedRail
 export (int) var onRailPosition
@@ -52,6 +54,7 @@ func _ready():
 
 		
 func update():
+	orange = false
 	if world == null:
 		world = find_parent("World")
 	if signalAfterNode == null and signalAfter != "":
@@ -69,6 +72,7 @@ func update():
 		signalAfterNode = world.get_node("Signals/"+signalAfter)
 		if signalAfterNode !=  world.get_node("Signals") and signalAfterNode != null and signalAfterNode.status == 0:
 			orange()
+			orange = true
 			return
 		green()
 	elif status < 0:

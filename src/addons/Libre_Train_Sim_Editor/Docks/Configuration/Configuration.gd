@@ -81,7 +81,7 @@ func _on_DeleteScenario_pressed():
 	var scenarioList = get_all_scenarios()
 	scenarioList.erase(currentScenario)
 	var sData = config.get_value("Scenarios", "sData", {})
-	sData.remove(currentScenario)
+	sData.erase(currentScenario)
 	config.set_value("Scenarios", "sData", sData)
 	config.set_value("Scenarios", "List", scenarioList)
 	config.save(save_path)

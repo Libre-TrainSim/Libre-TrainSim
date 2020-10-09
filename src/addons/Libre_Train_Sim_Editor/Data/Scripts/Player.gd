@@ -738,7 +738,7 @@ func bake_route(): ## Generate the whole route for the train.
 func show_textbox_message(string):
 	$HUD.show_textbox_message(string)
 	
-func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray with the names of the signals. The first entry is the nearest. 
+func get_all_upcoming_signalPoints_of_types(types): # returns an sorted aray with the names of the signals. The first entry is the nearest. 
 	var returnValue = []
 	var index = routeIndex
 	while(index != baked_route.size()):
@@ -748,7 +748,7 @@ func get_all_upcoming_signalPoints_of_one_type(type): # returns an sorted aray w
 			var signalN = world.get_node("Signals").get_node(signalName)
 			if signalN == null:
 				continue
-			if signalN.type == type and signalN.forward == baked_route_direction[index]:
+			if types.has(signalN.type) and signalN.forward == baked_route_direction[index]:
 				if rail != currentRail:
 					signalsAtRail["name"].append(signalName)
 					signalsAtRail["position"].append(signalN.onRailPosition)
@@ -804,7 +804,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 	else:
 		check_for_next_stationTimer = 0
 		if nextStation == "":
-			var nextStations = get_all_upcoming_signalPoints_of_one_type("Station")
+			var nextStations = get_all_upcoming_signalPoints_of_types(["Station"])
 			print(name + ": "+String(nextStations))
 			if nextStations.size() == 0:
 				stationMessageSent = true
@@ -864,8 +864,8 @@ func check_sifa(delta):
 	$Sound/SiFa.stream_paused = not sifaTimer > 30
 		
 func set_signalWarnLimits(): # Called in the beginning of the route
-	var signals = get_all_upcoming_signalPoints_of_one_type("Signal")
-	var speedLimits = get_all_upcoming_signalPoints_of_one_type("Speed")
+	var signals = get_all_upcoming_signalPoints_of_types(["Signal"])
+	var speedLimits = get_all_upcoming_signalPoints_of_types(["Speed"])
 	for speedLimit in speedLimits:
 		signals.append(speedLimit)
 	var signalT = {"name" : signals, "position" : []}
@@ -885,7 +885,7 @@ func set_signalWarnLimits(): # Called in the beginning of the route
 			limit = signalN.speed
 
 func set_signalAfters():
-	var signals = get_all_upcoming_signalPoints_of_one_type("Signal")
+	var signals = get_all_upcoming_signalPoints_of_types(["Signal"])
 	for i in range(1,signals.size()):
 		var signalN = world.get_node("Signals").get_node(signals[i-1])
 		signalN.signalAfter = signals[i]
@@ -923,11 +923,11 @@ var autoPilotInStation = true
 var updateNextSignalTimer = 0
 func updateNextSignal(delta):
 	if nextSignal == null:
-		if get_all_upcoming_signalPoints_of_one_type("Signal").size() == 0: return
-		nextSignal = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_one_type("Signal")[0])
+		if get_all_upcoming_signalPoints_of_types(["Signal"]).size() == 0: return
+		nextSignal = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_types(["Signal"])[0])
 		updateNextSignalTimer = 1 ## Force Update Signal
 	updateNextSignalTimer += delta
-	if updateNextSignalTimer > 0.5:
+	if updateNextSignalTimer > 0.1:
 		distanceToNextSignal = get_distance_to_signal(nextSignal.name)
 		updateNextSignalTimer = 0
 
@@ -935,31 +935,31 @@ func updateNextSignal(delta):
 var updateNextSpeedLimitTimer = 0
 func updateNextSpeedLimit(delta):
 	if nextSpeedLimitNode == null:
-		if get_all_upcoming_signalPoints_of_one_type("SpeedLimit").size() > 0:
-			var nextSpeedLimitName = get_all_upcoming_signalPoints_of_one_type("SpeedLimit")[0]
-			distanceToNextSpeedLimit = get_distance_to_signal(nextSpeedLimitName)
-			if distanceToNextSignal < distanceToNextSpeedLimit:
-				nextSpeedLimitNode = nextSignal
-			else:
-				nextSpeedLimitNode = world.get_node("Signals").get_node(nextSpeedLimitName)
-		else:
-			nextSpeedLimitNode = nextSignal
+		nextSpeedLimitNode = get_next_SpeedLimit()
 		if nextSpeedLimitNode == null:
 			return
 		updateNextSpeedLimitTimer = 1 ## Force Update Signal
 	updateNextSpeedLimitTimer += delta
-	if updateNextSpeedLimitTimer > 0.5:
+	if updateNextSpeedLimitTimer > 0.1:
 		distanceToNextSpeedLimit = get_distance_to_signal(nextSpeedLimitNode.name)
 		updateNextSpeedLimitTimer = 0
-	
+
+func get_next_SpeedLimit():
+	var allLimits = get_all_upcoming_signalPoints_of_types(["SpeedLimit", "Signal"])
+	for limit in allLimits:
+		if world.get_node("Signals/" + limit).speed != -1:
+			return world.get_node("Signals/" + limit)
+			
+
+
 var nextStationNode = null
 var distanceToNextStation = 0
 var updateNextStationTimer = 0
 func updateNextStation(delta):  ## Used for Autopilot
 	distanceToNextStation -= speed*delta
 	if nextStationNode == null:
-		if get_all_upcoming_signalPoints_of_one_type("Station").size() > 0:
-			nextStationNode = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_one_type("Station")[0])
+		if get_all_upcoming_signalPoints_of_types(["Station"]).size() > 0:
+			nextStationNode = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_types(["Station"])[0])
 			distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
 
 

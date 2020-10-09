@@ -54,7 +54,9 @@ export (float) var endTend
 export (String) var parallelRail = ""
 export (float) var distanceToParallelRail = 0
 var parRail
-var world
+
+onready var world = find_parent("World")
+onready var buildings = world.get_node("Buildings")
 
 
 var attachedSignals = {}
@@ -71,12 +73,20 @@ func _ready():
 	
 func _process(delta):
 	if Engine.is_editor_hint():
+		## Disable moving in editor, if manual Moving is false:
 		if fixedTransform == null:
 			fixedTransform = transform
 		if not manualMoving:
 			transform = fixedTransform
 		else:
 			fixedTransform = transform
+		
+		## Move Buildings to the Buildings Node
+		for child in get_children():
+			if child.is_class("MeshInstance") and not (child.name == "Beginning" or child.name == "Ending"):
+				remove_child(child)
+				buildings.add_child(child)
+				child.owner = world
 
 func _update(newvar):
 	world = find_parent("World")

@@ -70,15 +70,21 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "New Rail"
 
-[node name="HSeparator2" type="HSeparator" parent="."]
+[node name="ManualMoving" type="CheckButton" parent="."]
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 56.0
+margin_bottom = 92.0
+text = "Manual Moving in Editor"
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+margin_top = 96.0
+margin_right = 1024.0
+margin_bottom = 100.0
 
 [node name="RotationHeight" type="GridContainer" parent="."]
-margin_top = 60.0
+margin_top = 104.0
 margin_right = 1024.0
-margin_bottom = 112.0
+margin_bottom = 156.0
 columns = 4
 
 [node name="LabelStart" type="Label" parent="RotationHeight"]
@@ -154,14 +160,14 @@ __meta__ = {
 }
 
 [node name="HSeparator3" type="HSeparator" parent="."]
-margin_top = 116.0
+margin_top = 160.0
 margin_right = 1024.0
-margin_bottom = 120.0
+margin_bottom = 164.0
 
 [node name="S" type="VBoxContainer" parent="."]
-margin_top = 124.0
+margin_top = 168.0
 margin_right = 1024.0
-margin_bottom = 328.0
+margin_bottom = 372.0
 
 [node name="General" type="VBoxContainer" parent="S"]
 margin_right = 1024.0
@@ -586,14 +592,14 @@ size_flags_horizontal = 4
 text = "Update"
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_top = 332.0
+margin_top = 376.0
 margin_right = 1024.0
-margin_bottom = 336.0
+margin_bottom = 380.0
 
 [node name="RailConnector" type="VBoxContainer" parent="."]
-margin_top = 340.0
+margin_top = 384.0
 margin_right = 1024.0
-margin_bottom = 434.0
+margin_bottom = 478.0
 
 [node name="Label" type="Label" parent="RailConnector"]
 margin_right = 1024.0
@@ -675,6 +681,7 @@ text = "Connect"
 [connection signal="item_selected" from="AddRail/Mode" to="." method="_on_Mode_item_selected"]
 [connection signal="text_entered" from="AddRail/ParallelDistance/LineEdit" to="." method="_on_Update_pressed"]
 [connection signal="pressed" from="AddRail/AddRail" to="." method="_on_AddRail_pressed"]
+[connection signal="pressed" from="ManualMoving" to="." method="_on_ManualMoving_pressed"]
 [connection signal="item_selected" from="S/Settings/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="text_entered" from="S/Settings/Length/LineEdit" to="." method="_on_Update_pressed"]
 [connection signal="text_entered" from="S/Settings/Radius/LineEdit" to="." method="_on_Update_pressed"]

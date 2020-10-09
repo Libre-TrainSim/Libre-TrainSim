@@ -22,6 +22,7 @@ func update_selected_rail(node):
 	if node.is_in_group("Rail"):
 		currentRail = node
 		$CurrentRail/Name.text = node.name
+		$ManualMoving.pressed = currentRail.manualMoving
 		currentRail._update(true)
 		$S.visible = true
 		$RotationHeight.visible = true
@@ -381,3 +382,8 @@ func update_generalInformation():
 	$S/General/RailType/LineEdit.text = currentRail.railType
 	$S/General/ParallelRail/ParallelRail.text = currentRail.parallelRail
 	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distanceToParallelRail)
+	
+
+
+func _on_ManualMoving_pressed():
+	currentRail.manualMoving = $ManualMoving.pressed

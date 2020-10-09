@@ -14,7 +14,11 @@ export (int) var visibleSegments
 # warning-ignore:unused_class_variable
 export (bool) var update setget _update
 
+export (bool) var manualMoving = false
+var fixedTransform
+
 var trackObjects = []
+
 
 var MAX_LENGTH = 1000 
 
@@ -57,12 +61,22 @@ var attachedSignals = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	manualMoving = false
 	_update(false)
 	if not Engine.is_editor_hint():
 		$Beginning.queue_free()
 		$Ending.queue_free()
 		$Types.hide()
 	pass # Replace with function body.
+	
+func _process(delta):
+	if Engine.is_editor_hint():
+		if fixedTransform == null:
+			fixedTransform = transform
+		if not manualMoving:
+			transform = fixedTransform
+		else:
+			fixedTransform = transform
 
 func _update(newvar):
 	world = find_parent("World")
@@ -81,6 +95,7 @@ func _update(newvar):
 			length = parRail.length * ((radius)/(parRail.radius))
 		translation = parRail.get_shifted_pos_at_RailDistance(0, distanceToParallelRail) ## Hier verstehe ich das minus nicht
 		rotation_degrees.y = parRail.rotation_degrees.y
+		fixedTransform = transform
 			
 	if $Types.get_node(railType) == null:
 		railType = "Rail"

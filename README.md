@@ -2,9 +2,9 @@
 
 Train Simulator written in Godot Engine - Free for everyone. Licensed under GPL 3.0
 
-## [Play](libre-trainsim.de/download)
+## [Play](http://libre-trainsim.de/download)
 
-## [Community](libre-trainsim.de/community)
+## [Community](http://libre-trainsim.de/community)
 
 ## Project:
 This project is created by Jean28518 from germany in his free time, who is studying computer science. The aim is to create a modern fully free Train Simulator for Linux, Mac and Windows.

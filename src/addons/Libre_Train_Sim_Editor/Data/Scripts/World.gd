@@ -7,6 +7,8 @@ var timeSecond
 var timeMSeconds = 0
 onready var time = [timeHour,timeMinute,timeSecond]
 
+var globalDict = {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
+
 ################################################################################
 var currentScenario = ""
 

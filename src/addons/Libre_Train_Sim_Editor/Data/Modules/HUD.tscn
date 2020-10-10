@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://Resources/Basic/Sounds/Bling.ogg" type="AudioStream" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/HUD.gd" type="Script" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrainInfo.tscn" type="PackedScene" id=7]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame_Small.tres" type="DynamicFont" id=9]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/GreenSignal.png" type="Texture" id=10]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Signal.png" type="Texture" id=11]
@@ -17,10 +17,6 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/NextTable.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=6]
 size = 18
 font_data = ExtResource( 13 )
 
@@ -29,7 +25,6 @@ size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="Animation" id=3]
-resource_name = "FadeIn"
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Label:modulate")
 tracks/0/interp = 1
@@ -56,7 +51,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "FadeOut"
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Label:modulate")
 tracks/0/interp = 1
@@ -97,39 +91,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Speed" type="VBoxContainer" parent="IngameInformation"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -271.394
-margin_top = -102.272
-margin_right = -14.394
-margin_bottom = -8.27191
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CurrentLimit" type="Label" parent="IngameInformation/Speed"]
-margin_right = 257.0
-margin_bottom = 45.0
-grow_horizontal = 0
-custom_fonts/font = ExtResource( 8 )
-text = "Current Limit: "
-align = 2
-
-[node name="Speed" type="Label" parent="IngameInformation/Speed"]
-margin_top = 49.0
-margin_right = 257.0
-margin_bottom = 94.0
-grow_horizontal = 0
-custom_fonts/font = SubResource( 1 )
-text = "Speed"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Next" type="Control" parent="IngameInformation"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -165,7 +126,7 @@ __meta__ = {
 margin_right = 72.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 1 )
 text = "Distance"
 align = 1
 
@@ -174,7 +135,7 @@ margin_left = 76.0
 margin_right = 148.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 1 )
 text = "Type"
 align = 1
 
@@ -183,7 +144,7 @@ margin_left = 152.0
 margin_right = 224.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 1 )
 text = "Info"
 align = 1
 
@@ -268,6 +229,25 @@ margin_bottom = 133.0
 custom_fonts/font = ExtResource( 9 )
 text = "-"
 align = 1
+
+[node name="TrainInfo" type="Control" parent="IngameInformation"]
+modulate = Color( 1, 1, 1, 0.501961 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1024.0
+margin_top = -600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Screen1" parent="IngameInformation/TrainInfo" instance=ExtResource( 8 )]
+position = Vector2( 504.228, 296.127 )
+scale = Vector2( 0.4, 0.4 )
+
+[node name="TrainInfoAbove" parent="IngameInformation" instance=ExtResource( 7 )]
+visible = false
 
 [node name="FPS" type="Label" parent="."]
 visible = false
@@ -413,9 +393,6 @@ margin_right = 214.0
 margin_bottom = 150.0
 custom_fonts/font = ExtResource( 4 )
 text = "Quit to OS"
-
-[node name="TrainInfo" parent="." instance=ExtResource( 7 )]
-visible = false
 [connection signal="pressed" from="TextBox/Ok" to="." method="_on_OkTextBox_pressed"]
 [connection signal="pressed" from="Pause/HBox/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="Pause/HBox/QuitMenu" to="." method="_on_QuitMenu_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
@@ -7,32 +7,56 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/SpeedLimit.png" type="Texture" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=9]
 
-[sub_resource type="Animation" id=1]
-resource_name = "autopilot"
-length = 3.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Autopilot:modulate")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5, 3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
+[sub_resource type="DynamicFont" id=2]
+size = 80
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 45
+font_data = ExtResource( 9 )
 
 [node name="Screen1" type="Node2D"]
 script = ExtResource( 1 )
 SpeedPointerRotationAt100 = 40.0
+SollSpeedPointerRotationAt100 = -50.0
 CommandPointerRotationAt100 = 190.0
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 650, 450 )
 texture = ExtResource( 2 )
+
+[node name="Speed" type="Label" parent="."]
+margin_left = 272.67
+margin_top = 380.005
+margin_right = 453.67
+margin_bottom = 500.005
+custom_fonts/font = SubResource( 2 )
+text = "100"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="."]
+margin_left = 588.367
+margin_top = 19.8775
+margin_right = 738.367
+margin_bottom = 86.8775
+custom_fonts/font = SubResource( 3 )
+text = "12:00:00"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpeedLimitPointer" type="Sprite" parent="."]
+position = Vector2( 361.6, 326.177 )
+rotation = -2.61799
+texture = ExtResource( 8 )
+offset = Vector2( -0.253, -122.526 )
 
 [node name="SpeedPointer" type="Sprite" parent="."]
 modulate = Color( 0.729412, 0.0352941, 0.0352941, 1 )
@@ -108,10 +132,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayerAutoPilot" type="AnimationPlayer" parent="."]
-anims/autopilot = SubResource( 1 )
-
 [node name="Autopilot" type="ColorRect" parent="."]
+modulate = Color( 1, 1, 1, 0.71263 )
 margin_left = 41.5861
 margin_top = 613.604
 margin_right = 558.59

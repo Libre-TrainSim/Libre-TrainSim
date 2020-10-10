@@ -104,4 +104,14 @@ func time2String(time):
 	if second.length() == 1:
 		second = "0" + second
 	return (hour + ":" + minute +":" + second)
+	
+func distance2String(distance):
+	if distance > 10000:
+		return String(int(distance/1000)) + " km"
+	if distance > 1000:
+		return String(int(distance/100)/10.0) + " km"
+	if distance > 100:
+		return String((int(distance/100))*100) + " m"
+	else:
+		return String((int(distance-10)/10)*10) + " m"
 		

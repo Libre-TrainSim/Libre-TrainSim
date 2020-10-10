@@ -188,12 +188,11 @@ func ready(): ## Called by World!
 	print("Train " + name + " spawned sucessfully at " + currentRail.name)
 
 func _process(delta):
-	var osTime0 = OS.get_ticks_msec()
 	if world == null:
 		return
 	
-	if Root.EasyMode or ai:
-		check_automaticDriving()
+	if Root.EasyMode and not ai:
+		check_user_autopilot()
 	
 	updateNextSignal(delta)
 	updateNextSpeedLimit(delta)
@@ -254,6 +253,8 @@ func get_time():
 	time = world.time
 
 func _input(event):
+	if ai:
+		return
 	if event is InputEventMouseMotion:
 		mouseMotion = event.relative
 		
@@ -305,9 +306,9 @@ func getCommand(delta):
 		soll_command = accRoll
 		if brakeRoll != 0: soll_command = brakeRoll
 		
-	if soll_command == 0 or Root.EasyMode and not enforcedBreaking:
+	if soll_command == 0 or Root.EasyMode or ai and not enforcedBreaking:
 		blockedAcceleration = false
-	if command < 0 and not Root.EasyMode:
+	if command < 0 and not Root.EasyMode and not ai:
 		blockedAcceleration = true
 	if (doorRight or doorLeft):
 		blockedAcceleration = true
@@ -614,7 +615,7 @@ func check_station(delta):
 var pantographTimer = 0
 
 func check_pantograph(delta):
-	if Input.is_action_just_pressed("pantograph"):
+	if Input.is_action_just_pressed("pantograph") and not ai:
 		pantographUp = !pantographUp
 		pantographTimer = 0
 	if pantograph != pantographUp:
@@ -650,16 +651,16 @@ func send_message(string):
 var doorsClosingTimer = 0
 
 func check_doors(delta):
-	if Input.is_action_just_pressed("doorClose"):
+	if Input.is_action_just_pressed("doorClose") and not ai:
 		if not doorsClosing and (doorLeft or doorRight):
 			doorsClosing = true
 			$Sound/DoorsClose.play()
-	if Input.is_action_just_pressed("doorLeft"):
+	if Input.is_action_just_pressed("doorLeft") and not ai:
 		if not doorLeft and speed == 0:
 			if not $Sound/DoorsOpen.playing: 
 				$Sound/DoorsOpen.play()
 			doorLeft = true
-	if Input.is_action_just_pressed("doorRight"):
+	if Input.is_action_just_pressed("doorRight") and not ai:
 		if not doorRight and speed == 0:
 			if not $Sound/DoorsOpen.playing: 
 				$Sound/DoorsOpen.play()
@@ -850,7 +851,7 @@ func check_for_player_help(delta):
 		
 
 func check_horn():
-	if Input.is_action_just_pressed("Horn"):
+	if Input.is_action_just_pressed("Horn") and not ai:
 		$Sound/Horn.play()
 
 var sifaTimer = 0
@@ -909,7 +910,7 @@ func spawnWagons():
 		get_parent().add_child(newWagon)
 	
 
-func check_automaticDriving():
+func check_user_autopilot():
 	if Input.is_action_just_pressed("autopilot"):
 		automaticDriving = !automaticDriving
 		if not automaticDriving:
@@ -927,7 +928,7 @@ func updateNextSignal(delta):
 		nextSignal = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_types(["Signal"])[0])
 		updateNextSignalTimer = 1 ## Force Update Signal
 	updateNextSignalTimer += delta
-	if updateNextSignalTimer > 0.1:
+	if updateNextSignalTimer > 0.2:
 		distanceToNextSignal = get_distance_to_signal(nextSignal.name)
 		updateNextSignalTimer = 0
 
@@ -940,12 +941,12 @@ func updateNextSpeedLimit(delta):
 			return
 		updateNextSpeedLimitTimer = 1 ## Force Update Signal
 	updateNextSpeedLimitTimer += delta
-	if updateNextSpeedLimitTimer > 0.1:
+	if updateNextSpeedLimitTimer > 0.2:
 		distanceToNextSpeedLimit = get_distance_to_signal(nextSpeedLimitNode.name)
 		updateNextSpeedLimitTimer = 0
 
-func get_next_SpeedLimit():
-	var allLimits = get_all_upcoming_signalPoints_of_types(["SpeedLimit", "Signal"])
+func get_next_SpeedLimit(): #
+	var allLimits = get_all_upcoming_signalPoints_of_types(["Speed", "Signal"])
 	for limit in allLimits:
 		if world.get_node("Signals/" + limit).speed != -1:
 			return world.get_node("Signals/" + limit)
@@ -1074,7 +1075,8 @@ func debugLights(node):
 		print("Spotlight updated")
 
 func controlLights(delta):
-	if ai: return
+	if ai: 
+		return
 	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
 		frontLight = !frontLight
 	if Input.is_action_just_pressed("InsideLight"):

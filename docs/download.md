@@ -11,6 +11,10 @@
 - #### [Mac](https://github.com/Jean28518/Libre-TrainSim/releases/download/v0.6/Libre_TrainSim_Mac_v0_6.zip)
 
 
+## Editor:
+
+- ### [0.7 BETA](https://www.server-jean.de/LibreTrainSim/0.7-BETA/LibreTrainSimEditor.zip)
+
 ## How to Play
 
 Extract the .zip file and run the executable.

@@ -193,9 +193,32 @@ func _on_FullscreenSettings_pressed():
 	config.set_value("Settings", "fullscreen", $Settings/GridContainer/Fullscreen.pressed)
 	config.save(save_path)
 	OS.window_fullscreen = $Settings/GridContainer/Fullscreen.pressed
+	
+func _on_SettingsShadows_pressed():
+	config.set_value("Settings", "shadows", $Settings/GridContainer/Shadows.pressed)
+	config.save(save_path)
+
+func _on_SettingsViewDistance_value_changed(value):
+	config.set_value("Settings", "viewDistance", $Settings/GridContainer/ViewDistance.value)
+	config.save(save_path)
+
+
+func _on_SettingsAntiAlasing_pressed():
+	config.set_value("Settings", "antiAliasing", $Settings/GridContainer/AntiAliasing.pressed)
+	config.save(save_path)
+
+func _on_SettingsFog_pressed():
+	config.set_value("Settings", "fog", $Settings/GridContainer/Fog.pressed)
+	config.save(save_path)
 
 func update_settings():
 	$Settings/GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
+	$Settings/GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)
+	$Settings/GridContainer/ViewDistance.value = config.get_value("Settings", "viewDistance", 1000)
+	$Settings/GridContainer/AntiAliasing.pressed = config.get_value("Settings", "antiAliasing", true)
+	$Settings/GridContainer/Fog.pressed = config.get_value("Settings", "fog", true)
+	
+	
 
 
 func _on_BackSettings_pressed():
@@ -268,3 +291,14 @@ func _on_OpenWebBrowser_pressed():
 
 func _on_Later_pressed():
 	$FeedBack.hide()
+
+
+
+
+
+
+
+
+
+
+

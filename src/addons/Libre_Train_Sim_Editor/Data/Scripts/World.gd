@@ -35,6 +35,8 @@ var description = ""
 
 var pendingTrains = {"TrainName" : [], "SpawnTime" : []}
 
+var player
+
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
@@ -58,12 +60,29 @@ func _ready():
 #		processorTime = OS.get_ticks_msec() / 1000
 #		print("Processor Time 2: " + String(processorTime - initProcessorTime))
 		print(load_response)
-		var player = $Players/Player
+		player = $Players/Player
 		lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
-
+		
+		apply_user_settings()
 
 
 	pass
+
+
+
+
+
+func apply_user_settings():
+	var userConfig = ConfigFile.new()
+	userConfig.load(OS.get_executable_path().get_base_dir()+"config.cfg")
+	if get_node("DirectionalLight") != null:
+		$DirectionalLight.shadow_enabled = userConfig.get_value("Settings", "shadows", true)
+	player.get_node("Camera").far = userConfig.get_value("Settings", "viewDistance", 1000)
+	if userConfig.get_value("Settings", "antiAliasing", true):
+		ProjectSettings.set_setting("rendering/quality/filters/msaa", 4)
+	else: 
+		ProjectSettings.set_setting("rendering/quality/filters/msaa", 0)
+	$WorldEnvironment.environment.fog_enabled = userConfig.get_value("Settings", "fog", true)
 	
 func _process(delta):
 	if not Engine.editor_hint:

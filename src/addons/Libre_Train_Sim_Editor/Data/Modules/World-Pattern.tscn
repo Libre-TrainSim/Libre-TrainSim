@@ -58,6 +58,7 @@ __meta__ = {
 [node name="Rails" type="Spatial" parent="."]
 
 [node name="Rail" parent="Rails" instance=ExtResource( 5 )]
+visibleSegments = 112.111
 otherRadius = 1995.5
 otherLength = 997.75
 Outlength = 94.8772

@@ -348,37 +348,112 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Settings"]
 margin_right = 970.0
-margin_bottom = 53.0
+margin_bottom = 45.0
 custom_fonts/font = ExtResource( 5 )
 text = "Settings:"
 align = 1
 
-[node name="GridContainer" type="GridContainer" parent="Settings"]
-margin_top = 57.0
+[node name="Control" type="Control" parent="Settings"]
+margin_top = 49.0
 margin_right = 970.0
-margin_bottom = 500.0
+margin_bottom = 220.0
 size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Settings"]
+margin_left = 400.0
+margin_top = 224.0
+margin_right = 569.0
+margin_bottom = 332.0
+size_flags_horizontal = 4
 columns = 2
 
 [node name="Label" type="Label" parent="Settings/GridContainer"]
 margin_top = 5.0
-margin_right = 106.0
+margin_right = 91.0
 margin_bottom = 19.0
-text = "Fullscreen Mode"
+text = "Fullscreen"
 
 [node name="Fullscreen" type="CheckBox" parent="Settings/GridContainer"]
-margin_left = 110.0
-margin_right = 134.0
+margin_left = 120.0
+margin_right = 144.0
 margin_bottom = 24.0
+size_flags_horizontal = 4
+
+[node name="Label2" type="Label" parent="Settings/GridContainer"]
+margin_top = 33.0
+margin_right = 91.0
+margin_bottom = 47.0
+text = "Shadows"
+
+[node name="Shadows" type="CheckBox" parent="Settings/GridContainer"]
+margin_left = 120.0
+margin_top = 28.0
+margin_right = 144.0
+margin_bottom = 52.0
+size_flags_horizontal = 4
+
+[node name="Label3" type="Label" parent="Settings/GridContainer"]
+margin_top = 61.0
+margin_right = 91.0
+margin_bottom = 75.0
+text = "View-Distance"
+
+[node name="ViewDistance" type="SpinBox" parent="Settings/GridContainer"]
+margin_left = 95.0
+margin_top = 56.0
+margin_right = 169.0
+margin_bottom = 80.0
+min_value = 250.0
+max_value = 1000.0
+value = 1000.0
+suffix = "m"
+
+[node name="Label4" type="Label" parent="Settings/GridContainer"]
+margin_top = 89.0
+margin_right = 91.0
+margin_bottom = 103.0
+text = "Anti Aliasing"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AntiAliasing" type="CheckBox" parent="Settings/GridContainer"]
+margin_left = 120.0
+margin_top = 84.0
+margin_right = 144.0
+margin_bottom = 108.0
+size_flags_horizontal = 4
+
+[node name="Label5" type="Label" parent="Settings/GridContainer"]
+margin_top = 89.0
+margin_right = 91.0
+margin_bottom = 103.0
+text = "Fog"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fog" type="CheckBox" parent="Settings/GridContainer"]
+margin_left = 120.0
+margin_top = 84.0
+margin_right = 144.0
+margin_bottom = 108.0
+size_flags_horizontal = 4
+
+[node name="Control2" type="Control" parent="Settings"]
+margin_top = 336.0
+margin_right = 970.0
+margin_bottom = 508.0
+size_flags_vertical = 3
 
 [node name="Buttons" type="HBoxContainer" parent="Settings"]
-margin_top = 504.0
+margin_top = 512.0
 margin_right = 970.0
 margin_bottom = 563.0
 
 [node name="Back" type="Button" parent="Settings/Buttons"]
 margin_right = 970.0
-margin_bottom = 59.0
+margin_bottom = 51.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
@@ -478,6 +553,10 @@ text = "Open Web-Browser"
 [connection signal="pressed" from="Content/Buttons/Back" to="." method="_on_BackContent_pressed"]
 [connection signal="pressed" from="Content/Buttons/Reload" to="." method="_on_ReloadContent_pressed"]
 [connection signal="pressed" from="Settings/GridContainer/Fullscreen" to="." method="_on_FullscreenSettings_pressed"]
+[connection signal="pressed" from="Settings/GridContainer/Shadows" to="." method="_on_SettingsShadows_pressed"]
+[connection signal="value_changed" from="Settings/GridContainer/ViewDistance" to="." method="_on_SettingsViewDistance_value_changed"]
+[connection signal="pressed" from="Settings/GridContainer/AntiAliasing" to="." method="_on_SettingsAntiAlasing_pressed"]
+[connection signal="pressed" from="Settings/GridContainer/Fog" to="." method="_on_SettingsFog_pressed"]
 [connection signal="pressed" from="Settings/Buttons/Back" to="." method="_on_BackSettings_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/Later" to="." method="_on_Later_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/OpenWebBrowser" to="." method="_on_OpenWebBrowser_pressed"]

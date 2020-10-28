@@ -1,7 +1,7 @@
 tool
 extends Spatial
 
-var  timeHour 
+var timeHour 
 var timeMinute
 var timeSecond 
 var timeMSeconds = 0

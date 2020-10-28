@@ -175,6 +175,7 @@ func _on_AddRail_pressed():
 
 func _on_Rename_pressed():
 	if currentRail == null: return
+	$CurrentRail/Name.text = $CurrentRail/Name.text.replace(" ", "_")
 	currentRail.name = $CurrentRail/Name.text
 	update_selected_rail(currentRail)
 	print("Rail renamed.")

@@ -72,7 +72,6 @@ surfaces/0 = {
 script = ExtResource( 1 )
 length = 100.0
 buildDistance = 0.9
-visibleSegments = 112.111
 endpos = Vector3( 100, 0, 0 )
 otherLength = 100.0
 Outlength = 100.0

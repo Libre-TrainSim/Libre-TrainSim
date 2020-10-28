@@ -41,9 +41,9 @@ func kmHToSpeed(speed):
 	return speed/3.6
 	
 func normDeg(degree):
-	while degree > 360.0:
+	while degree > 180.0:
 		degree -= 360.0
-	while degree < 0.0:
+	while degree < 180.0:
 		degree += 360.0
 	return degree
 

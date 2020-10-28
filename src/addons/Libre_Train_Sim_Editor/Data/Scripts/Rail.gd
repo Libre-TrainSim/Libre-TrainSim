@@ -70,9 +70,14 @@ func _ready():
 		$Ending.queue_free()
 		$Types.hide()
 	pass # Replace with function body.
-	
+
+var EditorUpdateTimer = 0
 func _process(delta):
 	if Engine.is_editor_hint():
+		EditorUpdateTimer += delta
+		if EditorUpdateTimer < 0.25:
+			return
+		EditorUpdateTimer = 0
 		## Disable moving in editor, if manual Moving is false:
 		if fixedTransform == null:
 			fixedTransform = transform
@@ -80,6 +85,10 @@ func _process(delta):
 			transform = fixedTransform
 		else:
 			fixedTransform = transform
+		
+		if name.match(" "):
+			name = name.replace(" ", "_")
+		
 		
 		## Move Buildings to the Buildings Node
 		for child in get_children():
@@ -325,3 +334,4 @@ func set_tendSlopeData(data):
 	d.tend1 = s.tend1
 	d.tend2Pos = s.tend2Pos
 	d.tend2 = s.tend2
+

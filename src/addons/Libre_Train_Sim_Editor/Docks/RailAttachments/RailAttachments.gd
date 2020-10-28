@@ -63,13 +63,16 @@ func _on_ClearTOs_pressed():
 
 func _on_NewTO_pressed():
 	if $Tab/TrackObjects/HBoxContainer/LineEdit.text != "":
+		clear_Materials_View()
 		var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
 		var to = TO_object.instance()
 		to.description = $Tab/TrackObjects/HBoxContainer/LineEdit.text
 		to.name = currentRail.name + " " + $Tab/TrackObjects/HBoxContainer/LineEdit.text
 		to.attachedRail = currentRail.name
+		to.materialPaths = []
 		world.get_node("TrackObjects").add_child(to)
 		to.set_owner(world)
+
 		update_selected_rail(currentRail)
 		print("Created TrackObject: "+to.name)
 
@@ -125,8 +128,8 @@ func _on_ItemListTO_item_selected(index):
 	$Tab/TrackObjects/HBoxContainer/LineEdit.text = currentTO.description
 	
 
-func get_materials():
-	var materials = currentTO.materialPaths
+func get_materials(): ## Prepare the View of the Materials-Table
+	var materials = currentTO.materialPaths.duplicate()
 	for x in range(currentTO.materialPaths.size()):
 		var entry = $"Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0".duplicate()
 		$Tab/TrackObjects/Settings/Tab/Object/GridContainer.add_child(entry)
@@ -159,14 +162,15 @@ func _on_SaveMaterials_pressed(): ## The object path is saved too here
 			currentTO.materialPaths.append(child.get_node("LineEdit").text)
 	currentTO._update(true)
 	print("Materials Saved")
-	
-		
-func update_Materials():
+
+func clear_Materials_View():
 	var childs = $Tab/TrackObjects/Settings/Tab/Object/GridContainer.get_children()
 	for child in childs:
 		if child.name != "Material 0" and child.find_parent("Material 0") == null:
 			child.queue_free()
-			
+		
+func update_Materials():
+	clear_Materials_View()
 	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = ""
 	if currentTO:
 		var objectPath = currentTO.objectPath
@@ -344,3 +348,10 @@ func _on_PickMaterial_pressed(): ## Called by material select script.
 
 func _on_ItemList_multi_selected(index, selected):
 	_on_ItemListTO_item_selected(index)
+
+
+func _on_MaterialRemove_pressed():
+	var materialRow = $Tab/TrackObjects/Settings/Tab/Object/GridContainer.get_children().back()
+	if materialRow.name != "Material 0":
+		$Tab/TrackObjects/Settings/Tab/Object/GridContainer.get_children().back().queue_free()
+	pass # Replace with function body.

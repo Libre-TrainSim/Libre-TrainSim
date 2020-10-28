@@ -21,10 +21,9 @@ margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Tab" type="TabContainer" parent="."]
-visible = false
 margin_top = 28.0
 margin_right = 1024.0
-margin_bottom = 402.0
+margin_bottom = 234.0
 tab_align = 0
 
 [node name="TrackObjects" type="VBoxContainer" parent="Tab"]
@@ -135,11 +134,11 @@ text = "Paste"
 visible = false
 margin_top = 174.0
 margin_right = 1016.0
-margin_bottom = 338.0
+margin_bottom = 346.0
 
 [node name="Tab" type="TabContainer" parent="Tab/TrackObjects/Settings"]
 margin_right = 1016.0
-margin_bottom = 140.0
+margin_bottom = 148.0
 
 [node name="Object" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 anchor_right = 1.0
@@ -175,16 +174,17 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_top = 46.0
+margin_right = 1008.0
+margin_bottom = 60.0
 size_flags_horizontal = 3
 text = "Materials:"
 align = 1
 
 [node name="GridContainer" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_top = 46.0
+margin_top = 64.0
 margin_right = 1008.0
-margin_bottom = 46.0
+margin_bottom = 64.0
 
 [node name="Material 0" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer"]
 visible = false
@@ -216,18 +216,28 @@ margin_right = 12.0
 margin_bottom = 20.0
 text = "Pick"
 
-[node name="Add" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_top = 50.0
+[node name="Add-Remove" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
+margin_top = 68.0
+margin_right = 1008.0
+margin_bottom = 88.0
+
+[node name="Remove" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/Add-Remove"]
 margin_right = 502.0
-margin_bottom = 70.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Remove last Entry"
+
+[node name="Add" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/Add-Remove"]
+margin_left = 506.0
+margin_right = 1008.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Add"
 
 [node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_left = 506.0
-margin_top = 50.0
+margin_top = 92.0
 margin_right = 1008.0
-margin_bottom = 70.0
+margin_bottom = 112.0
 text = "Save"
 
 [node name="Position" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
@@ -585,9 +595,9 @@ text = "Save"
 
 [node name="Button" type="Button" parent="Tab/TrackObjects/Settings"]
 margin_left = 479.0
-margin_top = 144.0
+margin_top = 152.0
 margin_right = 537.0
-margin_bottom = 164.0
+margin_bottom = 172.0
 size_flags_horizontal = 4
 text = "Update"
 
@@ -597,7 +607,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Datei öffnen"
+window_title = "Open a File"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.obj" )
@@ -610,7 +620,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Datei öffnen"
+window_title = "Open a File"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres" )
@@ -629,7 +639,8 @@ current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Paste" to="." method="_on_PasteTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/Pick" to="." method="_on_PickObject_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0/Pick" to="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0" method="_on_Pick_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add" to="." method="_on_AddMaterial_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Remove" to="." method="_on_MaterialRemove_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Add" to="." method="_on_AddMaterial_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Save" to="." method="_on_SaveMaterials_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/Save" to="." method="_on_SavePosition_pressed"]

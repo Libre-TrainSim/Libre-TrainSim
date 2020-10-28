@@ -129,6 +129,7 @@ func ready(): ## Called by World!
 	
 	route = route.split(" ")
 	bake_route()
+
 	
 	if Root.EasyMode or ai:
 		pantograph = true
@@ -588,7 +589,7 @@ func check_station(delta):
 					nextStationNode = null
 
 					return
-				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= depatureTime[2]:
+				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
 					nextStation = null
 					send_message("You can now depart")
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
@@ -684,7 +685,6 @@ func bake_route(): ## Generate the whole route for the train.
 	baked_route_direction = [forward]
 	
 	baked_route.append(startRail)
-	print(name + ": BAKED ROUTE:"  +String(baked_route))
 	var currentR = world.get_node("Rails").get_node(baked_route[0]) ## imagine: current rail, which the train will drive later
 	baked_route_railLength = [currentR.length]
 	var currentpos
@@ -700,9 +700,9 @@ func bake_route(): ## Generate the whole route for the train.
 	while(true): ## Find next Rail
 		var possibleRails = []
 		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
-			if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.startrot)) < 1 and rail.name != currentR.name:
+			if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.startrot))) < 1 and rail.name != currentR.name:
 				possibleRails.append(rail.name)
-			elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - Math.normDeg(rail.endrot+180.0)) < 1 and rail.name != currentR.name:
+			elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.endrot+180.0))) < 1 and rail.name != currentR.name:
 				possibleRails.append(rail.name)
 		
 		if possibleRails.size() == 0: ## If no Rail was found
@@ -732,7 +732,7 @@ func bake_route(): ## Generate the whole route for the train.
 		else: ## Backward
 			currentpos = currentR.startpos
 			currentrot = currentR.startrot - 180.0
-	print(name + ": Baking Route finished.")
+	print(name + ": Baking Route finished:")
 	print(name + ": Baked Route: "+ String(baked_route))
 	print(name + ": Baked Route: Direction "+ String(baked_route_direction))
 	

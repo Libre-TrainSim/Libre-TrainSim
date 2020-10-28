@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://screenshot.png" type="Texture" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame.tres" type="DynamicFont" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres" type="DynamicFont" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" type="AudioStream" id=6]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -379,6 +380,18 @@ margin_right = 144.0
 margin_bottom = 24.0
 size_flags_horizontal = 4
 
+[node name="Label6" type="Label" parent="Settings/GridContainer"]
+margin_left = 120.0
+margin_right = 160.0
+margin_bottom = 14.0
+text = "Music"
+
+[node name="MainMenuMusic" type="CheckBox" parent="Settings/GridContainer"]
+margin_left = 120.0
+margin_right = 144.0
+margin_bottom = 24.0
+size_flags_horizontal = 4
+
 [node name="Label2" type="Label" parent="Settings/GridContainer"]
 margin_top = 33.0
 margin_right = 91.0
@@ -489,6 +502,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label_Music" type="Label" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -30.0
+margin_right = 306.0
+grow_horizontal = 0
+custom_fonts/font = ExtResource( 3 )
+text = " Music: Follow That Dream by Luca Fraula"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="FeedBack" type="WindowDialog" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -540,6 +566,10 @@ margin_bottom = 36.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "Open Web-Browser"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -25.384
 [connection signal="pressed" from="Feedback" to="." method="_on_ButtonFeedback_pressed"]
 [connection signal="pressed" from="Front/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/Content" to="." method="_on_Content_pressed"]
@@ -553,6 +583,7 @@ text = "Open Web-Browser"
 [connection signal="pressed" from="Content/Buttons/Back" to="." method="_on_BackContent_pressed"]
 [connection signal="pressed" from="Content/Buttons/Reload" to="." method="_on_ReloadContent_pressed"]
 [connection signal="pressed" from="Settings/GridContainer/Fullscreen" to="." method="_on_FullscreenSettings_pressed"]
+[connection signal="pressed" from="Settings/GridContainer/MainMenuMusic" to="." method="_on_SettingsMainMenuMusic_pressed"]
 [connection signal="pressed" from="Settings/GridContainer/Shadows" to="." method="_on_SettingsShadows_pressed"]
 [connection signal="value_changed" from="Settings/GridContainer/ViewDistance" to="." method="_on_SettingsViewDistance_value_changed"]
 [connection signal="pressed" from="Settings/GridContainer/AntiAliasing" to="." method="_on_SettingsAntiAlasing_pressed"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg-8cd98035c7fa54736e9c0718d8aebfc2.oggstr"
+
+[deps]
+
+source_file="res://addons/Libre_Train_Sim_Editor/Data/Misc/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg"
+dest_files=[ "res://.import/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg-8cd98035c7fa54736e9c0718d8aebfc2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

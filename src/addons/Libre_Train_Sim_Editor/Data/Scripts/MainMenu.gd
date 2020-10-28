@@ -21,8 +21,18 @@ func _ready():
 	var feedbackPressed = config.get_value("Main", "feedbackPressed", false)
 	if openTimes > 3 and not feedbackPressed:
 		$FeedBack.popup()
+	update_MainMenuMusic()
 	pass # Replace with function body.
 
+
+func update_MainMenuMusic():
+	if config.get_value("Settings", "mainMenuMusic", true):
+		$Label_Music.show()
+		$MusicPlayer.play()
+	else:
+		$Label_Music.hide()
+		$MusicPlayer.stop()
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,6 +56,7 @@ func _on_BackPlay_pressed():
 	$Feedback.show()
 	$Front.show()
 	$Version.show()
+	$Label_Music.show()
 	
 
 
@@ -56,6 +67,7 @@ func _on_PlayFront_pressed():
 	$Feedback.hide()
 	$Front.hide()
 	$Version.hide()
+	$Label_Music.hide()
 
 func _on_Content_pressed():
 	update_content()
@@ -211,12 +223,19 @@ func _on_SettingsFog_pressed():
 	config.set_value("Settings", "fog", $Settings/GridContainer/Fog.pressed)
 	config.save(save_path)
 
+func _on_SettingsMainMenuMusic_pressed():
+	config.set_value("Settings", "mainMenuMusic", $Settings/GridContainer/MainMenuMusic.pressed)
+	config.save(save_path)
+	update_MainMenuMusic()
+
 func update_settings():
 	$Settings/GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
 	$Settings/GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)
 	$Settings/GridContainer/ViewDistance.value = config.get_value("Settings", "viewDistance", 1000)
 	$Settings/GridContainer/AntiAliasing.pressed = config.get_value("Settings", "antiAliasing", true)
 	$Settings/GridContainer/Fog.pressed = config.get_value("Settings", "fog", true)
+	$Settings/GridContainer/MainMenuMusic.pressed = config.get_value("Settings", "mainMenuMusic", true)
+
 	
 	
 
@@ -291,6 +310,9 @@ func _on_OpenWebBrowser_pressed():
 
 func _on_Later_pressed():
 	$FeedBack.hide()
+
+
+
 
 
 

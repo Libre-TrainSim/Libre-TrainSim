@@ -126,7 +126,9 @@ var cameraZeroTransform # Saves the camera position at the beginning. The Camera
 
 
 func ready(): ## Called by World!
-	cameraZeroTransform = cameraNode.transform
+	if not ai:
+		cameraZeroTransform = cameraNode.transform
+		$Camera.current = true
 	world = get_parent().get_parent()
 	
 	route = route.split(" ")
@@ -177,6 +179,7 @@ func ready(): ## Called by World!
 	if not ai:
 		set_signalWarnLimits()
 		set_signalAfters()
+		
 		
 	if ai:
 		soundMode = 1
@@ -1104,9 +1107,10 @@ func freeLastSignalAfterDrivenTrainLength(): # Called, when overdrove the next s
 	freeLastSignalBoolean = true
 
 func checkFreeLastSignal(delta): #called by process
-	if freeLastSignalBoolean and ((distance - newSignalDistance) > length):
+	if freeLastSignalBoolean and ((distance - newSignalDistance) > length) and lastDrivenSignalTmp != null:
 		lastDrivenSignalTmp.giveSignalFree()
 		
 func freeLastSignalBecauseOfDespawn():
-	lastDrivenSignal.giveSignalFree()
+	if  lastDrivenSignal != null:
+		lastDrivenSignal.giveSignalFree()
 	

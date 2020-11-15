@@ -153,7 +153,10 @@ func save_chunk(position):
 	var Buildings = get_node("Buildings").get_children()
 	for building in Buildings:
 		if compareChunks(pos2Chunk(building.translation), position):
-			chunk.Buildings[building.name] = {name = building.name, transform = building.transform, mesh = building.mesh}
+			var surfaceArr = []
+			for i in range(building.get_surface_material_count()):
+				surfaceArr.append(building.get_surface_material(i))
+			chunk.Buildings[building.name] = {name = building.name, transform = building.transform, mesh = building.mesh, surfaceArr = surfaceArr}
 
 	chunk.Flora = {}
 	var Flora = get_node("Flora").get_children()
@@ -252,6 +255,12 @@ func load_chunk(position):
 			meshInstance.mesh = Buildings[building].mesh
 			meshInstance.transform = Buildings[building].transform
 			meshInstance.translation = getNewPos_bchunk(meshInstance.translation)
+			var surfaceArr = Buildings[building].surfaceArr
+			if surfaceArr == null:
+				surfaceArr = []
+			print(surfaceArr)
+			for i in range (surfaceArr.size()):
+				meshInstance.set_surface_material(i, surfaceArr[i])
 			buildingsNode.add_child(meshInstance)
 			meshInstance.set_owner(self)
 		else:

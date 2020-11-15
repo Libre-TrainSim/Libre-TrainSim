@@ -11,8 +11,10 @@ export var setPassAtS = 0
 export var speed = -1
 var warnSpeed = -1
 export var forward = true
+export var blockSignal = false
 
 var orange = false
+
 
 export (String) var attachedRail
 export (int) var onRailPosition
@@ -38,6 +40,8 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		update()
+	if blockSignal:
+		status = 1
 		
 	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	var texture = $Viewport.get_texture()
@@ -54,6 +58,8 @@ func _ready():
 
 		
 func update():
+	if Engine.is_editor_hint() and blockSignal:
+		status = 1
 	orange = false
 	if world == null:
 		world = find_parent("World")
@@ -113,6 +119,10 @@ func setToRail(newvar):
 		if not forward:
 			self.rotation_degrees.y += 180
 
+func giveSignalFree():
+	if blockSignal:
+		status = 1
+
 func update_screen2():
 	if speed != -1:
 		if speed - 100 >= 0:
@@ -146,6 +156,7 @@ func get_scenario_data():
 	d.setPassAtM = setPassAtM
 	d.setPassAtS = setPassAtS 
 	d.speed = speed
+	d.blockSignal = blockSignal
 	return d
 
 func set_scenario_data(d):
@@ -154,6 +165,7 @@ func set_scenario_data(d):
 	setPassAtM = d.setPassAtM
 	setPassAtS = d.setPassAtS 
 	speed = d.speed
+	blockSignal = d.get("blockSignal", false)
 	
 
 func reset():

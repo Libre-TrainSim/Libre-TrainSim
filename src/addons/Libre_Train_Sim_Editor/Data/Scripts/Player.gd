@@ -97,6 +97,8 @@ var despawning = false
 var frontLight = false
 var insideLight = false
 
+var lastDrivenSignal = null ## In here the reference of the last driven signal is saved
+
 ## callable functions:
 # send_message()
 # show_textbox_message(string)
@@ -186,6 +188,7 @@ func ready(): ## Called by World!
 		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
 		insideLight = true
 		frontLight = true
+		
 	print("Train " + name + " spawned sucessfully at " + currentRail.name)
 
 func _process(delta):
@@ -246,6 +249,8 @@ func _process(delta):
 	checkVisibility(delta)
 	
 	controlLights(delta)
+	
+	checkFreeLastSignal(delta)
 	
 #	var osTime1 = OS.get_ticks_msec()
 #	print(float(osTime1-osTime0))
@@ -511,7 +516,10 @@ func handle_signal(signalname):
 		if signal.status == 0:
 			send_message("You overrun a red signal. The game is over!")
 			overrunRedSignal = true
+		else:
+			freeLastSignalAfterDrivenTrainLength()
 		signal.status = 0
+		lastDrivenSignal = signal
 	elif signal.type == "Station": ## Station
 		if not stations["nodeName"].has(signal.name):
 			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track...")
@@ -826,7 +834,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 func check_security():#
 	var oldEnforcedBrake = 	enforcedBreaking
 	enforcedBreaking = hardOverSpeeding or overrunRedSignal or not pantograph or sifaTimer > 33 
-	if not oldEnforcedBrake and enforcedBreaking and speed > 0:
+	if not oldEnforcedBrake and enforcedBreaking and speed > 0 and not ai:
 		$Sound/EnforcedBrake.play()
 
 var check_for_player_helpTimer = 0
@@ -1050,6 +1058,7 @@ func handleSollSpeed(delta):
 
 func checkDespawn():
 	if ai and currentRail.name == despawnRail:
+		freeLastSignalBecauseOfDespawn()
 		print("Despawning Train: " + name)
 		despawning = true
 
@@ -1086,3 +1095,18 @@ func controlLights(delta):
 	if has_node("CabinLight"):
 		$CabinLight.visible = insideLight
 
+var lastDrivenSignalTmp = null
+var freeLastSignalBoolean = false
+var newSignalDistance = 0
+func freeLastSignalAfterDrivenTrainLength(): # Called, when overdrove the next signal
+	lastDrivenSignalTmp = lastDrivenSignal
+	newSignalDistance = distance
+	freeLastSignalBoolean = true
+
+func checkFreeLastSignal(delta): #called by process
+	if freeLastSignalBoolean and ((distance - newSignalDistance) > length):
+		lastDrivenSignalTmp.giveSignalFree()
+		
+func freeLastSignalBecauseOfDespawn():
+	lastDrivenSignal.giveSignalFree()
+	

@@ -11,6 +11,7 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -160,7 +161,6 @@ size_flags_horizontal = 4
 text = "! Save and crreate Chunks !"
 
 [node name="Scenarios" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -248,13 +248,14 @@ caret_blink_speed = 0.5
 [node name="Settings" type="VBoxContainer" parent="Scenarios"]
 margin_top = 178.0
 margin_right = 1016.0
-margin_bottom = 728.0
+margin_bottom = 756.0
 
 [node name="Tab" type="TabContainer" parent="Scenarios/Settings"]
 margin_right = 1016.0
-margin_bottom = 550.0
+margin_bottom = 578.0
 
 [node name="General" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -378,7 +379,6 @@ size_flags_horizontal = 4
 text = "Save General"
 
 [node name="Trains" type="VBoxContainer" parent="Scenarios/Settings/Tab"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -461,7 +461,7 @@ size_flags_horizontal = 3
 [node name="GridContainer" type="GridContainer" parent="Scenarios/Settings/Tab/Trains"]
 margin_top = 168.0
 margin_right = 1008.0
-margin_bottom = 244.0
+margin_bottom = 272.0
 columns = 4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -469,7 +469,7 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
 margin_top = 5.0
-margin_right = 80.0
+margin_right = 84.0
 margin_bottom = 19.0
 text = "Start Rail:"
 __meta__ = {
@@ -477,22 +477,22 @@ __meta__ = {
 }
 
 [node name="StartRail" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 84.0
-margin_right = 460.0
+margin_left = 88.0
+margin_right = 462.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_speed = 0.5
 
 [node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 464.0
+margin_left = 466.0
 margin_top = 5.0
-margin_right = 628.0
+margin_right = 630.0
 margin_bottom = 19.0
 text = "Start Rail Position:"
 
 [node name="StartRailPosition" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 632.0
+margin_left = 634.0
 margin_right = 1008.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -504,14 +504,14 @@ __meta__ = {
 
 [node name="Label3" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
 margin_top = 31.0
-margin_right = 80.0
+margin_right = 84.0
 margin_bottom = 45.0
 text = "Direction:"
 
 [node name="Direction" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 84.0
+margin_left = 88.0
 margin_top = 28.0
-margin_right = 460.0
+margin_right = 462.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 text = "Forward"
@@ -519,14 +519,14 @@ items = [ "Backwards", null, false, 0, null, "Forward", null, false, 1, null ]
 selected = 1
 
 [node name="Label9" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 464.0
+margin_left = 466.0
 margin_top = 31.0
-margin_right = 628.0
+margin_right = 630.0
 margin_bottom = 45.0
 text = "Door Configration at Start:"
 
 [node name="DoorConfiguration" type="OptionButton" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 632.0
+margin_left = 634.0
 margin_top = 28.0
 margin_right = 1008.0
 margin_bottom = 48.0
@@ -538,14 +538,14 @@ selected = 0
 
 [node name="Label4" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
 margin_top = 57.0
-margin_right = 80.0
+margin_right = 84.0
 margin_bottom = 71.0
 text = "Spawn Time:"
 
 [node name="SpawnTime" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 84.0
+margin_left = 88.0
 margin_top = 52.0
-margin_right = 460.0
+margin_right = 462.0
 margin_bottom = 76.0
 alignment = 1
 __meta__ = {
@@ -553,63 +553,92 @@ __meta__ = {
 }
 
 [node name="H" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 57.0
-margin_right = 131.0
+margin_left = 56.0
+margin_right = 130.0
 margin_bottom = 24.0
 min_value = -1.0
 max_value = 23.0
 value = -1.0
 
 [node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 135.0
+margin_left = 134.0
 margin_top = 5.0
-margin_right = 147.0
+margin_right = 146.0
 margin_bottom = 19.0
 text = " : "
 
 [node name="M" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 151.0
-margin_right = 225.0
+margin_left = 150.0
+margin_right = 224.0
 margin_bottom = 24.0
 max_value = 59.0
 
 [node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 229.0
+margin_left = 228.0
 margin_top = 5.0
-margin_right = 241.0
+margin_right = 240.0
 margin_bottom = 19.0
 text = " : "
 
 [node name="S" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 245.0
-margin_right = 319.0
+margin_left = 244.0
+margin_right = 318.0
 margin_bottom = 24.0
 max_value = 59.0
 
 [node name="Label5" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 464.0
+margin_left = 466.0
 margin_top = 57.0
-margin_right = 628.0
+margin_right = 630.0
 margin_bottom = 71.0
 text = "Despawn Rail:"
 
 [node name="DespawnRail" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
-margin_left = 632.0
+margin_left = 634.0
 margin_top = 52.0
 margin_right = 1008.0
 margin_bottom = 76.0
 
-[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains"]
-margin_top = 248.0
+[node name="Label6" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_top = 85.0
+margin_right = 84.0
+margin_bottom = 99.0
+text = "Initial Speed:"
+
+[node name="InitialSpeed" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 88.0
+margin_top = 80.0
+margin_right = 462.0
+margin_bottom = 104.0
+max_value = 10000.0
+
+[node name="Label7" type="Label" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 466.0
+margin_top = 85.0
+margin_right = 630.0
+margin_bottom = 99.0
+text = "Inital SpeedLimit"
+
+[node name="InitialSpeedLimit" type="SpinBox" parent="Scenarios/Settings/Tab/Trains/GridContainer"]
+margin_left = 634.0
+margin_top = 80.0
 margin_right = 1008.0
-margin_bottom = 262.0
+margin_bottom = 104.0
+min_value = -1.0
+max_value = 10000.0
+value = -1.0
+
+[node name="Label2" type="Label" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 276.0
+margin_right = 1008.0
+margin_bottom = 290.0
 text = "Stations:"
 align = 1
 
 [node name="Stations" type="ScrollContainer" parent="Scenarios/Settings/Tab/Trains"]
-margin_top = 266.0
+margin_top = 294.0
 margin_right = 1008.0
-margin_bottom = 466.0
+margin_bottom = 494.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="Stations" type="GridContainer" parent="Scenarios/Settings/Tab/Trains/Stations"]
@@ -743,9 +772,9 @@ __meta__ = {
 }
 
 [node name="StationButtons" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
-margin_top = 470.0
+margin_top = 498.0
 margin_right = 1008.0
-margin_bottom = 490.0
+margin_bottom = 518.0
 
 [node name="Remove" type="Button" parent="Scenarios/Settings/Tab/Trains/StationButtons"]
 margin_right = 502.0
@@ -762,21 +791,21 @@ text = "Add Entry"
 
 [node name="SaveTrain" type="Button" parent="Scenarios/Settings/Tab/Trains"]
 margin_left = 466.0
-margin_top = 494.0
+margin_top = 522.0
 margin_right = 542.0
-margin_bottom = 514.0
+margin_bottom = 542.0
 size_flags_horizontal = 4
 text = "Save Train"
 
 [node name="HSeparator" type="HSeparator" parent="Scenarios"]
-margin_top = 732.0
+margin_top = 760.0
 margin_right = 1016.0
-margin_bottom = 736.0
+margin_bottom = 764.0
 
 [node name="Label2" type="Label" parent="Scenarios"]
-margin_top = 740.0
+margin_top = 768.0
 margin_right = 1016.0
-margin_bottom = 754.0
+margin_bottom = 782.0
 text = "World (Signals and Stations):"
 align = 1
 __meta__ = {
@@ -784,24 +813,24 @@ __meta__ = {
 }
 
 [node name="Write" type="Button" parent="Scenarios"]
-margin_top = 758.0
+margin_top = 786.0
 margin_right = 1016.0
-margin_bottom = 778.0
+margin_bottom = 806.0
 size_flags_horizontal = 3
 text = "Save current Signal Data to scenario"
 
 [node name="Load" type="Button" parent="Scenarios"]
-margin_top = 782.0
+margin_top = 810.0
 margin_right = 1016.0
-margin_bottom = 802.0
+margin_bottom = 830.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
 text = "Load Signal Data from current Scenario"
 
 [node name="ResetSignals" type="Button" parent="Scenarios"]
-margin_top = 806.0
+margin_top = 834.0
 margin_right = 1016.0
-margin_bottom = 826.0
+margin_bottom = 854.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
 text = "Reset Signal Data"
@@ -811,8 +840,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
-margin_right = -713.0
-margin_bottom = -438.0
+margin_right = -4.0
+margin_bottom = -4.0
 popup_exclusive = true
 window_title = "Open a File"
 mode = 0

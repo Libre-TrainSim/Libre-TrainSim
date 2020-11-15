@@ -264,6 +264,8 @@ func get_train_settings():
 	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = train["SpawnTime"][1]
 	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = train["SpawnTime"][2]
 	$Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text = train["DespawnRail"]
+	$Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeed.value = train.get("InitialSpeed", 0)
+	$Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value = train.get("InitialSpeedLimit", -1)
 	print("Train "+ currentTrain + " loaded.")
 
 func set_train_settings():
@@ -275,6 +277,8 @@ func set_train_settings():
 	train["DoorConfiguration"] = $Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected
 	train["SpawnTime"] = [$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value, $Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value, $Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value]
 	train["DespawnRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text
+	train["InitialSpeed"] = $Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeed.value
+	train["InitialSpeedLimit"] = $Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value
 	train["Stations"] = get_station_array()
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario):

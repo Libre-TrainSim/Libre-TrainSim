@@ -490,6 +490,10 @@ func spawnTrain(trainName):
 	player.stations = scenario["Trains"][trainName]["Stations"]
 	player.despawnRail = scenario["Trains"][trainName]["DespawnRail"]
 	player.ai = trainName != "Player"
+	player.speed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))
+	if scenario["Trains"][trainName].get("InitialSpeedLimit", -1) != -1:
+		player.speedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
+	
 	if trainName == "Player":
 		player.debug = debug
 		

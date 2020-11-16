@@ -193,18 +193,34 @@ func ready(): ## Called by World!
 		frontLight = true
 		
 	print("Train " + name + " spawned sucessfully at " + currentRail.name)
+	
+var processLongDelta = 0.5 # Definition of Period, every which seconds the function is called.
+func processLong(delta): ## All functions in it are called every (processLongDelta * 1 second).
+	updateNextSignal(delta)
+	updateNextSpeedLimit(delta)
+	updateNextStation(delta)
+	checkDespawn()
+	checkSpeedLimit(delta)
+	check_for_next_station(delta)
+	check_for_player_help(delta)
+	get_time()
+	checkFreeLastSignal(delta)
+	fixObsoleteStations()
+
+var processLongTimer = 0
 
 func _process(delta):
+	processLongTimer += delta
+	if processLongTimer > processLongDelta:
+		processLong(processLongTimer)
+		processLongTimer = 0
+	
 	if world == null:
 		return
 	
 	if Root.EasyMode and not ai:
 		check_user_autopilot()
-	
-	updateNextSignal(delta)
-	updateNextSpeedLimit(delta)
-	updateNextStation(delta)
-	
+
 	if automaticDriving:
 		autopilot(delta)
 	
@@ -220,11 +236,11 @@ func _process(delta):
 	
 	if despawning: 
 		queue_free()
-	checkDespawn()
+
 	if not ai:
 		handleCamera(delta)
 	
-	get_time()
+
 	
 	if electric:
 		check_pantograph(delta)
@@ -239,11 +255,9 @@ func _process(delta):
 	
 	check_station(delta)
 	
-	checkSpeedLimit(delta)
+	
 	
 	if not ai:
-		check_for_next_station(delta)
-		check_for_player_help(delta)
 		check_horn()
 	
 	if sifaEnabled:
@@ -253,10 +267,8 @@ func _process(delta):
 	
 	controlLights(delta)
 	
-	checkFreeLastSignal(delta)
-	
-#	var osTime1 = OS.get_ticks_msec()
-#	print(float(osTime1-osTime0))
+
+
 	
 func get_time():
 	time = world.time
@@ -525,7 +537,7 @@ func handle_signal(signalname):
 		lastDrivenSignal = signal
 	elif signal.type == "Station": ## Station
 		if not stations["nodeName"].has(signal.name):
-			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track...")
+			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...")
 			return
 		var index = stations["nodeName"].find(signal.name)
 		match stations["stopType"][index]:
@@ -578,7 +590,7 @@ func check_station(delta):
 			if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
 				send_message("Hint: You have to open the doors with 'i' or 'p', to arrive at the station.")
 				doorOpenMessageSent = true
-		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight)) or (stationBeginning and not isInStation):
+		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight or platformSide == 0)) or (stationBeginning and not isInStation):
 			realArrivalTime = time
 			var lateMessage = "."
 			if not stationBeginning:
@@ -1114,3 +1126,15 @@ func freeLastSignalBecauseOfDespawn():
 	if  lastDrivenSignal != null:
 		lastDrivenSignal.giveSignalFree()
 	
+func fixObsoleteStations(): ## Checks, if there are stations in the stations table, wich are not passed, but unreachable. For them it sets them to passed. Thats good for the Screen in the train.
+	for i in range(stations.nodeName.size()):
+		var stationNodeName = stations.nodeName[i]
+		var obsolete = true
+		for nextStationsNodeName in get_all_upcoming_signalPoints_of_types(["Station"]):
+			print(nextStationsNodeName + " " + stationNodeName)
+			if nextStationsNodeName == stationNodeName:
+					obsolete = false
+					break
+		if obsolete:
+			if not stationNodeName == currentStationName:
+				stations.passed[i] = true

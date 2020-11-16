@@ -147,7 +147,7 @@ func update_nextTable(delta):
 		else:
 			for i in range (0, stations.passed.size()):
 				
-				if stations.passed[i]: continue
+				if stations.passed[i] or stations.nodeName[i] != player.nextStation: continue
 				$IngameInformation/Next/GridContainer/Arrival.text = Math.time2String(player.stations["arrivalTime"][i])
 				$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance2String(player.distanceToNextStation)
 				

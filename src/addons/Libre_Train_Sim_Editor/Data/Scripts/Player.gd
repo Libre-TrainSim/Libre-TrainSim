@@ -117,6 +117,8 @@ var currentRail # Node Reference to the current Rail on which we are driving.
 var routeIndex = 0 # Index of the baked route Array.
 var startRail # Rail, on which the train is starting. Set by the scenario manger of the world
 
+# Reference delta at 60fps
+const refDelta = 0.0167 # 1.0 / 60
 
 
 
@@ -488,8 +490,9 @@ func handleCamera(delta):
 		if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if mouseMotion == null: return
-		cameraY += -mouseMotion.x * delta * mouseSensitivity
-		cameraX += +mouseMotion.y * delta * mouseSensitivity 
+		var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
+		cameraY += -mouseMotion.x * motionFactor
+		cameraX += +mouseMotion.y * motionFactor
 		if cameraX > 85: cameraX = 85
 		if cameraX < -85: cameraX = -85
 		var cameraVector = Vector3(cameraDistance, 0, 0)

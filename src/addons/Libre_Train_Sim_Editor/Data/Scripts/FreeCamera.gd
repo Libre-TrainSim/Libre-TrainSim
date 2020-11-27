@@ -1,6 +1,6 @@
 extends Camera
 
-export var flyspeed = 1
+export var flyspeed = 0.5
 export var mouseSensitivity = 10
 var yaw = 0
 var pitch = 0
@@ -52,12 +52,14 @@ func _process(delta):
 		self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(0,0,1) * deltaFlyspeed)
 	if(Input.is_key_pressed(KEY_S)):
 		self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(0,0,1) * -deltaFlyspeed)
-	if(Input.is_key_pressed(KEY_A)):
+	if(Input.is_key_pressed(KEY_A) and not Input.is_key_pressed(KEY_CONTROL)):
 		self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(1,0,0) * deltaFlyspeed)
 	if(Input.is_key_pressed(KEY_D)):
 		self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(1,0,0) * -deltaFlyspeed)
 	if(Input.is_key_pressed(KEY_SHIFT)):
-		self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(0,1,0) * -deltaFlyspeed)
-	if(Input.is_key_pressed(KEY_CONTROL)):
-		self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(0,1,0) * deltaFlyspeed)
+		flyspeed = 2
+	else:
+		flyspeed = 0.5
+
+	
 	

@@ -427,6 +427,7 @@ func updateWorldTransform_bchunk(deltachunk):
 		forest.translation += deltaTranslation
 	for to in $TrackObjects.get_children():
 		to.translation += deltaTranslation
+	
 		
 
 
@@ -515,14 +516,13 @@ func spawnTrain(trainName):
 
 var checkTrainSpawnTimer = 0
 func checkTrainSpawn(delta):
-	pass
-#	checkTrainSpawnTimer += delta
-#	if checkTrainSpawnTimer < 0.5: return
-#	checkTrainSpawnTimer = 0
-#	for i in range (0, pendingTrains["TrainName"].size()):
-#		var spawnTime =  pendingTrains["SpawnTime"][i]
-#		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
-#			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
-#			spawnTrain(pendingTrains["TrainName"][i])
+	checkTrainSpawnTimer += delta
+	if checkTrainSpawnTimer < 0.5: return
+	checkTrainSpawnTimer = 0
+	for i in range (0, pendingTrains["TrainName"].size()):
+		var spawnTime =  pendingTrains["SpawnTime"][i]
+		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
+			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
+			spawnTrain(pendingTrains["TrainName"][i])
 
 

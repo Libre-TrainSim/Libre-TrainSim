@@ -67,7 +67,7 @@ export (String) var author = ""
 export (String) var releaseDate = ""
 export (String) var screenshotPath = ""
 
-var cameraState = 0 ## 0: Free View 1: Cabin View, 2: Outer View
+var cameraState = 1 ## 0: Free View 1: Cabin View, 2: Outer View
 var cameraMidPoint = Vector3(0,2,0)
 var cameraY = 90
 var cameraX = 0
@@ -452,6 +452,10 @@ func change_to_next_rail():
 	if not ai:
 		print("Player: Changing Rail...")
 	routeIndex += 1
+	if baked_route.size() == routeIndex:
+		print(name + ": Route no more rail found, despawning me...")
+		despawn()
+		return
 	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
 	forward = baked_route_direction[routeIndex]
 
@@ -492,7 +496,7 @@ func handleCamera(delta):
 		cam.current = true
 		world.add_child(cam)
 		cam.owner = world
-		cam.transform = transform
+		cam.transform = transform.translated(cameraMidPoint)
 
 	if cameraState == 1: # Inner Position
 		## Camera x Position
@@ -1070,7 +1074,6 @@ func autopilot(delta):
 	sollSpeed = sollSpeedArr.values().min()
 	sollSpeedEnabled = true
 	
-	print(sollSpeedArr)
 
 	
 
@@ -1093,9 +1096,12 @@ func handleSollSpeed(delta):
 
 func checkDespawn():
 	if ai and currentRail.name == despawnRail:
-		freeLastSignalBecauseOfDespawn()
-		print("Despawning Train: " + name)
-		despawning = true
+		despawn()
+		
+func despawn():
+	freeLastSignalBecauseOfDespawn()
+	print("Despawning Train: " + name)
+	despawning = true
 
 var checkVisibilityTimer = 0
 func checkVisibility(delta):
@@ -1146,13 +1152,14 @@ func freeLastSignalBecauseOfDespawn():
 		lastDrivenSignal.giveSignalFree()
 	
 func fixObsoleteStations(): ## Checks, if there are stations in the stations table, wich are not passed, but unreachable. For them it sets them to passed. Thats good for the Screen in the train.
-	for i in range(stations.nodeName.size()):
-		var stationNodeName = stations.nodeName[i]
-		var obsolete = true
-		for nextStationsNodeName in get_all_upcoming_signalPoints_of_types(["Station"]):
-			if nextStationsNodeName == stationNodeName:
-					obsolete = false
-					break
-		if obsolete:
-			if not stationNodeName == currentStationName and stations.stopType[i] != 2:
-				stations.passed[i] = true
+	pass # doesn't work as expected..
+#	for i in range(stations.nodeName.size()):
+#		var stationNodeName = stations.nodeName[i]
+#		var obsolete = true
+#		for nextStationsNodeName in get_all_upcoming_signalPoints_of_types(["Station"]):
+#			if nextStationsNodeName == stationNodeName:
+#					obsolete = false
+#					break
+#		if obsolete:
+#			if not stationNodeName == currentStationName and stations.stopType[i] != 2:
+#				stations.passed[i] = true

@@ -80,7 +80,7 @@ func _on_OkTextBox_pressed():
 	get_tree().paused = false
 	$TextBox.visible = false
 	
-var modulation = 0.5
+var modulation = 0
 func check_trainInfo(delta):
 	if Input.is_action_just_pressed("trainInfo"):
 		modulation += 0.5

@@ -27,16 +27,16 @@ func _ready():
 
 func update_MainMenuMusic():
 	if config.get_value("Settings", "mainMenuMusic", true):
-		$Label_Music.show()
 		$MusicPlayer.play()
 	else:
-		$Label_Music.hide()
 		$MusicPlayer.stop()
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	load_scene(delta)
+	updateBottmLabels()
+	
 
 var foundTracks = []
 var foundContentPacks = []
@@ -50,13 +50,17 @@ func _on_Quit_pressed():
 	get_tree().quit()
 
 
+func updateBottmLabels():
+	$Label_Music.visible = $Front.visible and config.get_value("Settings", "mainMenuMusic", true)
+	$Version.visible = $Front.visible
+
 func _on_BackPlay_pressed():
 	$Play.hide()
 	$MenuBackground.hide()
 	$Feedback.show()
 	$Front.show()
 	$Version.show()
-	$Label_Music.show()
+
 	
 
 
@@ -67,7 +71,6 @@ func _on_PlayFront_pressed():
 	$Feedback.hide()
 	$Front.hide()
 	$Version.hide()
-	$Label_Music.hide()
 
 func _on_Content_pressed():
 	update_content()
@@ -324,3 +327,7 @@ func _on_Later_pressed():
 
 
 
+
+
+func _on_FrontCreate_pressed():
+	OS.shell_open("https://github.com/Jean28518/Libre-TrainSim/wiki/Building-Tracks-for-Libre-TrainSim---Official-Documentation")

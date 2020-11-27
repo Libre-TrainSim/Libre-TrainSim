@@ -12,7 +12,7 @@
 
 ## Editor
 
-- ### [0.7 BETA](https://www.server-jean.de/LibreTrainSim/0.7/LibreTrainSimEditor.zip)
+- ### [0.7](https://www.server-jean.de/LibreTrainSim/0.7/LibreTrainSimEditor.zip)
 
 ## How to Play
 

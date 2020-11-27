@@ -2,8 +2,7 @@
 
 ***
 
-
-# Welcome to Libre TrainSim
+![LibreTrainSimLogo](https://raw.githubusercontent.com/Jean28518/Libre-TrainSim/master/LibreTrainSimLogo.png)
 
 Train Simulator written in Godot Engine - Free for everyone. Licensed under GPL 3.0
 

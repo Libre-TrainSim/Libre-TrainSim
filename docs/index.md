@@ -10,6 +10,42 @@ This project is created by Jean28518 from germany in his free time, who is study
 
 ## News:
 
+### November 2020 - Release of 0.7
+
+The waiting has an end! Version 0.7 was just released. It took the developers +100 hours to develop this version, and we are very proud of it. Have fun!
+
+#### Significant Changes:
+
+- Trains are now rendered from outside
+- NPC-Trains - You are'nt alone anymore!
+- Tracks rewrited - pitched and tended rails are possible now
+- New Track: U2-Nuremberg
+- New Train: JFR1_Grey
+- Editor for creating content -> can be downloaded at https://libre-trainsim.de
+- Editor documentation
+- Tutorial videos for track builders (will be published in the next days)
+- Autopilot
+- Different camera views
+- More settings
+- Live track information
+- Improved HUD
+- Music in main menu
+- Train lights
+- Contact Points: Signals can now be changed by trains
+- Intelligent Signals: They automatically find the signal after themselves
+- Block Signals
+- Fixed a ton of bugs
+- many more...
+
+#### What comes next?
+
+That's a good question.. We are waiting first for feedback of 0.7, and then decide, what to develop further on. Some ideas are an ingame editor, better sound system, longer tracks, and multi language support.
+You can follow the newest progress here: https://github.com/Jean28518/Libre-TrainSim/projects/4
+
+#### Your Feedback is very important!
+
+Only if we know, what you like, and dislike, we can make Libre-TrainSim a better game.  So it would be great to fill in our newest feedback form: https://libre-trainsim.de/feedback
+
 ### October 2020
 
 Hello all! I hope you had a great summer! So the weather will get colder, and rainy, so I continued the development of Libre TrainSim.

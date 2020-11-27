@@ -490,7 +490,7 @@ func spawnTrain(trainName):
 	player.stations = scenario["Trains"][trainName]["Stations"]
 	player.despawnRail = scenario["Trains"][trainName]["DespawnRail"]
 	player.ai = trainName != "Player"
-	player.speed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))
+	player.initialSpeed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))
 	if scenario["Trains"][trainName].get("InitialSpeedLimit", -1) != -1:
 		player.speedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
 	
@@ -515,13 +515,14 @@ func spawnTrain(trainName):
 
 var checkTrainSpawnTimer = 0
 func checkTrainSpawn(delta):
-	checkTrainSpawnTimer += delta
-	if checkTrainSpawnTimer < 0.5: return
-	checkTrainSpawnTimer = 0
-	for i in range (0, pendingTrains["TrainName"].size()):
-		var spawnTime =  pendingTrains["SpawnTime"][i]
-		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
-			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
-			spawnTrain(pendingTrains["TrainName"][i])
+	pass
+#	checkTrainSpawnTimer += delta
+#	if checkTrainSpawnTimer < 0.5: return
+#	checkTrainSpawnTimer = 0
+#	for i in range (0, pendingTrains["TrainName"].size()):
+#		var spawnTime =  pendingTrains["SpawnTime"][i]
+#		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
+#			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
+#			spawnTrain(pendingTrains["TrainName"][i])
 
 

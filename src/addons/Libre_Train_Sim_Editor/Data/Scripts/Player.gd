@@ -93,6 +93,7 @@ var ai = false # It will be set by the scenario manger from world node.
 var despawnRail = "" ## If the AI Train reaches this Rail, he will despawn.
 var rendering = true
 var despawning = false
+var initialSpeed = -1 ## Set by the scenario manager form the world node. Only works for ai. When == -1, it will be ignored
 
 var frontLight = false
 var insideLight = false
@@ -206,6 +207,14 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 	get_time()
 	checkFreeLastSignal(delta)
 	fixObsoleteStations()
+	checkVisibility(delta)
+	if automaticDriving:
+		autopilot(delta)
+	if name == "npc3":
+		print(currentRail.name)
+		print(distanceOnRail)
+
+
 
 var processLongTimer = 0
 
@@ -221,8 +230,7 @@ func _process(delta):
 	if Root.EasyMode and not ai:
 		check_user_autopilot()
 
-	if automaticDriving:
-		autopilot(delta)
+	
 	
 	if sollSpeedEnabled:
 		handleSollSpeed(delta)
@@ -263,7 +271,7 @@ func _process(delta):
 	if sifaEnabled:
 		check_sifa(delta)
 	
-	checkVisibility(delta)
+	
 	
 	controlLights(delta)
 	
@@ -362,6 +370,10 @@ func getCommand(delta):
 	
 	
 func getSpeed(delta):
+	if initialSpeed != -1 and not enforcedBreaking and command > 0 and ai:
+		speed = initialSpeed
+		initialSpeed = -1
+		return
 	var lastspeed = speed
 	## Slope:
 	var currentSlope = currentRail.get_heightRot(distanceOnRail)
@@ -422,13 +434,16 @@ func drive(delta):
 
 func change_to_next_rail():
 	## Handle rest of signals
-	for signalname in signals.keys():
-		if forward and signalname != "":
-			handle_signal(signalname)
-			signals.erase(signalname)
-		if not forward and signalname != "":
-			handle_signal(signalname)
-			signals.erase(signalname)
+	if signals == null:
+		"Train " + name + ": change_to_next_rail(): signals is null!"
+	else:
+		for signalname in signals.keys():
+			if forward and signalname != "":
+				handle_signal(signalname)
+				signals.erase(signalname)
+			if not forward and signalname != "":
+				handle_signal(signalname)
+				signals.erase(signalname)
 	
 	if forward:
 		distanceOnRail -= currentRail.length
@@ -829,16 +844,12 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 		check_for_next_stationTimer = 0
 		if nextStation == "":
 			var nextStations = get_all_upcoming_signalPoints_of_types(["Station"])
-			print(name + ": "+String(nextStations))
+#			print(name + ": "+String(nextStations))
 			if nextStations.size() == 0:
 				stationMessageSent = true
 				return
 			nextStation = nextStations[0]
 			stationMessageSent = false
-		
-		
-		#var station = world.get_node("Signals").get_node(nextStation)
-		#print("The next station is: "+ stations["stationName"][stations["nodeName"].find(nextStation)]+ ". It is "+ String(int(get_distance_to_signal(nextStation))) + "m away.")
 		
 		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and stations["nodeName"].has(nextStation) and stations["stopType"][stations["nodeName"].find(nextStation)] != 0:
 			var station = world.get_node("Signals").get_node(nextStation)
@@ -929,7 +940,10 @@ func spawnWagons():
 		newWagon.distanceOnRail = nextWagonPosition
 		newWagon.player = self
 		newWagon.world = world
-		nextWagonPosition -= wagonNode.length + wagonDistance
+		if forward:
+			nextWagonPosition -= wagonNode.length + wagonDistance
+		else:
+			nextWagonPosition += wagonNode.length + wagonDistance
 		get_parent().add_child(newWagon)
 	
 
@@ -987,11 +1001,8 @@ func updateNextStation(delta):  ## Used for Autopilot
 			distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
 
 
-var autopilotTimer = 0
+
 func autopilot(delta):
-	autopilotTimer += delta
-	if autopilotTimer < 0.5: return
-	autopilotTimer = 0
 	debugLights(self)
 	if not pantographUp:
 		pantographUp = true
@@ -1001,6 +1012,8 @@ func autopilot(delta):
 	if (doorLeft or doorRight) and not doorsClosing:
 		doorsClosing = true
 		$Sound/DoorsClose.play()
+		
+	
 	
 	var sollSpeedArr = {}
 	
@@ -1022,13 +1035,13 @@ func autopilot(delta):
 	
 	if nextStationNode != null:
 		if stations["nodeName"].has(nextStationNode.name):
+
 			sollSpeedArr[2] = min(sqrt(15*distanceToNextStation+20), (distanceToNextStation+10)/4.0)
 			if sollSpeedArr[2] < 10:
 				sollSpeedArr[2] = 0
 		else:
 			nextStationNode = null
-#		if (currentStationName != "" and distance-distanceOnStationBeginning>=length):
-#			sollSpeedArr[2] = 0
+
 			
 	## Open Doors:
 	if (currentStationName != "" and speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length):
@@ -1046,12 +1059,16 @@ func autopilot(delta):
 	
 	sollSpeedArr[3] = currentSpeedLimit
 	
+
 #	print("0: "+ String(sollSpeedArr[0]))
 #	print("1: "+ String(sollSpeedArr[1]))
 #	print("2: "+ String(sollSpeedArr[2]))
 #	print("3: "+ String(sollSpeedArr[3]))
 	sollSpeed = sollSpeedArr.values().min()
 	sollSpeedEnabled = true
+	
+	print(sollSpeedArr)
+
 	
 
 	
@@ -1081,9 +1098,8 @@ var checkVisibilityTimer = 0
 func checkVisibility(delta):
 	checkVisibilityTimer += delta
 	if checkVisibilityTimer < 1: return
-#	checkSpeedLimitTimer = 0
 	if ai: 
-		var currentChunk = world.pos2Chunk(translation)
+		var currentChunk = world.pos2Chunk(world.getOriginalPos_bchunk(translation))
 		rendering = world.istChunks.has(world.chunk2String(currentChunk))
 		self.visible = rendering
 		wagonsVisible = rendering
@@ -1131,10 +1147,9 @@ func fixObsoleteStations(): ## Checks, if there are stations in the stations tab
 		var stationNodeName = stations.nodeName[i]
 		var obsolete = true
 		for nextStationsNodeName in get_all_upcoming_signalPoints_of_types(["Station"]):
-			print(nextStationsNodeName + " " + stationNodeName)
 			if nextStationsNodeName == stationNodeName:
 					obsolete = false
 					break
 		if obsolete:
-			if not stationNodeName == currentStationName:
+			if not stationNodeName == currentStationName and stations.stopType[i] != 2:
 				stations.passed[i] = true

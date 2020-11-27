@@ -32,19 +32,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$MeshInstance.show()
-
+	
 	if player == null or player.despawning: 
 		queue_free()
+	
+	$MeshInstance.show()
 	if get_parent().name != "Players": return
 	if distanceToPlayer == -1:
 		distanceToPlayer = abs(player.distanceOnRail - distanceOnRail)
 	speed = player.speed
 	visible = player.wagonsVisible
-	
-	if not  initialSet:
+	if not initialSet or not visible:
 		$MeshInstance.hide()
-	if speed != 0 or not initialSet:
+	if speed != 0 or not initialSet: 
 		drive(delta)
 		initialSet = true
 	check_doors()
@@ -70,8 +70,13 @@ func drive(delta):
 	if currentRail  == player.currentRail:
 		if player.forward:
 			distanceOnRail = player.distanceOnRail - distanceToPlayer
+			if distanceOnRail > currentRail.length:
+				change_to_next_rail()
 		else:
 			distanceOnRail = player.distanceOnRail + distanceToPlayer
+			if distanceOnRail < 0:
+				change_to_next_rail()
+		
 		
 	else: 
 		## Real Driving - Only used, if wagon isn't at the same rail as his player.
@@ -88,23 +93,6 @@ func drive(delta):
 			distance += drivenDistance
 			if distanceOnRail < 0:
 				change_to_next_rail()
-	if not visible: return
-	if forward:
-		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
-	else:
-		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
-		rotate_object_local(Vector3(0,1,0), deg2rad(180))
-
-#func change_to_next_rail():
-#	print("Changing Rail..")
-#	routeIndex += 1
-#	currentRail =  world.get_node("Rails").get_node(bakedRoute[routeIndex])
-#	forward = bakedRouteDirection[routeIndex]
-#
-#	if forward:
-#		distanceOnRail = 0
-#	else:
-#		distanceOnRail = currentRail.length
 
 func change_to_next_rail():
 	if forward:

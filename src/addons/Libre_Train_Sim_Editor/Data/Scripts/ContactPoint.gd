@@ -54,6 +54,7 @@ func set_scenario_data(d):
 	a.bySpecificTrain = b.bySpecificTrain
 	a.newStatus = b.newStatus
 	a.affectTime = b.affectTime
+	a.newSpeed = b.newSpeed
 	
 func get_scenario_data():
 	var a = {}
@@ -62,6 +63,7 @@ func get_scenario_data():
 	a.bySpecificTrain = b.bySpecificTrain
 	a.newStatus = b.newStatus
 	a.affectTime = b.affectTime
+	a.newSoeed = b.newSpeed
 	return a
 	
 func reset():

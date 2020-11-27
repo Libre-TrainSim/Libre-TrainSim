@@ -46,6 +46,8 @@ You can follow the newest progress here: https://github.com/Jean28518/Libre-Trai
 
 Only if we know, what you like, and dislike, we can make Libre-TrainSim a better game.  So it would be great to fill in our newest feedback form: https://libre-trainsim.de/feedback
 
+***
+
 ### October 2020
 
 Hello all! I hope you had a great summer! So the weather will get colder, and rainy, so I continued the development of Libre TrainSim.

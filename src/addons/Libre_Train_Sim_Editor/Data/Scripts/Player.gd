@@ -150,6 +150,7 @@ func ready(): ## Called by World!
 	
 	if not electric:
 		pantograph = true
+		voltage = 15
 	
 	if sifaEnabled:
 		$Sound/SiFa.play()
@@ -490,7 +491,7 @@ func handleCamera(delta):
 	if Input.is_action_just_pressed("FreeCamera"):
 		$Cabin.hide()
 		wagonsVisible = true
-		cameraState = 3
+		cameraState = 0
 		get_node("Camera").current = false
 		var cam = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn").instance()
 		cam.current = true

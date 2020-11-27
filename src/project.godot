@@ -18,7 +18,9 @@ _global_script_class_icons={
 config/name="Libre TrainSim"
 config/description="Train Simulator"
 run/main_scene="res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn"
-config/icon="res://LibreTrainSimLogo_Quad.png"
+boot_splash/image="res://LibreTrainSimLogo_Quad_128.png"
+boot_splash/fullsize=false
+config/icon="res://LibreTrainSimLogo_Quad_128.png"
 
 [autoload]
 

@@ -302,7 +302,7 @@ func _on_ItemList_Train_selected(index):
 func _on_ButtonFeedback_pressed():
 	config.set_value("Main", "feedbackPressed", true)
 	config.save(save_path)
-	OS.shell_open("https://github.com/Jean28518/Libre-TrainSim/wiki/Feedback")
+	OS.shell_open("https://libre-trainsim.de/feedback")
 	
 
 

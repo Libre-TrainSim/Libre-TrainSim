@@ -10,6 +10,10 @@ func _ready():
 	pass
 	
 func _process(delta):
+	if $TextBox.visible:
+		if Input.is_action_just_pressed("ui_accept"):
+			_on_OkTextBox_pressed()
+	
 	check_escape(delta)
 	
 	check_trainInfoAbove(delta)

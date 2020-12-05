@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Pantograph_1_T.obj-5a1944506ac3eb336975d64f23f060bf.mesh"
+
+[deps]
+
+files=[ "res://.import/Pantograph_1_T.obj-5a1944506ac3eb336975d64f23f060bf.mesh" ]
+
+source_file="res://Trains/JFR1/Pantograph_1_T.obj"
+dest_files=[ "res://.import/Pantograph_1_T.obj-5a1944506ac3eb336975d64f23f060bf.mesh", "res://.import/Pantograph_1_T.obj-5a1944506ac3eb336975d64f23f060bf.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

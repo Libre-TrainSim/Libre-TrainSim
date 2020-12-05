@@ -1,3 +1,7 @@
-src/Worlds/
-src/Trains/
+src/Worlds/*
+!src/Worlds/Tutorial/
+
+src/Trains/*
+!src/Trains/JFR1/
+
 src/.import/

@@ -25,14 +25,14 @@ align = 1
 [node name="Control" type="Control" parent="."]
 margin_top = 49.0
 margin_right = 970.0
-margin_bottom = 192.0
+margin_bottom = 194.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="."]
 margin_left = 400.0
-margin_top = 196.0
+margin_top = 198.0
 margin_right = 569.0
-margin_bottom = 360.0
+margin_bottom = 358.0
 size_flags_horizontal = 4
 columns = 2
 
@@ -91,25 +91,25 @@ value = 1000.0
 suffix = "m"
 
 [node name="Label4" type="Label" parent="GridContainer"]
-margin_top = 117.0
+margin_top = 115.0
 margin_right = 91.0
-margin_bottom = 131.0
+margin_bottom = 129.0
 text = "Anti Aliasing"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AntiAliasing" type="CheckBox" parent="GridContainer"]
-margin_left = 120.0
+[node name="AntiAliasing" type="OptionButton" parent="GridContainer"]
+margin_left = 117.0
 margin_top = 112.0
-margin_right = 144.0
-margin_bottom = 136.0
+margin_right = 146.0
+margin_bottom = 132.0
 size_flags_horizontal = 4
 
 [node name="Label5" type="Label" parent="GridContainer"]
-margin_top = 145.0
+margin_top = 141.0
 margin_right = 91.0
-margin_bottom = 159.0
+margin_bottom = 155.0
 text = "Fog"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -117,13 +117,13 @@ __meta__ = {
 
 [node name="Fog" type="CheckBox" parent="GridContainer"]
 margin_left = 120.0
-margin_top = 140.0
+margin_top = 136.0
 margin_right = 144.0
-margin_bottom = 164.0
+margin_bottom = 160.0
 size_flags_horizontal = 4
 
 [node name="Control2" type="Control" parent="."]
-margin_top = 364.0
+margin_top = 362.0
 margin_right = 970.0
 margin_bottom = 508.0
 size_flags_vertical = 3
@@ -144,6 +144,6 @@ text = "Back"
 [connection signal="pressed" from="GridContainer/MainMenuMusic" to="." method="_on_MainMenuMusic_pressed"]
 [connection signal="pressed" from="GridContainer/Shadows" to="." method="_on_Shadows_pressed"]
 [connection signal="value_changed" from="GridContainer/ViewDistance" to="." method="_on_ViewDistance_value_changed"]
-[connection signal="pressed" from="GridContainer/AntiAliasing" to="." method="_on_AntiAliasing_pressed"]
+[connection signal="item_selected" from="GridContainer/AntiAliasing" to="." method="_on_AntiAliasing_item_selected"]
 [connection signal="pressed" from="GridContainer/Fog" to="." method="_on_Fog_pressed"]
 [connection signal="pressed" from="Buttons/Back" to="." method="_on_Back_pressed"]

@@ -34,7 +34,7 @@ func basics(delta):
 			if player.pantograph:
 				next_step()
 		1:
-			message = "Great! To close the Doors, press 'o'.\n\nWhith 'i' you can open the left one,\nwith 'p' you open the right door."
+			message = "Great! To close the Doors, press 'o'.\n\nWith 'i' you can open the left one,\nwith 'p' you open the right door."
 			if  not (player.doorRight or player.doorLeft):
 				next_step()
 		2:
@@ -42,11 +42,11 @@ func basics(delta):
 			if player.currentStationName == "":
 				next_step()
 		3:
-			message = "Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."
+			message = "Let’s start! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."
 			if Math.speedToKmH(player.speed) > 20:
 				next_step()
 		4:
-			message = "Ahead you see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
+			message = "Ahead you can see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
 			if Math.speedToKmH(player.speed) == 0 and not player.overrunRedSignal:
 				world.get_node("Signals/Signal2").status = 1
 				next_step()
@@ -63,7 +63,7 @@ func basics(delta):
 			if player.speed == 0 and player.currentStationName == "Tutorialbach" and not player.wholeTrainNotInStation:
 				next_step()
 		8:
-			message = "Great, you arrived securly!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
+			message = "Great, you arrived securely!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
 			if player.isInStation:
 				next_step()
 		9:

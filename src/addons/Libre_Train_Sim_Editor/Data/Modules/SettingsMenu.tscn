@@ -19,7 +19,7 @@ __meta__ = {
 margin_right = 970.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 1 )
-text = "Settings:"
+text = "MENU_SETTINGS:"
 align = 1
 
 [node name="Control" type="Control" parent="."]
@@ -29,61 +29,61 @@ margin_bottom = 194.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="."]
-margin_left = 400.0
+margin_left = 372.0
 margin_top = 198.0
-margin_right = 569.0
+margin_right = 597.0
 margin_bottom = 358.0
 size_flags_horizontal = 4
 columns = 2
 
 [node name="Label" type="Label" parent="GridContainer"]
 margin_top = 5.0
-margin_right = 91.0
+margin_right = 147.0
 margin_bottom = 19.0
-text = "Fullscreen"
+text = "MENU_FULLSCREEN"
 
 [node name="Fullscreen" type="CheckBox" parent="GridContainer"]
-margin_left = 120.0
-margin_right = 144.0
+margin_left = 176.0
+margin_right = 200.0
 margin_bottom = 24.0
 size_flags_horizontal = 4
 
 [node name="Label6" type="Label" parent="GridContainer"]
 margin_top = 33.0
-margin_right = 91.0
+margin_right = 147.0
 margin_bottom = 47.0
-text = "Music"
+text = "MENU_MUSIC"
 
 [node name="MainMenuMusic" type="CheckBox" parent="GridContainer"]
-margin_left = 120.0
+margin_left = 176.0
 margin_top = 28.0
-margin_right = 144.0
+margin_right = 200.0
 margin_bottom = 52.0
 size_flags_horizontal = 4
 
 [node name="Label2" type="Label" parent="GridContainer"]
 margin_top = 61.0
-margin_right = 91.0
+margin_right = 147.0
 margin_bottom = 75.0
-text = "Shadows"
+text = "MENU_SHADOWS"
 
 [node name="Shadows" type="CheckBox" parent="GridContainer"]
-margin_left = 120.0
+margin_left = 176.0
 margin_top = 56.0
-margin_right = 144.0
+margin_right = 200.0
 margin_bottom = 80.0
 size_flags_horizontal = 4
 
 [node name="Label3" type="Label" parent="GridContainer"]
 margin_top = 89.0
-margin_right = 91.0
+margin_right = 147.0
 margin_bottom = 103.0
-text = "View-Distance"
+text = "MENU_VIEW_DISTANCE"
 
 [node name="ViewDistance" type="SpinBox" parent="GridContainer"]
-margin_left = 95.0
+margin_left = 151.0
 margin_top = 84.0
-margin_right = 169.0
+margin_right = 225.0
 margin_bottom = 108.0
 min_value = 250.0
 max_value = 1000.0
@@ -92,33 +92,33 @@ suffix = "m"
 
 [node name="Label4" type="Label" parent="GridContainer"]
 margin_top = 115.0
-margin_right = 91.0
+margin_right = 147.0
 margin_bottom = 129.0
-text = "Anti Aliasing"
+text = "MENU_ANTI_ALIASING"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AntiAliasing" type="OptionButton" parent="GridContainer"]
-margin_left = 117.0
+margin_left = 173.0
 margin_top = 112.0
-margin_right = 146.0
+margin_right = 202.0
 margin_bottom = 132.0
 size_flags_horizontal = 4
 
 [node name="Label5" type="Label" parent="GridContainer"]
 margin_top = 141.0
-margin_right = 91.0
+margin_right = 147.0
 margin_bottom = 155.0
-text = "Fog"
+text = "MENU_FOG"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Fog" type="CheckBox" parent="GridContainer"]
-margin_left = 120.0
+margin_left = 176.0
 margin_top = 136.0
-margin_right = 144.0
+margin_right = 200.0
 margin_bottom = 160.0
 size_flags_horizontal = 4
 
@@ -139,7 +139,7 @@ margin_bottom = 51.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
-text = "Back"
+text = "MENU_BACK"
 [connection signal="pressed" from="GridContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="GridContainer/MainMenuMusic" to="." method="_on_MainMenuMusic_pressed"]
 [connection signal="pressed" from="GridContainer/Shadows" to="." method="_on_Shadows_pressed"]

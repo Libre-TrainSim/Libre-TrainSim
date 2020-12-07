@@ -345,144 +345,6 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_RELOAD"
 
-[node name="Settings" parent="." instance=ExtResource( 7 )]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 25.0
-margin_top = 13.0
-margin_right = -29.0
-margin_bottom = -24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Settings"]
-margin_right = 970.0
-margin_bottom = 45.0
-custom_fonts/font = ExtResource( 5 )
-text = "MENU_SETTINGS:"
-align = 1
-
-[node name="Control" type="Control" parent="Settings"]
-margin_top = 49.0
-margin_right = 970.0
-margin_bottom = 192.0
-size_flags_vertical = 3
-
-[node name="GridContainer" type="GridContainer" parent="Settings"]
-margin_left = 372.0
-margin_top = 196.0
-margin_right = 597.0
-margin_bottom = 360.0
-size_flags_horizontal = 4
-columns = 2
-
-[node name="Label" type="Label" parent="Settings/GridContainer"]
-margin_top = 5.0
-margin_right = 147.0
-margin_bottom = 19.0
-text = "MENU_FULLSCREEN"
-
-[node name="Fullscreen" type="CheckBox" parent="Settings/GridContainer"]
-margin_left = 176.0
-margin_right = 200.0
-margin_bottom = 24.0
-size_flags_horizontal = 4
-
-[node name="Label6" type="Label" parent="Settings/GridContainer"]
-margin_top = 33.0
-margin_right = 147.0
-margin_bottom = 47.0
-text = "MENU_MUSIC"
-
-[node name="MainMenuMusic" type="CheckBox" parent="Settings/GridContainer"]
-margin_left = 176.0
-margin_top = 28.0
-margin_right = 200.0
-margin_bottom = 52.0
-size_flags_horizontal = 4
-
-[node name="Label2" type="Label" parent="Settings/GridContainer"]
-margin_top = 61.0
-margin_right = 147.0
-margin_bottom = 75.0
-text = "MENU_SHADOWS"
-
-[node name="Shadows" type="CheckBox" parent="Settings/GridContainer"]
-margin_left = 176.0
-margin_top = 56.0
-margin_right = 200.0
-margin_bottom = 80.0
-size_flags_horizontal = 4
-
-[node name="Label3" type="Label" parent="Settings/GridContainer"]
-margin_top = 89.0
-margin_right = 147.0
-margin_bottom = 103.0
-text = "MENU_VIEW_DISTANCE"
-
-[node name="ViewDistance" type="SpinBox" parent="Settings/GridContainer"]
-margin_left = 151.0
-margin_top = 84.0
-margin_right = 225.0
-margin_bottom = 108.0
-min_value = 250.0
-max_value = 1000.0
-value = 1000.0
-suffix = "m"
-
-[node name="Label4" type="Label" parent="Settings/GridContainer"]
-margin_top = 117.0
-margin_right = 147.0
-margin_bottom = 131.0
-text = "MENU_ANTI_ALIASING"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AntiAliasing" type="CheckBox" parent="Settings/GridContainer"]
-margin_left = 176.0
-margin_top = 112.0
-margin_right = 200.0
-margin_bottom = 136.0
-size_flags_horizontal = 4
-
-[node name="Label5" type="Label" parent="Settings/GridContainer"]
-margin_top = 145.0
-margin_right = 147.0
-margin_bottom = 159.0
-text = "MENU_FOG"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Fog" type="CheckBox" parent="Settings/GridContainer"]
-margin_left = 176.0
-margin_top = 140.0
-margin_right = 200.0
-margin_bottom = 164.0
-size_flags_horizontal = 4
-
-[node name="Control2" type="Control" parent="Settings"]
-margin_top = 364.0
-margin_right = 970.0
-margin_bottom = 508.0
-size_flags_vertical = 3
-
-[node name="Buttons" type="HBoxContainer" parent="Settings"]
-margin_top = 512.0
-margin_right = 970.0
-margin_bottom = 563.0
-
-[node name="Back" type="Button" parent="Settings/Buttons"]
-margin_right = 970.0
-margin_bottom = 51.0
-rect_min_size = Vector2( 200, 0 )
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 5 )
-text = "MENU_BACK"
-
 [node name="Loading" type="Label" parent="."]
 visible = false
 anchor_left = 1.0
@@ -524,6 +386,9 @@ text = "MENU_MUSIC:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Settings" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [node name="FeedBack" type="WindowDialog" parent="."]
 anchor_left = 0.5

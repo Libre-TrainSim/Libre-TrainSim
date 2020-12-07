@@ -3,6 +3,8 @@ extends Control
 var save_path
 var config
 
+var languageTable = {"en" : 0, "de" : 1}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	save_path = get_parent().save_path
@@ -14,6 +16,11 @@ func _ready():
 	$GridContainer/AntiAliasing.add_item("8x", Viewport.MSAA_8X)
 	$GridContainer/AntiAliasing.add_item("16x", Viewport.MSAA_16X)
 	$GridContainer/AntiAliasing.select(config.get_value("Settings", "antiAliasing", ProjectSettings.get_setting("rendering/quality/filters/msaa")))
+	
+	var language = TranslationServer.get_locale().rsplit("_")[0]
+	if language == null:
+		language = "en"
+	$GridContainer/Language.select(languageTable[language])
 	
 	$GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
 	$GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)
@@ -60,3 +67,9 @@ func _on_Back_pressed():
 
 
 
+
+
+func _on_Language_item_selected(index):
+	config.set_value("Settings", "language", $GridContainer/Language.get_item_text(index))
+	TranslationServer.set_locale($GridContainer/Language.get_item_text(index))
+	config.save(save_path)

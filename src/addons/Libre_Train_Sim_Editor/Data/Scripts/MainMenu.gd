@@ -22,6 +22,10 @@ func _ready():
 	if openTimes > 3 and not feedbackPressed:
 		$FeedBack.popup()
 	update_MainMenuMusic()
+	
+	var language = config.get_value("Settings", "language", "no_language")
+	if language != "no_language":
+		TranslationServer.set_locale(language)
 	pass # Replace with function body.
 
 

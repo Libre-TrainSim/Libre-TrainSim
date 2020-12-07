@@ -6,10 +6,10 @@
 [node name="Settings" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 25.0
-margin_top = 13.0
-margin_right = -29.0
-margin_bottom = -24.0
+margin_left = 23.2182
+margin_top = 14.7818
+margin_right = -30.7818
+margin_bottom = -22.2182
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -25,14 +25,14 @@ align = 1
 [node name="Control" type="Control" parent="."]
 margin_top = 49.0
 margin_right = 970.0
-margin_bottom = 194.0
+margin_bottom = 182.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="."]
 margin_left = 372.0
-margin_top = 198.0
+margin_top = 186.0
 margin_right = 597.0
-margin_bottom = 358.0
+margin_bottom = 370.0
 size_flags_horizontal = 4
 columns = 2
 
@@ -48,52 +48,70 @@ margin_right = 200.0
 margin_bottom = 24.0
 size_flags_horizontal = 4
 
-[node name="Label6" type="Label" parent="GridContainer"]
-margin_top = 33.0
+[node name="Label7" type="Label" parent="GridContainer"]
+margin_top = 31.0
 margin_right = 147.0
-margin_bottom = 47.0
+margin_bottom = 45.0
+text = "MENU_LANGUAGE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Language" type="OptionButton" parent="GridContainer"]
+margin_left = 151.0
+margin_top = 28.0
+margin_right = 225.0
+margin_bottom = 48.0
+text = "en"
+items = [ "en", null, false, 0, null, "de", null, false, 1, null ]
+selected = 0
+
+[node name="Label6" type="Label" parent="GridContainer"]
+margin_top = 57.0
+margin_right = 147.0
+margin_bottom = 71.0
 text = "MENU_MUSIC"
 
 [node name="MainMenuMusic" type="CheckBox" parent="GridContainer"]
 margin_left = 176.0
-margin_top = 28.0
+margin_top = 52.0
 margin_right = 200.0
-margin_bottom = 52.0
+margin_bottom = 76.0
 size_flags_horizontal = 4
 
 [node name="Label2" type="Label" parent="GridContainer"]
-margin_top = 61.0
+margin_top = 85.0
 margin_right = 147.0
-margin_bottom = 75.0
+margin_bottom = 99.0
 text = "MENU_SHADOWS"
 
 [node name="Shadows" type="CheckBox" parent="GridContainer"]
 margin_left = 176.0
-margin_top = 56.0
+margin_top = 80.0
 margin_right = 200.0
-margin_bottom = 80.0
+margin_bottom = 104.0
 size_flags_horizontal = 4
 
 [node name="Label3" type="Label" parent="GridContainer"]
-margin_top = 89.0
+margin_top = 113.0
 margin_right = 147.0
-margin_bottom = 103.0
+margin_bottom = 127.0
 text = "MENU_VIEW_DISTANCE"
 
 [node name="ViewDistance" type="SpinBox" parent="GridContainer"]
 margin_left = 151.0
-margin_top = 84.0
+margin_top = 108.0
 margin_right = 225.0
-margin_bottom = 108.0
+margin_bottom = 132.0
 min_value = 250.0
 max_value = 1000.0
 value = 1000.0
 suffix = "m"
 
 [node name="Label4" type="Label" parent="GridContainer"]
-margin_top = 115.0
+margin_top = 139.0
 margin_right = 147.0
-margin_bottom = 129.0
+margin_bottom = 153.0
 text = "MENU_ANTI_ALIASING"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -101,15 +119,15 @@ __meta__ = {
 
 [node name="AntiAliasing" type="OptionButton" parent="GridContainer"]
 margin_left = 173.0
-margin_top = 112.0
+margin_top = 136.0
 margin_right = 202.0
-margin_bottom = 132.0
+margin_bottom = 156.0
 size_flags_horizontal = 4
 
 [node name="Label5" type="Label" parent="GridContainer"]
-margin_top = 141.0
+margin_top = 165.0
 margin_right = 147.0
-margin_bottom = 155.0
+margin_bottom = 179.0
 text = "MENU_FOG"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -117,13 +135,13 @@ __meta__ = {
 
 [node name="Fog" type="CheckBox" parent="GridContainer"]
 margin_left = 176.0
-margin_top = 136.0
+margin_top = 160.0
 margin_right = 200.0
-margin_bottom = 160.0
+margin_bottom = 184.0
 size_flags_horizontal = 4
 
 [node name="Control2" type="Control" parent="."]
-margin_top = 362.0
+margin_top = 374.0
 margin_right = 970.0
 margin_bottom = 508.0
 size_flags_vertical = 3
@@ -141,6 +159,7 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
 text = "MENU_BACK"
 [connection signal="pressed" from="GridContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="item_selected" from="GridContainer/Language" to="." method="_on_Language_item_selected"]
 [connection signal="pressed" from="GridContainer/MainMenuMusic" to="." method="_on_MainMenuMusic_pressed"]
 [connection signal="pressed" from="GridContainer/Shadows" to="." method="_on_Shadows_pressed"]
 [connection signal="value_changed" from="GridContainer/ViewDistance" to="." method="_on_ViewDistance_value_changed"]

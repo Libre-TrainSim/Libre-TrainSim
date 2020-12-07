@@ -123,34 +123,34 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_right = 72.0
+margin_right = 71.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
-text = "Distance"
+text = "DISTANCE"
 align = 1
 
 [node name="Label3" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 76.0
-margin_right = 148.0
+margin_left = 75.0
+margin_right = 120.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
-text = "Type"
+text = "TYPE"
 align = 1
 
 [node name="Label2" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 152.0
-margin_right = 224.0
+margin_left = 124.0
+margin_right = 226.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
-text = "Info"
+text = "INFORMATION"
 align = 1
 
 [node name="DistanceToSignal" type="Label" parent="IngameInformation/Next/GridContainer"]
 margin_top = 32.0
-margin_right = 72.0
+margin_right = 71.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 0, 32 )
 custom_fonts/font = ExtResource( 9 )
@@ -159,24 +159,24 @@ align = 1
 valign = 1
 
 [node name="TextureRect" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 76.0
+margin_left = 75.0
 margin_top = 32.0
-margin_right = 148.0
+margin_right = 120.0
 margin_bottom = 64.0
 texture = ExtResource( 11 )
 stretch_mode = 4
 
 [node name="Signal" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 152.0
+margin_left = 124.0
 margin_top = 32.0
-margin_right = 224.0
+margin_right = 226.0
 margin_bottom = 64.0
 texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="DistanceToSpeedLimit" type="Label" parent="IngameInformation/Next/GridContainer"]
 margin_top = 68.0
-margin_right = 72.0
+margin_right = 71.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 32 )
 custom_fonts/font = ExtResource( 9 )
@@ -185,17 +185,17 @@ align = 1
 valign = 1
 
 [node name="TextureRect2" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 76.0
+margin_left = 75.0
 margin_top = 68.0
-margin_right = 148.0
+margin_right = 120.0
 margin_bottom = 100.0
 texture = ExtResource( 14 )
 stretch_mode = 4
 
 [node name="SpeedLimit" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 152.0
+margin_left = 124.0
 margin_top = 68.0
-margin_right = 224.0
+margin_right = 226.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 32 )
 custom_fonts/font = ExtResource( 9 )
@@ -205,7 +205,7 @@ valign = 1
 
 [node name="DistanceToStation" type="Label" parent="IngameInformation/Next/GridContainer"]
 margin_top = 104.0
-margin_right = 72.0
+margin_right = 71.0
 margin_bottom = 136.0
 rect_min_size = Vector2( 0, 32 )
 custom_fonts/font = ExtResource( 9 )
@@ -214,17 +214,17 @@ align = 1
 valign = 1
 
 [node name="TextureRect3" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 76.0
+margin_left = 75.0
 margin_top = 104.0
-margin_right = 148.0
+margin_right = 120.0
 margin_bottom = 136.0
 texture = ExtResource( 12 )
 stretch_mode = 4
 
 [node name="Arrival" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 152.0
+margin_left = 124.0
 margin_top = 107.0
-margin_right = 224.0
+margin_right = 226.0
 margin_bottom = 133.0
 custom_fonts/font = ExtResource( 9 )
 text = "-"
@@ -262,6 +262,9 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -40.0
 margin_right = 152.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="MarginContainer"]
 modulate = Color( 1, 1, 1, 0 )
@@ -330,7 +333,7 @@ margin_right = 50.0
 margin_bottom = 225.105
 rect_min_size = Vector2( 100, 36 )
 custom_fonts/font = ExtResource( 4 )
-text = "Ok"
+text = "OK"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -370,7 +373,7 @@ __meta__ = {
 margin_right = 214.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 4 )
-text = "Pause"
+text = "PAUSE"
 align = 1
 
 [node name="Back" type="Button" parent="Pause/HBox"]
@@ -378,21 +381,21 @@ margin_top = 34.0
 margin_right = 214.0
 margin_bottom = 70.0
 custom_fonts/font = ExtResource( 4 )
-text = "Back"
+text = "BACK"
 
 [node name="QuitMenu" type="Button" parent="Pause/HBox"]
 margin_top = 74.0
 margin_right = 214.0
 margin_bottom = 110.0
 custom_fonts/font = ExtResource( 4 )
-text = "Quit to Menu"
+text = "QUIT_TO_MENU"
 
 [node name="QuitOS" type="Button" parent="Pause/HBox"]
 margin_top = 114.0
 margin_right = 214.0
 margin_bottom = 150.0
 custom_fonts/font = ExtResource( 4 )
-text = "Quit to OS"
+text = "QUIT_TO_OS"
 [connection signal="pressed" from="TextBox/Ok" to="." method="_on_OkTextBox_pressed"]
 [connection signal="pressed" from="Pause/HBox/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="Pause/HBox/QuitMenu" to="." method="_on_QuitMenu_pressed"]

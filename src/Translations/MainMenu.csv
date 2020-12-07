@@ -1,0 +1,45 @@
+keys,en,de
+MENU_PLAY,Play,Spielen
+MENU_BACK,Back,Zurück
+MENU_CONTENT,Content,Inhalt
+MENU_CREATE,Create,Erstellen
+MENU_SETTINGS,Settings,Einstellungen
+MENU_QUIT,Quit,Beenden
+MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!
+MENU_RELOAD,Reload,Aktualisieren
+,,
+MENU_TRACKS:,Tracks:,Strecken:
+MENU_SCENARIOS:,Szenarios:,Szenarien:
+MENU_TRAIN:,Train:,Zug:
+,,
+MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:"
+MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete
+MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten."
+,,
+MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula
+,,
+MENU_SETTINGS:,Settings:,Einstellungen:
+MENU_FULLSCREEN,Fullscreen,Vollbild
+MENU_MUSIC,Music,Musik 
+MENU_SHADOWS,Shadows,Schatten
+MENU_VIEW_DISTANCE,View Distance,Sichtweite
+MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing
+MENU_FOG,Fog,Nebel
+,,
+MENU_AUTHOR,,
+,,
+MENU_LOADING,Loading…,Laden…
+,,
+MENU_LATER,Later,Später
+MENU_OPEN_BROWSER,Open in Webbrowser,Öffne in Webbrowser
+MENU_FEEDBACK_QUESTION,   Do you have 2 minutes left for answerng a quick survey?\n   You would help the project a lot!,  Haben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n   Es würde dem Projekt sehr helfen!
+,,
+MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you cant play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.
+MENU_AUTHOR,Author,Autor
+MENU_RELEASE,Release,Veröffentlichung
+MENU_DURATION,Duration,Dauer
+MENU_ELECTRIC,Electric,Elektrisch
+MENU_EASY_MODE,Easy Mode,Einfacher Modus
+,,
+YES,Yes,Ja
+NO,No,Nein

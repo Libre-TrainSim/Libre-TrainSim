@@ -552,7 +552,7 @@ func handle_signal(signalname):
 		if signal.warnSpeed != -1: 
 			pass
 		if signal.status == 0:
-			send_message("You overrun a red signal. The game is over!")
+			send_message(TranslationServer.translate("YOU_OVERRUN_RED_SIGNAL"))
 			overrunRedSignal = true
 		else:
 			freeLastSignalAfterDrivenTrainLength()
@@ -607,27 +607,29 @@ func check_station(delta):
 	if currentStationName != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation:
 			wholeTrainNotInStation = true
-			send_message("The End of your Train haven't already reached the Station. Please drive a bit forward, and try it again.")
+			send_message(TranslationServer.translate("END_OF_YOUR_TRAIN_NOT_IN_STATION"))
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and not (doorLeft or doorRight)):
 			doorOpenMessageSentTimer += delta
 			if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
-				send_message("Hint: You have to open the doors with 'i' or 'p', to arrive at the station.")
+				send_message(TranslationServer.translate("HINT_OPEN_DOORS"))
 				doorOpenMessageSent = true
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight or platformSide == 0)) or (stationBeginning and not isInStation):
 			realArrivalTime = time
-			var lateMessage = "."
+			var lateMessage = ". "
 			if not stationBeginning:
 				var secondsLater = -arrivalTime[2] + realArrivalTime[2] + (-arrivalTime[1] + realArrivalTime[1])*60 + (-arrivalTime[0] + realArrivalTime[0])*3600
-				if secondsLater > 60:
-					lateMessage = ". You are " + String(int(secondsLater/60)) + " minutes later." 
-			send_message("Welcome to " + currentStationName + lateMessage)
+				if secondsLater > 120:
+					lateMessage += TranslationServer.translate("YOU_ARE_LATE_1") + " " + String(int(secondsLater/60)) + " " + TranslationServer.translate("YOU_ARE_LATE_2_ONE_MINUTE")
+				elif secondsLater > 60:
+					lateMessage += TranslationServer.translate("YOU_ARE_LATE_1") + " " + String(int(secondsLater/60)) + " " + TranslationServer.translate("YOU_ARE_LATE_2")
+			send_message(TranslationServer.translate("WELCOME_TO") + " " + currentStationName + lateMessage)
 			stationTimer = 0
 			
 			isInStation = true
 		elif (speed == 0 and isInStation ) :
 			if stationTimer > stationHaltTime:
 				if endStation:
-					send_message("Scenario successfully finished!")
+					send_message(TranslationServer.translate("SCENARIO_FINISHED"))
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
 					currentStationName = ""
 					nextStation = ""
@@ -637,7 +639,7 @@ func check_station(delta):
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
 					nextStation = null
-					send_message("You can now depart")
+					send_message(TranslationServer.translate("YOU_CAN_DEPART"))
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
 					currentStationName = ""
 					nextStation = ""
@@ -645,9 +647,9 @@ func check_station(delta):
 					nextStationNode = null
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
-				send_message("You departed earlier than allowed! Please wait for the depart message next time!")
+				send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
 			else:
-				send_message("You missed a station! Please drive further on.")
+				send_message(TranslationServer.translate("YOU_MISSED_A_STATION"))
 			stations["passed"][stations["stationName"].find(currentStationName)] = true
 			currentStationName = ""
 			nextStation = ""
@@ -683,7 +685,7 @@ func checkSpeedLimit(delta):
 	hardOverSpeeding = Math.speedToKmH(speed) > currentSpeedLimit + 10
 	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
-		send_message("You are driving to fast! The current Limit is: "+String(currentSpeedLimit))
+		send_message( TranslationServer.translate("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
 	checkSpeedLimitTimer += delta
 
 	
@@ -862,7 +864,12 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and stations["nodeName"].has(nextStation) and stations["stopType"][stations["nodeName"].find(nextStation)] != 0:
 			var station = world.get_node("Signals").get_node(nextStation)
 			stationMessageSent = true
-			send_message("The next station is: "+ stations["stationName"][stations["nodeName"].find(nextStation)]+ ". It is "+ String(int(get_distance_to_signal(nextStation)/100)*100+100) + "m away.")
+			var distanceS = String(int(get_distance_to_signal(nextStation)/100)*100+100)
+			if distanceS == "1000":
+				distanceS = "1km"
+			else:
+				distanceS+= "m"
+			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
 		
 
 func check_security():#
@@ -878,17 +885,17 @@ func check_for_player_help(delta):
 	if not check_for_player_helpSent and speed == 0:
 		check_for_player_helpTimer += delta
 		if check_for_player_helpTimer > 8 and not pantographUp and not check_for_player_helpSent:
-			send_message("Hint: Problems with the train? Under 'F2' you can see what is wrong")
+			send_message(TranslationServer.translate("HINT_F2"))
 			check_for_player_helpSent = true
 		if check_for_player_helpTimer > 15 and command < -0.5 and not check_for_player_helpSent:
-			send_message("Hint: Problems with the train? Under 'F2' you can see what is wrong")
+			send_message(TranslationServer.translate("HINT_F2"))
 			check_for_player_helpSent = true
 	else:
 		check_for_player_helpTimer = 0
 	
 	check_for_player_helpTimer2 += delta
 	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and not (doorRight or doorLeft) and not overrunRedSignal and check_for_player_helpTimer2 > 10 and not isInStation:
-		send_message("Hint: Try to set the acceleration to zero with 's', and give speed (=acceleration) with 'w' again.")
+		send_message(TranslationServer.translate("HINT_ADVANCED_DRIVING"))
 		check_for_player_helpTimer2 = 0
 		
 

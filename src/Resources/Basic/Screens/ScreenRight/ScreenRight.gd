@@ -8,9 +8,12 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Table/Arrival/Label.text = " " + TranslationServer.translate("ARRIVAL:") + " "	
+	$Table/Departure/Label.text = " " + TranslationServer.translate("DEPARTURE:") + " "	
+	$Table/Station/Label.text = " " + TranslationServer.translate("STATION:") + " "	
 	pass # Replace with function body.
 
-func update_display(arrivals, departures, stationNames, stopTypes, passed, isInStation):	
+func update_display(arrivals, departures, stationNames, stopTypes, passed, isInStation):
 	$CurrentStation.visible = isInStation
 	var arrString = ""
 	var depString = ""
@@ -30,9 +33,9 @@ func update_display(arrivals, departures, stationNames, stopTypes, passed, isInS
 			
 		staString += stationNames[i] + "\n"
 	
-	$Arrival/Label2.text = arrString
-	$Departure/Label2.text = depString
-	$Station/Label2.text = staString
+	$Table/Arrival/Label2.text = arrString
+	$Table/Departure/Label2.text = depString
+	$Table/Station/Label2.text = staString
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

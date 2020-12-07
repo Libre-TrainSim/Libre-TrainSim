@@ -1,5 +1,6 @@
 src/Worlds/*
 !src/Worlds/Tutorial/
+!src/Worlds/Tutorials/
 
 src/Trains/*
 !src/Trains/JFR1/

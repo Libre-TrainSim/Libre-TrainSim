@@ -10,11 +10,11 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/SpeedLimit.png" type="Texture" id=8]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=9]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 80
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 45
 font_data = ExtResource( 9 )
 
@@ -33,7 +33,7 @@ margin_left = 272.67
 margin_top = 380.005
 margin_right = 453.67
 margin_bottom = 500.005
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "100"
 align = 1
 __meta__ = {
@@ -45,7 +45,7 @@ margin_left = 588.367
 margin_top = 19.8775
 margin_right = 738.367
 margin_bottom = 86.8775
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "12:00:00"
 align = 1
 __meta__ = {
@@ -101,7 +101,7 @@ margin_bottom = 53.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
-text = "Enforced Breaking"
+text = "ENFORCED_BREAKING"
 align = 1
 valign = 1
 __meta__ = {
@@ -125,7 +125,7 @@ margin_bottom = 55.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
-text = "SiFa"
+text = "SIFA"
 align = 1
 valign = 1
 __meta__ = {
@@ -147,11 +147,11 @@ __meta__ = {
 modulate = Color( 0, 0, 0, 1 )
 margin_left = 55.0
 margin_right = 465.0
-margin_bottom = 55.0
+margin_bottom = 54.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
-text = "Automatic Driving"
+text = "AUTOMATIC_DRIVING"
 align = 1
 valign = 1
 __meta__ = {

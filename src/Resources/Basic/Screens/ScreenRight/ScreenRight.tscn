@@ -23,67 +23,78 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Arrival" type="VBoxContainer" parent="."]
-margin_right = 200.0
-margin_bottom = 184.0
+[node name="Table" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1005.0
+margin_bottom = 800.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Arrival"]
-margin_right = 200.0
-margin_bottom = 90.0
-custom_fonts/font = ExtResource( 1 )
-text = "Arrival:"
-align = 1
-
-[node name="Label2" type="Label" parent="Arrival"]
-margin_top = 94.0
-margin_right = 200.0
-margin_bottom = 184.0
-custom_fonts/font = ExtResource( 1 )
-align = 1
-
-[node name="Departure" type="VBoxContainer" parent="."]
-margin_left = 200.0
-margin_right = 450.0
-margin_bottom = 214.0
+[node name="Arrival" type="VBoxContainer" parent="Table"]
+margin_right = 203.0
+margin_bottom = 800.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Departure"]
-margin_right = 250.0
+[node name="Label" type="Label" parent="Table/Arrival"]
+margin_right = 203.0
 margin_bottom = 90.0
 custom_fonts/font = ExtResource( 1 )
-text = "Departure:"
+text = "ARRIVAL:"
 align = 1
 
-[node name="Label2" type="Label" parent="Departure"]
+[node name="Label2" type="Label" parent="Table/Arrival"]
 margin_top = 94.0
-margin_right = 250.0
+margin_right = 203.0
 margin_bottom = 184.0
 custom_fonts/font = ExtResource( 1 )
 align = 1
 
-[node name="Station" type="VBoxContainer" parent="."]
-margin_left = 470.0
-margin_right = 1000.0
-margin_bottom = 214.0
+[node name="Departure" type="VBoxContainer" parent="Table"]
+margin_left = 207.0
+margin_right = 478.0
+margin_bottom = 800.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Table/Departure"]
+margin_right = 271.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 1 )
+text = "DEPARTURE:"
+align = 1
+
+[node name="Label2" type="Label" parent="Table/Departure"]
+margin_top = 94.0
+margin_right = 271.0
+margin_bottom = 184.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
+
+[node name="Station" type="VBoxContainer" parent="Table"]
+margin_left = 482.0
+margin_right = 1005.0
+margin_bottom = 800.0
 rect_clip_content = true
+size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Station"]
-margin_right = 530.0
+[node name="Label" type="Label" parent="Table/Station"]
+margin_right = 523.0
 margin_bottom = 90.0
 custom_fonts/font = ExtResource( 1 )
-text = "Station:"
+text = "STATION:"
 align = 1
 
-[node name="Label2" type="Label" parent="Station"]
+[node name="Label2" type="Label" parent="Table/Station"]
 margin_top = 94.0
-margin_right = 530.0
+margin_right = 523.0
 margin_bottom = 184.0
 custom_fonts/font = ExtResource( 1 )
+align = 1

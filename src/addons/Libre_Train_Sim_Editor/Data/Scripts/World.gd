@@ -13,14 +13,15 @@ var globalDict = {} ## Used, if some nodes need to communicate globally. Modders
 var currentScenario = ""
 
 export (String) var FileName = "Name Me!"
+onready var trackName = FileName.rsplit("/")[0]
 export var debug = false
 var chunkSize = 1000
 
 var createChunksAndSaveWorld = false setget save_world
 
-var save_path = "res://Worlds/" + FileName + ".cfg"
+var save_path
 var config = ConfigFile.new()
-var load_response = config.load(save_path)
+var load_response
 
 var allChunks = []
 var istChunks = []
@@ -40,14 +41,19 @@ var player
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
+	if trackName == null:
+		trackName = FileName
+	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
+	load_response = config.load(save_path)
 	if Engine.editor_hint:
 		return
 		# Code to execute in editor.
 	if not Engine.editor_hint:
 		Root.world = self
+		Root.checkAndLoadTranslationsForTrack(trackName)
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
-		save_path = "res://Worlds/" + FileName + ".cfg"
+		save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
 		config = ConfigFile.new()
 		load_response = config.load(save_path)
 		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
@@ -315,7 +321,7 @@ func load_chunk(position):
 
 
 func save_world(newvar):
-	save_path = "res://Worlds/" + FileName + ".cfg"
+	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
 	config = ConfigFile.new()
 	load_response = config.load(save_path)
 	allChunks = []
@@ -444,7 +450,7 @@ func get_signal_data_for_scenario():
 	return signals
 	
 func set_scenario_to_world():
-	var Ssave_path = "res://Worlds/" + FileName + "-scenarios.cfg"
+	var Ssave_path = "res://Worlds/" + trackName + "/" + trackName + "-scenarios.cfg"
 	var sConfig = ConfigFile.new()
 	var load_response = sConfig.load(Ssave_path)
 	var sData = sConfig.get_value("Scenarios", "sData", {})
@@ -460,14 +466,14 @@ func set_scenario_to_world():
 	## SPAWN TRAINS:
 	for train in scenario["Trains"].keys():
 		spawnTrain(train)
-	$Players/Player.show_textbox_message(scenario["Description"])
+	$Players/Player.show_textbox_message(TranslationServer.translate(scenario["Description"]))
 
 
 func spawnTrain(trainName):
 	if $Players.has_node(trainName):
 		print("Train is already loaded! - Abortet loading...")
 		return
-	var Ssave_path = "res://Worlds/" + FileName + "-scenarios.cfg"
+	var Ssave_path = "res://Worlds/" + trackName + "/" + trackName + "-scenarios.cfg"
 	var sConfig = ConfigFile.new()
 	var load_response = sConfig.load(Ssave_path)
 	var sData = sConfig.get_value("Scenarios", "sData", {})
@@ -524,5 +530,7 @@ func checkTrainSpawn(delta):
 		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
 			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
 			spawnTrain(pendingTrains["TrainName"][i])
+
+
 
 

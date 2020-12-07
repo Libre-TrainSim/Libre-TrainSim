@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/screenshot.png-eef2f48e6d3675171fca4680a15205bf.stex"
+path="res://.import/screenshot.png-c1406f3626b290509681dc6007e54b39.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Worlds/Tutorial/screenshot.png"
-dest_files=[ "res://.import/screenshot.png-eef2f48e6d3675171fca4680a15205bf.stex" ]
+source_file="res://Worlds/Tutorials/screenshot.png"
+dest_files=[ "res://.import/screenshot.png-c1406f3626b290509681dc6007e54b39.stex" ]
 
 [params]
 

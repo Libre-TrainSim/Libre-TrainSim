@@ -21,10 +21,10 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -416.0
-margin_top = 15.4327
-margin_right = 394.0
-margin_bottom = 583.433
+margin_left = -423.101
+margin_top = 16.379
+margin_right = 460.899
+margin_bottom = 584.379
 color = Color( 0.0352941, 0.0823529, 0.196078, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -33,10 +33,10 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -391.0
-margin_top = 15.4327
-margin_right = 375.0
-margin_bottom = 565.433
+margin_left = -383.0
+margin_top = 23.0
+margin_right = 383.0
+margin_bottom = 573.0
 rect_clip_content = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -47,19 +47,19 @@ margin_right = 766.0
 margin_bottom = 45.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HeadLine"]
-margin_right = 529.0
+margin_right = 612.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
-text = "Train Information:"
+text = "TRAIN_INFORMATION"
 
 [node name="Label2" type="Label" parent="VBoxContainer/HeadLine"]
-margin_left = 533.0
+margin_left = 616.0
 margin_top = 7.0
 margin_right = 766.0
 margin_bottom = 37.0
 custom_fonts/font = ExtResource( 2 )
-text = "(Press 'F2' to close this window)"
+text = "PRESS_F2_TO_CLOSE"
 
 [node name="Pantograpgh" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 49.0
@@ -73,10 +73,10 @@ texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Pantograpgh"]
 margin_left = 34.0
-margin_right = 368.0
+margin_right = 229.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 2 )
-text = "Pantograph (press 'b' and wait a few seconds)"
+text = "TRAIN_INFO_PANTOGRAPH"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,7 +97,7 @@ margin_right = 766.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "SiFa (every 30 seconds you have to press 'space')"
+text = "TRAIN_INFO_SIFA"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -119,7 +119,7 @@ margin_right = 766.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Enforced Breaking: (check pantograpgh, red signal, speed limit, SiFa"
+text = "TRAIN_INFO_ENFORCED_BREAKING"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -137,10 +137,10 @@ texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Brakes-0"]
 margin_left = 34.0
-margin_right = 457.0
+margin_right = 199.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 2 )
-text = "Brakes: (release with left arrow; check Enforced Breaking)"
+text = "TRAIN_INFO_BRAKES_1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -157,10 +157,10 @@ texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Brakes-1"]
 margin_left = 34.0
-margin_right = 506.0
+margin_right = 201.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 2 )
-text = "Brakes: (release with 'a', apply with 'd', check Enforced Breaking)"
+text = "TRAIN_INFO_BRAKES_2"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -177,10 +177,10 @@ texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Doors"]
 margin_left = 34.0
-margin_right = 451.0
+margin_right = 179.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 2 )
-text = "Doors (close with 'o', open right with 'p', open left with 'i\""
+text = "TRAIN_INFO_DOORS"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -188,60 +188,60 @@ __meta__ = {
 [node name="Acceleration-0" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 253.0
 margin_right = 766.0
-margin_bottom = 316.0
+margin_bottom = 283.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Acceleration-0"]
 margin_right = 30.0
-margin_bottom = 63.0
+margin_bottom = 30.0
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Acceleration-0"]
 margin_left = 34.0
 margin_right = 766.0
-margin_bottom = 63.0
+margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Acceleration: (apply with up arrow key, left arrow key; release with left arrow key or down arrow key; check doors)"
+text = "TRAIN_INFO_ACCELERATION_1"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Acceleration-1" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 320.0
+margin_top = 287.0
 margin_right = 766.0
-margin_bottom = 383.0
+margin_bottom = 317.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Acceleration-1"]
 margin_right = 30.0
-margin_bottom = 63.0
+margin_bottom = 30.0
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="VBoxContainer/Acceleration-1"]
 margin_left = 34.0
 margin_right = 766.0
-margin_bottom = 63.0
+margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Acceleration: (apply with 'w'; release with 's'; check brakes; check brakes, doors) (try with releasing full acceleration first/setting acceleration to zero)"
+text = "TRAIN_INFO_ACCELERATION_2"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect2" type="ColorRect" parent="VBoxContainer"]
-margin_top = 387.0
+margin_top = 321.0
 margin_right = 766.0
-margin_bottom = 390.0
+margin_bottom = 324.0
 rect_min_size = Vector2( 0, 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Horn" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 394.0
+margin_top = 328.0
 margin_right = 766.0
-margin_bottom = 424.0
+margin_bottom = 358.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Horn"]
 margin_right = 30.0
@@ -254,16 +254,16 @@ margin_right = 766.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Horn (Press 'h')"
+text = "TRAIN_INFO_HORN"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="FrontLight" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 428.0
+margin_top = 362.0
 margin_right = 766.0
-margin_bottom = 458.0
+margin_bottom = 392.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/FrontLight"]
 margin_right = 30.0
@@ -276,16 +276,16 @@ margin_right = 766.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Front Light (Press 'L')"
+text = "TRAIN_INFO_FRONT_LIGHT"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="InsideLight" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 462.0
+margin_top = 396.0
 margin_right = 766.0
-margin_bottom = 492.0
+margin_bottom = 426.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/InsideLight"]
 margin_right = 30.0
@@ -298,16 +298,16 @@ margin_right = 766.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Cabin Light (Press 'ctrl + L')"
+text = "TRAIN_INFO_CABIN_LIGHT"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Autopilot" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 496.0
+margin_top = 430.0
 margin_right = 766.0
-margin_bottom = 526.0
+margin_bottom = 460.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Autopilot"]
 margin_right = 30.0
@@ -320,7 +320,7 @@ margin_right = 766.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Autopilot (Press 'Ctrl a')"
+text = "TRAIN_INFO_AUTOPILOT"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false

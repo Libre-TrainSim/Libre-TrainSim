@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://Trains/JFR1/JFR1.en.translation", "res://Trains/JFR1/JFR1.de.translation" ]
+
+source_file="res://Trains/JFR1/JFR1.csv"
+dest_files=[ "res://Trains/JFR1/JFR1.en.translation", "res://Trains/JFR1/JFR1.de.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

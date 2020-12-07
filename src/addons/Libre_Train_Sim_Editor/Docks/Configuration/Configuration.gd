@@ -19,7 +19,7 @@ func get_all_scenarios():
 func get_world_config():
 	if world == null or world.name != "World":
 		return null
-	var FileName = world.FileName
+	var FileName = world.trackName + "/" + world.trackName
 	save_path = "res://Worlds/" + FileName + "-scenarios.cfg"
 	config = ConfigFile.new()
 	var load_response = config.load(save_path)

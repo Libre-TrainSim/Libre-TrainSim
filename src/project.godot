@@ -151,6 +151,14 @@ nextTable={
  ]
 }
 
+[locale]
+
+translations=PoolStringArray( "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.de.translation" )
+locale_filter=[ 0, [ "de", "en" ] ]
+translation_remaps={
+
+}
+
 [rendering]
 
 threads/thread_model=2

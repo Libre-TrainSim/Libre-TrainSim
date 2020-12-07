@@ -158,6 +158,7 @@ func load_scene(delta):
 
 func _on_ItemList_itemTracks_selected(index):
 	currentTrack = foundTracks[index]
+	Root.checkAndLoadTranslationsForTrack(currentTrack.get_file().get_basename())
 	currentScenario = ""
 	var save_path = foundTracks[index].get_basename() + "-scenarios.cfg"
 	var config = ConfigFile.new()
@@ -166,12 +167,12 @@ func _on_ItemList_itemTracks_selected(index):
 	var wData = config.get_value("WorldConfig", "Data", null)
 	if wData == null: 
 		print(save_path)
-		$Play/Info/Description.text = "No Scenario data could be found. This Track is obsolete. Sadly you cant play it."
+		$Play/Info/Description.text = TranslationServer.translate("MENU_NO_SCENARIO_FOUND")
 		$Play/Selection/Scenarios.hide()
 		return
-	$Play/Info/Description.text = wData["TrackDesciption"]
-	$Play/Info/Info/Author.text = " Author: "+ wData["Author"] + " "
-	$Play/Info/Info/ReleaseDate.text = " Release: " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
+	$Play/Info/Description.text = TranslationServer.translate(wData["TrackDesciption"])
+	$Play/Info/Info/Author.text = " "+ TranslationServer.translate("MENU_AUTHOR") + ": " + wData["Author"] + " "
+	$Play/Info/Info/ReleaseDate.text = " "+ TranslationServer.translate("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
 	$Play/Info/Screenshot.texture = load(wData["ThumbnailPath"])
 	
 	$Play/Selection/Scenarios.show()
@@ -184,7 +185,7 @@ func _on_ItemList_itemTracks_selected(index):
 
 ## Content Page:
 func update_content():
-	$Content/Label.text = "To add content you have to place .pck files at " + OS.get_executable_path().get_base_dir()
+	$Content/Label.text = TranslationServer.translate("MENU_TO_ADD_CONTENT") + " " + OS.get_executable_path().get_base_dir()
 	$Content/ItemList.clear()
 	for contentPack in foundContentPacks:
 		$Content/ItemList.add_item(contentPack)
@@ -258,8 +259,8 @@ func _on_ItemList_scenario_selected(index):
 	var config = ConfigFile.new()
 	var load_response = config.load(save_path)
 	var sData = config.get_value("Scenarios", "sData", {})
-	$Play/Info/Description.text = sData[currentScenario]["Description"]
-	$Play/Info/Info/Duration.text = "Duration: " + String(sData[currentScenario]["Duration"]) + " min"
+	$Play/Info/Description.text = TranslationServer.translate(sData[currentScenario]["Description"])
+	$Play/Info/Info/Duration.text = TranslationServer.translate("MENU_DURATION")+": " + String(sData[currentScenario]["Duration"]) + " min"
 	$Play/Selection/Trains.show()
 	$Play/Info/Info/EasyMode.hide()
 	update_train_list()
@@ -283,17 +284,18 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 
 func _on_ItemList_Train_selected(index):
 	currentTrain = foundTrains[index]
+	Root.checkAndLoadTranslationsForTrain(currentTrain.get_base_dir())
 	var train = load(currentTrain).instance()
 	currentTrain = foundTrains[index]
 	print("Current Train: "+currentTrain)
-	$Play/Info/Description.text = train.description
-	$Play/Info/Info/ReleaseDate.text = "Release Date: "+ train.releaseDate
-	$Play/Info/Info/Author.text = "Author: "+ train.author
+	$Play/Info/Description.text = TranslationServer.translate(train.description)
+	$Play/Info/Info/ReleaseDate.text = TranslationServer.translate("MENU_RELEASE")+": "+ train.releaseDate
+	$Play/Info/Info/Author.text = TranslationServer.translate("MENU_AUTHOR")+": "+ train.author
 	$Play/Info/Screenshot.texture = load(train.screenshotPath)#
-	var electric = "yes"
+	var electric = TranslationServer.translate("YES")
 	if not train.electric:
-		electric = "no"
-	$Play/Info/Info/Duration.text = "Electric: " + electric
+		electric = TranslationServer.translate("NO")
+	$Play/Info/Info/Duration.text = TranslationServer.translate("MENU_ELECTRIC")+ ": " + electric
 	$Play/Info/Info/EasyMode.show()
 	train.queue_free()
 	
@@ -331,3 +333,5 @@ func _on_Later_pressed():
 
 func _on_FrontCreate_pressed():
 	OS.shell_open("https://github.com/Jean28518/Libre-TrainSim/wiki/Building-Tracks-for-Libre-TrainSim---Official-Documentation")
+
+

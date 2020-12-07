@@ -62,7 +62,6 @@ margin_left = 151.0
 margin_top = 28.0
 margin_right = 225.0
 margin_bottom = 48.0
-selected = 0
 
 [node name="Label6" type="Label" parent="GridContainer"]
 margin_top = 57.0

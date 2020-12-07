@@ -6,3 +6,5 @@ src/Trains/*
 !src/Trains/JFR1/
 
 src/.import/
+*.csv.import
+*.translation

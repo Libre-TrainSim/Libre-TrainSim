@@ -14,9 +14,13 @@
 
 - ### [0.7](https://www.server-jean.de/LibreTrainSim/0.7/LibreTrainSimEditor.zip)
 
-## How to Play
+## Tracks
 
-Extract the .zip file and run the executable.
+| Track        | Author           | Description | Download  |
+| :---: |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
 
 ***
 

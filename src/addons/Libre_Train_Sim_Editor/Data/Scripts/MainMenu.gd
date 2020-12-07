@@ -78,15 +78,10 @@ func _on_Content_pressed():
 	$MenuBackground.show()
 	$Content.show()
 
-func _on_SettingsFrong_pressed():
+func _on_SettingsFront_pressed():
 	$Front.hide()
 	$MenuBackground.show()
 	$Settings.show()
-	update_settings()
-	pass # Replace with function body.
-	
-
-
 
 func update_config():
 	## Get All .pck files:
@@ -200,57 +195,6 @@ func _on_BackContent_pressed():
 func _on_ReloadContent_pressed():
 	update_config()
 	update_content()
-
-
-
-
-## Settings:
-func _on_FullscreenSettings_pressed():
-	config.set_value("Settings", "fullscreen", $Settings/GridContainer/Fullscreen.pressed)
-	config.save(save_path)
-	OS.window_fullscreen = $Settings/GridContainer/Fullscreen.pressed
-	
-func _on_SettingsShadows_pressed():
-	config.set_value("Settings", "shadows", $Settings/GridContainer/Shadows.pressed)
-	config.save(save_path)
-
-func _on_SettingsViewDistance_value_changed(value):
-	config.set_value("Settings", "viewDistance", $Settings/GridContainer/ViewDistance.value)
-	config.save(save_path)
-
-
-func _on_SettingsAntiAlasing_pressed():
-	config.set_value("Settings", "antiAliasing", $Settings/GridContainer/AntiAliasing.pressed)
-	config.save(save_path)
-
-func _on_SettingsFog_pressed():
-	config.set_value("Settings", "fog", $Settings/GridContainer/Fog.pressed)
-	config.save(save_path)
-
-func _on_SettingsMainMenuMusic_pressed():
-	config.set_value("Settings", "mainMenuMusic", $Settings/GridContainer/MainMenuMusic.pressed)
-	config.save(save_path)
-	update_MainMenuMusic()
-
-func update_settings():
-	$Settings/GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
-	$Settings/GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)
-	$Settings/GridContainer/ViewDistance.value = config.get_value("Settings", "viewDistance", 1000)
-	$Settings/GridContainer/AntiAliasing.pressed = config.get_value("Settings", "antiAliasing", true)
-	$Settings/GridContainer/Fog.pressed = config.get_value("Settings", "fog", true)
-	$Settings/GridContainer/MainMenuMusic.pressed = config.get_value("Settings", "mainMenuMusic", true)
-
-	
-	
-
-
-func _on_BackSettings_pressed():
-	$Settings.hide()
-	$MenuBackground.hide()
-	$Front.show()
-	
-
-
 
 
 func _on_ItemList_scenario_selected(index):

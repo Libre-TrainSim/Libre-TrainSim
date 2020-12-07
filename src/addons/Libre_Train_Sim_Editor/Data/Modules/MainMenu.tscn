@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://screenshot.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres" type="DynamicFont" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" type="AudioStream" id=6]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SettingsMenu.tscn" type="PackedScene" id=7]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -344,7 +345,7 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_RELOAD"
 
-[node name="Settings" type="VBoxContainer" parent="."]
+[node name="Settings" parent="." instance=ExtResource( 7 )]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -581,7 +582,7 @@ volume_db = -25.384
 [connection signal="pressed" from="Front/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/Content" to="." method="_on_Content_pressed"]
 [connection signal="pressed" from="Front/Create" to="." method="_on_FrontCreate_pressed"]
-[connection signal="pressed" from="Front/Settings" to="." method="_on_SettingsFrong_pressed"]
+[connection signal="pressed" from="Front/Settings" to="." method="_on_SettingsFront_pressed"]
 [connection signal="pressed" from="Front/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="item_selected" from="Play/Selection/Tracks/ItemList" to="." method="_on_ItemList_itemTracks_selected"]
 [connection signal="item_selected" from="Play/Selection/Scenarios/ItemList" to="." method="_on_ItemList_scenario_selected"]
@@ -590,12 +591,5 @@ volume_db = -25.384
 [connection signal="pressed" from="Play/Buttons/Play" to="." method="_on_PlayPlay_pressed"]
 [connection signal="pressed" from="Content/Buttons/Back" to="." method="_on_BackContent_pressed"]
 [connection signal="pressed" from="Content/Buttons/Reload" to="." method="_on_ReloadContent_pressed"]
-[connection signal="pressed" from="Settings/GridContainer/Fullscreen" to="." method="_on_FullscreenSettings_pressed"]
-[connection signal="pressed" from="Settings/GridContainer/MainMenuMusic" to="." method="_on_SettingsMainMenuMusic_pressed"]
-[connection signal="pressed" from="Settings/GridContainer/Shadows" to="." method="_on_SettingsShadows_pressed"]
-[connection signal="value_changed" from="Settings/GridContainer/ViewDistance" to="." method="_on_SettingsViewDistance_value_changed"]
-[connection signal="pressed" from="Settings/GridContainer/AntiAliasing" to="." method="_on_SettingsAntiAlasing_pressed"]
-[connection signal="pressed" from="Settings/GridContainer/Fog" to="." method="_on_SettingsFog_pressed"]
-[connection signal="pressed" from="Settings/Buttons/Back" to="." method="_on_BackSettings_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/Later" to="." method="_on_Later_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/OpenWebBrowser" to="." method="_on_OpenWebBrowser_pressed"]

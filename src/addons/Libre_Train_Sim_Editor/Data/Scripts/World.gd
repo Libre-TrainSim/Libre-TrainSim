@@ -84,10 +84,7 @@ func apply_user_settings():
 	if get_node("DirectionalLight") != null:
 		$DirectionalLight.shadow_enabled = userConfig.get_value("Settings", "shadows", true)
 	player.get_node("Camera").far = userConfig.get_value("Settings", "viewDistance", 1000)
-	if userConfig.get_value("Settings", "antiAliasing", true):
-		ProjectSettings.set_setting("rendering/quality/filters/msaa", 4)
-	else: 
-		ProjectSettings.set_setting("rendering/quality/filters/msaa", 0)
+	get_viewport().set_msaa(userConfig.get_value("Settings", "antiAliasing", ProjectSettings.get_setting("rendering/quality/filters/msaa")))
 	$WorldEnvironment.environment.fog_enabled = userConfig.get_value("Settings", "fog", true)
 	
 func _process(delta):

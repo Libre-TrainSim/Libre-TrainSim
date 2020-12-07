@@ -20,6 +20,7 @@ func _ready():
 	config.save(save_path)
 	var feedbackPressed = config.get_value("Main", "feedbackPressed", false)
 	if openTimes > 3 and not feedbackPressed:
+		$FeedBack/VBoxContainer/RichTextLabel.text = TranslationServer.translate("MENU_FEEDBACK_QUESTION")
 		$FeedBack.popup()
 	update_MainMenuMusic()
 	

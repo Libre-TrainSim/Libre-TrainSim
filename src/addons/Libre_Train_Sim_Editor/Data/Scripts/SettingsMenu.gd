@@ -17,10 +17,13 @@ func _ready():
 	$GridContainer/AntiAliasing.add_item("16x", Viewport.MSAA_16X)
 	$GridContainer/AntiAliasing.select(config.get_value("Settings", "antiAliasing", ProjectSettings.get_setting("rendering/quality/filters/msaa")))
 	
-	var language = TranslationServer.get_locale().rsplit("_")[0]
+	var language = config.get_value("Settings", "language", TranslationServer.get_locale().rsplit("_")[0])
 	if language == null:
-		language = "en"
+		language = TranslationServer.get_locale()
+		if not languageTable.has(language):
+			language = "en"
 	$GridContainer/Language.select(languageTable[language])
+	TranslationServer.set_locale(language)
 	
 	$GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
 	$GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)

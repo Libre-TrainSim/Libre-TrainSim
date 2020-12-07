@@ -33,8 +33,8 @@ MENU_AUTHOR,,
 MENU_LOADING,Loading…,Laden…
 ,,
 MENU_LATER,Later,Später
-MENU_OPEN_BROWSER,Open in Webbrowser,Öffne in Webbrowser
-MENU_FEEDBACK_QUESTION,   Do you have 2 minutes left for answerng a quick survey?\n   You would help the project a lot!,  Haben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n   Es würde dem Projekt sehr helfen!
+MENU_OPEN_IN_BROWSER,Open in Webbrowser,Öffne in Webbrowser
+MENU_FEEDBACK_QUESTION,\tDo you have 2 minutes left for answering a quick survey?\n\tYou would help the project a lot!,\tHaben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n\tEs würde dem Projekt sehr helfen!
 ,,
 MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you cant play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.
 MENU_AUTHOR,Author,Autor

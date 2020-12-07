@@ -55,6 +55,17 @@ func checkAndLoadTranslationsForTrain(trainDirPath): # Searches for translation 
 		print(tainTranslation.locale)
 		TranslationServer.add_translation(tainTranslation)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func crawlDirectory(directoryPath,foundFiles,fileExtension): ## found files has to be an dict: {"Array" : []}
+	var dir = Directory.new()
+	if dir.open(directoryPath) != OK: return
+	dir.list_dir_begin()
+	while(true):
+		var file = dir.get_next()
+		if file == "": break
+		if file.begins_with("."): continue
+		if dir.current_is_dir():
+			crawlDirectory(directoryPath+"/"+file, foundFiles, fileExtension)
+		else:
+			if file.get_extension() == fileExtension:
+				foundFiles["Array"].append(directoryPath +"/"+file)
+	dir.list_dir_end()

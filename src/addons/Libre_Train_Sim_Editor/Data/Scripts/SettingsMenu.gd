@@ -17,13 +17,7 @@ func _ready():
 	$GridContainer/AntiAliasing.add_item("16x", Viewport.MSAA_16X)
 	$GridContainer/AntiAliasing.select(config.get_value("Settings", "antiAliasing", ProjectSettings.get_setting("rendering/quality/filters/msaa")))
 	
-	var language = config.get_value("Settings", "language", TranslationServer.get_locale().rsplit("_")[0])
-	if language == null:
-		language = TranslationServer.get_locale()
-		if not languageTable.has(language):
-			language = "en"
-	$GridContainer/Language.select(languageTable[language])
-	TranslationServer.set_locale(language)
+	updateLanguage()
 	
 	$GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
 	$GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)
@@ -76,3 +70,37 @@ func _on_Language_item_selected(index):
 	config.set_value("Settings", "language", $GridContainer/Language.get_item_text(index))
 	TranslationServer.set_locale($GridContainer/Language.get_item_text(index))
 	config.save(save_path)
+	
+func updateLanguage():
+	## Get all languages, and add MainMenu* and Ingame* to Libre TrainSim
+	var languageFiles = {"Array": []}
+	Root.crawlDirectory("res://",languageFiles, "translation")
+	var languages = []
+	for languageFile in languageFiles["Array"]:
+		if languageFile.get_file().begins_with("MainMenu") or languageFile.get_file().begins_with("Ingame"):
+			TranslationServer.add_translation(load(languageFile))
+			print("Added " + String(languageFile))
+		var language = languageFile.get_file().rsplit(".")[1]
+		if not languages.has(language):
+			languages.append(language)
+	print("Found Languages: " + String(languages))
+	languages.sort()
+	languageTable.clear()
+	var i = 0
+	for language in languages:
+		languageTable[language] = i
+		i += 1
+		
+	## Update&Set Language
+	for index in range(languageTable.size()):
+		$GridContainer/Language.add_item("",index)
+	for language in languageTable.keys():
+		$GridContainer/Language.set_item_text(languageTable[language], language)
+
+	var language = config.get_value("Settings", "language", TranslationServer.get_locale().rsplit("_")[0])
+	if language == null:
+		language = TranslationServer.get_locale()
+		if not languageTable.has(language):
+			language = "en"
+	$GridContainer/Language.select(languageTable[language])
+	TranslationServer.set_locale(language)

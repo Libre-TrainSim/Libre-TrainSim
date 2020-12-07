@@ -109,13 +109,13 @@ func update_config():
 			
 	## Get all Tracks:
 	var foundFiles = {"Array": []}
-	crawlDirectory("res://Worlds",foundFiles,"tscn")
+	Root.crawlDirectory("res://Worlds",foundFiles,"tscn")
 	print(foundFiles)
 	foundTracks = foundFiles["Array"].duplicate(true)
 	
 	## Get all Trains
 	foundFiles = {"Array": []}
-	crawlDirectory("res://Trains",foundFiles,"tscn")
+	Root.crawlDirectory("res://Trains",foundFiles,"tscn")
 	foundTrains = foundFiles["Array"].duplicate(true)
 	
 
@@ -215,20 +215,7 @@ func _on_ItemList_scenario_selected(index):
 	update_train_list()
 	
 	
-func crawlDirectory(directoryPath,foundFiles,fileExtension):
-	var dir = Directory.new()
-	if dir.open(directoryPath) != OK: return
-	dir.list_dir_begin()
-	while(true):
-		var file = dir.get_next()
-		if file == "": break
-		if file.begins_with("."): continue
-		if dir.current_is_dir():
-			crawlDirectory(directoryPath+"/"+file, foundFiles, fileExtension)
-		else:
-			if file.get_extension() == "tscn":
-				foundFiles["Array"].append(directoryPath +"/"+file)
-	dir.list_dir_end()
+
 
 
 func _on_ItemList_Train_selected(index):

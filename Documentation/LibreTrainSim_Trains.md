@@ -50,6 +50,21 @@ All important settings can be set at the `Player` Node in the Inspector. Here yo
 - **Wagon Distance**: The distance between the wagons. Unit: meter
 - **Camera Factor**: Describes, how strong the camera in the cabin moves when accelerating or braking.
 
+## Adding cameras
+Apart from cabin view, outer view and free camera, each train can define a custom set of additional cameras.
+
+To define a custom camera (eg: passenger view, onboard camera of any kind), simply add your camera to the train scene. Hint: camera is relative to parent so if you want a passenger camera on third wagon, make sure the camera is a child of the third wagon.
+
+To make the camera accessible two more steps are needed:
+- add the camera to the node group `PlayerCameras`. Without this, you won't be able to use it
+- now attach the `Camera.gd` script to the camera node
+
+The script exports two variables that you can configure on the node:
+- **fixed**: if a camera is fixed, its origin cannot change. Otherwise pushing `WASD` buttons will make it move around, still anchored to the parent
+- **accel**: if a camera has `accel` enabled, it will slightly move (just like cambin camera) when the train accelerates or breaks.
+
+Cameras can now be activated by using keys from `3` to `8`.
+
 ## Technical Background:
 The whole train will be loaded in the world while spawing. If it is a NPC, then such nodes as Camera, HUD, and the Cabin are removed.
 The Train has two main parts:

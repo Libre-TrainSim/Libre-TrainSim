@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=1]
 [ext_resource path="res://Resources/Basic/Materials/Black_Plastic.tres" type="Material" id=2]
@@ -38,6 +38,7 @@
 [ext_resource path="res://Resources/Basic/Materials/Red_Plastic.tres" type="Material" id=36]
 [ext_resource path="res://Trains/JFR1/Wagon_1.obj" type="ArrayMesh" id=37]
 [ext_resource path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" type="ArrayMesh" id=38]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Camera.gd" type="Script" id=39]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Brown.tres" type="Material" id=40]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -959,6 +960,13 @@ visible = false
 script = ExtResource( 26 )
 length = 14.0
 
+[node name="PassengerCamera1" type="Camera" parent="Wagon1" groups=[
+"PlayerCameras",
+]]
+transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.09673, 2.40611, 1.18214 )
+script = ExtResource( 39 )
+accel = true
+
 [node name="MeshInstance" type="MeshInstance" parent="Wagon1"]
 mesh = ExtResource( 37 )
 material/0 = ExtResource( 27 )
@@ -1230,6 +1238,13 @@ transform = Transform( 0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.4
 mesh = SubResource( 24 )
 material/0 = ExtResource( 33 )
 
+[node name="PassengerCamera2" type="Camera" parent="DriverCabinF" groups=[
+"PlayerCameras",
+]]
+transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182 )
+script = ExtResource( 39 )
+accel = true
+
 [node name="DriverCabinB" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 26 )
@@ -1388,6 +1403,13 @@ material/0 = ExtResource( 33 )
 transform = Transform( 0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.41134, 0.150598, 0 )
 mesh = SubResource( 24 )
 material/0 = ExtResource( 33 )
+
+[node name="PassengerCamera3" type="Camera" parent="DriverCabinB" groups=[
+"PlayerCameras",
+]]
+transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182 )
+script = ExtResource( 39 )
+accel = true
 
 [node name="Sound" type="Spatial" parent="."]
 script = ExtResource( 4 )

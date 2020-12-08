@@ -128,7 +128,6 @@ var cameraDistanceChanged = false
 onready var cameraNode = $Camera
 var cameraZeroTransform # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
-
 func ready(): ## Called by World!
 	if not ai:
 		cameraZeroTransform = cameraNode.transform
@@ -137,7 +136,6 @@ func ready(): ## Called by World!
 	
 	route = route.split(" ")
 	bake_route()
-
 	
 	if Root.EasyMode or ai:
 		pantograph = true
@@ -472,10 +470,9 @@ var mouseMotion = Vector2()
 var mouseWheel
 
 func remove_free_camera():
-	if world.get_node("FreeCamera") == null:
-		return
-	world.get_node("FreeCamera").queue_free()
-	get_node("Camera").current = true
+	if world.has_node("FreeCamera"):
+		world.get_node("FreeCamera").queue_free()
+		
 
 
 func handleCamera(delta):
@@ -486,11 +483,13 @@ func handleCamera(delta):
 		cameraNode.transform = cameraZeroTransform
 		$Cabin.show()
 		remove_free_camera()
+		$Camera.current = true
 	if Input.is_action_just_pressed("Outer View"):
 		wagonsVisible = true
 		cameraState = 2
 		$Cabin.hide()
 		remove_free_camera()
+		$Camera.current = true
 	if Input.is_action_just_pressed("FreeCamera"):
 		$Cabin.hide()
 		wagonsVisible = true
@@ -501,6 +500,15 @@ func handleCamera(delta):
 		world.add_child(cam)
 		cam.owner = world
 		cam.transform = transform.translated(cameraMidPoint)
+	
+	var playerCameras = get_tree().get_nodes_in_group("PlayerCameras")
+	for i in range(3, 9):
+		if Input.is_action_just_pressed("player_camera_" + str(i)) and playerCameras.size() >= i - 2:
+			wagonsVisible = true
+			cameraState = i
+			playerCameras[i -3].current = true
+			$Cabin.hide()
+			remove_free_camera()
 
 	if cameraState == 1: # Inner Position
 		## Camera x Position

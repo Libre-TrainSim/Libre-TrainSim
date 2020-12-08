@@ -121,6 +121,7 @@ var startRail # Rail, on which the train is starting. Set by the scenario manger
 # Reference delta at 60fps
 const refDelta = 0.0167 # 1.0 / 60
 
+var cameraDistanceChanged = false
 
 
 
@@ -288,16 +289,18 @@ func _input(event):
 	if ai:
 		return
 	if event is InputEventMouseMotion:
-		mouseMotion = event.relative
+		mouseMotion = mouseMotion + event.relative
 		
 	if event.is_pressed():
 		# zoom in
 		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
 			cameraDistance += cameraDistance*0.2
+			cameraDistanceChanged = true
 			# call the zoom function
 		# zoom out
 		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
 			cameraDistance -= cameraDistance*0.2
+			cameraDistanceChanged = true
 			# call the zoom function
 		if cameraDistance < 5 :
 			cameraDistance = 5
@@ -465,7 +468,7 @@ func change_to_next_rail():
 		
 	
 	
-var mouseMotion
+var mouseMotion = Vector2()
 var mouseWheel
 
 func remove_free_camera():
@@ -509,18 +512,19 @@ func handleCamera(delta):
 	elif cameraState == 2: ## Outer Position
 		if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if mouseMotion == null: return
-		var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
-		cameraY += -mouseMotion.x * motionFactor
-		cameraX += +mouseMotion.y * motionFactor
-		if cameraX > 85: cameraX = 85
-		if cameraX < -85: cameraX = -85
-		var cameraVector = Vector3(cameraDistance, 0, 0)
-		cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
-		cameraNode.translation = cameraVector + cameraMidPoint
-		cameraNode.rotation_degrees.y = cameraY +90
-		cameraNode.rotation_degrees.x = -cameraX
-		mouseMotion = Vector2(0,0)
+		if mouseMotion.length() > 0 or cameraDistanceChanged:
+			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
+			cameraY += -mouseMotion.x * motionFactor
+			cameraX += +mouseMotion.y * motionFactor
+			if cameraX > 85: cameraX = 85
+			if cameraX < -85: cameraX = -85
+			var cameraVector = Vector3(cameraDistance, 0, 0)
+			cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
+			cameraNode.translation = cameraVector + cameraMidPoint
+			cameraNode.rotation_degrees.y = cameraY +90
+			cameraNode.rotation_degrees.x = -cameraX
+			mouseMotion = Vector2(0,0)
+			cameraDistanceChanged = false
 		
 
 

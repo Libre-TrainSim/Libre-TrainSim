@@ -26,7 +26,7 @@ var mouseMotion = Vector2(0,0)
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		mouseMotion = event.relative
+		mouseMotion = mouseMotion + event.relative
 	
 var cameraY = 0
 var cameraX = 0
@@ -35,16 +35,16 @@ func _process(delta):
 	
 	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	if mouseMotion == null: return
-
-	var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
-	cameraY += -mouseMotion.x * motionFactor
-	cameraX += +mouseMotion.y * motionFactor
-	if cameraX > 85: cameraX = 85
-	if cameraX < -85: cameraX = -85
-	rotation_degrees.y = cameraY +90
-	rotation_degrees.x = -cameraX
-	mouseMotion = Vector2(0,0)
+			
+	if mouseMotion.length() > 0:
+		var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
+		cameraY += -mouseMotion.x * motionFactor
+		cameraX += +mouseMotion.y * motionFactor
+		if cameraX > 85: cameraX = 85
+		if cameraX < -85: cameraX = -85
+		rotation_degrees.y = cameraY +90
+		rotation_degrees.x = -cameraX
+		mouseMotion = Vector2(0,0)
 	
 	var deltaFlyspeed = (delta / refDelta) * flyspeed
 	

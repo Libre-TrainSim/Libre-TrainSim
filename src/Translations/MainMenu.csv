@@ -1,47 +1,48 @@
-keys,en,de
-MENU_PLAY,Play,Spielen
-MENU_BACK,Back,Zurück
-MENU_CONTENT,Content,Inhalt
-MENU_CREATE,Create,Erstellen
-MENU_SETTINGS,Settings,Einstellungen
-MENU_QUIT,Quit,Beenden
-MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!
-MENU_RELOAD,Reload,Aktualisieren
-,,
-MENU_TRACKS:,Tracks:,Strecken:
-MENU_SCENARIOS:,Szenarios:,Szenarien:
-MENU_TRAIN:,Train:,Zug:
-,,
-MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:"
-MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete
-MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten."
-,,
-MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula
-,,
-MENU_SETTINGS:,Settings:,Einstellungen:
-MENU_FULLSCREEN,Fullscreen,Vollbild
-MENU_MUSIC,Music,Musik 
-MENU_SHADOWS,Shadows,Schatten
-MENU_VIEW_DISTANCE,View Distance,Sichtweite
-MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing
-MENU_FOG,Fog,Nebel
-MENU_LANGUAGE,Language,Sprache
-,,
-,,
-MENU_AUTHOR,,
-,,
-MENU_LOADING,Loading…,Laden…
-,,
-MENU_LATER,Later,Später
-MENU_OPEN_IN_BROWSER,Open in Webbrowser,Öffne in Webbrowser
-MENU_FEEDBACK_QUESTION,\tDo you have 2 minutes left for answering a quick survey?\n\tYou would help the project a lot!,\tHaben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n\tEs würde dem Projekt sehr helfen!
-,,
-MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you cant play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.
-MENU_AUTHOR,Author,Autor
-MENU_RELEASE,Release,Veröffentlichung
-MENU_DURATION,Duration,Dauer
-MENU_ELECTRIC,Electric,Elektrisch
-MENU_EASY_MODE,Easy Mode,Einfacher Modus
-,,
-YES,Yes,Ja
-NO,No,Nein
+keys,en,de,it
+MENU_PLAY,Play,Spielen,Gioca
+MENU_BACK,Back,Zurück,Indietro
+MENU_CONTENT,Content,Inhalt,Contenuti
+MENU_CREATE,Create,Erstellen,Crea
+MENU_SETTINGS,Settings,Einstellungen,Impostazioni
+MENU_QUIT,Quit,Beenden,Esci
+MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!,Dicci la tua opinione!
+MENU_RELOAD,Reload,Aktualisieren,Ricarica
+,,,
+MENU_TRACKS:,Tracks:,Strecken:,Tracciati:
+MENU_SCENARIOS:,Szenarios:,Szenarien:,Scenari:
+MENU_TRAIN:,Train:,Zug:,Treno:
+,,,
+MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella"
+MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:
+MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco."
+,,,
+MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula,Musica: “Follow That Dream” di Luca Fraula
+,,,
+MENU_SETTINGS:,Settings:,Einstellungen:,Impostazioni:
+MENU_FULLSCREEN,Fullscreen,Vollbild,Schermo intero
+MENU_MUSIC,Music,Musik ,Musica
+MENU_SHADOWS,Shadows,Schatten,Ombre
+MENU_VIEW_DISTANCE,View Distance,Sichtweite,Visibilità
+MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Antialiasing
+MENU_DISABLED,Disabled,Deaktiviert,Disabilitato
+MENU_FOG,Fog,Nebel,Nebbia
+MENU_LANGUAGE,Language,Sprache,Lingua
+,,,
+,,,
+MENU_AUTHOR,,,
+,,,
+MENU_LOADING,Loading…,Laden…,Caricamento…
+,,,
+MENU_LATER,Later,Später,Più tardi
+MENU_OPEN_IN_BROWSER,Open in Webbrowser,Öffne in Webbrowser,Apri nel browser web
+MENU_FEEDBACK_QUESTION,\tDo you have 2 minutes left for answering a quick survey?\n\tYou would help the project a lot!,\tHaben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n\tEs würde dem Projekt sehr helfen!,\tAvresti 2 minuti per rispondere a brevi domande?\n\tPotresti aiutare molto il progetto!
+,,,
+MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you cant play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.,Non è stato trovato nessuno scenario. Questo tracciato è obsoleto. Purtroppo non è possibile giocare.
+MENU_AUTHOR,Author,Autor,Autore
+MENU_RELEASE,Release,Veröffentlichung,Rilasciato
+MENU_DURATION,Duration,Dauer,Durata
+MENU_ELECTRIC,Electric,Elektrisch,Elettrico
+MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile
+,,,
+YES,Yes,Ja,Si
+NO,No,Nein,No

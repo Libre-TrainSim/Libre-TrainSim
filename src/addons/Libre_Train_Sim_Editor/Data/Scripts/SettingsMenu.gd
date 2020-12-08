@@ -10,7 +10,7 @@ func _ready():
 	save_path = get_parent().save_path
 	config = get_parent().config
 	
-	$GridContainer/AntiAliasing.add_item("Disabled", Viewport.MSAA_DISABLED)
+	$GridContainer/AntiAliasing.add_item(tr("MENU_DISABLED"), Viewport.MSAA_DISABLED)
 	$GridContainer/AntiAliasing.add_item("2x", Viewport.MSAA_2X)
 	$GridContainer/AntiAliasing.add_item("4x", Viewport.MSAA_4X)
 	$GridContainer/AntiAliasing.add_item("8x", Viewport.MSAA_8X)

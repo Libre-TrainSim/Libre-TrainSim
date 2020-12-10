@@ -21,10 +21,15 @@ func _process(delta):
 	send_message(delta)
 	if scenario == "The Basics" or scenario == "The Basics (Duplicate)":
 		basics(delta)
+		return
 	if scenario == "Advanced Train Driving":
 		advanced(delta)
+		return
 	if scenario == "New Functions in 0.7":
 		newFunctionsZeroDotSeven(delta)
+		return
+		
+	message_sent = true
 
 
 func basics(delta):

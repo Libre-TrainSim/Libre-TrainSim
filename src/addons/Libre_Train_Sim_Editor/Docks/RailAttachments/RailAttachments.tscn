@@ -593,6 +593,14 @@ margin_bottom = 212.0
 size_flags_horizontal = 4
 text = "Save"
 
+[node name="Randomize" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
+margin_left = 483.0
+margin_top = 192.0
+margin_right = 524.0
+margin_bottom = 212.0
+size_flags_horizontal = 4
+text = "Randomize"
+
 [node name="Button" type="Button" parent="Tab/TrackObjects/Settings"]
 margin_left = 479.0
 margin_top = 152.0
@@ -645,6 +653,7 @@ current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/Save" to="." method="_on_SavePosition_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Save" to="." method="_on_SavePositioning_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Randomize" to="." method="_on_Randomize_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Button" to="." method="_on_Button_pressed"]
 [connection signal="file_selected" from="FileDialogObjects" to="." method="_on_FileDialog_onject_selected"]
 [connection signal="file_selected" from="FileDialogMaterials" to="." method="_on_FileDialogMaterials_file_selected"]

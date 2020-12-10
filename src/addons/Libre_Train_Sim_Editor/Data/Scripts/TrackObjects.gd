@@ -24,13 +24,15 @@ export (float) var randomScaleFactor = 0.2
 export (bool) var placeLast = false
 export (bool) var applySlopeRotation = false
 
+export (int) var randomSeed = 0
+
 export (bool) var wholeRail
 
 var material_updated = false
 
 
 export (bool) var update setget _update
-export (bool) var meshSet = false
+
 
 onready var world = find_parent("World")
 var rail
@@ -57,11 +59,12 @@ func get_data():
 	d.randomScale = randomScale
 	d.randomScaleFactor = randomScaleFactor
 	d.wholeRail = wholeRail
-	d.meshSet = meshSet
-	d.multimesh = multimesh.duplicate()
+#	d.meshSet = meshSet
+#	d.multimesh = multimesh.duplicate()
 	d.rotationObjects = rotationObjects
 	d.placeLast = placeLast
 	d.applySlopeRotation = applySlopeRotation
+	d.randomSeed = randomSeed
 	return d
 	
 	
@@ -85,10 +88,11 @@ func set_data(d):
 	randomScale = d.randomScale
 	randomScaleFactor = d.randomScaleFactor
 	wholeRail = d.wholeRail
-	meshSet = d.meshSet
-	multimesh = d.multimesh
+#	meshSet = d.meshSet
+#	multimesh = d.multimesh
 	rotationObjects = d.rotationObjects
 	placeLast = d.placeLast
+	randomSeed = d.get("randomSeed", 0)
 	if d.has("applySlopeRotation"):
 		applySlopeRotation = d.applySlopeRotation
 
@@ -126,6 +130,7 @@ func _update(newvar):
 	updated = true
 	world = find_parent("World")
 	if world == null: return
+	self.set_multimesh(self.multimesh.duplicate(false))
 	if wholeRail:
 		var rail = world.get_node("Rails").get_node(attachedRail)
 		if rail == null:
@@ -135,25 +140,20 @@ func _update(newvar):
 		length = rail.length
 	attach_to_rail()
 	## Set to Rail:
-	if world == null: return
 	if world.has_node("Rails/"+attachedRail) and attachedRail != "":
 		rail = world.get_node("Rails/"+attachedRail)
 		translation = rail.get_pos_at_RailDistance(onRailPosition)
-		#rotation_degrees.y = rail.getNextDeg(rail.radius, rail.rotation_degrees.y, onRailPosition)
+	
+	
+
+	if objectPath == "" : return
+	var mesh = load(objectPath).duplicate(true)
+	multimesh.mesh = mesh
+	
 	for x in range(materialPaths.size()):
 		if materialPaths[x] != "":
 			multimesh.mesh.surface_set_material(x, load(materialPaths[x]))
-	
-	## MultiMesh
-	self.set_multimesh(self.multimesh.duplicate(false))
-	
-	if meshSet: ## Only set Mesh if needed
-		return
-	material_updated = false
-	
-	if objectPath == "" : return
-	var mesh = load(objectPath).duplicate(true)
-	self.multimesh.mesh = mesh
+			print("KACKI")
 	
 	var straightCount = int(length / distanceLength)
 	if placeLast:
@@ -170,6 +170,7 @@ func _update(newvar):
 		self.multimesh.instance_count = int(straightCount * rows)*2
 	var idx = 0
 	var railpos = onRailPosition
+	seed(randomSeed)
 	for a in range(straightCount):
 		for b in range(rows):
 			if sides == 1 or sides == 3: ## Left Side
@@ -216,6 +217,9 @@ func _update(newvar):
 					idx += 1
 		railpos += distanceLength
 		self.multimesh.visible_instance_count = idx
-	meshSet = true
+#	meshSet = true
 
 
+func newSeed():
+	randomize()
+	randomSeed = rand_range(-1000000,1000000)

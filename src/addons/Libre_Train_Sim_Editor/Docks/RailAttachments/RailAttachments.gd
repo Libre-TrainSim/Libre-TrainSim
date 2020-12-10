@@ -255,7 +255,6 @@ func update_positioning():
 
 func _on_Button_pressed(): ## UPDATE
 	print("Updating...")
-	currentTO.meshSet = false
 	currentTO._update(true)
 
 
@@ -355,3 +354,8 @@ func _on_MaterialRemove_pressed():
 	if materialRow.name != "Material 0":
 		$Tab/TrackObjects/Settings/Tab/Object/GridContainer.get_children().back().queue_free()
 	pass # Replace with function body.
+
+
+func _on_Randomize_pressed():
+	currentTO.newSeed()
+	_on_Button_pressed()

@@ -38,6 +38,8 @@ var pendingTrains = {"TrainName" : [], "SpawnTime" : []}
 
 var player
 
+export var editorAllObjectsUnloaded = false ## saves, if all Objects in World where unloaded, or not. That's important for Saving and creating Chunks. It only works, if every Objet is loaded in the world.
+
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
@@ -53,13 +55,16 @@ func _ready():
 		Root.checkAndLoadTranslationsForTrack(trackName)
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
-		save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
-		config = ConfigFile.new()
-		load_response = config.load(save_path)
+		loadWorldConfig()
 		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
 			save_world(true)
+		
 		allChunks = config.get_value("Chunks", "allChunks", [])
-		istChunks = allChunks.duplicate()
+		
+		if editorAllObjectsUnloaded == true:
+			istChunks = []
+		else:
+			istChunks = allChunks.duplicate()
 		configure_soll_chunks(activeChunk)
 
 		apply_soll_chunks()
@@ -74,7 +79,10 @@ func _ready():
 
 	pass
 
-
+func loadWorldConfig():
+	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
+	config = ConfigFile.new()
+	load_response = config.load(save_path)
 
 
 
@@ -318,21 +326,15 @@ func load_chunk(position):
 
 
 func save_world(newvar):
+	if editorAllObjectsUnloaded:
+		print("Saving World skipped. Load all Objects from configuration first!")
+		return
 	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
 	config = ConfigFile.new()
 	load_response = config.load(save_path)
-	allChunks = []
-	## Get all chunks of the world
-	var railNode = get_node("Rails")
-	if railNode == null:
-		print("Rail Node not found. World not saved!")
-		return
-	for rail in railNode.get_children():
-		var railChunk = pos2Chunk(rail.translation)
-		allChunks = add_single_to_array(allChunks, chunk2String(railChunk))
 
-		for chunk in getChunkeighbours(railChunk):
-			allChunks = add_single_to_array(allChunks, chunk2String(chunk))
+	get_allChunks()
+	
 	
 	for chunk in allChunks:
 		save_chunk(string2Chunk(chunk))
@@ -341,6 +343,18 @@ func save_world(newvar):
 	config.save(save_path)
 	print("Saved the whole world. Chunks set correctly.")
 
+func get_allChunks():
+	allChunks = []
+	var railNode = get_node("Rails")
+	if railNode == null:
+		printerr("Rail Node not found. World is corrupt!")
+		return
+	for rail in railNode.get_children():
+		var railChunk = pos2Chunk(rail.translation)
+		allChunks = add_single_to_array(allChunks, chunk2String(railChunk))
+
+		for chunk in getChunkeighbours(railChunk):
+			allChunks = add_single_to_array(allChunks, chunk2String(chunk))
 
 func add_single_to_array(array, value):
 	if not array.has(value):
@@ -381,7 +395,21 @@ func handle_chunk():
 		apply_soll_chunks()
 	lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
 
-
+func editorUnloadAllChunks():
+	loadWorldConfig()
+	get_allChunks()
+	istChunks = allChunks.duplicate()
+	sollChunks = []
+	apply_soll_chunks()
+	editorAllObjectsUnloaded = true
+	
+func editorLoadAllChunks():
+	loadWorldConfig()
+	get_allChunks()
+	istChunks = []
+	sollChunks = allChunks.duplicate()
+	apply_soll_chunks()
+	editorAllObjectsUnloaded = false
 
 
 

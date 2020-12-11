@@ -231,6 +231,8 @@ func get_world_configuration():
 	$"World Configuration/GridContainer/Author".text = d["Author"]
 	$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
 	$"World Configuration/GridContainer/ThumbnailPath".text = d["ThumbnailPath"]
+	
+	updateToggleAllSavedObjectsButton()
 
 
 
@@ -459,3 +461,20 @@ func clear_train_settings_view(): # Resets the Train settings when adding a new 
 	$Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text = ""
 	prepare_station_table(null)
 
+
+
+func _on_ToggleAllSavedObjects_pressed():
+	if world.editorAllObjectsUnloaded:
+		world.editorLoadAllChunks()
+	else: 
+		world.editorUnloadAllChunks()
+	updateToggleAllSavedObjectsButton()
+
+
+func updateToggleAllSavedObjectsButton():
+	if world == null:
+		return
+	if not world.editorAllObjectsUnloaded:
+		$"World Configuration/ToggleAllSavedObjects".text = "Unload all Objects from configuration"
+	else: 
+		$"World Configuration/ToggleAllSavedObjects".text = "Load all Objects from configuration"

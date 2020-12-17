@@ -38,6 +38,7 @@ func update_selected_rail(node):
 		$S/Settings/Radius/LineEdit.text = String(node.radius)
 		$S/Settings/Angle/LineEdit.text =  String(currentRail.endrot - currentRail.startrot)
 		
+		
 		self.set_tendSlopeData(currentRail.get_tendSlopeData())
 	else:
 		currentRail = null
@@ -335,10 +336,12 @@ func _on_ShowHideTendency_pressed():
 		$S/Settings/Tendency/ShowHideTendency.text = "Show Tendency"
 		$S/Settings/Tendency/S.visible = false
 		$S/Settings/Tendency/S2.visible = false
+		$S/Settings/Tendency/automaticTendency.hide()
 	else:
 		$S/Settings/Tendency/ShowHideTendency.text = "Hide Tendency"
 		$S/Settings/Tendency/S.visible = true
 		$S/Settings/Tendency/S2.visible = true
+		$S/Settings/Tendency/automaticTendency.show()
 
 
 func _on_ShowHideSlope_pressed():
@@ -360,6 +363,7 @@ func get_tendSlopeData():
 	d.tend1 = $S/Settings/Tendency/S2/Tend1.value
 	d.tend2Pos = $S/Settings/Tendency/S2/Tend2Pos.value
 	d.tend2 = $S/Settings/Tendency/S2/Tend2.value
+	d.automaticTendency = $S/Settings/Tendency/automaticTendency.pressed
 	return d
 
 func set_tendSlopeData(data):
@@ -372,6 +376,13 @@ func set_tendSlopeData(data):
 	$S/Settings/Tendency/S2/Tend1.value = s.tend1
 	$S/Settings/Tendency/S2/Tend2Pos.value = s.tend2Pos
 	$S/Settings/Tendency/S2/Tend2.value = s.tend2
+	$S/Settings/Tendency/automaticTendency.pressed = s.automaticTendency
+	$S/Settings/Tendency/S2/Tend1Pos.editable = !s.automaticTendency
+	$S/Settings/Tendency/S2/Tend1.editable = !s.automaticTendency
+	$S/Settings/Tendency/S2/Tend2Pos.editable = !s.automaticTendency
+	$S/Settings/Tendency/S2/Tend2.editable = !s.automaticTendency
+	
+	
 
 func update_RotationHeightData():
 	$RotationHeight/StartRotation.text = String(currentRail.startrot)
@@ -388,3 +399,15 @@ func update_generalInformation():
 
 func _on_ManualMoving_pressed():
 	currentRail.manualMoving = $ManualMoving.pressed
+	
+
+
+func _on_automaticTendency_pressed():
+	currentRail.automaticTendency = $S/Settings/Tendency/automaticTendency.pressed
+	currentRail.updateAutomaticTendency()
+	set_tendSlopeData(currentRail.get_tendSlopeData())
+	currentRail._update(true)
+	
+	
+
+

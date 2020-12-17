@@ -180,6 +180,7 @@ func save_chunk(position):
 	chunk.TrackObjects = {}
 	var trackObjects = get_node("TrackObjects").get_children()
 	for trackObject in trackObjects:
+
 		if compareChunks(pos2Chunk(trackObject.translation), position):
 			chunk.TrackObjects[trackObject.name] = {name = trackObject.name, transform = trackObject.transform, data = trackObject.get_data()}
 #	processorTime = OS.get_ticks_msec() / 1000
@@ -396,20 +397,20 @@ func handle_chunk():
 	lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
 
 func editorUnloadAllChunks():
+	editorAllObjectsUnloaded = true
 	loadWorldConfig()
 	get_allChunks()
 	istChunks = allChunks.duplicate()
 	sollChunks = []
 	apply_soll_chunks()
-	editorAllObjectsUnloaded = true
 	
 func editorLoadAllChunks():
+	editorAllObjectsUnloaded = false
 	loadWorldConfig()
 	get_allChunks()
 	istChunks = []
 	sollChunks = allChunks.duplicate()
 	apply_soll_chunks()
-	editorAllObjectsUnloaded = false
 
 
 

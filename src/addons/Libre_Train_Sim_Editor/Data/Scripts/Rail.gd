@@ -50,6 +50,7 @@ export (float) var tend1 = 0
 export (float) var tend2Pos = 0
 export (float) var tend2 = 0
 export (float) var endTend
+export (float) var automaticTendency = false
 
 export (String) var parallelRail = ""
 export (float) var distanceToParallelRail = 0
@@ -100,6 +101,8 @@ func _process(delta):
 func _update(newvar):
 	world = find_parent("World")
 	if world == null: return
+	if parallelRail == "":
+		updateAutomaticTendency()
 	if parallelRail != "":
 		parRail = world.get_node("Rails").get_node(parallelRail)
 		if parRail == null:
@@ -128,7 +131,12 @@ func _update(newvar):
 	endrot = get_deg_at_RailDistance(length)
 	endpos = get_pos_at_RailDistance(length)
 	visibleSegments = length / buildDistance +1
-	buildRail()
+	if not world.editorAllObjectsUnloaded:
+		buildRail()
+	else:
+		if self.has_node("MultiMeshInstance"):
+			$MultiMeshInstance.queue_free()
+			
 	if Engine.is_editor_hint():
 		$Ending.translation = get_local_transform_at_rail_distance(length).origin
 	$Types.hide()
@@ -219,6 +227,7 @@ func get_shifted_local_pos_at_RailDistance(distance, shift):
 	return(Vector3(circlePos.x, get_height(distance), -circlePos.y+shift))  
 	
 func unload_visible_Instance():
+	
 	print("Unloading visible Instance for Rail "+name)
 	$MultiMeshInstance.queue_free()
 
@@ -321,6 +330,7 @@ func get_tendSlopeData():
 	d.tend1 = s.tend1
 	d.tend2Pos = s.tend2Pos
 	d.tend2 = s.tend2
+	d.automaticTendency = s.automaticTendency
 	return d
 
 func set_tendSlopeData(data):
@@ -334,4 +344,16 @@ func set_tendSlopeData(data):
 	d.tend1 = s.tend1
 	d.tend2Pos = s.tend2Pos
 	d.tend2 = s.tend2
+	d.automaticTendency = s.automaticTendency
 
+var automaticPointDistance = 50
+func updateAutomaticTendency(): 
+	if automaticTendency and radius != 0 and length > 3*automaticPointDistance:
+		tend1Pos = automaticPointDistance
+		tend2Pos = length -automaticPointDistance
+		var tendency = 300/radius * 5
+		tend1 = tendency
+		tend2 = tendency
+	elif automaticTendency and radius == 0:
+		tend1 = 0
+		tend2 = 0

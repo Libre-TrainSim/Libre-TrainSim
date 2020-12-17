@@ -459,6 +459,13 @@ min_value = -40.0
 max_value = 40.0
 step = 0.01
 
+[node name="automaticTendency" type="CheckButton" parent="S/Settings/Tendency"]
+visible = false
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 64.0
+text = "automaticTendency"
+
 [node name="Shift" type="VBoxContainer" parent="S/Settings"]
 visible = false
 margin_top = 152.0
@@ -688,6 +695,7 @@ text = "Connect"
 [connection signal="text_entered" from="S/Settings/Angle/LineEdit" to="." method="_on_Update_pressed"]
 [connection signal="pressed" from="S/Settings/Slope/ShowHideSlope" to="." method="_on_ShowHideSlope_pressed"]
 [connection signal="pressed" from="S/Settings/Tendency/ShowHideTendency" to="." method="_on_ShowHideTendency_pressed"]
+[connection signal="pressed" from="S/Settings/Tendency/automaticTendency" to="." method="_on_automaticTendency_pressed"]
 [connection signal="text_entered" from="S/Settings/Shift/Shift/LineEdit" to="." method="_on_ShiftButton_pressed"]
 [connection signal="text_entered" from="S/Settings/Shift/Radius/LineEdit" to="." method="_on_ShiftButton_pressed"]
 [connection signal="pressed" from="S/Settings/Shift/ShiftButton" to="." method="_on_ShiftButton_pressed"]

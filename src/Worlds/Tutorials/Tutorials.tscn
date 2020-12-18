@@ -128,9 +128,9 @@ otherLength = 1000.9
 Outlength = 1000.0
 startTend = -3.0
 tend1Pos = 50
-tend1 = 0.2
+tend1 = -0.3
 tend2Pos = 950.0
-tend2 = 0.2
+tend2 = -0.3
 automaticTendency = true
 
 [node name="Rail2" parent="Rails" instance=ExtResource( 2 )]
@@ -146,9 +146,9 @@ otherRadius = 2995.5
 otherLength = 998.5
 Outlength = 116.197
 tend1Pos = 50
-tend1 = -0.333333
+tend1 = 0.5
 tend2Pos = 950.0
-tend2 = -0.333333
+tend2 = 0.5
 endTend = 3.0
 automaticTendency = true
 

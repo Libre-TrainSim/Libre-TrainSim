@@ -131,7 +131,7 @@ func _update(newvar):
 	endrot = get_deg_at_RailDistance(length)
 	endpos = get_pos_at_RailDistance(length)
 	visibleSegments = length / buildDistance +1
-	if not world.editorAllObjectsUnloaded:
+	if not world.editorAllObjectsUnloaded or not Engine.is_editor_hint():
 		buildRail()
 	else:
 		if self.has_node("MultiMeshInstance"):

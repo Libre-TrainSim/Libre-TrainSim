@@ -255,7 +255,8 @@ func get_train_settings():
 	var trains = sData[currentScenario]["Trains"]
 	if not trains.has(currentTrain): return
 	var train = trains[currentTrain]
-	
+
+	$Scenarios/Settings/Tab/Trains/PreferredTrain/TrainName.text = train.get("PreferredTrain", "")
 	$Scenarios/Settings/Tab/Trains/Route/Route.text = train["Route"]
 	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
 	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
@@ -272,6 +273,7 @@ func get_train_settings():
 
 func set_train_settings():
 	var train = {}
+	train["PreferredTrain"] = $Scenarios/Settings/Tab/Trains/PreferredTrain/TrainName.text
 	train["Route"] = $Scenarios/Settings/Tab/Trains/Route/Route.text
 	train ["StartRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text
 	train["StartRailPosition"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value
@@ -450,6 +452,7 @@ func _on_DeleteTrain_pressed():
 	clear_train_settings_view()
 	
 func clear_train_settings_view(): # Resets the Train settings when adding a new npc for example.
+	$Scenarios/Settings/Tab/Trains/PreferredTrain/TrainName.text = ""
 	$Scenarios/Settings/Tab/Trains/Route/Route.text = ""
 	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = ""
 	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = 0

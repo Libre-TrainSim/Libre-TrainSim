@@ -214,6 +214,16 @@ func _on_ItemList_scenario_selected(index):
 	$Play/Info/Info/EasyMode.hide()
 	update_train_list()
 	
+	# Search and preselect train from scenario:
+	$Play/Selection/Trains/ItemList.unselect_all()
+	var preferredTrain = sData[currentScenario]["Trains"].get("Player", {}).get("PreferredTrain", "")
+	if preferredTrain != "":
+		for i in range(foundTrains.size()):
+			if foundTrains[i].find(preferredTrain) != -1:
+				$Play/Selection/Trains/ItemList.select(i)
+				_on_ItemList_Train_selected(i)
+		
+	
 	
 
 

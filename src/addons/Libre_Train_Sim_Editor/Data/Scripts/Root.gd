@@ -55,7 +55,8 @@ func checkAndLoadTranslationsForTrain(trainDirPath): # Searches for translation 
 		print(tainTranslation.locale)
 		TranslationServer.add_translation(tainTranslation)
 
-func crawlDirectory(directoryPath,foundFiles,fileExtension): ## found files has to be an dict: {"Array" : []}
+## foundFiles has to be an dict: {"Array" : []}
+func crawlDirectory(directoryPath,foundFiles,fileExtension): 
 	var dir = Directory.new()
 	if dir.open(directoryPath) != OK: return
 	dir.list_dir_begin()

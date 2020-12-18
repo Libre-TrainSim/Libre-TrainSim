@@ -453,6 +453,29 @@ margin_top = 132.0
 margin_right = 1008.0
 margin_bottom = 136.0
 
+[node name="PreferredTrain" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
+margin_top = 140.0
+margin_right = 1008.0
+margin_bottom = 164.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Scenarios/Settings/Tab/Trains/PreferredTrain"]
+margin_top = 5.0
+margin_right = 41.0
+margin_bottom = 19.0
+text = "Preferred Train:"
+align = 1
+
+[node name="TrainName" type="LineEdit" parent="Scenarios/Settings/Tab/Trains/PreferredTrain"]
+margin_left = 45.0
+margin_right = 1008.0
+margin_bottom = 24.0
+hint_tooltip = "In here you can optionally specify the train. For example \"JFR1_Grey\". If the train name was not found, the current train of the player is loaded. 
+A player can choose a train which he want. But if something is insertet here, the train will be preselected while selecting the scenario in main menu."
+size_flags_horizontal = 3
+
 [node name="Route" type="HBoxContainer" parent="Scenarios/Settings/Tab/Trains"]
 margin_top = 140.0
 margin_right = 1008.0
@@ -860,7 +883,7 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Datei öffnen"
 mode = 0
 filters = PoolStringArray( "*.obj" )
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]

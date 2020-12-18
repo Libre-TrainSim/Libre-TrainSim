@@ -40,6 +40,9 @@ var player
 
 export var editorAllObjectsUnloaded = false ## saves, if all Objects in World where unloaded, or not. That's important for Saving and creating Chunks. It only works, if every Objet is loaded in the world.
 
+var trainFiles = {"Array" : []}
+
+
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
@@ -53,6 +56,8 @@ func _ready():
 	if not Engine.editor_hint:
 		Root.world = self
 		Root.checkAndLoadTranslationsForTrack(trackName)
+		Root.crawlDirectory("res://Trains/",trainFiles,"tscn")
+		trainFiles = trainFiles["Array"]
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
 		loadWorldConfig()
@@ -495,6 +500,7 @@ func set_scenario_to_world():
 	$Players/Player.show_textbox_message(TranslationServer.translate(scenario["Description"]))
 
 
+
 func spawnTrain(trainName):
 	if $Players.has_node(trainName):
 		print("Train is already loaded! - Abortet loading...")
@@ -510,7 +516,22 @@ func spawnTrain(trainName):
 		pendingTrains["TrainName"].append(trainName)
 		pendingTrains["SpawnTime"].append(scenario["Trains"][trainName]["SpawnTime"].duplicate())
 		return
-	var player = load(Root.currentTrain).instance()
+	# Find preferred train:
+	var player
+	var preferredTrain = scenario["Trains"][trainName].get("PreferredTrain", "")
+	if preferredTrain == "":
+		print("no preferred train specified. Loading player train...")
+		player = load(Root.currentTrain).instance()
+	else:
+		for trainFile in trainFiles:
+			print(trainFile)
+			print(preferredTrain)
+			if trainFile.find(preferredTrain) != -1:
+				player = load(trainFile).instance()
+		if player == null:
+			print("Preferred train not found. Loading player train...")
+			player = load(Root.currentTrain).instance()
+		
 	player.name = trainName
 	$Players.add_child(player)
 	player.owner = self

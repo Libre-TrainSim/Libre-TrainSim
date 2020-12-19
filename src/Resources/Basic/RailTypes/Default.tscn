@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/RailType.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Basic/Rail.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Resources/Basic/Textures/RailTexture2.png" type="Texture" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 3 )
+
+[node name="RailType" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 2 )
+material/0 = SubResource( 1 )

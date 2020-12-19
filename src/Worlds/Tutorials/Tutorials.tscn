@@ -40,9 +40,6 @@ __meta__ = {
 stationLength = 200
 platformSide = 1
 attachedRail = "Rail"
-onRailPosition = 0
-update = false
-forward = true
 
 [node name="Signal" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.999118, 0, -0.0419877, 0, 1, 0, 0.0419877, 0, 0.999118, 209.938, 0, 4.40918 )
@@ -92,13 +89,12 @@ stationLength = 200
 platformSide = 1
 attachedRail = "Rail2"
 onRailPosition = 600
-update = false
-forward = true
 
 [node name="Rails" type="Spatial" parent="."]
 
 [node name="Rail" parent="Rails" instance=ExtResource( 2 )]
 visible = false
+railTypePath = ""
 length = 1000.0
 radius = -5000.0
 visibleSegments = 1112.11
@@ -108,11 +104,9 @@ otherRadius = -5004.5
 otherLength = 1000.9
 Outlength = 1000.0
 startTend = -3.0
-tend1Pos = 50
 tend1 = -0.3
 tend2Pos = 950.0
 tend2 = -0.3
-automaticTendency = true
 
 [node name="Rail2" parent="Rails" instance=ExtResource( 2 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 993.347, 0, 99.667 )
@@ -127,12 +121,10 @@ endpos = Vector3( 1988.17, 0, 132.84 )
 otherRadius = 2995.5
 otherLength = 998.5
 Outlength = 116.197
-tend1Pos = 50
 tend1 = 0.5
 tend2Pos = 950.0
 tend2 = 0.5
 endTend = 3.0
-automaticTendency = true
 
 [node name="Buildings" type="Spatial" parent="."]
 

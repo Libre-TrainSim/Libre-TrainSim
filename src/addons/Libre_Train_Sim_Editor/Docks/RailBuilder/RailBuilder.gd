@@ -391,7 +391,7 @@ func update_RotationHeightData():
 	$RotationHeight/EndHeight.text = String(currentRail.endpos.y)
 
 func update_generalInformation():
-	$S/General/RailType/LineEdit.text = currentRail.railType
+	$S/General/RailType/LineEdit.text = currentRail.railTypePath
 	$S/General/ParallelRail/ParallelRail.text = currentRail.parallelRail
 	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distanceToParallelRail)
 	

@@ -179,16 +179,16 @@ margin_bottom = 24.0
 
 [node name="Label" type="Label" parent="S/General/RailType"]
 margin_top = 5.0
-margin_right = 61.0
+margin_right = 93.0
 margin_bottom = 19.0
-text = "Rail Type:"
+text = "Rail Type Path:"
 
 [node name="LineEdit" type="LineEdit" parent="S/General/RailType"]
-margin_left = 65.0
+margin_left = 97.0
 margin_right = 1024.0
 margin_bottom = 24.0
+hint_tooltip = "Example (without '): 'res://Resources/Basic/RailTypes/Default.tscn'"
 size_flags_horizontal = 3
-text = "Rail"
 
 [node name="ParallelRail" type="HBoxContainer" parent="S/General"]
 margin_top = 28.0

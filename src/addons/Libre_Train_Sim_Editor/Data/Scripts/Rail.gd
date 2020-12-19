@@ -6,7 +6,7 @@ extends Spatial
 # If 'parallelRail != ""' All local train Settings apart from 'railType' and 'distanceToParallelRail' are deprecated. The Rail gets the rest information from parallel rail.
 
 
-export (String) var railType = "Rail"
+export (String) var railTypePath = "Rail"
 export (float) var length
 export (float) var radius
 export (float) var buildDistance = 1
@@ -56,6 +56,8 @@ export (String) var parallelRail = ""
 export (float) var distanceToParallelRail = 0
 var parRail
 
+var railTypeNode 
+
 onready var world = find_parent("World")
 onready var buildings = world.get_node("Buildings")
 
@@ -69,7 +71,6 @@ func _ready():
 	if not Engine.is_editor_hint():
 		$Beginning.queue_free()
 		$Ending.queue_free()
-		$Types.hide()
 	pass # Replace with function body.
 
 var EditorUpdateTimer = 0
@@ -116,10 +117,13 @@ func _update(newvar):
 		translation = parRail.get_shifted_pos_at_RailDistance(0, distanceToParallelRail) ## Hier verstehe ich das minus nicht
 		rotation_degrees.y = parRail.rotation_degrees.y
 		fixedTransform = transform
-
-	if $Types.get_node(railType) == null:
-		railType = "Rail"
-	buildDistance = $Types.get_node(railType).buildDistance
+	
+	if railTypeNode == null:
+		railTypeNode = load(railTypePath)
+		if railTypeNode == null:
+			railTypeNode = load("res://Resources/Basic/RailTypes/Default.tscn")
+		railTypeNode = railTypeNode.instance()
+		buildDistance = railTypeNode.buildDistance
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
@@ -138,7 +142,7 @@ func _update(newvar):
 
 	if Engine.is_editor_hint():
 		$Ending.translation = get_local_transform_at_rail_distance(length).origin
-	$Types.hide()
+
 
 func checkVisualInstance():
 	if visible:
@@ -154,7 +158,9 @@ func buildRail():
 		return
 	get_node("MultiMeshInstance").set_multimesh(get_node("MultiMeshInstance").multimesh.duplicate(false))
 	var multimesh = get_node("MultiMeshInstance").multimesh
-	multimesh.mesh = $Types.get_node(railType).mesh.duplicate(true)
+	multimesh.mesh = railTypeNode.get_child(0).mesh.duplicate(true)
+	for i in range(railTypeNode.get_child(0).get_surface_material_count()):
+		multimesh.mesh.surface_set_material(i, railTypeNode.get_child(0).get_surface_material(i))
 
 	multimesh.instance_count = length / buildDistance + 1
 	multimesh.visible_instance_count = visibleSegments

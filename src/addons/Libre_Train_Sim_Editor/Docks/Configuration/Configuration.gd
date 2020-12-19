@@ -475,7 +475,7 @@ func _on_ToggleAllSavedObjects_pressed():
 
 
 func updateToggleAllSavedObjectsButton():
-	if world == null:
+	if world == null or world.name != "World":
 		return
 	if not world.editorAllObjectsUnloaded:
 		$"World Configuration/ToggleAllSavedObjects".text = "Unload all Objects from configuration"

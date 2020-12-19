@@ -74,7 +74,7 @@ func _on_Language_item_selected(index):
 func updateLanguage():
 	## Get all languages, and add MainMenu* and Ingame* to Libre TrainSim
 	var languageFiles = {"Array": []}
-	Root.crawlDirectory("res://",languageFiles, "translation")
+	Root.crawlDirectory("res://", languageFiles, "translation")
 	var languages = []
 	for languageFile in languageFiles["Array"]:
 		if languageFile.get_file().begins_with("MainMenu") or languageFile.get_file().begins_with("Ingame"):

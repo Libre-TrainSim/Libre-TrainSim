@@ -56,7 +56,7 @@ func _ready():
 	if not Engine.editor_hint:
 		Root.world = self
 		Root.checkAndLoadTranslationsForTrack(trackName)
-		Root.crawlDirectory("res://Trains/",trainFiles,"tscn")
+		Root.crawlDirectory("res://Trains",trainFiles,"tscn")
 		trainFiles = trainFiles["Array"]
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
@@ -255,6 +255,7 @@ func load_chunk(position):
 	var Rails = chunk.Rails
 #	var railNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 	for rail in Rails:
+		printerr("Loading Rail: " + rail)
 		## IF YOU GET HERE AN ERROR: Do Save and Create Chunks, and check, if only Rails are assigned to the "Rails" Node
 		if $Rails.get_node(rail) != null:  ##DEBUG
 			$Rails.get_node(rail).load_visible_Instance()

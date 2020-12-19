@@ -65,8 +65,16 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 		if file == "": break
 		if file.begins_with("."): continue
 		if dir.current_is_dir():
-			crawlDirectory(directoryPath+"/"+file, foundFiles, fileExtension)
+			if directoryPath.ends_with("/"):
+				crawlDirectory(directoryPath+file, foundFiles, fileExtension)
+			else:
+				crawlDirectory(directoryPath+"/"+file, foundFiles, fileExtension)
 		else:
 			if file.get_extension() == fileExtension:
-				foundFiles["Array"].append(directoryPath +"/"+file)
+				var exportString 
+				if directoryPath.ends_with("/"):
+					exportString = directoryPath +file
+				else:
+					exportString = directoryPath +"/"+file
+				foundFiles["Array"].append(exportString)
 	dir.list_dir_end()

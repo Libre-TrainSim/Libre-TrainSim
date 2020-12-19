@@ -1,35 +1,80 @@
 tool
 extends Spatial
-var type = "Signal"
-export var status = 0# 0: Red, 1: Green, -1: Off,
-var signalAfter = ""
+const type = "Signal" # Never change this type!!
 onready var world = find_parent("World")
-var signalAfterNode
-export var setPassAtH = 25
+
+
+
+export var status = 0 # 0: Red, 1: Green, -1: Off,
+
+var signalAfter = "" # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
+var signalAfterNode # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
+
+export var setPassAtH = -1 # If these 3 variables represent a real time (24h format), the signal will be turned green at this specified time.
 export var setPassAtM = 0
 export var setPassAtS = 0
-export var speed = -1
-var warnSpeed = -1
-export var forward = true
+
+export var speed = -1 # SpeedLimit, which will be applied to the train. If -1: Speed Limit won't be changed by overdriving.
+var warnSpeed = -1 # Displays the speed of the following speedlimit. Just used for the player train. It doesn't affect any train..
+
 export var blockSignal = false
 
 var orange = false
 
 
-export (String) var attachedRail
-export (int) var onRailPosition
-export (bool) var update setget setToRail
 
-var blinking = false
+export var visualInstancePath = ""
+export (String) var attachedRail # Internal. Never change this via script.
+var attachedRailNode
+export var forward = true # Internal. Never change this via script.
+export (int) var onRailPosition # Internal. Never change this via script.
+
+export (bool) var update setget setToRail # Just uesd for the editor. If it will be pressed, then the function set_get rail will be
+
 var timer = 0
 func _process(delta):
+	timer += delta
+	if timer < 0.5:
+		return
+	timer = 0
+
 	if not Engine.is_editor_hint():
 		if world.time[0] == setPassAtH and world.time[1] == setPassAtM and world.time[2] == setPassAtS:
 			status = 1
-	timer += delta
-	if timer > 1:
-		timer = 0
-		update()
+	updateVisualInstance()
+
+func updateVisualInstance():
+	if attachedRailNode == null:
+		attachedRailNode = find_parent("World").get_node("Rails" + "/" + attachedRail)
+		if attachedRailNode == null:
+			return
+			
+	visible = attachedRailNode.visible
+	if not attachedRailNode.visible:
+		if get_node_or_null("VisualInstance") != null:
+			$VisualInstance.queue_free()
+		return
+
+	if get_node_or_null("VisualInstance") == null:
+		# Load Visual Instance:
+		var visualInstanceResource = load(visualInstancePath)
+		if visualInstanceResource == null:
+			visualInstanceResource = load("res://Resources/Basic/Signals/Default.tscn")
+		var visualInstance = visualInstanceResource.instance()
+		add_child(visualInstance)
+		visualInstance.name = "VisualInstance"
+		visualInstance.owner = self
+
+
+
+func update():
+	if Engine.is_editor_hint() and blockSignal:
+		status = 1
+	if world == null:
+		world = find_parent("World")
+	if signalAfterNode == null and signalAfter != "":
+		signalAfterNode = world.get_node("Signals/"+String(signalAfter))
+
 
 
 func _ready():
@@ -40,72 +85,20 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		update()
+	setToRail(true)
 	if blockSignal:
 		status = 1
-		
-	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	var texture = $Viewport.get_texture()
-	$Screen1.material_override = $Screen1.material_override.duplicate(true)
-	$Screen1.material_override.emission_texture = texture
-	
-	$Viewport2.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	texture = $Viewport2.get_texture()
-	$Screen2.material_override = $Screen2.material_override.duplicate(true)
-	$Screen2.material_override.emission_texture = texture
-	setToRail(true)
+
+
+
 	update()
-	pass
 
-		
-func update():
-	if Engine.is_editor_hint() and blockSignal:
-		status = 1
-	orange = false
-	if world == null:
-		world = find_parent("World")
-	if signalAfterNode == null and signalAfter != "":
-		signalAfterNode = world.get_node("Signals/"+String(signalAfter))
-	update_screen2()
-	update_screen1()
-	if warnSpeed != -1 and status == 1 and not blinking:
-		off()
-		blinking = true
-		return
-	blinking = false
-	if status == 0:
-		red()
-	elif status == 1:
-		signalAfterNode = world.get_node("Signals/"+signalAfter)
-		if signalAfterNode !=  world.get_node("Signals") and signalAfterNode != null and signalAfterNode.status == 0:
-			orange()
-			orange = true
-			return
-		green()
-	elif status < 0:
-		off()
 
-func green():
-	$Red.visible = false
-	$Orange.visible = false
-	$Green.visible = true
 
-func red():
-	$Red.visible = true
-	$Orange.visible = false
-	$Green.visible = false
-	$Screen1.visible = false
-	$Screen2.visible = false
 
-func orange():
-	$Red.visible = false
-	$Orange.visible = true
-	$Green.visible = false
-	
-func off():
-	$Red.visible = false
-	$Orange.visible = false
-	$Green.visible = false
-	
+
+
+
 func setToRail(newvar):
 	var world = find_parent("World")
 	if world == null:
@@ -123,38 +116,14 @@ func giveSignalFree():
 	if blockSignal:
 		status = 1
 
-func update_screen2():
-	if speed != -1:
-		if speed - 100 >= 0:
-			var outputSpeed = int(speed / 10)
-			$Viewport2/Node2D/Label.text = String(outputSpeed)
-		else: 
-			var outputSpeed = int(speed / 10)
-			var string = " " + String(outputSpeed)
-			$Viewport2/Node2D/Label.text = string
-		$Screen2.visible = true
-	else:
-		$Screen2.visible = false
-		
-func update_screen1():
-	if warnSpeed != -1:
-		if warnSpeed - 100 >= 0:
-			var outputSpeed = int(warnSpeed / 10)
-			$Viewport/Node2D/Label.text = String(outputSpeed)
-		else: 
-			var outputSpeed = int(warnSpeed / 10)
-			var string = " " + String(outputSpeed)
-			$Viewport/Node2D/Label.text = string
-		$Screen1.visible = true
-	else:
-		$Screen1.visible = false
-		
+
+
 func get_scenario_data():
 	var d = {}
 	d.status = status
 	d.setPassAtH = setPassAtH
 	d.setPassAtM = setPassAtM
-	d.setPassAtS = setPassAtS 
+	d.setPassAtS = setPassAtS
 	d.speed = speed
 	d.blockSignal = blockSignal
 	return d
@@ -163,10 +132,10 @@ func set_scenario_data(d):
 	status = d.status
 	setPassAtH = d.setPassAtH
 	setPassAtM = d.setPassAtM
-	setPassAtS = d.setPassAtS 
+	setPassAtS = d.setPassAtS
 	speed = d.speed
 	blockSignal = d.get("blockSignal", false)
-	
+
 
 func reset():
 	status = 0
@@ -175,6 +144,3 @@ func reset():
 	setPassAtS = 0
 	speed = -1
 	blockSignal = false
-
-	
-	

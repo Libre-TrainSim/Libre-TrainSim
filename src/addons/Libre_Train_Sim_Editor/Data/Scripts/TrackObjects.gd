@@ -153,7 +153,6 @@ func _update(newvar):
 	for x in range(materialPaths.size()):
 		if materialPaths[x] != "":
 			multimesh.mesh.surface_set_material(x, load(materialPaths[x]))
-			print("KACKI")
 	
 	var straightCount = int(length / distanceLength)
 	if placeLast:

@@ -30,6 +30,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.515472, 0 )
 material_override = ExtResource( 3 )
 mesh = ExtResource( 7 )
 material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Signals" type="Spatial" parent="."]
 
@@ -43,68 +46,45 @@ forward = true
 
 [node name="Signal" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.999118, 0, -0.0419877, 0, 1, 0, 0.0419877, 0, 0.999118, 209.938, 0, 4.40918 )
-status = 0
+visible = false
 setPassAtH = 12
-setPassAtM = 0
 setPassAtS = 5
 speed = 140
-forward = true
-blockSignal = false
 attachedRail = "Rail"
 onRailPosition = 210
-update = false
 
 [node name="Signal2" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.996802, 0, -0.0799147, 0, 1, 0, 0.0799147, 0, 0.996802, 399.573, 0, 15.9917 )
+visible = false
 status = 1
-setPassAtH = 25
-setPassAtM = 0
 setPassAtS = 45
-speed = -1
-forward = true
-blockSignal = false
 attachedRail = "Rail"
 onRailPosition = 400
-update = false
 
 [node name="Signal3" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.987227, 0, -0.159318, 0, 1, 0, 0.159318, 0, 0.987227, 796.591, 0, 63.8638 )
+visible = false
 status = 1
 setPassAtH = 12
-setPassAtM = 0
 setPassAtS = 50
-speed = -1
-forward = true
-blockSignal = false
 attachedRail = "Rail"
 onRailPosition = 800
-update = false
 
 [node name="Signal4" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, -0.0666163, 0, 1, 0, 0.0666163, 0, 0.997779, 1389.5, 0, 152.803 )
+transform = Transform( 0.997779, 0, -0.0666169, 0, 1, 0, 0.0666169, 0, 0.997779, 1389.5, 0, 152.803 )
+visible = false
 status = 1
 setPassAtH = 12
 setPassAtM = 1
-setPassAtS = 0
 speed = 80
-forward = true
-blockSignal = false
 attachedRail = "Rail2"
 onRailPosition = 400
-update = false
 
 [node name="Signal5" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, 0.0666183, 0, 1, 0, -0.0666183, 0, 0.997779, 1789.21, 0, 152.802 )
-status = 0
-setPassAtH = 25
-setPassAtM = 0
-setPassAtS = 0
-speed = -1
-forward = true
-blockSignal = false
+transform = Transform( 0.997779, 0, 0.0666178, 0, 1, 0, -0.0666178, 0, 0.997779, 1789.21, 0, 152.803 )
+visible = false
 attachedRail = "Rail2"
 onRailPosition = 800
-update = false
 
 [node name="City2" parent="Signals" instance=ExtResource( 17 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 1589.35, 0, 159.467 )
@@ -118,6 +98,7 @@ forward = true
 [node name="Rails" type="Spatial" parent="."]
 
 [node name="Rail" parent="Rails" instance=ExtResource( 2 )]
+visible = false
 length = 1000.0
 radius = -5000.0
 visibleSegments = 1112.11
@@ -135,6 +116,7 @@ automaticTendency = true
 
 [node name="Rail2" parent="Rails" instance=ExtResource( 2 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 993.347, 0, 99.667 )
+visible = false
 length = 1000.0
 radius = 3000.0
 visibleSegments = 1112.11

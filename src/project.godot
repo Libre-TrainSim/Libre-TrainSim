@@ -183,7 +183,7 @@ player_camera_8={
 
 [locale]
 
-translations=PoolStringArray(  )
+translations=PoolStringArray( "res://Translations/Ingame.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.it.translation", "res://Translations/MainMenu.de.translation", "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.it.translation" )
 locale_filter=[ 0, [ "de", "en" ] ]
 translation_remaps={
 

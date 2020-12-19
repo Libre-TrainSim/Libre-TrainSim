@@ -881,7 +881,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 				distanceS = "1km"
 			else:
 				distanceS+= "m"
-			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
+			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
 		
 
 func check_security():#

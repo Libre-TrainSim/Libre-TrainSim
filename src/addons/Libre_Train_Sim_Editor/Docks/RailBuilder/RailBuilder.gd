@@ -392,6 +392,7 @@ func update_RotationHeightData():
 
 func update_generalInformation():
 	$S/General/RailType/LineEdit.text = currentRail.railTypePath
+	$S/General/OverheadLine.pressed = currentRail.overheadLine
 	$S/General/ParallelRail/ParallelRail.text = currentRail.parallelRail
 	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distanceToParallelRail)
 	
@@ -411,3 +412,8 @@ func _on_automaticTendency_pressed():
 	
 
 
+
+
+func _on_OverheadLine_pressed():
+	currentRail.overheadLine = $S/General/OverheadLine.pressed
+	currentRail.updateOverheadLine()

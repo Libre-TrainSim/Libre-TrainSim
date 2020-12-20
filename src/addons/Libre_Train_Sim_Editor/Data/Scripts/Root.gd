@@ -78,3 +78,4 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 					exportString = directoryPath +"/"+file
 				foundFiles["Array"].append(exportString)
 	dir.list_dir_end()
+

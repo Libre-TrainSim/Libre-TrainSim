@@ -167,11 +167,11 @@ margin_bottom = 164.0
 [node name="S" type="VBoxContainer" parent="."]
 margin_top = 168.0
 margin_right = 1024.0
-margin_bottom = 372.0
+margin_bottom = 416.0
 
 [node name="General" type="VBoxContainer" parent="S"]
 margin_right = 1024.0
-margin_bottom = 52.0
+margin_bottom = 96.0
 
 [node name="RailType" type="HBoxContainer" parent="S/General"]
 margin_right = 1024.0
@@ -190,10 +190,16 @@ margin_bottom = 24.0
 hint_tooltip = "Example (without '): 'res://Resources/Basic/RailTypes/Default.tscn'"
 size_flags_horizontal = 3
 
-[node name="ParallelRail" type="HBoxContainer" parent="S/General"]
+[node name="OverheadLine" type="CheckButton" parent="S/General"]
 margin_top = 28.0
 margin_right = 1024.0
-margin_bottom = 52.0
+margin_bottom = 68.0
+text = "Overhead Line"
+
+[node name="ParallelRail" type="HBoxContainer" parent="S/General"]
+margin_top = 72.0
+margin_right = 1024.0
+margin_bottom = 96.0
 
 [node name="Label" type="Label" parent="S/General/ParallelRail"]
 margin_top = 5.0
@@ -222,9 +228,9 @@ margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Settings" type="VBoxContainer" parent="S"]
-margin_top = 56.0
+margin_top = 100.0
 margin_right = 1024.0
-margin_bottom = 180.0
+margin_bottom = 224.0
 
 [node name="OptionButton" type="OptionButton" parent="S/Settings"]
 margin_right = 1024.0
@@ -592,21 +598,21 @@ text = "Shift"
 
 [node name="Update" type="Button" parent="S"]
 margin_left = 483.0
-margin_top = 184.0
+margin_top = 228.0
 margin_right = 541.0
-margin_bottom = 204.0
+margin_bottom = 248.0
 size_flags_horizontal = 4
 text = "Update"
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_top = 376.0
+margin_top = 420.0
 margin_right = 1024.0
-margin_bottom = 380.0
+margin_bottom = 424.0
 
 [node name="RailConnector" type="VBoxContainer" parent="."]
-margin_top = 384.0
+margin_top = 428.0
 margin_right = 1024.0
-margin_bottom = 478.0
+margin_bottom = 522.0
 
 [node name="Label" type="Label" parent="RailConnector"]
 margin_right = 1024.0
@@ -689,6 +695,7 @@ text = "Connect"
 [connection signal="text_entered" from="AddRail/ParallelDistance/LineEdit" to="." method="_on_Update_pressed"]
 [connection signal="pressed" from="AddRail/AddRail" to="." method="_on_AddRail_pressed"]
 [connection signal="pressed" from="ManualMoving" to="." method="_on_ManualMoving_pressed"]
+[connection signal="pressed" from="S/General/OverheadLine" to="." method="_on_OverheadLine_pressed"]
 [connection signal="item_selected" from="S/Settings/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="text_entered" from="S/Settings/Length/LineEdit" to="." method="_on_Update_pressed"]
 [connection signal="text_entered" from="S/Settings/Radius/LineEdit" to="." method="_on_Update_pressed"]

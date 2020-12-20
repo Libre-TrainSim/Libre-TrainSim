@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Rail.gd" type="Script" id=1]
 
@@ -25,6 +25,8 @@ rings = 8
 [sub_resource type="MultiMesh" id=5]
 transform_format = 1
 
+[sub_resource type="ArrayMesh" id=6]
+
 [node name="Rail" type="Spatial" groups=[
 "Rail",
 ]]
@@ -34,6 +36,7 @@ buildDistance = 0.9
 endpos = Vector3( 100, 0, 0 )
 otherLength = 100.0
 Outlength = 100.0
+overheadLine = true
 
 [node name="Beginning" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
@@ -49,3 +52,6 @@ material/0 = null
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 5 )
+
+[node name="OverheadLine" type="MeshInstance" parent="."]
+mesh = SubResource( 6 )

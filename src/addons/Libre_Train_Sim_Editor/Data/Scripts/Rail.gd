@@ -54,6 +54,14 @@ export (float) var automaticTendency = false
 
 export (String) var parallelRail = ""
 export (float) var distanceToParallelRail = 0
+
+export (bool) var overheadLine = false
+var overheadLineHeight1 = 5.3
+var overheadLineHeight2 = 6.85
+var overheadLineThinkness = 0.02
+var line2HeightChangingFactor = 0.9
+var overheadLineBuilded = false
+
 var parRail
 
 var railTypeNode 
@@ -76,6 +84,9 @@ func _ready():
 var EditorUpdateTimer = 0
 func _process(delta):
 	checkVisualInstance()
+	if visible and not overheadLineBuilded:
+		updateOverheadLine()
+		overheadLineBuilded = true
 	if Engine.is_editor_hint():
 		EditorUpdateTimer += delta
 		if EditorUpdateTimer < 0.25:
@@ -92,12 +103,24 @@ func _process(delta):
 			name = name.replace(" ", "_")
 		## Move Buildings to the Buildings Node
 		for child in get_children():
-			if child.is_class("MeshInstance") and not (child.name == "Beginning" or child.name == "Ending"):
+			if not child.owner == self:
 				remove_child(child)
 				buildings.add_child(child)
 				child.owner = world
 
 func _update(newvar):
+	if railTypeNode == null:
+		railTypeNode = load(railTypePath)
+		if railTypeNode == null:
+			railTypeNode = load("res://Resources/Basic/RailTypes/Default.tscn")
+		railTypeNode = railTypeNode.instance()
+		buildDistance = railTypeNode.buildDistance
+		overheadLineHeight1 = railTypeNode.overheadLineHeight1
+		overheadLineHeight2 = railTypeNode.overheadLineHeight2
+		overheadLineThinkness = railTypeNode.overheadLineThinkness
+		line2HeightChangingFactor = railTypeNode.line2HeightChangingFactor
+	
+	updateOverheadLine()
 	world = find_parent("World")
 	if world == null: return
 	if parallelRail == "":
@@ -118,12 +141,6 @@ func _update(newvar):
 		rotation_degrees.y = parRail.rotation_degrees.y
 		fixedTransform = transform
 	
-	if railTypeNode == null:
-		railTypeNode = load(railTypePath)
-		if railTypeNode == null:
-			railTypeNode = load("res://Resources/Basic/RailTypes/Default.tscn")
-		railTypeNode = railTypeNode.instance()
-		buildDistance = railTypeNode.buildDistance
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
@@ -136,6 +153,7 @@ func _update(newvar):
 
 	if not world.editorAllObjectsUnloaded or not Engine.is_editor_hint():
 		buildRail()
+		updateOverheadLine()
 	else:
 		if self.has_node("MultiMeshInstance"):
 			$MultiMeshInstance.queue_free()
@@ -372,3 +390,189 @@ func updateAutomaticTendency():
 	elif automaticTendency and radius == 0:
 		tend1 = 0
 		tend2 = 0
+		
+var vertices
+var indices
+func updateOverheadLine():
+	if get_node_or_null("OverheadLine") != null:
+		$OverheadLine.free()
+	
+	if not overheadLine: 
+		return
+		
+	var overheadLineMeshInstance = MeshInstance.new()
+	overheadLineMeshInstance.name = "OverheadLine"
+	self.add_child(overheadLineMeshInstance)
+	overheadLineMeshInstance.owner = self
+	
+	vertices = PoolVector3Array()
+	indices = PoolIntArray()
+
+	## Get Pole Points:
+	var polePositions = []
+	polePositions.append(0)
+	
+	for trackObject in trackObjects:
+		if trackObject == null:
+			continue
+		print(trackObject.description)
+		if trackObject.description == "Poles":
+			var pos = trackObject.onRailPosition
+			if pos == 0:
+				pos += trackObject.distanceLength
+			while pos < (trackObject.length - trackObject.onRailPosition):
+				polePositions.append(pos)
+				pos += trackObject.distanceLength
+	
+	polePositions.append(length)
+	
+	for i in range (polePositions.size()-2):
+		buildOverheadLineSegment(polePositions[i], polePositions[i+1])
+		
+	if polePositions[polePositions.size()-2] != length:
+		buildOverheadLineSegment(polePositions[polePositions.size()-2], length)
+		
+		
+	
+	var mesh = ArrayMesh.new()
+
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_INDEX] = indices
+
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Black_Plastic.tres"))
+	$OverheadLine.mesh = mesh
+
+func buildOverheadLineSegment(start, end):
+	var startPos = get_local_pos_at_RailDistance(start)+Vector3(0,overheadLineHeight1,0)
+	var endPos = get_local_pos_at_RailDistance(end)+Vector3(0,overheadLineHeight1,0)
+	var directVector = (endPos-startPos).normalized()
+	var directDistance = startPos.distance_to(endPos)
+	
+	create3DLine(get_local_pos_at_RailDistance(start)+Vector3(0,overheadLineHeight1,0), get_local_pos_at_RailDistance(end)+Vector3(0,overheadLineHeight1,0), overheadLineThinkness)
+	
+	var segments = int(directDistance/10)
+	if segments == 0:
+		segments = 1
+	var segmentDistance = directDistance/segments
+	var currentPos1 = startPos
+	var currentPos2 = startPos + directVector*segmentDistance
+	for i in range(segments):
+		create3DLine(currentPos1+Vector3(0,overheadLineHeight2-overheadLineHeight1-sin(i*segmentDistance/directDistance*PI)*line2HeightChangingFactor,0), currentPos2+Vector3(0,overheadLineHeight2-overheadLineHeight1-sin((i+1)*segmentDistance/directDistance*PI)*line2HeightChangingFactor,0), overheadLineThinkness)
+
+		var lineHeight2ChangingAtHalf = sin((i+1)*segmentDistance/directDistance*PI)*line2HeightChangingFactor - (sin((i+1)*segmentDistance/directDistance*PI)*line2HeightChangingFactor - sin(i*segmentDistance/directDistance*PI)*line2HeightChangingFactor)/2.0
+		create3DLineUp(currentPos1+directVector*segmentDistance/2, currentPos1+directVector*segmentDistance/2+Vector3(0,overheadLineHeight2-overheadLineHeight1-lineHeight2ChangingAtHalf,0), overheadLineThinkness)
+		currentPos1+=directVector*segmentDistance
+		currentPos2+=directVector*segmentDistance
+	return {"vertices" : vertices, "indices" : indices}
+	
+	
+	
+
+func create3DLine(start, end, thinkness):
+	var x = vertices.size()
+	vertices.push_back(start + Vector3(0,thinkness,0))
+	vertices.push_back(start + Vector3(0,0,-thinkness))
+	vertices.push_back(start + Vector3(0,-thinkness,0))
+	vertices.push_back(start + Vector3(0,0,thinkness))
+	
+	vertices.push_back(end + Vector3(0,thinkness,0))
+	vertices.push_back(end + Vector3(0,0,-thinkness))
+	vertices.push_back(end + Vector3(0,-thinkness,0))
+	vertices.push_back(end + Vector3(0,0,thinkness))
+	
+	var indices_array = PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
+
+	indices.append_array(indices_array)
+	
+func create3DLineUp(start, end, thinkness):
+	var x = vertices.size()
+	vertices.push_back(start + Vector3(thinkness,0,0))
+	vertices.push_back(start + Vector3(0,0,-thinkness))
+	vertices.push_back(start + Vector3(-thinkness,0,0))
+	vertices.push_back(start + Vector3(0,0,thinkness))
+	
+	vertices.push_back(end + Vector3(thinkness,0,0))
+	vertices.push_back(end + Vector3(0,0,-thinkness))
+	vertices.push_back(end + Vector3(-thinkness,0,0))
+	vertices.push_back(end + Vector3(0,0,thinkness))
+	
+	var indices_array = PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
+
+	indices.append_array(indices_array)
+
+	
+	
+	
+#func buildOverheadLine():
+#
+#	if get_node_or_null("OverheadLine") == null:
+#		var overheadLineMeshInstance = MeshInstance.new()
+#		overheadLineMeshInstance.name = "OverheadLine"
+#		self.add_child(overheadLineMeshInstance)
+#		overheadLineMeshInstance.owner = self
+#
+#
+#	## Get Pole Points:
+#	var polePositions = []
+#	polePositions.append(0)
+#
+#	for trackObject in trackObjects:
+#		print(trackObject.description)
+#		if trackObject.description == "Poles":
+#			var pos = trackObject.onRailPosition
+#			if pos == 0:
+#				pos += trackObject.distanceLength
+#			while pos < (trackObject.length - trackObject.onRailPosition):
+#				polePositions.append(pos)
+#				pos += trackObject.distanceLength
+#
+#	polePositions.append(length)
+#
+#
+#	## Generate Mesh:
+#
+#	var vertices = PoolVector3Array()
+#	var indices = PoolIntArray()
+#
+#
+#	for i in range (polePositions.size()-1):
+#		var result = create3DLine(get_local_pos_at_RailDistance(polePositions[i])+Vector3(0,overheadLineHeight1,0), get_local_pos_at_RailDistance(polePositions[i+1])+Vector3(0,overheadLineHeight1,0), overheadLineThinkness, vertices, indices)
+#		vertices = result.vertices
+#		indices = result.indices
+#
+#		result = create3DLine(get_local_pos_at_RailDistance(polePositions[i])+Vector3(0,overheadLineHeight2,0), get_local_pos_at_RailDistance(polePositions[i+1])+Vector3(0,overheadLineHeight2,0), overheadLineThinkness, vertices, indices)
+#		vertices = result.vertices
+#		indices = result.indices
+#
+#	var mesh = ArrayMesh.new()
+#
+#	var arrays = []
+#	arrays.resize(Mesh.ARRAY_MAX)
+#	arrays[Mesh.ARRAY_VERTEX] = vertices
+#	arrays[Mesh.ARRAY_INDEX] = indices
+#
+#	print("HUHU")
+#	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+#	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Black_Plastic.tres"))
+#	$OverheadLine.mesh = mesh
+#
+#func create3DLine(start, end, thinkness, vertices, indices):
+#	var x = vertices.size()
+#	vertices.push_back(start + Vector3(0,thinkness,0))
+#	vertices.push_back(start + Vector3(0,0,-thinkness))
+#	vertices.push_back(start + Vector3(0,-thinkness,0))
+#	vertices.push_back(start + Vector3(0,0,thinkness))
+#
+#	vertices.push_back(end + Vector3(0,thinkness,0))
+#	vertices.push_back(end + Vector3(0,0,-thinkness))
+#	vertices.push_back(end + Vector3(0,-thinkness,0))
+#	vertices.push_back(end + Vector3(0,0,thinkness))
+#
+#	var indices_array = PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
+#
+#	indices.append_array(indices_array)
+#
+#	return {"vertices" : vertices, "indices" : indices}

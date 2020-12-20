@@ -97,6 +97,7 @@ func set_data(d):
 		applySlopeRotation = d.applySlopeRotation
 
 func _ready():
+	attach_to_rail()
 	_update(true)
 	pass
 		

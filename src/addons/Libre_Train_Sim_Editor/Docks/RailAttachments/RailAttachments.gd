@@ -256,6 +256,8 @@ func update_positioning():
 func _on_Button_pressed(): ## UPDATE
 	print("Updating...")
 	currentTO._update(true)
+	if currentTO.description == "Poles":
+		currentRail.updateOverheadLine()
 
 
 func _on_CopyTO_pressed():

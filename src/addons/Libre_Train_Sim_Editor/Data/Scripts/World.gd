@@ -578,6 +578,7 @@ func checkTrainSpawn(delta):
 		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
 			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
 			spawnTrain(pendingTrains["TrainName"][i])
+			
 
 
 

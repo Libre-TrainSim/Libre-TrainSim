@@ -1,7 +1,6 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=1]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Resources/Basic/Textures/TextBox.png" type="Texture" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Resources/Basic/Sounds/Bling.ogg" type="AudioStream" id=5]
@@ -12,19 +11,12 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/GreenSignal.png" type="Texture" id=10]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Signal.png" type="Texture" id=11]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Station.png" type="Texture" id=12]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Bold.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame_Small_Bold.tres" type="DynamicFont" id=13]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/SpeedLimit.png" type="Texture" id=14]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/NextTable.png" type="Texture" id=15]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=16]
 
-[sub_resource type="DynamicFont" id=1]
-size = 18
-font_data = ExtResource( 13 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Label:modulate")
 tracks/0/interp = 1
@@ -50,7 +42,7 @@ tracks/1/keys = {
 "values": [ Vector2( 5, 0 ), Vector2( 5, -20 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Label:modulate")
 tracks/0/interp = 1
@@ -75,10 +67,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 5, -20 ), Vector2( 5, 0 ) ]
 }
-
-[sub_resource type="DynamicFont" id=5]
-size = 20
-font_data = ExtResource( 2 )
 
 [node name="HUD" type="CanvasLayer"]
 pause_mode = 2
@@ -126,7 +114,7 @@ __meta__ = {
 margin_right = 71.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 13 )
 text = "DISTANCE"
 align = 1
 
@@ -135,7 +123,7 @@ margin_left = 75.0
 margin_right = 120.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 13 )
 text = "TYPE"
 align = 1
 
@@ -144,7 +132,7 @@ margin_left = 124.0
 margin_right = 226.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 13 )
 text = "INFORMATION"
 align = 1
 
@@ -270,15 +258,15 @@ __meta__ = {
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 225.0
 margin_bottom = 45.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Message" type="AnimationPlayer" parent="."]
-anims/FadeIn = SubResource( 3 )
-anims/FadeOut = SubResource( 4 )
+anims/FadeIn = SubResource( 2 )
+anims/FadeOut = SubResource( 3 )
 
 [node name="Bling" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
@@ -315,7 +303,7 @@ margin_top = -257.0
 margin_right = 412.0
 margin_bottom = 164.0
 focus_mode = 2
-custom_fonts/normal_font = SubResource( 5 )
+custom_fonts/normal_font = ExtResource( 4 )
 text = "Test Test meine Freunde"
 selection_enabled = true
 __meta__ = {

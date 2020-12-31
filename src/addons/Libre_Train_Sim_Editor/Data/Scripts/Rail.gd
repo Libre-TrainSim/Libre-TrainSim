@@ -6,7 +6,7 @@ extends Spatial
 # If 'parallelRail != ""' All local train Settings apart from 'railType' and 'distanceToParallelRail' are deprecated. The Rail gets the rest information from parallel rail.
 
 
-export (String) var railTypePath = "Rail"
+export (String) var railTypePath = "res://Resources/Basic/RailTypes/Default.tscn"
 export (float) var length
 export (float) var radius
 export (float) var buildDistance = 1
@@ -66,6 +66,8 @@ var parRail
 
 var railTypeNode 
 
+
+
 onready var world = find_parent("World")
 onready var buildings = world.get_node("Buildings")
 
@@ -110,7 +112,8 @@ func _process(delta):
 
 func _update(newvar):
 	if railTypeNode == null:
-		railTypeNode = load(railTypePath)
+		if ResourceLoader.exists(railTypePath):
+			railTypeNode = load(railTypePath)
 		if railTypeNode == null:
 			railTypeNode = load("res://Resources/Basic/RailTypes/Default.tscn")
 		railTypeNode = railTypeNode.instance()
@@ -390,7 +393,13 @@ func updateAutomaticTendency():
 	elif automaticTendency and radius == 0:
 		tend1 = 0
 		tend2 = 0
-		
+
+
+
+
+
+###############################################################################
+## Overhad Line
 var vertices
 var indices
 func updateOverheadLine():
@@ -503,76 +512,42 @@ func create3DLineUp(start, end, thinkness):
 
 	indices.append_array(indices_array)
 
+###############################################################################
+
+export var isSwitchPart = ["", ""]
+# 0: is Rail at beginning part of switch? 1: is the rail at end part of switch if not 
+# It is saved the name of the other rail which is part of switch
+func checkForSwitch():
+	isSwitchPart = ["", ""]
+	var foundRailsAtBeginning = []
+	var foundRailsAtEnding = []
+	for rail in world.get_node("Rails").get_children():
+		if rail == self:
+			continue
+		# Check for beginning
+		if startpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(startrot) - Math.normDeg(rail.startrot)) < 1:
+			foundRailsAtBeginning.append(rail.name)
+		elif startpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(startrot) - Math.normDeg(rail.endrot+180)) < 1:
+			foundRailsAtBeginning.append(rail.name)
+		#check for ending
+		if endpos.distance_to(rail.startpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.startrot+180.0))) < 1:
+			foundRailsAtEnding.append(rail.name)
+		elif endpos.distance_to(rail.endpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.endrot))) < 1:
+			foundRailsAtEnding.append(rail.name)
+			
+	if foundRailsAtBeginning.size() > 0:
+		isSwitchPart[0] = foundRailsAtBeginning[0]
+		pass
 	
+	if foundRailsAtEnding.size() > 0:
+		isSwitchPart[1] = foundRailsAtEnding[0]
+		pass
+
+
 	
-	
-#func buildOverheadLine():
-#
-#	if get_node_or_null("OverheadLine") == null:
-#		var overheadLineMeshInstance = MeshInstance.new()
-#		overheadLineMeshInstance.name = "OverheadLine"
-#		self.add_child(overheadLineMeshInstance)
-#		overheadLineMeshInstance.owner = self
-#
-#
-#	## Get Pole Points:
-#	var polePositions = []
-#	polePositions.append(0)
-#
-#	for trackObject in trackObjects:
-#		print(trackObject.description)
-#		if trackObject.description == "Poles":
-#			var pos = trackObject.onRailPosition
-#			if pos == 0:
-#				pos += trackObject.distanceLength
-#			while pos < (trackObject.length - trackObject.onRailPosition):
-#				polePositions.append(pos)
-#				pos += trackObject.distanceLength
-#
-#	polePositions.append(length)
-#
-#
-#	## Generate Mesh:
-#
-#	var vertices = PoolVector3Array()
-#	var indices = PoolIntArray()
-#
-#
-#	for i in range (polePositions.size()-1):
-#		var result = create3DLine(get_local_pos_at_RailDistance(polePositions[i])+Vector3(0,overheadLineHeight1,0), get_local_pos_at_RailDistance(polePositions[i+1])+Vector3(0,overheadLineHeight1,0), overheadLineThinkness, vertices, indices)
-#		vertices = result.vertices
-#		indices = result.indices
-#
-#		result = create3DLine(get_local_pos_at_RailDistance(polePositions[i])+Vector3(0,overheadLineHeight2,0), get_local_pos_at_RailDistance(polePositions[i+1])+Vector3(0,overheadLineHeight2,0), overheadLineThinkness, vertices, indices)
-#		vertices = result.vertices
-#		indices = result.indices
-#
-#	var mesh = ArrayMesh.new()
-#
-#	var arrays = []
-#	arrays.resize(Mesh.ARRAY_MAX)
-#	arrays[Mesh.ARRAY_VERTEX] = vertices
-#	arrays[Mesh.ARRAY_INDEX] = indices
-#
-#	print("HUHU")
-#	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-#	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Black_Plastic.tres"))
-#	$OverheadLine.mesh = mesh
-#
-#func create3DLine(start, end, thinkness, vertices, indices):
-#	var x = vertices.size()
-#	vertices.push_back(start + Vector3(0,thinkness,0))
-#	vertices.push_back(start + Vector3(0,0,-thinkness))
-#	vertices.push_back(start + Vector3(0,-thinkness,0))
-#	vertices.push_back(start + Vector3(0,0,thinkness))
-#
-#	vertices.push_back(end + Vector3(0,thinkness,0))
-#	vertices.push_back(end + Vector3(0,0,-thinkness))
-#	vertices.push_back(end + Vector3(0,-thinkness,0))
-#	vertices.push_back(end + Vector3(0,0,thinkness))
-#
-#	var indices_array = PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
-#
-#	indices.append_array(indices_array)
-#
-#	return {"vertices" : vertices, "indices" : indices}
+#var possibleRails = []
+#for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
+#	if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.startrot))) < 1 and rail.name != currentR.name:
+#		possibleRails.append(rail.name)
+#	elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.endrot+180.0))) < 1 and rail.name != currentR.name:
+#		possibleRails.append(rail.name)

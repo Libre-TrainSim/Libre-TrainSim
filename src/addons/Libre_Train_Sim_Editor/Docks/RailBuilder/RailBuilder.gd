@@ -68,7 +68,7 @@ func _on_Update_pressed():
 		update_selected_rail(self)
 	if currentRail == null: return
 	
-	currentRail.railType = $S/General/RailType/LineEdit.text
+	currentRail.railTypePath = $S/General/RailType/LineEdit.text
 	currentRail.distanceToParallelRail = float($S/General/ParallelRail/ParallelDistance.text)
 	if $S/Settings.visible:
 		var radius
@@ -118,7 +118,7 @@ func _on_AddRail_pressed():
 		newRail.rotation_degrees.y = currentRail.endrot
 		newRail.length = float($S/Settings/Length/LineEdit.text)
 		newRail.radius = float($S/Settings/Radius/LineEdit.text)
-		newRail.railType = $S/General/RailType/LineEdit.text
+		newRail.railTypePath = $S/General/RailType/LineEdit.text
 		newRail.startTend = currentRail.endTend
 		newRail.endTend = currentRail.endTend
 		newRail.startSlope = currentRail.endSlope
@@ -157,7 +157,7 @@ func _on_AddRail_pressed():
 		newRail.rotation_degrees.y = currentRail.rotation_degrees.y + 180
 		newRail.length = float($S/Settings/Length/LineEdit.text)
 		newRail.radius = float($S/Settings/Radius/LineEdit.text)
-		newRail.railType = $S/General/RailType/LineEdit.text
+		newRail.railTypePath = $S/General/RailType/LineEdit.text
 		newRail.startTend = -currentRail.startTend
 		newRail.endTend = -currentRail.startTend
 		newRail.startSlope = -currentRail.startSlope

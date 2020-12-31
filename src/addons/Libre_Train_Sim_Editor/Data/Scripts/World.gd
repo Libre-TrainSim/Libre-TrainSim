@@ -162,6 +162,7 @@ func save_chunk(position):
 	chunk.Rails = []
 	for rail in Rails:
 		if compareChunks(pos2Chunk(rail.translation), position):
+			rail.checkForSwitch()
 			chunk.Rails.append(rail.name)
 
 	

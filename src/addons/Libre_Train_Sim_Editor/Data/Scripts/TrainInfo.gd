@@ -19,6 +19,12 @@ var green = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/DotGreen.png"
 var orange = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/DotOrange.png")
 
 func update_info(player):
+	if player.engine:
+		$VBoxContainer/Engine/dot.texture = green
+	else:
+		$VBoxContainer/Engine/dot.texture = red
+	
+	
 	## Pantograph:
 	$VBoxContainer/Pantograpgh.visible = player.electric
 	if player.pantograph:

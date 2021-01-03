@@ -294,6 +294,8 @@ func _process(delta):
 	
 
 func handleEngine():
+	if not pantograph:
+		engine = false
 	if not ai and Input.is_action_just_pressed("engine"):
 		if not engine:
 			startEngine()
@@ -371,8 +373,6 @@ func getCommand(delta):
 	if command < 0 and not Root.EasyMode and not ai:
 		blockedAcceleration = true
 	if (doorRight or doorLeft):
-		blockedAcceleration = true
-	if not engine:
 		blockedAcceleration = true
 		
 	technicalSoll = soll_command
@@ -915,7 +915,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 
 func check_security():#
 	var oldEnforcedBrake = 	enforcedBreaking
-	enforcedBreaking = hardOverSpeeding or overrunRedSignal or not pantograph or sifaTimer > 33 
+	enforcedBreaking = hardOverSpeeding or overrunRedSignal or not engine or sifaTimer > 33 
 	if not oldEnforcedBrake and enforcedBreaking and speed > 0 and not ai:
 		$Sound/EnforcedBrake.play()
 

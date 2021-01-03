@@ -12,6 +12,7 @@ INFORMATION,Information,Information,Informazioni,情報
 AUTOMATIC_DRIVING,Automatic Driving,Automatische Führung,Guida automatica,自動運転
 SIFA,SiFa,SiFa,VACMA,SiFa
 ENFORCED_BREAKING,Enforced Breaking,Zwangsbremsung,Arresto forzato,強制ブレーキ
+ENGINE_OFF,Engines off,Motoren aus,,
 ,,,,
 ARRIVAL:,Arrival:,Ankunft:,Arrivo:,到着:
 DEPARTURE:,Departure:,Abfahrt,Partenza:,出発:
@@ -42,13 +43,14 @@ TRAIN_INFORMATION,Train Information:,Zug-Informationen:,Informazione treno:,列�
 PRESS_F2_TO_CLOSE,(Press 'F2' to close this window),"(Drücken Sie 'F2', um das Fenster zu schließen.)",(Premi ‘F1’ per chiudere questa finestra),(‘F2’でウィンドウを閉じます)
 TRAIN_INFO_PANTOGRAPH,Pantograph (press 'b' and wait a few seconds),"Pantograf ('b' drücken, und ein paar Sekunden warten)",Pantografo (premi ‘b’ e attendi qualche secondo),パンタグラフ: (‘b’を押して数秒待つ)
 TRAIN_INFO_SIFA,SiFa (every 30 seconds you have to press 'space'),SiFa (alle 30 Sekunden müssen Sie die Leertaste drücken),VACMA (ogni 30 secondi devi premere ‘spazio’),SiFa: (30秒ごとにスペースキーを押す)
-TRAIN_INFO_ENFORCED_BREAKING,"Enforced Breaking: (check pantograpgh, red signal, speed limit, SiFa","Zwangsbremsung: (Checken Pantograf, überfahrenes rotes Signal, Geschwindigkeitslimit, SiFa)","Arresto forzato: (controlla pantografo, segnaletica, limite velocità o VACMA)",強制ブレーキ: (パンタグラフや赤信号、制限速度、SiFaを確認)
-TRAIN_INFO_BRAKES_1,Brakes: (release with left arrow, check Enforced Breaking),"Bremsen: (Lösen: Pfeiltaste nach oben/links, Anwenden: Pfeiltaste nach unten; Checken: Zwangsbremsung.)",ブレーキ: (左矢印キーで解除)
+TRAIN_INFO_ENFORCED_BREAKING,"Enforced Breaking: (check engine, red signal, speed limit, SiFa","Zwangsbremsung: (Überbrüfen Pantograf, überfahrenes rotes Signal, Geschwindigkeitslimit, SiFa)","Arresto forzato: (controlla pantografo, segnaletica, limite velocità o VACMA)",強制ブレーキ: (パンタグラフや赤信号、制限速度、SiFaを確認)
+TRAIN_INFO_BRAKES_1,Brakes: (release with left arrow;  check Enforced Breaking),"Bremsen: (Lösen: Pfeiltaste nach oben/links, Anwenden: Pfeiltaste nach unten; Checken: Zwangsbremsung.)",,ブレーキ: (左矢印キーで解除)
 TRAIN_INFO_BRAKES_2,"Brakes: (release with 'a', apply with 'd', check Enforced Breaking)","Bremsen: (Lösen: 'a', Betätigen: 'd'; Checken: Zwangsbremsung.)","Freni: (rilascia con 'a', applica con 'd', controlla arresto forzato)",ブレーキ: (‘a’で解除、’b’でかける。強制ブレーキを確認)
 TRAIN_INFO_DOORS,"Doors: (close with 'o', open right with 'p', open left with 'i","Türen: (Schließen: 'o', Rechte Seite öffnen: 'p', Linke Seite öffnen: 'i')","Porte: (chiusura con 'o', apertura a destra con 'p', apertura a sinistra con 'i",ドア:  (‘o’で閉める。’p’で右のドア、’i’で左のドアを開ける)
-TRAIN_INFO_ACCELERATION_1,Acceleration: (Apply: up/right arrow key, Release: left/down arrow key, check doors),力行: (上矢印キー、右矢印キー)
-TRAIN_INFO_ACCELERATION_2,"Acceleration: (Apply: 'w', Release: 's'; Check: brakes, doors) (try with releasing full acceleration first/setting acceleration to zero)","Beschleunigung: (Erhöhen: 'w', Verringern: 's'; Check: Bremsen, Türen) (Versuchen Sie die Beschleunigung auf Null zu setzen)","Accelerazione: (applica con ‘w’, rilascia con ‘s’; controlla freni e porte) (prova a rilasciare completamente)",力行: (‘w’で力行、’s’で解除。ドアとブレーキを確認。) (力行をやめてみてください)
+TRAIN_INFO_ACCELERATION_1,"Acceleration: (Apply: up/right arrow key, Release: left/down arrow key,  check doors)","Beschleunigung: (Erhöhen: Pfeiltaste nach oben/rechts, Verringern: Pfeiltaste nach unten/links; Überprüfen: Türen)",,力行: (上矢印キー、右矢印キー)
+TRAIN_INFO_ACCELERATION_2,"Acceleration: (Apply: 'w', Release: 's'; Check: brakes, doors) (try with releasing full acceleration first/setting acceleration to zero)","Beschleunigung: (Erhöhen: 'w', Verringern: 's'; Checken: Bremsen, Türen) (Versuchen Sie die Beschleunigung auf Null zu setzen)","Accelerazione: (applica con ‘w’, rilascia con ‘s’; controlla freni e porte) (prova a rilasciare completamente)",力行: (‘w’で力行、’s’で解除。ドアとブレーキを確認。) (力行をやめてみてください)
 TRAIN_INFO_HORN,Horn: ('h'),Hupe: ('h'),Tromba: (‘h’),警笛: (‘h’)
 TRAIN_INFO_FRONT_LIGHT,Front Light: ('L'),Spitzenlicht: ('L'),Luci frontali: (‘L’),前方ライト: (‘L’)
 TRAIN_INFO_CABIN_LIGHT,Cabin Light: ('Ctrl' + 'L'),Kabinenlicht: ('Strg' + 'L'),Luci cabina: (‘Ctrl’ + ‘L’),室内電気: ('Ctrl' + 'L')
 TRAIN_INFO_AUTOPILOT,Autopilot ('Ctrl' +  'a'),Autopilot ('Strg' + 'a'),Guida automatica (‘Ctrl’ + ‘A’),自動運転: ('Ctrl' +  'a')
+TRAIN_INFO_ENGINE,Engines ('e'; Check: Pantograpph),Motoren ('e'; Überprüfen: Pantograf),,

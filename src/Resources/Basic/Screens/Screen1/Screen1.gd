@@ -57,7 +57,7 @@ func _process(delta):
 
 	
 var lastAutoPilot = false
-func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedBreaking, sifa, autopilot, speedLimit):
+func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedBreaking, sifa, autopilot, speedLimit, engine):
 	## Tachos:
 	$SpeedPointer.rotation_degrees = SpeedPointerZero+SpeedPerKmH*speed 
 	SollCommandPointer = CommandPointerZero+CommandPerPercent*command*100 
@@ -66,6 +66,9 @@ func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforcedB
 	
 	$Speed.text = String(int(speed))
 	$Time.text = Math.time2String(world.time)
+	
+	## Engine:
+	$Engine.visible = !engine
 	
 	## Enforced Breaking
 	if enforcedBreaking:

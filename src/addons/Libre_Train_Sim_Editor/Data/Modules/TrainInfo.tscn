@@ -81,10 +81,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SiFa" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Engine" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 83.0
 margin_right = 766.0
 margin_bottom = 113.0
+
+[node name="dot" type="TextureRect" parent="VBoxContainer/Engine"]
+margin_right = 30.0
+margin_bottom = 30.0
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Engine"]
+margin_left = 34.0
+margin_right = 181.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 2 )
+text = "TRAIN_INFO_ENGINE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SiFa" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 117.0
+margin_right = 766.0
+margin_bottom = 147.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/SiFa"]
 margin_right = 30.0
@@ -104,9 +124,9 @@ __meta__ = {
 }
 
 [node name="EnforcedBreaking" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 117.0
+margin_top = 151.0
 margin_right = 766.0
-margin_bottom = 147.0
+margin_bottom = 181.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/EnforcedBreaking"]
 margin_right = 30.0
@@ -126,9 +146,9 @@ __meta__ = {
 }
 
 [node name="Brakes-0" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 151.0
+margin_top = 185.0
 margin_right = 766.0
-margin_bottom = 181.0
+margin_bottom = 215.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Brakes-0"]
 margin_right = 30.0
@@ -146,9 +166,9 @@ __meta__ = {
 }
 
 [node name="Brakes-1" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 185.0
+margin_top = 219.0
 margin_right = 766.0
-margin_bottom = 215.0
+margin_bottom = 249.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Brakes-1"]
 margin_right = 30.0
@@ -166,9 +186,9 @@ __meta__ = {
 }
 
 [node name="Doors" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 219.0
+margin_top = 253.0
 margin_right = 766.0
-margin_bottom = 249.0
+margin_bottom = 283.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Doors"]
 margin_right = 30.0
@@ -186,9 +206,9 @@ __meta__ = {
 }
 
 [node name="Acceleration-0" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 253.0
+margin_top = 287.0
 margin_right = 766.0
-margin_bottom = 283.0
+margin_bottom = 317.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Acceleration-0"]
 margin_right = 30.0
@@ -208,9 +228,9 @@ __meta__ = {
 }
 
 [node name="Acceleration-1" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 287.0
+margin_top = 321.0
 margin_right = 766.0
-margin_bottom = 317.0
+margin_bottom = 351.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Acceleration-1"]
 margin_right = 30.0
@@ -230,18 +250,18 @@ __meta__ = {
 }
 
 [node name="ColorRect2" type="ColorRect" parent="VBoxContainer"]
-margin_top = 321.0
+margin_top = 355.0
 margin_right = 766.0
-margin_bottom = 324.0
+margin_bottom = 358.0
 rect_min_size = Vector2( 0, 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Horn" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 328.0
+margin_top = 362.0
 margin_right = 766.0
-margin_bottom = 358.0
+margin_bottom = 392.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Horn"]
 margin_right = 30.0
@@ -261,9 +281,9 @@ __meta__ = {
 }
 
 [node name="FrontLight" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 362.0
+margin_top = 396.0
 margin_right = 766.0
-margin_bottom = 392.0
+margin_bottom = 426.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/FrontLight"]
 margin_right = 30.0
@@ -283,9 +303,9 @@ __meta__ = {
 }
 
 [node name="InsideLight" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 396.0
+margin_top = 430.0
 margin_right = 766.0
-margin_bottom = 426.0
+margin_bottom = 460.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/InsideLight"]
 margin_right = 30.0
@@ -305,9 +325,9 @@ __meta__ = {
 }
 
 [node name="Autopilot" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 430.0
+margin_top = 464.0
 margin_right = 766.0
-margin_bottom = 460.0
+margin_bottom = 494.0
 
 [node name="dot" type="TextureRect" parent="VBoxContainer/Autopilot"]
 margin_right = 30.0

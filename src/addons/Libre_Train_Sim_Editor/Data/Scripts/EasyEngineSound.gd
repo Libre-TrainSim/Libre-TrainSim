@@ -19,14 +19,16 @@ func _process(delta):
 		return	
 	
 	if player.engine:
-		print("HUHU")
 		$Idle.unit_db = Root.clampViaTime(0, $Idle.unit_db, delta)
 	else:
 		$Idle.unit_db = Root.clampViaTime(-50, $Idle.unit_db, delta)
 		
 	var sollAcceleration = -50
-	if player.command != 0 and Math.speedToKmH(player.speed) < 60 and player.engine and player.speed != 0:
-		sollAcceleration = -30 + abs(player.command*30)
+	if player.command > 0 and player.engine and player.speed != 0:
+		if  Math.speedToKmH(player.speed) < 60:
+			sollAcceleration = -30 + abs(player.command*30)
+		else:
+			sollAcceleration = -30 + abs(player.command*30) - (Math.speedToKmH(player.speed)-60)*3.0
 	
 	$Acceleration.unit_db = Root.clampViaTime(sollAcceleration, $Acceleration.unit_db, delta)
 

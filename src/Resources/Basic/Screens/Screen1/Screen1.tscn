@@ -108,6 +108,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Engine" type="ColorRect" parent="."]
+margin_left = 738.367
+margin_top = 613.604
+margin_right = 1255.37
+margin_bottom = 668.604
+color = Color( 0.745098, 0.564706, 0.0745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Engine"]
+margin_left = 55.0
+margin_right = 465.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+text = "ENGINE_OFF"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Sifa" type="ColorRect" parent="."]
 margin_left = 41.5861
 margin_top = 686.163

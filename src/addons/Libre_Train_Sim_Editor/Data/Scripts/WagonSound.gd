@@ -21,7 +21,7 @@ func _process(delta):
 
 	
 	## sollCurveSound:
-	if wagon.currentRail.radius == 0 or Math.speedToKmH(player.speed) < 35 or wagon.currentRail.radius > 600:
+	if wagon.currentRail.radius == 0 or Math.speedToKmH(player.speed) < 35 or abs(wagon.currentRail.radius) > 600:
 		sollCurveSound = -50
 	else:
 		sollCurveSound = -25.0 + (Math.speedToKmH(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5

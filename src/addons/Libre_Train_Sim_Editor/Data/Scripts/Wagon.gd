@@ -6,6 +6,8 @@ extends Spatial
 # var b = "text"
 export (float) var length = 17.5
 
+export (bool) var cabinMode = false
+
 var bakedRoute
 var bakedRouteDirection
 var routeIndex = 0
@@ -26,21 +28,33 @@ var world
 var initialSet = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	if cabinMode:
+		length = 4
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+var initialSwitchCheck = false
 func _process(delta):
 	
 	if player == null or player.despawning: 
 		queue_free()
+		return
+	
+	if not initialSwitchCheck:
+		updateSwitchOnNextChange()
+		initialSwitchCheck = true
+		
+	speed = player.speed
+	
+	if cabinMode:
+		drive(delta)
+		return
 	
 	$MeshInstance.show()
 	if get_parent().name != "Players": return
 	if distanceToPlayer == -1:
 		distanceToPlayer = abs(player.distanceOnRail - distanceOnRail)
-	speed = player.speed
 	visible = player.wagonsVisible
 	if not initialSet or not visible:
 		$MeshInstance.hide()
@@ -70,10 +84,12 @@ func drive(delta):
 	if currentRail  == player.currentRail:
 		if player.forward:
 			distanceOnRail = player.distanceOnRail - distanceToPlayer
+			distance = player.distance - distanceToPlayer
 			if distanceOnRail > currentRail.length:
 				change_to_next_rail()
 		else:
 			distanceOnRail = player.distanceOnRail + distanceToPlayer
+			distance = player.distance + distanceToPlayer
 			if distanceOnRail < 0:
 				change_to_next_rail()
 		
@@ -100,6 +116,7 @@ func change_to_next_rail():
 	routeIndex += 1
 	currentRail =  world.get_node("Rails").get_node(bakedRoute[routeIndex])
 	forward = bakedRouteDirection[routeIndex]
+	updateSwitchOnNextChange()
 
 	if not forward:
 		distanceOnRail += currentRail.length
@@ -133,4 +150,53 @@ func check_pantograph():
 		$Pantograph/AnimationPlayer.play_backwards("Up")
 	lastPantograph = player.pantograph
 	lastPantographUp = player.pantographUp
+
+
+## This function is very very basic.. It only checks, if the "end" of the current Rail, or the "beginning" of the next rail is a switch. Otherwise it sets nextSwitchRail to null..
+#var nextSwitchRail = null
+#var nextSwitchOnBeginning = false
+#func findNextSwitch():
+#	if forward and currentRail.isSwitchPart[1] != "":
+#		nextSwitchRail = currentRail
+#		nextSwitchOnBeginning = false
+#		return
+#	elif not forward and currentRail.isSwitchPart[0] != "":
+#		nextSwitchRail = currentRail
+#		nextSwitchOnBeginning = true
+#		return
+#
+#	if bakedRoute.size() > routeIndex+1:
+#		var nextRail = bakedRoute[routeIndex+1]
+#		var nextForward = bakedRouteDirection[routeIndex+1]
+#		if nextForward and nextRail.isSwitchPart[0] != "":
+#			nextSwitchRail = nextRail
+#			nextSwitchOnBeginning = true
+#			return
+#		elif not nextForward and nextRail.isSwitchPart[1] != "":
+#			nextSwitchRail = nextRail
+#			nextSwitchOnBeginning = true
+#			return
+#
+#	nextSwitchRail = null
+	
+var switchOnNextChange = false
+func updateSwitchOnNextChange():
+	if forward and currentRail.isSwitchPart[1] != "":
+		switchOnNextChange = true
+		return
+	elif not forward and currentRail.isSwitchPart[0] != "":
+		switchOnNextChange = true
+		return
+	
+	if bakedRoute.size() > routeIndex+1:
+		var nextRail = world.get_node("Rails").get_node(bakedRoute[routeIndex+1])
+		var nextForward = bakedRouteDirection[routeIndex+1]
+		if nextForward and nextRail.isSwitchPart[0] != "":
+			switchOnNextChange = true
+			return
+		elif not nextForward and nextRail.isSwitchPart[1] != "":
+			switchOnNextChange = true
+			return
+			
+	switchOnNextChange = false
 

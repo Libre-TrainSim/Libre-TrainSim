@@ -17,6 +17,7 @@ export (int) var controlType = 0 # 0: Arrowkeys (Combi Control), 1: WASD (Separa
 export (bool) var electric = true
 var pantograph = false   ## Please just use this variable, if to check, if pantograph is up or down. true: up
 var pantographUp = false ## is true, if pantograph is rising.
+var engine = false ## Describes wether the engine of the train is running or not.
 var voltage = 0 # If this value = 0, the train wont drive unless you press ingame "B". If voltage is "up", then its at 15 by default. Unit (kV)
 export (float) var pantographTime = 5
 var speed = 0 # Initiats the speed. (Unit: m/s) ## You can convert it with var kmhSpeed = Math.speed2kmh(speed)
@@ -25,7 +26,7 @@ onready var currentSpeedLimit = speedLimit # Unit: km/h # holds the current spee
 var hardOverSpeeding = false # If Speed > speedlimit + 10 this is set to true
 var command = -1 # If Command is < 0 the train will brake, if command > 0 the train will accelerate. Set by the player with Arrow Keys.
 var technicalSoll = 0 # Soll Command. This variable describes the "aim" of command
-var blockedAcceleration = false ## If true, then acceleration is blocked. e.g.  brakes
+var blockedAcceleration = false ## If true, then acceleration is blocked. e.g.  brakes, dooors, engine,....
 var accRoll = 0 # describes the user input, (0 to 1)
 var brakeRoll = -1 # describes the user input (0 to -1)
 var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive) - JJust from brakes and engines
@@ -99,6 +100,11 @@ var frontLight = false
 var insideLight = false
 
 var lastDrivenSignal = null ## In here the reference of the last driven signal is saved
+
+## For Sound:
+var currentRailRadius = 0
+
+export (float) var soundIsolation = -8
 
 ## callable functions:
 # send_message()
@@ -182,6 +188,7 @@ func ready(): ## Called by World!
 	if not ai:
 		set_signalWarnLimits()
 		set_signalAfters()
+
 		
 		
 	if ai:
@@ -277,8 +284,28 @@ func _process(delta):
 	
 	controlLights(delta)
 	
+	currentRailRadius = currentRail.radius
+	
+	if not ai:
+		updateTrainAudioBus()
+	
+	handleEngine()
+	
+	
 
-
+func handleEngine():
+	if not ai and Input.is_action_just_pressed("engine"):
+		if not engine:
+			startEngine()
+		else:
+			stopEngine()
+	
+func startEngine():
+	if pantograph:
+		engine = true
+		
+func stopEngine():
+	engine = false
 	
 func get_time():
 	time = world.time
@@ -344,6 +371,8 @@ func getCommand(delta):
 	if command < 0 and not Root.EasyMode and not ai:
 		blockedAcceleration = true
 	if (doorRight or doorLeft):
+		blockedAcceleration = true
+	if not engine:
 		blockedAcceleration = true
 		
 	technicalSoll = soll_command
@@ -973,6 +1002,15 @@ func spawnWagons():
 			nextWagonPosition += wagonNode.length + wagonDistance
 		get_parent().add_child(newWagon)
 	
+	# Handle Cabin:
+	$Cabin.bakedRoute = baked_route
+	$Cabin.bakedRouteDirection = baked_route_direction
+	$Cabin.forward = forward
+	$Cabin.currentRail = currentRail
+	$Cabin.distanceOnRail = nextWagonPosition
+	$Cabin.player = self
+	$Cabin.world = world
+	
 
 func check_user_autopilot():
 	if Input.is_action_just_pressed("autopilot"):
@@ -1033,6 +1071,8 @@ func autopilot(delta):
 	debugLights(self)
 	if not pantographUp:
 		pantographUp = true
+	if not engine:
+		startEngine()
 	if isInStation:
 		sollSpeed = 0
 		return
@@ -1183,3 +1223,10 @@ func fixObsoleteStations(): ## Checks, if there are stations in the stations tab
 #		if obsolete:
 #			if not stationNodeName == currentStationName and stations.stopType[i] != 2:
 #				stations.passed[i] = true
+
+func updateTrainAudioBus():
+	if cameraState == 0 or cameraState == 2:
+		AudioServer.set_bus_volume_db(2,0)
+	else:
+		AudioServer.set_bus_volume_db(2,soundIsolation)
+		

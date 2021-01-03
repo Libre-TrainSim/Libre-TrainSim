@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=1]
 [ext_resource path="res://Resources/Basic/Materials/Black_Plastic.tres" type="Material" id=2]
@@ -8,12 +8,7 @@
 [ext_resource path="res://Resources/Basic/Materials/Blue_Plastic.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=7]
 [ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=8]
-[ext_resource path="res://Resources/Basic/Sounds/Drive.ogg" type="AudioStream" id=9]
-[ext_resource path="res://Resources/Basic/Sounds/Base.ogg" type="AudioStream" id=10]
-[ext_resource path="res://Resources/Basic/Sounds/Test.wav" type="AudioStream" id=11]
-[ext_resource path="res://Resources/Basic/Sounds/Acceleration.ogg" type="AudioStream" id=12]
-[ext_resource path="res://Resources/Basic/Sounds/Acceleration2.ogg" type="AudioStream" id=13]
-[ext_resource path="res://Resources/Basic/Sounds/AccelerationTransition.ogg" type="AudioStream" id=14]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/EasyEngineSound.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Resources/Basic/Textures/ScreenBook.png" type="Texture" id=15]
 [ext_resource path="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.png" type="Texture" id=16]
 [ext_resource path="res://Resources/Basic/Sounds/DoorsClosing2.ogg" type="AudioStream" id=17]
@@ -40,6 +35,7 @@
 [ext_resource path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" type="ArrayMesh" id=38]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Camera.gd" type="Script" id=39]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Brown.tres" type="Material" id=40]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/WagonSound.tscn" type="PackedScene" id=41]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0, 0, 0, 1 )
@@ -892,6 +888,8 @@ far = 1000.0
 script = ExtResource( 5 )
 
 [node name="Cabin" type="Spatial" parent="."]
+script = ExtResource( 26 )
+cabinMode = true
 
 [node name="ScreenMiddle" type="MeshInstance" parent="Cabin"]
 transform = Transform( -3.82021e-08, 0.177615, -0.797131, 2.89372e-08, 0.234483, 0.603806, 0.294159, 0, -1.62921e-07, 7.31889, 2.65065, 0 )
@@ -954,6 +952,11 @@ transform = Transform( 0.810062, -0.586344, 0, 0.586344, 0.810062, 0, 0, 0, 1, 7
 mesh = SubResource( 10 )
 material/0 = null
 material/1 = null
+
+[node name="WagonSound" parent="Cabin" instance=ExtResource( 41 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84215, 0, 0 )
+
+[node name="EasyEngineSound" parent="Cabin" instance=ExtResource( 9 )]
 
 [node name="Wagon1" type="Spatial" parent="."]
 visible = false
@@ -1063,6 +1066,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
 mesh = ExtResource( 28 )
 material/0 = null
 material/1 = null
+
+[node name="WagonSound" parent="Wagon1" instance=ExtResource( 41 )]
 
 [node name="DriverCabinF" type="Spatial" parent="."]
 visible = false
@@ -1245,6 +1250,10 @@ transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797,
 script = ExtResource( 39 )
 accel = true
 
+[node name="WagonSound" parent="DriverCabinF" instance=ExtResource( 41 )]
+
+[node name="EasyEngineSound" parent="DriverCabinF" instance=ExtResource( 9 )]
+
 [node name="DriverCabinB" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 26 )
@@ -1411,63 +1420,41 @@ transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797,
 script = ExtResource( 39 )
 accel = true
 
+[node name="WagonSound" parent="DriverCabinB" instance=ExtResource( 41 )]
+
+[node name="EasyEngineSound" parent="DriverCabinB" instance=ExtResource( 9 )]
+
 [node name="Sound" type="Spatial" parent="."]
 script = ExtResource( 4 )
-AccelerationTransitionTime = 6.0
+AccelerationTransitionTime = 4.0
 AccelerationTransitionSpeed = 10.0
-
-[node name="Base" type="AudioStreamPlayer3D" parent="Sound"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.97734, 2.79565, 0 )
-visible = false
-stream = ExtResource( 10 )
-unit_size = 5.0
-
-[node name="Drive" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 9 )
-unit_size = 25.0
-autoplay = true
-
-[node name="Acceleration1" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 12 )
-unit_size = 15.0
-
-[node name="Acceleration2" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 13 )
-unit_size = 15.0
-
-[node name="AccelerationTransition" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 14 )
-unit_size = 25.0
-
-[node name="Timer" type="Timer" parent="Sound"]
-one_shot = true
-
-[node name="Test" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 11 )
 
 [node name="DoorsOpen" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 18 )
-unit_size = 25.0
+unit_size = 10.0
+bus = "Train"
 
 [node name="DoorsClose" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 17 )
-unit_size = 25.0
+unit_size = 10.0
+bus = "Train"
 
 [node name="Horn" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.596, 3.60857, 0 )
 stream = ExtResource( 23 )
-unit_size = 30.0
+unit_size = 20.0
+bus = "Train"
 
 [node name="SiFa" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69591, 2.77763, 0 )
 stream = ExtResource( 24 )
-unit_size = 5.0
 stream_paused = true
+bus = "Train-Messages"
 
 [node name="EnforcedBrake" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.80865, 2.77868, 0 )
 stream = ExtResource( 25 )
-unit_size = 5.0
+bus = "Train-Messages"
 
 [node name="FrontLight" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21955, 0, 0 )
@@ -1494,4 +1481,3 @@ visible = false
 transform = Transform( -3.30409e-08, 0.654701, -0.755888, 2.86179e-08, 0.755888, 0.654701, 1, 0, -4.37114e-08, 5.44394, 3.40882, 0 )
 light_color = Color( 1, 0.890196, 0.890196, 1 )
 light_energy = 3.0
-[connection signal="timeout" from="Sound/Timer" to="Sound" method="_on_Timer_timeout"]

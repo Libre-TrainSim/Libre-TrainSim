@@ -17,6 +17,14 @@ var distanceOnRail = 0
 var distance = 0
 var speed = 0
 
+var leftDoors = []
+var rightDoors = []
+
+var seats = [] # In here the Seats Refernces are safed
+var seatsOccupancy = [] # In here the Persons are safed, they are currently sitting on the seats. Index equal to index of seats
+
+var passengerPathNodes = []
+
 var distanceToPlayer = -1
 
 export var pantographEnabled = false
@@ -25,11 +33,22 @@ export var pantographEnabled = false
 var player
 var world
 
+var attachedPersons = []
+
 var initialSet = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if cabinMode:
 		length = 4
+		return
+	registerDoors()
+	registerPassengerPathNodes()
+	registerSeats()
+	
+	var personsNode = Spatial.new()
+	personsNode.name = "Persons"
+	personsNode.owner = self
+	add_child(personsNode)
 	pass # Replace with function body.
 
 
@@ -200,3 +219,96 @@ func updateSwitchOnNextChange():
 			
 	switchOnNextChange = false
 
+func registerDoors():
+	for child in get_children():
+		if child.is_in_group("PassengerDoor"):
+			if child.translation[2] > 0:
+				child.translation += Vector3(0,0,0.5)
+				rightDoors.append(child)
+			else:
+				child.translation -= Vector3(0,0,0.5)
+				leftDoors.append(child)
+
+func registerPerson(person, door):
+	var seatIndex = getRandomFreeSeatIndex()
+	if seatIndex == -1:
+		person.queue_free()
+		return
+	attachedPersons.append(person)
+	person.get_parent().remove_child(person)
+	person.owner = self
+	$Persons.add_child(person)
+	person.translation = door.translation
+	
+	var passengerRoutePath = getPathFromTo(door, seats[seatIndex]) 
+	if passengerRoutePath == null:
+		printerr("Some seats of "+ name + " are not reachable from every door!!")
+		return
+#	print(passengerRoutePath)
+	person.destinationPos = passengerRoutePath
+	seatsOccupancy[seatIndex] = person
+	
+	
+
+func getRandomFreeSeatIndex():
+	if attachedPersons.size()+1 > seats.size():
+		return -1
+	while (true):
+		var randIndex = int(rand_range(0, seats.size()))
+		if seatsOccupancy[randIndex] == null:
+			return randIndex
+			
+			
+func getPathFromTo(start, destination):
+	var passengerRoutePath = [] ## Array of Vector3
+	var realStartNode = start
+#	print(start.get_groups())
+	if start.is_in_group("PassengerDoor"): # find the connected passengerNode
+		for passengerPathNode in passengerPathNodes:
+			for connection in passengerPathNode.connections:
+#				print(connection + "  " + start.name)
+				if connection == start.name:
+					passengerRoutePath.append(passengerPathNode.translation)
+#					print("Equals!")
+					realStartNode = passengerPathNode
+#					print(realStartNode.name)
+	
+	if not realStartNode.is_in_group("PassengerPathNode"):
+#		printerr("At " + name + " " + start.name + " is not connected to a passengerPathNode!")
+		return null
+	
+	var restOfpassengerRoutePath = getPathFromToHelper(realStartNode, destination, [])
+	if restOfpassengerRoutePath == null:
+		return null
+	for routePathPosition in restOfpassengerRoutePath:
+		passengerRoutePath.append(routePathPosition)
+	return passengerRoutePath
+
+func getPathFromToHelper(start, destination, visitedNodes): ## Recursion, Simple Pathfinding, Start  has to be a PassengerPathNode.
+#	print("Recursion: " + start.name + " " + destination.name + " " + String(visitedNodes))
+	for connection in start.connections:
+		var connectionN = get_node(connection)
+		if connectionN == destination:
+			return [connectionN.translation]
+		if connectionN.is_in_group("PassengerPathNode"):
+			if visitedNodes.has(connectionN):
+				continue
+			visitedNodes.append(connectionN)
+			var passengerRoutePath = getPathFromToHelper(connectionN, destination, visitedNodes)
+			if  passengerRoutePath != null:
+				passengerRoutePath.push_front(connectionN.translation)
+				return passengerRoutePath
+	return null
+
+	
+func registerPassengerPathNodes():
+	for child in get_children():
+		if child.is_in_group("PassengerPathNode"):
+			passengerPathNodes.append(child)
+
+func registerSeats():
+	for child in get_children():
+		if child.is_in_group("PassengerSeat"):
+			seats.append(child)
+			seatsOccupancy.append(null)
+	

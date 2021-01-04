@@ -42,10 +42,18 @@ export var editorAllObjectsUnloaded = false ## saves, if all Objects in World wh
 
 var trainFiles = {"Array" : []}
 
+var personVisualInstancesPathes = [
+	"res://Resources/Basic/Persons/RedDummy.tscn"
+]
+var personVisualInstances = []
+
 
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
+
+
+	
 	if trackName == null:
 		trackName = FileName
 	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
@@ -60,6 +68,25 @@ func _ready():
 		trainFiles = trainFiles["Array"]
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
+		
+		
+		## Create Persons-Node:
+		var personsNode = Spatial.new()
+		personsNode.name = "Persons"
+		personsNode.owner = self
+		add_child(personsNode)
+		
+		for personVisualInstancesPath in personVisualInstancesPathes:
+			personVisualInstances.append(load(personVisualInstancesPath))
+			
+		for signalN in $Signals.get_children():
+			if signalN.type == "Station":
+				signalN.personsNode = personsNode
+				signalN.spawnPersonsAtBeginning()
+				
+				
+				
+				
 		loadWorldConfig()
 		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
 			save_world(true)

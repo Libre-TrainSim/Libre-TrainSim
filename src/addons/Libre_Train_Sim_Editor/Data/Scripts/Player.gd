@@ -79,6 +79,7 @@ var soundMode = 0 # 0: Interior, 1: Outer   ## Not currently used
 export (Array, NodePath) var wagons 
 export var wagonDistance = 0.5 ## Distance between the wagons
 var wagonsVisible = false
+var wagonsI = [] # Over this the wagons can be accessed
 
 var automaticDriving = false # Autopilot
 var sollSpeed = 0 ## Unit: km/h
@@ -626,6 +627,7 @@ func handle_signal(signalname):
 		depatureTime = stations["departureTime"][index]
 		doorOpenMessageSentTimer = 0
 		doorOpenMessageSent = false
+		currentStationNode = signal
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
@@ -644,6 +646,7 @@ var stationTimer = 0
 var distanceOnStationBeginning = 0
 var doorOpenMessageSentTimer = 0
 var doorOpenMessageSent = false
+var currentStationNode 
 func check_station(delta):
 	if currentStationName != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation:
@@ -667,6 +670,7 @@ func check_station(delta):
 			stationTimer = 0
 			
 			isInStation = true
+			sendDoorPositionsToCurrentStation()
 		elif (speed == 0 and isInStation ) :
 			if stationTimer > stationHaltTime:
 				if endStation:
@@ -1001,6 +1005,7 @@ func spawnWagons():
 		else:
 			nextWagonPosition += wagonNode.length + wagonDistance
 		get_parent().add_child(newWagon)
+		wagonsI.append(newWagon)
 	
 	# Handle Cabin:
 	$Cabin.bakedRoute = baked_route
@@ -1229,4 +1234,23 @@ func updateTrainAudioBus():
 		AudioServer.set_bus_volume_db(2,0)
 	else:
 		AudioServer.set_bus_volume_db(2,soundIsolation)
+
+func sendDoorPositionsToCurrentStation():
+	print("Sending Door Postions...")
+	var doors = []
+	var doorsWagon = []
+	for wagon in wagonsI:
+		var wagonTransform = wagon.currentRail.get_transform_at_rail_distance(wagon.distanceOnRail)
+		if currentStationNode.platformSide == 1: # Left
+			for door in wagon.rightDoors:
+				door.worldPos = (wagonTransform.translated(door.translation).origin)
+				doors.append(door)
+				doorsWagon.append(wagon)
+		if currentStationNode.platformSide == 2: # Right
+			for door in wagon.leftDoorPositions:
+				door.worldPos = (wagonTransform.translated(door.translation).origin)
+				doors.append(door)
+				doorsWagon.append(wagon)
+	currentStationNode.setDoorPositions(doors, doorsWagon)
+		
 		

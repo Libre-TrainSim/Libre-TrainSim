@@ -543,11 +543,3 @@ func checkForSwitch():
 		isSwitchPart[1] = foundRailsAtEnding[0]
 		pass
 
-
-	
-#var possibleRails = []
-#for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
-#	if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.startrot))) < 1 and rail.name != currentR.name:
-#		possibleRails.append(rail.name)
-#	elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.endrot+180.0))) < 1 and rail.name != currentR.name:
-#		possibleRails.append(rail.name)

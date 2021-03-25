@@ -1,48 +1,47 @@
-keys,en,de,it,ja,pl
-MENU_PLAY,Play,Spielen,Gioca,プレイ,Graj
-MENU_BACK,Back,Zurück,Indietro,戻る,Wroć
-MENU_CONTENT,Content,Inhalt,Contenuti,コンテンツ,zawartość
-MENU_CREATE,Create,Erstellen,Crea,作成,Utworz
-MENU_SETTINGS,Settings,Einstellungen,Impostazioni,設定,Ustawienia
-MENU_QUIT,Quit,Beenden,Esci,終了,Wyjdź
-MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!,Dicci la tua opinione!,あなたのフェードバックが必要です,
-MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież
-,,,,,
-MENU_TRACKS:,Tracks:,Strecken:,Tracciati:,路線:,Tory
-MENU_SCENARIOS:,Szenarios:,Szenarien:,Scenari:,シナリオ:,Scenariusze
-MENU_TRAIN:,Train:,Zug:,Treno:,列車:,Pociąg
-,,,,,
-MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella",コンテンツを追加する場合は次の場所に.pckファイルを置いてください  ,Aby dodać zawartość musisz  umieścić pliki .Pck w
-MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:,現在ロードされているコンテンツパック:,Załadowane paczki zawartości
-MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre
-,,,,,
-MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula,Musica: “Follow That Dream” di Luca Fraula,音楽:Luca FraulaによるFollow That Dream,Muzyka: Follow That Dream by Luca Fraula
-,,,,,
-MENU_SETTINGS:,Settings:,Einstellungen:,Impostazioni:,設定:,Ustawienia
-MENU_FULLSCREEN,Fullscreen,Vollbild,Schermo intero,フルスクリーン,Pełny ekran
-MENU_MUSIC,Music,Musik ,Musica,音楽,Muzyka
-MENU_SHADOWS,Shadows,Schatten,Ombre,影,cienie
-MENU_VIEW_DISTANCE,View Distance,Sichtweite,Visibilità,描画距離,Dystans rysowania
-MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Antialiasing,アンチエイリアス,Anti-aliasing
-MENU_DISABLED,Disabled,Deaktiviert,Disabilitato,無効,Dezaktywowane
-MENU_FOG,Fog,Nebel,Nebbia,霧 ,Mgła
-MENU_LANGUAGE,Language,Sprache,Lingua,言語,Język
-,,,,,
-,,,,,
-MENU_AUTHOR,,,,,Autor
-,,,,,
-MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...
-,,,,,
-MENU_LATER,Later,Später,Più tardi,あとで,Później
-MENU_OPEN_IN_BROWSER,Open in Webbrowser,Öffne in Webbrowser,Apri nel browser web,ウェブブラウザを開く,Otwórz W Przeglądarce
-MENU_FEEDBACK_QUESTION,\tDo you have 2 minutes left for answering a quick survey?\n\tYou would help the project a lot!,\tHaben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n\tEs würde dem Projekt sehr helfen!,\tAvresti 2 minuti per rispondere a brevi domande?\n\tPotresti aiutare molto il progetto!,\tもしあなたに2分ぐらいのお時間があるのなら、簡単な調査アンケートにご協力していただけますか？\n\tプロジェクトにとって大きな手助けになるでしょう。,\t Czy masz czas aby wziąść udział w 2 minutowej ankiecie?\n\t To Bardzo pomoże w rozwoju projektu
-,,,,,
-MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you cant play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.,Non è stato trovato nessuno scenario. Questo tracciato è obsoleto. Purtroppo non è possibile giocare.,シナリオデータが見つかりませんでした。残念ながらこの路線は廃止されました。,Scenariusz nie został wczytany.Ta trasa jest nie kompatybilna. Niestety nie możesz w nią zagrać.
-MENU_AUTHOR,Author,Autor,Autore,作者 ,Autor
-MENU_RELEASE,Release,Veröffentlichung,Rilasciato,リリース,Opublikuj
-MENU_DURATION,Duration,Dauer,Durata,時間,Czas trwania
-MENU_ELECTRIC,Electric,Elektrisch,Elettrico,電力,elektryczny
-MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile,イージーモード,Tryb Łatwy
-,,,,,
-YES,Yes,Ja,Si,はい,TAK
-NO,No,Nein,No,いいえ,NIE
+keys,en,de,it,ja,pl,uk
+MENU_PLAY,Play,Spielen,Gioca,プレイ,Graj,Грати
+MENU_BACK,Back,Zurück,Indietro,戻る,Wroć,Назад
+MENU_CONTENT,Content,Inhalt,Contenuti,コンテンツ,zawartość,Вміст
+MENU_CREATE,Create,Erstellen,Crea,作成,Utworz,Створити
+MENU_SETTINGS,Settings,Einstellungen,Impostazioni,設定,Ustawienia,Налаштування
+MENU_QUIT,Quit,Beenden,Esci,終了,Wyjdź,Вийти
+MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!,Dicci la tua opinione!,あなたのフェードバックが必要です,,Ваш відгук важливий!
+MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież,Перезавантажити
+,,,,,,
+MENU_TRACKS:,Tracks:,Strecken:,Tracciati:,路線:,Tory,Траси:
+MENU_SCENARIOS:,Szenarios:,Szenarien:,Scenari:,シナリオ:,Scenariusze,Сценарії:
+MENU_TRAIN:,Train:,Zug:,Treno:,列車:,Pociąg,Поїзди:
+,,,,,,
+MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella",コンテンツを追加する場合は次の場所に.pckファイルを置いてください  ,Aby dodać zawartość musisz  umieścić pliki .Pck w,"Щоб додати вміст, вам потрібно вставити .pck файл сюди:"
+MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:,現在ロードされているコンテンツパック:,Załadowane paczki zawartości,Зараз завантажені такі файли:
+MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre,"Порада: Якщо ви оновили вміст пакунків, вам потрібно перезапустити гру"
+,,,,,,
+MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula,Musica: “Follow That Dream” di Luca Fraula,音楽:Luca FraulaによるFollow That Dream,Muzyka: Follow That Dream by Luca Fraula,Музика:  Follow That Dream von Luca Fraula
+,,,,,,
+MENU_SETTINGS:,Settings:,Einstellungen:,Impostazioni:,設定:,Ustawienia,Налаштування:
+MENU_FULLSCREEN,Fullscreen,Vollbild,Schermo intero,フルスクリーン,Pełny ekran,Повноекранний режим
+MENU_MUSIC,Music,Musik ,Musica,音楽,Muzyka,Музика
+MENU_SHADOWS,Shadows,Schatten,Ombre,影,cienie,Тіні
+MENU_VIEW_DISTANCE,View Distance,Sichtweite,Visibilità,描画距離,Dystans rysowania,Дальність огляду
+MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Antialiasing,アンチエイリアス,Anti-aliasing,Екранне згладжування
+MENU_DISABLED,Disabled,Deaktiviert,Disabilitato,無効,Dezaktywowane,Туман
+MENU_FOG,Fog,Nebel,Nebbia,霧 ,Mgła,Мова
+MENU_LANGUAGE,Language,Sprache,Lingua,言語,Język,
+,,,,,,
+,,,,,,
+,,,,,,
+MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...,Завантаження...
+,,,,,,
+MENU_LATER,Later,Später,Più tardi,あとで,Później,Пізніше
+MENU_OPEN_IN_BROWSER,Open in Webbrowser,Öffne in Webbrowser,Apri nel browser web,ウェブブラウザを開く,Otwórz W Przeglądarce,Відкрити в браузері
+MENU_FEEDBACK_QUESTION,\tDo you have 2 minutes left for answering a quick survey?\n\tYou would help the project a lot!,\tHaben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n\tEs würde dem Projekt sehr helfen!,\tAvresti 2 minuti per rispondere a brevi domande?\n\tPotresti aiutare molto il progetto!,\tもしあなたに2分ぐらいのお時間があるのなら、簡単な調査アンケートにご協力していただけますか？\n\tプロジェクトにとって大きな手助けになるでしょう。,\t Czy masz czas aby wziąść udział w 2 minutowej ankiecie?\n\t To Bardzo pomoże w rozwoju projektu,"\tЧи маєш 2 хвилинки, щоб відповісти на коротке опитування?\n\tТи дуже допоможеш проекту!"
+,,,,,,
+MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you cant play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.,Non è stato trovato nessuno scenario. Questo tracciato è obsoleto. Purtroppo non è possibile giocare.,シナリオデータが見つかりませんでした。残念ながらこの路線は廃止されました。,Scenariusz nie został wczytany.Ta trasa jest nie kompatybilna. Niestety nie możesz w nią zagrać.,"Не знайдено жодного сценарію. Ці шляхи є застарілими. Шкода, ти не зможеш зіграти."
+MENU_AUTHOR,Author,Autor,Autore,作者 ,Autor,Автор
+MENU_RELEASE,Release,Veröffentlichung,Rilasciato,リリース,Opublikuj,Випуск
+MENU_DURATION,Duration,Dauer,Durata,時間,Czas trwania,Тривалість
+MENU_ELECTRIC,Electric,Elektrisch,Elettrico,電力,elektryczny,Електричний
+MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile,イージーモード,Tryb Łatwy,Спрощений режим
+,,,,,,
+YES,Yes,Ja,Si,はい,TAK,Так
+NO,No,Nein,No,いいえ,NIE,Ні

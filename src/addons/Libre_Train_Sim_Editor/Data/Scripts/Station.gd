@@ -19,7 +19,7 @@ export (int) var onRailPosition
 export (bool) var update setget setToRail
 export var forward = true
 
-var waitingPersonCount = 20
+var waitingPersonCount = 5
 var attachedPersons = []
 
 var rail
@@ -66,6 +66,11 @@ func spawnPersonsAtBeginning():
 	while(rail.visible and attachedPersons.size() < waitingPersonCount):
 		spawnRandomPerson()
 
+func set_waiting_persons(count : int):
+	waitingPersonCount = count
+	spawnPersonsAtBeginning() 
+	
+
 func handlePersons():
 	if platformSide == 0:
 		return
@@ -74,6 +79,7 @@ func handlePersons():
 	
 	if rail.visible and attachedPersons.size() < waitingPersonCount:
 		spawnRandomPerson()
+		
 		
 func spawnRandomPerson():
 	randomize()
@@ -92,9 +98,9 @@ func spawnRandomPerson():
 func getRandomLocationAtPlatform():
 	var randRailDistance = int(rand_range(onRailPosition, onRailPosition+stationLength))
 	if platformSide == 1: # Left
-		return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+		return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0)
 	if platformSide == 2: ## right
-		return rail.get_shifted_pos_at_RailDistance(randRailDistance, -rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+		return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
 		
 func setDoorPositions(doors, doorsWagon): ## Called by the train
 	if doors.size() == 0:
@@ -111,10 +117,14 @@ func setDoorPositions(doors, doorsWagon): ## Called by the train
 		
 		
 func deregisterPerson(personToDelete):
-	for i in range(attachedPersons.size()):
-		if attachedPersons[i] == personToDelete:
-			attachedPersons.remove(i)
-			waitingPersonCount -=1
-			return
+	if attachedPersons.has(personToDelete):
+		attachedPersons.erase(personToDelete)
+		waitingPersonCount -= 1
+
 			
-	
+func registerPerson(personNode):
+	attachedPersons.append(personNode)
+	personNode.get_parent().remove_child(personNode)
+	personNode.owner = world
+	personsNode.add_child(personNode)
+	personNode.destinationPos.append(getRandomLocationAtPlatform())

@@ -32,7 +32,7 @@ func check_duplicate_scenario(sName): # gives true, if duplicate was found
 	return false
 
 func _on_NewScenario_pressed():
-	var sName = $Scenarios/HBoxContainer/LineEdit.text
+	var sName = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text
 	if sName == "" or check_duplicate_scenario(sName): return
 	var scenarioList = get_all_scenarios()
 	scenarioList.append(sName)
@@ -46,7 +46,7 @@ func _on_NewScenario_pressed():
 	print("Scenario added.")
 		
 func _on_RenameScenario_pressed():
-	var sName = $Scenarios/HBoxContainer/LineEdit.text
+	var sName = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text
 	if currentScenario == "" or sName == "" or check_duplicate_scenario(sName) or sName == currentScenario: return
 	var scenarioList = get_all_scenarios()
 	scenarioList.erase(currentScenario)
@@ -106,16 +106,16 @@ func _process(delta):
 	for child in $"Scenarios".get_children():
 		child.visible = activeWorld
 	if not activeWorld: return
-	$Scenarios/CurrentScenario/LineEdit.text = currentScenario
+	$Scenarios/VBoxContainer/CurrentScenario/LineEdit.text = currentScenario
 
-	if $Scenarios/ItemList.get_selected_items().size() > 0:
-		currentScenario = $Scenarios/ItemList.get_item_text($Scenarios/ItemList.get_selected_items()[0])
+	if $Scenarios/VBoxContainer/ItemList.get_selected_items().size() > 0:
+		currentScenario = $Scenarios/VBoxContainer/ItemList.get_item_text($Scenarios/VBoxContainer/ItemList.get_selected_items()[0])
 	
-	$Scenarios/Settings.visible = currentScenario != ""
-	$Scenarios/Label2.visible = currentScenario != ""
-	$Scenarios/Write.visible = currentScenario != ""
-	$Scenarios/Load.visible = currentScenario != ""
-	$Scenarios/ResetSignals.visible = currentScenario != ""
+	$Scenarios/VBoxContainer/Settings.visible = currentScenario != ""
+	$Scenarios/VBoxContainer/Label2.visible = currentScenario != ""
+	$Scenarios/VBoxContainer/Write.visible = currentScenario != ""
+	$Scenarios/VBoxContainer/Load.visible = currentScenario != ""
+	$Scenarios/VBoxContainer/ResetSignals.visible = currentScenario != ""
 	
 	
 func get_scenario_settings(): # fills the settings field with saved values
@@ -123,12 +123,12 @@ func get_scenario_settings(): # fills the settings field with saved values
 	if not sData.has(currentScenario): return
 	var s = sData[currentScenario]
 	
-	$Scenarios/Settings/Tab/General/Time/TimeHour.value = s["TimeH"]
-	$Scenarios/Settings/Tab/General/Time/TimeMinute.value = s["TimeM"]
-	$Scenarios/Settings/Tab/General/Time/TimeSecond.value = s["TimeS"]
-	$Scenarios/Settings/Tab/General/TrainLength/SpinBox.value = s["TrainLength"]
-	$Scenarios/Settings/Tab/General/Description.text = s["Description"]
-	$Scenarios/Settings/Tab/General/Duration/SpinBox.value = s["Duration"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value = s["TimeH"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value = s["TimeM"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value = s["TimeS"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value = s["TrainLength"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Description.text = s["Description"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value = s["Duration"]
 	print("Scenario Settings loaded")
 
 func set_scenario_settings():
@@ -136,12 +136,12 @@ func set_scenario_settings():
 	var sData = config.get_value("Scenarios", "sData", {})
 	if sData == null:
 		sData = {}
-	sData[currentScenario]["TimeH"] = $Scenarios/Settings/Tab/General/Time/TimeHour.value 
-	sData[currentScenario]["TimeM"] = $Scenarios/Settings/Tab/General/Time/TimeMinute.value 
-	sData[currentScenario]["TimeS"] = $Scenarios/Settings/Tab/General/Time/TimeSecond.value 
-	sData[currentScenario]["TrainLength"] = $Scenarios/Settings/Tab/General/TrainLength/SpinBox.value 
-	sData[currentScenario]["Description"] = $Scenarios/Settings/Tab/General/Description.text 
-	sData[currentScenario]["Duration"] = $Scenarios/Settings/Tab/General/Duration/SpinBox.value 
+	sData[currentScenario]["TimeH"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value 
+	sData[currentScenario]["TimeM"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value 
+	sData[currentScenario]["TimeS"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value 
+	sData[currentScenario]["TrainLength"] = $Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value 
+	sData[currentScenario]["Description"] = $Scenarios/VBoxContainer/Settings/Tab/General/Description.text 
+	sData[currentScenario]["Duration"] = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value 
 	print("Scenario Settings saved")
 	
 
@@ -150,20 +150,20 @@ func set_scenario_settings():
 	print("Scenario General Settings saved")
 	
 func update_scenario_list():
-	$Scenarios/ItemList.clear()
+	$Scenarios/VBoxContainer/ItemList.clear()
 	if config == null: return
 	var scenarios = config.get_value("Scenarios", "List", {})
 	for scenario in scenarios:
-		$Scenarios/ItemList.add_item(scenario)
+		$Scenarios/VBoxContainer/ItemList.add_item(scenario)
 	print("Scenario List updated.")
 
 func update_train_list():
-	$Scenarios/Settings/Tab/Trains/ItemList2.clear()
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.clear()
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData[currentScenario].has("Trains"): return
 	var trains = sData[currentScenario]["Trains"].keys()
 	for train in trains:
-		$Scenarios/Settings/Tab/Trains/ItemList2.add_item(train)
+		$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(train)
 	print("Train List updated.")
 
 func _on_SaveGeneral_pressed():
@@ -200,7 +200,7 @@ func get_enviroment_data_for_scenario():
 
 
 func _on_ItemList_item_selected(index):
-	currentScenario = $Scenarios/ItemList.get_item_text(index)
+	currentScenario = $Scenarios/VBoxContainer/ItemList.get_item_text(index)
 	world.currentScenario = currentScenario
 	update_train_list()
 	get_train_settings()
@@ -256,34 +256,36 @@ func get_train_settings():
 	if not trains.has(currentTrain): return
 	var train = trains[currentTrain]
 
-	$Scenarios/Settings/Tab/Trains/PreferredTrain/TrainName.text = train.get("PreferredTrain", "")
-	$Scenarios/Settings/Tab/Trains/Route/Route.text = train["Route"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected = train["Direction"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = train["DoorConfiguration"]
-	prepare_station_table(train["Stations"])
-	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = train["SpawnTime"][0]
-	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = train["SpawnTime"][1]
-	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = train["SpawnTime"][2]
-	$Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text = train["DespawnRail"]
-	$Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeed.value = train.get("InitialSpeed", 0)
-	$Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value = train.get("InitialSpeedLimit", -1)
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text = train.get("PreferredTrain", "")
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text = train["Route"]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/Direction.selected = train["Direction"]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = train["DoorConfiguration"]
+	print(train)
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.set_data(train["Stations"])
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = train["SpawnTime"][0]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = train["SpawnTime"][1]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = train["SpawnTime"][2]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text = train["DespawnRail"]
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeed.value = train.get("InitialSpeed", 0)
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value = train.get("InitialSpeedLimit", -1)
 	print("Train "+ currentTrain + " loaded.")
 
 func set_train_settings():
 	var train = {}
-	train["PreferredTrain"] = $Scenarios/Settings/Tab/Trains/PreferredTrain/TrainName.text
-	train["Route"] = $Scenarios/Settings/Tab/Trains/Route/Route.text
-	train ["StartRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text
-	train["StartRailPosition"] = $Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value
-	train["Direction"] = $Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected
-	train["DoorConfiguration"] = $Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected
-	train["SpawnTime"] = [$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value, $Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value, $Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value]
-	train["DespawnRail"] = $Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text
-	train["InitialSpeed"] = $Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeed.value
-	train["InitialSpeedLimit"] = $Scenarios/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value
-	train["Stations"] = get_station_array()
+	train["PreferredTrain"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text
+	train["Route"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text
+	train ["StartRail"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRail.text
+	train["StartRailPosition"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRailPosition.value
+	train["Direction"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/Direction.selected
+	train["DoorConfiguration"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected
+	train["SpawnTime"] = [$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/H.value, $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/M.value, $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/S.value]
+	train["DespawnRail"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text
+	train["InitialSpeed"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeed.value
+	train["InitialSpeedLimit"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value
+	
+	train["Stations"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.get_data()
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario):
 		sData[currentScenario] = {}
@@ -294,87 +296,106 @@ func set_train_settings():
 	config.save(save_path)
 	print("Train "+ currentTrain + " saved.")
 
-var entriesCount = 0
+#var entriesCount = 0
+#const stationTableColumns = 8
+
+#func _on_RemoveStationEntry_pressed():
+#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+#	var children = grid.get_children()
+#	if entriesCount == 0:
+#		return
+#	children.invert()
+#	for i in range (0,stationTableColumns):
+#		children[i].queue_free()
+#	entriesCount -= 1
 
 
-func _on_RemoveStationEntry_pressed():
-	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-	var children = grid.get_children()
-	if entriesCount == 0:
-		return
-	children.invert()
-	for i in range (0,6):
-		children[i].queue_free()
-	entriesCount -= 1
+#func _on_AddStationEntry_pressed():
+#	entriesCount += 1
+#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+#	for child in grid.get_children():
+#		print(child.name)
+#	print("###############")
+#
+#	var a
+#
+#	a = grid.get_node("nodeName0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("stationName0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("arrivalTime0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("departureTime0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("haltTime0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("stopType0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("waitingPersons0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#
+#	a = grid.get_node("leavingPersons0").duplicate()
+#	grid.add_child(a)
+#	a.show()
+#	pass # Replace with function body.
 
 
-func _on_AddStationEntry_pressed():
-	entriesCount += 1
-	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-	var a
-	
-	a = grid.get_node("nodeName0").duplicate()
-	grid.add_child(a)
-	a.show()
-	
-	a = grid.get_node("stationName0").duplicate()
-	grid.add_child(a)
-	a.show()
-	
-	a = grid.get_node("arrivalTime0").duplicate()
-	grid.add_child(a)
-	a.show()
-	
-	a = grid.get_node("departureTime0").duplicate()
-	grid.add_child(a)
-	a.show()
-	
-	a = grid.get_node("haltTime0").duplicate()
-	grid.add_child(a)
-	a.show()
-	
-	a = grid.get_node("stopType0").duplicate()
-	grid.add_child(a)
-	a.show()
-	pass # Replace with function body.
+#func get_station_array():
+#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+#	var children = grid.get_children()
+#	var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons": [], "leavingPersons" : [], "passed" : []}
+#	for i in range(2, entriesCount+2):
+#		stations["nodeName"].append(children[stationTableColumns*i+0].text)
+#		stations["stationName"].append(children[stationTableColumns*i+1].text)
+#		stations["arrivalTime"].append([children[stationTableColumns*i+2].get_node("H").value, children[6*i+2].get_node("M").value, children[6*i+2].get_node("S").value])
+#		stations["departureTime"].append([children[stationTableColumns*i+3].get_node("H").value, children[6*i+3].get_node("M").value, children[6*i+3].get_node("S").value])
+#		stations["haltTime"].append(children[stationTableColumns*i+4].value)
+#		stations["stopType"].append(children[stationTableColumns*i+5].selected)
+#		stations["waitingPersons"].append(children[stationTableColumns*i+6].value)
+#		stations["leavingPersons"].append(children[stationTableColumns*i+7].value)
+#		stations["passed"].append(false)
+#	return stations
 
-func get_station_array():
-	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-	var children = grid.get_children()
-	var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "passed" : []}
-	for i in range(2, entriesCount+2):
-		stations["nodeName"].append(children[6*i+0].text)
-		stations["stationName"].append(children[6*i+1].text)
-		stations["arrivalTime"].append([children[6*i+2].get_node("H").value, children[6*i+2].get_node("M").value, children[6*i+2].get_node("S").value])
-		stations["departureTime"].append([children[6*i+3].get_node("H").value, children[6*i+3].get_node("M").value, children[6*i+3].get_node("S").value])
-		stations["haltTime"].append(children[6*i+4].value)
-		stations["stopType"].append(children[6*i+5].selected)
-		stations["passed"].append(false)
-	return stations
-
-func prepare_station_table(stations):
-	
-#	print(stations)
-	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-	while (grid.get_children().size() > 12):
-		grid.get_children()[grid.get_children().size()-1].free()
-	entriesCount = 0
-	if stations == null:
-		return
-	for i in range (0,stations["nodeName"].size()):
-		_on_AddStationEntry_pressed()
-	var children = grid.get_children()
-	for i in range(2, entriesCount+2):
-		children[6*i+0].text = stations["nodeName"][i-2]
-		children[6*i+1].text = stations["stationName"][i-2]
-		children[6*i+2].get_node("H").value = stations["arrivalTime"][i-2][0]
-		children[6*i+2].get_node("M").value = stations["arrivalTime"][i-2][1]
-		children[6*i+2].get_node("S").value = stations["arrivalTime"][i-2][2]
-		children[6*i+3].get_node("H").value = stations["departureTime"][i-2][0]
-		children[6*i+3].get_node("M").value = stations["departureTime"][i-2][1]
-		children[6*i+3].get_node("S").value = stations["departureTime"][i-2][2]
-		children[6*i+4].value = stations["haltTime"][i-2]
-		children[6*i+5].selected = stations["stopType"][i-2]
+#func prepare_station_table(stations):
+#
+##	print(stations)
+#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
+#	while (grid.get_children().size() > 2*stationTableColumns):
+#		grid.get_children()[grid.get_children().size()-1].free()
+#	entriesCount = 0
+#	if stations == null:
+#		return
+#	for i in range (0,stations["nodeName"].size()):
+#		_on_AddStationEntry_pressed()
+#	var children = grid.get_children()
+#	for i in range(2, entriesCount+2):
+#		children[stationTableColumns*i+0].text = stations["nodeName"][i-2]
+#		children[stationTableColumns*i+1].text = stations["stationName"][i-2]
+#		children[stationTableColumns*i+2].get_node("H").value = stations["arrivalTime"][i-2][0]
+#		children[stationTableColumns*i+2].get_node("M").value = stations["arrivalTime"][i-2][1]
+#		children[stationTableColumns*i+2].get_node("S").value = stations["arrivalTime"][i-2][2]
+#		children[stationTableColumns*i+3].get_node("H").value = stations["departureTime"][i-2][0]
+#		children[stationTableColumns*i+3].get_node("M").value = stations["departureTime"][i-2][1]
+#		children[stationTableColumns*i+3].get_node("S").value = stations["departureTime"][i-2][2]
+#		children[stationTableColumns*i+4].value = stations["haltTime"][i-2]
+#		children[stationTableColumns*i+5].selected = stations["stopType"][i-2]
+#		if stations.has("waitingPersons"):
+#			children[stationTableColumns*i+6].value = stations["waitingPersons"][i-2]
+#		if stations.has("leavingPersons"):
+#			children[stationTableColumns*i+7].value = stations["leavingPersons"][i-2]
 
 	
 
@@ -387,15 +408,15 @@ func _on_ResetSignals_pressed():
 
 
 func _on_ItemList2_Train_selected(index):
-	currentTrain = $Scenarios/Settings/Tab/Trains/ItemList2.get_item_text(index)
+	currentTrain = $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_text(index)
 	get_train_settings()
-	$Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text = currentTrain
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text = currentTrain
 
 
 func _on_NewTrain_pressed():
-	var trainName = $Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
+	var trainName = $Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
 	if trainName == "": return
-	$Scenarios/Settings/Tab/Trains/ItemList2.add_item(trainName)
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(trainName)
 
 
 
@@ -404,10 +425,10 @@ func _on_RenameTrain_pressed():
 		print("You can't rename the player train!")
 		return
 	var oldTrain = currentTrain
-	var trainName = $Scenarios/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
+	var trainName = $Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
 	if trainName == "": return
-	for  i in range(0, $Scenarios/Settings/Tab/Trains/ItemList2.get_item_count()):
-		if $Scenarios/Settings/Tab/Trains/ItemList2.get_item_text(i) == trainName:
+	for  i in range(0, $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_count()):
+		if $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_text(i) == trainName:
 			print("There already exists a train whith this train name, aborting...")
 			return
 	get_train_settings()
@@ -424,7 +445,7 @@ func _on_DuplicateTrain_pressed():
 	if currentTrain == "": return
 	get_train_settings()
 	currentTrain = currentTrain + " (Duplicate)"
-	$Scenarios/Settings/Tab/Trains/ItemList2.add_item(currentTrain)
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(currentTrain)
 	set_train_settings()
 	
 
@@ -452,17 +473,18 @@ func _on_DeleteTrain_pressed():
 	clear_train_settings_view()
 	
 func clear_train_settings_view(): # Resets the Train settings when adding a new npc for example.
-	$Scenarios/Settings/Tab/Trains/PreferredTrain/TrainName.text = ""
-	$Scenarios/Settings/Tab/Trains/Route/Route.text = ""
-	$Scenarios/Settings/Tab/Trains/GridContainer/StartRail.text = ""
-	$Scenarios/Settings/Tab/Trains/GridContainer/StartRailPosition.value = 0
-	$Scenarios/Settings/Tab/Trains/GridContainer/Direction.selected = 0
-	$Scenarios/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = 0
-	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = -1
-	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = 0
-	$Scenarios/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = 0
-	$Scenarios/Settings/Tab/Trains/GridContainer/DespawnRail.text = ""
-	prepare_station_table(null)
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text = ""
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text = ""
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRail.text = ""
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRailPosition.value = 0
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/Direction.selected = 0
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = 0
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = -1
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = 0
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = 0
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text = ""
+	
+	$Scenarios/VBoxContainer/VBoxContainer/Settings/Tab/Trains/stationTable.clear_data()
 
 
 

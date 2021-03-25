@@ -7,6 +7,8 @@ var timeSecond
 var timeMSeconds = 0
 onready var time = [timeHour,timeMinute,timeSecond]
 
+var default_persons_at_station = 20
+
 var globalDict = {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
 
 ################################################################################
@@ -526,6 +528,7 @@ func set_scenario_to_world():
 	## SPAWN TRAINS:
 	for train in scenario["Trains"].keys():
 		spawnTrain(train)
+		
 	$Players/Player.show_textbox_message(TranslationServer.translate(scenario["Description"]))
 
 
@@ -548,8 +551,9 @@ func spawnTrain(trainName):
 	# Find preferred train:
 	var player
 	var preferredTrain = scenario["Trains"][trainName].get("PreferredTrain", "")
-	if preferredTrain == "":
-		print("no preferred train specified. Loading player train...")
+	if (preferredTrain == "" and not trainName == "Player") or trainName == "Player":
+		if not trainName == "Player":
+			print("no preferred train specified. Loading player train...")
 		player = load(Root.currentTrain).instance()
 	else:
 		for trainFile in trainFiles:
@@ -571,6 +575,9 @@ func spawnTrain(trainName):
 	player.forward = bool(scenario["Trains"][trainName]["Direction"])
 	player.startPosition = scenario["Trains"][trainName]["StartRailPosition"]
 	player.stations = scenario["Trains"][trainName]["Stations"]
+	player.stations["passed"] = []
+	for i in range(player.stations["nodeName"].size()):
+		player.stations["passed"].append(false)
 	player.despawnRail = scenario["Trains"][trainName]["DespawnRail"]
 	player.ai = trainName != "Player"
 	player.initialSpeed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))

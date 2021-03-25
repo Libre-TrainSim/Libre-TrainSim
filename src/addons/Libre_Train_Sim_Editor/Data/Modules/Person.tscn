@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Person.gd" type="Script" id=1]
 
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=1]
 radius = 0.4
 height = 1.5
 
@@ -13,4 +13,4 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.18796, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Body"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )

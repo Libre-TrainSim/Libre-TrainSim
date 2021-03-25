@@ -47,14 +47,15 @@ func _ready():
 	
 	var personsNode = Spatial.new()
 	personsNode.name = "Persons"
-	personsNode.owner = self
 	add_child(personsNode)
+	personsNode.owner = self
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var initialSwitchCheck = false
 func _process(delta):
+	
 	
 	if player == null or player.despawning: 
 		queue_free()
@@ -263,7 +264,8 @@ func getPathFromTo(start, destination):
 	var passengerRoutePath = [] ## Array of Vector3
 	var realStartNode = start
 #	print(start.get_groups())
-	if start.is_in_group("PassengerDoor"): # find the connected passengerNode
+	if start.is_in_group("PassengerDoor") or start.is_in_group("PassengerSeat"):
+		 # find the connected passengerNode
 		for passengerPathNode in passengerPathNodes:
 			for connection in passengerPathNode.connections:
 #				print(connection + "  " + start.name)
@@ -311,4 +313,65 @@ func registerSeats():
 		if child.is_in_group("PassengerSeat"):
 			seats.append(child)
 			seatsOccupancy.append(null)
+
+var leavingPassengerNodes = []
+## Called by the train when arriving
+## Randomly picks some to the waggon attached persons, picks randomly a door
+## on the given side, sends the routeInformation for that to the persons.
+func sendPersonsToDoor(doorDirection, proportion : float = 0.5): 
+	leavingPassengerNodes.clear()
+	 #0: No platform, 1: at left side, 2: at right side, 3: at both sides
+	var possibleDoors = []
+	if doorDirection == 1 or doorDirection == 3: # Left
+		for door in leftDoors:
+			possibleDoors.append(door)
+	if doorDirection == 2 or doorDirection == 3: # Right
+		for door in rightDoors:
+			possibleDoors.append(door)
+		
+		
+	if possibleDoors.empty():
+		print(name + ": No Doors found for doorDirection: " + String(doorDirection) )
+		return
+		
+	randomize()
+	for personNode in $Persons.get_children():
+		if rand_range(0, 1) < proportion:
+			leavingPassengerNodes.append(personNode)
+			var randomDoor = possibleDoors[int(rand_range(0, possibleDoors.size()))]
+			
+			var seatIndex = -1
+			for i in range(seatsOccupancy.size()):
+				if seatsOccupancy[i] == personNode:
+					seatIndex = i
+					break
+			if seatIndex == -1:
+				print(name + ": Error: Seat from person" + personNode.name+  " not found!")
+				return
+			
+			var passengerRoutePath = getPathFromTo(seats[seatIndex], randomDoor)
+			if passengerRoutePath == null:
+				printerr("Some doors are not reachable from every door! Check your Path configuration")
+				return
+			
+			# Update position of door. (The Persons should stick inside the train while waiting ;)
+			if passengerRoutePath.back().z < 0:
+				passengerRoutePath[passengerRoutePath.size()-1].z += 1.3
+			else:
+				passengerRoutePath[passengerRoutePath.size()-1].z -= 1.3
+
+			personNode.destinationPos = passengerRoutePath # Here maybe .append could be better
+			personNode.attachedStation = player.currentStationNode
+			personNode.transitionToStation = true
+			personNode.assignedDoor = randomDoor
+			seatsOccupancy[seatIndex] = null
+			# Send Person to door
+			pass
+	pass
+
+func deregisterPerson(personNode):
+	if leavingPassengerNodes.has(personNode):
+		leavingPassengerNodes.erase(personNode)
+
+
 	

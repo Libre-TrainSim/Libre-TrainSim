@@ -19,7 +19,7 @@
 [ext_resource path="res://Resources/Basic/BasicSun.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Resources/Basic/Materials/PlasterStonesLight.tres" type="Material" id=19]
 
-[sub_resource type="ArrayMesh" id=13]
+[sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {
 "aabb": AABB( -5.25, 0.536283, 0.998107, 10.5, 1.00136e-05, 0.157782 ),
 "array_data": PoolByteArray( 0, 0, 168, 192, 216, 73, 9, 63, 241, 131, 127, 63, 0, 127, 0, 0, 0, 0, 126, 127, 0, 0, 255, 59, 0, 0, 168, 64, 216, 73, 9, 63, 241, 131, 127, 63, 0, 127, 0, 0, 0, 0, 126, 127, 0, 0, 0, 0, 0, 0, 168, 192, 216, 73, 9, 63, 44, 244, 147, 63, 0, 127, 0, 0, 0, 0, 126, 127, 120, 36, 255, 59, 0, 0, 168, 64, 216, 73, 9, 63, 44, 244, 147, 63, 0, 127, 0, 0, 0, 0, 126, 127, 120, 36, 0, 0 ),
@@ -73,11 +73,11 @@ surfaces/3 = {
 "vertex_count": 300
 }
 
-[sub_resource type="MultiMesh" id=14]
+[sub_resource type="MultiMesh" id=2]
 transform_format = 1
 instance_count = 20
 visible_instance_count = 20
-mesh = SubResource( 13 )
+mesh = SubResource( 1 )
 transform_array = PoolVector3Array( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.6, 3.5, -0.999998, 0, 0.002, 0, 1, 0, -0.002, 0, -0.999998, 9.99299, 0.6, 3.50977, -0.999992, 0, 0.00400009, 0, 1, 0, -0.00400009, 0, -0.999992, 19.9859, 0.6, 3.54004, -0.999982, 0, 0.00599992, 0, 1, 0, -0.00599992, 0, -0.999982, 29.9788, 0.6, 3.58984, -0.999968, 0, 0.00799996, 0, 1, 0, -0.00799996, 0, -0.999968, 39.9716, 0.6, 3.65967, -0.99995, 0, 0.00999974, 0, 1, 0, -0.00999974, 0, -0.99995, 49.9642, 0.6, 3.75, -0.999928, 0, 0.0119997, 0, 1, 0, -0.0119997, 0, -0.999928, 59.9566, 0.6, 3.85986, -0.999902, 0, 0.0139996, 0, 1, 0, -0.0139996, 0, -0.999902, 69.9487, 0.6, 3.98975, -0.999872, 0, 0.0159993, 0, 1, 0, -0.0159993, 0, -0.999872, 79.9406, 0.6, 4.13965, -0.999838, 0, 0.0179991, 0, 1, 0, -0.0179991, 0, -0.999838, 89.9321, 0.6, 4.30957, -0.9998, 0, 0.0199986, 0, 1, 0, -0.0199986, 0, -0.9998, 99.9233, 0.6, 4.49902, -0.999758, 0, 0.0219982, 0, 1, 0, -0.0219982, 0, -0.999758, 109.914, 0.6, 4.70898, -0.999712, 0, 0.0239978, 0, 1, 0, -0.0239978, 0, -0.999712, 119.904, 0.6, 4.93896, -0.999662, 0, 0.025997, 0, 1, 0, -0.025997, 0, -0.999662, 129.894, 0.6, 5.18896, -0.999608, 0, 0.0279964, 0, 1, 0, -0.0279964, 0, -0.999608, 139.884, 0.6, 5.4585, -0.99955, 0, 0.0299954, 0, 1, 0, -0.0299954, 0, -0.99955, 149.873, 0.6, 5.74805, -0.999488, 0, 0.0319945, 0, 1, 0, -0.0319945, 0, -0.999488, 159.861, 0.6, 6.05811, -0.999422, 0, 0.0339935, 0, 1, 0, -0.0339935, 0, -0.999422, 169.848, 0.6, 6.3877, -0.999352, 0, 0.0359921, 0, 1, 0, -0.0359921, 0, -0.999352, 179.835, 0.6, 6.7373, -0.999278, 0, 0.0379909, 0, 1, 0, -0.0379909, 0, -0.999278, 189.821, 0.6, 7.10693 )
 
 [sub_resource type="ArrayMesh" id=3]
@@ -334,7 +334,7 @@ __meta__ = {
 
 [node name="City1" parent="Signals" instance=ExtResource( 17 )]
 stationLength = 200
-platformSide = 1
+platformSide = 2
 attachedRail = "Rail"
 
 [node name="Signal" parent="Signals" instance=ExtResource( 12 )]
@@ -375,14 +375,11 @@ attachedRail = "Rail2"
 onRailPosition = 800
 
 [node name="City2" parent="Signals" instance=ExtResource( 17 )]
-transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 1589.35, 0, 159.467 )
+transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 1584.35, 0, 159.463 )
 stationLength = 200
 platformSide = 1
-platformHeight = 0.8
-platformStart = 2.0
-platformEnd = 5.0
 attachedRail = "Rail2"
-onRailPosition = 600
+onRailPosition = 595
 
 [node name="Rails" type="Spatial" parent="."]
 
@@ -427,7 +424,7 @@ isSwitchPart = [ "", "" ]
 [node name="TrackObjects" type="Spatial" parent="."]
 
 [node name="Rail Platform" parent="TrackObjects" instance=ExtResource( 9 )]
-multimesh = SubResource( 14 )
+multimesh = SubResource( 2 )
 description = "Platform"
 attachedRail = "Rail"
 length = 200.0
@@ -515,5 +512,5 @@ sides = 1
 rows = 1.0
 shift = 3.5
 
-[node name="Node" type="Node" parent="."]
+[node name="Sctipting" type="Node" parent="."]
 script = ExtResource( 10 )

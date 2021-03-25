@@ -35,7 +35,7 @@ var time = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Seco
 var enforcedBreaking = false 
 var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
-var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "passed" : []} 
+var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : []} 
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
 
 ## For current Station:
@@ -229,6 +229,13 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 var processLongTimer = 0
 
 func _process(delta):
+	
+	
+	## DEBUG:
+	if Input.is_key_pressed(KEY_T):
+		for wagonI in wagonsI:
+			wagonI.sendPersonsToDoor(1)
+	
 	processLongTimer += delta
 	if processLongTimer > processLongDelta:
 		processLong(processLongTimer)
@@ -628,6 +635,9 @@ func handle_signal(signalname):
 		doorOpenMessageSentTimer = 0
 		doorOpenMessageSent = false
 		currentStationNode = signal
+		if not stationBeginning:
+			for wagonI in wagonsI:
+				wagonI.sendPersonsToDoor(platformSide, stations["leavingPersons"][index]/100.0)
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
@@ -666,11 +676,13 @@ func check_station(delta):
 					lateMessage += TranslationServer.translate("YOU_ARE_LATE_1") + " " + String(int(secondsLater/60)) + " " + TranslationServer.translate("YOU_ARE_LATE_2_ONE_MINUTE")
 				elif secondsLater > 60:
 					lateMessage += TranslationServer.translate("YOU_ARE_LATE_1") + " " + String(int(secondsLater/60)) + " " + TranslationServer.translate("YOU_ARE_LATE_2")
+			if stationBeginning:
+				currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
 			send_message(TranslationServer.translate("WELCOME_TO") + " " + currentStationName + lateMessage)
 			stationTimer = 0
-			
 			isInStation = true
-			sendDoorPositionsToCurrentStation()
+			if not endStation:
+				sendDoorPositionsToCurrentStation()
 		elif (speed == 0 and isInStation ) :
 			if stationTimer > stationHaltTime:
 				if endStation:
@@ -680,7 +692,7 @@ func check_station(delta):
 					nextStation = ""
 					isInStation = false
 					nextStationNode = null
-
+					update_waiting_persons_on_next_station()
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
 					nextStation = null
@@ -690,6 +702,7 @@ func check_station(delta):
 					nextStation = ""
 					isInStation = false
 					nextStationNode = null
+					update_waiting_persons_on_next_station()
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
 				send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
@@ -700,10 +713,17 @@ func check_station(delta):
 			nextStation = ""
 			isInStation = false
 			nextStationNode = null
+			update_waiting_persons_on_next_station()
 		stationTimer += delta
 		if (speed != 0):
 			wholeTrainNotInStation = false
 
+func update_waiting_persons_on_next_station():
+	var station_nodes = get_all_upcoming_signalPoints_of_types(["Station"])
+	if station_nodes.size() != 0:
+		var station_node = world.get_node("Signals/"+station_nodes[0])
+		var index = stations["nodeName"].find(station_node.name)
+		station_node.set_waiting_persons(stations["waitingPersons"][index]/100.0 * world.default_persons_at_station)
 
 ## Pantograph
 var pantographTimer = 0
@@ -832,7 +852,7 @@ func bake_route(): ## Generate the whole route for the train.
 func show_textbox_message(string):
 	$HUD.show_textbox_message(string)
 	
-func get_all_upcoming_signalPoints_of_types(types): # returns an sorted aray with the names of the signals. The first entry is the nearest. 
+func get_all_upcoming_signalPoints_of_types(types : Array): # returns an sorted aray with the names of the signals. The first entry is the nearest. 
 	var returnValue = []
 	var index = routeIndex
 	while(index != baked_route.size()):
@@ -1242,12 +1262,12 @@ func sendDoorPositionsToCurrentStation():
 	for wagon in wagonsI:
 		var wagonTransform = wagon.currentRail.get_transform_at_rail_distance(wagon.distanceOnRail)
 		if currentStationNode.platformSide == 1: # Left
-			for door in wagon.rightDoors:
+			for door in wagon.leftDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)
 				doorsWagon.append(wagon)
 		if currentStationNode.platformSide == 2: # Right
-			for door in wagon.leftDoorPositions:
+			for door in wagon.rightDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)
 				doorsWagon.append(wagon)

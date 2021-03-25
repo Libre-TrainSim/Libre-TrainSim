@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/Configuration/time_field.gd" type="Script" id=1]
+
+[node name="TimeField" type="Control" groups=[
+"TimeField",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -34.0
+margin_top = -10.0
+margin_right = 34.0
+margin_bottom = 10.0
+text = "00:00:00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="PopupDialog" parent="."]
+margin_right = 376.0
+margin_bottom = 143.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Popup"]
+margin_left = 77.0
+margin_top = 46.0
+margin_right = 307.0
+margin_bottom = 70.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="H" type="SpinBox" parent="Popup/HBoxContainer"]
+margin_right = 74.0
+margin_bottom = 24.0
+max_value = 23.0
+suffix = "H"
+
+[node name="M" type="SpinBox" parent="Popup/HBoxContainer"]
+margin_left = 78.0
+margin_right = 152.0
+margin_bottom = 24.0
+max_value = 59.0
+suffix = "M"
+
+[node name="S" type="SpinBox" parent="Popup/HBoxContainer"]
+margin_left = 156.0
+margin_right = 230.0
+margin_bottom = 24.0
+max_value = 59.0
+suffix = "S"
+
+[node name="Okay" type="Button" parent="Popup"]
+margin_left = 116.0
+margin_top = 109.5
+margin_right = 259.0
+margin_bottom = 129.5
+text = "Ok"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="TimeButton" to="." method="_on_TimeButton_pressed"]
+[connection signal="pressed" from="Popup/Okay" to="." method="_on_Okay_pressed"]

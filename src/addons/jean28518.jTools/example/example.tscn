@@ -1,0 +1,187 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/example/example.gd" type="Script" id=1]
+[ext_resource path="res://addons/jean28518.jTools/jTable/jTable.tscn" type="PackedScene" id=2]
+
+[node name="Example" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Table" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 110.0
+margin_right = -13.0
+margin_bottom = -8.0
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="jTable" parent="Table" instance=ExtResource( 2 )]
+margin_left = 7.0
+margin_top = 8.0
+margin_right = -6.0
+margin_bottom = -10.0
+headings = [ "Gender", "First Name", "Last Name", "Street", "Housenumber", "Postal Code", "City" ]
+keys = [ "gender", "firstName", "lastName", "Street", "housenumber", "postalCode", "city" ]
+minimum_column_size = 150
+show_save_button = true
+
+[node name="Gender" type="OptionButton" parent="Table/jTable"]
+visible = false
+margin_right = 29.0
+margin_bottom = 20.0
+text = "Male"
+items = [ "Male", null, false, 0, null, "Female", null, false, 1, null, "Other", null, false, 2, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FirstName" type="LineEdit" parent="Table/jTable"]
+visible = false
+margin_right = 58.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LastName" type="LineEdit" parent="Table/jTable"]
+visible = false
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="Street" type="LineEdit" parent="Table/jTable"]
+visible = false
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="Housenumber" type="LineEdit" parent="Table/jTable"]
+visible = false
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="PostalCode" type="SpinBox" parent="Table/jTable"]
+visible = false
+margin_right = 74.0
+margin_bottom = 24.0
+min_value = 11111.0
+max_value = 99999.0
+value = 11111.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="City" type="LineEdit" parent="Table/jTable"]
+visible = false
+margin_right = 58.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlaySound" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -101.804
+margin_top = 21.1736
+margin_right = -20.8038
+margin_bottom = 41.1736
+text = "Play Sound"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -101.0
+margin_top = 50.0
+margin_right = -22.0
+margin_bottom = 70.0
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -101.0
+margin_top = 81.0
+margin_right = -22.0
+margin_bottom = 101.0
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+margin_left = 65.0
+margin_top = 22.0
+margin_right = -405.0
+margin_bottom = 90.0
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ColorRect"]
+margin_left = 148.835
+margin_top = 8.00903
+margin_right = 306.835
+margin_bottom = 22.009
+text = "Easy Save/Load Example"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect"]
+margin_left = 9.41995
+margin_top = 36.1179
+margin_right = 200.42
+margin_bottom = 60.1179
+
+[node name="Save" type="Button" parent="ColorRect"]
+margin_left = 211.667
+margin_top = 38.1179
+margin_right = 312.667
+margin_bottom = 58.1179
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Load" type="Button" parent="ColorRect"]
+margin_left = 328.535
+margin_top = 38.1179
+margin_right = 429.535
+margin_bottom = 58.1179
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clear" type="Button" parent="ColorRect"]
+margin_left = 443.332
+margin_top = 38.1179
+margin_right = 544.332
+margin_bottom = 58.1179
+text = "Clear"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="saved_pressed" from="Table/jTable" to="." method="_on_jTable_saved_pressed"]
+[connection signal="pressed" from="PlaySound" to="." method="_on_PlaySound_pressed"]
+[connection signal="pressed" from="Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="ColorRect/Save" to="." method="_on_SaveSingleValue_pressed"]
+[connection signal="pressed" from="ColorRect/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="ColorRect/Clear" to="." method="_on_ClearExampleValue_pressed"]

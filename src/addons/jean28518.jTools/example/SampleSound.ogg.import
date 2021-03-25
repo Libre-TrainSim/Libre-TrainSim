@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SampleSound.ogg-f2cef9a90f04d395fc05614290517bc1.oggstr"
+
+[deps]
+
+source_file="res://addons/jean28518.jTools/example/SampleSound.ogg"
+dest_files=[ "res://.import/SampleSound.ogg-f2cef9a90f04d395fc05614290517bc1.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

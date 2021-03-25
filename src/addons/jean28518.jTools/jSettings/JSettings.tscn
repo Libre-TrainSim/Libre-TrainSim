@@ -1,0 +1,176 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/jSettings/JSettings.gd" type="Script" id=1]
+
+[node name="JSettings" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -328.0
+margin_top = -233.0
+margin_right = 328.0
+margin_bottom = 233.0
+color = Color( 0.0705882, 0.0627451, 0.117647, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="ColorRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -74.2477
+margin_top = -30.5947
+margin_right = 75.7523
+margin_bottom = -10.5947
+rect_min_size = Vector2( 150, 0 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -319.5
+margin_top = -206.0
+margin_right = 319.5
+margin_bottom = 206.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+margin_right = 639.0
+margin_bottom = 412.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 485.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Fullscreen"
+
+[node name="Fullscreen" type="CheckBox" parent="ScrollContainer/GridContainer"]
+margin_left = 489.0
+margin_right = 639.0
+margin_bottom = 24.0
+align = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 33.0
+margin_right = 485.0
+margin_bottom = 47.0
+size_flags_horizontal = 3
+text = "Shadows"
+
+[node name="Shadows" type="CheckBox" parent="ScrollContainer/GridContainer"]
+margin_left = 489.0
+margin_top = 28.0
+margin_right = 639.0
+margin_bottom = 52.0
+align = 1
+
+[node name="Label6" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 59.0
+margin_right = 485.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+text = "Anti Aliasing"
+
+[node name="AntiAliasing" type="OptionButton" parent="ScrollContainer/GridContainer"]
+margin_left = 489.0
+margin_top = 56.0
+margin_right = 639.0
+margin_bottom = 76.0
+text = "Disabled"
+align = 1
+items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null, "8x", null, false, 3, null, "16x", null, false, 4, null ]
+selected = 0
+
+[node name="Label3" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 81.0
+margin_right = 485.0
+margin_bottom = 95.0
+size_flags_horizontal = 3
+text = "Main Volume"
+
+[node name="MainVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
+margin_left = 489.0
+margin_top = 80.0
+margin_right = 639.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 1.0
+step = 0.05
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 101.0
+margin_right = 485.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+text = "Game Volume"
+
+[node name="GameVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
+margin_left = 489.0
+margin_top = 100.0
+margin_right = 639.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 1.0
+step = 0.05
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 121.0
+margin_right = 485.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+text = "Music Volume"
+
+[node name="MusicVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
+margin_left = 489.0
+margin_top = 120.0
+margin_right = 639.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 1.0
+step = 0.05
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="ColorRect/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/Shadows" to="." method="_on_Shadows_pressed"]
+[connection signal="item_selected" from="ScrollContainer/GridContainer/AntiAliasing" to="." method="set_anti_aliasing"]
+[connection signal="item_selected" from="ScrollContainer/GridContainer/AntiAliasing" to="." method="save_and_apply_current_settings"]
+[connection signal="value_changed" from="ScrollContainer/GridContainer/MainVolume" to="." method="set_main_volume"]
+[connection signal="value_changed" from="ScrollContainer/GridContainer/GameVolume" to="." method="set_game_volume"]
+[connection signal="value_changed" from="ScrollContainer/GridContainer/MusicVolume" to="." method="set_music_volume"]

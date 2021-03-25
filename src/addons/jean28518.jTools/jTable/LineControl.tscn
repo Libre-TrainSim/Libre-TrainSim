@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/jTable/LineControl.gd" type="Script" id=1]
+
+[node name="LineControl" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 175, 0 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line" type="Label" parent="HBoxContainer"]
+margin_top = 293.0
+margin_right = 25.0
+margin_bottom = 307.0
+rect_min_size = Vector2( 25, 0 )
+text = "1"
+align = 1
+
+[node name="Up" type="Button" parent="HBoxContainer"]
+margin_left = 29.0
+margin_right = 355.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+text = "Up"
+
+[node name="Down" type="Button" parent="HBoxContainer"]
+margin_left = 359.0
+margin_right = 685.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+text = "Down"
+
+[node name="Delete" type="Button" parent="HBoxContainer"]
+margin_left = 689.0
+margin_right = 1015.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+margin_left = 1019.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 5, 0 )
+[connection signal="pressed" from="HBoxContainer/Up" to="." method="_on_Up_pressed"]
+[connection signal="pressed" from="HBoxContainer/Down" to="." method="_on_Down_pressed"]
+[connection signal="pressed" from="HBoxContainer/Delete" to="." method="_on_Delete_pressed"]

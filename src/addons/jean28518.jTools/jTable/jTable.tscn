@@ -1,0 +1,88 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/jTable/jTable.gd" type="Script" id=1]
+
+[node name="jTable" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+minimum_column_size = 230
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 572.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+
+[node name="Headings" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 1024.0
+
+[node name="Grid" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 4.0
+margin_right = 1024.0
+margin_bottom = 4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+margin_top = 576.0
+margin_right = 1024.0
+margin_bottom = 576.0
+
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 580.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="ClearTable" type="Button" parent="VBoxContainer/Buttons"]
+margin_right = 338.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Clear Table"
+
+[node name="RemoveEntry" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Remove Entry"
+
+[node name="AddEntry" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Add Entry"
+
+[node name="Save" type="Button" parent="VBoxContainer/Buttons"]
+visible = false
+margin_left = 771.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Save"
+[connection signal="pressed" from="VBoxContainer/Buttons/ClearTable" to="." method="_on_ClearTable_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/RemoveEntry" to="." method="_on_RemoveEntry_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/AddEntry" to="." method="_on_AddEntry_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/Save" to="." method="_on_Save_pressed"]

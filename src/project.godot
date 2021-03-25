@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Control",
+"class": "TimeField",
+"language": "GDScript",
+"path": "res://addons/Libre_Train_Sim_Editor/Docks/Configuration/time_field.gd"
+} ]
 _global_script_class_icons={
-
+"TimeField": ""
 }
 
 [application]
@@ -26,6 +31,9 @@ config/icon="res://LibreTrainSimLogo_Quad_128.png"
 
 Math="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Math.gd"
 Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Root.gd"
+jSaveManager="*res://addons/jean28518.jTools/jSaveManager/jSaveManager.gd"
+jAudioManager="*res://addons/jean28518.jTools/jAudioManager/JAudioManager.gd"
+jSettings="*res://addons/jean28518.jTools/jSettings/JSettings.tscn"
 
 [debug]
 
@@ -34,7 +42,7 @@ settings/stdout/verbose_stdout=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Libre_Train_Sim_Editor" )
+enabled=PoolStringArray( "Libre_Train_Sim_Editor", "jean28518.jTools" )
 
 [input]
 

@@ -37,8 +37,12 @@ jSettings="*res://addons/jean28518.jTools/jSettings/JSettings.tscn"
 
 [debug]
 
-settings/fps/force_fps=30
+settings/fps/force_fps=60
 settings/stdout/verbose_stdout=true
+
+[display]
+
+window/size/width=800
 
 [editor_plugins]
 

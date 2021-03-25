@@ -62,7 +62,6 @@ func updateBottmLabels():
 func _on_BackPlay_pressed():
 	$Play.hide()
 	$MenuBackground.hide()
-	$Feedback.show()
 	$Front.show()
 	$Version.show()
 
@@ -73,7 +72,6 @@ func _on_PlayFront_pressed():
 	update_track_list()
 	$Play.show()
 	$MenuBackground.show()
-	$Feedback.hide()
 	$Front.hide()
 	$Version.hide()
 
@@ -250,7 +248,7 @@ func _on_ItemList_Train_selected(index):
 func _on_ButtonFeedback_pressed():
 	config.set_value("Main", "feedbackPressed", true)
 	config.save(save_path)
-	OS.shell_open("https://libre-trainsim.de/feedback")
+	OS.shell_open("https://www.libre-trainsim.de/feedback")
 	
 
 

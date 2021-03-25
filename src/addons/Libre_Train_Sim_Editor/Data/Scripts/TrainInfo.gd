@@ -20,87 +20,87 @@ var orange = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/DotOrange.pn
 
 func update_info(player):
 	if player.engine:
-		$VBoxContainer/Engine/dot.texture = green
+		$ScrollContainer/VBoxContainer/Engine/dot.texture = green
 	else:
-		$VBoxContainer/Engine/dot.texture = red
+		$ScrollContainer/VBoxContainer/Engine/dot.texture = red
 	
 	
 	## Pantograph:
-	$VBoxContainer/Pantograpgh.visible = player.electric
+	$ScrollContainer/VBoxContainer/Pantograpgh.visible = player.electric
 	if player.pantograph:
-		$VBoxContainer/Pantograpgh/dot.texture = green
+		$ScrollContainer/VBoxContainer/Pantograpgh/dot.texture = green
 	else:
 		if player.pantographUp:
-			$VBoxContainer/Pantograpgh/dot.texture = orange
+			$ScrollContainer/VBoxContainer/Pantograpgh/dot.texture = orange
 		else:
-			$VBoxContainer/Pantograpgh/dot.texture = red
+			$ScrollContainer/VBoxContainer/Pantograpgh/dot.texture = red
 	
 	## Doors:
-	$VBoxContainer/Doors.visible = player.doors
+	$ScrollContainer/VBoxContainer/Doors.visible = player.doors
 	if not (player.doorLeft or player.doorRight):
-		$VBoxContainer/Doors/dot.texture = green
+		$ScrollContainer/VBoxContainer/Doors/dot.texture = green
 	else:
 		if player.doorsClosing:
-			$VBoxContainer/Doors/dot.texture = orange
+			$ScrollContainer/VBoxContainer/Doors/dot.texture = orange
 		else:
-			$VBoxContainer/Doors/dot.texture = red
+			$ScrollContainer/VBoxContainer/Doors/dot.texture = red
 	
 	## Control Type:
 	if player.controlType == 0:
-		$"VBoxContainer/Brakes-1".hide()
-		$"VBoxContainer/Acceleration-1".hide()
+		$"ScrollContainer/VBoxContainer/Brakes-1".hide()
+		$"ScrollContainer/VBoxContainer/Acceleration-1".hide()
 	else:
-		$"VBoxContainer/Brakes-0".hide()
-		$"VBoxContainer/Acceleration-0".hide()
+		$"ScrollContainer/VBoxContainer/Brakes-0".hide()
+		$"ScrollContainer/VBoxContainer/Acceleration-0".hide()
 		
 		
 	## Brakes:
 	if player.technicalSoll < 0:
-		$"VBoxContainer/Brakes-0/dot".texture = red
-		$"VBoxContainer/Brakes-1/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = red
 	else:
 		if player.command < 0:
-			$"VBoxContainer/Brakes-0/dot".texture = orange
-			$"VBoxContainer/Brakes-1/dot".texture = orange
+			$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = orange
+			$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = orange
 		else:
-			$"VBoxContainer/Brakes-0/dot".texture = green
-			$"VBoxContainer/Brakes-1/dot".texture = green
+			$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = green
+			$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = green
 	
 	## Acceleration:
 	if player.blockedAcceleration:
-		$"VBoxContainer/Acceleration-0/dot".texture = red
-		$"VBoxContainer/Acceleration-1/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Acceleration-0/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Acceleration-1/dot".texture = red
 	else:
-		$"VBoxContainer/Acceleration-0/dot".texture = green
-		$"VBoxContainer/Acceleration-1/dot".texture = green
+		$"ScrollContainer/VBoxContainer/Acceleration-0/dot".texture = green
+		$"ScrollContainer/VBoxContainer/Acceleration-1/dot".texture = green
 	
 	## EnforcedBreake
 	if player.enforcedBreaking:
-		$VBoxContainer/EnforcedBreaking/dot.texture = red
+		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = red
 	else:
-		$VBoxContainer/EnforcedBreaking/dot.texture = green
+		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = green
 	
 	## SiFa
-	$VBoxContainer/SiFa.visible = player.sifaEnabled
+	$ScrollContainer/VBoxContainer/SiFa.visible = player.sifaEnabled
 	if player.sifaTimer > 35:
-		$VBoxContainer/SiFa/dot.texture = red
+		$ScrollContainer/VBoxContainer/SiFa/dot.texture = red
 	elif player.sifaTimer > 25:
-		$VBoxContainer/SiFa/dot.texture = orange
+		$ScrollContainer/VBoxContainer/SiFa/dot.texture = orange
 	else:
-		$VBoxContainer/SiFa/dot.texture = green
+		$ScrollContainer/VBoxContainer/SiFa/dot.texture = green
 	
-	$VBoxContainer/Autopilot.visible = Root.EasyMode
+	$ScrollContainer/VBoxContainer/Autopilot.visible = Root.EasyMode
 	if player.automaticDriving:
-		$VBoxContainer/Autopilot/dot.texture = green
+		$ScrollContainer/VBoxContainer/Autopilot/dot.texture = green
 	else:
-		$VBoxContainer/Autopilot/dot.texture = red
+		$ScrollContainer/VBoxContainer/Autopilot/dot.texture = red
 	
 	if player.frontLight:
-		$VBoxContainer/FrontLight/dot.texture = green
+		$ScrollContainer/VBoxContainer/FrontLight/dot.texture = green
 	else:
-		$VBoxContainer/FrontLight/dot.texture = red
+		$ScrollContainer/VBoxContainer/FrontLight/dot.texture = red
 	
 	if player.insideLight:
-		$VBoxContainer/InsideLight/dot.texture = green
+		$ScrollContainer/VBoxContainer/InsideLight/dot.texture = green
 	else:
-		$VBoxContainer/InsideLight/dot.texture = red
+		$ScrollContainer/VBoxContainer/InsideLight/dot.texture = red

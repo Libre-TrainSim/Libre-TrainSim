@@ -16,7 +16,7 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/NextTable.png" type="Texture" id=15]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=16]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Label:modulate")
 tracks/0/interp = 1
@@ -42,7 +42,7 @@ tracks/1/keys = {
 "values": [ Vector2( 5, 0 ), Vector2( 5, -20 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Label:modulate")
 tracks/0/interp = 1
@@ -224,14 +224,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1024.0
+margin_left = -800.0
 margin_top = -600.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Screen1" parent="IngameInformation/TrainInfo" instance=ExtResource( 8 )]
-position = Vector2( 504.228, 296.127 )
+position = Vector2( 280, 290 )
 scale = Vector2( 0.4, 0.4 )
 
 [node name="TrainInfoAbove" parent="IngameInformation" instance=ExtResource( 7 )]
@@ -265,8 +265,8 @@ __meta__ = {
 }
 
 [node name="Message" type="AnimationPlayer" parent="."]
-anims/FadeIn = SubResource( 2 )
-anims/FadeOut = SubResource( 3 )
+anims/FadeIn = SubResource( 1 )
+anims/FadeOut = SubResource( 2 )
 
 [node name="Bling" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
@@ -284,11 +284,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -960.0
-margin_top = -540.0
-margin_right = 960.0
-margin_bottom = 540.0
+margin_left = -395.056
+margin_top = -280.507
+margin_right = 493.944
+margin_bottom = 292.493
+rect_scale = Vector2( 0.9, 0.9 )
 texture = ExtResource( 3 )
+expand = true
+stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -298,10 +301,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -424.0
-margin_top = -257.0
-margin_right = 412.0
-margin_bottom = 164.0
+margin_left = -368.0
+margin_top = -244.0
+margin_right = 366.0
+margin_bottom = 140.0
 focus_mode = 2
 custom_fonts/normal_font = ExtResource( 4 )
 text = "Test Test meine Freunde"
@@ -316,9 +319,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -50.0
-margin_top = 189.105
+margin_top = 157.641
 margin_right = 50.0
-margin_bottom = 225.105
+margin_bottom = 193.641
 rect_min_size = Vector2( 100, 36 )
 custom_fonts/font = ExtResource( 4 )
 text = "OK"

@@ -34,6 +34,7 @@ Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Root.gd"
 jSaveManager="*res://addons/jean28518.jTools/jSaveManager/jSaveManager.gd"
 jAudioManager="*res://addons/jean28518.jTools/jAudioManager/JAudioManager.gd"
 jSettings="*res://addons/jean28518.jTools/jSettings/JSettings.tscn"
+jTools="*res://addons/jean28518.jTools/jTools.gd"
 
 [debug]
 

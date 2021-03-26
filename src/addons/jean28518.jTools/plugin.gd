@@ -2,11 +2,13 @@ tool
 extends EditorPlugin
 
 func _enter_tree():
+	 add_autoload_singleton("jTools", "res://addons/jean28518.jTools/jTools.gd")
 	 add_autoload_singleton("jSaveManager", "res://addons/jean28518.jTools/jSaveManager/jSaveManager.gd")
 	 add_autoload_singleton("jAudioManager", "res://addons/jean28518.jTools/jAudioManager/JAudioManager.gd")
 	 add_autoload_singleton("jSettings", "res://addons/jean28518.jTools/jSettings/JSettings.tscn")
 	
 func _exit_tree():
+	remove_autoload_singleton("jTools")
 	remove_autoload_singleton("jSaveManager")
 	remove_autoload_singleton("jAudioManager")
 	remove_autoload_singleton("jSettings")

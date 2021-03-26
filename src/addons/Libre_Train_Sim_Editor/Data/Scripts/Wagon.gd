@@ -49,6 +49,8 @@ func _ready():
 	personsNode.name = "Persons"
 	add_child(personsNode)
 	personsNode.owner = self
+	
+	initialize_outside_announcement_player()
 	pass # Replace with function body.
 
 
@@ -373,5 +375,25 @@ func deregisterPerson(personNode):
 	if leavingPassengerNodes.has(personNode):
 		leavingPassengerNodes.erase(personNode)
 
-
+var outside_announcement_player
+func initialize_outside_announcement_player():
+	var audioStreamPlayer = AudioStreamPlayer3D.new()
 	
+	audioStreamPlayer.unit_size = 10
+	audioStreamPlayer.bus = "Game"
+	outside_announcement_player = audioStreamPlayer
+	
+	add_child(audioStreamPlayer)
+
+func play_outside_announcement(sound_path : String):
+	if sound_path == "":
+		return
+	if cabinMode:
+		return
+	var stream = load(sound_path)
+	stream.loop = false
+	if stream != null:
+		outside_announcement_player.stream = stream
+		outside_announcement_player.play()
+	
+

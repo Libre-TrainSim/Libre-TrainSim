@@ -35,7 +35,7 @@ var time = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Seco
 var enforcedBreaking = false 
 var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
-var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : []} 
+var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []} 
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
 
 ## For current Station:
@@ -611,10 +611,10 @@ func handle_signal(signalname):
 		if not stations["nodeName"].has(signal.name):
 			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...")
 			return
-		var index = stations["nodeName"].find(signal.name)
-		match stations["stopType"][index]:
+		current_station_index = stations["nodeName"].find(signal.name)
+		match stations["stopType"][current_station_index]:
 			0:
-				stations["passed"][index] = true
+				stations["passed"][current_station_index] = true
 			1:
 				endStation = false
 				stationBeginning = false
@@ -624,20 +624,20 @@ func handle_signal(signalname):
 			3:
 				endStation = true
 				stationBeginning = false
-		currentStationName = stations["stationName"][index]		
+		currentStationName = stations["stationName"][current_station_index]		
 		isInStation = false
 		platformSide = signal.platformSide
-		stationHaltTime = stations["haltTime"][index]
+		stationHaltTime = stations["haltTime"][current_station_index]
 		stationLength = signal.stationLength
 		distanceOnStationBeginning = distance
-		arrivalTime = stations["arrivalTime"][index]
-		depatureTime = stations["departureTime"][index]
+		arrivalTime = stations["arrivalTime"][current_station_index]
+		depatureTime = stations["departureTime"][current_station_index]
 		doorOpenMessageSentTimer = 0
 		doorOpenMessageSent = false
 		currentStationNode = signal
 		if not stationBeginning:
 			for wagonI in wagonsI:
-				wagonI.sendPersonsToDoor(platformSide, stations["leavingPersons"][index]/100.0)
+				wagonI.sendPersonsToDoor(platformSide, stations["leavingPersons"][current_station_index]/100.0)
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
@@ -657,6 +657,7 @@ var distanceOnStationBeginning = 0
 var doorOpenMessageSentTimer = 0
 var doorOpenMessageSent = false
 var currentStationNode 
+var current_station_index = 0
 func check_station(delta):
 	if currentStationName != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation:
@@ -679,6 +680,14 @@ func check_station(delta):
 			if stationBeginning:
 				currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
 			send_message(TranslationServer.translate("WELCOME_TO") + " " + currentStationName + lateMessage)
+			
+			if cameraState != 1:
+				for wagon in wagonsI:
+					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
+#					wagon.play_outside_announcement(stations["arrivalAnnouncePath"][current_station_index])
+			else:
+				jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
+#				jAudioManager.play_game_sound(stations["arrivalAnnouncePath"][current_station_index])
 			stationTimer = 0
 			isInStation = true
 			if not endStation:
@@ -698,6 +707,11 @@ func check_station(delta):
 					nextStation = null
 					send_message(TranslationServer.translate("YOU_CAN_DEPART"))
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
+					if cameraState != 1:
+						for wagon in wagonsI:
+							wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
+					else:
+						jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
 					currentStationName = ""
 					nextStation = ""
 					isInStation = false
@@ -935,6 +949,9 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 			else:
 				distanceS+= "m"
 			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
+			if cameraState != 2 and cameraState != 0:
+				jTools.call_delayed(1.5, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][current_station_index+1]])
+#				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
 		
 
 func check_security():#

@@ -91,9 +91,9 @@ text = "MENU_QUIT"
 [node name="Feedback" type="Button" parent="Front"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = 541.38
+margin_left = -221.894
 margin_top = 13.2964
-margin_right = 748.38
+margin_right = -14.894
 margin_bottom = 49.2964
 grow_horizontal = 0
 custom_fonts/font = ExtResource( 3 )

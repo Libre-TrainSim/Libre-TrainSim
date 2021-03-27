@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/MobileHUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Basic/Textures/TextBox.png" type="Texture" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Resources/Basic/Sounds/Bling.ogg" type="AudioStream" id=5]
@@ -39,7 +40,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 5, 0 ), Vector2( 5, -20 ) ]
+"values": [ Vector2( -857.701, 0 ), Vector2( -857.701, -20 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -65,7 +66,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 5, -20 ), Vector2( 5, 0 ) ]
+"values": [ Vector2( -857.701, -20 ), Vector2( -857.701, 0 ) ]
 }
 
 [node name="HUD" type="CanvasLayer"]
@@ -89,10 +90,11 @@ __meta__ = {
 [node name="TextureRect" type="TextureRect" parent="IngameInformation/Next"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -260.9
-margin_top = 42.0404
-margin_right = 0.10022
-margin_bottom = 215.04
+margin_left = -261.0
+margin_top = 42.0448
+margin_bottom = 215.045
+grow_horizontal = 0
+grow_vertical = 0
 texture = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -101,10 +103,10 @@ __meta__ = {
 [node name="GridContainer" type="GridContainer" parent="IngameInformation/Next"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -228.52
-margin_top = 51.3969
-margin_right = -2.51978
-margin_bottom = 187.397
+margin_left = -232.682
+margin_top = 52.1356
+margin_right = -6.68176
+margin_bottom = 188.136
 columns = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -219,6 +221,7 @@ text = "-"
 align = 1
 
 [node name="TrainInfo" type="Control" parent="IngameInformation"]
+visible = false
 modulate = Color( 1, 1, 1, 0 )
 anchor_left = 1.0
 anchor_top = 1.0
@@ -237,6 +240,9 @@ scale = Vector2( 0.4, 0.4 )
 [node name="TrainInfoAbove" parent="IngameInformation" instance=ExtResource( 7 )]
 visible = false
 
+[node name="MobileHUD" parent="." instance=ExtResource( 2 )]
+visible = false
+
 [node name="FPS" type="Label" parent="."]
 visible = false
 margin_right = 40.0
@@ -246,20 +252,30 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="Control" parent="."]
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+margin_left = -76.0
 margin_top = -40.0
-margin_right = 152.0
+margin_right = 76.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="MarginContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_right = 225.0
-margin_bottom = 45.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -933.701
+margin_top = -40.0
+margin_right = 930.299
+margin_bottom = 5.0
 custom_fonts/font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -121,6 +121,12 @@ func loadWorldConfig():
 
 
 func apply_user_settings():
+	if Root.mobile_version:
+		$DirectionalLight.shadow_enabled = false
+		player.get_node("Camera").far = 400
+		get_viewport().set_msaa(0)
+		$WorldEnvironment.environment.fog_enabled = false
+		return
 	var userConfig = ConfigFile.new()
 	userConfig.load(OS.get_executable_path().get_base_dir()+"config.cfg")
 	if get_node("DirectionalLight") != null:

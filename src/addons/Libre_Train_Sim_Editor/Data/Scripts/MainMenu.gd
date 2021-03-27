@@ -5,6 +5,7 @@ extends Control
 # var a = 2
 # var b = "text"
 export var version = ""
+export var mobile_version = false
 var save_path = OS.get_executable_path().get_base_dir()+"config.cfg"
 var config = ConfigFile.new()
 var load_response = config.load(save_path)
@@ -24,11 +25,20 @@ func _ready():
 		$FeedBack.popup()
 	update_MainMenuMusic()
 	
+	Root.mobile_version = mobile_version
+	
+	if mobile_version:
+		set_menu_to_mobile()
+	
 	var language = config.get_value("Settings", "language", "no_language")
 	if language != "no_language":
 		TranslationServer.set_locale(language)
 	pass # Replace with function body.
 
+func set_menu_to_mobile():
+	$Front/VBoxContainer.hide()
+	$Front/VBoxContainerAndoid.show()
+	
 
 func update_MainMenuMusic():
 	if config.get_value("Settings", "mainMenuMusic", true):
@@ -166,6 +176,7 @@ func _on_ItemList_itemTracks_selected(index):
 	if wData == null: 
 		print(save_path)
 		$Play/Info/Description.text = TranslationServer.translate("MENU_NO_SCENARIO_FOUND")
+		$Play/Info/Description.text = TranslationServer.translate(save_path)
 		$Play/Selection/Scenarios.hide()
 		return
 	$Play/Info/Description.text = TranslationServer.translate(wData["TrackDesciption"])

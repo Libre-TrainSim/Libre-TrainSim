@@ -245,7 +245,8 @@ func _process(delta):
 		return
 	
 	if Root.EasyMode and not ai:
-		check_user_autopilot()
+		if Input.is_action_just_pressed("autopilot"):
+			toggle_automatic_driving()
 
 	
 	
@@ -511,22 +512,28 @@ func remove_free_camera():
 		world.get_node("FreeCamera").queue_free()
 		
 
+func switch_to_cabin_view():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	cameraState = 1
+	wagonsVisible = false
+	cameraNode.transform = cameraZeroTransform
+	$Cabin.show()
+	remove_free_camera()
+	$Camera.current = true
+
+func switch_to_outer_view():
+	wagonsVisible = true
+	cameraState = 2
+	$Cabin.hide()
+	remove_free_camera()
+	$Camera.current = true
+
 
 func handleCamera(delta):
 	if Input.is_action_just_pressed("Cabin View"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		cameraState = 1
-		wagonsVisible = false
-		cameraNode.transform = cameraZeroTransform
-		$Cabin.show()
-		remove_free_camera()
-		$Camera.current = true
+		switch_to_cabin_view()
 	if Input.is_action_just_pressed("Outer View"):
-		wagonsVisible = true
-		cameraState = 2
-		$Cabin.hide()
-		remove_free_camera()
-		$Camera.current = true
+		switch_to_outer_view()
 	if Input.is_action_just_pressed("FreeCamera"):
 		$Cabin.hide()
 		wagonsVisible = true
@@ -742,6 +749,11 @@ func update_waiting_persons_on_next_station():
 ## Pantograph
 var pantographTimer = 0
 
+func rise_pantograph():
+	if not pantograph:
+		pantographUp = true
+		pantographTimer = 0
+
 func check_pantograph(delta):
 	if Input.is_action_just_pressed("pantograph") and not ai:
 		pantographUp = !pantographUp
@@ -778,21 +790,30 @@ func send_message(string):
 
 var doorsClosingTimer = 0
 
+func open_left_doors():
+	if not doorLeft and speed == 0:
+		if not $Sound/DoorsOpen.playing: 
+			$Sound/DoorsOpen.play()
+		doorLeft = true
+		
+func open_right_doors():
+	if not doorRight and speed == 0:
+		if not $Sound/DoorsOpen.playing: 
+			$Sound/DoorsOpen.play()
+		doorRight = true
+
+func close_doors():
+	if not doorsClosing and (doorLeft or doorRight):
+		doorsClosing = true
+		$Sound/DoorsClose.play()
+
 func check_doors(delta):
 	if Input.is_action_just_pressed("doorClose") and not ai:
-		if not doorsClosing and (doorLeft or doorRight):
-			doorsClosing = true
-			$Sound/DoorsClose.play()
+		close_doors()
 	if Input.is_action_just_pressed("doorLeft") and not ai:
-		if not doorLeft and speed == 0:
-			if not $Sound/DoorsOpen.playing: 
-				$Sound/DoorsOpen.play()
-			doorLeft = true
+		open_left_doors()
 	if Input.is_action_just_pressed("doorRight") and not ai:
-		if not doorRight and speed == 0:
-			if not $Sound/DoorsOpen.playing: 
-				$Sound/DoorsOpen.play()
-			doorRight = true
+		open_right_doors()
 	if doorsClosing:
 		doorsClosingTimer += delta
 	if doorsClosingTimer > doorsClosingTime:
@@ -967,10 +988,12 @@ func check_for_player_help(delta):
 	if not check_for_player_helpSent and speed == 0:
 		check_for_player_helpTimer += delta
 		if check_for_player_helpTimer > 8 and not pantographUp and not check_for_player_helpSent:
-			send_message(TranslationServer.translate("HINT_F2"))
+			if not Root.mobile_version:
+				send_message(TranslationServer.translate("HINT_F2"))
 			check_for_player_helpSent = true
 		if check_for_player_helpTimer > 15 and command < -0.5 and not check_for_player_helpSent:
-			send_message(TranslationServer.translate("HINT_F2"))
+			if not Root.mobile_version:
+				send_message(TranslationServer.translate("HINT_F2"))
 			check_for_player_helpSent = true
 	else:
 		check_for_player_helpTimer = 0
@@ -1052,16 +1075,14 @@ func spawnWagons():
 	$Cabin.distanceOnRail = nextWagonPosition
 	$Cabin.player = self
 	$Cabin.world = world
-	
 
-func check_user_autopilot():
-	if Input.is_action_just_pressed("autopilot"):
-		automaticDriving = !automaticDriving
-		if not automaticDriving:
-			sollSpeedEnabled = false
-			print("AutomaticDriving disabled")
-		else:
-			print("AutomaticDriving enabled")
+func toggle_automatic_driving():
+	automaticDriving = !automaticDriving
+	if not automaticDriving:
+		sollSpeedEnabled = false
+		print("AutomaticDriving disabled")
+	else:
+		print("AutomaticDriving enabled")
 
 var autoPilotInStation = true
 

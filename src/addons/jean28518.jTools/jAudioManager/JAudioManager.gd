@@ -25,6 +25,9 @@ func play(soundPath : String, loop : bool = false, pausable : bool = true, volum
 		if resourceTable[soundPath] == null:
 			print_debug("jAudioManager: " + soundPath + " not found. Please give in a appropriate path beginning with res://")
 			return
+			
+	if not resourceTable[soundPath] is AudioStream:
+		return
 	
 	audioStreamPlayer.volume_db = volume_db
 	audioStreamPlayer.stream = resourceTable[soundPath].duplicate()

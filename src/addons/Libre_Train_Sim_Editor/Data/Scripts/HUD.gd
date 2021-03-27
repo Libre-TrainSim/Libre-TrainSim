@@ -7,9 +7,12 @@ extends CanvasLayer
 onready var player = get_parent()
 
 func _ready():
-	pass
+	$MobileHUD.visible = Root.mobile_version
+
 	
 func _process(delta):
+	if Root.mobile_version:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if $TextBox.visible:
 		if Input.is_action_just_pressed("ui_accept"):
 			_on_OkTextBox_pressed()

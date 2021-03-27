@@ -3,7 +3,7 @@ extends Node
 var currentScenario
 var currentTrain
 var EasyMode = true
-
+var mobile_version = false
 
 
 

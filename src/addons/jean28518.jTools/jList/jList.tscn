@@ -1,0 +1,130 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/jList/jList.gd" type="Script" id=1]
+
+[node name="jList" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 572.0
+rect_clip_content = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
+select_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 576.0
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_right = 915.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 919.0
+margin_right = 956.0
+margin_bottom = 24.0
+text = "Add"
+
+[node name="Remove" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 960.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Remove"
+
+[node name="Rename" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 612.0
+margin_right = 712.0
+margin_bottom = 24.0
+text = "Rename"
+
+[node name="Duplicate" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 716.0
+margin_right = 816.0
+margin_bottom = 24.0
+text = "Duplicate"
+
+[node name="Copy" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 820.0
+margin_right = 920.0
+margin_bottom = 24.0
+text = "Copy"
+
+[node name="Paste" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 924.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Paste"
+
+[node name="Save" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 924.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Save"
+
+[node name="PopupDialog" type="PopupDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -137.466
+margin_top = -60.7126
+margin_right = 138.534
+margin_bottom = 70.2874
+popup_exclusive = true
+
+[node name="Label" type="Label" parent="PopupDialog"]
+margin_left = 13.0
+margin_top = 22.0
+margin_right = 265.0
+margin_bottom = 87.0
+text = "Lorem ipsum..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Okay" type="Button" parent="PopupDialog"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 109.67
+margin_top = -29.3439
+margin_right = -92.3303
+margin_bottom = -9.3439
+text = "Okay"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="item_activated" from="VBoxContainer/ItemList" to="." method="_on_ItemList_item_activated"]
+[connection signal="multi_selected" from="VBoxContainer/ItemList" to="." method="_on_ItemList_multi_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Add" to="." method="_on_Add_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Rename" to="." method="_on_Rename_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Duplicate" to="." method="_on_Duplicate_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Paste" to="." method="_on_Paste_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="PopupDialog/Okay" to="." method="_on_PopupDiaglog_Okay_pressed"]

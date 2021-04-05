@@ -477,6 +477,7 @@ text = "MENU_OPEN_IN_BROWSER"
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -25.384
+bus = "Music"
 [connection signal="pressed" from="Front/VBoxContainer/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Content" to="." method="_on_Content_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Create" to="." method="_on_FrontCreate_pressed"]

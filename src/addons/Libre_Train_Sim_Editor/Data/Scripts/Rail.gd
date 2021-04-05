@@ -173,6 +173,11 @@ func checkVisualInstance():
 		if get_node_or_null("MultiMeshInstance") != null:
 			unload_visible_Instance()
 
+func get_track_object(track_object_name : String): # (Searches for the description of track objects
+	for track_object in trackObjects:
+		if track_object.description == track_object_name:
+			return track_object
+	return null
 
 func buildRail():
 	if get_node_or_null("MultiMeshInstance") == null:

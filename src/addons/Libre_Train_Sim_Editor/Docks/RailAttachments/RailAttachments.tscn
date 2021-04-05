@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/RailAttachments.gd" type="Script" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/MaterialSelection.gd" type="Script" id=2]
+[ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=3]
 
 [node name="Rail Attachments" type="VBoxContainer"]
 anchor_right = 1.0
@@ -12,18 +13,18 @@ __meta__ = {
 }
 
 [node name="CurrentRail" type="HBoxContainer" parent="."]
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 24.0
 
 [node name="Name" type="LineEdit" parent="CurrentRail"]
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Tab" type="TabContainer" parent="."]
 margin_top = 28.0
-margin_right = 1024.0
-margin_bottom = 234.0
+margin_right = 800.0
+margin_bottom = 232.0
 tab_align = 0
 
 [node name="TrackObjects" type="VBoxContainer" parent="Tab"]
@@ -38,40 +39,42 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tab/TrackObjects"]
-margin_right = 1016.0
+margin_right = 792.0
 margin_bottom = 14.0
 text = "Track Objects:"
 align = 1
 
 [node name="CopyPaste" type="HBoxContainer" parent="Tab/TrackObjects"]
+visible = false
 margin_top = 18.0
-margin_right = 1016.0
+margin_right = 792.0
 margin_bottom = 38.0
 
 [node name="Copy" type="Button" parent="Tab/TrackObjects/CopyPaste"]
-margin_right = 336.0
+margin_right = 261.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Copy Whole Configuration"
 
 [node name="Paste" type="Button" parent="Tab/TrackObjects/CopyPaste"]
-margin_left = 340.0
-margin_right = 676.0
+margin_left = 265.0
+margin_right = 526.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Paste Whole Configuration"
 
 [node name="Clear" type="Button" parent="Tab/TrackObjects/CopyPaste"]
-margin_left = 680.0
-margin_right = 1016.0
+margin_left = 530.0
+margin_right = 792.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Clear whole Configuration"
 
 [node name="ItemList" type="ItemList" parent="Tab/TrackObjects"]
-margin_top = 42.0
-margin_right = 1016.0
-margin_bottom = 142.0
+visible = false
+margin_top = 18.0
+margin_right = 792.0
+margin_bottom = 118.0
 rect_min_size = Vector2( 0, 100 )
 items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
 select_mode = 1
@@ -80,9 +83,10 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tab/TrackObjects"]
-margin_top = 146.0
-margin_right = 1016.0
-margin_bottom = 170.0
+visible = false
+margin_top = 18.0
+margin_right = 792.0
+margin_bottom = 42.0
 
 [node name="New" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
 margin_right = 40.0
@@ -91,44 +95,70 @@ text = "New"
 
 [node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/HBoxContainer"]
 margin_left = 44.0
-margin_right = 706.0
+margin_right = 482.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Rename" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 710.0
-margin_right = 774.0
+margin_left = 486.0
+margin_right = 550.0
 margin_bottom = 24.0
 text = "Rename"
 
 [node name="Duplicate" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 778.0
-margin_right = 851.0
+margin_left = 554.0
+margin_right = 627.0
 margin_bottom = 24.0
 text = "Duplicate"
 
 [node name="Delete" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 855.0
-margin_right = 910.0
+margin_left = 631.0
+margin_right = 686.0
 margin_bottom = 24.0
 text = "Delete"
 
 [node name="VSeparator" type="VSeparator" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 914.0
-margin_right = 918.0
+margin_left = 690.0
+margin_right = 694.0
 margin_bottom = 24.0
 
 [node name="Copy" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 922.0
-margin_right = 965.0
+margin_left = 698.0
+margin_right = 741.0
 margin_bottom = 24.0
 text = "Copy"
 
 [node name="Paste" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 969.0
-margin_right = 1016.0
+margin_left = 745.0
+margin_right = 792.0
 margin_bottom = 24.0
 text = "Paste"
+
+[node name="jListTrackObjects" parent="Tab/TrackObjects" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 18.0
+margin_right = 792.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+_id = "_random"
+entry_duplicate_text = "_duplicate"
+only_unique_entries_allowed = true
+enable_add_button = true
+enable_remove_button = true
+enable_rename_button = true
+enable_duplicate_button = true
+enable_copy_button = true
+enable_paste_button = true
+enable_save_button = false
+add_button_text = "New"
+remove_button_text = "Delete"
+rename_button_text = "Rename"
+duplicate_button_text = "Duplicate"
+copy_button_text = "Copy"
+paste_button_text = "Paste"
+save_button_text = "Save"
+update = false
 
 [node name="Settings" type="VBoxContainer" parent="Tab/TrackObjects"]
 visible = false
@@ -615,7 +645,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Datei öffnen"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.obj" )
@@ -628,7 +658,7 @@ margin_right = 1024.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 600, 400 )
 popup_exclusive = true
-window_title = "Open a File"
+window_title = "Datei öffnen"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres" )
@@ -645,6 +675,13 @@ current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Delete" to="." method="_on_DeleteTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Copy" to="." method="_on_CopyTO_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Paste" to="." method="_on_PasteTO_pressed"]
+[connection signal="user_added_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_added_entry"]
+[connection signal="user_copied_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_copied_entries"]
+[connection signal="user_duplicated_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_duplicated_entries"]
+[connection signal="user_pasted_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_pasted_entries"]
+[connection signal="user_removed_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_removed_entries"]
+[connection signal="user_renamed_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_renamed_entry"]
+[connection signal="user_selected_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_selected_entry"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/Pick" to="." method="_on_PickObject_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0/Pick" to="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0" method="_on_Pick_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Remove" to="." method="_on_MaterialRemove_pressed"]

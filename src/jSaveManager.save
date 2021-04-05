@@ -6,3 +6,5 @@ antiAliasing=2
 mainVolume=1.0
 musicVolume=1.0
 gameVolume=1.0
+language="de"
+view_distance=300

@@ -189,11 +189,9 @@ func get_value_of(grid_address : int):
 		return node.selected
 	if node is CheckBox or node is CheckButton:
 		return node.pressed
-	if node is TimeField:
-		return node.get_data()
-	
-	print("Node Type of " + node.name + " in jTable currently not supported. Add me! jTable.gd:189")
-	return 0
+		
+	return jConfig.get_value_of(node)
+
 		
 func set_value_to(grid_address : int, value):
 	var node = grid_node.get_child(grid_address)
@@ -209,11 +207,8 @@ func set_value_to(grid_address : int, value):
 	if node is CheckBox or node is CheckButton:
 		node.pressed = value
 		return
-	if node is TimeField:
-		node.set_data(value)
-		return
-		
-	print("Node Type of " + node.name + " in jTable currently not supported. Add me! jTable.gd:200")
+	
+	jConfig.set_value_to(node, value)
 
 
 func _on_Save_pressed():

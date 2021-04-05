@@ -92,9 +92,10 @@ func _on_Content_pressed():
 	$Content.show()
 
 func _on_SettingsFront_pressed():
-	$Front.hide()
-	$MenuBackground.show()
-	$Settings.show()
+#	$Front.hide()
+	jSettings.open_window()
+#	$MenuBackground.show()
+#	$Settings.show()
 
 func update_config():
 	## Get All .pck files:
@@ -290,3 +291,7 @@ func _on_FrontCreate_pressed():
 	OS.shell_open("https://github.com/Jean28518/Libre-TrainSim/wiki/Building-Tracks-for-Libre-TrainSim---Official-Documentation")
 
 
+
+
+func _on_Options_pressed_delme():
+	jSettings.open_window()

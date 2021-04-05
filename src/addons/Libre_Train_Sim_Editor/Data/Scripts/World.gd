@@ -127,13 +127,11 @@ func apply_user_settings():
 		get_viewport().set_msaa(0)
 		$WorldEnvironment.environment.fog_enabled = false
 		return
-	var userConfig = ConfigFile.new()
-	userConfig.load(OS.get_executable_path().get_base_dir()+"config.cfg")
 	if get_node("DirectionalLight") != null:
-		$DirectionalLight.shadow_enabled = userConfig.get_value("Settings", "shadows", true)
-	player.get_node("Camera").far = userConfig.get_value("Settings", "viewDistance", 1000)
-	get_viewport().set_msaa(userConfig.get_value("Settings", "antiAliasing", ProjectSettings.get_setting("rendering/quality/filters/msaa")))
-	$WorldEnvironment.environment.fog_enabled = userConfig.get_value("Settings", "fog", true)
+		$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+	player.get_node("Camera").far = jSettings.get_view_distance()
+	get_viewport().set_msaa(jSettings.get_anti_aliasing())
+	$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
 	
 func _process(delta):
 	if not Engine.editor_hint:

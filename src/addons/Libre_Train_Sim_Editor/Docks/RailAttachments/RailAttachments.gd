@@ -13,6 +13,8 @@ var copyTOArray
 var currentTO
 var eds # Editor Selection
 var pluginRoot
+
+var track_object_resource = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -22,6 +24,8 @@ func _ready():
 func _process(delta):
 	$Tab/TrackObjects/Settings.visible = currentTO != null
 	pass
+
+
 
 
 func update_selected_rail(node):
@@ -40,83 +44,144 @@ func update_selected_rail(node):
 		$Tab.visible = false
 
 func update_itemList():
-	$Tab/TrackObjects/ItemList.clear()
-	var tos = currentRail.trackObjects
-	for x in range(tos.size()):
-		if tos[x].description == null:
-			tos[x].queue_free()
+	$Tab/TrackObjects/jListTrackObjects.clear()
+	var track_objects = currentRail.trackObjects
+	for x in range(track_objects.size()):
+		if track_objects[x].description == null:
+			track_objects[x].queue_free()
 		else:
-			$Tab/TrackObjects/ItemList.add_item(tos[x].description)
+			$Tab/TrackObjects/jListTrackObjects.add_entry(track_objects[x].description)
 
 
-func _on_ClearTOs_pressed():
-	var tos = currentRail.trackObjects
-	for x in range(tos.size()):
-		tos[x].queue_free()
-	currentRail.trackObjects.clear()
+#func _on_ClearTOs_pressed():
+#	var tos = currentRail.trackObjects
+#	for x in range(tos.size()):
+#		tos[x].queue_free()
+#	currentRail.trackObjects.clear()
+#	update_itemList()
+#	update_Materials()
+#	update_positioning()
+#	update_Position()
+#	print("Cleared TrackObjects")
+	
+
+func _on_jListTrackObjects_user_removed_entries(entry_names):
+	for entry_name in entry_names:
+		var track_object = currentRail.get_track_object(entry_name)
+		var track_object_name = track_object.name
+		track_object.queue_free()
+		currentRail.trackObjects.erase(track_object)
+		print("TrackObject " + track_object_name + " deleted")
 	update_itemList()
-	update_Materials()
-	update_positioning()
-	update_Position()
-	print("Cleared TrackObjects")
 
 
-func _on_NewTO_pressed():
-	if $Tab/TrackObjects/HBoxContainer/LineEdit.text != "":
-		clear_Materials_View()
-		var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
-		var to = TO_object.instance()
-		to.description = $Tab/TrackObjects/HBoxContainer/LineEdit.text
-		to.name = currentRail.name + " " + $Tab/TrackObjects/HBoxContainer/LineEdit.text
-		to.attachedRail = currentRail.name
-		to.materialPaths = []
-		world.get_node("TrackObjects").add_child(to)
-		to.set_owner(world)
-
-		update_selected_rail(currentRail)
-		print("Created TrackObject: "+to.name)
-
-
-func _on_RenameTO_pressed():
-	if $Tab/TrackObjects/HBoxContainer/LineEdit.text != "":
-		currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].description = $Tab/TrackObjects/HBoxContainer/LineEdit.text
-		currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].name = currentRail.name + " " + $Tab/TrackObjects/HBoxContainer/LineEdit.text
-	update_itemList()
-	print("TrackObject renamed: "+ currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].name)
+#func _on_NewTO_pressed():
+#	if $Tab/TrackObjects/HBoxContainer/LineEdit.text != "":
+#		clear_Materials_View()
+#		var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
+#		var to = TO_object.instance()
+#		to.description = $Tab/TrackObjects/HBoxContainer/LineEdit.text
+#		to.name = currentRail.name + " " + $Tab/TrackObjects/HBoxContainer/LineEdit.text
+#		to.attachedRail = currentRail.name
+#		to.materialPaths = []
+#		world.get_node("TrackObjects").add_child(to)
+#		to.set_owner(world)
+#
+#		update_selected_rail(currentRail)
+#		print("Created TrackObject: "+to.name)
+		
 
 
+func _on_jListTrackObjects_user_added_entry(entry_name):
+	print(entry_name)
+	clear_Materials_View()
+	var track_object = track_object_resource.instance()
+	track_object.description = entry_name
+	track_object.name = currentRail.name + " " + entry_name
+	track_object.attachedRail = currentRail.name
+	track_object.materialPaths = []
+	world.get_node("TrackObjects").add_child(track_object)
+	track_object.set_owner(world)
+	
+	print("Created track object " + track_object.name)
 
-func _on_DuplicateTO_pressed():
-	var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
-	var to = TO_object.instance()
-	var data = currentTO.get_data()
-	to.set_data(data)
-	to.description = currentTO.description + " (Duplicate)"
-	to.name = currentTO.name + " (Duplicate)"
-	to.attachedRail = currentRail.name
-	world.get_node("TrackObjects").add_child(to)
-	to.set_owner(world)
-	update_selected_rail(currentRail)
-	to._update(true)
-	print("TrackObject " + to.name + " duplicated")
+#func _on_RenameTO_pressed():
+#	if $Tab/TrackObjects/HBoxContainer/LineEdit.text != "":
+#		currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].description = $Tab/TrackObjects/HBoxContainer/LineEdit.text
+#		currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].name = currentRail.name + " " + $Tab/TrackObjects/HBoxContainer/LineEdit.text
+#	update_itemList()
+#	print("TrackObject renamed: "+ currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]].name)
+
+func _on_jListTrackObjects_user_renamed_entry(old_name, new_name):
+	var track_object = currentRail.get_track_object(old_name)
+	track_object.description = new_name
+	track_object.name = currentRail.name + " " + new_name
+	print("TrackObject renamed from "+ old_name + " to " + new_name)
+
+#
+#func _on_DuplicateTO_pressed():
+#	var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
+#	var to = TO_object.instance()
+#	var data = currentTO.get_data()
+#	to.set_data(data)
+#	to.description = currentTO.description + " (Duplicate)"
+#	to.name = currentTO.name + " (Duplicate)"
+#	to.attachedRail = currentRail.name
+#	world.get_node("TrackObjects").add_child(to)
+#	to.set_owner(world)
+#	update_selected_rail(currentRail)
+#	to._update(true)
+#	print("TrackObject " + to.name + " duplicated")
+	
+func _on_jListTrackObjects_user_duplicated_entries(source_entry_names, duplicated_entry_names):
+	for i in range(source_entry_names.size()):
+		var source_entry_name = source_entry_names[i]
+		var duplicated_entry_name = duplicated_entry_names[i]
+		var source_track_object = currentRail.get_track_object(source_entry_name)
+		copy_track_object_to_current_rail(source_track_object, duplicated_entry_name)
+		print("TrackObject " +  source_entry_name + " duplicated.")
+	pass # Replace with function body.
+
+func copy_track_object_to_current_rail(source_track_object : Node, new_description : String):
+	var new_track_object = track_object_resource.instance()
+	var data = source_track_object.get_data()
+	new_track_object.set_data(data)
+	new_track_object.name = currentRail.name + " " + new_description
+	new_track_object.description = new_description
+	new_track_object.attachedRail = currentRail.name
+	world.get_node("TrackObjects").add_child(new_track_object)
+	new_track_object.set_owner(world)
+	new_track_object._update(true)
 
 
-func _on_DeleteTO_pressed():
-	if currentTO == null: return
-	var id = $Tab/TrackObjects/ItemList.get_selected_items()[0]
-	if id == null:
-		return
-	var to = currentRail.trackObjects[id]
-	var n = to.name
-	to.queue_free()
-	currentRail.trackObjects.erase(to)
-	currentTO = null
-	update_itemList()
-	print("TrackObject " + n + " deleted")
+#func _on_DeleteTO_pressed():
+#	if currentTO == null: return
+#	var id = $Tab/TrackObjects/ItemList.get_selected_items()[0]
+#	if id == null:
+#		return
+#	var to = currentRail.trackObjects[id]
+#	var n = to.name
+#	to.queue_free()
+#	currentRail.trackObjects.erase(to)
+#	currentTO = null
+#	update_itemList()
+#	print("TrackObject " + n + " deleted")
 
 
-func _on_ItemListTO_item_selected(index):	
-	currentTO = currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]]
+#func _on_ItemListTO_item_selected(index):	
+#	currentTO = currentRail.trackObjects[$Tab/TrackObjects/ItemList.get_selected_items()[0]]
+#	if currentTO == null:
+#		$"Tab/TrackObjects/Settings".visible = false
+#		return
+#	else:
+#		$"Tab/TrackObjects/Settings".visible = true
+#	update_Materials()
+#	update_positioning()
+#	update_Position()
+#	$Tab/TrackObjects/HBoxContainer/LineEdit.text = currentTO.description
+	
+func _on_jListTrackObjects_user_selected_entry(entry_name):
+	currentTO = currentRail.get_track_object(entry_name)
 	if currentTO == null:
 		$"Tab/TrackObjects/Settings".visible = false
 		return
@@ -125,7 +190,7 @@ func _on_ItemListTO_item_selected(index):
 	update_Materials()
 	update_positioning()
 	update_Position()
-	$Tab/TrackObjects/HBoxContainer/LineEdit.text = currentTO.description
+	pass # Replace with function body.
 	
 
 func get_materials(): ## Prepare the View of the Materials-Table
@@ -260,43 +325,64 @@ func _on_Button_pressed(): ## UPDATE
 		currentRail.updateOverheadLine()
 
 
-func _on_CopyTO_pressed():
-	copyTOArray = []
-	for i in $Tab/TrackObjects/ItemList.get_selected_items():
-		copyTOArray.append (currentRail.trackObjects[i])
-	if copyTOArray == []:
-		$"Tab/TrackObjects/Settings".visible = false
-		return
-	else:
-		$"Tab/TrackObjects/Settings".visible = true
-	print("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pased a copy of it/them.")
+#func _on_CopyTO_pressed():
+#	copyTOArray = []
+#	for i in $Tab/TrackObjects/ItemList.get_selected_items():
+#		copyTOArray.append (currentRail.trackObjects[i])
+#	if copyTOArray == []:
+#		$"Tab/TrackObjects/Settings".visible = false
+#		return
+#	else:
+#		$"Tab/TrackObjects/Settings".visible = true
+#	print("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pasted a copy of it/them.")
 	
 
+func _on_jListTrackObjects_user_copied_entries(entry_names):
+	if entry_names.size() == 0:
+		$"Tab/TrackObjects/Settings".visible = false
+		return
+	copyTOArray = []
+	for entry_name in entry_names:
+		copyTOArray.append(currentRail.get_track_object(entry_name))
+	$"Tab/TrackObjects/Settings".visible = true
+	print("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pasted a copy of it/them.")
 
-func _on_PasteTO_pressed():
-	for TO in copyTOArray:
-		duplicate_newTO(TO)
-	print("TrackObject(s) pasted")
 
 
-func duplicate_newTO(set):
-	if set != null:
-			var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
-			var to = TO_object.instance()
-			var data = set.get_data()
-			update_Position()
-			to.set_data(data)
-			to.description = set.description
-			to.name = set.name
-			to.attachedRail = currentRail.name
-			world.get_node("TrackObjects").add_child(to)
-			to.set_owner(world)
-			update_selected_rail(currentRail)
-			currentTO = to
-			_on_SavePosition_pressed()
-			_on_Button_pressed()
-			update_itemList()
-			print("Track Object pasted")
+
+
+#func _on_PasteTO_pressed():
+#	for TO in copyTOArray:
+#		duplicate_newTO(TO)
+#	print("TrackObject(s) pasted")
+	
+
+func _on_jListTrackObjects_user_pasted_entries(source_entry_names, source_jList_id, pasted_entry_names):
+	assert(pasted_entry_names.size() == copyTOArray.size())
+	for i in range (pasted_entry_names.size()):
+		copy_track_object_to_current_rail(copyTOArray[i], pasted_entry_names[i])
+			
+
+
+
+#func duplicate_newTO(set):
+#	if set != null:
+#			var TO_object = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
+#			var to = TO_object.instance()
+#			var data = set.get_data()
+#			update_Position()
+#			to.set_data(data)
+#			to.description = set.description
+#			to.name = set.name
+#			to.attachedRail = currentRail.name
+#			world.get_node("TrackObjects").add_child(to)
+#			to.set_owner(world)
+#			update_selected_rail(currentRail)
+#			currentTO = to
+#			_on_SavePosition_pressed()
+#			_on_Button_pressed()
+#			update_itemList()
+#			print("Track Object pasted")
 
 #		var to = set.duplicate()
 #		to.materialPaths = set.materialPaths.duplicate()
@@ -311,16 +397,16 @@ func duplicate_newTO(set):
 #		print("Track Object pasted")
 #
 
+#
+#func _on_CopyTrack_pressed():
+#	copyRail = currentRail
+#	print("Track Objects copied")
 
-func _on_CopyTrack_pressed():
-	copyRail = currentRail
-	print("Track Objects copied")
-
-
-func _on_PasteRail_pressed():
-	print("Pasting Track Objects..")
-	for to in copyRail.trackObjects:
-		duplicate_newTO(to)
+#
+#func _on_PasteRail_pressed():
+#	print("Pasting Track Objects..")
+#	for to in copyRail.trackObjects:
+#		duplicate_newTO(to)
 	
 
 
@@ -347,8 +433,8 @@ func _on_PickMaterial_pressed(): ## Called by material select script.
 	$FileDialogMaterials.popup_centered()
 
 
-func _on_ItemList_multi_selected(index, selected):
-	_on_ItemListTO_item_selected(index)
+#func _on_ItemList_multi_selected(index, selected):
+#	_on_ItemListTO_item_selected(index)
 
 
 func _on_MaterialRemove_pressed():
@@ -361,3 +447,15 @@ func _on_MaterialRemove_pressed():
 func _on_Randomize_pressed():
 	currentTO.newSeed()
 	_on_Button_pressed()
+
+
+
+
+
+
+
+
+
+
+
+

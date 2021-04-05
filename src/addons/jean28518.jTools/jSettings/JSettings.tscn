@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/JSettings.gd" type="Script" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=3]
 
 [node name="JSettings" type="Control"]
 pause_mode = 2
@@ -12,17 +13,13 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -328.0
-margin_top = -233.0
-margin_right = 328.0
-margin_bottom = 233.0
-color = Color( 0.0705882, 0.0627451, 0.117647, 1 )
+anchor_left = 0.07125
+anchor_top = 0.111667
+anchor_right = 0.93625
+anchor_bottom = 0.908333
+color = Color( 0.180392, 0.184314, 0.223529, 0.960784 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Back" type="Button" parent="ColorRect"]
@@ -30,32 +27,29 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -74.2477
-margin_top = -30.5947
-margin_right = 75.7523
-margin_bottom = -10.5947
+margin_left = -74.0
+margin_top = -65.7451
+margin_right = 76.0
+margin_bottom = -14.7451
 rect_min_size = Vector2( 150, 0 )
-text = "Back"
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_BACK"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -319.5
-margin_top = -206.0
-margin_right = 319.5
-margin_bottom = 206.0
+anchor_left = 0.10125
+anchor_top = 0.156667
+anchor_right = 0.9
+anchor_bottom = 0.77
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
-margin_right = 639.0
-margin_bottom = 412.0
+margin_right = 627.0
+margin_bottom = 449.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -64,62 +58,118 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 5.0
-margin_right = 485.0
-margin_bottom = 19.0
+margin_right = 473.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
-text = "Fullscreen"
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_FULLSCREEN"
 
 [node name="Fullscreen" type="CheckBox" parent="ScrollContainer/GridContainer"]
-margin_left = 489.0
-margin_right = 639.0
-margin_bottom = 24.0
-align = 1
+margin_left = 540.0
+margin_right = 564.0
+margin_bottom = 45.0
+size_flags_horizontal = 4
 
 [node name="Label2" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 33.0
-margin_right = 485.0
-margin_bottom = 47.0
+margin_top = 49.0
+margin_right = 473.0
+margin_bottom = 94.0
 size_flags_horizontal = 3
-text = "Shadows"
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_SHADOWS"
 
 [node name="Shadows" type="CheckBox" parent="ScrollContainer/GridContainer"]
-margin_left = 489.0
-margin_top = 28.0
-margin_right = 639.0
-margin_bottom = 52.0
+margin_left = 540.0
+margin_top = 49.0
+margin_right = 564.0
+margin_bottom = 94.0
+size_flags_horizontal = 4
+align = 1
+
+[node name="Label8" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 98.0
+margin_right = 473.0
+margin_bottom = 143.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_FOG"
+
+[node name="Fog" type="CheckBox" parent="ScrollContainer/GridContainer"]
+margin_left = 540.0
+margin_top = 98.0
+margin_right = 564.0
+margin_bottom = 143.0
+size_flags_horizontal = 4
+align = 1
+
+[node name="Label9" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 147.0
+margin_right = 473.0
+margin_bottom = 192.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_VIEW_DISTANCE"
+
+[node name="ViewDistance" type="SpinBox" parent="ScrollContainer/GridContainer"]
+margin_left = 477.0
+margin_top = 147.0
+margin_right = 627.0
+margin_bottom = 192.0
+min_value = 250.0
+max_value = 1000.0
+value = 1000.0
 align = 1
 
 [node name="Label6" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 59.0
-margin_right = 485.0
-margin_bottom = 73.0
+margin_top = 199.0
+margin_right = 473.0
+margin_bottom = 244.0
 size_flags_horizontal = 3
-text = "Anti Aliasing"
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_ANTI_ALIASING"
 
 [node name="AntiAliasing" type="OptionButton" parent="ScrollContainer/GridContainer"]
-margin_left = 489.0
-margin_top = 56.0
-margin_right = 639.0
-margin_bottom = 76.0
+margin_left = 477.0
+margin_top = 196.0
+margin_right = 627.0
+margin_bottom = 247.0
+custom_fonts/font = ExtResource( 3 )
 text = "Disabled"
 align = 1
 items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null, "8x", null, false, 3, null, "16x", null, false, 4, null ]
 selected = 0
 
-[node name="Label3" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 81.0
-margin_right = 485.0
-margin_bottom = 95.0
+[node name="Label7" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 254.0
+margin_right = 473.0
+margin_bottom = 299.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_LANGUAGE"
+
+[node name="Language" type="OptionButton" parent="ScrollContainer/GridContainer"]
+margin_left = 477.0
+margin_top = 251.0
+margin_right = 627.0
+margin_bottom = 302.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+
+[node name="Label3" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 306.0
+margin_right = 473.0
+margin_bottom = 351.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
 text = "Main Volume"
 
 [node name="MainVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
-margin_left = 489.0
-margin_top = 80.0
-margin_right = 639.0
-margin_bottom = 96.0
+margin_left = 477.0
+margin_top = 306.0
+margin_right = 627.0
+margin_bottom = 351.0
 rect_min_size = Vector2( 150, 0 )
+size_flags_vertical = 1
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -128,18 +178,20 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 101.0
-margin_right = 485.0
-margin_bottom = 115.0
+margin_top = 355.0
+margin_right = 473.0
+margin_bottom = 400.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
 text = "Game Volume"
 
 [node name="GameVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
-margin_left = 489.0
-margin_top = 100.0
-margin_right = 639.0
-margin_bottom = 116.0
+margin_left = 477.0
+margin_top = 355.0
+margin_right = 627.0
+margin_bottom = 400.0
 rect_min_size = Vector2( 150, 0 )
+size_flags_vertical = 1
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -148,18 +200,20 @@ __meta__ = {
 }
 
 [node name="Label5" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 121.0
-margin_right = 485.0
-margin_bottom = 135.0
+margin_top = 404.0
+margin_right = 473.0
+margin_bottom = 449.0
 size_flags_horizontal = 3
-text = "Music Volume"
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_MUSIC"
 
 [node name="MusicVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
-margin_left = 489.0
-margin_top = 120.0
-margin_right = 639.0
-margin_bottom = 136.0
+margin_left = 477.0
+margin_top = 404.0
+margin_right = 627.0
+margin_bottom = 449.0
 rect_min_size = Vector2( 150, 0 )
+size_flags_vertical = 1
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -169,8 +223,11 @@ __meta__ = {
 [connection signal="pressed" from="ColorRect/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/Shadows" to="." method="_on_Shadows_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/Fog" to="." method="_on_Fog_pressed"]
+[connection signal="value_changed" from="ScrollContainer/GridContainer/ViewDistance" to="." method="set_view_distance"]
 [connection signal="item_selected" from="ScrollContainer/GridContainer/AntiAliasing" to="." method="set_anti_aliasing"]
 [connection signal="item_selected" from="ScrollContainer/GridContainer/AntiAliasing" to="." method="save_and_apply_current_settings"]
+[connection signal="item_selected" from="ScrollContainer/GridContainer/Language" to="." method="_on_Language_item_selected"]
 [connection signal="value_changed" from="ScrollContainer/GridContainer/MainVolume" to="." method="set_main_volume"]
 [connection signal="value_changed" from="ScrollContainer/GridContainer/GameVolume" to="." method="set_game_volume"]
 [connection signal="value_changed" from="ScrollContainer/GridContainer/MusicVolume" to="." method="set_music_volume"]

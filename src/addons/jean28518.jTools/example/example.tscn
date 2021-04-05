@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/example/example.gd" type="Script" id=1]
 [ext_resource path="res://addons/jean28518.jTools/jTable/jTable.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/jean28518.jTools/Heading.png" type="Texture" id=3]
+[ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=4]
 
 [node name="Example" type="Control"]
 anchor_right = 1.0
@@ -11,11 +13,77 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Heading" type="Sprite" parent="."]
+position = Vector2( 265.112, 96.2125 )
+scale = Vector2( 0.535175, 0.535175 )
+texture = ExtResource( 3 )
+
+[node name="Page2" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="jListExample1" type="ColorRect" parent="Page2"]
+anchor_left = 0.0107422
+anchor_top = 0.306667
+anchor_right = 0.990234
+anchor_bottom = 0.575
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Page2/jListExample1"]
+anchor_right = 1.0
+margin_top = 4.23785
+margin_bottom = 18.2379
+text = "jList Example 1"
+align = 1
+
+[node name="jList" parent="Page2/jListExample1" instance=ExtResource( 4 )]
+margin_left = 6.0
+margin_top = 26.0
+margin_right = -6.0
+margin_bottom = -6.0
+enable_rename_button = true
+enable_duplicate_button = true
+enable_copy_button = true
+
+[node name="jListExample2" type="ColorRect" parent="Page2"]
+anchor_left = 0.0117188
+anchor_top = 0.595
+anchor_right = 0.539062
+anchor_bottom = 0.871667
+margin_top = -3.05176e-05
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Page2/jListExample2"]
+anchor_right = 1.0
+margin_top = 4.23785
+margin_bottom = 18.2379
+text = "jList Example 2"
+align = 1
+
+[node name="jList" parent="Page2/jListExample2" instance=ExtResource( 4 )]
+margin_left = 6.0
+margin_top = 26.0
+margin_right = -6.0
+margin_bottom = -6.0
+enable_add_button = false
+enable_paste_button = true
+enable_save_button = true
+
 [node name="Table" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 110.0
+margin_top = 311.0
 margin_right = -13.0
 margin_bottom = -8.0
 color = Color( 0.14902, 0.172549, 0.231373, 1 )
@@ -30,7 +98,6 @@ margin_right = -6.0
 margin_bottom = -10.0
 headings = [ "Gender", "First Name", "Last Name", "Street", "Housenumber", "Postal Code", "City" ]
 keys = [ "gender", "firstName", "lastName", "Street", "housenumber", "postalCode", "city" ]
-minimum_column_size = 150
 show_save_button = true
 
 [node name="Gender" type="OptionButton" parent="Table/jTable"]
@@ -86,6 +153,127 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SaveLoadExample" type="ColorRect" parent="."]
+anchor_right = 1.0
+margin_left = 17.123
+margin_top = 231.147
+margin_right = -452.877
+margin_bottom = 299.147
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SaveLoadExample"]
+margin_left = 148.835
+margin_top = 8.00903
+margin_right = 306.835
+margin_bottom = 22.009
+text = "Easy Save/Load Example"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="SaveLoadExample"]
+margin_left = 9.41995
+margin_top = 36.1179
+margin_right = 200.42
+margin_bottom = 60.1179
+
+[node name="Save" type="Button" parent="SaveLoadExample"]
+margin_left = 211.667
+margin_top = 38.1179
+margin_right = 312.667
+margin_bottom = 58.1179
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Load" type="Button" parent="SaveLoadExample"]
+margin_left = 328.535
+margin_top = 38.1179
+margin_right = 429.535
+margin_bottom = 58.1179
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clear" type="Button" parent="SaveLoadExample"]
+margin_left = 443.332
+margin_top = 38.1179
+margin_right = 544.332
+margin_bottom = 58.1179
+text = "Clear"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayDelayedSound" type="ColorRect" parent="."]
+anchor_right = 1.0
+margin_left = 594.0
+margin_top = 231.0
+margin_right = -65.0
+margin_bottom = 299.0
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PlayDelayedSound"]
+margin_left = 51.616
+margin_top = 8.00903
+margin_right = 374.616
+margin_bottom = 22.009
+text = "Delayed Function Call ( just1 line of code)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="seconds" type="SpinBox" parent="PlayDelayedSound"]
+margin_left = 9.41995
+margin_top = 36.1179
+margin_right = 200.42
+margin_bottom = 60.1179
+step = 0.1
+value = 1.3
+suffix = "seconds"
+
+[node name="PlayDelayedSound" type="Button" parent="PlayDelayedSound"]
+margin_left = 211.667
+margin_top = 38.1179
+margin_right = 312.667
+margin_bottom = 58.1179
+text = "Play Delayed Sound"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pages" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+margin_left = 529.0
+margin_top = 21.7091
+margin_right = -124.0
+margin_bottom = 41.7091
+custom_constants/separation = 10
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Page1" type="Button" parent="Pages"]
+margin_left = 126.0
+margin_right = 180.0
+margin_bottom = 20.0
+text = "Page 1"
+
+[node name="Page2" type="Button" parent="Pages"]
+margin_left = 190.0
+margin_right = 244.0
+margin_bottom = 20.0
+text = "Page 2"
+
 [node name="PlaySound" type="Button" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -121,67 +309,14 @@ text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-margin_left = 65.0
-margin_top = 22.0
-margin_right = -405.0
-margin_bottom = 90.0
-color = Color( 0.14902, 0.172549, 0.231373, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="ColorRect"]
-margin_left = 148.835
-margin_top = 8.00903
-margin_right = 306.835
-margin_bottom = 22.009
-text = "Easy Save/Load Example"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LineEdit" type="LineEdit" parent="ColorRect"]
-margin_left = 9.41995
-margin_top = 36.1179
-margin_right = 200.42
-margin_bottom = 60.1179
-
-[node name="Save" type="Button" parent="ColorRect"]
-margin_left = 211.667
-margin_top = 38.1179
-margin_right = 312.667
-margin_bottom = 58.1179
-text = "Save"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Load" type="Button" parent="ColorRect"]
-margin_left = 328.535
-margin_top = 38.1179
-margin_right = 429.535
-margin_bottom = 58.1179
-text = "Load"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Clear" type="Button" parent="ColorRect"]
-margin_left = 443.332
-margin_top = 38.1179
-margin_right = 544.332
-margin_bottom = 58.1179
-text = "Clear"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[connection signal="user_selected_entry" from="Page2/jListExample1/jList" to="." method="_on_jListExample1_user_selected_entry"]
 [connection signal="saved_pressed" from="Table/jTable" to="." method="_on_jTable_saved_pressed"]
+[connection signal="pressed" from="SaveLoadExample/Save" to="." method="_on_SaveSingleValue_pressed"]
+[connection signal="pressed" from="SaveLoadExample/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="SaveLoadExample/Clear" to="." method="_on_ClearExampleValue_pressed"]
+[connection signal="pressed" from="PlayDelayedSound/PlayDelayedSound" to="." method="_on_PlayDelayedSound_pressed"]
+[connection signal="pressed" from="Pages/Page1" to="." method="_on_Page1_pressed"]
+[connection signal="pressed" from="Pages/Page2" to="." method="_on_Page2_pressed"]
 [connection signal="pressed" from="PlaySound" to="." method="_on_PlaySound_pressed"]
 [connection signal="pressed" from="Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="Quit" to="." method="_on_Quit_pressed"]
-[connection signal="pressed" from="ColorRect/Save" to="." method="_on_SaveSingleValue_pressed"]
-[connection signal="pressed" from="ColorRect/Load" to="." method="_on_Load_pressed"]
-[connection signal="pressed" from="ColorRect/Clear" to="." method="_on_ClearExampleValue_pressed"]

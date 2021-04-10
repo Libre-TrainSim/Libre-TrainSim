@@ -57,7 +57,9 @@ func updateVisualInstance():
 
 	if get_node_or_null("VisualInstance") == null:
 		# Load Visual Instance:
-		var visualInstanceResource = load(visualInstancePath)
+		var visualInstanceResource = null
+		if visualInstancePath != "":
+			visualInstanceResource = load(visualInstancePath)
 		if visualInstanceResource == null:
 			visualInstanceResource = load("res://Resources/Basic/Signals/Default.tscn")
 		var visualInstance = visualInstanceResource.instance()

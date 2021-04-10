@@ -25,11 +25,11 @@ var save_path
 var config = ConfigFile.new()
 var load_response
 
-var allChunks = []
-var istChunks = []
-var sollChunks = []
+var all_chunks = [] # All Chunks of the world
+var istChunks = [] # All Current loaded Chunks
+var sollChunks = [] # All Chunks, which should be loaded immediately
 
-var activeChunk = string2Chunk("0,0")
+var activeChunk = string2Chunk("0,0") # Current Chunk of the player (ingame)
 
 
 var author = ""
@@ -53,13 +53,14 @@ var personVisualInstances = []
 #var initProcessorTime = 0
 #var processorTime = 0
 func _ready():
-
-
-	
+	jEssentials.call_delayed(2.0, self, "get_actual_loaded_chunks")
 	if trackName == null:
 		trackName = FileName
+	print("trackName: " +trackName + " " + FileName)
 	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
 	load_response = config.load(save_path)
+	$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
+	
 	if Engine.editor_hint:
 		return
 		# Code to execute in editor.
@@ -93,12 +94,12 @@ func _ready():
 		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
 			save_world(true)
 		
-		allChunks = config.get_value("Chunks", "allChunks", [])
+		all_chunks = config.get_value("Chunks", "all_chunks", [])
 		
 		if editorAllObjectsUnloaded == true:
 			istChunks = []
 		else:
-			istChunks = allChunks.duplicate()
+			istChunks = all_chunks.duplicate()
 		configure_soll_chunks(activeChunk)
 
 		apply_soll_chunks()
@@ -112,6 +113,12 @@ func _ready():
 
 
 	pass
+	
+func save_value(key : String, value):
+	return $jSaveModule.save_value(key, value)
+	
+func get_value(key : String,  default_value = null):
+	return $jSaveModule.get_value(key,  default_value)
 
 func loadWorldConfig():
 	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
@@ -169,33 +176,40 @@ func time(delta):
 
 
 func pos2Chunk(position):
-	return {x= int(position.x / chunkSize), z = int(position.z / chunkSize)}
+	return Vector3(int(position.x / chunkSize), 0, int(position.z / chunkSize))
 	
 func compareChunks(pos1, pos2):
 	return (pos1.x == pos2.x && pos1.z == pos2.z)
 	
-func chunk2String(position):
+func chunk2String(position : Vector3):
 	return (String(position.x) + ","+String(position.z))
 	
-func string2Chunk(string):
+func string2Chunk(string : String):
 	var array = string.split(",")
 	return Vector3(int(array[0]), 0 , int(array[1]))
 
 func getChunkeighbours(chunk):
-	return [{x = chunk.x+1, z = chunk.z+1}, {x= chunk.x+1, z = chunk.z}, {x= chunk.x+1, z = chunk.z-1}, {x= chunk.x, z = chunk.z+1}, {x = chunk.x, z = chunk.z-1}, {x = chunk.x-1, z = chunk.z+1}, {x = chunk.x-1, z = chunk.z}, {x = chunk.x-1, z = chunk.z-1}]
+	return [
+		Vector3(chunk.x+1, 0, chunk.z+1), 
+		Vector3(chunk.x+1, 0, chunk.z), 
+		Vector3(chunk.x+1, 0, chunk.z-1), 
+		Vector3(chunk.x, 0, chunk.z+1), 
+		Vector3(chunk.x, 0, chunk.z-1), 
+		Vector3(chunk.x-1, 0, chunk.z+1), 
+		Vector3(chunk.x-1, 0, chunk.z), 
+		Vector3(chunk.x-1, 0, chunk.z-1)
+	]
 
 func save_chunk(position):
 	
 	var chunk = {} #"position" : position, "Rails" : {}, "Buildings" : {}, "Flora" : {}}
 	chunk.position = position
 	chunk.Rails = {}
-#	processorTime = OS.get_ticks_msec() / 1000
-#	print("Processor Time 2: " + String(processorTime - initProcessorTime))	
 	var Rails = get_node("Rails").get_children()
 	chunk.Rails = []
 	for rail in Rails:
 		if compareChunks(pos2Chunk(rail.translation), position):
-			rail.checkForSwitch()
+			rail.update_is_switch_part()
 			chunk.Rails.append(rail.name)
 
 	
@@ -222,15 +236,13 @@ func save_chunk(position):
 
 		if compareChunks(pos2Chunk(trackObject.translation), position):
 			chunk.TrackObjects[trackObject.name] = {name = trackObject.name, transform = trackObject.transform, data = trackObject.get_data()}
-#	processorTime = OS.get_ticks_msec() / 1000
-#	print("Processor Time 3: " + String(processorTime - initProcessorTime))	
 	config.set_value("Chunks", chunk2String(position), null)
 	config.set_value("Chunks", chunk2String(position), chunk)
 	print("Saved Chunk " + chunk2String(position))
 	
 
 
-func unload_chunk(position):
+func unload_chunk(position : Vector3):
 	
 	var chunk = config.get_value("Chunks", chunk2String(position), null)
 	if chunk == null:
@@ -257,14 +269,6 @@ func unload_chunk(position):
 			else:
 				print("Object not saved! I wont unload this for you...")
 	
-#	var Signals = get_node("Signals").get_children()
-#	for signalN in Signals:
-#		if compareChunks(pos2Chunk(signalN.translation), position):
-#			if chunk.Signals.has(signalN.name):
-#				signalN.queue_free()
-#			else:
-#				print("Object not saved! I wont unload this for you...")
-	
 	var TrackObjects = get_node("TrackObjects").get_children()
 	for node in TrackObjects:
 		if compareChunks(pos2Chunk(node.translation), position):
@@ -277,19 +281,20 @@ func unload_chunk(position):
 	
 	
 	
-func load_chunk(position):
+func load_chunk(position : Vector3):
 	
 	print("Loading Chunk " + chunk2String(position))
-	var chunk = config.get_value("Chunks", chunk2String(position), null)
 	
-	if chunk == null:
+	var chunk = config.get_value("Chunks", chunk2String(position), {"empty" : true})
+
+	if chunk.has("empty"):
 		print("Chunk "+chunk2String(position) + " not found in Save File. Chunk not loaded!")
 		return
 	## Rails:
 	var Rails = chunk.Rails
 #	var railNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 	for rail in Rails:
-		printerr("Loading Rail: " + rail)
+		print("Loading Rail: " + rail)
 		## IF YOU GET HERE AN ERROR: Do Save and Create Chunks, and check, if only Rails are assigned to the "Rails" Node
 		if $Rails.get_node(rail) != null:  ##DEBUG
 			$Rails.get_node(rail).load_visible_Instance()
@@ -374,28 +379,29 @@ func save_world(newvar):
 	config = ConfigFile.new()
 	load_response = config.load(save_path)
 
-	get_allChunks()
+	get_all_chunks()
 	
 	
-	for chunk in allChunks:
+	for chunk in all_chunks:
 		save_chunk(string2Chunk(chunk))
 	
 
 	config.save(save_path)
 	print("Saved the whole world. Chunks set correctly.")
 
-func get_allChunks():
-	allChunks = []
+func get_all_chunks(): # Returns Array of Strings
+	all_chunks = []
 	var railNode = get_node("Rails")
 	if railNode == null:
 		printerr("Rail Node not found. World is corrupt!")
 		return
 	for rail in railNode.get_children():
 		var railChunk = pos2Chunk(rail.translation)
-		allChunks = add_single_to_array(allChunks, chunk2String(railChunk))
+		all_chunks = add_single_to_array(all_chunks, chunk2String(railChunk))
 
 		for chunk in getChunkeighbours(railChunk):
-			allChunks = add_single_to_array(allChunks, chunk2String(chunk))
+			all_chunks = add_single_to_array(all_chunks, chunk2String(chunk))
+	return all_chunks
 
 func add_single_to_array(array, value):
 	if not array.has(value):
@@ -436,21 +442,7 @@ func handle_chunk():
 		apply_soll_chunks()
 	lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
 
-func editorUnloadAllChunks():
-	editorAllObjectsUnloaded = true
-	loadWorldConfig()
-	get_allChunks()
-	istChunks = allChunks.duplicate()
-	sollChunks = []
-	apply_soll_chunks()
-	
-func editorLoadAllChunks():
-	editorAllObjectsUnloaded = false
-	loadWorldConfig()
-	get_allChunks()
-	istChunks = []
-	sollChunks = allChunks.duplicate()
-	apply_soll_chunks()
+
 
 
 
@@ -619,6 +611,113 @@ func checkTrainSpawn(delta):
 			spawnTrain(pendingTrains["TrainName"][i])
 			
 
+func update_rail_connections():
+	for rail_node in $Rails.get_children():
+		rail_node.update_connections()
 
+# pathfinding from a start rail to an end rail. returns an array of rail nodes
+func get_path_from_to(start_rail : Node, forward : bool, destination_rail : Node):
+	if Engine.editor_hint:
+		update_rail_connections()
+	else:
+		print_debug("Be sure you called update_rail_connections once before..")
+	var route = _get_path_from_to_helper(start_rail, forward, [], destination_rail)
+	print_debug(route)
+	return route
 
+# Recursive Function
+func _get_path_from_to_helper(start_rail : Node, forward : bool, already_visited_rails : Array, destination_rail : Node):
+	already_visited_rails.append(start_rail)
+	print(already_visited_rails)
+	if start_rail == destination_rail:
+		return already_visited_rails
+	else:
+		var possbile_rails
+		if forward:
+			possbile_rails = start_rail.get_connected_rails_at_ending()
+		else:
+			possbile_rails = start_rail.get_connected_rails_at_beginning()
+		for rail_node in possbile_rails:
+			print("Possible Rails" + String(possbile_rails))
+			if not already_visited_rails.has(rail_node):
+				if rail_node.get_connected_rails_at_ending().has(start_rail):
+					forward = false
+				if rail_node.get_connected_rails_at_beginning().has(start_rail):
+					forward = true
+				return _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
+	return []
 
+# Iterates through all currently loaded/visible rails, buildings, flora. Returns an array of chunks in strings
+func get_actual_loaded_chunks():
+	var actual_loaded_chunks = []
+	for rail_node in $Rails.get_children():
+		if rail_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(rail_node.translation))): 
+			actual_loaded_chunks.append(chunk2String(pos2Chunk(rail_node.translation)))
+	for building_node in $Buildings.get_children():
+		if building_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(building_node.translation))): 
+			actual_loaded_chunks.append(chunk2String(pos2Chunk(building_node.translation)))
+	for flora_node in $Flora.get_children():
+		if flora_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(flora_node.translation))): 
+			actual_loaded_chunks.append(chunk2String(pos2Chunk(flora_node.translation)))
+	
+	return actual_loaded_chunks
+
+# loads all chunks (for Editor Use) (even if some chunks are loaded, and others not.)
+func force_load_all_chunks():
+	sollChunks = get_all_chunks()
+	istChunks = []
+	apply_soll_chunks()
+	
+# Accepts an array of chunks noted as strings
+func unload_and_save_chunks(chunks_to_unload : Array):
+	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
+	for chunk_to_unload in chunks_to_unload:
+		if current_unloaded_chunks.has(chunk_to_unload): # If chunk is loaded but unloaded at the same time
+			print("Chunk conflict: " + chunk_to_unload + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
+			load_chunk(string2Chunk(chunk_to_unload))
+			save_chunk(string2Chunk(chunk_to_unload))
+			unload_chunk(string2Chunk(chunk_to_unload))
+			continue
+		save_chunk(string2Chunk(chunk_to_unload))
+		unload_chunk(string2Chunk(chunk_to_unload))
+		current_unloaded_chunks.append(chunk_to_unload)
+	save_value("unloaded_chunks", current_unloaded_chunks)
+	print("Unloaded and saved chunks sucessfully.")
+
+# Accepts an array of chunks noted as strings
+func load_chunks(chunks_to_load : Array):
+	for chunk in chunks_to_load:
+		load_chunk(string2Chunk(chunk))
+
+func unload_and_save_all_chunks():
+	unload_and_save_chunks(get_all_chunks())
+
+# Returns all chunks in form of strings.
+func get_chunks_between_rails(start_rail : String, destination_rail : String, include_neighbour_chunks : bool = false):
+	var start_rail_node = $Rails.get_node_or_null(start_rail)
+	var destination_rail_node = $Rails.get_node_or_null(destination_rail)
+	if start_rail_node == null or destination_rail_node == null:
+		print("Some Rails not found. Are the Names correct? Aborting...")
+		return
+	var rail_nodes = get_path_from_to(start_rail_node, true, destination_rail_node)
+	if rail_nodes.empty():
+		rail_nodes = get_path_from_to(start_rail_node, false, destination_rail_node)
+	if rail_nodes.empty():
+		print("Path between these rails could not be found. Are these rails reachable? Check the connections! Aborting...")
+	
+	var chunks = []
+	for rail_node in rail_nodes:
+		chunks.append(chunk2String(pos2Chunk(rail_node.translation)))
+	chunks = jEssentials.remove_duplicates(chunks)
+	if not include_neighbour_chunks:
+		return chunks
+	
+	var chunks_with_neighbours = chunks.duplicate()
+	for chunk in chunks:
+		var chunks_neighbours = getChunkeighbours(string2Chunk(chunk))
+		for chunk_neighbour in chunks_neighbours:
+			chunks_with_neighbours.append(chunk2String(chunk_neighbour))
+	chunks_with_neighbours = jEssentials.remove_duplicates(chunks_with_neighbours)
+	return chunks_with_neighbours
+	
+	

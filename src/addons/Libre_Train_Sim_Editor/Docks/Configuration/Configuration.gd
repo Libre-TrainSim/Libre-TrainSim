@@ -17,7 +17,7 @@ func get_all_scenarios():
 	return config.get_value("Scenarios", "List", [])
 
 func get_world_config():
-	if world == null or world.name != "World":
+	if world == null or world.name != "World" or world.trackName == null:
 		return null
 	var FileName = world.trackName + "/" + world.trackName
 	save_path = "res://Worlds/" + FileName + "-scenarios.cfg"
@@ -232,7 +232,6 @@ func get_world_configuration():
 	$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
 	$"World Configuration/GridContainer/ThumbnailPath".text = d["ThumbnailPath"]
 	
-	updateToggleAllSavedObjectsButton()
 
 
 
@@ -488,18 +487,58 @@ func clear_train_settings_view(): # Resets the Train settings when adding a new 
 
 
 
-func _on_ToggleAllSavedObjects_pressed():
-	if world.editorAllObjectsUnloaded:
-		world.editorLoadAllChunks()
-	else: 
-		world.editorUnloadAllChunks()
-	updateToggleAllSavedObjectsButton()
+#func _on_ToggleAllSavedObjects_pressed():
+#	if world.editorAllObjectsUnloaded:
+#		world.editorLoadAllChunks()
+#	else: 
+#		world.editorUnloadAllChunks()
+#	updateToggleAllSavedObjectsButton()
+#
+#
+#func updateToggleAllSavedObjectsButton():
+#	if world == null or world.name != "World":
+#		return
+#	if not world.editorAllObjectsUnloaded:
+#		$"World Configuration/ToggleAllSavedObjects".text = "Unload all Objects from configuration"
+#	else: 
+#		$"World Configuration/ToggleAllSavedObjects".text = "Load all Objects from configuration"
 
 
-func updateToggleAllSavedObjectsButton():
-	if world == null or world.name != "World":
+func _on_WorldLoading_AllChunks_pressed():
+	if $"World Configuration/WorldLoading/AllChunks".pressed:
+		$"World Configuration/WorldLoading/RailConfiguration".hide()
+		$"World Configuration/WorldLoading/IncludeNeighbours".hide()
+	else:
+		$"World Configuration/WorldLoading/RailConfiguration".show()
+		$"World Configuration/WorldLoading/IncludeNeighbours".show()
+
+
+
+func _on_WorldLoading_Unload_pressed():
+	if $"World Configuration/WorldLoading/AllChunks".pressed:
+		world.unload_and_save_all_chunks()
+		print("Unloaded all chunks.")
 		return
-	if not world.editorAllObjectsUnloaded:
-		$"World Configuration/ToggleAllSavedObjects".text = "Unload all Objects from configuration"
-	else: 
-		$"World Configuration/ToggleAllSavedObjects".text = "Load all Objects from configuration"
+	var chunks = world.get_chunks_between_rails(
+		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
+		$"World Configuration/WorldLoading/RailConfiguration/ToRail".text,
+		$"World Configuration/WorldLoading/IncludeNeighbours".pressed)
+	if chunks == null:
+		return
+	world.unload_and_save_chunks(chunks)
+	pass # Replace with function body.
+
+
+func _on_WorldLoading_Load_pressed():
+	if $"World Configuration/WorldLoading/AllChunks".pressed:
+		world.force_load_all_chunks()
+		print("Loaded all chunks.")
+		return
+	var chunks = world.get_chunks_between_rails(
+		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
+		$"World Configuration/WorldLoading/RailConfiguration/ToRail".text,
+		$"World Configuration/WorldLoading/IncludeNeighbours".pressed)
+	if chunks == null:
+		return
+	world.load_chunks(chunks)
+	print("Loaded Chunks " + String(chunks))

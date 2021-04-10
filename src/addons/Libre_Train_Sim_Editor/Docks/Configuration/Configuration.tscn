@@ -13,7 +13,6 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -170,16 +169,77 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToggleAllSavedObjects" type="Button" parent="World Configuration"]
-margin_left = 307.0
+[node name="WorldLoading" type="VBoxContainer" parent="World Configuration"]
 margin_top = 270.0
-margin_right = 485.0
-margin_bottom = 290.0
-hint_tooltip = "This creates the chunksystem for Loading ingame. You should save and create the Chunksystem everytime you changed something in the world, and you wanna test or export the world."
-size_flags_horizontal = 4
-text = "Unload Rail Attachements"
+margin_right = 792.0
+margin_bottom = 374.0
+
+[node name="AllChunks" type="CheckBox" parent="World Configuration/WorldLoading"]
+margin_right = 792.0
+margin_bottom = 24.0
+text = "All Chunks"
+
+[node name="RailConfiguration" type="HBoxContainer" parent="World Configuration/WorldLoading"]
+margin_top = 28.0
+margin_right = 792.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="World Configuration/WorldLoading/RailConfiguration"]
+margin_top = 5.0
+margin_right = 64.0
+margin_bottom = 19.0
+text = "From Rail:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FromRail" type="LineEdit" parent="World Configuration/WorldLoading/RailConfiguration"]
+margin_left = 68.0
+margin_right = 401.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="World Configuration/WorldLoading/RailConfiguration"]
+margin_left = 405.0
+margin_top = 5.0
+margin_right = 455.0
+margin_bottom = 19.0
+text = "To Rail: "
+
+[node name="ToRail" type="LineEdit" parent="World Configuration/WorldLoading/RailConfiguration"]
+margin_left = 459.0
+margin_right = 792.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="IncludeNeighbours" type="CheckBox" parent="World Configuration/WorldLoading"]
+margin_top = 56.0
+margin_right = 792.0
+margin_bottom = 80.0
+text = "Include Chunk Neighbours"
+
+[node name="Buttons" type="HBoxContainer" parent="World Configuration/WorldLoading"]
+margin_top = 84.0
+margin_right = 792.0
+margin_bottom = 104.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="Unload" type="Button" parent="World Configuration/WorldLoading/Buttons"]
+margin_left = 256.0
+margin_right = 423.0
+margin_bottom = 20.0
+text = "Unload and Save Chunks"
+
+[node name="Load" type="Button" parent="World Configuration/WorldLoading/Buttons"]
+margin_left = 443.0
+margin_right = 535.0
+margin_bottom = 20.0
+text = "Load Chunks"
 
 [node name="Scenarios" type="ScrollContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -189,9 +249,8 @@ margin_bottom = -4.0
 scroll_vertical = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Scenarios"]
-margin_top = -100.0
-margin_right = 780.0
-margin_bottom = 758.0
+margin_right = 792.0
+margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -282,7 +341,6 @@ margin_right = 780.0
 margin_bottom = 582.0
 
 [node name="General" type="VBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -409,6 +467,7 @@ size_flags_horizontal = 4
 text = "Save General"
 
 [node name="Trains" type="VBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -696,8 +755,9 @@ margin_bottom = 522.0
 rect_min_size = Vector2( 0, 200 )
 headings = [ "Station Node Name", "Station Name", "Arrival", "Departure", "Mininmal Halt Time", "Stop Type", "Waiting Persons", "Leaving Persons", "Arrival Announce Path", "Departure Announce Path", "Approach Announce Path" ]
 keys = [ "nodeName", "stationName", "arrivalTime", "departureTime", "haltTime", "stopType", "waitingPersons", "leavingPersons", "arrivalAnnouncePath", "departureAnnouncePath", "approachAnnouncePath" ]
-minimum_column_size = 150
+show_save_button = false
 show_clear_button = false
+_update_table = false
 
 [node name="NodeName" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
 visible = false
@@ -844,7 +904,10 @@ mode = 0
 filters = PoolStringArray( "*.obj" )
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
 [connection signal="pressed" from="World Configuration/SaveChunks" to="." method="_on_SaveChunks_pressed"]
-[connection signal="pressed" from="World Configuration/ToggleAllSavedObjects" to="." method="_on_ToggleAllSavedObjects_pressed"]
+[connection signal="pressed" from="World Configuration/WorldLoading/AllChunks" to="." method="_on_WorldLoading_AllChunks_pressed"]
+[connection signal="pressed" from="World Configuration/WorldLoading/IncludeNeighbours" to="." method="_on_WorldLoading_AllChunks_pressed"]
+[connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Unload" to="." method="_on_WorldLoading_Unload_pressed"]
+[connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Load" to="." method="_on_WorldLoading_Load_pressed"]
 [connection signal="item_selected" from="Scenarios/VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/New" to="." method="_on_NewScenario_pressed"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/Rename" to="." method="_on_RenameScenario_pressed"]

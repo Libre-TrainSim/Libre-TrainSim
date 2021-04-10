@@ -38,7 +38,7 @@ func _ready():
 		setToRail(true)
 		
 		
-func _process(delta):
+func __process(delta):
 	if rail == null:
 		setToRail(true)
 	

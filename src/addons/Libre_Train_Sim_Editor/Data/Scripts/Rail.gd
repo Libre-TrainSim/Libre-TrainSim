@@ -95,6 +95,7 @@ func _process(delta):
 			return
 		EditorUpdateTimer = 0
 		## Disable moving in editor, if manual Moving is false:
+#		print("checking transofrmation....")
 		if fixedTransform == null:
 			fixedTransform = transform
 		if not manualMoving:
@@ -122,7 +123,6 @@ func _update(newvar):
 		overheadLineHeight2 = railTypeNode.overheadLineHeight2
 		overheadLineThinkness = railTypeNode.overheadLineThinkness
 		line2HeightChangingFactor = railTypeNode.line2HeightChangingFactor
-	
 	updateOverheadLine()
 	world = find_parent("World")
 	if world == null: return
@@ -154,12 +154,8 @@ func _update(newvar):
 	endpos = get_pos_at_RailDistance(length)
 	visibleSegments = length / buildDistance +1
 
-	if not world.editorAllObjectsUnloaded or not Engine.is_editor_hint():
-		buildRail()
-		updateOverheadLine()
-	else:
-		if self.has_node("MultiMeshInstance"):
-			$MultiMeshInstance.queue_free()
+	buildRail()
+	updateOverheadLine()
 
 	if Engine.is_editor_hint():
 		$Ending.translation = get_local_transform_at_rail_distance(length).origin
@@ -283,6 +279,7 @@ func load_visible_Instance():
 	add_child(multimeshI)
 	multimeshI.owner = self
 	_update(true)
+	print("Loading of visual instance complete")
 
 ################################################### Easy Circle Functions:
 func circle_get_pos(radius, distance):
@@ -522,7 +519,7 @@ func create3DLineUp(start, end, thinkness):
 export var isSwitchPart = ["", ""]
 # 0: is Rail at beginning part of switch? 1: is the rail at end part of switch if not 
 # It is saved the name of the other rail which is part of switch
-func checkForSwitch():
+func update_is_switch_part():
 	isSwitchPart = ["", ""]
 	var foundRailsAtBeginning = []
 	var foundRailsAtEnding = []
@@ -547,4 +544,38 @@ func checkForSwitch():
 	if foundRailsAtEnding.size() > 0:
 		isSwitchPart[1] = foundRailsAtEnding[0]
 		pass
+
+
+var _connected_rails_at_beginning = [] # Array of rail nodes
+var _connected_rails_at_ending = [] # Array of rail nodes
+# The code of update_connections and update_is_switch_part can't be summarized, because 
+# we are searching for different rails in these functions. (Rotation of searched 
+# rails differs by 180 degrees)
+
+# This function should be called before get_connected_rails_at_beginning() 
+# or get_connected_rails_at_ending once.
+func update_connections():
+	_connected_rails_at_beginning = []
+	_connected_rails_at_ending = []
+	for rail in world.get_node("Rails").get_children():
+		if rail == self:
+			continue
+		# Check for beginning
+		if startpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(startrot) - Math.normDeg(rail.startrot+180)) < 1:
+			_connected_rails_at_beginning.append(rail)
+		elif startpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(startrot) - Math.normDeg(rail.endrot)) < 1:
+			_connected_rails_at_beginning.append(rail)
+		#check for ending
+		if endpos.distance_to(rail.startpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.startrot))) < 1:
+			_connected_rails_at_ending.append(rail)
+		elif endpos.distance_to(rail.endpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.endrot+180))) < 1:
+			_connected_rails_at_ending.append(rail)
+
+# Returns array of rail nodes
+func get_connected_rails_at_beginning():
+	return _connected_rails_at_beginning
+
+# Returns array of rail nodes
+func get_connected_rails_at_ending():
+	return _connected_rails_at_ending
 

@@ -97,7 +97,8 @@ func set_data(d):
 		applySlopeRotation = d.applySlopeRotation
 
 func _ready():
-	attach_to_rail()
+	world = find_parent("World")
+#	attach_to_rail()
 	_update(true)
 	pass
 		
@@ -122,10 +123,19 @@ func _process(delta):
 func attach_to_rail():
 	if world == null: 
 		return
-	var rail = world.get_node("Rails").get_node(attachedRail)
+	var rail = world.get_node("Rails").get_node_or_null(attachedRail)
 	if rail != null:
 		if not rail.trackObjects.has(self):
 			rail.trackObjects.append(self)
+
+func unattach_from_rail():
+	var rail = world.get_node("Rails").get_node_or_null(attachedRail)
+	if rail != null:
+		if rail.trackObjects.has(self):
+			rail.trackObjects.erase(self)
+
+func _exit_tree():
+	unattach_from_rail()
 
 func _update(newvar):
 	updated = true
@@ -146,7 +156,6 @@ func _update(newvar):
 		translation = rail.get_pos_at_RailDistance(onRailPosition)
 	
 	
-
 	if objectPath == "" : return
 	var mesh = load(objectPath).duplicate(true)
 	multimesh.mesh = mesh

@@ -1,20 +1,21 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Resources/Basic/BasicWorldEnviroment.tres" type="Environment" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Basic/Grass.material" type="Material" id=3]
-[ext_resource path="res://Resources/Basic/Materials/PlasterStones.tres" type="Material" id=4]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=5]
 [ext_resource path="res://Resources/Basic/Materials/EasyTree.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Basic/grass.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=8]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Resources/Basic/Materials/Metal_Green.tres" type="Material" id=9]
 [ext_resource path="res://Worlds/Tutorials/TutorialScript.gd" type="Script" id=10]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Green.tres" type="Material" id=13]
+[ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=13]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Brown.tres" type="Material" id=14]
-[ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=15]
-[ext_resource path="res://Resources/Basic/Materials/Beton.tres" type="Material" id=16]
+[ext_resource path="res://Resources/Basic/Materials/Beton.tres" type="Material" id=15]
+[ext_resource path="res://Resources/Basic/Materials/PlasterStones.tres" type="Material" id=16]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Station.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Resources/Basic/BasicSun.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Resources/Basic/Materials/PlasterStonesLight.tres" type="Material" id=19]
@@ -40,7 +41,7 @@ surfaces/1 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 12,
-"material": ExtResource( 4 ),
+"material": ExtResource( 16 ),
 "name": "Pflasterstein",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -66,7 +67,7 @@ surfaces/3 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 540,
-"material": ExtResource( 15 ),
+"material": ExtResource( 13 ),
 "name": "Metal",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -88,7 +89,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 30,
-"material": ExtResource( 16 ),
+"material": ExtResource( 15 ),
 "name": "Beton",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -101,7 +102,7 @@ surfaces/1 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 396,
-"material": ExtResource( 13 ),
+"material": ExtResource( 9 ),
 "name": "GreenMetal",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -114,7 +115,7 @@ surfaces/2 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 1350,
-"material": ExtResource( 15 ),
+"material": ExtResource( 13 ),
 "name": "Metal",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -171,7 +172,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 30,
-"material": ExtResource( 16 ),
+"material": ExtResource( 15 ),
 "name": "Beton",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -184,7 +185,7 @@ surfaces/1 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 396,
-"material": ExtResource( 13 ),
+"material": ExtResource( 9 ),
 "name": "GreenMetal",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -197,7 +198,7 @@ surfaces/2 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 1350,
-"material": ExtResource( 15 ),
+"material": ExtResource( 13 ),
 "name": "Metal",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -267,7 +268,7 @@ surfaces/1 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 12,
-"material": ExtResource( 4 ),
+"material": ExtResource( 16 ),
 "name": "Pflasterstein",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -293,7 +294,7 @@ surfaces/3 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 540,
-"material": ExtResource( 15 ),
+"material": ExtResource( 13 ),
 "name": "Metal",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -339,71 +340,40 @@ attachedRail = "Rail"
 
 [node name="Signal" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.999118, 0, -0.0419877, 0, 1, 0, 0.0419877, 0, 0.999118, 209.938, 0, 4.40918 )
-status = 0
 setPassAtH = 12
-setPassAtM = 0
 setPassAtS = 5
 speed = 140
-blockSignal = false
-visualInstancePath = ""
 attachedRail = "Rail"
-forward = true
 onRailPosition = 210
-update = false
 
 [node name="Signal2" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.996802, 0, -0.0799147, 0, 1, 0, 0.0799147, 0, 0.996802, 399.573, 0, 15.9917 )
 status = 1
-setPassAtM = 0
 setPassAtS = 45
-speed = -1
-blockSignal = false
-visualInstancePath = ""
 attachedRail = "Rail"
-forward = true
 onRailPosition = 400
-update = false
 
 [node name="Signal3" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.987227, 0, -0.159318, 0, 1, 0, 0.159318, 0, 0.987227, 796.591, 0, 63.8638 )
 status = 1
 setPassAtH = 12
-setPassAtM = 0
 setPassAtS = 50
-speed = -1
-blockSignal = false
-visualInstancePath = ""
 attachedRail = "Rail"
-forward = true
 onRailPosition = 800
-update = false
 
 [node name="Signal4" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, -0.0666163, 0, 1, 0, 0.0666163, 0, 0.997779, 1389.5, 0, 152.803 )
+transform = Transform( 0.997779, 0, -0.0666169, 0, 1, 0, 0.0666169, 0, 0.997779, 1389.5, 0, 152.803 )
 status = 1
 setPassAtH = 12
 setPassAtM = 1
-setPassAtS = 0
 speed = 80
-blockSignal = false
-visualInstancePath = ""
 attachedRail = "Rail2"
-forward = true
 onRailPosition = 400
-update = false
 
 [node name="Signal5" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, 0.0666183, 0, 1, 0, -0.0666183, 0, 0.997779, 1789.21, 0, 152.802 )
-status = 0
-setPassAtM = 0
-setPassAtS = 0
-speed = -1
-blockSignal = false
-visualInstancePath = ""
+transform = Transform( 0.997779, 0, 0.0666178, 0, 1, 0, -0.0666178, 0, 0.997779, 1789.21, 0, 152.803 )
 attachedRail = "Rail2"
-forward = true
 onRailPosition = 800
-update = false
 
 [node name="City2" parent="Signals" instance=ExtResource( 17 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 1584.35, 0, 159.463 )
@@ -428,6 +398,7 @@ startTend = -3.0
 tend1 = -0.3
 tend2Pos = 950.0
 tend2 = -0.3
+automaticTendency = false
 isSwitchPart = [ "", "" ]
 
 [node name="Rail2" parent="Rails" instance=ExtResource( 2 )]
@@ -454,144 +425,83 @@ isSwitchPart = [ "", "" ]
 
 [node name="TrackObjects" type="Spatial" parent="."]
 
-[node name="Rail Platform" parent="TrackObjects" instance=ExtResource( 9 )]
+[node name="Rail Platform" parent="TrackObjects" instance=ExtResource( 4 )]
 multimesh = SubResource( 2 )
 description = "Platform"
 attachedRail = "Rail"
-onRailPosition = 0.0
 length = 200.0
 objectPath = "res://Resources/Basic/Platform-1.obj"
 materialPaths = [ "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/PlasterStones.tres", "res://Resources/Basic/Materials/PlasterStonesLight.tres", "res://Resources/Basic/Materials/Metal.tres" ]
 sides = 2
-spawnRate = 1.0
 rows = 1.0
-distanceLength = 10.0
-distanceRows = 0.0
 shift = 3.5
 height = 0.6
 rotationObjects = 180.0
-randomLocation = false
-randomLocationFactor = 0.3
-randomRotation = false
-randomScale = false
-randomScaleFactor = 0.2
-placeLast = false
-applySlopeRotation = false
-randomSeed = 0
-wholeRail = false
-update = false
 
-[node name="Rail Poles" parent="TrackObjects" instance=ExtResource( 9 )]
+[node name="Rail Poles" parent="TrackObjects" instance=ExtResource( 4 )]
 multimesh = SubResource( 4 )
 description = "Poles"
 attachedRail = "Rail"
-onRailPosition = 0
 length = 1000.0
 objectPath = "res://Resources/Basic/Pole1.obj"
 materialPaths = [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ]
 sides = 1
-spawnRate = 1.0
 rows = 1.0
 distanceLength = 80.0
-distanceRows = 0.0
-shift = 0.0
-height = 0.0
 rotationObjects = -90.0
-randomLocation = false
-randomLocationFactor = 0.3
-randomRotation = false
-randomScale = false
-randomScaleFactor = 0.2
 placeLast = true
-applySlopeRotation = false
-randomSeed = 0
 wholeRail = true
-update = false
 
-[node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 9 )]
+[node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 4 )]
 multimesh = SubResource( 6 )
 description = "Tree"
 attachedRail = "Rail"
-onRailPosition = 0
 length = 1000.0
 objectPath = "res://Resources/Basic/EasyTree_big.obj"
 materialPaths = [ "res://Resources/Basic/Materials/EasyTree.tres" ]
 sides = 3
-spawnRate = 1.0
 rows = 5.0
-distanceLength = 10.0
 distanceRows = 10.0
 shift = 20.0
-height = 0.0
-rotationObjects = 0.0
 randomLocation = true
-randomLocationFactor = 0.3
 randomRotation = true
 randomScale = true
-randomScaleFactor = 0.2
-placeLast = false
-applySlopeRotation = false
 randomSeed = -230917.0
 wholeRail = true
-update = false
 
-[node name="Rail2 Poles" parent="TrackObjects" instance=ExtResource( 9 )]
+[node name="Rail2 Poles" parent="TrackObjects" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
 multimesh = SubResource( 8 )
 description = "Poles"
 attachedRail = "Rail2"
-onRailPosition = 0
 length = 1000.0
 objectPath = "res://Resources/Basic/Pole1.obj"
 materialPaths = [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ]
 sides = 1
-spawnRate = 1.0
 rows = 1.0
 distanceLength = 80.0
-distanceRows = 0.0
-shift = 0.0
-height = 0.0
 rotationObjects = 90.0
-randomLocation = false
-randomLocationFactor = 0.3
-randomRotation = false
-randomScale = false
-randomScaleFactor = 0.2
 placeLast = true
-applySlopeRotation = false
-randomSeed = 0
 wholeRail = true
-update = false
 
-[node name="Rail2 Tree" parent="TrackObjects" instance=ExtResource( 9 )]
+[node name="Rail2 Tree" parent="TrackObjects" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
 multimesh = SubResource( 10 )
 description = "Tree"
 attachedRail = "Rail2"
-onRailPosition = 0
 length = 1000.0
 objectPath = "res://Resources/Basic/EasyTree_big.obj"
 materialPaths = [ "res://Resources/Basic/Materials/EasyTree.tres", "", "", "", "" ]
 sides = 3
-spawnRate = 1.0
 rows = 5.0
-distanceLength = 10.0
 distanceRows = 10.0
 shift = 20.0
-height = 0.0
-rotationObjects = 0.0
 randomLocation = true
-randomLocationFactor = 0.3
 randomRotation = true
 randomScale = true
-randomScaleFactor = 0.2
-placeLast = false
-applySlopeRotation = false
-randomSeed = 0
 wholeRail = true
-update = false
 
-[node name="Rail2 Platform" parent="TrackObjects" instance=ExtResource( 9 )]
+[node name="Rail2 Platform" parent="TrackObjects" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1589.35, 0, 159.467 )
 multimesh = SubResource( 12 )
 description = "Platform"
@@ -601,23 +511,11 @@ length = 200.0
 objectPath = "res://Resources/Basic/Platform-1.obj"
 materialPaths = [ "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/PlasterStones.tres", "res://Resources/Basic/Materials/PlasterStonesLight.tres", "res://Resources/Basic/Materials/Metal.tres" ]
 sides = 1
-spawnRate = 1.0
 rows = 1.0
-distanceLength = 10.0
-distanceRows = 0.0
 shift = 3.5
-height = 0.0
-rotationObjects = 0.0
-randomLocation = false
-randomLocationFactor = 0.3
-randomRotation = false
-randomScale = false
-randomScaleFactor = 0.2
-placeLast = false
-applySlopeRotation = false
-randomSeed = 0
-wholeRail = false
-update = false
 
 [node name="Sctipting" type="Node" parent="."]
 script = ExtResource( 10 )
+
+[node name="jSaveModule" parent="." instance=ExtResource( 11 )]
+save_path = "res://Worlds/Tutorials/Tutorials.save"

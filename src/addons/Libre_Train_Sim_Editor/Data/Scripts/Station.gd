@@ -106,6 +106,7 @@ func setDoorPositions(doors, doorsWagon): ## Called by the train
 	if doors.size() == 0:
 		return
 	for person in attachedPersons:
+		person.clear_destinations()
 		var nearestDoorIndex = 0
 		for i in range(doors.size()):
 			if doors[i].worldPos.distance_to(person.translation) <  doors[nearestDoorIndex].worldPos.distance_to(person.translation):

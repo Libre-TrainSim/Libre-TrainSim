@@ -30,7 +30,8 @@ func handleWalk(delta):
 	# If Doors where closed to early, and the person is at the station..
 	if transitionToWagon == true and not (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
 		if attachedWagon.player.currentStationNode != attachedStation:
-			deSpawn()
+			transitionToWagon = false
+			destinationPos.clear()
 		else:
 			stopping = true
 	else:
@@ -77,3 +78,6 @@ func deSpawn():
 		attachedWagon.deregisterPerson(self)
 		
 	queue_free()
+
+func clear_destinations():
+	destinationPos.clear()

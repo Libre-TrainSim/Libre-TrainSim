@@ -691,10 +691,8 @@ func check_station(delta):
 			if cameraState != 1:
 				for wagon in wagonsI:
 					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
-#					wagon.play_outside_announcement(stations["arrivalAnnouncePath"][current_station_index])
 			else:
 				jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
-#				jAudioManager.play_game_sound(stations["arrivalAnnouncePath"][current_station_index])
 			stationTimer = 0
 			isInStation = true
 			if not endStation:
@@ -708,6 +706,7 @@ func check_station(delta):
 					nextStation = ""
 					isInStation = false
 					nextStationNode = null
+					currentStationNode = null
 					update_waiting_persons_on_next_station()
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
@@ -719,25 +718,28 @@ func check_station(delta):
 							wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
 					else:
 						jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
-					currentStationName = ""
-					nextStation = ""
-					isInStation = false
-					nextStationNode = null
-					update_waiting_persons_on_next_station()
+					leave_current_station()
+		elif (speed != 0 and isInStation):
+			send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
+			leave_current_station()
 		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
 				send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
 			else:
 				send_message(TranslationServer.translate("YOU_MISSED_A_STATION"))
-			stations["passed"][stations["stationName"].find(currentStationName)] = true
-			currentStationName = ""
-			nextStation = ""
-			isInStation = false
-			nextStationNode = null
-			update_waiting_persons_on_next_station()
+			leave_current_station()
 		stationTimer += delta
 		if (speed != 0):
 			wholeTrainNotInStation = false
+			
+func leave_current_station():
+	stations["passed"][stations["stationName"].find(currentStationName)] = true
+	currentStationName = ""
+	nextStation = ""
+	isInStation = false
+	nextStationNode = null
+	currentStationNode = null
+	update_waiting_persons_on_next_station()
 
 func update_waiting_persons_on_next_station():
 	var station_nodes = get_all_upcoming_signalPoints_of_types(["Station"])
@@ -791,13 +793,13 @@ func send_message(string):
 var doorsClosingTimer = 0
 
 func open_left_doors():
-	if not doorLeft and speed == 0:
+	if not doorLeft and speed == 0 and not doorsClosing:
 		if not $Sound/DoorsOpen.playing: 
 			$Sound/DoorsOpen.play()
 		doorLeft = true
 		
 func open_right_doors():
-	if not doorRight and speed == 0:
+	if not doorRight and speed == 0 and not doorsClosing:
 		if not $Sound/DoorsOpen.playing: 
 			$Sound/DoorsOpen.play()
 		doorRight = true

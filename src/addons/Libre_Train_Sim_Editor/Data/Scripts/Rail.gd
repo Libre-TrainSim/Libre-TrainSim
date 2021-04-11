@@ -428,15 +428,15 @@ func updateOverheadLine():
 			continue
 		print(trackObject.description)
 		if trackObject.description == "Poles":
-			var pos = trackObject.onRailPosition
-			if pos == 0:
+			var pos = 0
+			if trackObject.onRailPosition == 0:
 				pos += trackObject.distanceLength
-			while pos < (trackObject.length - trackObject.onRailPosition):
-				polePositions.append(pos)
+			while pos < trackObject.length:
+				polePositions.append(pos + trackObject.onRailPosition)
 				pos += trackObject.distanceLength
-	
+			if not trackObject.placeLast:
+				polePositions.remove(polePositions.size()-1)
 	polePositions.append(length)
-	
 	for i in range (polePositions.size()-2):
 		buildOverheadLineSegment(polePositions[i], polePositions[i+1])
 		

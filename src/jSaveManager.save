@@ -1,10 +1,10 @@
 [Settings]
 
-fullscreen=false
+fullscreen=true
 shadows=true
 antiAliasing=2
 mainVolume=1.0
 musicVolume=1.0
 gameVolume=1.0
 language="de"
-view_distance=300
+view_distance=1000

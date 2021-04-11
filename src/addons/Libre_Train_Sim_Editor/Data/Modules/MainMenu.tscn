@@ -16,6 +16,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 version = "0.8"
+mobile_version = true
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -99,21 +100,33 @@ __meta__ = {
 }
 
 [node name="Play" type="Button" parent="Front/VBoxContainerAndoid"]
-margin_top = 176.0
-margin_right = 232.0
-margin_bottom = 256.0
-rect_min_size = Vector2( 200, 80 )
+margin_top = 116.0
+margin_right = 600.0
+margin_bottom = 236.0
+rect_min_size = Vector2( 600, 120 )
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 text = "MENU_PLAY"
 
+[node name="Feedback" type="Button" parent="Front/VBoxContainerAndoid"]
+margin_top = 240.0
+margin_right = 600.0
+margin_bottom = 360.0
+grow_horizontal = 0
+rect_min_size = Vector2( 0, 120 )
+custom_fonts/font = ExtResource( 4 )
+text = "MENU_FEEDBACK_WANTED"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Quit" type="Button" parent="Front/VBoxContainerAndoid"]
-margin_top = 344.0
-margin_right = 232.0
-margin_bottom = 424.0
-rect_min_size = Vector2( 200, 80 )
+margin_top = 364.0
+margin_right = 600.0
+margin_bottom = 484.0
+rect_min_size = Vector2( 200, 120 )
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 4 )
 text = "MENU_QUIT"
 
 [node name="Feedback" type="Button" parent="Front"]
@@ -484,6 +497,7 @@ bus = "Music"
 [connection signal="pressed" from="Front/VBoxContainer/Settings" to="." method="_on_SettingsFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="Front/VBoxContainerAndoid/Play" to="." method="_on_PlayFront_pressed"]
+[connection signal="pressed" from="Front/VBoxContainerAndoid/Feedback" to="." method="_on_ButtonFeedback_pressed"]
 [connection signal="pressed" from="Front/VBoxContainerAndoid/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="Front/Feedback" to="." method="_on_ButtonFeedback_pressed"]
 [connection signal="item_selected" from="Play/Selection/Tracks/ItemList" to="." method="_on_ItemList_itemTracks_selected"]

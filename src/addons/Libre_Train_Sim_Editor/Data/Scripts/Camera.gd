@@ -46,7 +46,7 @@ var mouseMotion = Vector2(0,0)
 func _input(event):
 	if current and event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
-	
+
 onready var cameraY = rotation_degrees.y - 90.0
 onready var cameraX = -rotation_degrees.x
 
@@ -54,10 +54,10 @@ func _process(delta):
 	if not current:
 		pass
 	#mouse movement
-	
-	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+
+	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			
+
 	if mouseMotion.length() > 0:
 		var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
 		cameraY += -mouseMotion.x * motionFactor
@@ -68,7 +68,7 @@ func _process(delta):
 		rotation_degrees.x = -cameraX
 		mouseMotion = Vector2(0,0)
 
-	
+
 	if accel and player:
 		var currentRealAcceleration = player.currentRealAcceleration
 		var speed = player.speed
@@ -77,7 +77,7 @@ func _process(delta):
 			sollCameraPosition = cameraZeroTransform.origin.x
 		var missingCameraPosition = translation.x - sollCameraPosition
 		translation.x -= missingCameraPosition * delta
-	
+
 	if not fixed:
 		var deltaFlyspeed = (delta / refDelta) * flyspeed
 
@@ -93,6 +93,3 @@ func _process(delta):
 			flyspeed = 2
 		else:
 			flyspeed = 0.5
-
-	
-	

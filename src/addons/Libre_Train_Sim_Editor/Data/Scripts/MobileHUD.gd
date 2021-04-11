@@ -8,11 +8,13 @@ var player
 
 func _ready():
 	player = world.get_node("Players/Player")
+	
 
 func _process(delta):
 	$VBoxContainer/Pantograph.visible = not player.pantograph
 	$VBoxContainer/Engine.visible = not player.engine
-	$ProgressBar.rect_position.y = ((player.soll_command-1)*(-0.5)) * OS.get_screen_size().y
+	var progress_bar_soll_position = ((player.soll_command-1)*(-0.5)) * OS.get_screen_size().y
+	$ProgressBar.rect_position.y = Root.clampViaTime(progress_bar_soll_position, $ProgressBar.rect_position.y, delta*5.0)
 	
 	if player.pantographUp and not player.pantograph:
 		$VBoxContainer/Pantograph.modulate = Color(1,1,1,0.5)
@@ -95,3 +97,21 @@ func _on_Camera_pressed():
 func _on_Autopilot_pressed():
 	jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 	player.toggle_automatic_driving()
+
+
+func _on_Pause_Back_pressed():
+	$Pause.hide()
+	get_tree().paused = false
+
+
+
+
+func _on_Pause_QuitMenu_pressed():
+	get_tree().paused = false
+	jAudioManager.clear_all_sounds()
+	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+
+
+func _on_PauseButton_pressed():
+	$Pause.show()
+	get_tree().paused = true

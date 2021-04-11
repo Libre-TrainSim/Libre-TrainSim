@@ -1,6 +1,6 @@
 [Settings]
 
-fullscreen=true
+fullscreen=false
 shadows=true
 antiAliasing=2
 mainVolume=1.0

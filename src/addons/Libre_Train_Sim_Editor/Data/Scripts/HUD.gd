@@ -8,11 +8,14 @@ onready var player = get_parent()
 
 func _ready():
 	$MobileHUD.visible = Root.mobile_version
+	if Root.mobile_version:
+		$IngameInformation/Next.rect_position.y += 100
+		$TextBox/RichTextLabel.hide()
+		$TextBox/RichTextLabelMobile.show()
+		$TextBox/Ok.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 
 	
 func _process(delta):
-	if Root.mobile_version:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if $TextBox.visible:
 		if Input.is_action_just_pressed("ui_accept"):
 			_on_OkTextBox_pressed()
@@ -40,7 +43,7 @@ func _process(delta):
 #		alpha = 0
 #	$IngameInformation/Speed/CurrentLimit.modulate.a = alpha
 	
-	if $Pause.visible or $TextBox.visible:
+	if $Pause.visible or $TextBox.visible or $MobileHUD/Pause.visible:
 		get_tree().paused = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:
@@ -78,6 +81,7 @@ func _on_Quit_pressed():
 
 func show_textbox_message(string):
 	$TextBox/RichTextLabel.text = string
+	$TextBox/RichTextLabelMobile.text = string
 	get_tree().paused = true
 	$TextBox.visible = true
 	
@@ -103,6 +107,7 @@ func check_nextTable(delta):
 
 func _on_QuitMenu_pressed():
 	get_tree().paused = false
+	jAudioManager.clear_all_sounds()
 	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 	pass # Replace with function body.
 

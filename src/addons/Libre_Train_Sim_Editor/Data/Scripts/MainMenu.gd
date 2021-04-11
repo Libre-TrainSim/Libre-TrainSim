@@ -20,7 +20,7 @@ func _ready():
 	config.set_value("Main", "openTimes", openTimes)
 	config.save(save_path)
 	var feedbackPressed = config.get_value("Main", "feedbackPressed", false)
-	if openTimes > 3 and not feedbackPressed:
+	if openTimes > 3 and not feedbackPressed and not mobile_version:
 		$FeedBack/VBoxContainer/RichTextLabel.text = TranslationServer.translate("MENU_FEEDBACK_QUESTION")
 		$FeedBack.popup()
 	update_MainMenuMusic()
@@ -38,6 +38,15 @@ func _ready():
 func set_menu_to_mobile():
 	$Front/VBoxContainer.hide()
 	$Front/VBoxContainerAndoid.show()
+	$Front/Feedback.hide()
+	$Play/Buttons/Play.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Buttons/Back.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Selection/Tracks/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Selection/Tracks/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Selection/Scenarios/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Selection/Scenarios/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Selection/Trains/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
+	$Play/Selection/Trains/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	
 
 func update_MainMenuMusic():
@@ -252,7 +261,10 @@ func _on_ItemList_Train_selected(index):
 	if not train.electric:
 		electric = TranslationServer.translate("NO")
 	$Play/Info/Info/Duration.text = TranslationServer.translate("MENU_ELECTRIC")+ ": " + electric
-	$Play/Info/Info/EasyMode.show()
+	if not Root.mobile_version:
+		$Play/Info/Info/EasyMode.show()
+	else:
+		$Play/Info/Info/EasyMode.pressed = true
 	train.queue_free()
 	
 

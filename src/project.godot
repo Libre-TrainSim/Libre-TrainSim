@@ -26,6 +26,7 @@ run/main_scene="res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn"
 boot_splash/image="res://LibreTrainSimLogo_Quad_128.png"
 boot_splash/fullsize=false
 config/icon="res://LibreTrainSimLogo_Quad_128.png"
+config/quit_on_go_back=false
 
 [autoload]
 
@@ -51,6 +52,10 @@ window/size/width=800
 [editor_plugins]
 
 enabled=PoolStringArray( "Libre_Train_Sim_Editor", "jean28518.jTools" )
+
+[global]
+
+back=false
 
 [input]
 

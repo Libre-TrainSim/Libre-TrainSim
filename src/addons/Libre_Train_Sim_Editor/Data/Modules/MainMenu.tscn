@@ -16,6 +16,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 version = "0.8"
+mobile_version = true
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0

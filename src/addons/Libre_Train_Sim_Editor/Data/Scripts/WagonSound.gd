@@ -68,7 +68,6 @@ func checkAndPlaySwitchSound():
 	
 	if secondSwitchSoundDistance != -1 and secondSwitchSoundDistance < wagon.distance:
 		$SwitchSound2.play()
-		print("played second")
 		secondSwitchSoundDistance = -1
 		
 	if not wagon.switchOnNextChange:

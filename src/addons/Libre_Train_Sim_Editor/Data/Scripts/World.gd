@@ -236,15 +236,18 @@ func save_chunk(position):
 
 		if compareChunks(pos2Chunk(trackObject.translation), position):
 			chunk.TrackObjects[trackObject.name] = {name = trackObject.name, transform = trackObject.transform, data = trackObject.get_data()}
-	config.set_value("Chunks", chunk2String(position), null)
-	config.set_value("Chunks", chunk2String(position), chunk)
+#	config.set_value("Chunks", chunk2String(position), null)
+#	config.set_value("Chunks", chunk2String(position), chunk)
+	$jSaveModule.save_value(chunk2String(position), null)
+	$jSaveModule.save_value(chunk2String(position), chunk)
 	print("Saved Chunk " + chunk2String(position))
 	
 
 
 func unload_chunk(position : Vector3):
 	
-	var chunk = config.get_value("Chunks", chunk2String(position), null)
+#	var chunk = config.get_value("Chunks", chunk2String(position), null)
+	var chunk = $jSaveModule.get_value(chunk2String(position), null)
 	if chunk == null:
 		return
 	var Rails = get_node("Rails").get_children()
@@ -283,9 +286,13 @@ func unload_chunk(position : Vector3):
 	
 func load_chunk(position : Vector3):
 	
+
+	
+	
 	print("Loading Chunk " + chunk2String(position))
 	
-	var chunk = config.get_value("Chunks", chunk2String(position), {"empty" : true})
+#	var chunk = config.get_value("Chunks", chunk2String(position), {"empty" : true})
+	var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
 
 	if chunk.has("empty"):
 		print("Chunk "+chunk2String(position) + " not found in Save File. Chunk not loaded!")
@@ -366,6 +373,10 @@ func load_chunk(position : Vector3):
 			nodeI.set_owner(self)
 		else:
 			print("Node " + node + " already loaded!") 
+	
+	var unloaded_chunks = get_value("unloaded_chunks", [])
+	unloaded_chunks.erase(chunk2String(position))
+	save_value("unloaded_chunks", unloaded_chunks)
 	
 	print("Chunk " + chunk2String(position) + " loaded")
 	pass
@@ -688,6 +699,7 @@ func unload_and_save_chunks(chunks_to_unload : Array):
 	for chunk_to_unload in chunks_to_unload:
 		unload_chunk(string2Chunk(chunk_to_unload))
 		current_unloaded_chunks.append(chunk_to_unload)
+	current_unloaded_chunks = jEssentials.remove_duplicates(current_unloaded_chunks)
 	save_value("unloaded_chunks", current_unloaded_chunks)
 	print("Unloaded chunks sucessfully.")
 

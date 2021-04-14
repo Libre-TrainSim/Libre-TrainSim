@@ -7,7 +7,7 @@ extends Node
 func play(soundPath : String, loop : bool = false, pausable : bool = true, volume_db : float = 0.0 , bus : String = "Game"):
 	var audioStreamPlayer = AudioStreamPlayer.new()
 	
-	if not resourceTable.has(soundPath):
+	if not resourceTable.has(soundPath) or resourceTable[soundPath] == null:
 		resourceTable[soundPath] = load(soundPath)
 		if resourceTable[soundPath] == null:
 			print_debug("jAudioManager: " + soundPath + " not found. Please give in a appropriate path beginning with res://")

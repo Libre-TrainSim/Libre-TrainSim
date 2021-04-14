@@ -91,7 +91,7 @@ var distanceToNextSignal = 0
 var nextSpeedLimitNode = null ## Type: Node (object)
 var distanceToNextSpeedLimit = 0
 
-var ai = false # It will be set by the scenario manger from world node.
+var ai = false # It will be set by the scenario manger from world node. -> Every train which is not controlled by player has this value = true.
 var despawnRail = "" ## If the AI Train reaches this Rail, he will despawn.
 var rendering = true
 var despawning = false
@@ -972,7 +972,8 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 			else:
 				distanceS+= "m"
 			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
-			if cameraState != 2 and cameraState != 0:
+			if cameraState != 2 and cameraState != 0 and not ai:
+				print(name + ": Playing Sound.......................................................")
 				jTools.call_delayed(1.5, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][current_station_index+1]])
 #				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
 		

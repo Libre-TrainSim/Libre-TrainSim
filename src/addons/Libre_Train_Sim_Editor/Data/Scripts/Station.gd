@@ -63,6 +63,8 @@ func set_scenario_data(d):
 	return
 
 func spawnPersonsAtBeginning():
+	if platformSide == 0:
+		return
 	while(rail.visible and attachedPersons.size() < waitingPersonCount):
 		spawnRandomPerson()
 

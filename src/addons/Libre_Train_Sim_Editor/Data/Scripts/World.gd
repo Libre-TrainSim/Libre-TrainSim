@@ -667,22 +667,29 @@ func force_load_all_chunks():
 	sollChunks = get_all_chunks()
 	istChunks = []
 	apply_soll_chunks()
+
+# Accepts an array of chunks noted as strings
+func save_chunks(chunks_to_save : Array):
+	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
+	for chunk_to_save in chunks_to_save:
+		if current_unloaded_chunks.has(chunk_to_save): # If chunk is loaded but unloaded at the same time
+			print("Chunk conflict: " + chunk_to_save + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
+			load_chunk(string2Chunk(chunk_to_save))
+			save_chunk(string2Chunk(chunk_to_save))
+			continue
+		save_chunk(string2Chunk(chunk_to_save))
+	print("Saved chunks sucessfully.")
 	
 # Accepts an array of chunks noted as strings
 func unload_and_save_chunks(chunks_to_unload : Array):
+	save_chunks(chunks_to_unload)
+	
 	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
 	for chunk_to_unload in chunks_to_unload:
-		if current_unloaded_chunks.has(chunk_to_unload): # If chunk is loaded but unloaded at the same time
-			print("Chunk conflict: " + chunk_to_unload + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
-			load_chunk(string2Chunk(chunk_to_unload))
-			save_chunk(string2Chunk(chunk_to_unload))
-			unload_chunk(string2Chunk(chunk_to_unload))
-			continue
-		save_chunk(string2Chunk(chunk_to_unload))
 		unload_chunk(string2Chunk(chunk_to_unload))
 		current_unloaded_chunks.append(chunk_to_unload)
 	save_value("unloaded_chunks", current_unloaded_chunks)
-	print("Unloaded and saved chunks sucessfully.")
+	print("Unloaded chunks sucessfully.")
 
 # Accepts an array of chunks noted as strings
 func load_chunks(chunks_to_load : Array):
@@ -691,6 +698,9 @@ func load_chunks(chunks_to_load : Array):
 
 func unload_and_save_all_chunks():
 	unload_and_save_chunks(get_all_chunks())
+
+func save_all_chunks():
+	save_chunks(get_all_chunks())
 
 # Returns all chunks in form of strings.
 func get_chunks_between_rails(start_rail : String, destination_rail : String, include_neighbour_chunks : bool = false):

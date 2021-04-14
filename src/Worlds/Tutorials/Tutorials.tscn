@@ -362,7 +362,7 @@ attachedRail = "Rail"
 onRailPosition = 800
 
 [node name="Signal4" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, -0.0666169, 0, 1, 0, 0.0666169, 0, 0.997779, 1389.5, 0, 152.803 )
+transform = Transform( 0.997779, 0, -0.0666163, 0, 1, 0, 0.0666163, 0, 0.997779, 1389.5, 0, 152.803 )
 status = 1
 setPassAtH = 12
 setPassAtM = 1
@@ -371,7 +371,7 @@ attachedRail = "Rail2"
 onRailPosition = 400
 
 [node name="Signal5" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, 0.0666178, 0, 1, 0, -0.0666178, 0, 0.997779, 1789.21, 0, 152.803 )
+transform = Transform( 0.997779, 0, 0.0666183, 0, 1, 0, -0.0666183, 0, 0.997779, 1789.21, 0, 152.802 )
 attachedRail = "Rail2"
 onRailPosition = 800
 

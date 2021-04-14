@@ -431,12 +431,13 @@ func updateOverheadLine():
 			var pos = 0
 			if trackObject.onRailPosition == 0:
 				pos += trackObject.distanceLength
-			while pos < trackObject.length:
+			while pos <= trackObject.length:
 				polePositions.append(pos + trackObject.onRailPosition)
 				pos += trackObject.distanceLength
-			if not trackObject.placeLast:
+			if not trackObject.placeLast and polePositions.size() > 1:
 				polePositions.remove(polePositions.size()-1)
 	polePositions.append(length)
+	polePositions = jEssentials.remove_duplicates(polePositions)
 	for i in range (polePositions.size()-2):
 		buildOverheadLineSegment(polePositions[i], polePositions[i+1])
 		

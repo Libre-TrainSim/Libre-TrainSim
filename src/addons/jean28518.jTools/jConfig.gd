@@ -29,6 +29,8 @@ func get_value_of(node : Node):
 #		return node.text
 #	if node is SpinBox:
 #		return node.value
+	if node is TimeField:
+		return node.get_data()
 
 	print_debug("Node Type of " + node.name + " in jTable currently not supported. Add me!")
 	return 0
@@ -41,5 +43,8 @@ func set_value_to(node : Node, value):
 #	if node is SpinBox:
 #		node.value = value
 #		return
+	if node is TimeField:
+		node.set_data(value)
+		return
 
 	print_debug("Node Type of " + node.name + " in jTable currently not supported. Add me!")

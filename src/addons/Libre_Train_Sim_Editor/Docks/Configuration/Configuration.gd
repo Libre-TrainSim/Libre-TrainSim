@@ -542,3 +542,17 @@ func _on_WorldLoading_Load_pressed():
 		return
 	world.load_chunks(chunks)
 	print("Loaded Chunks " + String(chunks))
+
+
+func _on_Chunks_Save_pressed():
+	if $"World Configuration/WorldLoading/AllChunks".pressed:
+		world.save_all_chunks()
+		print("Saved all chunks.")
+		return
+	var chunks = world.get_chunks_between_rails(
+		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
+		$"World Configuration/WorldLoading/RailConfiguration/ToRail".text,
+		$"World Configuration/WorldLoading/IncludeNeighbours".pressed)
+	if chunks == null:
+		return
+	world.save_chunks(chunks)

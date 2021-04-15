@@ -38,7 +38,7 @@ func _ready():
 		setToRail(true)
 		
 		
-func __process(delta):
+func _process(delta):
 	if rail == null:
 		setToRail(true)
 	
@@ -98,11 +98,18 @@ func spawnRandomPerson():
 	
 	
 func getRandomLocationAtPlatform():
-	var randRailDistance = int(rand_range(onRailPosition, onRailPosition+stationLength))
-	if platformSide == 1: # Left
-		return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0)
-	if platformSide == 2: ## right
-		return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+	if forward:
+		var randRailDistance = int(rand_range(onRailPosition, onRailPosition+stationLength))
+		if platformSide == 1: # Left
+			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0)
+		if platformSide == 2: ## right
+			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+	else:
+		var randRailDistance = int(rand_range(onRailPosition, onRailPosition-stationLength))
+		if platformSide == 1: # Left
+			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+		if platformSide == 2: ## right
+			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0)
 		
 func setDoorPositions(doors, doorsWagon): ## Called by the train
 	if doors.size() == 0:

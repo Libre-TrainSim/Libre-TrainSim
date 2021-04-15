@@ -391,6 +391,8 @@ func play_outside_announcement(sound_path : String):
 	if cabinMode:
 		return
 	var stream = load(sound_path)
+	if stream == null:
+		return
 	stream.loop = false
 	if stream != null:
 		outside_announcement_player.stream = stream

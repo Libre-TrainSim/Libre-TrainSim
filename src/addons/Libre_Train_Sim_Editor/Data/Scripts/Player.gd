@@ -1302,12 +1302,12 @@ func sendDoorPositionsToCurrentStation():
 	var doorsWagon = []
 	for wagon in wagonsI:
 		var wagonTransform = wagon.currentRail.get_transform_at_rail_distance(wagon.distanceOnRail)
-		if currentStationNode.platformSide == 1: # Left
+		if (currentStationNode.platformSide == 1 and forward) or (currentStationNode.platformSide == 2 and not forward): # Left
 			for door in wagon.leftDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)
 				doorsWagon.append(wagon)
-		if currentStationNode.platformSide == 2: # Right
+		if (currentStationNode.platformSide == 2 and forward) or (currentStationNode.platformSide == 1 and not forward): # Right
 			for door in wagon.rightDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)

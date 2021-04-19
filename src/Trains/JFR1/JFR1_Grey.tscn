@@ -852,6 +852,7 @@ friction = 0.005
 length = 80.0
 speedLimit = 100.0
 electric = false
+doorsClosingTime = 4
 description = "JFR1_DESCRIPTION_GREY"
 author = "Jean"
 releaseDate = "11 2020"

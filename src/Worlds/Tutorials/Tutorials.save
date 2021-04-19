@@ -1,6 +1,6 @@
 [Main]
 
-unloaded_chunks=[ "0,0", "1,1", "1,0", "1,-1", "0,1", "0,-1", "-1,1", "-1,0", "-1,-1" ]
+unloaded_chunks=[  ]
 0,0={
 "Buildings": {
 
@@ -154,64 +154,6 @@ unloaded_chunks=[ "0,0", "1,1", "1,0", "1,-1", "0,1", "0,-1", "-1,1", "-1,0", "-
 },
 "name": "Rail2 Tree",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
-},
-"Rail3 Platform": {
-"data": {
-"applySlopeRotation": false,
-"attachedRail": "Rail3",
-"description": "Platform",
-"distanceLength": 10.0,
-"distanceRows": 0.0,
-"height": 0.6,
-"length": 150.0,
-"materialPaths": [ "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/PlasterStones.tres", "res://Resources/Basic/Materials/PlasterStonesLight.tres", "res://Resources/Basic/Materials/Metal.tres" ],
-"objectPath": "res://Resources/Basic/Platform-1.obj",
-"onRailPosition": 100.0,
-"placeLast": false,
-"randomLocation": false,
-"randomLocationFactor": 0.3,
-"randomRotation": false,
-"randomScale": false,
-"randomScaleFactor": 0.2,
-"randomSeed": 0,
-"rotationObjects": 0.0,
-"rows": 1.0,
-"shift": 3.5,
-"sides": 1,
-"spawnRate": 1.0,
-"wholeRail": false
-},
-"name": "Rail3 Platform",
-"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -99.9933, 0, -0.999985 )
-},
-"Rail3 Poles": {
-"data": {
-"applySlopeRotation": false,
-"attachedRail": "Rail3",
-"description": "Poles",
-"distanceLength": 80.0,
-"distanceRows": 0.0,
-"height": 0.0,
-"length": 920.0,
-"materialPaths": [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ],
-"objectPath": "res://Resources/Basic/Pole1.obj",
-"onRailPosition": 80.0,
-"placeLast": true,
-"randomLocation": false,
-"randomLocationFactor": 0.3,
-"randomRotation": false,
-"randomScale": false,
-"randomScaleFactor": 0.2,
-"randomSeed": 0,
-"rotationObjects": -90.0,
-"rows": 1.0,
-"shift": 0.0,
-"sides": 1,
-"spawnRate": 1.0,
-"wholeRail": false
-},
-"name": "Rail3 Poles",
-"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -79.9966, 0, -0.640125 )
 }
 },
 "position": Vector3( 0, 0, 0 )
@@ -245,7 +187,7 @@ unloaded_chunks=[ "0,0", "1,1", "1,0", "1,-1", "0,1", "0,-1", "-1,1", "-1,0", "-
 "description": "Platform",
 "distanceLength": 10.0,
 "distanceRows": 0.0,
-"height": 0.0,
+"height": 0.6,
 "length": 200.0,
 "materialPaths": [ "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/PlasterStones.tres", "res://Resources/Basic/Materials/PlasterStonesLight.tres", "res://Resources/Basic/Materials/Metal.tres" ],
 "objectPath": "res://Resources/Basic/Platform-1.obj",

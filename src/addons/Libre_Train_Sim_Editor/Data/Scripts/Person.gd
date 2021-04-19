@@ -53,7 +53,6 @@ func handleWalk(delta):
 			destinationIsSeat = false
 			## Animation
 		return
-		
 	
 	if translation.distance_to(destinationPos[0]) < 0.1:
 		destinationPos.pop_front()

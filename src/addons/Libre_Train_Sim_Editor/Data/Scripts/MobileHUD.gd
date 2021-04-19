@@ -13,19 +13,17 @@ func _ready():
 func _process(delta):
 	$VBoxContainer/Pantograph.visible = not player.pantograph
 	$VBoxContainer/Engine.visible = not player.engine
-	var progress_bar_soll_position = ((player.soll_command-1)*(-0.5)) * OS.get_screen_size().y
+	var progress_bar_soll_position = ((soll_command-1)*(-0.5)) * OS.get_screen_size().y
 	$ProgressBar.rect_position.y = Root.clampViaTime(progress_bar_soll_position, $ProgressBar.rect_position.y, delta*5.0)
 	
 	if player.pantographUp and not player.pantograph:
 		$VBoxContainer/Pantograph.modulate = Color(1,1,1,0.5)
 		
-	
-	
-	
-	if player.soll_command < 0:
-		$ProgressBar.modulate = Color(1, 0.6, 0.1, 1)
-	elif player.soll_command == 0:
+
+	if soll_command > -0.1 and soll_command < 0.1:
 		$ProgressBar.modulate = Color(1, 1, 1, 1)
+	elif soll_command < 0:
+		$ProgressBar.modulate = Color(1, 0.6, 0.1, 1)
 	else:
 		$ProgressBar.modulate = Color(0.2, 0.7, 0.2, 1)
 	
@@ -44,7 +42,7 @@ func _process(delta):
 func update_player_control():
 	player.soll_command = soll_command
 
-var soll_command = 0.0
+var soll_command = -1
 func _on_Up_pressed():
 	jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 	soll_command += COMMAND_STEP

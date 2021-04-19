@@ -1301,13 +1301,20 @@ func sendDoorPositionsToCurrentStation():
 	var doors = []
 	var doorsWagon = []
 	for wagon in wagonsI:
-		var wagonTransform = wagon.currentRail.get_transform_at_rail_distance(wagon.distanceOnRail)
-		if (currentStationNode.platformSide == 1 and forward) or (currentStationNode.platformSide == 2 and not forward): # Left
+		var wagonTransform
+		if forward:
+			wagonTransform = wagon.currentRail.get_transform_at_rail_distance(wagon.distanceOnRail)
+		else:
+			var forward_transform = wagon.currentRail.get_transform_at_rail_distance(wagon.distanceOnRail)
+			var backward_basis = forward_transform.basis.rotated(Vector3(0,1,0), deg2rad(180)) # Maybe this could break on ascending/descanding rails..
+			var backward_transform = Transform(backward_basis, forward_transform.origin)
+			wagonTransform = backward_transform
+		if (currentStationNode.platformSide == 1): # Left
 			for door in wagon.leftDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)
 				doorsWagon.append(wagon)
-		if (currentStationNode.platformSide == 2 and forward) or (currentStationNode.platformSide == 1 and not forward): # Right
+		if (currentStationNode.platformSide == 2): # Right
 			for door in wagon.rightDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)

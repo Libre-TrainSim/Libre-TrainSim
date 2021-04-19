@@ -35,7 +35,8 @@ func _handle_delayed_calls(delta):
 		delayed_call_table.delay[i] -= delta
 		if delayed_call_table.delay[i] <= 0:
 			var object = delayed_call_table.object[i]
-			object.callv(delayed_call_table.method[i], delayed_call_table.arg_array[i])
+			if object != null:
+				object.callv(delayed_call_table.method[i], delayed_call_table.arg_array[i])
 			delayed_call_table.delay.remove(i)
 			delayed_call_table.object.remove(i)
 			delayed_call_table.method.remove(i)

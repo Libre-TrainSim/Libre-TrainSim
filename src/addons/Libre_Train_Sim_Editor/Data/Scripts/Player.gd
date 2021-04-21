@@ -973,7 +973,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 				distanceS+= "m"
 			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
 			if cameraState != 2 and cameraState != 0 and not ai:
-				print(name + ": Playing Sound.......................................................")
+#				print(name + ": Playing Sound.......................................................")
 				jTools.call_delayed(1.5, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][current_station_index+1]])
 #				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
 		
@@ -1129,6 +1129,7 @@ func updateNextStation(delta):  ## Used for Autopilot
 	if nextStationNode == null:
 		if get_all_upcoming_signalPoints_of_types(["Station"]).size() > 0:
 			nextStationNode = world.get_node("Signals").get_node(get_all_upcoming_signalPoints_of_types(["Station"])[0])
+			nextStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
 			distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
 
 

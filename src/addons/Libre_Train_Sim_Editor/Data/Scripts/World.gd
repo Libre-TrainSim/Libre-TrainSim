@@ -19,12 +19,6 @@ onready var trackName = FileName.rsplit("/")[0]
 export var debug = false
 var chunkSize = 1000
 
-var createChunksAndSaveWorld = false setget save_world
-
-var save_path
-var config = ConfigFile.new()
-var load_response
-
 var all_chunks = [] # All Chunks of the world
 var istChunks = [] # All Current loaded Chunks
 var sollChunks = [] # All Chunks, which should be loaded immediately
@@ -50,20 +44,17 @@ var personVisualInstancesPathes = [
 var personVisualInstances = []
 
 
-#var initProcessorTime = 0
-#var processorTime = 0
 func _ready():
 	jEssentials.call_delayed(2.0, self, "get_actual_loaded_chunks")
 	if trackName == null:
 		trackName = FileName
 	print("trackName: " +trackName + " " + FileName)
-	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
-	load_response = config.load(save_path)
 	$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
 	
 	if Engine.editor_hint:
+#		update_all_rails_overhead_line_setting(false)
 		return
-		# Code to execute in editor.
+
 	if not Engine.editor_hint:
 		Root.world = self
 		Root.checkAndLoadTranslationsForTrack(trackName)
@@ -86,26 +77,14 @@ func _ready():
 			if signalN.type == "Station":
 				signalN.personsNode = personsNode
 				signalN.spawnPersonsAtBeginning()
-				
-				
-				
-				
-		loadWorldConfig()
-		if config.get_value("Chunks", chunk2String(activeChunk), null) == null:
-			save_world(true)
 		
-		all_chunks = config.get_value("Chunks", "all_chunks", [])
+		all_chunks = get_all_chunks()
 		
-		if editorAllObjectsUnloaded == true:
-			istChunks = []
-		else:
-			istChunks = all_chunks.duplicate()
+		istChunks = []
 		configure_soll_chunks(activeChunk)
 
 		apply_soll_chunks()
-#		processorTime = OS.get_ticks_msec() / 1000
-#		print("Processor Time 2: " + String(processorTime - initProcessorTime))
-		print(load_response)
+
 		player = $Players/Player
 		lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
 		
@@ -119,13 +98,6 @@ func save_value(key : String, value):
 	
 func get_value(key : String,  default_value = null):
 	return $jSaveModule.get_value(key,  default_value)
-
-func loadWorldConfig():
-	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
-	config = ConfigFile.new()
-	load_response = config.load(save_path)
-
-
 
 func apply_user_settings():
 	if Root.mobile_version:
@@ -220,7 +192,7 @@ func save_chunk(position):
 			var surfaceArr = []
 			for i in range(building.get_surface_material_count()):
 				surfaceArr.append(building.get_surface_material(i))
-			chunk.Buildings[building.name] = {name = building.name, transform = building.transform, mesh = building.mesh, surfaceArr = surfaceArr}
+			chunk.Buildings[building.name] = {name = building.name, transform = building.transform, mesh_path = building.mesh.resource_path, surfaceArr = surfaceArr}
 
 	chunk.Flora = {}
 	var Flora = get_node("Flora").get_children()
@@ -236,8 +208,6 @@ func save_chunk(position):
 
 		if compareChunks(pos2Chunk(trackObject.translation), position):
 			chunk.TrackObjects[trackObject.name] = {name = trackObject.name, transform = trackObject.transform, data = trackObject.get_data()}
-#	config.set_value("Chunks", chunk2String(position), null)
-#	config.set_value("Chunks", chunk2String(position), chunk)
 	$jSaveModule.save_value(chunk2String(position), null)
 	$jSaveModule.save_value(chunk2String(position), chunk)
 	print("Saved Chunk " + chunk2String(position))
@@ -246,7 +216,6 @@ func save_chunk(position):
 
 func unload_chunk(position : Vector3):
 	
-#	var chunk = config.get_value("Chunks", chunk2String(position), null)
 	var chunk = $jSaveModule.get_value(chunk2String(position), null)
 	if chunk == null:
 		return
@@ -291,7 +260,6 @@ func load_chunk(position : Vector3):
 	
 	print("Loading Chunk " + chunk2String(position))
 	
-#	var chunk = config.get_value("Chunks", chunk2String(position), {"empty" : true})
 	var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
 
 	if chunk.has("empty"):
@@ -299,7 +267,6 @@ func load_chunk(position : Vector3):
 		return
 	## Rails:
 	var Rails = chunk.Rails
-#	var railNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 	for rail in Rails:
 		print("Loading Rail: " + rail)
 		## IF YOU GET HERE AN ERROR: Do Save and Create Chunks, and check, if only Rails are assigned to the "Rails" Node
@@ -316,7 +283,7 @@ func load_chunk(position : Vector3):
 		if buildingsNode.find_node(building) == null:
 			var meshInstance = MeshInstance.new()
 			meshInstance.name = Buildings[building].name
-			meshInstance.mesh = Buildings[building].mesh
+			meshInstance.set_mesh(load(Buildings[building].mesh_path))
 			meshInstance.transform = Buildings[building].transform
 			meshInstance.translation = getNewPos_bchunk(meshInstance.translation)
 			var surfaceArr = Buildings[building].surfaceArr
@@ -381,25 +348,6 @@ func load_chunk(position : Vector3):
 	print("Chunk " + chunk2String(position) + " loaded")
 	pass
 
-
-func save_world(newvar):
-	if editorAllObjectsUnloaded:
-		print("Saving World skipped. Load all Objects from configuration first!")
-		return
-	save_path = "res://Worlds/" + trackName + "/" + trackName + ".cfg"
-	config = ConfigFile.new()
-	load_response = config.load(save_path)
-
-	get_all_chunks()
-	
-	
-	for chunk in all_chunks:
-		save_chunk(string2Chunk(chunk))
-	
-
-	config.save(save_path)
-	print("Saved the whole world. Chunks set correctly.")
-
 func get_all_chunks(): # Returns Array of Strings
 	all_chunks = []
 	var railNode = get_node("Rails")
@@ -445,7 +393,6 @@ func apply_soll_chunks():
 var lastchunk
 func handle_chunk():
 	var player = $Players/Player
-	#var world = get_parent().get_parent()
 	var currentChunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
 	if not compareChunks(currentChunk, lastchunk):
 		activeChunk = currentChunk
@@ -742,4 +689,8 @@ func get_chunks_between_rails(start_rail : String, destination_rail : String, in
 	chunks_with_neighbours = jEssentials.remove_duplicates(chunks_with_neighbours)
 	return chunks_with_neighbours
 	
+func update_all_rails_overhead_line_setting(overhead_line : bool): # Not called automaticly. From any instance or button, but very helpful.
+	for rail in $Rails.get_children():
+		rail.overheadLine = overhead_line
+		rail.updateOverheadLine()
 	

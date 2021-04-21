@@ -230,6 +230,44 @@ margin_right = 591.0
 margin_bottom = 20.0
 text = "Load Chunks"
 
+[node name="HSeparator2" type="HSeparator" parent="World Configuration"]
+margin_top = 346.0
+margin_right = 792.0
+margin_bottom = 350.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Notes" type="VBoxContainer" parent="World Configuration"]
+margin_top = 354.0
+margin_right = 792.0
+margin_bottom = 564.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="World Configuration/Notes"]
+margin_right = 792.0
+margin_bottom = 14.0
+text = "Notes for Authors:"
+align = 1
+
+[node name="RichTextLabel" type="TextEdit" parent="World Configuration/Notes"]
+margin_top = 18.0
+margin_right = 792.0
+margin_bottom = 186.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_vertical = 3
+
+[node name="Save" type="Button" parent="World Configuration/Notes"]
+margin_left = 354.0
+margin_top = 190.0
+margin_right = 437.0
+margin_bottom = 210.0
+size_flags_horizontal = 4
+text = "Save Notes"
+
 [node name="Scenarios" type="ScrollContainer" parent="."]
 visible = false
 anchor_right = 1.0
@@ -747,7 +785,9 @@ margin_bottom = 522.0
 rect_min_size = Vector2( 0, 200 )
 headings = [ "Station Node Name", "Station Name", "Arrival", "Departure", "Mininmal Halt Time", "Stop Type", "Waiting Persons", "Leaving Persons", "Arrival Announce Path", "Departure Announce Path", "Approach Announce Path" ]
 keys = [ "nodeName", "stationName", "arrivalTime", "departureTime", "haltTime", "stopType", "waitingPersons", "leavingPersons", "arrivalAnnouncePath", "departureAnnouncePath", "approachAnnouncePath" ]
+show_save_button = false
 show_clear_button = false
+_update_table = false
 
 [node name="NodeName" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
 visible = false
@@ -899,6 +939,7 @@ show_hidden_files = true
 [connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Save" to="." method="_on_Chunks_Save_pressed"]
 [connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Unload" to="." method="_on_WorldLoading_Unload_pressed"]
 [connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Load" to="." method="_on_WorldLoading_Load_pressed"]
+[connection signal="pressed" from="World Configuration/Notes/Save" to="." method="_on_Notes_Save_pressed"]
 [connection signal="item_selected" from="Scenarios/VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/New" to="." method="_on_NewScenario_pressed"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/Rename" to="." method="_on_RenameScenario_pressed"]

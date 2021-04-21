@@ -232,6 +232,8 @@ func get_world_configuration():
 	$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
 	$"World Configuration/GridContainer/ThumbnailPath".text = d["ThumbnailPath"]
 	
+	$"World Configuration/Notes/RichTextLabel".text = world.get_value("notes", "")
+	
 
 
 
@@ -556,3 +558,7 @@ func _on_Chunks_Save_pressed():
 	if chunks == null:
 		return
 	world.save_chunks(chunks)
+
+
+func _on_Notes_Save_pressed():
+	world.save_value("notes", $"World Configuration/Notes/RichTextLabel".text)

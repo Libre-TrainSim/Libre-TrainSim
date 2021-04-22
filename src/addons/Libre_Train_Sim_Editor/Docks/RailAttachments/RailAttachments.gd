@@ -33,11 +33,21 @@ func update_selected_rail(node):
 		currentRail = node
 		$CurrentRail/Name.text = node.name
 		$Tab.visible = true
-		currentTO = null
+		var track_object_name = ""
+		if currentTO != null:
+			track_object_name = currentTO.description
 		update_itemList()
 		update_Materials()
 		update_positioning()
 		
+		# if jList has description, select this one..
+		if $Tab/TrackObjects/jListTrackObjects.has_entry(track_object_name):
+			$Tab/TrackObjects/jListTrackObjects.select_entry(track_object_name)
+			_on_jListTrackObjects_user_selected_entry(track_object_name)
+		else:
+			currentTO = null
+			
+			
 	else:
 		currentRail = null
 		$CurrentRail/Name.text = ""
@@ -256,6 +266,10 @@ func update_Position():
 func _on_AssignWholeRail_pressed():
 	$Tab/TrackObjects/Settings/Tab/Position/StartPos.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
+	
+	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.onRailPosition
+	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.onRailPosition + currentTO.length
+	
 	_on_SavePosition_pressed()
 	_on_Button_pressed()
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Resources/Basic/BasicWorldEnviroment.tres" type="Environment" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Resources/Basic/Materials/EasyTree.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Basic/grass.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=8]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/TrackObjects.gd" type="Script" id=9]
 [ext_resource path="res://Worlds/Tutorials/TutorialScript.gd" type="Script" id=10]
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn" type="PackedScene" id=12]
@@ -337,51 +336,95 @@ __meta__ = {
 [node name="City1" parent="Signals" instance=ExtResource( 17 )]
 stationLength = 200
 platformSide = 2
+personSystem = true
+platformHeight = 1.2
+platformStart = 2.5
+platformEnd = 4.5
 attachedRail = "Rail"
+onRailPosition = 0
+update = false
+forward = true
 
 [node name="Signal" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.999118, 0, -0.0419877, 0, 1, 0, 0.0419877, 0, 0.999118, 209.938, 0, 4.40918 )
+status = 0
 setPassAtH = 12
+setPassAtM = 0
 setPassAtS = 5
 speed = 140
+blockSignal = false
+visualInstancePath = ""
 attachedRail = "Rail"
+forward = true
 onRailPosition = 210
+update = false
 
 [node name="Signal2" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.996802, 0, -0.0799147, 0, 1, 0, 0.0799147, 0, 0.996802, 399.573, 0, 15.9917 )
 status = 1
+setPassAtM = 0
 setPassAtS = 45
+speed = -1
+blockSignal = false
+visualInstancePath = ""
 attachedRail = "Rail"
+forward = true
 onRailPosition = 400
+update = false
 
 [node name="Signal3" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.987227, 0, -0.159318, 0, 1, 0, 0.159318, 0, 0.987227, 796.591, 0, 63.8638 )
 status = 1
 setPassAtH = 12
+setPassAtM = 0
 setPassAtS = 50
+speed = -1
+blockSignal = false
+visualInstancePath = ""
 attachedRail = "Rail"
+forward = true
 onRailPosition = 800
+update = false
 
 [node name="Signal4" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.997779, 0, -0.0666163, 0, 1, 0, 0.0666163, 0, 0.997779, 1389.5, 0, 152.803 )
 status = 1
 setPassAtH = 12
 setPassAtM = 1
+setPassAtS = 0
 speed = 80
+blockSignal = false
+visualInstancePath = ""
 attachedRail = "Rail2"
+forward = true
 onRailPosition = 400
+update = false
 
 [node name="Signal5" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.997779, 0, 0.0666183, 0, 1, 0, -0.0666183, 0, 0.997779, 1789.21, 0, 152.802 )
+status = 0
+setPassAtM = 0
+setPassAtS = 0
+speed = -1
+blockSignal = false
+visualInstancePath = ""
 attachedRail = "Rail2"
+forward = true
 onRailPosition = 800
+update = false
 
 [node name="City2" parent="Signals" instance=ExtResource( 17 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 1584.35, 0, 159.463 )
 stationLength = 200
 platformSide = 1
+personSystem = true
+platformHeight = 1.2
+platformStart = 2.5
+platformEnd = 4.5
 attachedRail = "Rail2"
 onRailPosition = 595
+update = false
+forward = true
 
 [node name="Rails" type="Spatial" parent="."]
 
@@ -427,13 +470,8 @@ isSwitchPart = [ "", "" ]
 
 [node name="TrackObjects" type="Spatial" parent="."]
 
-[node name="Rail Platform" type="MultiMeshInstance" parent="TrackObjects" groups=[
-"TrackObject",
-] instance=ExtResource( 8 )]
-use_in_baked_light = true
-lod_max_distance = 100.0
+[node name="Rail Platform" parent="TrackObjects" instance=ExtResource( 8 )]
 multimesh = SubResource( 2 )
-script = ExtResource( 9 )
 description = "Platform"
 attachedRail = "Rail"
 length = 200.0
@@ -445,13 +483,8 @@ shift = 3.5
 height = 0.6
 rotationObjects = 180.0
 
-[node name="Rail Poles" type="MultiMeshInstance" parent="TrackObjects" groups=[
-"TrackObject",
-] instance=ExtResource( 8 )]
-use_in_baked_light = true
-lod_max_distance = 100.0
+[node name="Rail Poles" parent="TrackObjects" instance=ExtResource( 8 )]
 multimesh = SubResource( 4 )
-script = ExtResource( 9 )
 description = "Poles"
 attachedRail = "Rail"
 length = 1000.0
@@ -464,13 +497,8 @@ rotationObjects = -90.0
 placeLast = true
 wholeRail = true
 
-[node name="Rail Tree" type="MultiMeshInstance" parent="TrackObjects" groups=[
-"TrackObject",
-] instance=ExtResource( 8 )]
-use_in_baked_light = true
-lod_max_distance = 100.0
+[node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 8 )]
 multimesh = SubResource( 6 )
-script = ExtResource( 9 )
 description = "Tree"
 attachedRail = "Rail"
 length = 1000.0
@@ -488,14 +516,9 @@ randomScale = true
 randomSeed = -230917.0
 wholeRail = true
 
-[node name="Rail2 Poles" type="MultiMeshInstance" parent="TrackObjects" groups=[
-"TrackObject",
-] instance=ExtResource( 8 )]
+[node name="Rail2 Poles" parent="TrackObjects" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
-use_in_baked_light = true
-lod_max_distance = 100.0
 multimesh = SubResource( 8 )
-script = ExtResource( 9 )
 description = "Poles"
 attachedRail = "Rail2"
 length = 1000.0
@@ -508,14 +531,9 @@ rotationObjects = 90.0
 placeLast = true
 wholeRail = true
 
-[node name="Rail2 Tree" type="MultiMeshInstance" parent="TrackObjects" groups=[
-"TrackObject",
-] instance=ExtResource( 8 )]
+[node name="Rail2 Tree" parent="TrackObjects" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
-use_in_baked_light = true
-lod_max_distance = 100.0
 multimesh = SubResource( 10 )
-script = ExtResource( 9 )
 description = "Tree"
 attachedRail = "Rail2"
 length = 1000.0
@@ -533,14 +551,9 @@ randomScale = true
 randomSeed = -601170.0
 wholeRail = true
 
-[node name="Rail2 Platform" type="MultiMeshInstance" parent="TrackObjects" groups=[
-"TrackObject",
-] instance=ExtResource( 8 )]
+[node name="Rail2 Platform" parent="TrackObjects" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1589.35, 0, 159.467 )
-use_in_baked_light = true
-lod_max_distance = 100.0
 multimesh = SubResource( 12 )
-script = ExtResource( 9 )
 description = "Platform"
 attachedRail = "Rail2"
 onRailPosition = 600.0

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Leaves1.png-c9ecbb56ea49dc1d4c0c138fd727a6fd.s3tc.stex"
-path.etc2="res://.import/Leaves1.png-c9ecbb56ea49dc1d4c0c138fd727a6fd.etc2.stex"
+path.s3tc="res://.import/CorrugatedSteel.png-ad53c531a371fe9e466aa845fa8eab45.s3tc.stex"
+path.etc2="res://.import/CorrugatedSteel.png-ad53c531a371fe9e466aa845fa8eab45.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Resources/Basic/Textures/Leaves1.png"
-dest_files=[ "res://.import/Leaves1.png-c9ecbb56ea49dc1d4c0c138fd727a6fd.s3tc.stex", "res://.import/Leaves1.png-c9ecbb56ea49dc1d4c0c138fd727a6fd.etc2.stex" ]
+source_file="res://Resources/Basic/Textures/CorrugatedSteel.png"
+dest_files=[ "res://.import/CorrugatedSteel.png-ad53c531a371fe9e466aa845fa8eab45.s3tc.stex", "res://.import/CorrugatedSteel.png-ad53c531a371fe9e466aa845fa8eab45.etc2.stex" ]
 
 [params]
 
@@ -26,7 +26,7 @@ flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=1
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

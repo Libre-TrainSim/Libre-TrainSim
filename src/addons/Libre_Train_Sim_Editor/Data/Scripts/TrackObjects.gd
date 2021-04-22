@@ -126,7 +126,10 @@ func attach_to_rail():
 	var rail = world.get_node("Rails").get_node_or_null(attachedRail)
 	if rail != null:
 		if not rail.trackObjects.has(self):
-			rail.trackObjects.append(self)
+			rail.trackObjects.append(self)#
+	else:
+		print("TrackObject " + name + " can't find rail! Deleting...")
+		queue_free()
 
 func unattach_from_rail():
 	var rail = world.get_node("Rails").get_node_or_null(attachedRail)

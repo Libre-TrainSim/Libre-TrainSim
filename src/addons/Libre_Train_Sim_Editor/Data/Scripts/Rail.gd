@@ -112,17 +112,15 @@ func _process(delta):
 				child.owner = world
 
 func _update(newvar):
+	if ResourceLoader.exists(railTypePath):
+		railTypeNode = load(railTypePath)
 	if railTypeNode == null:
-		if ResourceLoader.exists(railTypePath):
-			railTypeNode = load(railTypePath)
-		if railTypeNode == null:
-			railTypeNode = load("res://Resources/Basic/RailTypes/Default.tscn")
-		railTypeNode = railTypeNode.instance()
-		buildDistance = railTypeNode.buildDistance
-		overheadLineHeight1 = railTypeNode.overheadLineHeight1
-		overheadLineHeight2 = railTypeNode.overheadLineHeight2
-		overheadLineThinkness = railTypeNode.overheadLineThinkness
-		line2HeightChangingFactor = railTypeNode.line2HeightChangingFactor
+		railTypeNode = preload("res://Resources/Basic/RailTypes/Default.tscn").instance()
+	buildDistance = railTypeNode.buildDistance
+	overheadLineHeight1 = railTypeNode.overheadLineHeight1
+	overheadLineHeight2 = railTypeNode.overheadLineHeight2
+	overheadLineThinkness = railTypeNode.overheadLineThinkness
+	line2HeightChangingFactor = railTypeNode.line2HeightChangingFactor
 	updateOverheadLine()
 	world = find_parent("World")
 	if world == null: return

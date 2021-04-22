@@ -60,6 +60,14 @@ func remove_entry(entry_name : String):
 	if entry_id != -1:
 		remove_entry_id(entry_id)
 
+func has_entry(entry_name : String):
+	return -1 != get_entry_id(entry_name)
+	
+func select_entry(entry_name : String):
+	if not has_entry(entry_name):
+		print_debug("jList " + name + ": Entry " + entry_name + " not found. Dont selecting anything...")
+	$VBoxContainer/ItemList.select(get_entry_id(entry_name))
+
 func get_size():
 	return item_list.get_item_count()#
 

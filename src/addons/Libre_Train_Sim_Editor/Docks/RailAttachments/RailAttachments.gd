@@ -235,8 +235,8 @@ func _on_SaveMaterials_pressed(): ## The object path is saved too here
 	for child in childs:
 		if child.get_node("LineEdit") != null and child.name != "Material 0":
 			currentTO.materialPaths.append(child.get_node("LineEdit").text)
-	currentTO._update(true)
 	print("Materials Saved")
+	update_current_rail_attachment()
 
 func clear_Materials_View():
 	var childs = $Tab/TrackObjects/Settings/Tab/Object/GridContainer.get_children()
@@ -271,7 +271,7 @@ func _on_AssignWholeRail_pressed():
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.onRailPosition + currentTO.length
 	
 	_on_SavePosition_pressed()
-	_on_Button_pressed()
+	update_current_rail_attachment()
 	
 
 
@@ -310,6 +310,7 @@ func _on_SavePositioning_pressed():
 	currentTO.placeLast = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed
 	currentTO.applySlopeRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed
 	print("Positioning Saved")
+	update_current_rail_attachment()
 
 func update_positioning():
 	if currentTO == null: return
@@ -332,7 +333,7 @@ func update_positioning():
 
 
 
-func _on_Button_pressed(): ## UPDATE
+func update_current_rail_attachment(): ## UPDATE
 	print("Updating...")
 	currentTO._update(true)
 	if currentTO.description == "Poles":
@@ -432,7 +433,7 @@ func _on_PickObject_pressed():
 func _on_FileDialog_onject_selected(path):
 	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = path
 	_on_SaveMaterials_pressed()
-	_on_Button_pressed() # update
+	update_current_rail_attachment() # update
 
 
 var currentMaterial = 0
@@ -440,7 +441,7 @@ func _on_FileDialogMaterials_file_selected(path):
 	if currentMaterial != 0:
 		get_node("Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material " + String(currentMaterial) + "/LineEdit").text = path
 		_on_SaveMaterials_pressed()
-		_on_Button_pressed() # update
+		update_current_rail_attachment() # update
 
 
 func _on_PickMaterial_pressed(): ## Called by material select script.
@@ -460,7 +461,7 @@ func _on_MaterialRemove_pressed():
 
 func _on_Randomize_pressed():
 	currentTO.newSeed()
-	_on_Button_pressed()
+	update_current_rail_attachment() # update
 
 
 

@@ -252,11 +252,11 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Add"
 
-[node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
+[node name="SaveAndUpdate" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
 margin_top = 92.0
 margin_right = 1008.0
 margin_bottom = 112.0
-text = "Save"
+text = "Save & Update"
 
 [node name="Position" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 visible = false
@@ -316,13 +316,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Position"]
+[node name="SaveAndUpdate" type="Button" parent="Tab/TrackObjects/Settings/Tab/Position"]
 margin_left = 483.0
 margin_top = 84.0
 margin_right = 524.0
 margin_bottom = 104.0
 size_flags_horizontal = 4
-text = "Save"
+text = "Save & Update"
 
 [node name="Object Positioning" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 visible = false
@@ -603,13 +603,13 @@ size_flags_horizontal = 3
 step = 0.01
 allow_greater = true
 
-[node name="Save" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
+[node name="SaveAndUpdate" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
 margin_left = 483.0
 margin_top = 192.0
 margin_right = 524.0
 margin_bottom = 212.0
 size_flags_horizontal = 4
-text = "Save"
+text = "Save & Update"
 
 [node name="Randomize" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
 margin_left = 483.0
@@ -618,14 +618,6 @@ margin_right = 524.0
 margin_bottom = 212.0
 size_flags_horizontal = 4
 text = "Randomize"
-
-[node name="Button" type="Button" parent="Tab/TrackObjects/Settings"]
-margin_left = 479.0
-margin_top = 152.0
-margin_right = 537.0
-margin_bottom = 172.0
-size_flags_horizontal = 4
-text = "Update"
 
 [node name="FileDialogObjects" type="FileDialog" parent="."]
 margin_top = 28.0
@@ -652,6 +644,7 @@ mode = 0
 filters = PoolStringArray( "*.tres" )
 current_dir = "res://Resources"
 current_path = "res://Resources/"
+
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Copy" to="." method="_on_CopyTrack_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Paste" to="." method="_on_PasteRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Clear" to="." method="_on_ClearTOs_pressed"]
@@ -674,11 +667,10 @@ current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0/Pick" to="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0" method="_on_Pick_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Remove" to="." method="_on_MaterialRemove_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Add" to="." method="_on_AddMaterial_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Save" to="." method="_on_SaveMaterials_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/SaveAndUpdate" to="." method="_on_SaveMaterials_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/Save" to="." method="_on_SavePosition_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Save" to="." method="_on_SavePositioning_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/SaveAndUpdate" to="." method="_on_SavePosition_pressed"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/SaveAndUpdate" to="." method="_on_SavePositioning_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Randomize" to="." method="_on_Randomize_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Button" to="." method="_on_Button_pressed"]
 [connection signal="file_selected" from="FileDialogObjects" to="." method="_on_FileDialog_onject_selected"]
 [connection signal="file_selected" from="FileDialogMaterials" to="." method="_on_FileDialogMaterials_file_selected"]

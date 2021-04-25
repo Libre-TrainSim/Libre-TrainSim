@@ -571,6 +571,8 @@ func checkTrainSpawn(delta):
 
 func update_rail_connections():
 	for rail_node in $Rails.get_children():
+		rail_node.update_positions_and_rotations()
+	for rail_node in $Rails.get_children():
 		rail_node.update_connections()
 
 # pathfinding from a start rail to an end rail. returns an array of rail nodes
@@ -602,7 +604,10 @@ func _get_path_from_to_helper(start_rail : Node, forward : bool, already_visited
 					forward = false
 				if rail_node.get_connected_rails_at_beginning().has(start_rail):
 					forward = true
-				return _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
+				var outcome = _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
+				if outcome != []:
+					return outcome
+#				return _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
 	return []
 
 # Iterates through all currently loaded/visible rails, buildings, flora. Returns an array of chunks in strings

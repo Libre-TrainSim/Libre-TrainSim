@@ -34,8 +34,10 @@ func update_selected_rail(node):
 		$CurrentRail/Name.text = node.name
 		$Tab.visible = true
 		var track_object_name = ""
-		if currentTO != null:
+		if is_instance_valid(currentTO):
 			track_object_name = currentTO.description
+		else:
+			currentTO = null
 		update_itemList()
 		update_Materials()
 		update_positioning()
@@ -152,7 +154,7 @@ func _on_jListTrackObjects_user_duplicated_entries(source_entry_names, duplicate
 		print("TrackObject " +  source_entry_name + " duplicated.")
 	pass # Replace with function body.
 
-func copy_track_object_to_current_rail(source_track_object : Node, new_description : String):
+func copy_track_object_to_current_rail(source_track_object : Node, new_description : String, mirror : bool  = false):
 	var new_track_object = track_object_resource.instance()
 	var data = source_track_object.get_data()
 	new_track_object.set_data(data)
@@ -160,6 +162,12 @@ func copy_track_object_to_current_rail(source_track_object : Node, new_descripti
 	new_track_object.description = new_description
 	new_track_object.attachedRail = currentRail.name
 	world.get_node("TrackObjects").add_child(new_track_object)
+	if mirror:
+		new_track_object.rotationObjects = source_track_object.rotationObjects + 180.0
+		if source_track_object.sides == 1:
+			new_track_object.sides = 2
+		elif source_track_object.sides == 2:
+			new_track_object.sides = 1
 	new_track_object.set_owner(world)
 	new_track_object._update(true)
 
@@ -336,7 +344,7 @@ func update_positioning():
 func update_current_rail_attachment(): ## UPDATE
 	print("Updating...")
 	currentTO._update(true)
-	if currentTO.description == "Poles":
+	if currentTO.description.begins_with("Pole"):
 		currentRail.updateOverheadLine()
 
 
@@ -375,7 +383,7 @@ func _on_jListTrackObjects_user_copied_entries(entry_names):
 func _on_jListTrackObjects_user_pasted_entries(source_entry_names, source_jList_id, pasted_entry_names):
 	assert(pasted_entry_names.size() == copyTOArray.size())
 	for i in range (pasted_entry_names.size()):
-		copy_track_object_to_current_rail(copyTOArray[i], pasted_entry_names[i])
+		copy_track_object_to_current_rail(copyTOArray[i], pasted_entry_names[i], $Tab/TrackObjects/MirrorPastedObjects.pressed)
 			
 
 

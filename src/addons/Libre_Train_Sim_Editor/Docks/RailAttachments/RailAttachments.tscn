@@ -24,7 +24,7 @@ size_flags_horizontal = 3
 [node name="Tab" type="TabContainer" parent="."]
 margin_top = 28.0
 margin_right = 800.0
-margin_bottom = 232.0
+margin_bottom = 260.0
 tab_align = 0
 
 [node name="TrackObjects" type="VBoxContainer" parent="Tab"]
@@ -147,6 +147,15 @@ enable_copy_button = true
 enable_paste_button = true
 add_button_text = "New"
 remove_button_text = "Delete"
+
+[node name="MirrorPastedObjects" type="CheckBox" parent="Tab/TrackObjects"]
+margin_top = 172.0
+margin_right = 792.0
+margin_bottom = 196.0
+text = "Mirror track objects (while pasting)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Settings" type="VBoxContainer" parent="Tab/TrackObjects"]
 visible = false

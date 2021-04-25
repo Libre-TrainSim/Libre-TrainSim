@@ -113,7 +113,7 @@ func _process(delta):
 
 func _update(newvar):
 	if ResourceLoader.exists(railTypePath):
-		railTypeNode = load(railTypePath)
+		railTypeNode = load(railTypePath).instance()
 	if railTypeNode == null:
 		railTypeNode = preload("res://Resources/Basic/RailTypes/Default.tscn").instance()
 	buildDistance = railTypeNode.buildDistance
@@ -121,7 +121,7 @@ func _update(newvar):
 	overheadLineHeight2 = railTypeNode.overheadLineHeight2
 	overheadLineThinkness = railTypeNode.overheadLineThinkness
 	line2HeightChangingFactor = railTypeNode.line2HeightChangingFactor
-	updateOverheadLine()
+#	updateOverheadLine()
 	world = find_parent("World")
 	if world == null: return
 	if parallelRail == "":
@@ -146,10 +146,7 @@ func _update(newvar):
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
 		print(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
-	startpos = self.get_translation()
-	startrot = self.rotation_degrees.y
-	endrot = get_deg_at_RailDistance(length)
-	endpos = get_pos_at_RailDistance(length)
+	update_positions_and_rotations()
 	visibleSegments = length / buildDistance +1
 
 	buildRail()
@@ -425,7 +422,7 @@ func updateOverheadLine():
 		if trackObject == null:
 			continue
 		print(trackObject.description)
-		if trackObject.description == "Poles":
+		if trackObject.description.begins_with("Pole"):
 			var pos = 0
 			if trackObject.onRailPosition == 0:
 				pos += trackObject.distanceLength
@@ -434,6 +431,7 @@ func updateOverheadLine():
 				pos += trackObject.distanceLength
 			if not trackObject.placeLast and polePositions.size() > 1:
 				polePositions.remove(polePositions.size()-1)
+			## Maybe here comes a break in. (If we only want to search for one trackobkject which begins with "pole"
 	polePositions.append(length)
 	polePositions = jEssentials.remove_duplicates(polePositions)
 	for i in range (polePositions.size()-2):
@@ -514,6 +512,11 @@ func create3DLineUp(start, end, thinkness):
 	indices.append_array(indices_array)
 
 ###############################################################################
+func update_positions_and_rotations():
+	startpos = self.get_translation()
+	startrot = self.rotation_degrees.y
+	endrot = get_deg_at_RailDistance(length)
+	endpos = get_pos_at_RailDistance(length)
 
 export var isSwitchPart = ["", ""]
 # 0: is Rail at beginning part of switch? 1: is the rail at end part of switch if not 
@@ -531,7 +534,7 @@ func update_is_switch_part():
 		elif startpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(startrot) - Math.normDeg(rail.endrot+180)) < 1:
 			foundRailsAtBeginning.append(rail.name)
 		#check for ending
-		if endpos.distance_to(rail.startpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.startrot+180.0))) < 1:
+		if endpos.distance_to(rail.startpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.startrot+180))) < 1:
 			foundRailsAtEnding.append(rail.name)
 		elif endpos.distance_to(rail.endpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.endrot))) < 1:
 			foundRailsAtEnding.append(rail.name)
@@ -554,6 +557,7 @@ var _connected_rails_at_ending = [] # Array of rail nodes
 # This function should be called before get_connected_rails_at_beginning() 
 # or get_connected_rails_at_ending once.
 func update_connections():
+	print("HUHU")
 	_connected_rails_at_beginning = []
 	_connected_rails_at_ending = []
 	for rail in world.get_node("Rails").get_children():

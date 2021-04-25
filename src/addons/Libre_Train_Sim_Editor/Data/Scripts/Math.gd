@@ -47,7 +47,7 @@ func normDeg(degree):
 	while degree < 180.0:
 		degree += 360.0
 	return degree
-
+	
 
 #func sort_signals(signalTable, forward = true):
 #	var signalT = [signalTable.values(), signalTable.keys()]

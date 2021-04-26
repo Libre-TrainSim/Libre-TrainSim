@@ -3,10 +3,8 @@
 unloaded_chunks=[  ]
 0,0={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [ "Rail", "Rail2" ],
 "TrackObjects": {
@@ -160,23 +158,18 @@ unloaded_chunks=[  ]
 }
 1,1={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( 1, 0, 1 )
 }
 1,0={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
@@ -214,79 +207,61 @@ unloaded_chunks=[  ]
 }
 1,-1={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( 1, 0, -1 )
 }
 0,1={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( 0, 0, 1 )
 }
 0,-1={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( 0, 0, -1 )
 }
 -1,1={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( -1, 0, 1 )
 }
 -1,0={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( -1, 0, 0 )
 }
 -1,-1={
 "Buildings": {
-
 },
 "Flora": {
-
 },
 "Rails": [  ],
 "TrackObjects": {
-
 },
 "position": Vector3( -1, 0, -1 )
 }

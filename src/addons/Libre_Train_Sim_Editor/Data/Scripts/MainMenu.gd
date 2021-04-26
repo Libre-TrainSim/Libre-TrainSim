@@ -14,7 +14,6 @@ var load_response = config.load(save_path)
 func _ready():
 	update_config()
 	$Version.text = "Version: " + String(version)
-	OS.window_fullscreen = config.get_value("Settings", "fullscreen", true)
 	var openTimes = config.get_value("Main", "openTimes", 0)
 	openTimes += 1
 	config.set_value("Main", "openTimes", openTimes)
@@ -24,12 +23,12 @@ func _ready():
 		$FeedBack/VBoxContainer/RichTextLabel.text = TranslationServer.translate("MENU_FEEDBACK_QUESTION")
 		$FeedBack.popup()
 	update_MainMenuMusic()
-	
+
 	Root.mobile_version = mobile_version
-	
+
 	if mobile_version:
 		set_menu_to_mobile()
-	
+
 	var language = config.get_value("Settings", "language", "no_language")
 	if language != "no_language":
 		TranslationServer.set_locale(language)
@@ -47,20 +46,20 @@ func set_menu_to_mobile():
 	$Play/Selection/Scenarios/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
-	
+
 
 func update_MainMenuMusic():
 	if config.get_value("Settings", "mainMenuMusic", true):
 		$MusicPlayer.play()
 	else:
 		$MusicPlayer.stop()
-		
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	load_scene(delta)
 	updateBottmLabels()
-	
+
 
 var foundTracks = []
 var foundContentPacks = []
@@ -84,7 +83,7 @@ func _on_BackPlay_pressed():
 	$Front.show()
 	$Version.show()
 
-	
+
 
 
 func _on_PlayFront_pressed():
@@ -120,33 +119,33 @@ func update_config():
 			foundContentPacks.append(file)
 	dir.list_dir_end()
 	print("Found Content Packs: " + String(foundContentPacks))
-	
+
 	for contentPack in foundContentPacks:
 		if ProjectSettings.load_resource_pack(contentPack, false):
 			print("Loading Content Pack "+ contentPack+" successfully finished")
-			
+
 	## Get all Tracks:
 	var foundFiles = {"Array": []}
 	Root.crawlDirectory("res://Worlds",foundFiles,"tscn")
 	print(foundFiles)
 	foundTracks = foundFiles["Array"].duplicate(true)
-	
+
 	## Get all Trains
 	foundFiles = {"Array": []}
 	Root.crawlDirectory("res://Trains",foundFiles,"tscn")
 	foundTrains = foundFiles["Array"].duplicate(true)
-	
+
 
 func update_track_list():
 	$Play/Selection/Tracks/ItemList.clear()
 	for track in foundTracks:
 		$Play/Selection/Tracks/ItemList.add_item(track.get_file().get_basename())
-		
+
 func update_train_list():
 	$Play/Selection/Trains/ItemList.clear()
 	for train in foundTrains:
 		$Play/Selection/Trains/ItemList.add_item(train.get_file().get_basename())
-	
+
 
 # Play Page:
 func _on_PlayPlay_pressed():
@@ -181,9 +180,9 @@ func _on_ItemList_itemTracks_selected(index):
 	var save_path = foundTracks[index].get_basename() + "-scenarios.cfg"
 	var config = ConfigFile.new()
 	var load_response = config.load(save_path)
-	
+
 	var wData = config.get_value("WorldConfig", "Data", null)
-	if wData == null: 
+	if wData == null:
 		print(save_path)
 		$Play/Info/Description.text = TranslationServer.translate("MENU_NO_SCENARIO_FOUND")
 		$Play/Info/Description.text = TranslationServer.translate(save_path)
@@ -193,7 +192,7 @@ func _on_ItemList_itemTracks_selected(index):
 	$Play/Info/Info/Author.text = " "+ TranslationServer.translate("MENU_AUTHOR") + ": " + wData["Author"] + " "
 	$Play/Info/Info/ReleaseDate.text = " "+ TranslationServer.translate("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
 	$Play/Info/Screenshot.texture = load(wData["ThumbnailPath"])
-	
+
 	$Play/Selection/Scenarios.show()
 	$Play/Selection/Scenarios/ItemList.clear()
 	$Play/Selection/Trains.hide()
@@ -232,7 +231,7 @@ func _on_ItemList_scenario_selected(index):
 	$Play/Selection/Trains.show()
 	$Play/Info/Info/EasyMode.hide()
 	update_train_list()
-	
+
 	# Search and preselect train from scenario:
 	$Play/Selection/Trains/ItemList.unselect_all()
 	var preferredTrain = sData[currentScenario]["Trains"].get("Player", {}).get("PreferredTrain", "")
@@ -241,9 +240,9 @@ func _on_ItemList_scenario_selected(index):
 			if foundTrains[i].find(preferredTrain) != -1:
 				$Play/Selection/Trains/ItemList.select(i)
 				_on_ItemList_Train_selected(i)
-		
-	
-	
+
+
+
 
 
 
@@ -266,14 +265,14 @@ func _on_ItemList_Train_selected(index):
 	else:
 		$Play/Info/Info/EasyMode.pressed = true
 	train.queue_free()
-	
+
 
 
 func _on_ButtonFeedback_pressed():
 	config.set_value("Main", "feedbackPressed", true)
 	config.save(save_path)
 	OS.shell_open("https://www.libre-trainsim.de/feedback")
-	
+
 
 
 func _on_OpenWebBrowser_pressed():

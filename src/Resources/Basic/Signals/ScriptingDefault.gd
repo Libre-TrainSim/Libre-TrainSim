@@ -1,3 +1,4 @@
+tool
 extends Node
 
 onready var Signal = get_parent()
@@ -42,7 +43,7 @@ func update():
 	if Signal.status == 0:
 		red()
 	elif Signal.status == 1:
-		if Signal.signalAfterNode !=  world.get_node("Signals") and Signal.signalAfterNode != null and Signal.signalAfterNode.status == 0:
+		if Signal.signalAfterNode != null and Signal.signalAfterNode.status == 0:
 			orange()
 			orange = true
 			return

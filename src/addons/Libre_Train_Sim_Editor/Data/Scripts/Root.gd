@@ -83,3 +83,11 @@ func clampViaTime(soll : float, ist : float, delta : float):
 	ist += (soll-ist)*delta
 	return ist
 
+func fix_frame_drop():
+	if not jSettings.get_framedrop_fix():
+		return
+	jEssentials.call_delayed(1.0, self,  "set_fullscreen", [!jSettings.get_fullscreen()])
+	jEssentials.call_delayed(1.3, self,  "set_fullscreen", [jSettings.get_fullscreen()])
+	
+func set_fullscreen(value : bool):
+	OS.window_fullscreen = value

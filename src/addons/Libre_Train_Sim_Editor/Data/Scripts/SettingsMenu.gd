@@ -9,16 +9,16 @@ var languageTable = {"en" : 0, "de" : 1}
 func _ready():
 	save_path = get_parent().save_path
 	config = get_parent().config
-	
+
 	$GridContainer/AntiAliasing.add_item(tr("MENU_DISABLED"), Viewport.MSAA_DISABLED)
 	$GridContainer/AntiAliasing.add_item("2x", Viewport.MSAA_2X)
 	$GridContainer/AntiAliasing.add_item("4x", Viewport.MSAA_4X)
 	$GridContainer/AntiAliasing.add_item("8x", Viewport.MSAA_8X)
 	$GridContainer/AntiAliasing.add_item("16x", Viewport.MSAA_16X)
 	$GridContainer/AntiAliasing.select(config.get_value("Settings", "antiAliasing", ProjectSettings.get_setting("rendering/quality/filters/msaa")))
-	
+
 	updateLanguage()
-	
+
 	$GridContainer/Fullscreen.pressed = config.get_value("Settings", "fullscreen", true)
 	$GridContainer/Shadows.pressed = config.get_value("Settings", "shadows", true)
 	$GridContainer/ViewDistance.value = config.get_value("Settings", "viewDistance", 1000)
@@ -33,8 +33,8 @@ func _process(delta):
 func _on_Fullscreen_pressed():
 	config.set_value("Settings", "fullscreen", $GridContainer/Fullscreen.pressed)
 	config.save(save_path)
-	OS.window_fullscreen = $GridContainer/Fullscreen.pressed
-	
+	# OS.window_fullscreen = $GridContainer/Fullscreen.pressed
+
 func _on_Shadows_pressed():
 	config.set_value("Settings", "shadows", $GridContainer/Shadows.pressed)
 	config.save(save_path)
@@ -60,7 +60,7 @@ func _on_Back_pressed():
 	hide()
 	get_node("../MenuBackground").hide()
 	get_node("../Front").show()
-	
+
 
 
 
@@ -70,7 +70,7 @@ func _on_Language_item_selected(index):
 	config.set_value("Settings", "language", $GridContainer/Language.get_item_text(index))
 	TranslationServer.set_locale($GridContainer/Language.get_item_text(index))
 	config.save(save_path)
-	
+
 func updateLanguage():
 	## Get all languages, and add MainMenu* and Ingame* to Libre TrainSim
 	var languageFiles = {"Array": []}
@@ -90,7 +90,7 @@ func updateLanguage():
 	for language in languages:
 		languageTable[language] = i
 		i += 1
-		
+
 	## Update&Set Language
 	for index in range(languageTable.size()):
 		$GridContainer/Language.add_item("",index)

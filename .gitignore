@@ -2,6 +2,10 @@ src/Worlds/*
 !src/Worlds/Tutorial/
 !src/Worlds/Tutorials/
 
+src/Resources/*
+!src/Resources/Tutorials
+!src/Resources/Basic
+
 src/Trains/*
 !src/Trains/JFR1/
 

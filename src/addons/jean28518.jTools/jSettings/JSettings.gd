@@ -39,6 +39,7 @@ func _ready():
 
 func apply_saved_settings():
 	OS.window_fullscreen = get_fullscreen()
+	print_debug(OS.window_fullscreen)
 	ProjectSettings.set_setting("rendering/quality/filters/msaa", get_anti_aliasing())
 
 	## This can only be used, if JAudioManager is in project.
@@ -58,6 +59,7 @@ func update_settings_window():
 	$ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
 	$ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
 	$ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
+	$ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
 
 	if not jConfig.enable_jAudioManager:
 		$ScrollContainer/GridContainer/Label4.hide()
@@ -135,6 +137,13 @@ func set_view_distance(value : int):
 
 func get_view_distance():
 	return jSaveManager.get_setting("view_distance", 1000)
+	
+
+func set_framedrop_fix(value : bool):
+	jSaveManager.save_setting("framedrop_fix", value)
+	
+func get_framedrop_fix():
+	return jSaveManager.get_setting("framedrop_fix", true)
 	
 
 ## Other Functionality #########################################################

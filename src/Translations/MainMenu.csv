@@ -27,7 +27,7 @@ MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Antialiasing,アンチエイリ�
 MENU_DISABLED,Disabled,Deaktiviert,Disabilitato,無効,Dezaktywowane,Туман
 MENU_FOG,Fog,Nebel,Nebbia,霧 ,Mgła,Мова
 MENU_LANGUAGE,Language,Sprache,Lingua,言語,Język,
-,,,,,,
+MENU_AUTOMATIC_FRAMEDROP_FIX,Automatic Framedrop Fix,Automatischer Framedrop Fix,,,,
 ,,,,,,
 ,,,,,,
 MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...,Завантаження...

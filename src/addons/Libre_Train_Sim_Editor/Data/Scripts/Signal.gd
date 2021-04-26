@@ -44,6 +44,7 @@ func _process(delta):
 	updateVisualInstance()
 
 func updateVisualInstance():
+	update()
 	if attachedRailNode == null:
 		attachedRailNode = find_parent("World").get_node("Rails" + "/" + attachedRail)
 		if attachedRailNode == null:
@@ -80,6 +81,7 @@ func update():
 
 
 func _ready():
+	# Set Signal while adding to the Signals node
 	if Engine.is_editor_hint() and not get_parent().name == "Signals":
 		if get_parent().is_in_group("Rail"):
 			attachedRail = get_parent().name
@@ -87,13 +89,18 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		update()
-	setToRail(true)
+		
+
+
 	if blockSignal:
 		status = 1
-
+	
+	setToRail(true)
 
 
 	update()
+
+	
 
 
 

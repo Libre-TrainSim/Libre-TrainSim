@@ -486,7 +486,7 @@ func set_scenario_to_world():
 	for train in scenario["Trains"].keys():
 		spawnTrain(train)
 	
-	jEssentials.call_delayed(0.6, $Players/Player, "show_textbox_message", [TranslationServer.translate(scenario["Description"])])
+	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [TranslationServer.translate(scenario["Description"])])
 #	$Players/Player.show_textbox_message(TranslationServer.translate(scenario["Description"]))
 
 

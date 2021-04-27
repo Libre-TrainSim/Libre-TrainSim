@@ -90,6 +90,8 @@ func show_textbox_message(string):
 func _on_OkTextBox_pressed():
 	get_tree().paused = false
 	$TextBox.visible = false
+	if $Black.visible:
+		$Black/AnimationPlayer.play("FadeOut")
 	
 var modulation = 0
 func check_trainInfo(delta):

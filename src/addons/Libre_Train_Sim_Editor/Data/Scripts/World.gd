@@ -450,6 +450,8 @@ func updateWorldTransform_bchunk(deltachunk):
 		forest.translation += deltaTranslation
 	for to in $TrackObjects.get_children():
 		to.translation += deltaTranslation
+	for person in $Persons.get_children():
+		person.translation += deltaTranslation
 	
 		
 

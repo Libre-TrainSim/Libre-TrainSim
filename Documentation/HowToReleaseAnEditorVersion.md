@@ -7,4 +7,3 @@
 - Check in the main menu the version numer ;)
 - Rename the Project in the Project Settings to: "Libre TrainSim Editor"
 - Now you can close GoDot. Rename the src folder to "LibreTrainSimEditor", and zip this folder.
-- The zip file is the editor to release

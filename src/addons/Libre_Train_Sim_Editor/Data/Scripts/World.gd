@@ -34,8 +34,6 @@ var pendingTrains = {"TrainName" : [], "SpawnTime" : []}
 
 var player
 
-export var editorAllObjectsUnloaded = false ## saves, if all Objects in World where unloaded, or not. That's important for Saving and creating Chunks. It only works, if every Objet is loaded in the world.
-
 var trainFiles = {"Array" : []}
 
 var personVisualInstancesPathes = [
@@ -540,7 +538,7 @@ func spawnTrain(trainName):
 	player.ai = trainName != "Player"
 	player.initialSpeed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))
 	if scenario["Trains"][trainName].get("InitialSpeedLimit", -1) != -1:
-		player.speedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
+		player.currentSpeedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
 	
 	if trainName == "Player":
 		player.debug = debug

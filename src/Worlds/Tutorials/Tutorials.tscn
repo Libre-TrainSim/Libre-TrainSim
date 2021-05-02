@@ -348,8 +348,10 @@ onRailPosition = 210
 
 [node name="Signal2" parent="Signals" instance=ExtResource( 12 )]
 transform = Transform( 0.996802, 0, -0.0799147, 0, 1, 0, 0.0799147, 0, 0.996802, 399.573, 0, 15.9917 )
+status = 1
 setPassAtH = 12
 setPassAtS = 45
+blockSignal = true
 attachedRail = "Rail"
 onRailPosition = 400
 
@@ -395,7 +397,6 @@ endpos = Vector3( 993.347, 0, 99.667 )
 otherRadius = -5004.5
 otherLength = 1000.9
 Outlength = 1000.0
-startTend = -3.0
 tend1Pos = 50
 tend1 = -0.3
 tend2Pos = 950.0
@@ -418,7 +419,7 @@ Outlength = 116.197
 tend1 = 0.5
 tend2Pos = 950.0
 tend2 = 0.5
-endTend = 3.0
+automaticTendency = false
 isSwitchPart = [ "", "" ]
 
 [node name="Buildings" type="Spatial" parent="."]

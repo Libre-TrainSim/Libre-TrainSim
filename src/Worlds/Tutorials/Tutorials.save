@@ -37,11 +37,11 @@ unloaded_chunks=[  ]
 "name": "Rail Platform",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 },
-"Rail Poles": {
+"Rail Poles_single": {
 "data": {
 "applySlopeRotation": false,
 "attachedRail": "Rail",
-"description": "Poles",
+"description": "Poles_single",
 "distanceLength": 80.0,
 "distanceRows": 0.0,
 "height": 0.0,
@@ -63,7 +63,7 @@ unloaded_chunks=[  ]
 "spawnRate": 1.0,
 "wholeRail": true
 },
-"name": "Rail Poles",
+"name": "Rail Poles_single",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 },
 "Rail Tree": {

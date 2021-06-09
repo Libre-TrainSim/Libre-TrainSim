@@ -115,7 +115,8 @@ export (float) var soundIsolation = -8
 
 var world # Node Reference to the world node.
 
-export var cameraFactor = 0.1 ## The Factor, how much the camaere moves at acceleration and braking
+export var cameraFactor = 1 ## The Factor, how much the camaere moves at acceleration and braking
+export var camera_shaking_factor = 1.0 ## The Factor how much the camera moves at high speeds
 var startPosition # on rail, given by scenario manager in world node
 var forward = true # does the train drive at the rail direction, or against it? 
 var debug  ## used for driving fast at the track, if true. Set by world node. Set only for Player Train
@@ -204,7 +205,8 @@ func ready(): ## Called by World!
 		frontLight = true
 		
 	print("Train " + name + " spawned sucessfully at " + currentRail.name)
-	
+
+var initialSwitchCheck = false
 var processLongDelta = 0.5 # Definition of Period, every which seconds the function is called.
 func processLong(delta): ## All functions in it are called every (processLongDelta * 1 second).
 	updateNextSignal(delta)
@@ -223,6 +225,10 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 	if name == "npc3":
 		print(currentRail.name)
 		print(distanceOnRail)
+		
+	if not initialSwitchCheck:
+		updateSwitchOnNextChange()
+		initialSwitchCheck = true
 
 
 
@@ -297,8 +303,13 @@ func _process(delta):
 	
 	if not ai:
 		updateTrainAudioBus()
+		
 	
 	handleEngine()
+	
+	check_overdriving_a_switch()
+	
+	
 	
 	
 
@@ -475,6 +486,10 @@ func drive(delta):
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
 
 func change_to_next_rail():
+	var old_radius = currentRail.radius
+	if forward:
+		old_radius = -old_radius
+		
 	## Handle rest of signals
 	if signals == null:
 		"Train " + name + ": change_to_next_rail(): signals is null!"
@@ -498,11 +513,30 @@ func change_to_next_rail():
 		return
 	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
 	forward = baked_route_direction[routeIndex]
-
+	
+	var new_radius = currentRail.radius
+	if forward:
+		new_radius = -new_radius
+	
 	if not forward:
 		distanceOnRail += currentRail.length
 		
 	
+	# Get radius difference:
+	if old_radius == 0: # prevent diviging through Zero, and take a very very big curve radius instead. 
+		old_radius = 1000000000
+	if new_radius == 0: # prevent diviging through Zero, and take a very very big curve radius instead. 
+		new_radius = 1000000000
+	var radius_difference_factor = abs(1/new_radius - 1/old_radius)*2000
+	
+	print(new_radius)
+	print(old_radius)
+	
+	print (radius_difference_factor)
+	curve_shaking_factor = radius_difference_factor * Math.speedToKmH(speed) / 100.0 * camera_shaking_factor
+
+
+
 	
 var mouseMotion = Vector2()
 var mouseWheel
@@ -544,7 +578,6 @@ func handleCamera(delta):
 		world.add_child(cam)
 		cam.owner = world
 		cam.transform = transform.translated(cameraMidPoint)
-	
 	var playerCameras = get_tree().get_nodes_in_group("PlayerCameras")
 	for i in range(3, 9):
 		if Input.is_action_just_pressed("player_camera_" + str(i)) and playerCameras.size() >= i - 2:
@@ -556,11 +589,20 @@ func handleCamera(delta):
 
 	if cameraState == 1: # Inner Position
 		## Camera x Position
-		var sollCameraPosition = cameraZeroTransform.origin.x + (currentRealAcceleration * -cameraFactor)
+		var sollCameraPosition_x = cameraZeroTransform.origin.x + (currentRealAcceleration/20.0 * -cameraFactor)
 		if speed == 0 or debug:
-			sollCameraPosition = cameraZeroTransform.origin.x
-		var missingCameraPosition = cameraNode.translation.x - sollCameraPosition
-		cameraNode.translation.x -= missingCameraPosition * delta
+			sollCameraPosition_x = cameraZeroTransform.origin.x
+		var missingCameraPosition_x = cameraNode.translation.x - sollCameraPosition_x
+		var soll_camera_translation = cameraNode.translation
+		soll_camera_translation.x -= missingCameraPosition_x * delta
+		
+		## Handle Camera Shaking:
+		soll_camera_translation += get_camera_shaking(delta)
+		
+		
+		
+		
+		cameraNode.translation = soll_camera_translation
 	elif cameraState == 2: ## Outer Position
 		if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -656,7 +698,8 @@ func handle_signal(signalname):
 
 
 
-## For Station: 
+## For Station:
+var GOODWILL_DISTANCE = 10 # The distance the player can overdrive a station, or it's train end isn't in the station.
 var endStation = false
 var stationBeginning = true
 var stationTimer = 0
@@ -667,7 +710,7 @@ var currentStationNode
 var current_station_index = 0
 func check_station(delta):
 	if currentStationName != "":
-		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning<length) and not wholeTrainNotInStation and not stationBeginning:
+		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning+GOODWILL_DISTANCE<length) and not wholeTrainNotInStation and not stationBeginning:
 			wholeTrainNotInStation = true
 			send_message(TranslationServer.translate("END_OF_YOUR_TRAIN_NOT_IN_STATION"))
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and not (doorLeft or doorRight)):
@@ -725,7 +768,7 @@ func check_station(delta):
 		elif (speed != 0 and isInStation):
 			send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
 			leave_current_station()
-		elif (stationLength<distance-distanceOnStationBeginning) and currentStationName != "":
+		elif (stationLength+GOODWILL_DISTANCE<distance-distanceOnStationBeginning) and currentStationName != "":
 			if isInStation:
 				send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
 			else:
@@ -1059,8 +1102,8 @@ func spawnWagons():
 		var newWagon = wagonNode.duplicate()
 		newWagon.owner = self.owner
 		newWagon.show()
-		newWagon.bakedRoute = baked_route
-		newWagon.bakedRouteDirection = baked_route_direction
+		newWagon.baked_route = baked_route
+		newWagon.baked_route_direction = baked_route_direction
 		newWagon.forward = forward
 		newWagon.currentRail = currentRail
 		newWagon.distanceOnRail = nextWagonPosition
@@ -1074,8 +1117,8 @@ func spawnWagons():
 		wagonsI.append(newWagon)
 	
 	# Handle Cabin:
-	$Cabin.bakedRoute = baked_route
-	$Cabin.bakedRouteDirection = baked_route_direction
+	$Cabin.baked_route = baked_route
+	$Cabin.baked_route_direction = baked_route_direction
 	$Cabin.forward = forward
 	$Cabin.currentRail = currentRail
 	$Cabin.distanceOnRail = nextWagonPosition
@@ -1324,5 +1367,62 @@ func sendDoorPositionsToCurrentStation():
 				doors.append(door)
 				doorsWagon.append(wagon)
 	currentStationNode.setDoorPositions(doors, doorsWagon)
+
+
+var curve_shaking_factor = 0.0
+var camera_shaking_time = 0.0
+func get_camera_shaking(delta):
+	camera_shaking_time += delta
+	curve_shaking_factor = Root.clampViaTime(0.0, curve_shaking_factor, delta)
+	
+	var camera_shaking = Vector3(sin(camera_shaking_time*10.0), cos(camera_shaking_time*7.0), sin(camera_shaking_time*13.0)) / 10000.0
+	
+	var shaking_factor = Math.speedToKmH(speed) / 100.0 * abs(sin(camera_shaking_time/5)) * camera_shaking_factor
+	
+
+#	print(curve_shaking_factor)
+	shaking_factor = max(shaking_factor, curve_shaking_factor)
+	
+	var current_camera_shaking = camera_shaking * shaking_factor
+	
+	return current_camera_shaking
 		
-		
+var switch_on_next_change = false
+func updateSwitchOnNextChange():
+	if forward and currentRail.isSwitchPart[1] != "":
+		switch_on_next_change = true
+		return
+	elif not forward and currentRail.isSwitchPart[0] != "":
+		switch_on_next_change = true
+		return
+	
+	if baked_route.size() > routeIndex+1:
+		var nextRail = world.get_node("Rails").get_node(baked_route[routeIndex+1])
+		var nextForward = baked_route_direction[routeIndex+1]
+		if nextForward and nextRail.isSwitchPart[0] != "":
+			switch_on_next_change = true
+			return
+		elif not nextForward and nextRail.isSwitchPart[1] != "":
+			switch_on_next_change = true
+			return
+			
+	switch_on_next_change = false
+
+var last_switch_rail = null ## Last Rail, where was overdriven a switch
+func check_overdriving_a_switch():
+	if not switch_on_next_change:
+		return
+	
+	if forward:
+		if currentRail.length - (distanceOnRail + $Camera.translation.x) < 0 and not currentRail == last_switch_rail:
+			overdriven_switch()
+			last_switch_rail = currentRail
+	else:
+		if distanceOnRail - $Camera.translation.x < 0 and not currentRail == last_switch_rail:
+			overdriven_switch()
+			last_switch_rail = currentRail
+
+
+func overdriven_switch():
+	pass
+

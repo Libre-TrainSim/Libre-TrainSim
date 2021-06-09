@@ -8,8 +8,8 @@ export (float) var length = 17.5
 
 export (bool) var cabinMode = false
 
-var bakedRoute
-var bakedRouteDirection
+var baked_route
+var baked_route_direction
 var routeIndex = 0
 var forward
 var currentRail 
@@ -53,9 +53,8 @@ func _ready():
 	initialize_outside_announcement_player()
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 var initialSwitchCheck = false
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
 	
@@ -136,10 +135,9 @@ func change_to_next_rail():
 	if forward:
 		distanceOnRail -= currentRail.length
 	routeIndex += 1
-	currentRail =  world.get_node("Rails").get_node(bakedRoute[routeIndex])
-	forward = bakedRouteDirection[routeIndex]
+	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
+	forward = baked_route_direction[routeIndex]
 	updateSwitchOnNextChange()
-
 	if not forward:
 		distanceOnRail += currentRail.length
 
@@ -187,9 +185,9 @@ func check_pantograph():
 #		nextSwitchOnBeginning = true
 #		return
 #
-#	if bakedRoute.size() > routeIndex+1:
-#		var nextRail = bakedRoute[routeIndex+1]
-#		var nextForward = bakedRouteDirection[routeIndex+1]
+#	if baked_route.size() > routeIndex+1:
+#		var nextRail = baked_route[routeIndex+1]
+#		var nextForward = baked_route_direction[routeIndex+1]
 #		if nextForward and nextRail.isSwitchPart[0] != "":
 #			nextSwitchRail = nextRail
 #			nextSwitchOnBeginning = true
@@ -201,26 +199,7 @@ func check_pantograph():
 #
 #	nextSwitchRail = null
 	
-var switchOnNextChange = false
-func updateSwitchOnNextChange():
-	if forward and currentRail.isSwitchPart[1] != "":
-		switchOnNextChange = true
-		return
-	elif not forward and currentRail.isSwitchPart[0] != "":
-		switchOnNextChange = true
-		return
-	
-	if bakedRoute.size() > routeIndex+1:
-		var nextRail = world.get_node("Rails").get_node(bakedRoute[routeIndex+1])
-		var nextForward = bakedRouteDirection[routeIndex+1]
-		if nextForward and nextRail.isSwitchPart[0] != "":
-			switchOnNextChange = true
-			return
-		elif not nextForward and nextRail.isSwitchPart[1] != "":
-			switchOnNextChange = true
-			return
-			
-	switchOnNextChange = false
+
 
 func registerDoors():
 	for child in get_children():
@@ -398,4 +377,23 @@ func play_outside_announcement(sound_path : String):
 		outside_announcement_player.stream = stream
 		outside_announcement_player.play()
 	
-
+var switch_on_next_change = false
+func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these are needed: When the player drives over many small rails that could be inaccurate..
+	if forward and currentRail.isSwitchPart[1] != "":
+		switch_on_next_change = true
+		return
+	elif not forward and currentRail.isSwitchPart[0] != "":
+		switch_on_next_change = true
+		return
+	
+	if baked_route.size() > routeIndex+1:
+		var nextRail = world.get_node("Rails").get_node(baked_route[routeIndex+1])
+		var nextForward = baked_route_direction[routeIndex+1]
+		if nextForward and nextRail.isSwitchPart[0] != "":
+			switch_on_next_change = true
+			return
+		elif not nextForward and nextRail.isSwitchPart[1] != "":
+			switch_on_next_change = true
+			return
+			
+	switch_on_next_change = false

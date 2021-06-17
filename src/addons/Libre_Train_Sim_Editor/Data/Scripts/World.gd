@@ -37,7 +37,7 @@ var player
 var trainFiles = {"Array" : []}
 
 var personVisualInstancesPathes = [
-	"res://Resources/Basic/Persons/RedDummy.tscn"
+	"res://Resources/Basic/Persons/Human1.tscn"
 ]
 var personVisualInstances = []
 

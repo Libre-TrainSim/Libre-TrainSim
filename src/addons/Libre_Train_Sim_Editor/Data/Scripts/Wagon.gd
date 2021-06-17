@@ -228,6 +228,8 @@ func registerPerson(person, door):
 		return
 #	print(passengerRoutePath)
 	person.destinationPos = passengerRoutePath
+	person.destinationIsSeat = true
+	person.attachedSeat = seats[seatIndex]
 	seatsOccupancy[seatIndex] = person
 	
 	

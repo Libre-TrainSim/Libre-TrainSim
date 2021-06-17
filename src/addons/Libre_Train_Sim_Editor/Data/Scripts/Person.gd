@@ -4,6 +4,7 @@ export (float) var walkingSpeed = 1.5
 
 var attachedStation = null
 var attachedWagon = null
+var attachedSeat = null
 var assignedDoor = null
 var destinationIsSeat = false
 
@@ -37,6 +38,7 @@ func handleWalk(delta):
 	else:
 		stopping = false
 	
+	
 	if destinationPos.size() == 0:
 		if transitionToWagon: 
 			attachedStation.deregisterPerson(self)
@@ -45,14 +47,23 @@ func handleWalk(delta):
 			attachedWagon.registerPerson(self, assignedDoor)
 			assignedDoor = null
 		if transitionToStation and (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
+			transitionToStation = false
 			leave_wagon_timer += delta
 			if leave_wagon_timer > 1.8:
 				leave_wagon_timer = 0
 				leave_current_wagon()
-		if destinationIsSeat:
+		if destinationIsSeat and translation.distance_to(attachedSeat.translation) < 0.1:
 			destinationIsSeat = false
-			## Animation
+			rotation_degrees.y = attachedSeat.rotation_degrees.y + 90
+
+			## Animation Sitting
+		elif !$VisualInstance/AnimationPlayer.is_playing():
+			$VisualInstance/AnimationPlayer.play("Idle")
+
 		return
+		
+	if !$VisualInstance/AnimationPlayer.is_playing() or $VisualInstance/AnimationPlayer.current_animation != "Walking":
+		$VisualInstance/AnimationPlayer.play("Walking")
 	
 	if translation.distance_to(destinationPos[0]) < 0.1:
 		destinationPos.pop_front()
@@ -60,6 +71,10 @@ func handleWalk(delta):
 	else:
 		if not stopping:
 			translation = translation.move_toward(destinationPos[0], delta*walkingSpeed)
+			var vector_delta = destinationPos[0] - translation
+#			rotation_degrees.y = rad2deg(translation.angle_to(destinationPos[0]))
+			if vector_delta.z != 0:
+				rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))+180
 
 func leave_current_wagon():
 	destinationPos.append(assignedDoor.to_global(Vector3(0,0,0)))

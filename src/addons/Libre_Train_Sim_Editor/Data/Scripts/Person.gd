@@ -57,12 +57,13 @@ func handleWalk(delta):
 			rotation_degrees.y = attachedSeat.rotation_degrees.y + 90
 
 			## Animation Sitting
-		elif !$VisualInstance/AnimationPlayer.is_playing():
-			$VisualInstance/AnimationPlayer.play("Idle")
+			$VisualInstance/AnimationPlayer.play("Sitting")
+		elif !$VisualInstance/AnimationPlayer.is_playing() and attachedSeat == null:
+			$VisualInstance/AnimationPlayer.play("Standing")
 
 		return
-		
-	if !$VisualInstance/AnimationPlayer.is_playing() or $VisualInstance/AnimationPlayer.current_animation != "Walking":
+	
+	if !$VisualInstance/AnimationPlayer.is_playing():
 		$VisualInstance/AnimationPlayer.play("Walking")
 	
 	if translation.distance_to(destinationPos[0]) < 0.1:

@@ -347,6 +347,7 @@ func sendPersonsToDoor(doorDirection, proportion : float = 0.5):
 			personNode.attachedStation = player.currentStationNode
 			personNode.transitionToStation = true
 			personNode.assignedDoor = randomDoor
+			personNode.attachedSeat = null
 			seatsOccupancy[seatIndex] = null
 			# Send Person to door
 			pass

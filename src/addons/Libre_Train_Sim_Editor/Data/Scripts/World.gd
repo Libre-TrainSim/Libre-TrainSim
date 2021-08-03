@@ -39,7 +39,8 @@ var personVisualInstancesPathes = [
 	"res://Resources/Basic/Persons/Man_Young_01.tscn",
 	"res://Resources/Basic/Persons/Man_Middleaged_01.tscn",
 	"res://Resources/Basic/Persons/Woman_Young_01.tscn",
-		"res://Resources/Basic/Persons/Woman_Middleaged_01.tscn"
+	"res://Resources/Basic/Persons/Woman_Middleaged_01.tscn",
+	"res://Resources/Basic/Persons/Woman_Old_01.tscn"
 ]
 var personVisualInstances = []
 

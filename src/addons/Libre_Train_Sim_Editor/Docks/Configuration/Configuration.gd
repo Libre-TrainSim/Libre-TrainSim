@@ -39,12 +39,12 @@ func _on_NewScenario_pressed():
 	config.set_value("Scenarios", "List", scenarioList)
 	var sData = config.get_value("Scenarios", "sData", {})
 	sData[sName] = {}
-	config.set_value("Scenarios", "sData", sData)	
-	config.save(save_path)	
+	config.set_value("Scenarios", "sData", sData)
+	config.save(save_path)
 	currentScenario = sName
 	update_scenario_list()
 	print("Scenario added.")
-		
+
 func _on_RenameScenario_pressed():
 	var sName = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text
 	if currentScenario == "" or sName == "" or check_duplicate_scenario(sName) or sName == currentScenario: return
@@ -59,7 +59,7 @@ func _on_RenameScenario_pressed():
 	currentScenario = sName
 	update_scenario_list()
 	print("Scenario renamed.")
-	
+
 func _on_DuplicateScenario_pressed():
 	var sName = currentScenario + " (Duplicate)"
 	if currentScenario == "" or sName == "" or check_duplicate_scenario(sName) or sName == currentScenario: return
@@ -70,10 +70,16 @@ func _on_DuplicateScenario_pressed():
 	config.set_value("Scenarios", "sData", sData)
 	config.set_value("Scenarios", "List", scenarioList)
 	config.save(save_path)
+	reload_config()
 	currentScenario = sName
 	print("Scenario dulicated.")
 	update_scenario_list()
 	pass # Replace with function body.
+
+func reload_config():
+	config = ConfigFile.new()
+	var load_response = config.load(save_path)
+	print("Scenario Config reloaded.")
 
 
 func _on_DeleteScenario_pressed():
@@ -88,7 +94,7 @@ func _on_DeleteScenario_pressed():
 	currentScenario = ""
 	update_scenario_list()
 	print("Scenario deleted.")
-	
+
 var oldworld
 func _process(delta):
 	if world == null:
@@ -110,19 +116,19 @@ func _process(delta):
 
 	if $Scenarios/VBoxContainer/ItemList.get_selected_items().size() > 0:
 		currentScenario = $Scenarios/VBoxContainer/ItemList.get_item_text($Scenarios/VBoxContainer/ItemList.get_selected_items()[0])
-	
+
 	$Scenarios/VBoxContainer/Settings.visible = currentScenario != ""
 	$Scenarios/VBoxContainer/Label2.visible = currentScenario != ""
 	$Scenarios/VBoxContainer/Write.visible = currentScenario != ""
 	$Scenarios/VBoxContainer/Load.visible = currentScenario != ""
 	$Scenarios/VBoxContainer/ResetSignals.visible = currentScenario != ""
-	
-	
+
+
 func get_scenario_settings(): # fills the settings field with saved values
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario): return
 	var s = sData[currentScenario]
-	
+
 	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value = s["TimeH"]
 	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value = s["TimeM"]
 	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value = s["TimeS"]
@@ -136,19 +142,19 @@ func set_scenario_settings():
 	var sData = config.get_value("Scenarios", "sData", {})
 	if sData == null:
 		sData = {}
-	sData[currentScenario]["TimeH"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value 
-	sData[currentScenario]["TimeM"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value 
-	sData[currentScenario]["TimeS"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value 
-	sData[currentScenario]["TrainLength"] = $Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value 
-	sData[currentScenario]["Description"] = $Scenarios/VBoxContainer/Settings/Tab/General/Description.text 
-	sData[currentScenario]["Duration"] = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value 
+	sData[currentScenario]["TimeH"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value
+	sData[currentScenario]["TimeM"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value
+	sData[currentScenario]["TimeS"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value
+	sData[currentScenario]["TrainLength"] = $Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value
+	sData[currentScenario]["Description"] = $Scenarios/VBoxContainer/Settings/Tab/General/Description.text
+	sData[currentScenario]["Duration"] = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value
 	print("Scenario Settings saved")
-	
+
 
 	config.set_value("Scenarios", "sData", sData)
 	config.save(save_path)
 	print("Scenario General Settings saved")
-	
+
 func update_scenario_list():
 	$Scenarios/VBoxContainer/ItemList.clear()
 	if config == null: return
@@ -168,11 +174,11 @@ func update_train_list():
 
 func _on_SaveGeneral_pressed():
 	set_scenario_settings()
-	
 
-	
 
-	
+
+
+
 ## Load Signals
 func _on_LoadScenario_pressed():
 	if currentScenario == "": return
@@ -191,7 +197,7 @@ func _on_WriteData_pressed():
 func get_enviroment_data_for_scenario():
 	var signals = world.get_signal_data_for_scenario()
 	var sData = config.get_value("Scenarios", "sData", {})
-	if not sData.has(currentScenario): 
+	if not sData.has(currentScenario):
 		sData[currentScenario] = {}
 	sData[currentScenario]["Signals"] = signals
 	config.set_value("Scenarios", "sData", sData)
@@ -205,7 +211,7 @@ func _on_ItemList_item_selected(index):
 	update_train_list()
 	get_train_settings()
 	get_scenario_settings()
-	
+
 func _on_SaveChunks_pressed():
 	print("Saving and Creating World Chunks..")
 	world.save_world(true)
@@ -231,9 +237,9 @@ func get_world_configuration():
 	$"World Configuration/GridContainer/Author".text = d["Author"]
 	$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
 	$"World Configuration/GridContainer/ThumbnailPath".text = d["ThumbnailPath"]
-	
+
 	$"World Configuration/Notes/RichTextLabel".text = world.get_value("notes", "")
-	
+
 
 
 
@@ -285,7 +291,7 @@ func set_train_settings():
 	train["DespawnRail"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text
 	train["InitialSpeed"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeed.value
 	train["InitialSpeedLimit"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value
-	
+
 	train["Stations"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.get_data()
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario):
@@ -398,7 +404,7 @@ func set_train_settings():
 #		if stations.has("leavingPersons"):
 #			children[stationTableColumns*i+7].value = stations["leavingPersons"][i-2]
 
-	
+
 
 
 
@@ -438,8 +444,8 @@ func _on_RenameTrain_pressed():
 	## Delete "Old Train"
 	delete_train(oldTrain)
 	update_train_list()
-	
-	
+
+
 
 
 func _on_DuplicateTrain_pressed():
@@ -448,7 +454,7 @@ func _on_DuplicateTrain_pressed():
 	currentTrain = currentTrain + " (Duplicate)"
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(currentTrain)
 	set_train_settings()
-	
+
 
 
 func delete_train(train):
@@ -472,7 +478,7 @@ func _on_DeleteTrain_pressed():
 	currentTrain = ""
 	update_train_list()
 	clear_train_settings_view()
-	
+
 func clear_train_settings_view(): # Resets the Train settings when adding a new npc for example.
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text = ""
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text = ""
@@ -484,7 +490,7 @@ func clear_train_settings_view(): # Resets the Train settings when adding a new 
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = 0
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = 0
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text = ""
-	
+
 	$Scenarios/VBoxContainer/VBoxContainer/Settings/Tab/Trains/stationTable.clear_data()
 
 
@@ -492,7 +498,7 @@ func clear_train_settings_view(): # Resets the Train settings when adding a new 
 #func _on_ToggleAllSavedObjects_pressed():
 #	if world.editorAllObjectsUnloaded:
 #		world.editorLoadAllChunks()
-#	else: 
+#	else:
 #		world.editorUnloadAllChunks()
 #	updateToggleAllSavedObjectsButton()
 #
@@ -502,7 +508,7 @@ func clear_train_settings_view(): # Resets the Train settings when adding a new 
 #		return
 #	if not world.editorAllObjectsUnloaded:
 #		$"World Configuration/ToggleAllSavedObjects".text = "Unload all Objects from configuration"
-#	else: 
+#	else:
 #		$"World Configuration/ToggleAllSavedObjects".text = "Load all Objects from configuration"
 
 

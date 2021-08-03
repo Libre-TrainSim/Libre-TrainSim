@@ -75,7 +75,10 @@ func handleWalk(delta):
 			var vector_delta = destinationPos[0] - translation
 #			rotation_degrees.y = rad2deg(translation.angle_to(destinationPos[0]))
 			if vector_delta.z != 0:
-				rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))+180
+				if vector_delta.z > 0:
+					rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))
+				else:
+					rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))+180
 
 func leave_current_wagon():
 	destinationPos.append(assignedDoor.to_global(Vector3(0,0,0)))

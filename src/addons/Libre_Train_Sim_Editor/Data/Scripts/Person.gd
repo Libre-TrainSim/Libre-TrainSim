@@ -47,10 +47,10 @@ func handleWalk(delta):
 			attachedWagon.registerPerson(self, assignedDoor)
 			assignedDoor = null
 		if transitionToStation and (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
-			transitionToStation = false
 			leave_wagon_timer += delta
 			if leave_wagon_timer > 1.8:
 				leave_wagon_timer = 0
+				transitionToStation = false
 				leave_current_wagon()
 		if destinationIsSeat and translation.distance_to(attachedSeat.translation) < 0.1:
 			destinationIsSeat = false

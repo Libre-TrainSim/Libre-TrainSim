@@ -16,7 +16,6 @@ var currentScenario = ""
 
 export (String) var FileName = "Name Me!"
 onready var trackName = FileName.rsplit("/")[0]
-export var debug = false
 var chunkSize = 1000
 
 var all_chunks = [] # All Chunks of the world
@@ -543,8 +542,6 @@ func spawnTrain(trainName):
 	if scenario["Trains"][trainName].get("InitialSpeedLimit", -1) != -1:
 		player.currentSpeedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
 	
-	if trainName == "Player":
-		player.debug = debug
 		
 	
 	var doorStatus = scenario["Trains"][trainName]["DoorConfiguration"]

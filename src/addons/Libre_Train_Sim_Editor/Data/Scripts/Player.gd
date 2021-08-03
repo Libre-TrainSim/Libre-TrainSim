@@ -241,6 +241,19 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_T):
 		for wagonI in wagonsI:
 			wagonI.sendPersonsToDoor(1)
+			
+	if Input.is_action_just_pressed("debug"):
+		debug = !debug
+		if debug:
+			send_message(TranslationServer.translate("DEBUG_MODE_ENABLED"))
+			force_close_doors()
+			force_pantograph_up()
+			startEngine()
+			command = 0
+			soll_command = 0
+			
+		else:
+			send_message(TranslationServer.translate("DEBUG_MODE_DISABLED"))
 	
 	processLongTimer += delta
 	if processLongTimer > processLongDelta:
@@ -253,7 +266,6 @@ func _process(delta):
 	if Root.EasyMode and not ai:
 		if Input.is_action_just_pressed("autopilot"):
 			toggle_automatic_driving()
-
 	
 	
 	if sollSpeedEnabled:
@@ -797,6 +809,10 @@ func update_waiting_persons_on_next_station():
 ## Pantograph
 var pantographTimer = 0
 
+func force_pantograph_up():
+	pantograph = true
+	pantographUp = true
+
 func rise_pantograph():
 	if not pantograph:
 		pantographUp = true
@@ -854,6 +870,10 @@ func close_doors():
 	if not doorsClosing and (doorLeft or doorRight):
 		doorsClosing = true
 		$Sound/DoorsClose.play()
+		
+func force_close_doors():
+	doorsClosing = true
+	doorsClosingTimer = doorsClosingTime - 0.1
 
 func check_doors(delta):
 	if Input.is_action_just_pressed("doorClose") and not ai:

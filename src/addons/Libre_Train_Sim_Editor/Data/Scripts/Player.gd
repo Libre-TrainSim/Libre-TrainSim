@@ -1433,12 +1433,15 @@ func check_overdriving_a_switch():
 	if not switch_on_next_change:
 		return
 	
+	var camera_translation = 0
+	if has_node("Camera"):
+		camera_translation = $Camera.translation.x
 	if forward:
-		if currentRail.length - (distanceOnRail + $Camera.translation.x) < 0 and not currentRail == last_switch_rail:
+		if currentRail.length - (distanceOnRail + camera_translation) < 0 and not currentRail == last_switch_rail:
 			overdriven_switch()
 			last_switch_rail = currentRail
 	else:
-		if distanceOnRail - $Camera.translation.x < 0 and not currentRail == last_switch_rail:
+		if distanceOnRail - camera_translation < 0 and not currentRail == last_switch_rail:
 			overdriven_switch()
 			last_switch_rail = currentRail
 

@@ -90,26 +90,26 @@ func spawnRandomPerson():
 	var personI = person.instance()
 	personI.add_child(personVI.instance())
 	personI.attachedStation = self
-	personI.translation = getRandomLocationAtPlatform()
+	personI.transform = getRandomTransformAtPlatform()
 	personI.owner = world
 	personsNode.add_child(personI)
 	
 	attachedPersons.append(personI)
 	
 	
-func getRandomLocationAtPlatform():
+func getRandomTransformAtPlatform():
 	if forward:
 		var randRailDistance = int(rand_range(onRailPosition, onRailPosition+stationLength))
 		if platformSide == 1: # Left
-			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0)
+			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)),  rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 		if platformSide == 2: ## right
-			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 	else:
 		var randRailDistance = int(rand_range(onRailPosition, onRailPosition-stationLength))
 		if platformSide == 1: # Left
-			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0)
+			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platformSide == 2: ## right
-			return rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0)
+			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 		
 func setDoorPositions(doors, doorsWagon): ## Called by the train
 	if doors.size() == 0:
@@ -137,4 +137,4 @@ func registerPerson(personNode):
 	personNode.get_parent().remove_child(personNode)
 	personNode.owner = world
 	personsNode.add_child(personNode)
-	personNode.destinationPos.append(getRandomLocationAtPlatform())
+	personNode.destinationPos.append(getRandomTransformAtPlatform().origin)

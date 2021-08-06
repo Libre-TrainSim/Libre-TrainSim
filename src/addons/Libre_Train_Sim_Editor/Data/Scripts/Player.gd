@@ -176,7 +176,7 @@ func ready(): ## Called by World!
 	else:
 		self.transform = currentRail.get_transform_at_rail_distance(distanceOnRail)
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
-	if debug: 
+	if debug and not ai: 
 		command = 0
 		soll_command = 0
 	
@@ -236,19 +236,16 @@ var processLongTimer = 0
 
 func _process(delta):
 	
-	
-	## DEBUG:
-	if Input.is_key_pressed(KEY_T):
-		for wagonI in wagonsI:
-			wagonI.sendPersonsToDoor(1)
 			
-	if Input.is_action_just_pressed("debug"):
+	if Input.is_action_just_pressed("debug")  and not ai:
 		debug = !debug
 		if debug:
 			send_message(TranslationServer.translate("DEBUG_MODE_ENABLED"))
 			force_close_doors()
 			force_pantograph_up()
 			startEngine()
+			overrunRedSignal = false
+			enforcedBreaking = false
 			command = 0
 			soll_command = 0
 			
@@ -289,7 +286,7 @@ func _process(delta):
 	if electric:
 		check_pantograph(delta)
 	
-	if not debug:
+	if not debug and not ai:
 		check_security()
 	
 	if doors:

@@ -749,7 +749,7 @@ func check_station(delta):
 			if cameraState != 1:
 				for wagon in wagonsI:
 					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
-			else:
+			elif not ai:
 				jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
 			stationTimer = 0
 			isInStation = true
@@ -774,7 +774,7 @@ func check_station(delta):
 					if cameraState != 1:
 						for wagon in wagonsI:
 							wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
-					else:
+					elif not ai:
 						jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
 					leave_current_station()
 		elif (speed != 0 and isInStation):

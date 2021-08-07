@@ -250,6 +250,10 @@ func _process(delta):
 			soll_command = 0
 			
 		else:
+			overrunRedSignal = false
+			enforcedBreaking = false
+			command = 0
+			soll_command = 0
 			send_message(TranslationServer.translate("DEBUG_MODE_DISABLED"))
 	
 	processLongTimer += delta
@@ -262,6 +266,7 @@ func _process(delta):
 	
 	if Root.EasyMode and not ai:
 		if Input.is_action_just_pressed("autopilot"):
+			jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 			toggle_automatic_driving()
 	
 	
@@ -326,6 +331,7 @@ func handleEngine():
 	if not pantograph:
 		engine = false
 	if not ai and Input.is_action_just_pressed("engine"):
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		if not engine:
 			startEngine()
 		else:
@@ -817,6 +823,7 @@ func rise_pantograph():
 
 func check_pantograph(delta):
 	if Input.is_action_just_pressed("pantograph") and not ai:
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		pantographUp = !pantographUp
 		pantographTimer = 0
 	if pantograph != pantographUp:
@@ -874,10 +881,13 @@ func force_close_doors():
 
 func check_doors(delta):
 	if Input.is_action_just_pressed("doorClose") and not ai:
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		close_doors()
 	if Input.is_action_just_pressed("doorLeft") and not ai:
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		open_left_doors()
 	if Input.is_action_just_pressed("doorRight") and not ai:
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		open_right_doors()
 	if doorsClosing:
 		doorsClosingTimer += delta
@@ -1072,6 +1082,7 @@ func check_for_player_help(delta):
 
 func check_horn():
 	if Input.is_action_just_pressed("Horn") and not ai:
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		$Sound/Horn.play()
 
 var sifaTimer = 0
@@ -1080,6 +1091,8 @@ func check_sifa(delta):
 		sifaTimer = 0
 	sifaTimer += delta
 	if speed == 0 or Input.is_action_just_pressed("SiFa"):
+		if Input.is_action_just_pressed("SiFa"):
+			jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		sifaTimer = 0
 	sifa =  sifaTimer > 25
 	$Sound/SiFa.stream_paused = not sifaTimer > 30
@@ -1317,8 +1330,10 @@ func controlLights(delta):
 	if ai: 
 		return
 	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		frontLight = !frontLight
 	if Input.is_action_just_pressed("InsideLight"):
+		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 		insideLight = !insideLight
 	if has_node("FrontLight"):
 		$FrontLight.visible = frontLight

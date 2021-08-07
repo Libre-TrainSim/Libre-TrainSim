@@ -272,7 +272,7 @@ func load_chunk(position : Vector3):
 	for rail in Rails:
 		print("Loading Rail: " + rail)
 		## IF YOU GET HERE AN ERROR: Do Save and Create Chunks, and check, if only Rails are assigned to the "Rails" Node
-		if $Rails.get_node(rail) != null:  ##DEBUG
+		if $Rails.get_node(rail) != null: 
 			$Rails.get_node(rail).load_visible_Instance()
 		else:
 			printerr("WARNING: Rail "+ rail+ " not found in scene tree, but was saved in chunk. That shouldn't be.")

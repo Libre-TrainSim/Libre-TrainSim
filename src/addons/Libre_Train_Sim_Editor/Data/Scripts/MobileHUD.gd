@@ -107,6 +107,7 @@ func _on_Pause_Back_pressed():
 func _on_Pause_QuitMenu_pressed():
 	get_tree().paused = false
 	jAudioManager.clear_all_sounds()
+	jEssentials.remove_all_pending_delayed_calls()
 	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 
 

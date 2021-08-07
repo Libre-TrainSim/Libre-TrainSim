@@ -6,7 +6,10 @@ func call_delayed(delay : float, object : Object, method : String, arg_array : A
 	delayed_call_table.object.append(object)
 	delayed_call_table.method.append(method)
 	delayed_call_table.arg_array.append(arg_array)
-	
+
+func remove_all_pending_delayed_calls():
+	initialize_delayed_call_table()
+
 func find_files_recursively(directory_path : String, file_extension : String):
 	var found_files = {"Array" : []}
 	_find_files_recursively_helper(directory_path, found_files, file_extension)
@@ -22,6 +25,9 @@ func remove_duplicates(array : Array):
 ## Internal Functions ##########################################################
 
 func _ready():
+	initialize_delayed_call_table()
+
+func initialize_delayed_call_table():
 	delayed_call_table = {"delay" : [], "object" : [], "method" : [], "arg_array" : [] }
 
 func _process(delta):
@@ -31,7 +37,7 @@ var delayed_call_table
 
 func _handle_delayed_calls(delta):
 	var i = 0
-	while(i < delayed_call_table.delay.size()): ## We need here a while loop, because want to keep track of the (changing) table size. 
+	while(i < delayed_call_table.delay.size()): ## We need here a while loop, because want to keep track of the (changing) table size.
 		delayed_call_table.delay[i] -= delta
 		if delayed_call_table.delay[i] <= 0:
 			var object = delayed_call_table.object[i]
@@ -44,7 +50,7 @@ func _handle_delayed_calls(delta):
 			i -= 1 ## Because we remove here an entry
 		i += 1
 
-func _find_files_recursively_helper(directory_path,found_files,file_extension): 
+func _find_files_recursively_helper(directory_path,found_files,file_extension):
 	var dir = Directory.new()
 	if dir.open(directory_path) != OK: return
 	dir.list_dir_begin()
@@ -59,7 +65,7 @@ func _find_files_recursively_helper(directory_path,found_files,file_extension):
 				_find_files_recursively_helper(directory_path+"/"+file, found_files, file_extension)
 		else:
 			if file.get_extension() == file_extension:
-				var exportString 
+				var exportString
 				if directory_path.ends_with("/"):
 					exportString = directory_path +file
 				else:

@@ -774,10 +774,10 @@ func check_station(delta):
 					elif not ai:
 						jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
 					leave_current_station()
-		elif (speed != 0 and isInStation):
+		elif (speed != 0 and isInStation) and not (doorLeft or doorRight):
 			send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
 			leave_current_station()
-		elif (stationLength+GOODWILL_DISTANCE<distance-distanceOnStationBeginning) and currentStationName != "":
+		elif (stationLength+GOODWILL_DISTANCE<distance-distanceOnStationBeginning) and currentStationName != "" and not stationBeginning:
 			if isInStation:
 				send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
 			else:
@@ -1026,7 +1026,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 			nextStation = nextStations[0]
 			stationMessageSent = false
 		
-		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and stations["nodeName"].has(nextStation) and stations["stopType"][stations["nodeName"].find(nextStation)] != 0:
+		if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and stations["nodeName"].has(nextStation) and stations["stopType"][stations["nodeName"].find(nextStation)] != 0 and not isInStation:
 			var station = world.get_node("Signals").get_node(nextStation)
 			stationMessageSent = true
 			var distanceS = String(int(get_distance_to_signal(nextStation)/100)*100+100)
@@ -1037,7 +1037,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
 			if cameraState != 2 and cameraState != 0 and not ai:
 #				print(name + ": Playing Sound.......................................................")
-				jTools.call_delayed(10, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][current_station_index+1]])
+				jTools.call_delayed(10, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][stations["nodeName"].find(nextStation)]])
 #				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
 		
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Trains/JFR1/Door.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=2]
@@ -6,13 +6,9 @@
 [ext_resource path="res://Resources/Basic/Materials/LEDLamp.tres" type="Material" id=4]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Grey.tres" type="Material" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Player.gd" type="Script" id=6]
-[ext_resource path="res://Resources/Basic/Sounds/Drive.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" type="ArrayMesh" id=8]
-[ext_resource path="res://Resources/Basic/Sounds/Test.wav" type="AudioStream" id=9]
 [ext_resource path="res://Resources/Basic/Sounds/DoorsOpening.ogg" type="AudioStream" id=10]
 [ext_resource path="res://Resources/Basic/Textures/ScreenBook.png" type="Texture" id=11]
-[ext_resource path="res://Resources/Basic/Sounds/AccelerationTransition.ogg" type="AudioStream" id=12]
-[ext_resource path="res://Resources/Basic/Sounds/Acceleration2.ogg" type="AudioStream" id=13]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/HUD.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Blue_Light.tres" type="Material" id=15]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Red.tres" type="Material" id=16]
@@ -30,7 +26,6 @@
 [ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=28]
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=29]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Black.tres" type="Material" id=30]
-[ext_resource path="res://Resources/Basic/Sounds/Base.ogg" type="AudioStream" id=31]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Brown.tres" type="Material" id=32]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Wagon.gd" type="Script" id=33]
 [ext_resource path="res://Resources/Basic/Materials/Carpet_Blue.tres" type="Material" id=34]
@@ -39,7 +34,6 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.tscn" type="PackedScene" id=37]
 [ext_resource path="res://Resources/Basic/Sounds/SiFa.ogg" type="AudioStream" id=38]
 [ext_resource path="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.tscn" type="PackedScene" id=39]
-[ext_resource path="res://Resources/Basic/Sounds/Acceleration.ogg" type="AudioStream" id=40]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/EasyEngineSound.tscn" type="PackedScene" id=41]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerPathNode.tscn" type="PackedScene" id=42]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerDoor.tscn" type="PackedScene" id=43]
@@ -929,6 +923,10 @@ mesh = SubResource( 9 )
 material/0 = null
 material/1 = null
 
+[node name="WagonSound" parent="Cabin" instance=ExtResource( 45 )]
+
+[node name="EasyEngineSound" parent="Cabin" instance=ExtResource( 41 )]
+
 [node name="DriverCabinF2" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 33 )
@@ -1035,8 +1033,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = null
 material/1 = null
-
-[node name="WagonSound" parent="Wagon1" instance=ExtResource( 45 )]
 
 [node name="PassengerDoor" parent="Wagon1" instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
@@ -1211,6 +1207,8 @@ connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "Passen
 [node name="PassengerPathNode5" parent="Wagon1" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
 connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
+
+[node name="WagonSound" parent="Wagon1" instance=ExtResource( 45 )]
 
 [node name="DriverCabinF" type="Spatial" parent="."]
 visible = false
@@ -1908,35 +1906,6 @@ script = ExtResource( 25 )
 AccelerationTransitionTime = 6.0
 AccelerationTransitionSpeed = 10.0
 
-[node name="Base" type="AudioStreamPlayer3D" parent="Sound"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.97734, 2.79565, 0 )
-visible = false
-stream = ExtResource( 31 )
-unit_size = 5.0
-
-[node name="Drive" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 7 )
-unit_size = 25.0
-autoplay = true
-
-[node name="Acceleration1" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 40 )
-unit_size = 15.0
-
-[node name="Acceleration2" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 13 )
-unit_size = 15.0
-
-[node name="AccelerationTransition" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 12 )
-unit_size = 25.0
-
-[node name="Timer" type="Timer" parent="Sound"]
-one_shot = true
-
-[node name="Test" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 9 )
-
 [node name="DoorsOpen" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 10 )
 unit_size = 25.0
@@ -1986,4 +1955,3 @@ visible = false
 transform = Transform( -3.30409e-08, 0.654701, -0.755888, 2.86179e-08, 0.755888, 0.654701, 1, 0, -4.37114e-08, 5.44394, 3.40882, 0 )
 light_color = Color( 1, 0.890196, 0.890196, 1 )
 light_energy = 3.0
-[connection signal="timeout" from="Sound/Timer" to="Sound" method="_on_Timer_timeout"]

@@ -18,6 +18,7 @@ func _process(delta):
 		player = get_parent().player
 		return	
 	
+	
 	if player.engine:
 		$Idle.unit_db = Root.clampViaTime(0, $Idle.unit_db, delta)
 	else:
@@ -32,6 +33,8 @@ func _process(delta):
 	
 	$Acceleration.unit_db = Root.clampViaTime(sollAcceleration, $Acceleration.unit_db, delta)
 
+	$Idle.stream_paused = not wagon.visible
+	$Acceleration.stream_paused = not wagon.visible
 #
 #
 ### sollCurveSound:

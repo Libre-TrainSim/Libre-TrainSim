@@ -46,6 +46,12 @@ func _process(delta):
 			sollBreakSound = 10
 	$BrakeSound.unit_db = Root.clampViaTime(sollBreakSound, $BrakeSound.unit_db, delta)
 	
+	$DriveSound.stream_paused = not wagon.visible
+	$CurveSound.stream_paused = not wagon.visible
+	$SwitchSound.stream_paused = not wagon.visible
+	$SwitchSound2.stream_paused = not wagon.visible
+	$BrakeSound.stream_paused = not wagon.visible
+	
 
 	checkAndPlaySwitchSound()
 	

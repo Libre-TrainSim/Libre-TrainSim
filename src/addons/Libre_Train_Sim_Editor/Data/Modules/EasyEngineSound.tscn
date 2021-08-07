@@ -6,6 +6,7 @@
 
 [node name="EasyEngineSound" type="Spatial"]
 script = ExtResource( 3 )
+accelerationPath = "res://Resources/Basic/Sounds/Acceleration4.ogg"
 
 [node name="Idle" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 2 )

@@ -35,6 +35,8 @@ func handleWalk(delta):
 			destinationPos.clear()
 		else:
 			stopping = true
+			if $VisualInstance/AnimationPlayer.current_animation != "Standing":
+				$VisualInstance/AnimationPlayer.play("Standing")
 	else:
 		stopping = false
 	

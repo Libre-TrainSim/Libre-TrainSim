@@ -25,9 +25,6 @@ func _process(delta):
 	if scenario == "Advanced Train Driving":
 		advanced(delta)
 		return
-	if scenario == "New Functions in 0.7":
-		newFunctionsZeroDotSeven(delta)
-		return
 		
 	message_sent = true
 
@@ -102,75 +99,31 @@ func advanced(delta):
 		0:
 			Root.EasyMode = false
 			message = TranslationServer.translate("TUTORIAL_1_0")
-			if player.currentStationName == "" and not (player.doorRight or player.doorLeft):
+			if player.engine:
 				next_step()
 		1:
+			message = TranslationServer.translate("TUTORIAL_1_6")
+			if player.currentStationName == "" and not (player.doorRight or player.doorLeft):
+				next_step()
+		2:
 			message = TranslationServer.translate("TUTORIAL_1_1")
 			if player.sifa:
 				next_step()
-		2:
+		3:
 			message = TranslationServer.translate("TUTORIAL_1_2")
+			if player.distanceOnRail > 800:
+				next_step()
+		4: 
+			message = TranslationServer.translate("TUTORIAL_1_5")
 			if player.currentRail.name == "Rail2":
 				next_step()
-		3:
+			
+		5:
 			message = TranslationServer.translate("TUTORIAL_1_3")
 			if player.isInStation:
 				next_step()
-		4:
-			message = TranslationServer.translate("TUTORIAL_1_4")
-
-func newFunctionsZeroDotSeven(delta):
-	match step:
-		0:
-			message = TranslationServer.translate("TUTORIAL_2_0")
-			if player.automaticDriving:
-				next_step()
-		1:
-			message = TranslationServer.translate("TUTORIAL_2_1")
-			if player.cameraState == 2:
-				next_step()#
-		2:
-			message = TranslationServer.translate("TUTORIAL_2_2")
-			if player.cameraState == 1:
-				next_step()
-		3:
-			message = TranslationServer.translate("TUTORIAL_2_3")
-			if Input.is_key_pressed(KEY_F1):
-				next_step()
-		4:
-			message = TranslationServer.translate("TUTORIAL_2_4")
-			if not player.isInStation:
-				next_step()
-		5:
-			message = TranslationServer.translate("TUTORIAL_2_5")
-			if player.distanceOnRail > 500 and player.currentRail.name == "Rail":
-				next_step()
 		6:
-			message = TranslationServer.translate("TUTORIAL_2_6")
-			if player.currentRail.name == "Rail2":
-				next_step()
-		7:
-			message = TranslationServer.translate("TUTORIAL_2_7")
-			if player.currentRail.name == "Rail2" and player.distanceOnRail > 200:
-				next_step()
-		8:
-			message = TranslationServer.translate("TUTORIAL_2_8")
-			if player.currentRail.name == "Rail2" and player.distanceOnRail > 400:
-				next_step()
-		9:
-			message = TranslationServer.translate("TUTORIAL_2_9")
-			if player.cameraState == 0:
-				next_step()
-		10:
-			message = TranslationServer.translate("TUTORIAL_2_10")
-			if player.isInStation:
-				next_step()
-		11:
-			message = TranslationServer.translate("TUTORIAL_2_11")
-
-
-
-
+			message = TranslationServer.translate("TUTORIAL_1_4")
 
 var send_message_timer = 0
 var message = ""

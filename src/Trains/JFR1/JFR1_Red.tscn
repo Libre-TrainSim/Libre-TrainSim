@@ -8,10 +8,10 @@
 [ext_resource path="res://Resources/Basic/Materials/Blue_Plastic.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=7]
 [ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=8]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/EasyEngineSound.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerDoor.tscn" type="PackedScene" id=10]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerPathNode.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerSeat.tscn" type="PackedScene" id=12]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/AdvancedEngineSound.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Resources/Basic/Textures/ScreenBook.png" type="Texture" id=15]
 [ext_resource path="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.png" type="Texture" id=16]
 [ext_resource path="res://Resources/Basic/Sounds/DoorsClosing2.ogg" type="AudioStream" id=17]
@@ -1021,7 +1021,7 @@ material/1 = null
 [node name="WagonSound" parent="Cabin" instance=ExtResource( 41 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84215, 0, 0 )
 
-[node name="EasyEngineSound" parent="Cabin" instance=ExtResource( 9 )]
+[node name="AdvancedEngineSound" parent="Cabin" instance=ExtResource( 13 )]
 
 [node name="Wagon1" type="Spatial" parent="."]
 visible = false
@@ -1491,8 +1491,6 @@ accel = true
 
 [node name="WagonSound" parent="DriverCabinF" instance=ExtResource( 41 )]
 
-[node name="EasyEngineSound" parent="DriverCabinF" instance=ExtResource( 9 )]
-
 [node name="PassengerDoor" parent="DriverCabinF" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
 
@@ -1667,6 +1665,8 @@ connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "Passen
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
 connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
 
+[node name="AdvancedEngineSound" parent="DriverCabinF" instance=ExtResource( 13 )]
+
 [node name="DriverCabinB" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 26 )
@@ -1834,8 +1834,6 @@ script = ExtResource( 39 )
 accel = true
 
 [node name="WagonSound" parent="DriverCabinB" instance=ExtResource( 41 )]
-
-[node name="EasyEngineSound" parent="DriverCabinB" instance=ExtResource( 9 )]
 
 [node name="PassengerDoor" parent="DriverCabinB" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
@@ -2010,6 +2008,8 @@ connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "Passen
 [node name="PassengerPathNode5" parent="DriverCabinB" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
 connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
+
+[node name="AdvancedEngineSound" parent="DriverCabinB" instance=ExtResource( 13 )]
 
 [node name="Sound" type="Spatial" parent="."]
 script = ExtResource( 4 )

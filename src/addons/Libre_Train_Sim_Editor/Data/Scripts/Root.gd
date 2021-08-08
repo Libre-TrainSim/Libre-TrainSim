@@ -79,6 +79,7 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 				foundFiles["Array"].append(exportString)
 	dir.list_dir_end()
 	
+# approaches 'ist' value to 'soll' value in one second  (=smooth transitions from current 'ist' value to 'soll' value)
 func clampViaTime(soll : float, ist : float, delta : float):
 	ist += (soll-ist)*delta
 	return ist

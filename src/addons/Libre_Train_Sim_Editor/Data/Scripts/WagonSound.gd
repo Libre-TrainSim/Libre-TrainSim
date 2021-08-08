@@ -67,6 +67,7 @@ func _ready():
 	
 	$DriveSound.unit_db = -50
 	$CurveSound.unit_db = -50
+	$BrakeSound.unit_db = -50
 
 var lastSwitchSoundRail = null
 var secondSwitchSoundDistance = -1 # If this distance is set, and its bigger than the complete distance of the wagon, the second switch sound will be played 

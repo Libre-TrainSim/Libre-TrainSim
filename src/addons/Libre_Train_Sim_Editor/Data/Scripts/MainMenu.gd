@@ -7,33 +7,27 @@ extends Control
 export var version = ""
 export var mobile_version = false
 var save_path = OS.get_executable_path().get_base_dir()+"config.cfg"
-var config = ConfigFile.new()
-var load_response = config.load(save_path)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	update_config()
 	$Version.text = "Version: " + String(version)
-	var openTimes = config.get_value("Main", "openTimes", 0)
+	var openTimes = jSaveManager.get_value("open_times", 0)
 	openTimes += 1
-	config.set_value("Main", "openTimes", openTimes)
-	config.save(save_path)
-	var feedbackPressed = config.get_value("Main", "feedbackPressed", false)
+	jSaveManager.save_value("open_times", openTimes)
+	var feedbackPressed = jSaveManager.get_value("feedback_pressed", false)
 	if openTimes > 3 and not feedbackPressed and not mobile_version:
 		$FeedBack/VBoxContainer/RichTextLabel.text = TranslationServer.translate("MENU_FEEDBACK_QUESTION")
 		$FeedBack.popup()
-	update_MainMenuMusic()
+	$MusicPlayer.play(0)
+
 
 	Root.mobile_version = mobile_version
 
 	if mobile_version:
 		set_menu_to_mobile()
 
-	var language = config.get_value("Settings", "language", "no_language")
-	if language != "no_language":
-		TranslationServer.set_locale(language)
-	pass # Replace with function body.
-
+	
 func set_menu_to_mobile():
 	$Front/VBoxContainer.hide()
 	$Front/VBoxContainerAndoid.show()
@@ -46,13 +40,6 @@ func set_menu_to_mobile():
 	$Play/Selection/Scenarios/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
-
-
-func update_MainMenuMusic():
-	if config.get_value("Settings", "mainMenuMusic", true):
-		$MusicPlayer.play()
-	else:
-		$MusicPlayer.stop()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -74,7 +61,7 @@ func _on_Quit_pressed():
 
 
 func updateBottmLabels():
-	$Label_Music.visible = $Front.visible and config.get_value("Settings", "mainMenuMusic", true)
+	$Label_Music.visible = jSaveManager.get_setting("musicVolume", 0.0) != 0.0
 	$Version.visible = $Front.visible
 
 func _on_BackPlay_pressed():
@@ -269,8 +256,7 @@ func _on_ItemList_Train_selected(index):
 
 
 func _on_ButtonFeedback_pressed():
-	config.set_value("Main", "feedbackPressed", true)
-	config.save(save_path)
+	jSaveManager.save_value("feedback_pressed", true)
 	OS.shell_open("https://www.libre-trainsim.de/feedback")
 
 

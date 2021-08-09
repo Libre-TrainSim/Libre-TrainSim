@@ -191,6 +191,10 @@ func _on_ItemList_itemTracks_selected(index):
 	$Play/Info/Info/EasyMode.hide()
 	var scenarios = config.get_value("Scenarios", "List", [])
 	for scenario in scenarios:
+		if mobile_version and (scenario == "The Basics" or scenario == "Advanced Train Driving"):
+			continue
+		if not mobile_version and scenario == "The Basics - Mobile Version":
+			continue
 		$Play/Selection/Scenarios/ItemList.add_item(scenario)
 
 ## Content Page:

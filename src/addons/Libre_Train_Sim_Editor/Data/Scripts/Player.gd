@@ -303,9 +303,6 @@ func _process(delta):
 	
 	
 	
-	if not ai:
-		check_horn()
-	
 	if sifaEnabled:
 		check_sifa(delta)
 	
@@ -1080,10 +1077,10 @@ func check_for_player_help(delta):
 		check_for_player_helpTimer2 = 0
 		
 
-func check_horn():
-	if Input.is_action_just_pressed("Horn") and not ai:
+func horn():
+	if not ai:
 		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-		$Sound/Horn.play()
+	$Sound/Horn.play()
 
 var sifaTimer = 0
 func check_sifa(delta):
@@ -1464,8 +1461,13 @@ func overdriven_switch():
 	pass
 
 func handle_input():
+	if ai:
+		return
 	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
 		toggle_front_light()
 		
 	if Input.is_action_just_pressed("InsideLight"):
 		toggle_cabin_light()
+	
+	if Input.is_action_just_pressed("Horn"):
+		horn()

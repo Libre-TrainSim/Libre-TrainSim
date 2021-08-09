@@ -11,8 +11,8 @@ func _ready():
 	
 
 func _process(delta):
-	$VBoxContainer/Pantograph.visible = not player.pantograph
-	$VBoxContainer/Engine.visible = not player.engine
+	$Pantograph.visible = not player.pantograph
+	$Engine.visible = not player.engine
 	
 	var window_size_y = float(ProjectSettings.get_setting("display/window/size/height"))
 	# var window_size_y = OS.window_size.y ## If we will change the resolution, than this line could be better
@@ -20,8 +20,13 @@ func _process(delta):
 	var progress_bar_soll_position = ((soll_command-1)*(-0.5)) * window_size_y
 	$ProgressBar.rect_position.y = Root.clampViaTime(progress_bar_soll_position, $ProgressBar.rect_position.y, delta*5.0)
 	
+	if player.automaticDriving:
+		soll_command = 0
+	$ColorRect.visible = not player.automaticDriving
+	$ProgressBar.visible = not player.automaticDriving
+	
 	if player.pantographUp and not player.pantograph:
-		$VBoxContainer/Pantograph.modulate = Color(1,1,1,0.5)
+		$Pantograph.modulate = Color(1,1,1,0.5)
 		
 
 	if soll_command > -0.1 and soll_command < 0.1:
@@ -37,7 +42,6 @@ func _process(delta):
 	
 	$Up.visible = other_buttons_visible
 	$Down.visible = other_buttons_visible
-	$VBoxContainer.visible = other_buttons_visible
 	$DoorLeft.visible = other_buttons_visible and player_speed_zero
 	$DoorClose.visible = other_buttons_visible and player_speed_zero
 	$DoorRight.visible = other_buttons_visible and player_speed_zero
@@ -124,3 +128,7 @@ func _on_Lights_pressed():
 	player.toggle_front_light()
 	player.toggle_cabin_light()
 
+
+
+func _on_Horn_pressed():
+	player.horn()

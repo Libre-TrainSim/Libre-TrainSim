@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres" type="DynamicFont" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/MobileHUD.gd" type="Script" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Basic/Textures/pantograph_button.png" type="Texture" id=5]
+[ext_resource path="res://Resources/Basic/Textures/light_button.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Basic/Textures/engine_button.png" type="Texture" id=7]
+[ext_resource path="res://Resources/Basic/Textures/pause_button.png" type="Texture" id=8]
+[ext_resource path="res://Resources/Basic/Textures/camera_button.png" type="Texture" id=9]
+[ext_resource path="res://Resources/Basic/Textures/arrow_up_button.png" type="Texture" id=10]
+[ext_resource path="res://Resources/Basic/Textures/arrow_down_button.png" type="Texture" id=11]
+[ext_resource path="res://Resources/Basic/Textures/arrow_right_button.png" type="Texture" id=12]
+[ext_resource path="res://Resources/Basic/Textures/arrow_left_button.png" type="Texture" id=13]
+[ext_resource path="res://Resources/Basic/Textures/autopilot_button.png" type="Texture" id=14]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/Doors.png" type="Texture" id=15]
+[ext_resource path="res://Resources/Basic/Textures/horn_button.png" type="Texture" id=16]
 
 [node name="MobileHUD" type="Control"]
 pause_mode = 2
@@ -17,13 +29,13 @@ __meta__ = {
 [node name="Up" type="Button" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 40.7229
-margin_top = -211.597
-margin_right = 190.723
-margin_bottom = -115.597
-rect_min_size = Vector2( 150, 0 )
+margin_left = 47.3109
+margin_top = -224.147
+margin_right = 143.311
+margin_bottom = -128.147
 custom_fonts/font = ExtResource( 1 )
-text = "Up"
+icon = ExtResource( 10 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,82 +43,93 @@ __meta__ = {
 [node name="Down" type="Button" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 40.7229
-margin_top = -108.214
-margin_right = 190.723
-margin_bottom = -12.2136
-rect_min_size = Vector2( 150, 0 )
+margin_left = 47.8406
+margin_top = -113.877
+margin_right = 143.841
+margin_bottom = -17.8773
 custom_fonts/font = ExtResource( 1 )
-text = "Down"
+icon = ExtResource( 11 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Camera" type="Button" parent="."]
-margin_left = 312.483
-margin_top = 6.72335
-margin_right = 574.483
-margin_bottom = 102.723
-rect_min_size = Vector2( 150, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -224.213
+margin_top = 14.7015
+margin_right = -128.213
+margin_bottom = 110.701
 rect_pivot_offset = Vector2( 155.017, 351.277 )
 custom_fonts/font = ExtResource( 1 )
-text = "Camera"
+icon = ExtResource( 9 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Autopilot" type="Button" parent="."]
-margin_left = 311.983
-margin_top = 108.671
-margin_right = 573.983
-margin_bottom = 204.671
-rect_min_size = Vector2( 150, 0 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 159.115
+margin_top = -114.022
+margin_right = 255.115
+margin_bottom = -18.0222
 rect_pivot_offset = Vector2( 155.517, 249.329 )
 custom_fonts/font = ExtResource( 1 )
-text = "Autopilot"
+icon = ExtResource( 14 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pantograph" type="Button" parent="."]
+margin_left = 280.296
+margin_top = 15.0462
+margin_right = 376.296
+margin_bottom = 111.046
+custom_fonts/font = ExtResource( 1 )
+icon = ExtResource( 5 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Engine" type="Button" parent="."]
+margin_left = 164.074
+margin_top = 15.0462
+margin_right = 260.074
+margin_bottom = 111.046
+custom_fonts/font = ExtResource( 1 )
+icon = ExtResource( 7 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Lights" type="Button" parent="."]
-margin_left = 200.0
-margin_top = 612.0
-margin_right = 382.0
-margin_bottom = 708.0
-rect_min_size = Vector2( 150, 0 )
+margin_left = 50.8602
+margin_top = 14.3384
+margin_right = 146.86
+margin_bottom = 110.338
 rect_pivot_offset = Vector2( 155.017, 351.277 )
 custom_fonts/font = ExtResource( 1 )
-text = "Lights"
+icon = ExtResource( 6 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 40.2246
-margin_top = 8.0
-margin_right = 302.225
-margin_bottom = 204.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Pantograph" type="Button" parent="VBoxContainer"]
-margin_right = 262.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 150, 0 )
+[node name="Horn" type="Button" parent="."]
+margin_left = 50.8602
+margin_top = 126.034
+margin_right = 146.86
+margin_bottom = 222.034
+rect_pivot_offset = Vector2( 155.017, 351.277 )
 custom_fonts/font = ExtResource( 1 )
-text = "Pantograph"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Engine" type="Button" parent="VBoxContainer"]
-margin_top = 100.0
-margin_right = 262.0
-margin_bottom = 196.0
-rect_min_size = Vector2( 150, 0 )
-custom_fonts/font = ExtResource( 1 )
-text = "Engine"
+icon = ExtResource( 16 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -116,13 +139,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -483.0
-margin_top = -107.0
-margin_right = -333.0
-margin_bottom = -11.0
-rect_min_size = Vector2( 150, 0 )
+margin_left = -331.295
+margin_top = -111.401
+margin_right = -235.295
+margin_bottom = -15.4009
 custom_fonts/font = ExtResource( 1 )
-text = "Left"
+icon = ExtResource( 13 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -132,13 +155,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -322.0
-margin_top = -107.0
-margin_right = -172.0
-margin_bottom = -11.0
-rect_min_size = Vector2( 150, 0 )
+margin_left = -222.07
+margin_top = -111.133
+margin_right = -126.07
+margin_bottom = -15.1326
 custom_fonts/font = ExtResource( 1 )
-text = "Close"
+icon = ExtResource( 15 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -148,13 +171,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -160.0
-margin_top = -107.0
-margin_right = -10.0
-margin_bottom = -11.0
-rect_min_size = Vector2( 150, 0 )
+margin_left = -110.051
+margin_top = -111.23
+margin_right = -14.0511
+margin_bottom = -15.2303
 custom_fonts/font = ExtResource( 1 )
-text = "Right"
+icon = ExtResource( 12 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -162,12 +185,13 @@ __meta__ = {
 [node name="PauseButton" type="Button" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -147.0
-margin_top = 7.0
-margin_right = -7.0
-margin_bottom = 103.0
+margin_left = -111.629
+margin_top = 14.5004
+margin_right = -15.6289
+margin_bottom = 110.5
 custom_fonts/font = ExtResource( 1 )
-text = "Pause"
+icon = ExtResource( 8 )
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -262,9 +286,10 @@ text = "QUIT_TO_MENU"
 [connection signal="pressed" from="Down" to="." method="_on_Down_pressed"]
 [connection signal="pressed" from="Camera" to="." method="_on_Camera_pressed"]
 [connection signal="pressed" from="Autopilot" to="." method="_on_Autopilot_pressed"]
+[connection signal="pressed" from="Pantograph" to="." method="_on_Pantograph_pressed"]
+[connection signal="pressed" from="Engine" to="." method="_on_Engine_pressed"]
 [connection signal="pressed" from="Lights" to="." method="_on_Lights_pressed"]
-[connection signal="pressed" from="VBoxContainer/Pantograph" to="." method="_on_Pantograph_pressed"]
-[connection signal="pressed" from="VBoxContainer/Engine" to="." method="_on_Engine_pressed"]
+[connection signal="pressed" from="Horn" to="." method="_on_Horn_pressed"]
 [connection signal="pressed" from="DoorLeft" to="." method="_on_DoorLeft_pressed"]
 [connection signal="pressed" from="DoorClose" to="." method="_on_DoorClose_pressed"]
 [connection signal="pressed" from="DoorRight" to="." method="_on_DoorRight_pressed"]

@@ -311,7 +311,7 @@ func _process(delta):
 	
 	
 	
-	controlLights(delta)
+	handle_input()
 	
 	currentRailRadius = currentRail.radius
 	
@@ -1326,19 +1326,21 @@ func debugLights(node):
 		node.visible = true
 		print("Spotlight updated")
 
-func controlLights(delta):
-	if ai: 
+
+		
+func toggle_cabin_light():
+	if not has_node("CabinLight"):
 		return
-	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
-		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-		frontLight = !frontLight
-	if Input.is_action_just_pressed("InsideLight"):
-		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-		insideLight = !insideLight
-	if has_node("FrontLight"):
-		$FrontLight.visible = frontLight
-	if has_node("CabinLight"):
-		$CabinLight.visible = insideLight
+	jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
+	insideLight = !insideLight
+	$CabinLight.visible = insideLight
+
+func toggle_front_light():
+	if not has_node("FrontLight"):
+		return
+	jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
+	frontLight = !frontLight
+	$FrontLight.visible = frontLight
 
 var lastDrivenSignalTmp = null
 var freeLastSignalBoolean = false
@@ -1461,3 +1463,9 @@ func check_overdriving_a_switch():
 func overdriven_switch():
 	pass
 
+func handle_input():
+	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
+		toggle_front_light()
+		
+	if Input.is_action_just_pressed("InsideLight"):
+		toggle_cabin_light()

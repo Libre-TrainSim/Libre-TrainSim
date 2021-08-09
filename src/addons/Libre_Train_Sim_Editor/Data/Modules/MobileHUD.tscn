@@ -48,6 +48,7 @@ margin_top = 6.72335
 margin_right = 574.483
 margin_bottom = 102.723
 rect_min_size = Vector2( 150, 0 )
+rect_pivot_offset = Vector2( 155.017, 351.277 )
 custom_fonts/font = ExtResource( 1 )
 text = "Camera"
 __meta__ = {
@@ -60,8 +61,22 @@ margin_top = 108.671
 margin_right = 573.983
 margin_bottom = 204.671
 rect_min_size = Vector2( 150, 0 )
+rect_pivot_offset = Vector2( 155.517, 249.329 )
 custom_fonts/font = ExtResource( 1 )
 text = "Autopilot"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lights" type="Button" parent="."]
+margin_left = 200.0
+margin_top = 612.0
+margin_right = 382.0
+margin_bottom = 708.0
+rect_min_size = Vector2( 150, 0 )
+rect_pivot_offset = Vector2( 155.017, 351.277 )
+custom_fonts/font = ExtResource( 1 )
+text = "Lights"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -242,10 +257,12 @@ margin_right = 345.0
 margin_bottom = 196.0
 custom_fonts/font = ExtResource( 1 )
 text = "QUIT_TO_MENU"
+
 [connection signal="pressed" from="Up" to="." method="_on_Up_pressed"]
 [connection signal="pressed" from="Down" to="." method="_on_Down_pressed"]
 [connection signal="pressed" from="Camera" to="." method="_on_Camera_pressed"]
 [connection signal="pressed" from="Autopilot" to="." method="_on_Autopilot_pressed"]
+[connection signal="pressed" from="Lights" to="." method="_on_Lights_pressed"]
 [connection signal="pressed" from="VBoxContainer/Pantograph" to="." method="_on_Pantograph_pressed"]
 [connection signal="pressed" from="VBoxContainer/Engine" to="." method="_on_Engine_pressed"]
 [connection signal="pressed" from="DoorLeft" to="." method="_on_DoorLeft_pressed"]

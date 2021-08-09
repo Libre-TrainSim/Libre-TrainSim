@@ -95,6 +95,8 @@ func set_fullscreen(value : bool):
 
 func set_low_resolution(value : bool):
 	if value:
+		if ProjectSettings.get_setting("display/window/stretch/mode") == "viewport":
+			return
 		ProjectSettings.set_setting("display/window/stretch/mode", "viewport")
 		ProjectSettings.set_setting("display/window/stretch/aspect", "keep")
 		ProjectSettings.set_setting("display/window/size/width", "1280")

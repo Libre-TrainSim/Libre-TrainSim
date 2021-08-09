@@ -13,7 +13,11 @@ func _ready():
 func _process(delta):
 	$VBoxContainer/Pantograph.visible = not player.pantograph
 	$VBoxContainer/Engine.visible = not player.engine
-	var progress_bar_soll_position = ((soll_command-1)*(-0.5)) * OS.get_screen_size().y
+	
+	var window_size_y = float(ProjectSettings.get_setting("display/window/size/height"))
+	# var window_size_y = OS.window_size.y ## If we will change the resolution, than this line could be better
+	
+	var progress_bar_soll_position = ((soll_command-1)*(-0.5)) * window_size_y
 	$ProgressBar.rect_position.y = Root.clampViaTime(progress_bar_soll_position, $ProgressBar.rect_position.y, delta*5.0)
 	
 	if player.pantographUp and not player.pantograph:
@@ -114,3 +118,9 @@ func _on_Pause_QuitMenu_pressed():
 func _on_PauseButton_pressed():
 	$Pause.show()
 	get_tree().paused = true
+
+
+func _on_Lights_pressed():
+	player.toggle_front_light()
+	player.toggle_cabin_light()
+

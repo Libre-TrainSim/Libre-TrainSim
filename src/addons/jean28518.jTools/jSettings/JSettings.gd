@@ -32,6 +32,9 @@ func _ready():
 
 	if get_game_volume() == null:
 		set_game_volume(1)
+	
+	if get_persons() == null:
+		set_persons(true)
 
 	apply_saved_settings()
 
@@ -39,7 +42,6 @@ func _ready():
 
 func apply_saved_settings():
 	OS.window_fullscreen = get_fullscreen()
-	print_debug(OS.window_fullscreen)
 	ProjectSettings.set_setting("rendering/quality/filters/msaa", get_anti_aliasing())
 
 	## This can only be used, if JAudioManager is in project.
@@ -53,6 +55,7 @@ func update_settings_window():
 	$ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
 	$ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
 	$ScrollContainer/GridContainer/Fog.pressed = get_fog()
+	$ScrollContainer/GridContainer/Persons.pressed = get_persons()
 	$ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
 	$ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
 	$ScrollContainer/GridContainer/AntiAliasing.selected = get_anti_aliasing()
@@ -130,6 +133,12 @@ func set_fog(value : bool):
 
 func get_fog():
 	return jSaveManager.get_setting("fog", true)
+
+func set_persons(value : bool):
+	jSaveManager.save_setting("persons", value)
+	
+func get_persons():
+	return jSaveManager.get_setting("persons", true)
 	
 
 func set_view_distance(value : int):
@@ -200,3 +209,7 @@ func _on_Language_item_selected(index):
 
 func _on_Fog_pressed():
 	set_fog($ScrollContainer/GridContainer/Fog.pressed)
+
+
+func _on_Persons_pressed():
+	set_persons($ScrollContainer/GridContainer/Persons.pressed)

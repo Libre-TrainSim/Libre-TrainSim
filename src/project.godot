@@ -47,7 +47,9 @@ settings/stdout/verbose_stdout=true
 
 [display]
 
-window/size/width=800
+window/size/width="800"
+window/size/height="600"
+window/handheld/orientation="sensor_landscape"
 
 [editor_plugins]
 

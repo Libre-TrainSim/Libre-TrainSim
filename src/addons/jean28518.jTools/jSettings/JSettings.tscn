@@ -49,7 +49,7 @@ __meta__ = {
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
 margin_right = 627.0
-margin_bottom = 498.0
+margin_bottom = 547.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -102,37 +102,53 @@ margin_bottom = 143.0
 size_flags_horizontal = 4
 align = 1
 
-[node name="Label9" type="Label" parent="ScrollContainer/GridContainer"]
+[node name="Label11" type="Label" parent="ScrollContainer/GridContainer"]
 margin_top = 147.0
 margin_right = 473.0
 margin_bottom = 192.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_PERSONS"
+
+[node name="Persons" type="CheckBox" parent="ScrollContainer/GridContainer"]
+margin_left = 540.0
+margin_top = 147.0
+margin_right = 564.0
+margin_bottom = 192.0
+size_flags_horizontal = 4
+align = 1
+
+[node name="Label9" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 196.0
+margin_right = 473.0
+margin_bottom = 241.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_VIEW_DISTANCE"
 
 [node name="ViewDistance" type="SpinBox" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
-margin_top = 147.0
+margin_top = 196.0
 margin_right = 627.0
-margin_bottom = 192.0
+margin_bottom = 241.0
 min_value = 250.0
 max_value = 1000.0
 value = 1000.0
 align = 1
 
 [node name="Label6" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 199.0
+margin_top = 248.0
 margin_right = 473.0
-margin_bottom = 244.0
+margin_bottom = 293.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_ANTI_ALIASING"
 
 [node name="AntiAliasing" type="OptionButton" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
-margin_top = 196.0
+margin_top = 245.0
 margin_right = 627.0
-margin_bottom = 247.0
+margin_bottom = 296.0
 custom_fonts/font = ExtResource( 3 )
 text = "Disabled"
 align = 1
@@ -140,50 +156,50 @@ items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", nu
 selected = 0
 
 [node name="Label10" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 251.0
+margin_top = 300.0
 margin_right = 473.0
-margin_bottom = 296.0
+margin_bottom = 345.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_AUTOMATIC_FRAMEDROP_FIX"
 
 [node name="FramedropFix" type="CheckBox" parent="ScrollContainer/GridContainer"]
 margin_left = 540.0
-margin_top = 251.0
+margin_top = 300.0
 margin_right = 564.0
-margin_bottom = 296.0
+margin_bottom = 345.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label7" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 303.0
+margin_top = 352.0
 margin_right = 473.0
-margin_bottom = 348.0
+margin_bottom = 397.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_LANGUAGE"
 
 [node name="Language" type="OptionButton" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
-margin_top = 300.0
+margin_top = 349.0
 margin_right = 627.0
-margin_bottom = 351.0
+margin_bottom = 400.0
 custom_fonts/font = ExtResource( 3 )
 align = 1
 
 [node name="Label3" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 355.0
+margin_top = 404.0
 margin_right = 473.0
-margin_bottom = 400.0
+margin_bottom = 449.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "Main Volume"
 
 [node name="MainVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
-margin_top = 355.0
+margin_top = 404.0
 margin_right = 627.0
-margin_bottom = 400.0
+margin_bottom = 449.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 1
 max_value = 1.0
@@ -194,18 +210,18 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 404.0
+margin_top = 453.0
 margin_right = 473.0
-margin_bottom = 449.0
+margin_bottom = 498.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "Game Volume"
 
 [node name="GameVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
-margin_top = 404.0
+margin_top = 453.0
 margin_right = 627.0
-margin_bottom = 449.0
+margin_bottom = 498.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 1
 max_value = 1.0
@@ -216,18 +232,18 @@ __meta__ = {
 }
 
 [node name="Label5" type="Label" parent="ScrollContainer/GridContainer"]
-margin_top = 453.0
+margin_top = 502.0
 margin_right = 473.0
-margin_bottom = 498.0
+margin_bottom = 547.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_MUSIC"
 
 [node name="MusicVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
-margin_top = 453.0
+margin_top = 502.0
 margin_right = 627.0
-margin_bottom = 498.0
+margin_bottom = 547.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 1
 max_value = 1.0
@@ -241,6 +257,7 @@ __meta__ = {
 [connection signal="pressed" from="ScrollContainer/GridContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/Shadows" to="." method="_on_Shadows_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/Fog" to="." method="_on_Fog_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/Persons" to="." method="_on_Persons_pressed"]
 [connection signal="value_changed" from="ScrollContainer/GridContainer/ViewDistance" to="." method="set_view_distance"]
 [connection signal="item_selected" from="ScrollContainer/GridContainer/AntiAliasing" to="." method="set_anti_aliasing"]
 [connection signal="item_selected" from="ScrollContainer/GridContainer/AntiAliasing" to="." method="save_and_apply_current_settings"]

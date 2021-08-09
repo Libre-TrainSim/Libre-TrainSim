@@ -36,6 +36,7 @@ func _ready():
 	if not Engine.is_editor_hint():
 		$MeshInstance.queue_free()
 		setToRail(true)
+		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
 		
 		
 func _process(delta):
@@ -43,7 +44,8 @@ func _process(delta):
 		setToRail(true)
 	
 	if not Engine.editor_hint:
-		handlePersons()
+		if personSystem:
+			handlePersons()
 
 
 
@@ -63,6 +65,8 @@ func set_scenario_data(d):
 	return
 
 func spawnPersonsAtBeginning():
+	if not personSystem:
+		return
 	if platformSide == 0:
 		return
 	while(rail.visible and attachedPersons.size() < waitingPersonCount):

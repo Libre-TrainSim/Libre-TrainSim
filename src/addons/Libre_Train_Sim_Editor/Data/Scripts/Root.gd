@@ -1,3 +1,4 @@
+tool
 extends Node
 
 var currentScenario
@@ -12,7 +13,6 @@ var world ## Reference to world
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -92,3 +92,17 @@ func fix_frame_drop():
 	
 func set_fullscreen(value : bool):
 	OS.window_fullscreen = value
+
+func set_low_resolution(value : bool):
+	if value:
+		ProjectSettings.set_setting("display/window/stretch/mode", "viewport")
+		ProjectSettings.set_setting("display/window/stretch/aspect", "keep")
+		ProjectSettings.set_setting("display/window/size/width", "1280")
+		ProjectSettings.set_setting("display/window/size/height", "720")
+		ProjectSettings.save()
+	else:
+		ProjectSettings.set_setting("display/window/stretch/mode", "disabled")
+		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
+		ProjectSettings.set_setting("display/window/size/width", "800")
+		ProjectSettings.set_setting("display/window/size/height", "600")
+		ProjectSettings.save()

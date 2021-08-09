@@ -1,3 +1,4 @@
+tool
 extends Control
 
 
@@ -5,11 +6,13 @@ extends Control
 # var a = 2
 # var b = "text"
 export var version = ""
-export var mobile_version = false
+export (bool) var mobile_version setget update_project_for_mobile
 var save_path = OS.get_executable_path().get_base_dir()+"config.cfg"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if Engine.is_editor_hint():
+		return
 	update_config()
 	$Version.text = "Version: " + String(version)
 	var openTimes = jSaveManager.get_value("open_times", 0)
@@ -40,10 +43,12 @@ func set_menu_to_mobile():
 	$Play/Selection/Scenarios/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Engine.is_editor_hint():
+		return
 	load_scene(delta)
 	updateBottmLabels()
 
@@ -277,7 +282,9 @@ func _on_Later_pressed():
 
 
 
-
+func update_project_for_mobile(value):
+	Root.set_low_resolution(value)
+	mobile_version = value
 
 
 

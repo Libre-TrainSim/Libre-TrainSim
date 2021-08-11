@@ -12,3 +12,5 @@ src/Trains/*
 src/.import/
 *.csv.import
 *.translation
+
+src/android/*

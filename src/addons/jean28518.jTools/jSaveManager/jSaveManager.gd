@@ -3,7 +3,7 @@ extends Node
 ## Here you can configure the filename
 var fileName = "jSaveManager.save"
 
-onready var save_path = "res://"+ fileName
+onready var save_path = "user://"+ fileName
 onready var config = ConfigFile.new()
 onready var load_response = config.load(save_path)
 

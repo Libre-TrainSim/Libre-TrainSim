@@ -107,10 +107,20 @@ func _process(delta):
 			name = name.replace(" ", "_")
 		## Move Buildings to the Buildings Node
 		for child in get_children():
-			if not child.owner == self:
+			if not child.owner == self and not child.is_in_group("Gizmo"):
 				remove_child(child)
 				buildings.add_child(child)
 				child.owner = world
+
+func _exit_tree():
+	for track_object in trackObjects:
+		track_object.queue_free()
+
+func rename(new_name):
+	var old_name = name
+	Root.name_node_appropriate(self, new_name, get_parent())
+	for track_object in trackObjects:
+		track_object.name = name + " " + track_object.description
 
 func _update(newvar):
 	if ResourceLoader.exists(railTypePath):

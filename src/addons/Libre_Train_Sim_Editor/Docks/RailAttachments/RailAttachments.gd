@@ -447,7 +447,8 @@ func _on_FileDialog_onject_selected(path):
 var currentMaterial = 0
 func _on_FileDialogMaterials_file_selected(path):
 	if currentMaterial != 0:
-		get_node("Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material " + String(currentMaterial) + "/LineEdit").text = path
+		print(currentMaterial)
+		get_node("Tab/TrackObjects/Settings/Tab/Object/GridContainer").get_child(currentMaterial).get_node("LineEdit").text = path
 		_on_SaveMaterials_pressed()
 		update_current_rail_attachment() # update
 

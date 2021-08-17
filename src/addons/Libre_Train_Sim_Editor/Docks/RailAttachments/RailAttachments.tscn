@@ -638,6 +638,7 @@ window_title = "Open a File"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.obj" )
+show_hidden_files = true
 current_dir = "res://Resources"
 current_path = "res://Resources/"
 
@@ -651,6 +652,7 @@ window_title = "Open a File"
 resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres" )
+show_hidden_files = true
 current_dir = "res://Resources"
 current_path = "res://Resources/"
 

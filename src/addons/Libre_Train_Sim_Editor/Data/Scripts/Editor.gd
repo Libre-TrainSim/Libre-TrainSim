@@ -15,7 +15,7 @@ var bouncing_timer = 0
 func _process(delta):
 	
 	## Bouncing Effect at selected object
-	if selected_object != null:
+	if is_instance_valid(selected_object):
 		bouncing_timer += delta
 		var bounce_factor = 1 + 0.02 * sin(bouncing_timer*5.0) + 0.02
 		if selected_object_type == "Building":
@@ -25,6 +25,8 @@ func _process(delta):
 			selected_object.get_node("Ending").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 			selected_object.get_node("Mid").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 			selected_object.get_node("Beginning").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
+	else:
+		clear_selected_object()
 		
 
 func _enter_tree():
@@ -44,15 +46,6 @@ func _input(event):
 
 func select_object_under_mouse():
 	
-	# Reset scale of current object because of editor "bouncing"
-	if selected_object != null:
-		if selected_object_type == "Building":
-			selected_object.scale = Vector3(1,1,1)
-		if selected_object_type == "Rail":
-			selected_object.get_node("Ending").scale = Vector3(1,1,1)
-			selected_object.get_node("Mid").scale = Vector3(1,1,1)
-			selected_object.get_node("Beginning").scale = Vector3(1,1,1)
-	
 	var ray_length = 1000
 	var mouse_pos = get_viewport().get_mouse_position()
 	var from = camera.project_ray_origin(mouse_pos)
@@ -62,16 +55,28 @@ func select_object_under_mouse():
 	# use global coordinates, not local to node
 	var result = space_state.intersect_ray( from, to)
 	if result.has("collider"):
-		selected_object = result["collider"].get_parent()
-		print("Selected: " + selected_object.name)
-		$EditorHUD.set_current_object_name(selected_object.name)
-		selected_object_type = get_type_of_object(selected_object)
-		print("Type: " + selected_object_type)
-		
+		set_selected_object(result["collider"].get_parent())
 		provide_settings_for_selected_object()
 		
 
 func clear_selected_object():
+	# Reset scale of current object because of editor "bouncing"
+	if is_instance_valid(selected_object):
+		if selected_object_type == "Building":
+			selected_object.scale = Vector3(1,1,1)
+			selected_object.get_node("SelectCollider").show()
+			selected_object.get_child(1).queue_free()
+			$EditorHUD.hide_current_object_transform()
+		if selected_object_type == "Rail":
+			selected_object.get_node("Ending").scale = Vector3(1,1,1)
+			selected_object.get_node("Mid").scale = Vector3(1,1,1)
+			selected_object.get_node("Beginning").scale = Vector3(1,1,1)
+			$EditorHUD.hide_current_object_transform()
+			for child in selected_object.get_children():
+				if child.is_in_group("Gizmo"):
+					child.queue_free()
+			
+	
 	selected_object = null
 	selected_object_type = ""
 	$EditorHUD.clear_current_object_name()
@@ -131,3 +136,23 @@ func rename_selected_object(new_name):
 func delete_selected_object():
 	selected_object.queue_free()
 	clear_selected_object()
+	
+func get_rail(name : String):
+	return $World/Rails.get_node_or_null(name)
+	
+func set_selected_object(object):
+	clear_selected_object()
+	
+	selected_object = object
+	$EditorHUD.set_current_object_name(selected_object.name)
+	selected_object_type = get_type_of_object(selected_object)
+	
+	if selected_object_type == "Building":
+		selected_object.get_node("SelectCollider").hide()
+		selected_object.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Gizmo.tscn").instance())
+		$EditorHUD.show_current_object_transform()
+	if selected_object_type == "Rail":
+		if selected_object.manualMoving:
+			selected_object.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Gizmo.tscn").instance())
+			$EditorHUD.show_current_object_transform()
+

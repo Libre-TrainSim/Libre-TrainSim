@@ -21,6 +21,25 @@ var current_editor_track = ""  # Name of track
 func _ready():
 	pass # Replace with function body.
 
+## Get appropriate name for new object. Used for adding nodes at ingame editor
+func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node): 
+	# Remove last Numbers from wanted name
+	while(wanted_name[-1].is_valid_integer()):
+		wanted_name.erase(wanted_name.length() -1, 1)
+		
+	if not parent_node.has_node(wanted_name):
+		node.name = wanted_name
+		return wanted_name
+	var counter = 2
+	var base_name = wanted_name
+	while(true):
+		var new_name = base_name + String(counter)
+		if not parent_node.has_node(new_name):
+			node.name = new_name
+			return new_name
+		counter += 1
+	
+
 func checkAndLoadTranslationsForTrack(trackName): # Searches for translation files with trackName in res://Translations/
 	print(trackName.get_file().get_basename())
 	var trackTranslations = []

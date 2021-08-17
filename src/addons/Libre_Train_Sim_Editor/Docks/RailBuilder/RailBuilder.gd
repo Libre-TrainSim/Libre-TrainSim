@@ -113,7 +113,7 @@ func _on_AddRail_pressed():
 		var RailParent = world.get_node("Rails")
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 		var newRail = RailNode.instance()
-		newRail.name = currentRail.name
+		print(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
 		newRail.translation = currentRail.endpos
 		newRail.rotation_degrees.y = currentRail.endrot
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -133,7 +133,7 @@ func _on_AddRail_pressed():
 		var RailParent = currentRail.get_parent()
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 		var newRail = RailNode.instance()
-		newRail.name = currentRail.name + "P"
+		print(Root.name_node_appropriate(newRail, currentRail.name + "P", RailParent))
 		newRail.parallelRail = currentRail.name
 		newRail.distanceToParallelRail = float($AddRail/ParallelDistance/LineEdit.text)
 #		currentRail.othersDistance = float($AddRail/ParallelDistance/LineEdit.text)
@@ -154,7 +154,7 @@ func _on_AddRail_pressed():
 		var RailParent = currentRail.get_parent()
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 		var newRail = RailNode.instance()
-		newRail.name = currentRail.name
+		print(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
 		newRail.translation = currentRail.translation
 		newRail.rotation_degrees.y = currentRail.rotation_degrees.y + 180
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -171,8 +171,11 @@ func _on_AddRail_pressed():
 			eds.clear()
 			eds.add_node(newRail)
 		
+	
 		
-		
+	var editor = find_parent("Editor")
+	if editor != null:
+		editor.set_selected_object(currentRail)
 	print("Rail added.")
 	pass # Replace with function body.
 
@@ -180,8 +183,11 @@ func _on_AddRail_pressed():
 func _on_Rename_pressed():
 	if currentRail == null: return
 	$CurrentRail/Name.text = $CurrentRail/Name.text.replace(" ", "_")
-	currentRail.name = $CurrentRail/Name.text
+	currentRail.rename($CurrentRail/Name.text)
 	update_selected_rail(currentRail)
+	var editor = find_parent("Editor")
+	if editor:
+		editor.set_selected_object(currentRail)
 	print("Rail renamed.")
 	pass # Replace with function body.
 
@@ -403,6 +409,9 @@ func update_generalInformation():
 
 func _on_ManualMoving_pressed():
 	currentRail.manualMoving = $ManualMoving.pressed
+	var editor = find_parent("Editor")
+	if editor:
+		editor.set_selected_object(currentRail)
 	
 
 

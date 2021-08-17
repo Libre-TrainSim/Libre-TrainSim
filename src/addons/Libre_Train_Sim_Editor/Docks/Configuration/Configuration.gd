@@ -128,6 +128,10 @@ func get_scenario_settings(): # fills the settings field with saved values
 	var sData = config.get_value("Scenarios", "sData", {})
 	if not sData.has(currentScenario): return
 	var s = sData[currentScenario]
+#	print(s)
+	
+	if s.size() == 0:
+		return
 
 	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value = s["TimeH"]
 	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value = s["TimeM"]

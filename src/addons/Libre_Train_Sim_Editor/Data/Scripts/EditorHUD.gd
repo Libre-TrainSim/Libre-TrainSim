@@ -29,3 +29,22 @@ func hide_settings():
 
 func show_settings():
 	$Settings.show()
+
+func set_current_object_name(object_name : String):
+	$CurrentObjectName/HBoxContainer/LineEdit.text = object_name
+	$CurrentObjectName.show()
+
+func clear_current_object_name():
+	$CurrentObjectName.hide()
+
+
+func _on_ClearCurrentObject_pressed():
+	get_parent().clear_selected_object()
+
+
+func _on_CurrentObjectRename_pressed():
+	get_parent().rename_selected_object($CurrentObjectName/HBoxContainer/LineEdit.text)
+
+
+func _on_DeleteCurrentObject_pressed():
+	get_parent().delete_selected_object()

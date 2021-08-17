@@ -1,10 +1,5 @@
 extends Spatial
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 onready var camera = get_node("FreeCamera")
 var editor_directory = ""
 
@@ -18,6 +13,8 @@ func _ready():
 
 var bouncing_timer = 0
 func _process(delta):
+	
+	## Bouncing Effect at selected object
 	if selected_object != null:
 		bouncing_timer += delta
 		var bounce_factor = 1 + 0.02 * sin(bouncing_timer*5.0) + 0.02
@@ -39,6 +36,9 @@ func _exit_tree():
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed == false:
 		select_object_under_mouse()
+	
+	if Input.is_action_just_pressed("save"):
+		save_world()
 
 
 
@@ -64,14 +64,17 @@ func select_object_under_mouse():
 	if result.has("collider"):
 		selected_object = result["collider"].get_parent()
 		print("Selected: " + selected_object.name)
+		$EditorHUD.set_current_object_name(selected_object.name)
 		selected_object_type = get_type_of_object(selected_object)
 		print("Type: " + selected_object_type)
 		
 		provide_settings_for_selected_object()
 		
-	else:
-		selected_object = null
-		selected_object_type = ""
+
+func clear_selected_object():
+	selected_object = null
+	selected_object_type = ""
+	$EditorHUD.clear_current_object_name()
 
 func get_type_of_object(object):
 	if object is MeshInstance:
@@ -99,3 +102,32 @@ func load_world():
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World
 	$EditorHUD/Settings/TabContainer/Configuration.world = $World
 	
+func save_world():
+
+	var packed_scene = PackedScene.new()
+	var result = packed_scene.pack($World)
+	if result == OK:
+		var error = ResourceSaver.save(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn", packed_scene) 
+		if error != OK:
+			push_error("An error occurred while saving the scene to disk.")
+
+
+
+func _on_SaveWorldButton_pressed():
+	save_world()
+
+func rename_selected_object(new_name):
+	new_name = new_name.replace("/" , "")
+	new_name = new_name.replace("\\" , "")
+	new_name = new_name.replace(" " , "")
+	if selected_object_type == "Rail":
+		if not $World/Rails.has_node(new_name):
+			selected_object.name = new_name
+		else:
+			jEssentials.show_message("Rail with the name " + new_name + " already exists!")
+			$EditorHUD.set_current_object_name(selected_object.name)
+	pass
+
+func delete_selected_object():
+	selected_object.queue_free()
+	clear_selected_object()

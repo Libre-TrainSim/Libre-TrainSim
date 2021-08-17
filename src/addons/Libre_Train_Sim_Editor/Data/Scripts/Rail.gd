@@ -78,9 +78,10 @@ var attachedSignals = {}
 func _ready():
 	manualMoving = false
 	_update(false)
-	if not Engine.is_editor_hint():
+	if not (Engine.is_editor_hint() or Root.Editor):
 		$Beginning.queue_free()
 		$Ending.queue_free()
+		$Mid.queue_free()
 	pass # Replace with function body.
 
 var EditorUpdateTimer = 0
@@ -89,7 +90,7 @@ func _process(delta):
 	if visible and not overheadLineBuilded:
 		updateOverheadLine()
 		overheadLineBuilded = true
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or Root.Editor:
 		EditorUpdateTimer += delta
 		if EditorUpdateTimer < 0.25:
 			return
@@ -152,8 +153,9 @@ func _update(newvar):
 	buildRail()
 	updateOverheadLine()
 
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or Root.Editor:
 		$Ending.translation = get_local_transform_at_rail_distance(length).origin
+		$Mid.translation = get_local_transform_at_rail_distance(length/2.0).origin
 
 
 func checkVisualInstance():

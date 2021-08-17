@@ -46,3 +46,9 @@ MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile,イージーモード,
 ,,,,,,
 YES,Yes,Ja,Si,はい,TAK,Так
 NO,No,Nein,No,いいえ,NIE,Ні
+,,,,,,
+ABSOLUTE_EDITOR_PATH: ,Absolute editor path: ,Absoluter Editor-Pfad: ,,,,
+UPDATE,Update,Aktualisieren,,,,
+NEW,New,Neu,,,,
+RENAME,Rename,Umbenennen,,,,
+OPEN,Open,Öffnen,,,,

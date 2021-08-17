@@ -10,6 +10,9 @@ var mobile_version = false
 
 var world ## Reference to world
 
+var Editor = false
+var current_editor_track = ""  # Name of track
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

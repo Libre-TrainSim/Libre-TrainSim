@@ -126,8 +126,9 @@ func _on_AddRail_pressed():
 		RailParent.add_child(newRail)
 		newRail.set_owner(currentRail.find_parent("World"))
 		update_selected_rail(newRail)
-		eds.clear()
-		eds.add_node(newRail)
+		if eds != null:
+			eds.clear()
+			eds.add_node(newRail)
 	if $AddRail/Mode.selected == 1: ## Parallel Rail
 		var RailParent = currentRail.get_parent()
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
@@ -146,8 +147,9 @@ func _on_AddRail_pressed():
 		RailParent.add_child(newRail)
 		newRail.set_owner(currentRail.find_parent("World"))
 		update_selected_rail(newRail)
-		eds.clear()
-		eds.add_node(newRail)
+		if eds != null:
+			eds.clear()
+			eds.add_node(newRail)
 	if $AddRail/Mode.selected == 2: ## Before Rail
 		var RailParent = currentRail.get_parent()
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
@@ -165,8 +167,9 @@ func _on_AddRail_pressed():
 		RailParent.add_child(newRail)
 		newRail.set_owner(currentRail.find_parent("World"))
 		update_selected_rail(newRail)
-		eds.clear()
-		eds.add_node(newRail)
+		if eds != null:
+			eds.clear()
+			eds.add_node(newRail)
 		
 		
 		

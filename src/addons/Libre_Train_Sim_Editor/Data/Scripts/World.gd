@@ -52,7 +52,11 @@ func _ready():
 	print("trackName: " +trackName + " " + FileName)
 	$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
 	
-	if Engine.editor_hint:
+	if Engine.editor_hint or Root.Editor:
+		if Root.Editor:
+			$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
+			$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+			
 #		update_all_rails_overhead_line_setting(false)
 		return
 
@@ -115,7 +119,7 @@ func apply_user_settings():
 	$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
 	
 func _process(delta):
-	if not Engine.editor_hint:
+	if not (Engine.editor_hint or Root.Editor):
 		time(delta)
 		checkTrainSpawn(delta)
 		handle_chunk()

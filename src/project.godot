@@ -50,6 +50,7 @@ settings/stdout/verbose_stdout=true
 window/size/width="800"
 window/size/height="600"
 window/handheld/orientation="sensor_landscape"
+window/size/heigt="720"
 
 [editor_plugins]
 

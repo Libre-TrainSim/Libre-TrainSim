@@ -23,20 +23,22 @@ onready var cameraZeroTransform = transform
 const refDelta = 0.0167 # 1.0 / 60
 
 
-onready var world = find_parent("World")
+var world
 
 # used for accel if any.
-onready var player = world.find_node("Player")
+var player
 
 func _ready():
 	# Initialization here
 	self.set_process_input(true)
 	self.set_process(true)
+	
 	#set mouse position
 
 
 func _enter_tree():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if not Root.Editor:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _exit_tree():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -44,7 +46,7 @@ func _exit_tree():
 var mouseMotion = Vector2(0,0)
 
 func _input(event):
-	if current and event is InputEventMouseMotion:
+	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		mouseMotion = mouseMotion + event.relative
 
 onready var cameraY = rotation_degrees.y - 90.0
@@ -53,12 +55,16 @@ onready var cameraX = -rotation_degrees.x
 func _process(delta):
 	if not current:
 		pass
+	if not world:
+		world = find_parent("World")
+	if not player and world != null:
+		player = world.find_node("Player")
 	#mouse movement
 
-	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version:
+	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-	if mouseMotion.length() > 0:
+	if mouseMotion.length() > 0 and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
 		cameraY += -mouseMotion.x * motionFactor
 		cameraX += +mouseMotion.y * motionFactor
@@ -78,7 +84,7 @@ func _process(delta):
 		var missingCameraPosition = translation.x - sollCameraPosition
 		translation.x -= missingCameraPosition * delta
 
-	if not fixed:
+	if not fixed and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		var deltaFlyspeed = (delta / refDelta) * flyspeed
 
 		if(Input.is_key_pressed(KEY_W)):

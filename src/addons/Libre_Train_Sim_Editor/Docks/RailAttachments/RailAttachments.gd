@@ -22,7 +22,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$Tab/TrackObjects/Settings.visible = currentTO != null
+	$Tab/TrackObjects/Settings.visible = is_instance_valid(currentTO)
 	pass
 
 

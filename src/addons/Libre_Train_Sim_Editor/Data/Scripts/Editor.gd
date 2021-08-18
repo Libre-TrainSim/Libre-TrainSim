@@ -41,6 +41,9 @@ func _input(event):
 	
 	if Input.is_action_just_pressed("save"):
 		save_world()
+	
+	if Input.is_action_just_pressed("delete"):
+		delete_selected_object()
 
 
 
@@ -107,7 +110,17 @@ func load_world():
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World
 	$EditorHUD/Settings/TabContainer/Configuration.world = $World
 	
+	## Load Camera Position
+	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
+	if last_editor_camera_transforms.has(Root.current_editor_track):
+		$FreeCamera.transform = last_editor_camera_transforms[Root.current_editor_track]
+	 
+	
 func save_world():
+	## Save Camera Position
+	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
+	last_editor_camera_transforms[Root.current_editor_track] = $FreeCamera.transform
+	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
@@ -122,16 +135,9 @@ func _on_SaveWorldButton_pressed():
 	save_world()
 
 func rename_selected_object(new_name):
-	new_name = new_name.replace("/" , "")
-	new_name = new_name.replace("\\" , "")
-	new_name = new_name.replace(" " , "")
-	if selected_object_type == "Rail":
-		if not $World/Rails.has_node(new_name):
-			selected_object.name = new_name
-		else:
-			jEssentials.show_message("Rail with the name " + new_name + " already exists!")
-			$EditorHUD.set_current_object_name(selected_object.name)
-	pass
+	Root.name_node_appropriate(selected_object, new_name, selected_object.get_parent())
+	$EditorHUD.set_current_object_name(selected_object.name)
+	provide_settings_for_selected_object()
 
 func delete_selected_object():
 	selected_object.queue_free()
@@ -155,4 +161,22 @@ func set_selected_object(object):
 		if selected_object.manualMoving:
 			selected_object.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Gizmo.tscn").instance())
 			$EditorHUD.show_current_object_transform()
+	
+	provide_settings_for_selected_object()
 
+func add_rail():
+	var position = $FreeCamera.translation 
+	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
+	var rail_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
+	var rail_instance = rail_res.instance()
+	rail_instance.name = Root.name_node_appropriate(rail_instance, "Rail", $World/Rails)
+	rail_instance.translation = position
+	$World/Rails.add_child(rail_instance)
+	rail_instance.set_owner($World)
+#	rail_instance._update()
+	set_selected_object(rail_instance)
+	
+
+
+func _on_FreeCamera_single_rightclick():
+	clear_selected_object()

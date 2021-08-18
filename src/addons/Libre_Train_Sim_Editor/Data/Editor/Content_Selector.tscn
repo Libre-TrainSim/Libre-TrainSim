@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/Content_Selector.gd" type="Script" id=1]
+
+[node name="Content_Selector" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 24.0
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+margin_right = 768.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="ClearText" type="Button" parent="HBoxContainer"]
+margin_left = 772.0
+margin_right = 800.0
+margin_bottom = 24.0
+text = " X "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="."]
+margin_top = 28.0
+margin_right = 800.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+
+[connection signal="text_changed" from="HBoxContainer/LineEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/ClearText" to="." method="_on_ClearText_pressed"]
+[connection signal="item_activated" from="ItemList" to="." method="_on_ItemList_item_activated"]

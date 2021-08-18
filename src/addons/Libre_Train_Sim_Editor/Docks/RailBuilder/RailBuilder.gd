@@ -15,6 +15,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var editor = find_parent("Editor")
+	if editor:
+		visible = is_instance_valid(currentRail) and get_parent().current_tab == 0
 	pass
 
 
@@ -63,6 +66,7 @@ func _on_OptionButton_item_selected(id):
 		$S/Settings/Angle.visible = true
 
 func _on_Update_pressed():
+	print("TEST")
 	if $CurrentRail/Name.text != currentRail.name: 
 		currentRail = null
 		update_selected_rail(self)
@@ -429,3 +433,11 @@ func _on_automaticTendency_pressed():
 func _on_OverheadLine_pressed():
 	currentRail.overheadLine = $S/General/OverheadLine.pressed
 	currentRail.updateOverheadLine()
+
+
+func _on_LineEdit_text_entered(new_text):
+	_on_Update_pressed()
+
+
+func _on_RenameLine_text_entered(new_text):
+	_on_Rename_pressed()

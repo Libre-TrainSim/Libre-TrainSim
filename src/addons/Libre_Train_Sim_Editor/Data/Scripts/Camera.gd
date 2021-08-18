@@ -1,5 +1,7 @@
 extends Camera
 
+signal single_rightclick() # Rightclick without moving the mouse
+
 # General purpose configurable camera script
 # later getting things like "follow player" for camera at stations
 
@@ -45,9 +47,18 @@ func _exit_tree():
 
 var mouseMotion = Vector2(0,0)
 
+var mouse_not_moved = false
 func _input(event):
 	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		mouseMotion = mouseMotion + event.relative
+		if event.relative != Vector2(0,0):
+			mouse_not_moved = false
+	
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == true:
+		mouse_not_moved = true
+	
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and mouse_not_moved:
+		emit_signal("single_rightclick")
 
 onready var cameraY = rotation_degrees.y - 90.0
 onready var cameraX = -rotation_degrees.x
@@ -59,6 +70,9 @@ func _process(delta):
 		world = find_parent("World")
 	if not player and world != null:
 		player = world.find_node("Player")
+		
+	cameraY = rotation_degrees.y - 90.0
+	cameraX = -rotation_degrees.x
 	#mouse movement
 
 	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor:

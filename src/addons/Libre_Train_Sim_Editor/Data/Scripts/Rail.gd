@@ -121,6 +121,7 @@ func rename(new_name):
 	Root.name_node_appropriate(self, new_name, get_parent())
 	for track_object in trackObjects:
 		track_object.name = name + " " + track_object.description
+		track_object.attachedRail = name
 
 func _update(newvar):
 	if ResourceLoader.exists(railTypePath):
@@ -178,6 +179,8 @@ func checkVisualInstance():
 
 func get_track_object(track_object_name : String): # (Searches for the description of track objects
 	for track_object in trackObjects:
+		if not is_instance_valid(track_object):
+			continue
 		if track_object.description == track_object_name:
 			return track_object
 	return null
@@ -431,7 +434,7 @@ func updateOverheadLine():
 	polePositions.append(0)
 	
 	for trackObject in trackObjects:
-		if trackObject == null:
+		if not is_instance_valid(trackObject):
 			continue
 		print(trackObject.description)
 		if trackObject.description.begins_with("Pole"):

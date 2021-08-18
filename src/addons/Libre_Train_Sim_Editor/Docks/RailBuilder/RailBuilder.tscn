@@ -167,7 +167,7 @@ margin_bottom = 164.0
 [node name="S" type="VBoxContainer" parent="."]
 margin_top = 168.0
 margin_right = 800.0
-margin_bottom = 416.0
+margin_bottom = 472.0
 
 [node name="General" type="VBoxContainer" parent="S"]
 margin_right = 800.0
@@ -230,7 +230,7 @@ size_flags_horizontal = 3
 [node name="Settings" type="VBoxContainer" parent="S"]
 margin_top = 100.0
 margin_right = 800.0
-margin_bottom = 224.0
+margin_bottom = 280.0
 
 [node name="OptionButton" type="OptionButton" parent="S/Settings"]
 margin_right = 800.0
@@ -297,7 +297,7 @@ text = "0"
 [node name="Slope" type="VBoxContainer" parent="S/Settings"]
 margin_top = 80.0
 margin_right = 800.0
-margin_bottom = 100.0
+margin_bottom = 156.0
 
 [node name="ShowHideSlope" type="Button" parent="S/Settings/Slope"]
 margin_left = 358.0
@@ -307,9 +307,8 @@ size_flags_horizontal = 4
 text = "Show Slope"
 
 [node name="SlopeGrid" type="GridContainer" parent="S/Settings/Slope"]
-visible = false
 margin_top = 24.0
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 76.0
 columns = 2
 
@@ -321,7 +320,7 @@ text = "Start Slope (per 100m)"
 
 [node name="StartSlope" type="SpinBox" parent="S/Settings/Slope/SlopeGrid"]
 margin_left = 146.0
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -100.0
@@ -336,16 +335,16 @@ text = "End Slope (per 100m)"
 [node name="EndSlope" type="SpinBox" parent="S/Settings/Slope/SlopeGrid"]
 margin_left = 146.0
 margin_top = 28.0
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 min_value = -100.0
 step = 0.001
 
 [node name="Tendency" type="VBoxContainer" parent="S/Settings"]
-margin_top = 104.0
+margin_top = 160.0
 margin_right = 800.0
-margin_bottom = 124.0
+margin_bottom = 180.0
 
 [node name="ShowHideTendency" type="Button" parent="S/Settings/Tendency"]
 margin_left = 345.0
@@ -598,21 +597,21 @@ text = "Shift"
 
 [node name="Update" type="Button" parent="S"]
 margin_left = 371.0
-margin_top = 228.0
+margin_top = 284.0
 margin_right = 429.0
-margin_bottom = 248.0
+margin_bottom = 304.0
 size_flags_horizontal = 4
 text = "Update"
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_top = 420.0
+margin_top = 476.0
 margin_right = 800.0
-margin_bottom = 424.0
+margin_bottom = 480.0
 
 [node name="RailConnector" type="VBoxContainer" parent="."]
-margin_top = 428.0
+margin_top = 484.0
 margin_right = 800.0
-margin_bottom = 522.0
+margin_bottom = 578.0
 
 [node name="Label" type="Label" parent="RailConnector"]
 margin_right = 800.0
@@ -690,17 +689,20 @@ margin_bottom = 94.0
 size_flags_horizontal = 4
 text = "Connect"
 
+[connection signal="text_entered" from="CurrentRail/Name" to="." method="_on_RenameLine_text_entered"]
 [connection signal="pressed" from="CurrentRail/Rename" to="." method="_on_Rename_pressed"]
 [connection signal="pressed" from="CurrentRail/Delete" to="." method="_on_Delete_pressed"]
 [connection signal="item_selected" from="AddRail/Mode" to="." method="_on_Mode_item_selected"]
 [connection signal="text_entered" from="AddRail/ParallelDistance/LineEdit" to="." method="_on_Update_pressed"]
 [connection signal="pressed" from="AddRail/AddRail" to="." method="_on_AddRail_pressed"]
 [connection signal="pressed" from="ManualMoving" to="." method="_on_ManualMoving_pressed"]
+[connection signal="text_entered" from="S/General/RailType/LineEdit" to="." method="_on_LineEdit_text_entered"]
 [connection signal="pressed" from="S/General/OverheadLine" to="." method="_on_OverheadLine_pressed"]
+[connection signal="text_entered" from="S/General/ParallelRail/ParallelDistance" to="." method="_on_LineEdit_text_entered"]
 [connection signal="item_selected" from="S/Settings/OptionButton" to="." method="_on_OptionButton_item_selected"]
-[connection signal="text_entered" from="S/Settings/Length/LineEdit" to="." method="_on_Update_pressed"]
-[connection signal="text_entered" from="S/Settings/Radius/LineEdit" to="." method="_on_Update_pressed"]
-[connection signal="text_entered" from="S/Settings/Angle/LineEdit" to="." method="_on_Update_pressed"]
+[connection signal="text_entered" from="S/Settings/Length/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="text_entered" from="S/Settings/Radius/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="text_entered" from="S/Settings/Angle/LineEdit" to="." method="_on_LineEdit_text_entered"]
 [connection signal="pressed" from="S/Settings/Slope/ShowHideSlope" to="." method="_on_ShowHideSlope_pressed"]
 [connection signal="pressed" from="S/Settings/Tendency/ShowHideTendency" to="." method="_on_ShowHideTendency_pressed"]
 [connection signal="pressed" from="S/Settings/Tendency/automaticTendency" to="." method="_on_automaticTendency_pressed"]

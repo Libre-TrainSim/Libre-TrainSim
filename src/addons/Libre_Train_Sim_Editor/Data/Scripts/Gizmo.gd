@@ -12,6 +12,9 @@ var mouseMotion = Vector2(0,0)
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
+	
+	if event is InputEventMouseButton and event.pressed == true:
+		mouseMotion = Vector2(0,0)
 		
 	if event is InputEventMouseButton:
 		if event.pressed == false:

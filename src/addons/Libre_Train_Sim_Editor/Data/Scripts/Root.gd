@@ -21,11 +21,14 @@ var current_editor_track = ""  # Name of track
 func _ready():
 	pass # Replace with function body.
 
-## Get appropriate name for new object. Used for adding nodes at ingame editor
+## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor
 func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node): 
 	# Remove last Numbers from wanted name
 	while(wanted_name[-1].is_valid_integer()):
 		wanted_name.erase(wanted_name.length() -1, 1)
+	
+	wanted_name = wanted_name.replace(" " , "")
+	wanted_name = wanted_name.validate_node_name()
 		
 	if not parent_node.has_node(wanted_name):
 		node.name = wanted_name
@@ -100,6 +103,20 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 					exportString = directoryPath +"/"+file
 				foundFiles["Array"].append(exportString)
 	dir.list_dir_end()
+	
+func get_subfolders_of(directoryPath):
+	var dir = Directory.new()
+	if dir.open(directoryPath) != OK: return
+	dir.list_dir_begin()
+	var folder_names = []
+	while(true):
+		var file = dir.get_next()
+		if file == "": break
+		if file.begins_with("."): continue
+		if dir.current_is_dir():
+			folder_names.append(file)
+	dir.list_dir_end()
+	return folder_names
 	
 # approaches 'ist' value to 'soll' value in one second  (=smooth transitions from current 'ist' value to 'soll' value)
 func clampViaTime(soll : float, ist : float, delta : float):

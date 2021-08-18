@@ -706,3 +706,7 @@ func update_all_rails_overhead_line_setting(overhead_line : bool): # Not called 
 		rail.overheadLine = overhead_line
 		rail.updateOverheadLine()
 	
+
+## Should be later used if we have a real heightmap
+func get_terrain_height_at(Position : Vector2):
+	return 0

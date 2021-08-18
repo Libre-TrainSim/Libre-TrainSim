@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Tunnel1.obj-6152cd9f11102b83af95000e6ed02201.mesh"
+
+[deps]
+
+files=[ "res://.import/Tunnel1.obj-6152cd9f11102b83af95000e6ed02201.mesh" ]
+
+source_file="res://Resources/Basic/Materials/Tunnel1.obj"
+dest_files=[ "res://.import/Tunnel1.obj-6152cd9f11102b83af95000e6ed02201.mesh", "res://.import/Tunnel1.obj-6152cd9f11102b83af95000e6ed02201.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

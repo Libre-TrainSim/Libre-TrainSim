@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/platform_light_1.obj-88974bb35534fb1c70fe2cd27b266a79.mesh"
+
+[deps]
+
+files=[ "res://.import/platform_light_1.obj-88974bb35534fb1c70fe2cd27b266a79.mesh" ]
+
+source_file="res://Resources/Basic/Objects/platform_light_1.obj"
+dest_files=[ "res://.import/platform_light_1.obj-88974bb35534fb1c70fe2cd27b266a79.mesh", "res://.import/platform_light_1.obj-88974bb35534fb1c70fe2cd27b266a79.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

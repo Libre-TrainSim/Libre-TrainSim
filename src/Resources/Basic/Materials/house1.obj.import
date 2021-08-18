@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/house1.obj-bdab2bafa13c72f4b2b2549a45eee435.mesh"
+
+[deps]
+
+files=[ "res://.import/house1.obj-bdab2bafa13c72f4b2b2549a45eee435.mesh" ]
+
+source_file="res://Resources/Basic/Materials/house1.obj"
+dest_files=[ "res://.import/house1.obj-bdab2bafa13c72f4b2b2549a45eee435.mesh", "res://.import/house1.obj-bdab2bafa13c72f4b2b2549a45eee435.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

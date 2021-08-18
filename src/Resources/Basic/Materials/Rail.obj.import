@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Rail.obj-381c2940b1d708ea5e3d81c7943ef169.mesh"
+
+[deps]
+
+files=[ "res://.import/Rail.obj-381c2940b1d708ea5e3d81c7943ef169.mesh" ]
+
+source_file="res://Resources/Basic/Materials/Rail.obj"
+dest_files=[ "res://.import/Rail.obj-381c2940b1d708ea5e3d81c7943ef169.mesh", "res://.import/Rail.obj-381c2940b1d708ea5e3d81c7943ef169.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

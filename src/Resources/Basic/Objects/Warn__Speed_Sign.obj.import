@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Warn__Speed_Sign.obj-fa1115801c2f293d931452f7fbe1c88b.mesh"
+
+[deps]
+
+files=[ "res://.import/Warn__Speed_Sign.obj-fa1115801c2f293d931452f7fbe1c88b.mesh" ]
+
+source_file="res://Resources/Basic/Objects/Warn__Speed_Sign.obj"
+dest_files=[ "res://.import/Warn__Speed_Sign.obj-fa1115801c2f293d931452f7fbe1c88b.mesh", "res://.import/Warn__Speed_Sign.obj-fa1115801c2f293d931452f7fbe1c88b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

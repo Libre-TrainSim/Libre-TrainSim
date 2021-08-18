@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Bridge1.obj-bd08e4733d31923ee05706cda105e208.mesh"
+
+[deps]
+
+files=[ "res://.import/Bridge1.obj-bd08e4733d31923ee05706cda105e208.mesh" ]
+
+source_file="res://Resources/Basic/Objects/Bridge1.obj"
+dest_files=[ "res://.import/Bridge1.obj-bd08e4733d31923ee05706cda105e208.mesh", "res://.import/Bridge1.obj-bd08e4733d31923ee05706cda105e208.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

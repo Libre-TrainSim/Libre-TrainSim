@@ -21,8 +21,6 @@ func _on_ClearText_pressed():
 
 var current_type = null
 func set_type(type):
-	if current_type == null:
-		return
 	current_type = type
 	clear_text()
 	crawl_directory_for_resources()
@@ -108,7 +106,19 @@ func emit_selected_resource():
 	elif current_type == TEXTURES:
 		complete_path += "/Textures" + resource.right(split_position) + ".png"
 		
-	
+	hide()
 	emit_signal("resource_selected", complete_path)
 	
 	
+
+
+func _on_Select_pressed():
+	emit_selected_resource()
+	
+
+
+
+func _on_Cancel_pressed():
+	hide()
+	clear_text()
+	emit_signal("resource_selected", "")

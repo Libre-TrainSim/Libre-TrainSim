@@ -6,7 +6,7 @@
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=5]
 [ext_resource path="res://Resources/Basic/Materials/EasyTree.tres" type="Material" id=6]
-[ext_resource path="res://Resources/Basic/Materials/grass.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://Resources/Basic/Objects/grass.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Worlds/Tutorials/TutorialScript.gd" type="Script" id=10]
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=11]
@@ -516,7 +516,7 @@ attachedRail = "Rail"
 onRailPosition = 800
 
 [node name="Signal4" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, -0.0666169, 0, 1, 0, 0.0666169, 0, 0.997779, 1389.5, 0, 152.803 )
+transform = Transform( 0.997779, 0, -0.0666163, 0, 1, 0, 0.0666163, 0, 0.997779, 1389.5, 0, 152.803 )
 status = 1
 setPassAtH = 12
 setPassAtM = 1
@@ -525,7 +525,7 @@ attachedRail = "Rail2"
 onRailPosition = 400
 
 [node name="Signal5" parent="Signals" instance=ExtResource( 12 )]
-transform = Transform( 0.997779, 0, 0.0666178, 0, 1, 0, -0.0666178, 0, 0.997779, 1789.21, 0, 152.803 )
+transform = Transform( 0.997779, 0, 0.0666183, 0, 1, 0, -0.0666183, 0, 0.997779, 1789.21, 0, 152.802 )
 attachedRail = "Rail2"
 onRailPosition = 800
 

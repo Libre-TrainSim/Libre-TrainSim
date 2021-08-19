@@ -114,6 +114,10 @@ func load_world():
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(Root.current_editor_track):
 		$FreeCamera.transform = last_editor_camera_transforms[Root.current_editor_track]
+		
+	## Add Colliding Boxes to Buildings:
+	for building in $World/Buildings.get_children():
+		building.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	 
 	
 func save_world():
@@ -165,8 +169,7 @@ func set_selected_object(object):
 	provide_settings_for_selected_object()
 
 func add_rail():
-	var position = $FreeCamera.translation 
-	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
+	var position = get_current_ground_position()
 	var rail_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 	var rail_instance = rail_res.instance()
 	rail_instance.name = Root.name_node_appropriate(rail_instance, "Rail", $World/Rails)
@@ -175,6 +178,24 @@ func add_rail():
 	rail_instance.set_owner($World)
 #	rail_instance._update()
 	set_selected_object(rail_instance)
+
+func get_current_ground_position() -> Vector3:
+	var position = $FreeCamera.translation 
+	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
+	return position
+
+func add_object(complete_path : String):
+	var position = get_current_ground_position()
+	var obj_res = load(complete_path)
+	var mesh_instance = MeshInstance.new()
+	mesh_instance.mesh = obj_res
+	var mesh_name = complete_path.get_file().get_basename() + "_"
+	mesh_instance.name = Root.name_node_appropriate(mesh_instance, mesh_name, $World/Buildings)
+	mesh_instance.translation = position
+	$World/Buildings.add_child(mesh_instance)
+	mesh_instance.set_owner($World)
+	mesh_instance.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	set_selected_object(mesh_instance)
 	
 
 

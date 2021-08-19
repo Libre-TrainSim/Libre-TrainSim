@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Editor.gd" type="Script" id=2]
-[ext_resource path="res://Resources/Basic/house4.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Resources/Basic/Objects/house4.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailBuilder/RailBuilder.tscn" type="PackedScene" id=6]
@@ -10,6 +10,7 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/Configuration/Configuration.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/EditorHUD.gd" type="Script" id=9]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/AddObjects.gd" type="Script" id=10]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/Content_Selector.tscn" type="PackedScene" id=11]
 
 [node name="Editor" type="Spatial"]
 script = ExtResource( 2 )
@@ -351,6 +352,17 @@ margin_bottom = 161.0
 custom_fonts/font = ExtResource( 5 )
 text = "EXIT_WITHOUT_SAVING"
 
+[node name="Content_Selector" parent="EditorHUD" instance=ExtResource( 11 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -153.5
+margin_top = -114.0
+margin_right = 153.5
+margin_bottom = 114.0
+
 [connection signal="single_rightclick" from="FreeCamera" to="." method="_on_FreeCamera_single_rightclick"]
 [connection signal="pressed" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
 [connection signal="pressed" from="EditorHUD/SaveWorldButton" to="." method="_on_SaveWorldButton_pressed"]
@@ -367,3 +379,4 @@ text = "EXIT_WITHOUT_SAVING"
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD" method="_on_Pause_Back_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD" method="_on_SaveAndExit_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveWithoutExit" to="EditorHUD" method="_on_SaveWithoutExit_pressed"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]

@@ -24,8 +24,8 @@ END_OF_YOUR_TRAIN_NOT_IN_STATION,"The End of your Train haven't already reached 
 HINT_OPEN_DOORS,"Hint: You have to open the doors with 'i' or 'p', when arriving at the station.",Tipp: Sie müssen noch die Türen mit ‚p‘ oder ‚i‘ öffnen.,"Suggerimento: arrivato in stazione, aprire le porte con ‘i’ oppure ‘p’.",ヒント:駅に到着したら ‘i’ か ‘p’ でドアを開けてください。,"Porada: Kiedy zatrzymasz Się Na Stacji Naciśnij Przycisk ""i"" Lub ""P"" Aby Otworzyć Dzwi","Підказка: Ви можете відкрити двері за допомогою 'i' чи 'p', коли прибудете на станцію."
 ,,Sie sind,,,,
 YOU_ARE_LATE_1,You are,Sie haben,Viaggi con,あなたは,Masz,Ви прибули на
-YOU_ARE_LATE_2,minutes later!,Minuten Verspätung!,minuti di ritardo!,分後です!,Minut Spóźnienia,хвилин(и) пізніше!
-YOU_ARE_LATE_2_ONE_MINUTE,minute later.,Minute Verspätung.,minuto di ritardo.,分後です,Minute Spóźnienia,хвилину пізніше.
+YOU_ARE_LATE_2,minutes late!,Minuten Verspätung!,minuti di ritardo!,分後です!,Minut Spóźnienia,хвилин(и) пізніше!
+YOU_ARE_LATE_2_ONE_MINUTE,minute late.,Minute Verspätung.,minuto di ritardo.,分後です,Minute Spóźnienia,хвилину пізніше.
 ,,,,,,
 WELCOME_TO,Welcome to,Willkommen bei,Benvenuto a,Welcome to,Witamy W,Ласкаво просимо до
 SCENARIO_FINISHED,Scenario successfully finished.,Szenario erfolgreich beendet.,Scenario completato con successo.,シナリオを無事完走しました,Scenariusz Ukończony,Сценарій успішно закінчено.

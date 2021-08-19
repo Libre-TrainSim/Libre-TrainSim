@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/RailAttachments.gd" type="Script" id=1]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/MaterialSelection.gd" type="Script" id=2]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/BuildingSettings.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=3]
 
 [node name="Rail Attachments" type="VBoxContainer"]
@@ -24,7 +24,7 @@ size_flags_horizontal = 3
 [node name="Tab" type="TabContainer" parent="."]
 margin_top = 28.0
 margin_right = 800.0
-margin_bottom = 260.0
+margin_bottom = 364.0
 tab_align = 0
 
 [node name="TrackObjects" type="VBoxContainer" parent="Tab"]
@@ -43,96 +43,6 @@ margin_right = 792.0
 margin_bottom = 14.0
 text = "Track Objects:"
 align = 1
-
-[node name="CopyPaste" type="HBoxContainer" parent="Tab/TrackObjects"]
-visible = false
-margin_top = 18.0
-margin_right = 792.0
-margin_bottom = 38.0
-
-[node name="Copy" type="Button" parent="Tab/TrackObjects/CopyPaste"]
-margin_right = 261.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Copy Whole Configuration"
-
-[node name="Paste" type="Button" parent="Tab/TrackObjects/CopyPaste"]
-margin_left = 265.0
-margin_right = 526.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Paste Whole Configuration"
-
-[node name="Clear" type="Button" parent="Tab/TrackObjects/CopyPaste"]
-margin_left = 530.0
-margin_right = 792.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Clear whole Configuration"
-
-[node name="ItemList" type="ItemList" parent="Tab/TrackObjects"]
-visible = false
-margin_top = 18.0
-margin_right = 792.0
-margin_bottom = 118.0
-rect_min_size = Vector2( 0, 100 )
-items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
-select_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Tab/TrackObjects"]
-visible = false
-margin_top = 18.0
-margin_right = 792.0
-margin_bottom = 42.0
-
-[node name="New" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_right = 40.0
-margin_bottom = 24.0
-text = "New"
-
-[node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 44.0
-margin_right = 482.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-
-[node name="Rename" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 486.0
-margin_right = 550.0
-margin_bottom = 24.0
-text = "Rename"
-
-[node name="Duplicate" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 554.0
-margin_right = 627.0
-margin_bottom = 24.0
-text = "Duplicate"
-
-[node name="Delete" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 631.0
-margin_right = 686.0
-margin_bottom = 24.0
-text = "Delete"
-
-[node name="VSeparator" type="VSeparator" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 690.0
-margin_right = 694.0
-margin_bottom = 24.0
-
-[node name="Copy" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 698.0
-margin_right = 741.0
-margin_bottom = 24.0
-text = "Copy"
-
-[node name="Paste" type="Button" parent="Tab/TrackObjects/HBoxContainer"]
-margin_left = 745.0
-margin_right = 792.0
-margin_bottom = 24.0
-text = "Paste"
 
 [node name="jListTrackObjects" parent="Tab/TrackObjects" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -158,14 +68,13 @@ __meta__ = {
 }
 
 [node name="Settings" type="VBoxContainer" parent="Tab/TrackObjects"]
-visible = false
-margin_top = 174.0
-margin_right = 1016.0
-margin_bottom = 346.0
+margin_top = 200.0
+margin_right = 792.0
+margin_bottom = 300.0
 
 [node name="Tab" type="TabContainer" parent="Tab/TrackObjects/Settings"]
-margin_right = 1016.0
-margin_bottom = 148.0
+margin_right = 792.0
+margin_bottom = 100.0
 
 [node name="Object" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 anchor_right = 1.0
@@ -176,24 +85,24 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_right = 1008.0
+margin_right = 784.0
 margin_bottom = 14.0
 text = "Object: (.obj)"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
 margin_top = 18.0
-margin_right = 1008.0
+margin_right = 784.0
 margin_bottom = 42.0
 
 [node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer"]
-margin_right = 966.0
+margin_right = 742.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Pick" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer"]
-margin_left = 970.0
-margin_right = 1008.0
+margin_left = 746.0
+margin_right = 784.0
 margin_bottom = 24.0
 text = "Pick"
 __meta__ = {
@@ -202,70 +111,18 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
 margin_top = 46.0
-margin_right = 1008.0
+margin_right = 784.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 text = "Materials:"
 align = 1
 
-[node name="GridContainer" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
+[node name="BuildingSettings" parent="Tab/TrackObjects/Settings/Tab/Object" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 64.0
-margin_right = 1008.0
+margin_right = 784.0
 margin_bottom = 64.0
-
-[node name="Material 0" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer"]
-visible = false
-margin_right = 1008.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-script = ExtResource( 2 )
-
-[node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
-margin_top = 5.0
-margin_right = 68.0
-margin_bottom = 19.0
-text = "Material 1:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
-margin_left = 72.0
-margin_right = 1008.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Pick" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0"]
-margin_right = 12.0
-margin_bottom = 20.0
-text = "Pick"
-
-[node name="Add-Remove" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_top = 68.0
-margin_right = 1008.0
-margin_bottom = 88.0
-
-[node name="Remove" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/Add-Remove"]
-margin_right = 502.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Remove last Entry"
-
-[node name="Add" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/Add-Remove"]
-margin_left = 506.0
-margin_right = 1008.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Add"
-
-[node name="SaveAndUpdate" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_top = 92.0
-margin_right = 1008.0
-margin_bottom = 112.0
-text = "Save & Update"
 
 [node name="Position" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 visible = false
@@ -656,17 +513,6 @@ show_hidden_files = true
 current_dir = "res://Resources"
 current_path = "res://Resources/"
 
-[connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Copy" to="." method="_on_CopyTrack_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Paste" to="." method="_on_PasteRail_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/CopyPaste/Clear" to="." method="_on_ClearTOs_pressed"]
-[connection signal="item_selected" from="Tab/TrackObjects/ItemList" to="." method="_on_ItemListTO_item_selected"]
-[connection signal="multi_selected" from="Tab/TrackObjects/ItemList" to="." method="_on_ItemList_multi_selected"]
-[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/New" to="." method="_on_NewTO_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Rename" to="." method="_on_RenameTO_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Duplicate" to="." method="_on_DuplicateTO_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Delete" to="." method="_on_DeleteTO_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Copy" to="." method="_on_CopyTO_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/HBoxContainer/Paste" to="." method="_on_PasteTO_pressed"]
 [connection signal="user_added_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_added_entry"]
 [connection signal="user_copied_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_copied_entries"]
 [connection signal="user_duplicated_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_duplicated_entries"]
@@ -675,10 +521,7 @@ current_path = "res://Resources/"
 [connection signal="user_renamed_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_renamed_entry"]
 [connection signal="user_selected_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_selected_entry"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/Pick" to="." method="_on_PickObject_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0/Pick" to="Tab/TrackObjects/Settings/Tab/Object/GridContainer/Material 0" method="_on_Pick_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Remove" to="." method="_on_MaterialRemove_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/Add-Remove/Add" to="." method="_on_AddMaterial_pressed"]
-[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object/SaveAndUpdate" to="." method="_on_SaveMaterials_pressed"]
+[connection signal="updated" from="Tab/TrackObjects/Settings/Tab/Object/BuildingSettings" to="." method="_on_BuildingSettings_updated"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/SaveAndUpdate" to="." method="_on_SavePosition_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/SaveAndUpdate" to="." method="_on_SavePositioning_pressed"]

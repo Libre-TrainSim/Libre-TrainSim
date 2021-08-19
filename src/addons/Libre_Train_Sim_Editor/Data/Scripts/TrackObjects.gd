@@ -6,7 +6,7 @@ export (String) var attachedRail
 export (float) var onRailPosition
 export (float) var length
 
-export (String) var objectPath
+export (String) var objectPath = ""
 export var materialPaths = []
 export (int) var sides = 0#0: No Side, 1: Left, 2: Right 4: Both
 export (float) var spawnRate = 1

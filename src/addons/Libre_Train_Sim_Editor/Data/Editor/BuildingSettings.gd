@@ -1,5 +1,6 @@
 extends VBoxContainer
 
+signal updated()
 
 var current_material_index = 0
 var current_mesh = null
@@ -14,10 +15,14 @@ func _input(event):
 	if not is_instance_valid(current_mesh):
 		hide()
 
+func emit_signal_updated():
+	emit_signal("updated")
 
 func set_mesh(mesh : MeshInstance):
 	current_mesh = mesh
 	clear_materials_list()
+	if current_mesh == null:
+		return
 	material_count = mesh.get_surface_material_count()
 	for i in range(material_count):
 		var new_child = get_node("Material-1").duplicate()
@@ -34,6 +39,7 @@ func set_mesh(mesh : MeshInstance):
 	button.name = "Button"
 	button.text = "Update"
 	button.connect("pressed", self, "set_current_config_to_mesh")
+	button.connect("pressed", self, "emit_signal_updated")
 	add_child(button)
 	
 	show()
@@ -75,3 +81,18 @@ func _on_Content_Selector_resource_selected(complete_path):
 		return
 	get_child(current_material_index + 1).get_node("LineEdit").text = complete_path
 	set_current_config_to_mesh()
+	emit_signal_updated()
+
+func get_material_array():
+	if not is_instance_valid(current_mesh):
+		return []
+	var array = []
+	for child in get_children():
+		if child.name == "Material-1" or child is Button:
+			continue
+		var material_path = child.get_node("LineEdit").text
+		if ResourceLoader.exists(material_path):
+			array.append(material_path)
+		else:
+			array.append("")
+	return array

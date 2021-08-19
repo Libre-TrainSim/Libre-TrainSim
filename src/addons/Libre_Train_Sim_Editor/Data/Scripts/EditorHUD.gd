@@ -117,3 +117,12 @@ func _on_y_rot_value_changed(value):
 
 func _onObjectName_text_entered(new_text):
 	_on_CurrentObjectRename_pressed()
+	
+func show_building_settings():
+	show_settings()
+	$Settings/TabContainer.current_tab = 3
+
+func ensure_rail_settings():
+	show_settings()
+	if $Settings/TabContainer.current_tab > 2:
+		$Settings/TabContainer.current_tab = 0

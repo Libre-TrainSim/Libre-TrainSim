@@ -96,8 +96,10 @@ func provide_settings_for_selected_object():
 	if selected_object_type == "Rail":
 		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
 		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
+		$EditorHUD.ensure_rail_settings()
 	if selected_object_type == "Building":
 		$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(selected_object)
+		$EditorHUD.show_building_settings()
 
 ## Should be used, if world is loaded into scene.
 func load_world():

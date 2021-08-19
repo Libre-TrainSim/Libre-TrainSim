@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Editor.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/EditorHUD.gd" type="Script" id=9]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/AddObjects.gd" type="Script" id=10]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/Content_Selector.tscn" type="PackedScene" id=11]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/BuildingSettings.tscn" type="PackedScene" id=12]
 
 [node name="Editor" type="Spatial"]
 script = ExtResource( 2 )
@@ -81,6 +82,13 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Configuration" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 8 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 12 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0
@@ -379,4 +387,5 @@ margin_bottom = 114.0
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD" method="_on_Pause_Back_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD" method="_on_SaveAndExit_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveWithoutExit" to="EditorHUD" method="_on_SaveWithoutExit_pressed"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]

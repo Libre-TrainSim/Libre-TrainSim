@@ -706,3 +706,5 @@ script = ExtResource( 10 )
 
 [node name="jSaveModule" parent="." instance=ExtResource( 11 )]
 save_path = "res://Worlds/Tutorials/Tutorials.save"
+
+[node name="jSaveModuleScenarios" parent="." instance=ExtResource( 11 )]

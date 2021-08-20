@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
 [ext_resource path="res://addons/jean28518.jTools/jTable/jTable.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/Configuration/TimeField.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=4]
 
 [node name="Configuration" type="TabContainer"]
 anchor_right = 1.0
@@ -13,6 +14,7 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -269,14 +271,12 @@ size_flags_horizontal = 4
 text = "Save Notes"
 
 [node name="Scenarios" type="ScrollContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-scroll_vertical = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Scenarios"]
 margin_right = 792.0
@@ -285,14 +285,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="Scenarios/VBoxContainer"]
-margin_right = 780.0
+margin_right = 792.0
 margin_bottom = 14.0
 text = "Scenarios:"
 align = 1
 
 [node name="ItemList" type="ItemList" parent="Scenarios/VBoxContainer"]
 margin_top = 18.0
-margin_right = 780.0
+margin_right = 792.0
 margin_bottom = 118.0
 rect_min_size = Vector2( 0, 100 )
 items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
@@ -302,7 +302,7 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Scenarios/VBoxContainer"]
 margin_top = 122.0
-margin_right = 780.0
+margin_right = 792.0
 margin_bottom = 146.0
 
 [node name="New" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
@@ -312,34 +312,34 @@ text = "New"
 
 [node name="LineEdit" type="LineEdit" parent="Scenarios/VBoxContainer/HBoxContainer"]
 margin_left = 44.0
-margin_right = 576.0
+margin_right = 588.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 caret_blink_speed = 0.5
 
 [node name="Rename" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 580.0
-margin_right = 644.0
+margin_left = 592.0
+margin_right = 656.0
 margin_bottom = 24.0
 text = "Rename"
 
 [node name="Duplicate" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 648.0
-margin_right = 721.0
+margin_left = 660.0
+margin_right = 733.0
 margin_bottom = 24.0
 text = "Duplicate"
 
 [node name="Delete" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 725.0
-margin_right = 780.0
+margin_left = 737.0
+margin_right = 792.0
 margin_bottom = 24.0
 text = "Delete"
 
 [node name="CurrentScenario" type="HBoxContainer" parent="Scenarios/VBoxContainer"]
-margin_left = 304.0
+margin_left = 310.0
 margin_top = 150.0
-margin_right = 475.0
+margin_right = 481.0
 margin_bottom = 174.0
 size_flags_horizontal = 4
 __meta__ = {
@@ -363,12 +363,12 @@ caret_blink_speed = 0.5
 
 [node name="Settings" type="VBoxContainer" parent="Scenarios/VBoxContainer"]
 margin_top = 178.0
-margin_right = 780.0
-margin_bottom = 760.0
+margin_right = 792.0
+margin_bottom = 440.0
 
 [node name="Tab" type="TabContainer" parent="Scenarios/VBoxContainer/Settings"]
-margin_right = 780.0
-margin_bottom = 582.0
+margin_right = 792.0
+margin_bottom = 262.0
 
 [node name="General" type="VBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab"]
 anchor_right = 1.0
@@ -785,9 +785,7 @@ margin_bottom = 522.0
 rect_min_size = Vector2( 0, 200 )
 headings = [ "Station Node Name", "Station Name", "Arrival", "Departure", "Mininmal Halt Time", "Stop Type", "Waiting Persons", "Leaving Persons", "Arrival Announce Path", "Departure Announce Path", "Approach Announce Path" ]
 keys = [ "nodeName", "stationName", "arrivalTime", "departureTime", "haltTime", "stopType", "waitingPersons", "leavingPersons", "arrivalAnnouncePath", "departureAnnouncePath", "approachAnnouncePath" ]
-show_save_button = false
 show_clear_button = false
-_update_table = false
 
 [node name="NodeName" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
 visible = false
@@ -884,39 +882,53 @@ size_flags_horizontal = 4
 text = "Save Train"
 
 [node name="HSeparator" type="HSeparator" parent="Scenarios/VBoxContainer"]
-margin_top = 764.0
-margin_right = 780.0
-margin_bottom = 768.0
+margin_top = 444.0
+margin_right = 792.0
+margin_bottom = 448.0
 
 [node name="Label2" type="Label" parent="Scenarios/VBoxContainer"]
-margin_top = 772.0
-margin_right = 780.0
-margin_bottom = 786.0
-text = "World (Signals and Stations):"
+margin_top = 452.0
+margin_right = 792.0
+margin_bottom = 466.0
+text = "Signal Data (Signals, Stations, Contact Points):"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Write" type="Button" parent="Scenarios/VBoxContainer"]
-margin_top = 790.0
-margin_right = 780.0
-margin_bottom = 810.0
+[node name="SaveSignalData" type="Button" parent="Scenarios/VBoxContainer"]
+margin_top = 470.0
+margin_right = 792.0
+margin_bottom = 490.0
 size_flags_horizontal = 3
-text = "Save current Signal Data to scenario"
+text = "Save Signal Data"
 
-[node name="Load" type="Button" parent="Scenarios/VBoxContainer"]
-margin_top = 814.0
-margin_right = 780.0
-margin_bottom = 834.0
+[node name="CopySignalDataFrom" type="HBoxContainer" parent="Scenarios/VBoxContainer"]
+margin_top = 494.0
+margin_right = 792.0
+margin_bottom = 514.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CopyAndOverwriteSignalDataFrom" type="Button" parent="Scenarios/VBoxContainer/CopySignalDataFrom"]
+margin_right = 792.0
+margin_bottom = 20.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
-text = "Load Signal Data from current Scenario"
+text = "Get and Overwrite current Signal Data From..."
+
+[node name="PopupMenu" type="PopupMenu" parent="Scenarios/VBoxContainer/CopySignalDataFrom"]
+margin_left = 717.0
+margin_right = 780.0
+margin_bottom = 88.0
+items = [ "Item 0", null, 0, false, false, 0, 0, null, "", false, "Item 1", null, 0, false, false, 1, 0, null, "", false, "Item 2", null, 0, false, false, 2, 0, null, "", false, "Item 3", null, 0, false, false, 3, 0, null, "", false ]
+allow_search = true
 
 [node name="ResetSignals" type="Button" parent="Scenarios/VBoxContainer"]
-margin_top = 838.0
-margin_right = 780.0
-margin_bottom = 858.0
+margin_top = 518.0
+margin_right = 792.0
+margin_bottom = 538.0
 hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
 size_flags_horizontal = 3
 text = "Reset Signal Data"
@@ -929,10 +941,13 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 popup_exclusive = true
-window_title = "Datei öffnen"
+window_title = "Open a File"
 mode = 0
 filters = PoolStringArray( "*.obj" )
 show_hidden_files = true
+
+[node name="jSaveModule" parent="." instance=ExtResource( 4 )]
+
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
 [connection signal="pressed" from="World Configuration/WorldLoading/AllChunks" to="." method="_on_WorldLoading_AllChunks_pressed"]
 [connection signal="pressed" from="World Configuration/WorldLoading/IncludeNeighbours" to="." method="_on_WorldLoading_AllChunks_pressed"]
@@ -952,6 +967,7 @@ show_hidden_files = true
 [connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/Duplicate" to="." method="_on_DuplicateTrain_pressed"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/Delete" to="." method="_on_DeleteTrain_pressed"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/SaveTrain" to="." method="_on_SaveTrain_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Write" to="." method="_on_WriteData_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Load" to="." method="_on_LoadScenario_pressed"]
+[connection signal="pressed" from="Scenarios/VBoxContainer/SaveSignalData" to="." method="_on_SaveSignalData_pressed"]
+[connection signal="pressed" from="Scenarios/VBoxContainer/CopySignalDataFrom/CopyAndOverwriteSignalDataFrom" to="." method="_on_CopyAndOverwriteSignalDataFrom_pressed"]
+[connection signal="index_pressed" from="Scenarios/VBoxContainer/CopySignalDataFrom/PopupMenu" to="." method="_on_PopupMenu_Copy_SignalDataFrom_index_pressed"]
 [connection signal="pressed" from="Scenarios/VBoxContainer/ResetSignals" to="." method="_on_ResetSignals_pressed"]

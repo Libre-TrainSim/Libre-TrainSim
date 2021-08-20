@@ -30,7 +30,7 @@ surfaces/0 = {
 "vertex_count": 12
 }
 
-[sub_resource type="MultiMesh" id=2]
+[sub_resource type="MultiMesh" id=4]
 transform_format = 1
 instance_count = 60
 visible_instance_count = 60
@@ -91,7 +91,7 @@ surfaces/3 = {
 "vertex_count": 1400
 }
 
-[sub_resource type="MultiMesh" id=4]
+[sub_resource type="MultiMesh" id=5]
 transform_format = 1
 instance_count = 3
 visible_instance_count = 3
@@ -140,7 +140,7 @@ script = ExtResource( 9 )
 [node name="TrackObjects" type="Spatial" parent="."]
 
 [node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 6 )]
-multimesh = SubResource( 2 )
+multimesh = SubResource( 4 )
 description = "Tree"
 attachedRail = "Rail"
 length = 160.0
@@ -159,7 +159,7 @@ randomScaleFactor = 0.3
 wholeRail = true
 
 [node name="Rail Poles" parent="TrackObjects" instance=ExtResource( 6 )]
-multimesh = SubResource( 4 )
+multimesh = SubResource( 5 )
 description = "Poles"
 attachedRail = "Rail"
 length = 160.0
@@ -174,3 +174,5 @@ wholeRail = true
 
 [node name="jSaveModule" parent="." instance=ExtResource( 10 )]
 save_path = "res://Worlds/Name Me!/Name Me!.save"
+
+[node name="jSaveModuleScenarios" parent="." instance=ExtResource( 10 )]

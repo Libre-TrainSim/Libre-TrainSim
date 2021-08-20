@@ -7,6 +7,7 @@ export (String) var save_path = ""
 
 func set_save_path(save_path : String):
 	self.save_path = save_path
+	reload()
 
 func save_value(key : String, value):
 	if _config == null:
@@ -24,6 +25,9 @@ func get_value(key,  default_value = null):
 	if _config.has_section_key("Main", key):
 		return _config.get_value("Main", key, default_value)
 	return default_value
+
+func reload():
+	_load_current_config()
 	
 ## Internal Code ###############################################################
 var _config

@@ -64,7 +64,8 @@ func show_message(message : String, title : String = ""):
 	message_box.anchor_right = 0.5
 	message_box.anchor_top = 0.5
 	message_box.anchor_bottom = 0.5
-	message_box.show()
+	message_box.show_on_top = true
+	message_box.popup_centered()
 
 
 func does_path_exist(path : String):

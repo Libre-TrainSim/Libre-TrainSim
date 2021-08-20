@@ -135,7 +135,9 @@ func save_world():
 	if result == OK:
 		var error = ResourceSaver.save(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn", packed_scene) 
 		if error != OK:
-			push_error("An error occurred while saving the scene to disk.")
+			jEssentials.show_message("An error occurred while saving the scene to disk.")
+	
+	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
 
 
 

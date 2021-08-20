@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://screenshot.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" type="AudioStream" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Main_Menu_Editor_Configuration.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=8]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -509,6 +510,8 @@ text = "MENU_OPEN_IN_BROWSER"
 stream = ExtResource( 6 )
 volume_db = -25.384
 bus = "Music"
+
+[node name="jSaveModule" parent="." instance=ExtResource( 8 )]
 
 [connection signal="pressed" from="Front/VBoxContainer/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Content" to="." method="_on_Content_pressed"]

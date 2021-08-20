@@ -6,6 +6,8 @@ var currentTrain
 var EasyMode = true
 var mobile_version = false
 
+var start_menu_in_play_menu = false
+
 
 
 var world ## Reference to world

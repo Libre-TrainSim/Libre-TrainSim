@@ -127,9 +127,8 @@ __meta__ = {
 length = 160.0
 visibleSegments = 178.778
 endpos = Vector3( 160, 0, 0 )
-otherRadius = 1995.5
-otherLength = 997.75
-Outlength = 94.8772
+otherLength = 160.0
+Outlength = 160.0
 automaticTendency = false
 
 [node name="Buildings" type="Spatial" parent="."]

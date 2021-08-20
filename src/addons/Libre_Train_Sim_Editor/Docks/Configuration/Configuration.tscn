@@ -14,7 +14,6 @@ __meta__ = {
 }
 
 [node name="World Configuration" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -31,7 +30,7 @@ align = 1
 [node name="GridContainer" type="GridContainer" parent="World Configuration"]
 margin_top = 18.0
 margin_right = 792.0
-margin_bottom = 202.0
+margin_bottom = 174.0
 columns = 2
 
 [node name="Label" type="Label" parent="World Configuration/GridContainer"]
@@ -126,41 +125,26 @@ margin_bottom = 156.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 
-[node name="Label5" type="Label" parent="World Configuration/GridContainer"]
-margin_top = 165.0
-margin_right = 115.0
-margin_bottom = 179.0
-text = "Thumbnail Path:"
-
-[node name="ThumbnailPath" type="LineEdit" parent="World Configuration/GridContainer"]
-margin_left = 119.0
-margin_top = 160.0
-margin_right = 792.0
-margin_bottom = 184.0
-hint_tooltip = "To get a path, rightclick in your Godot Filemenager a file, and select get path. Then you can paste it here."
-caret_blink = true
-caret_blink_speed = 0.5
-
 [node name="SaveWorldConfig" type="Button" parent="World Configuration"]
 margin_left = 333.0
-margin_top = 206.0
+margin_top = 178.0
 margin_right = 459.0
-margin_bottom = 226.0
+margin_bottom = 198.0
 size_flags_horizontal = 4
 text = "Save World Config"
 
 [node name="HSeparator" type="HSeparator" parent="World Configuration"]
-margin_top = 230.0
+margin_top = 202.0
 margin_right = 792.0
-margin_bottom = 234.0
+margin_bottom = 206.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="WorldLoading" type="VBoxContainer" parent="World Configuration"]
-margin_top = 238.0
+margin_top = 210.0
 margin_right = 792.0
-margin_bottom = 342.0
+margin_bottom = 314.0
 
 [node name="AllChunks" type="CheckBox" parent="World Configuration/WorldLoading"]
 margin_right = 792.0
@@ -233,15 +217,15 @@ margin_bottom = 20.0
 text = "Load Chunks"
 
 [node name="HSeparator2" type="HSeparator" parent="World Configuration"]
-margin_top = 346.0
+margin_top = 318.0
 margin_right = 792.0
-margin_bottom = 350.0
+margin_bottom = 322.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Notes" type="VBoxContainer" parent="World Configuration"]
-margin_top = 354.0
+margin_top = 326.0
 margin_right = 792.0
 margin_bottom = 564.0
 size_flags_vertical = 3
@@ -258,19 +242,20 @@ align = 1
 [node name="RichTextLabel" type="TextEdit" parent="World Configuration/Notes"]
 margin_top = 18.0
 margin_right = 792.0
-margin_bottom = 186.0
+margin_bottom = 214.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 3
 
 [node name="Save" type="Button" parent="World Configuration/Notes"]
 margin_left = 354.0
-margin_top = 190.0
+margin_top = 218.0
 margin_right = 437.0
-margin_bottom = 210.0
+margin_bottom = 238.0
 size_flags_horizontal = 4
 text = "Save Notes"
 
 [node name="Scenarios" type="ScrollContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0

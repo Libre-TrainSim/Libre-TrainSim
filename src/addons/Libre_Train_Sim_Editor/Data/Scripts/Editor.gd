@@ -207,3 +207,89 @@ func add_object(complete_path : String):
 
 func _on_FreeCamera_single_rightclick():
 	clear_selected_object()
+
+func test_track_pck():
+	var dir = Directory.new()
+	dir.make_dir_recursive(editor_directory + "/.cache/")
+	var pck_path = editor_directory + "/.cache/" + Root.current_editor_track + ".pck"
+	var packer = PCKPacker.new()
+	packer.pck_start(pck_path)
+	
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg")
+	packer.flush()
+
+	if ProjectSettings.load_resource_pack(pck_path, true):
+		print("Loading Content Pack "+ pck_path+" successfully finished")
+	Root.start_menu_in_play_menu = true
+	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+
+func export_track_pck(export_path):
+	var track_name = Root.current_editor_track
+	$World.force_load_all_chunks()
+	var packer = PCKPacker.new()
+	packer.pck_start(export_path)
+	
+	## Handle dependencies
+	var dependencies_raw = ResourceLoader.get_dependencies(editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
+
+	$World/jSaveModuleScenarios.set_save_path(editor_directory + "/Worlds/" + track_name + "/" + track_name + "-scenarios.cfg")
+	var scenario_data = $World/jSaveModuleScenarios.get_value("scenario_data")
+	for scenario in scenario_data:
+		for train in scenario_data[scenario]["Trains"]:
+			if not scenario_data[scenario]["Trains"][train].has("approachAnnouncePath"): continue
+			for path in scenario_data[scenario]["Trains"][train]["approachAnnouncePath"]:
+				dependencies_raw.append(path)
+			for path in scenario_data[scenario]["Trains"][train]["arrivalAnnouncePath"]:
+				dependencies_raw.append(path)
+			for path in scenario_data[scenario]["Trains"][train]["departureAnnouncePath"]:
+				dependencies_raw.append(path)
+				
+		
+	
+	
+	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+	var dependencies_export = []
+	for dependence in dependencies_raw:
+		if not dependence.begins_with("res://addons/") and ResourceLoader.exists(dependence):
+			dependencies_export.append(dependence)
+	for dependence in dependencies_export:
+		print(dependence)
+		packer.add_file(dependence, dependence)
+	
+	$World.unload_and_save_all_chunks()
+	save_world()
+	
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg")
+	packer.add_file("res://Worlds/"+Root.current_editor_track+"/screenshot.png", editor_directory + "/Worlds/"+Root.current_editor_track+"/screenshot.png")
+	
+	packer.flush()
+	send_message("Track successfully exported to: " + export_path)
+	$EditorHUD/ExportDialog.hide()
+	
+	save_world()
+	
+	
+func _on_ExportTrack_pressed():
+	$EditorHUD/ExportDialog.show_up(editor_directory)
+	
+	
+
+
+
+func _on_TestTrack_pressed():
+	test_track_pck()
+
+
+func _on_ExportDialog_export_confirmed(path):
+	export_track_pck(path)
+
+func send_message(message):
+	$EditorHUD/Message/RichTextLabel.text = message
+	$EditorHUD/Message.show()
+
+func _on_MessageClose_pressed():
+	$EditorHUD/Message.hide()

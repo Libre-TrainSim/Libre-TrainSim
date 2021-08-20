@@ -277,6 +277,8 @@ func unload_visible_Instance():
 	print("Unloading visible Instance for Rail "+name)
 	visible = false
 	$MultiMeshInstance.queue_free()
+	for track_object in trackObjects:
+		track_object.queue_free()
 
 func load_visible_Instance():
 	visible = true

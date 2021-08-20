@@ -195,7 +195,7 @@ func _on_SaveWorldConfig_pressed():
 	d["ReleaseDate"] = [$"World Configuration/GridContainer/ReleaseDate/Day".value, $"World Configuration/GridContainer/ReleaseDate/Month".value, $"World Configuration/GridContainer/ReleaseDate/Year".value]
 	d["Author"] = $"World Configuration/GridContainer/Author".text
 	d["TrackDesciption"] = $"World Configuration/GridContainer/TrackDescription".text
-	d["ThumbnailPath"] = $"World Configuration/GridContainer/ThumbnailPath".text
+
 	$jSaveModule.save_value("world_config", d)
 	print("World Config saved.")
 
@@ -207,7 +207,7 @@ func update_save_pathuration():
 	$"World Configuration/GridContainer/ReleaseDate/Year".value = d["ReleaseDate"][2]
 	$"World Configuration/GridContainer/Author".text = d["Author"]
 	$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
-	$"World Configuration/GridContainer/ThumbnailPath".text = d["ThumbnailPath"]
+
 
 	$"World Configuration/Notes/RichTextLabel".text = world.get_value("notes", "")
 

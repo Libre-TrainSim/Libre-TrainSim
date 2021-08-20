@@ -173,10 +173,10 @@ func _on_SpeedLimit_SpeedLimit_value_changed(value):
 
 
 func update_warn_speed_limit_settings_ui():
-	$WarnSpeedLimitSettings/SpeedLimit.value = current_rail_logic.warnSpeed
+	$WarnSpeedLimitSettings/SpeedLimit.value = current_rail_logic.warn_speed
 
 func _on_WarnSpeedLimit_value_changed(value):
-	current_rail_logic.warnSpeed = $WarnSpeedLimitSettings/SpeedLimit.value
+	current_rail_logic.warn_speed = $WarnSpeedLimitSettings/SpeedLimit.value
 	current_rail_logic.setToRail(true)
 
 

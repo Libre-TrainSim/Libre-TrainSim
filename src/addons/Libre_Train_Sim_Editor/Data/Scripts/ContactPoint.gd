@@ -88,5 +88,5 @@ func _on_Timer_timeout():
 	if signalN.type != "Signal":
 		print("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...")
 		return
-	signalN.status = newStatus
-	signalN.speed = newSpeed
+	signalN.set_status(newStatus)
+	signalN.set_speed(newSpeed)

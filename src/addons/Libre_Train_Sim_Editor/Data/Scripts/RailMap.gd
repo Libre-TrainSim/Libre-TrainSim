@@ -188,12 +188,10 @@ func create_signal(signal_instance):
 
 func _on_signal_changed(signal_instance):
 	var sprite: Sprite = $Signals.get_node(signal_instance.name)
-	if signal_instance.status == 0:
-		sprite.texture = signal_red
-	elif signal_instance.is_orange == true:
-		sprite.texture = signal_orange
-	else:
-		sprite.texture = signal_green
+	match signal_instance.status:
+		SignalStatus.RED: sprite.texture = signal_red
+		SignalStatus.ORANGE: sprite.texture = signal_orange
+		SignalStatus.GREEN: sprite.texture = signal_green
 
 
 func _on_chunk_world_transform_update(deltaTranslation):

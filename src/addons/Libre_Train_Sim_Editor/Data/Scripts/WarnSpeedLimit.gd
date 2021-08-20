@@ -3,7 +3,7 @@ extends Spatial
 
 var type = "WarnSpeed"
 
-export (int) var warnSpeed
+export (int) var warn_speed
 
 export (String) var attachedRail
 export (int) var onRailPosition
@@ -35,11 +35,11 @@ func setToRail(newvar):
 
 	
 	
-	if warnSpeed - 100 >= 0:
-		var outputSpeed = int(warnSpeed / 10)
+	if warn_speed - 100 >= 0:
+		var outputSpeed = int(warn_speed / 10)
 		$Viewport/Speed/Label.text = String(outputSpeed)
 	else: 
-		var outputSpeed = int(warnSpeed / 10)
+		var outputSpeed = int(warn_speed / 10)
 		var string = " " + String(outputSpeed)
 		$Viewport/Speed/Label.text = string
 	

@@ -38,6 +38,13 @@ var overrunRedSignal = false
 var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []} 
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
 
+enum ReverserState {
+	FORWARD = 1,
+	NEUTRAL = 0,
+	REVERSE = -1,
+}
+var reverser = ReverserState.NEUTRAL
+
 ## For current Station:
 var currentStationName = "" # If we are in a station, this variable stores the current station name
 var wholeTrainNotInStation = false # true if speed = 0, and the train is not fully in the station
@@ -1516,6 +1523,25 @@ func check_overdriving_a_switch():
 func overdriven_switch():
 	pass
 
+func change_reverser(change):
+	if speed != 0:
+		return
+
+	match reverser:
+		ReverserState.FORWARD:
+			if change < 0:
+				reverser = ReverserState.NEUTRAL
+				jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
+		ReverserState.NEUTRAL:
+			jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
+			if change > 0: reverser = ReverserState.FORWARD
+			else: reverser = ReverserState.REVERSE
+		ReverserState.REVERSE:
+			if change > 0:
+				reverser = ReverserState.NEUTRAL
+				jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
+
+
 func handle_input():
 	if ai:
 		return
@@ -1527,3 +1553,9 @@ func handle_input():
 	
 	if Input.is_action_just_pressed("Horn"):
 		horn()
+
+	if Input.is_action_just_pressed("reverser+"):
+		change_reverser(+1)
+
+	if Input.is_action_just_pressed("reverser-"):
+		change_reverser(-1)

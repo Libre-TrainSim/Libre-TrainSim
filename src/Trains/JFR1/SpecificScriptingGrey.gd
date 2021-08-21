@@ -23,7 +23,9 @@ func ready():
 	texture = get_node("../Cabin/DisplayRight").get_texture()
 	get_node("../Cabin/ScreenRight").material_override.emission_texture = texture
 	
-	pass # Replace with function body.
+	get_node("../Cabin/DisplayReverser").set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
+	texture = get_node("../Cabin/DisplayReverser").get_texture()
+	get_node("../Cabin/ScreenReverser").material_override.emission_texture = texture
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,7 +44,17 @@ func _process(delta):
 	get_node("../Cabin/DisplayRight/ScreenRight").update_display(stations["arrivalTime"], stations["departureTime"], stations["stationName"], stations["stopType"], stations["passed"], player.isInStation)
 	
 	update_Combi_Roll(player.soll_command, get_node("../Cabin/BrakeRoll"))
+	update_reverser(player.reverser, get_node("../Cabin/Reverser"))
 
+
+func update_reverser(command, node):
+	match command:
+		player.ReverserState.FORWARD:
+			node.rotation_degrees.y = -120
+		player.ReverserState.NEUTRAL:
+			node.rotation_degrees.y = -90
+		player.ReverserState.REVERSE:
+			node.rotation_degrees.y = -60
 
 
 func update_Combi_Roll(command, node):

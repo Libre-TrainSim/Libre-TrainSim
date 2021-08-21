@@ -55,3 +55,7 @@ TRAIN_INFO_FRONT_LIGHT,Front Light ('%s'),Spitzenlicht ('%s'),Luci frontali (‘
 TRAIN_INFO_CABIN_LIGHT,Cabin Light ('%s'),Kabinenlicht ('%s'),Luci cabina (‘%s’),室内電気 ('C%s'),"Światła Kabiny (""%s"")",Світло в кабіні ('%s')
 TRAIN_INFO_AUTOPILOT,Autopilot ('%s'),Autopilot ('%s'),Guida automatica (‘%s’),自動運転 ('%s'),"Autopilot (""%s"")",Автопілот ('%s')
 TRAIN_INFO_ENGINE,Engines ('%s'; Check: Pantograpph),Motoren ('%s'; Überprüfen: Pantograf),,,"Silniki (""%s""; Sprawdź: Pantograf)",
+,,,,,,
+"FORWARD","Forward","Vorwärts",,,,
+"NEUTRAL","Neutral","Neutral",,,,
+"REVERSE","Reverse","Rückwärts",,,,

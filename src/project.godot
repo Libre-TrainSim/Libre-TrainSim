@@ -24,6 +24,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/PlatformSide.gd"
 }, {
+"class": "ReverserState",
+"language": "GDScript",
+"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/ReverserState.gd"
+}, {
 "base": "Reference",
 "class": "SignalStatus",
 "language": "GDScript",
@@ -38,6 +42,7 @@ _global_script_class_icons={
 "Authors": "",
 "InputLabel": "",
 "PlatformSide": "",
+"ReverserState": "",
 "SignalStatus": "",
 "TimeField": ""
 }

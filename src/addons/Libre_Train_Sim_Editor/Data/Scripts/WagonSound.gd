@@ -72,8 +72,7 @@ func _ready():
 var lastSwitchSoundRail = null
 var secondSwitchSoundDistance = -1 # If this distance is set, and its bigger than the complete distance of the wagon, the second switch sound will be played 
 func checkAndPlaySwitchSound():
-	
-	if secondSwitchSoundDistance != -1 and secondSwitchSoundDistance < wagon.distance:
+	if secondSwitchSoundDistance != -1 and secondSwitchSoundDistance < wagon.distanceOnRoute:
 		$SwitchSound2.play()
 		secondSwitchSoundDistance = -1
 		
@@ -84,12 +83,12 @@ func checkAndPlaySwitchSound():
 		if wagon.currentRail.length - (wagon.distanceOnRail + wagon.length/2.0) < 1 and not wagon.currentRail == lastSwitchSoundRail:
 			$SwitchSound.play()
 			lastSwitchSoundRail = wagon.currentRail
-			secondSwitchSoundDistance = wagon.distance + wagon.length -1
+			secondSwitchSoundDistance = wagon.distanceOnRoute + wagon.length -1
 	else:
 		if wagon.distanceOnRail - wagon.length/2.0 < 1 and not wagon.currentRail == lastSwitchSoundRail:
 			$SwitchSound.play()
 			lastSwitchSoundRail = wagon.currentRail
-			secondSwitchSoundDistance = wagon.distance + wagon.length -1
+			secondSwitchSoundDistance = wagon.distanceOnRoute + wagon.length -1
 			
 	
 	

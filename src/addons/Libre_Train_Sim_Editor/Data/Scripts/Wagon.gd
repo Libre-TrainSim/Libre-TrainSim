@@ -14,7 +14,7 @@ var routeIndex = 0
 var forward
 var currentRail 
 var distanceOnRail = 0
-var distance = 0
+var distanceOnRoute = 0
 var speed = 0
 
 var leftDoors = []
@@ -107,43 +107,60 @@ func _process(delta):
 
 func drive(delta):
 	if currentRail  == player.currentRail:
+		## It is IMPORTANT that the `distance > length` and `distance < 0` are SEPARATE!
 		if player.forward:
-			distanceOnRail = player.distanceOnRail - distanceToPlayer
-			distance = player.distance - distanceToPlayer
+			distanceOnRail = player.distanceOnRail - distanceToPlayer # possibly < 0 !
+			distanceOnRoute = player.distanceOnRoute - distanceToPlayer
 			if distanceOnRail > currentRail.length:
 				change_to_next_rail()
 		else:
-			distanceOnRail = player.distanceOnRail + distanceToPlayer
-			distance = player.distance + distanceToPlayer
+			distanceOnRail = player.distanceOnRail + distanceToPlayer # possibly > currentRail.length !
+			distanceOnRoute = player.distanceOnRoute + distanceToPlayer
 			if distanceOnRail < 0:
 				change_to_next_rail()
-		
-		
 	else: 
 		## Real Driving - Only used, if wagon isn't at the same rail as his player.
-		var drivenDistance
-		if forward:
-			drivenDistance = speed * delta
-			distanceOnRail += drivenDistance
-			distance += drivenDistance
-			if distanceOnRail > currentRail.length:
-				change_to_next_rail()
-		else:
-			drivenDistance = speed * delta
-			distanceOnRail -= drivenDistance
-			distance += drivenDistance
-			if distanceOnRail < 0:
-				change_to_next_rail()
+		var drivenDistance = speed * delta
+		if player.reverser == ReverserState.REVERSE:
+			drivenDistance = -drivenDistance
+		distanceOnRoute += drivenDistance
 
+		if not forward:
+			drivenDistance = -drivenDistance
+		distanceOnRail += drivenDistance
+
+		if distanceOnRail > currentRail.length or distanceOnRail < 0:
+			change_to_next_rail()
+
+
+# TODO: this is almost 100% duplicate code also in Player.gd
+#       can we have a single method that both of them use?
 func change_to_next_rail():
-	if forward:
+	if forward and (player.reverser == ReverserState.FORWARD):
 		distanceOnRail -= currentRail.length
-	routeIndex += 1
+	if not forward and (player.reverser == ReverserState.REVERSE):
+		distanceOnRail -= currentRail.length
+
+	if player.reverser == ReverserState.REVERSE:
+		routeIndex -= 1
+	else:
+		routeIndex += 1
+
+	if baked_route.size() == routeIndex:
+		print(name + ": Route no more rail found, despawning me...")
+		queue_free()
+		return
+
 	currentRail =  world.get_node("Rails").get_node(baked_route[routeIndex])
 	forward = baked_route_direction[routeIndex]
+
 	updateSwitchOnNextChange()
-	if not forward:
+
+	if not forward and (player.reverser == ReverserState.FORWARD):
 		distanceOnRail += currentRail.length
+	if forward and (player.reverser == ReverserState.REVERSE):
+		distanceOnRail += currentRail.length
+
 
 var lastDoorRight = false
 var lastDoorLeft = false

@@ -70,26 +70,26 @@ export (String) var screenshotPath = ""
 
 ## 0: Free View 1: Cabin View, 2: Outer View
 enum CameraState {
-	FreeView = 0,
-	CabinView = 1,
-	OuterView = 2
+	FREE_VIEW = 0,
+	CABIN_VIEW = 1,
+	OUTER_VIEW = 2
 }
-var cameraState = CameraState.CabinView
+var camera_state = CameraState.CABIN_VIEW
 
-var cameraMidPoint = Vector3(0,2,0)
+var camera_mid_point = Vector3(0,2,0)
 var cameraY = 90
 var cameraX = 0
 
 var mouseSensitivity = 10
 
-var cameraDistance = 20
-var cameraDistanceChanged = false
+var camera_distance = 20
+var has_camera_distance_changed = false
 const CAMERA_DISTANCE_MIN = 5
 const CAMERA_DISTANCE_MAX = 200
 
-var refFov = 42.7 # reference FOV for camera movement multiplier
-var cameraFov = 42.7 # current FOV
-var cameraFovSoll = 42.7 # FOV user wants
+var ref_fov = 42.7 # reference FOV for camera movement multiplier
+var camera_fov = 42.7 # current FOV
+var camera_fov_soll = 42.7 # FOV user wants
 const CAMERA_FOV_MIN = 20
 const CAMERA_FOV_MAX = 60
 
@@ -226,7 +226,7 @@ func ready(): ## Called by World!
 		$Cabin.queue_free()
 		$Camera.queue_free()
 		$HUD.queue_free()
-		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
+		camera_state = CameraState.CABIN_VIEW # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
 		insideLight = true
 		frontLight = true
 		
@@ -377,23 +377,23 @@ func _input(event):
 	if event.is_pressed():
 		# zoom in
 		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
-			if cameraState == CameraState.CabinView:
-				cameraFovSoll = cameraFov + 5
-			elif cameraState == CameraState.OuterView:
-				cameraDistance += cameraDistance*0.2
-				cameraDistanceChanged = true
+			if camera_state == CameraState.CABIN_VIEW:
+				camera_fov_soll = camera_fov + 5
+			elif camera_state == CameraState.OUTER_VIEW:
+				camera_distance += camera_distance*0.2
+				has_camera_distance_changed = true
 			# call the zoom function
 		# zoom out
 		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
-			if cameraState == CameraState.CabinView:
-				cameraFovSoll = cameraFov - 5
-			elif cameraState == CameraState.OuterView:
-				cameraDistance -= cameraDistance*0.2
-				cameraDistanceChanged = true
+			if camera_state == CameraState.CABIN_VIEW:
+				camera_fov_soll = camera_fov - 5
+			elif camera_state == CameraState.OUTER_VIEW:
+				camera_distance -= camera_distance*0.2
+				has_camera_distance_changed = true
 			# call the zoom function
 		
-		cameraFovSoll = clamp(cameraFovSoll, CAMERA_FOV_MIN, CAMERA_FOV_MAX)
-		cameraDistance = clamp(cameraDistance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
+		camera_fov_soll = clamp(camera_fov_soll, CAMERA_FOV_MIN, CAMERA_FOV_MAX)
+		camera_distance = clamp(camera_distance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
 
 func getCommand(delta):
 	if controlType == 0 and not automaticDriving: ## Combi Roll
@@ -589,21 +589,21 @@ func remove_free_camera():
 
 func switch_to_cabin_view():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	cameraState = CameraState.CabinView
+	camera_state = CameraState.CABIN_VIEW
 	wagonsVisible = false
 	cameraNode.transform = cameraZeroTransform
 	cameraX = -cameraNode.rotation_degrees.x
 	cameraY = cameraNode.rotation_degrees.y
-	$Camera.fov = cameraFov # reset to first person FOV (zoom)
+	$Camera.fov = camera_fov # reset to first person FOV (zoom)
 	$Cabin.show()
 	remove_free_camera()
 	$Camera.current = true
 
 func switch_to_outer_view():
 	wagonsVisible = true
-	cameraState = CameraState.OuterView
-	cameraDistanceChanged = true # FIX for camera not properly setting itself until 1st input
-	$Camera.fov = refFov # reset to reference FOV, zooming works different in this view
+	camera_state = CameraState.OUTER_VIEW
+	has_camera_distance_changed = true # FIX for camera not properly setting itself until 1st input
+	$Camera.fov = ref_fov # reset to reference FOV, zooming works different in this view
 	$Cabin.hide()
 	remove_free_camera()
 	$Camera.current = true
@@ -617,23 +617,23 @@ func handleCamera(delta):
 	if Input.is_action_just_pressed("FreeCamera"):
 		$Cabin.hide()
 		wagonsVisible = true
-		cameraState = CameraState.FreeView
+		camera_state = CameraState.FREE_VIEW
 		get_node("Camera").current = false
 		var cam = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn").instance()
 		cam.current = true
 		world.add_child(cam)
 		cam.owner = world
-		cam.transform = transform.translated(cameraMidPoint)
+		cam.transform = transform.translated(camera_mid_point)
 	var playerCameras = get_tree().get_nodes_in_group("PlayerCameras")
 	for i in range(3, 9):
 		if Input.is_action_just_pressed("player_camera_" + str(i)) and playerCameras.size() >= i - 2:
 			wagonsVisible = true
-			cameraState = i
+			camera_state = i
 			playerCameras[i -3].current = true
 			$Cabin.hide()
 			remove_free_camera()
 
-	if cameraState == CameraState.CabinView:
+	if camera_state == CameraState.CABIN_VIEW:
 		## Camera x Position
 		var sollCameraPosition_x = cameraZeroTransform.origin.x + (currentRealAcceleration/20.0 * -cameraFactor)
 		if speed == 0 or debug:
@@ -648,7 +648,7 @@ func handleCamera(delta):
 		
 		# FIXME: in the first frame, delta == 0, why?
 		if mouseMotion.length() > 0 and delta > 0:
-			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * (cameraFov / refFov)
+			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * (camera_fov / ref_fov)
 			cameraY += -mouseMotion.x * motionFactor
 			cameraX += +mouseMotion.y * motionFactor
 			cameraX = clamp(cameraX, -85, 85)
@@ -656,25 +656,25 @@ func handleCamera(delta):
 			cameraNode.rotation_degrees.x = -cameraX
 			mouseMotion = Vector2(0,0)
 		
-		if abs(cameraFov - cameraFovSoll) > 1:
-			cameraFov += sign(cameraFovSoll-cameraFov)
-			cameraNode.fov = cameraFov
+		if abs(camera_fov - camera_fov_soll) > 1:
+			camera_fov += sign(camera_fov_soll-camera_fov)
+			cameraNode.fov = camera_fov
 		
-	elif cameraState == CameraState.OuterView:
+	elif camera_state == CameraState.OUTER_VIEW:
 		#if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if mouseMotion.length() > 0 or cameraDistanceChanged:
+		if mouseMotion.length() > 0 or has_camera_distance_changed:
 			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
 			cameraY += -mouseMotion.x * motionFactor
 			cameraX += +mouseMotion.y * motionFactor
 			cameraX = clamp(cameraX, -85, 85)
-			var cameraVector = Vector3(cameraDistance, 0, 0)
+			var cameraVector = Vector3(camera_distance, 0, 0)
 			cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
-			cameraNode.translation = cameraVector + cameraMidPoint
+			cameraNode.translation = cameraVector + camera_mid_point
 			cameraNode.rotation_degrees.y = cameraY + 90
 			cameraNode.rotation_degrees.x = -cameraX
 			mouseMotion = Vector2(0,0)
-			cameraDistanceChanged = false
+			has_camera_distance_changed = false
 		
 
 
@@ -790,7 +790,7 @@ func check_station(delta):
 				send_message(TranslationServer.translate("WELCOME_TO") + " " + currentStationName + lateMessage)
 				
 			
-			if cameraState != CameraState.CabinView:
+			if camera_state != CameraState.CABIN_VIEW:
 				for wagon in wagonsI:
 					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
 			elif not ai:
@@ -815,7 +815,7 @@ func check_station(delta):
 					nextStation = null
 					send_message(TranslationServer.translate("YOU_CAN_DEPART"))
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
-					if cameraState != CameraState.CabinView:
+					if camera_state != CameraState.CABIN_VIEW:
 						for wagon in wagonsI:
 							wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
 					elif not ai:
@@ -1086,7 +1086,7 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 			else:
 				distanceS+= "m"
 			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
-			if cameraState != CameraState.OuterView and cameraState != CameraState.FreeView and not ai:
+			if camera_state != CameraState.OUTER_VIEW and camera_state != CameraState.FREE_VIEW and not ai:
 #				print(name + ": Playing Sound.......................................................")
 				jTools.call_delayed(10, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][stations["nodeName"].find(nextStation)]])
 #				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
@@ -1413,7 +1413,7 @@ func fixObsoleteStations(): ## Checks, if there are stations in the stations tab
 #				stations.passed[i] = true
 
 func updateTrainAudioBus():
-	if cameraState == CameraState.FreeView or cameraState == CameraState.OuterView:
+	if camera_state == CameraState.FREE_VIEW or camera_state == CameraState.OUTER_VIEW:
 		AudioServer.set_bus_volume_db(2,0)
 	else:
 		AudioServer.set_bus_volume_db(2,soundIsolation)

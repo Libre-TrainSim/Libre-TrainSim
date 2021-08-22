@@ -159,8 +159,11 @@ func _update(newvar):
 		translation = rail.get_pos_at_RailDistance(onRailPosition)
 	
 	
-	if objectPath == "" : return
-	var mesh = load(objectPath).duplicate(true)
+	var mesh_res = load(objectPath)
+	if mesh_res == null: 
+		printerr("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
+		return
+	var mesh = mesh_res.duplicate(true)
 	multimesh.mesh = mesh
 	
 	for x in range(materialPaths.size()):

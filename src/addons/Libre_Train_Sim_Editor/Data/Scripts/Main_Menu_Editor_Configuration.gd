@@ -54,10 +54,6 @@ func create_resource_directory_structure(track_name):
 	dir.make_dir_recursive(editor_directory + "Resources/" + track_name + "/Sounds")
 	dir.make_dir_recursive(editor_directory + "Resources/" + track_name + "/Textures")
 	
-	if not dir.dir_exists(editor_directory + "Resources/Basic"):
-		jEssentials.copy_folder_recursively("res://Resources/Basic/", editor_directory + "Resources/Basic")
-		pass
-	
 
 func _on_TracksList_user_added_entry(entry_name):
 	$VBoxContainer/TracksList.remove_entry(entry_name)

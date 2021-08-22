@@ -47,6 +47,8 @@ func _exit_tree():
 
 var mouseMotion = Vector2(0,0)
 
+var saved_mouse_position = Vector2(0,0)
+
 var mouse_not_moved = false
 func _input(event):
 	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
@@ -55,7 +57,13 @@ func _input(event):
 			mouse_not_moved = false
 	
 	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == true:
+		saved_mouse_position = get_viewport().get_mouse_position()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		mouse_not_moved = true
+	
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		get_viewport().warp_mouse(saved_mouse_position)
 	
 	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and mouse_not_moved:
 		emit_signal("single_rightclick")

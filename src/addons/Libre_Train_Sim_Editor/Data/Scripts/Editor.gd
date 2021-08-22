@@ -36,7 +36,7 @@ func _exit_tree():
 	Root.Editor = false
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed == false:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed == false and not $EditorHUD.mouse_over_ui:
 		select_object_under_mouse()
 	
 	if Input.is_action_just_pressed("save"):
@@ -100,25 +100,29 @@ func provide_settings_for_selected_object():
 	if selected_object_type == "Building":
 		$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(selected_object)
 		$EditorHUD.show_building_settings()
+	$EditorHUD.update_ShowSettingsButton()
 
 ## Should be used, if world is loaded into scene.
 func load_world():
 	editor_directory = jSaveManager.get_setting("editor_directory_path")
 	var world_resource = load(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn")
+	if world_resource == null:
+		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
+		return
 	var world = world_resource.instance()
 	world.owner = self
 	world.FileName = Root.current_editor_track
 	add_child(world)
-	
+
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World
 	$EditorHUD/Settings/TabContainer/Configuration.world = $World
-	
+
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(Root.current_editor_track):
 		$FreeCamera.transform = last_editor_camera_transforms[Root.current_editor_track]
-		
+
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
 		building.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
@@ -135,9 +139,12 @@ func save_world():
 	if result == OK:
 		var error = ResourceSaver.save(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn", packed_scene) 
 		if error != OK:
-			jEssentials.show_message("An error occurred while saving the scene to disk.")
+			send_message("An error occurred while saving the scene to disk.")
+			return
 	
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
+	send_message("World successfully saved!")
+	
 
 
 
@@ -206,7 +213,8 @@ func add_object(complete_path : String):
 
 
 func _on_FreeCamera_single_rightclick():
-	clear_selected_object()
+	if not $EditorHUD.mouse_over_ui:
+		clear_selected_object()
 
 func test_track_pck():
 	var dir = Directory.new()
@@ -288,8 +296,24 @@ func _on_ExportDialog_export_confirmed(path):
 	export_track_pck(path)
 
 func send_message(message):
+	print("Editor sends message: " + message)
 	$EditorHUD/Message/RichTextLabel.text = message
 	$EditorHUD/Message.show()
 
 func _on_MessageClose_pressed():
 	$EditorHUD/Message.hide()
+	if not has_node("World"):
+		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+
+func duplicate_selected_object():
+	print(selected_object_type)
+	if selected_object_type != "Building":
+		return
+	else:
+		print("Duplicating " + selected_object.name + " ...")
+		var new_object = selected_object.duplicate()
+		Root.name_node_appropriate(new_object, new_object.name, $World/Buildings)
+		$World/Buildings.add_child(new_object)
+		new_object.set_owner($World)
+		set_selected_object(new_object)
+	

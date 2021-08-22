@@ -69,7 +69,7 @@ anchor_left = 0.624
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -0.200012
-margin_top = 29.0
+margin_top = 67.0
 margin_right = -7.0
 margin_bottom = -11.0
 __meta__ = {
@@ -114,8 +114,8 @@ margin_bottom = -4.0
 [node name="ObjectName" type="Control" parent="EditorHUD"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -215.5
-margin_right = 215.5
+margin_left = -265.0
+margin_right = 265.0
 margin_bottom = 30.0
 grow_horizontal = 2
 __meta__ = {
@@ -154,27 +154,33 @@ __meta__ = {
 
 [node name="LineEdit" type="LineEdit" parent="EditorHUD/ObjectName/Name"]
 margin_left = 106.0
-margin_right = 245.0
+margin_right = 267.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Clear" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 249.0
-margin_right = 293.0
+margin_left = 271.0
+margin_right = 315.0
 margin_bottom = 24.0
 text = "Clear"
 
 [node name="Rename" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 297.0
-margin_right = 361.0
+margin_left = 319.0
+margin_right = 383.0
 margin_bottom = 24.0
 text = "Rename"
 
 [node name="Delete" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 365.0
-margin_right = 420.0
+margin_left = 387.0
+margin_right = 442.0
 margin_bottom = 24.0
 text = "Delete"
+
+[node name="Duplicate" type="Button" parent="EditorHUD/ObjectName/Name"]
+margin_left = 446.0
+margin_right = 519.0
+margin_bottom = 24.0
+text = "Duplicate"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/ObjectName"]
 margin_right = 40.0
@@ -187,10 +193,10 @@ __meta__ = {
 visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -214.0
-margin_top = 29.0
-margin_right = 216.0
-margin_bottom = 63.0
+margin_left = -264.0
+margin_top = 30.0
+margin_right = 265.0
+margin_bottom = 64.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -222,7 +228,7 @@ text = "x: "
 
 [node name="x" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
 margin_left = 19.0
-margin_right = 96.0
+margin_right = 121.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -232,15 +238,15 @@ allow_greater = true
 allow_lesser = true
 
 [node name="Label2" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 100.0
+margin_left = 125.0
 margin_top = 5.0
-margin_right = 115.0
+margin_right = 140.0
 margin_bottom = 19.0
 text = "y: "
 
 [node name="y" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 119.0
-margin_right = 196.0
+margin_left = 144.0
+margin_right = 246.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -250,15 +256,15 @@ allow_greater = true
 allow_lesser = true
 
 [node name="Label3" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 200.0
+margin_left = 250.0
 margin_top = 5.0
-margin_right = 215.0
+margin_right = 265.0
 margin_bottom = 19.0
 text = "z: "
 
 [node name="z" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 219.0
-margin_right = 296.0
+margin_left = 269.0
+margin_right = 371.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -268,15 +274,15 @@ allow_greater = true
 allow_lesser = true
 
 [node name="Label4" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 300.0
+margin_left = 375.0
 margin_top = 5.0
-margin_right = 337.0
+margin_right = 412.0
 margin_bottom = 19.0
 text = "x rot: "
 
 [node name="y_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 341.0
-margin_right = 419.0
+margin_left = 416.0
+margin_right = 518.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -311,11 +317,14 @@ __meta__ = {
 visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 12.0263
-margin_top = -112.702
-margin_right = 173.026
-margin_bottom = -30.7015
-items = [ "Rail", null, false, "Object", null, false, "Rail Attachment", null, false, "Rail Logic", null, false ]
+margin_left = 12.0
+margin_top = -94.0
+margin_right = 173.0
+margin_bottom = -31.0
+items = [ "Rail", null, false, "Object", null, false, "Rail Logic", null, false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ExportDialog" type="Panel" parent="EditorHUD"]
 visible = false
@@ -481,27 +490,52 @@ __meta__ = {
 }
 
 [connection signal="single_rightclick" from="FreeCamera" to="." method="_on_FreeCamera_single_rightclick"]
+[connection signal="mouse_entered" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
+[connection signal="mouse_entered" from="EditorHUD/SaveWorldButton" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/SaveWorldButton" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/SaveWorldButton" to="." method="_on_SaveWorldButton_pressed"]
+[connection signal="mouse_entered" from="EditorHUD/ExportTrack" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/ExportTrack" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/ExportTrack" to="." method="_on_ExportTrack_pressed"]
+[connection signal="mouse_entered" from="EditorHUD/TestTrack" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/TestTrack" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/TestTrack" to="." method="_on_TestTrack_pressed"]
+[connection signal="mouse_entered" from="EditorHUD/Settings/TabContainer" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/Settings/TabContainer" to="EditorHUD" method="_on_Mouse_exited_UI"]
+[connection signal="mouse_entered" from="EditorHUD/ObjectName" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/ObjectName" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="text_entered" from="EditorHUD/ObjectName/Name/LineEdit" to="EditorHUD" method="_onObjectName_text_entered"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Clear" to="EditorHUD" method="_on_ClearCurrentObject_pressed"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Rename" to="EditorHUD" method="_on_CurrentObjectRename_pressed"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Delete" to="EditorHUD" method="_on_DeleteCurrentObject_pressed"]
+[connection signal="pressed" from="EditorHUD/ObjectName/Name/Duplicate" to="EditorHUD" method="_on_DuplicateObject_pressed"]
+[connection signal="mouse_entered" from="EditorHUD/ObjectTransform" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/ObjectTransform" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x" to="EditorHUD" method="_on_x_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y" to="EditorHUD" method="_on_y_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z" to="EditorHUD" method="_on_z_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y_rot" to="EditorHUD" method="_on_y_rot_value_changed"]
+[connection signal="mouse_entered" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD/AddObjects" method="_on_ShowMenu_pressed"]
 [connection signal="item_selected" from="EditorHUD/AddObjects/ItemList" to="EditorHUD/AddObjects" method="_on_ItemList_item_selected"]
+[connection signal="mouse_entered" from="EditorHUD/AddObjects/ItemList" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/AddObjects/ItemList" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="export_confirmed" from="EditorHUD/ExportDialog" to="." method="_on_ExportDialog_export_confirmed"]
+[connection signal="mouse_entered" from="EditorHUD/ExportDialog" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/ExportDialog" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/ExportDialog/Cancel" to="EditorHUD/ExportDialog" method="_on_Cancel_pressed"]
 [connection signal="pressed" from="EditorHUD/ExportDialog/Export" to="EditorHUD/ExportDialog" method="_on_Export_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD" method="_on_Pause_Back_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD" method="_on_SaveAndExit_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveWithoutExit" to="EditorHUD" method="_on_SaveWithoutExit_pressed"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
+[connection signal="mouse_entered" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
+[connection signal="mouse_entered" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]

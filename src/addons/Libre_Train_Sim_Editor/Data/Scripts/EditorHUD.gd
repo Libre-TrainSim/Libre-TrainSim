@@ -8,14 +8,17 @@ extends CanvasLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+#	if Engine.is_editor_hint():
+	register_signals_for_escaping_mouse_clicks_from_ui(self)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	handle_object_transform_field()
+	pass
 	
 func handle_object_transform_field():
+	$ObjectName/Name/Duplicate.visible = get_parent().selected_object_type == "Building"
 	if not $ObjectTransform.visible:
 		return
 	var selected_object = get_parent().selected_object
@@ -33,15 +36,24 @@ func _input(event):
 		else:
 			$Pause.show()
 			get_tree().paused = true
+	
+	handle_object_transform_field()
 
+	
+
+func update_ShowSettingsButton():
+	if not $Settings.visible:
+		$ShowSettingsButton.text = "Show Settings"
+	else:
+		$ShowSettingsButton.text = "Hide Settings"
 
 func _on_ShowSettings_pressed():
 	if $Settings.visible:
 		hide_settings()
-		$ShowSettingsButton.text = "Show Settings"
 	else:
 		show_settings()
-		$ShowSettingsButton.text = "Hide Settings"
+	update_ShowSettingsButton()
+		
 	
 func hide_settings():
 	$Settings.hide()
@@ -126,3 +138,26 @@ func ensure_rail_settings():
 	show_settings()
 	if $Settings/TabContainer.current_tab > 2:
 		$Settings/TabContainer.current_tab = 0
+
+
+func  _on_DuplicateObject_pressed():
+	get_parent().duplicate_selected_object()
+
+
+var mouse_over_ui = false
+var mouse_ui_index = 0
+func _on_Mouse_entered_UI():
+	mouse_ui_index += 1
+	mouse_over_ui = mouse_ui_index != 0
+	
+func _on_Mouse_exited_UI():
+	mouse_ui_index -= 1
+	mouse_over_ui =  mouse_ui_index != 0
+
+func register_signals_for_escaping_mouse_clicks_from_ui(node : Node) -> void:
+	print("CONNECTING SIGNALS:::::")
+	for child in node.get_children():
+		if child.has_signal("mouse_entered"): 
+			child.connect("mouse_entered", child.find_parent("EditorHUD"), "_on_Mouse_entered_UI")
+			child.connect("mouse_exited", child.find_parent("EditorHUD"), "_on_Mouse_exited_UI")
+		register_signals_for_escaping_mouse_clicks_from_ui(child)

@@ -186,9 +186,19 @@ func buildRail():
 		multimesh.set_instance_transform(i, get_local_transform_at_rail_distance(distance))
 		distance += buildDistance
 
+# local to "Rails" node
 func get_transform_at_rail_distance(distance):
 	var locTransform = get_local_transform_at_rail_distance(distance)
 	return Transform(locTransform.basis.rotated(Vector3(0,1,0), deg2rad(rotation_degrees.y)) ,translation + locTransform.origin.rotated(Vector3(0,1,0), deg2rad(rotation_degrees.y)))
+
+# completely global
+func get_global_transform_at_rail_distance(distance):
+	var locTransform = get_local_transform_at_rail_distance(distance)
+	var global_rot = global_transform.basis.get_euler()
+	var global_pos = global_transform.origin
+	return Transform(locTransform.basis.rotated(Vector3(0,1,0), global_rot.y), global_pos + locTransform.origin.rotated(Vector3(0,1,0), global_rot.y))
+
+# local to this rail
 func get_local_transform_at_rail_distance(distance):
 	if parallelRail == "":
 		return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) )
@@ -243,11 +253,20 @@ func get_deg_at_RailDistance(distance):
 func get_local_deg_at_RailDistance(distance):
 	return circle_get_deg(radius, distance)
 
+# completely global
+func get_shifted_global_pos_at_RailDistance(distance, shift):
+	var local_pos = get_shifted_local_pos_at_RailDistance(distance, shift)
+	var global_rot = global_transform.basis.get_euler()
+	var global_pos = global_transform.origin
+	return global_pos + local_pos.rotated(Vector3(0,1,0), global_rot.y)
+
+# local to "Rails" node
 func get_shifted_pos_at_RailDistance(distance, shift):
 	return get_shifted_local_pos_at_RailDistance(distance, shift).rotated(Vector3(0,1,0),deg2rad(rotation_degrees.y)) + startpos
 #	var railpos = get_pos_at_RailDistance(distance)
 #	return railpos + (Vector3(1, 0, 0).rotated(Vector3(0,1,0), deg2rad(get_deg_at_RailDistance(distance)+90))*shift)
 
+# local to this rail
 func get_shifted_local_pos_at_RailDistance(distance, shift):
 	var newRadius = radius + shift
 	if radius == 0:

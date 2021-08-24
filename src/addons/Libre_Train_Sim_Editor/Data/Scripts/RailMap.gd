@@ -116,11 +116,11 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	var player_pos = train_world.player.translation
+	var player_pos = train_world.player.global_transform.origin
 	var player_pos_2d = Vector2(player_pos.x, player_pos.z)
 	
 	$PlayerPolygon.position = player_pos_2d
-	$PlayerPolygon.rotation_degrees = -train_world.player.rotation_degrees.y
+	$PlayerPolygon.rotation = -train_world.player.global_transform.basis.get_euler().y
 	
 	if follow_player == true:
 		camera.position = player_pos_2d
@@ -254,19 +254,19 @@ func build_rail(rail) -> Array:
 		var point_count = int(length / LINE_POINT_INTERVAL) + 1
 		# add point count many points along track
 		for i in range(0,point_count):
-			var rail_pos = rail.get_shifted_pos_at_RailDistance(i*LINE_POINT_INTERVAL, rail.distanceToParallelRail)
+			var rail_pos = rail.get_shifted_global_pos_at_RailDistance(i*LINE_POINT_INTERVAL, rail.distanceToParallelRail)
 			points.append(Vector2(rail_pos.x, rail_pos.z))
 		# add end point
-		var rail_pos = rail.get_shifted_pos_at_RailDistance(length, rail.distanceToParallelRail)
+		var rail_pos = rail.get_shifted_global_pos_at_RailDistance(length, rail.distanceToParallelRail)
 		points.append(Vector2(rail_pos.x, rail_pos.z))
 	else:
 		var length = rail.length
 		var point_count = int(length / LINE_POINT_INTERVAL) + 1
 		# add point count many points along track
 		for i in range(0,point_count):
-			var rail_transform = rail.get_transform_at_rail_distance(i*LINE_POINT_INTERVAL)
+			var rail_transform = rail.get_global_transform_at_rail_distance(i*LINE_POINT_INTERVAL)
 			points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# add end point
-		var rail_transform = rail.get_transform_at_rail_distance(rail.length)
+		var rail_transform = rail.get_global_transform_at_rail_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 	return points

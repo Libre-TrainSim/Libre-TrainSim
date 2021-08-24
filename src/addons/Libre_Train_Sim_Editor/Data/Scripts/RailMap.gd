@@ -14,10 +14,13 @@ var overlay = false
 
 var active_route_rect = Rect2(2e31, 2e31, 0, 0)
 
+var chunk_origin = Vector2()
 func init_map():
 	if train_world == null:
 		print("RAILMAP: Could not find world! Despawning!")
 		queue_free()
+	
+	train_world.connect("bchunk_updated_world_transform", self, "_on_chunk_world_transform_update")
 	
 	var rails = train_world.get_node("Rails").get_children()
 	for rail in rails:
@@ -116,14 +119,15 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	var player_pos = train_world.player.global_transform.origin
+	var player_pos = train_world.player.translation
 	var player_pos_2d = Vector2(player_pos.x, player_pos.z)
 	
-	$PlayerPolygon.position = player_pos_2d
-	$PlayerPolygon.rotation = -train_world.player.global_transform.basis.get_euler().y
+	# subtracting chunk origin is necessary!
+	$PlayerPolygon.position = player_pos_2d - chunk_origin
+	$PlayerPolygon.rotation = -train_world.player.rotation.y
 	
 	if follow_player == true:
-		camera.position = player_pos_2d
+		camera.position = $PlayerPolygon.position
 		camera.rotation_degrees = $PlayerPolygon.rotation_degrees + 90
 	else:
 		var movement = mouse_motion * $Camera2D.zoom.x * 0.5
@@ -150,7 +154,7 @@ func update_active_lines_width(width):
 func create_station(signal_instance):
 	var index = train_world.player.stations["nodeName"].find(signal_instance.name)
 	if index < 0:
-		print("Station Name not found!")
+		print("Station Name not found: ", signal_instance.name, "! Probably not a stop in the current scenario!")
 		return
 	
 	var node = Node2D.new()
@@ -188,6 +192,11 @@ func _on_signal_changed(signal_instance):
 		sprite.texture = signal_orange
 	else:
 		sprite.texture = signal_green
+
+
+func _on_chunk_world_transform_update(deltaTranslation):
+	print("RAIL MAP: UPDATING WORLD ORIGIN")
+	chunk_origin += Vector2(deltaTranslation.x, deltaTranslation.z)
 
 
 func create_line2d_from_rail(rail):

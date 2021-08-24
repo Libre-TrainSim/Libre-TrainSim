@@ -258,10 +258,6 @@ func unload_chunk(position : Vector3):
 	
 	
 func load_chunk(position : Vector3):
-	
-
-	
-	
 	print("Loading Chunk " + chunk2String(position))
 	
 	var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
@@ -436,10 +432,11 @@ func checkBigChunk():
 		updateWorldTransform_bchunk(deltaChunk)
 		
 
-
+signal bchunk_updated_world_transform(deltaTranslation)
 func updateWorldTransform_bchunk(deltachunk):
 	var deltaTranslation = Vector3(deltachunk.x*5000, 0, deltachunk.y*5000)
-	print(deltaTranslation)
+	print("UPDATING WORLD ORIGIN: ",deltaTranslation)
+	emit_signal("bchunk_updated_world_transform", deltaTranslation)
 	for player in $Players.get_children():
 		player.translation += deltaTranslation
 	for rail in $Rails.get_children():

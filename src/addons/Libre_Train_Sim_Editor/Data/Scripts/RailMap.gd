@@ -5,9 +5,9 @@ const LINE_POINT_INTERVAL = 10 # 1 line point for every 10 meters of track
 onready var train_world = find_parent("World")
 onready var camera = $Camera2D
 
-onready var signal_green = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/GreenSignal.png")
-onready var signal_red = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/RedSignal.png")
-onready var signal_orange = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/OrangeSignal.png")
+onready var signal_green = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/GreenSignalArrow.svg")
+onready var signal_red = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/RedSignalArrow.svg")
+onready var signal_orange = preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/OrangeSignalArrow.svg")
 
 var follow_player = true
 var overlay = false
@@ -15,6 +15,7 @@ var overlay = false
 var active_route_rect = Rect2(2e31, 2e31, 0, 0)
 
 var chunk_origin = Vector2()
+
 func init_map():
 	if train_world == null:
 		print("RAILMAP: Could not find world! Despawning!")
@@ -176,7 +177,8 @@ func create_station(signal_instance):
 func create_signal(signal_instance):
 	var sprite = Sprite.new()
 	sprite.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
-	sprite.scale = Vector2(0.2, 0.2)
+	sprite.scale = Vector2(0.1, 0.1)
+	sprite.rotation_degrees = -signal_instance.rotation_degrees.y + 90
 	sprite.name = signal_instance.name
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
@@ -212,12 +214,12 @@ func create_line2d_from_rail(rail):
 	line.name = rail.name
 	
 	if train_world.player.baked_route.has(rail.name):
-		line.default_color = Color.yellow
+		line.default_color = Color("9eea18")
 		$RouteLines.add_child(line)
 		line.owner = $RouteLines
 		find_max_coords(points)
 	else:
-		line.default_color = Color.cornflower
+		line.default_color = Color("4b86ff")
 		$RailLines.add_child(line)
 		line.owner = $RailLines
 	

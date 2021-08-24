@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/MobileHUD.tscn" type="PackedScene" id=2]
@@ -17,6 +17,12 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/NextTable.png" type="Texture" id=15]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=16]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/RailMap.tscn" type="PackedScene" id=18]
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("Map/ViewportContainer/RailMap")
+
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("Map/ViewportContainer/RailMap")
 
 [sub_resource type="Animation" id=1]
 tracks/0/type = "value"
@@ -100,76 +106,6 @@ tracks/1/keys = {
 [node name="HUD" type="CanvasLayer"]
 pause_mode = 2
 script = ExtResource( 6 )
-
-[node name="Map" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ViewportContainer" type="ViewportContainer" parent="Map"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-stretch = true
-stretch_shrink = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RailMap" parent="Map/ViewportContainer" instance=ExtResource( 18 )]
-size = Vector2( 400, 300 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="FullMap" type="TextureRect" parent="Map"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -395.056
-margin_top = -280.507
-margin_right = 493.944
-margin_bottom = 292.493
-rect_scale = Vector2( 0.9, 0.9 )
-texture = ExtResource( 3 )
-expand = true
-stretch_mode = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MapRenderTexture" type="TextureRect" parent="Map/FullMap"]
-anchor_left = 0.026
-anchor_top = 0.085
-anchor_right = 0.956
-anchor_bottom = 0.917
-margin_right = 0.26001
-rect_clip_content = true
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="OverlayMap" type="TextureRect" parent="Map"]
-visible = false
-anchor_left = 0.01
-anchor_top = 0.5
-anchor_right = 0.01
-anchor_bottom = 0.5
-margin_top = -160.0
-margin_right = 180.0
-margin_bottom = 160.0
-rect_clip_content = true
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="IngameInformation" type="Control" parent="."]
 anchor_right = 1.0
@@ -340,6 +276,71 @@ scale = Vector2( 0.4, 0.4 )
 
 [node name="TrainInfoAbove" parent="IngameInformation" instance=ExtResource( 7 )]
 visible = false
+
+[node name="Map" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Map"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RailMap" parent="Map/ViewportContainer" instance=ExtResource( 18 )]
+size = Vector2( 800, 600 )
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="FullMap" type="Control" parent="Map"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="Map/FullMap"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.25098, 0.25098, 0.25098, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RenderTexture" type="TextureRect" parent="Map/FullMap"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+texture = SubResource( 4 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OverlayMap" type="TextureRect" parent="Map"]
+visible = false
+anchor_right = 0.33
+anchor_bottom = 1.0
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource( 5 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MobileHUD" parent="." instance=ExtResource( 2 )]
 visible = false

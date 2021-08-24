@@ -38,15 +38,20 @@ func open_full_map():
 	self.set_process_input(true)
 	self.size = OS.window_size
 	overlay = false
+	$RouteLines.show()
+	$RailLines.show()
+	$Signals.show()
 
 
 func open_overlay_map():
 	self.set_process(true)
 	self.set_process_input(true)
-	follow_player = true
 	var os_size = OS.window_size
 	self.size = Vector2(os_size.x*0.33,os_size.y)
 	overlay = true
+	$Signals.hide()
+	$RailLines.hide()
+	$RouteLines.show()
 
 
 func close_map():
@@ -147,17 +152,19 @@ func create_line2d_from_rail(rail):
 	# large map, but! line points are measured in pixels. No problem! :)
 	var points = build_rail(rail)
 	line.points = points
-	
-	if train_world.player.baked_route.has(rail.name):
-		line.default_color = Color.yellow
-	else:
-		line.default_color = Color.cornflower
-	
 	line.width = 1.435
 	line.antialiased = true
 	line.name = rail.name
-	$RailLines.add_child(line)
-	line.owner = $RailLines
+	
+	if train_world.player.baked_route.has(rail.name):
+		line.default_color = Color.yellow
+		$RouteLines.add_child(line)
+		line.owner = $RouteLines
+	else:
+		line.default_color = Color.cornflower
+		$RailLines.add_child(line)
+		line.owner = $RailLines
+	
 
 
 # like Curve2D.tesselate 

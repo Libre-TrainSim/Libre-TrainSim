@@ -35,6 +35,8 @@ z_index = 1
 
 [node name="RailLines" type="Node2D" parent="."]
 
+[node name="RouteLines" type="Node2D" parent="."]
+
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.1, 0.1 )

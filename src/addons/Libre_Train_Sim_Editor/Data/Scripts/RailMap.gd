@@ -249,24 +249,19 @@ func tessellate_rail(rail):
 func build_rail(rail) -> Array:
 	var points = []
 
+	var length
 	if rail.parRail != null:
-		var length = rail.parRail.length
-		var point_count = int(length / LINE_POINT_INTERVAL) + 1
-		# add point count many points along track
-		for i in range(0,point_count):
-			var rail_pos = rail.get_shifted_global_pos_at_RailDistance(i*LINE_POINT_INTERVAL, rail.distanceToParallelRail)
-			points.append(Vector2(rail_pos.x, rail_pos.z))
-		# add end point
-		var rail_pos = rail.get_shifted_global_pos_at_RailDistance(length, rail.distanceToParallelRail)
-		points.append(Vector2(rail_pos.x, rail_pos.z))
+		length = rail.parRail.length
 	else:
-		var length = rail.length
-		var point_count = int(length / LINE_POINT_INTERVAL) + 1
-		# add point count many points along track
-		for i in range(0,point_count):
-			var rail_transform = rail.get_global_transform_at_rail_distance(i*LINE_POINT_INTERVAL)
-			points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
-		# add end point
-		var rail_transform = rail.get_global_transform_at_rail_distance(rail.length)
+		length = rail.length
+	
+	var point_count = int(length / LINE_POINT_INTERVAL) + 1
+	# add point count many points along track
+	for i in range(0,point_count):
+		var rail_transform = rail.get_global_transform_at_rail_distance(i*LINE_POINT_INTERVAL)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
+	# add end point
+	var rail_transform = rail.get_global_transform_at_rail_distance(rail.length)
+	points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
+	
 	return points

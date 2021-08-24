@@ -8,7 +8,8 @@ onready var camera = $Camera2D
 var follow_player = true
 var overlay = false
 
-func _ready() -> void:
+
+func init_map():
 	if train_world == null:
 		print("RAILMAP: Could not find world! Despawning!")
 		queue_free()

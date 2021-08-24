@@ -203,8 +203,13 @@ func ready(): ## Called by World!
 		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
 		insideLight = true
 		frontLight = true
-		
+	
 	print("Train " + name + " spawned sucessfully at " + currentRail.name)
+
+
+func init_map():
+	$HUD.init_map()
+
 
 var initialSwitchCheck = false
 var processLongDelta = 0.5 # Definition of Period, every which seconds the function is called.
@@ -685,7 +690,7 @@ func handle_signal(signalname):
 			3:
 				endStation = true
 				stationBeginning = false
-		currentStationName = stations["stationName"][current_station_index]		
+		currentStationName = stations["stationName"][current_station_index]
 		isInStation = false
 		platformSide = signal.platformSide
 		stationHaltTime = stations["haltTime"][current_station_index]

@@ -20,14 +20,13 @@ func _ready():
 		$TextBox/RichTextLabel.hide()
 		$TextBox/RichTextLabelMobile.show()
 		$TextBox/Ok.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
-	
-	$Map/ViewportContainer.mouse_filter
+
+
+func init_map():
 	$Map/ViewportContainer.hide()
 	$Map/ViewportContainer/RailMap.render_target_update_mode = Viewport.UPDATE_ALWAYS
 	$Map/ViewportContainer/RailMap.handle_input_locally = true
-	$Map/FullMap/MapRenderTexture.texture = $Map/ViewportContainer/RailMap.get_texture()
-	$Map/OverlayMap.texture = $Map/ViewportContainer/RailMap.get_texture()
-
+	$Map/ViewportContainer/RailMap.init_map()
 
 
 func _process(delta):

@@ -12,6 +12,7 @@ onready var signal_orange = preload("res://addons/Libre_Train_Sim_Editor/Data/Mi
 var follow_player = true
 var overlay = false
 
+var active_route_rect = Rect2(2e31, 2e31, 0, 0)
 
 func init_map():
 	if train_world == null:
@@ -36,22 +37,53 @@ func init_map():
 func open_full_map():
 	self.set_process(true)
 	self.set_process_input(true)
+	
 	self.size = OS.window_size
 	overlay = false
+	
 	$RouteLines.show()
 	$RailLines.show()
 	$Signals.show()
+	
+	follow_player = true
+	$Camera2D.zoom = Vector2(0.1, 0.1)
+	$Camera2D.rotation = 0
+	
+	update_active_lines_width(1.435)
+	$PlayerPolygon.scale = Vector2(1,1)
 
 
 func open_overlay_map():
 	self.set_process(true)
-	self.set_process_input(true)
+	self.set_process_input(false)
+	
 	var os_size = OS.window_size
 	self.size = Vector2(os_size.x*0.33,os_size.y)
+	
 	overlay = true
+	follow_player = false
+	
 	$Signals.hide()
 	$RailLines.hide()
 	$RouteLines.show()
+	
+	var zoomx
+	var zoomy
+	if active_route_rect.size.x > active_route_rect.size.y:
+		camera.rotation = 90
+		zoomx = active_route_rect.size.x / self.size.y
+		zoomy = active_route_rect.size.y / self.size.x
+	else:
+		camera.rotation = 0
+		zoomx = active_route_rect.size.x / self.size.x
+		zoomy = active_route_rect.size.y / self.size.y
+	
+	var zoom = max(zoomx, zoomy)*1.2 # 120% to make sure labels are not cut off
+	$Camera2D.zoom = Vector2(zoom, zoom)  # mazda :^)
+	$Camera2D.position = active_route_rect.position + (active_route_rect.size/2)
+	
+	update_active_lines_width(1.435 * zoom)
+	$PlayerPolygon.scale = 4*Vector2(zoom, zoom)
 
 
 func close_map():
@@ -66,25 +98,21 @@ func _input(event: InputEvent) -> void:
 		zoom.x = clamp(zoom.x*0.8, 0.01, 2.5)
 		zoom.y = clamp(zoom.y*0.8, 0.01, 2.5)
 		$Camera2D.zoom = zoom
-		for node in $Stations.get_children():
-			node.scale = zoom.clamped(1)*0.33
 		
 	if event.is_action("zoom_out"):
 		var zoom = $Camera2D.zoom
 		zoom.x = clamp(zoom.x*1.25, 0.01, 3)
 		zoom.y = clamp(zoom.y*1.25, 0.01, 3)
 		$Camera2D.zoom = zoom
-		for node in $Stations.get_children():
-			node.scale = zoom.clamped(1)*0.33
 	
-	if event.is_action_pressed("map_center_player") and not overlay:
-		follow_player = true
-	
-	if event is InputEventMouseButton and not overlay:
-		if event.button_index == BUTTON_MIDDLE:
-			follow_player = false
-	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
-		mouse_motion -= event.relative
+	if not overlay:
+		if event.is_action_pressed("map_center_player"):
+			follow_player = true
+		if event is InputEventMouseButton:
+			if event.button_index == BUTTON_MIDDLE:
+				follow_player = false
+		if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
+			mouse_motion -= event.relative
 
 
 func _process(delta: float) -> void:
@@ -101,6 +129,22 @@ func _process(delta: float) -> void:
 		var movement = mouse_motion * $Camera2D.zoom.x * 0.5
 		camera.position += movement.rotated(camera.rotation)
 		mouse_motion = Vector2(0,0)
+	
+	update_labels()
+
+
+func update_labels():
+	for node in $Stations.get_children():
+		node.rotation_degrees = camera.rotation_degrees# - 30
+		if overlay:
+			node.scale = camera.zoom * 0.25
+		else:
+			node.scale = camera.zoom.clamped(1)*0.25
+
+
+func update_active_lines_width(width):
+	for line in $RouteLines.get_children():
+		line.width = width
 
 
 func create_station(signal_instance):
@@ -110,7 +154,7 @@ func create_station(signal_instance):
 		return
 	
 	var node = Node2D.new()
-	node.rotation_degrees = -45
+	node.rotation_degrees = -30
 	#node.scale = Vector2(0.1, 0.1)
 	node.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
 	node.name = signal_instance.name
@@ -162,12 +206,36 @@ func create_line2d_from_rail(rail):
 		line.default_color = Color.yellow
 		$RouteLines.add_child(line)
 		line.owner = $RouteLines
+		find_max_coords(points)
 	else:
 		line.default_color = Color.cornflower
 		$RailLines.add_child(line)
 		line.owner = $RailLines
 	
 
+func find_max_coords(points):
+	var min_x = 2e31
+	var max_x = -2e31
+	var min_y = 2e31
+	var max_y = -2e31
+	
+	for p in points:
+		max_x = max(max_x, p.x)
+		min_x = min(min_x, p.x)
+		max_y = max(max_y, p.y)
+		min_y = min(min_y, p.y)
+	
+	var rect_max_x = active_route_rect.position.x + active_route_rect.size.x
+	var rect_max_y = active_route_rect.position.y + active_route_rect.size.y
+	
+	if min_x < active_route_rect.position.x:
+		active_route_rect.position.x = min_x
+	if min_y < active_route_rect.position.y:
+		active_route_rect.position.y = min_y
+	if max_x > rect_max_x:
+		active_route_rect.size.x = max_x - active_route_rect.position.x
+	if max_y > rect_max_y:
+		active_route_rect.size.y = max_y - active_route_rect.position.y
 
 # like Curve2D.tesselate 
 # reduces the amount of points per rail

@@ -96,8 +96,10 @@ func _process(delta: float) -> void:
 	
 	if follow_player == true:
 		camera.position = player_pos_2d
+		camera.rotation_degrees = $PlayerPolygon.rotation_degrees + 90
 	else:
-		camera.position += mouse_motion * $Camera2D.zoom.x * 0.5
+		var movement = mouse_motion * $Camera2D.zoom.x * 0.5
+		camera.position += movement.rotated(camera.rotation)
 		mouse_motion = Vector2(0,0)
 
 

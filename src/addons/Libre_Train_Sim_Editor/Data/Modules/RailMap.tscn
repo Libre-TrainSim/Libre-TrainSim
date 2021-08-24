@@ -38,6 +38,8 @@ z_index = 1
 [node name="RouteLines" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+rotation = 1.5708
+rotating = true
 current = true
 zoom = Vector2( 0.1, 0.1 )
 

@@ -4,8 +4,8 @@ extends Node
 onready var Signal = get_parent()
 onready var world = find_parent("World")
 
-var orange = false
-var blinking = false
+var is_orange = false
+var is_blinking = false
 
 func _ready():
 	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
@@ -24,28 +24,28 @@ func _process(delta):
 	if timer > 1:
 		timer = 0
 		update()
-		Signal.orange = orange
+		Signal.is_orange = is_orange
 		
 func update():
 	if not Signal.is_in_group("Signal"):
 		printerr("Visual Instance is not directly attached at a SignalNode")
 		return
-	orange = false
+	is_orange = false
 	if world == null:
 		world = find_parent("World")
 	update_screen2()
 	update_screen1()
-	if Signal.warnSpeed != -1 and Signal.status == 1 and not blinking:
+	if Signal.warnSpeed != -1 and Signal.status == 1 and not is_blinking:
 		off()
-		blinking = true
+		is_blinking = true
 		return
-	blinking = false
+	is_blinking = false
 	if Signal.status == 0:
 		red()
 	elif Signal.status == 1:
 		if Signal.signalAfterNode != null and Signal.signalAfterNode.status == 0:
 			orange()
-			orange = true
+			is_orange = true
 			return
 		green()
 	elif Signal.status < 0:

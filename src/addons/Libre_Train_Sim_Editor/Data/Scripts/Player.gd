@@ -1127,7 +1127,6 @@ func spawnWagons():
 	for wagon in wagons:
 		var wagonNode = get_node(wagon)
 		var newWagon = wagonNode.duplicate()
-		newWagon.owner = self.owner
 		newWagon.show()
 		newWagon.baked_route = baked_route
 		newWagon.baked_route_direction = baked_route_direction
@@ -1141,6 +1140,7 @@ func spawnWagons():
 		else:
 			nextWagonPosition += wagonNode.length + wagonDistance
 		get_parent().add_child(newWagon)
+		newWagon.owner = self.owner
 		wagonsI.append(newWagon)
 	
 	# Handle Cabin:

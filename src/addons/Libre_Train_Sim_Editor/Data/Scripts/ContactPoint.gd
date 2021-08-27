@@ -7,7 +7,7 @@ export var affectedSignal = ""
 export var bySpecificTrain = ""
 export var newStatus = 1
 export var newSpeed = -1
-export var affectTime = 1 # is 1 second okay?
+export var affectTime = 0.1 # is 1 second okay?
 
 export (String) var attachedRail
 export (int) var onRailPosition

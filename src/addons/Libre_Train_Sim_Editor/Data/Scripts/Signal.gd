@@ -5,7 +5,8 @@ onready var world = find_parent("World")
 
 
 
-export var status = 0 # 0: Red, 1: Green, -1: Off,
+export var status = 0 setget set_status # 0: Red, 1: Green, -1: Off,
+signal status_changed(signal_instance)
 
 var signalAfter = "" # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 var signalAfterNode # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
@@ -19,8 +20,7 @@ var warnSpeed = -1 # Displays the speed of the following speedlimit. Just used f
 
 export var blockSignal = false
 
-var is_orange = false
-
+var is_orange = false setget set_orange
 
 
 export var visualInstancePath = ""
@@ -40,7 +40,7 @@ func _process(delta):
 
 	if not Engine.is_editor_hint():
 		if world.time[0] == setPassAtH and world.time[1] == setPassAtM and world.time[2] == setPassAtS:
-			status = 1
+			set_status(1)
 	updateVisualInstance()
 
 func updateVisualInstance():
@@ -72,7 +72,7 @@ func updateVisualInstance():
 
 func update():
 	if Engine.is_editor_hint() and blockSignal:
-		status = 1
+		set_status(1)
 	if world == null:
 		world = find_parent("World")
 	if signalAfterNode == null and signalAfter != "":
@@ -89,24 +89,21 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		update()
-		
-
-
+	
 	if blockSignal:
-		status = 1
+		set_status(1)
 	
 	setToRail(true)
-
-
 	update()
 
-	
+# signals necessary for RailMap to work
+func set_status(new_val):
+	status = new_val
+	emit_signal("status_changed", self)
 
-
-
-
-
-
+func set_orange(new_val):
+	is_orange = new_val
+	emit_signal("status_changed", self)
 
 func setToRail(newvar):
 	var world = find_parent("World")
@@ -121,10 +118,10 @@ func setToRail(newvar):
 		if not forward:
 			self.rotation_degrees.y += 180
 
+
 func giveSignalFree():
 	if blockSignal:
-		status = 1
-
+		set_status(1)
 
 
 func get_scenario_data():
@@ -137,8 +134,9 @@ func get_scenario_data():
 	d.blockSignal = blockSignal
 	return d
 
+
 func set_scenario_data(d):
-	status = d.status
+	set_status(d.status)
 	setPassAtH = d.setPassAtH
 	setPassAtM = d.setPassAtM
 	setPassAtS = d.setPassAtS
@@ -147,7 +145,7 @@ func set_scenario_data(d):
 
 
 func reset():
-	status = 0
+	set_status(0)
 	setPassAtH = 25
 	setPassAtM = 0
 	setPassAtS = 0

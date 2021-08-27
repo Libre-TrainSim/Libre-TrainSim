@@ -6,6 +6,13 @@ extends CanvasLayer
 
 onready var player = get_parent()
 
+enum MapStatus {
+	CLOSED = 0,
+	OVERLAY = 1,
+	FULL = 2
+}
+var map_status = MapStatus.CLOSED
+
 func _ready():
 	$MobileHUD.visible = Root.mobile_version
 	if Root.mobile_version:
@@ -14,7 +21,14 @@ func _ready():
 		$TextBox/RichTextLabelMobile.show()
 		$TextBox/Ok.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 
-	
+
+func init_map():
+	$Map/ViewportContainer.hide()
+	$Map/ViewportContainer/RailMap.render_target_update_mode = Viewport.UPDATE_ALWAYS
+	$Map/ViewportContainer/RailMap.handle_input_locally = true
+	$Map/ViewportContainer/RailMap.init_map()
+
+
 func _process(delta):
 	if $TextBox.visible:
 		if Input.is_action_just_pressed("ui_accept"):
@@ -27,6 +41,8 @@ func _process(delta):
 	check_nextTable(delta)
 	
 	check_trainInfo(delta)
+	
+	check_map(delta)
 	
 	if sending:
 		messaget += delta
@@ -105,6 +121,25 @@ func check_nextTable(delta):
 	if Input.is_action_just_pressed("nextTable"):
 		$IngameInformation/Next.visible = !$IngameInformation/Next.visible
 
+
+
+func check_map(delta):
+	if Input.is_action_just_pressed("map_open"):
+		map_status = (map_status + 1) % 3
+		match map_status:
+			MapStatus.CLOSED:
+				$Map/ViewportContainer/RailMap.close_map()
+				$Map.hide()
+			MapStatus.OVERLAY:
+				$Map/ViewportContainer/RailMap.open_overlay_map()
+				$Map.show()
+				$Map/FullMap.hide()
+				$Map/OverlayMap.show()
+			MapStatus.FULL:
+				$Map/ViewportContainer/RailMap.open_full_map()
+				$Map.show()
+				$Map/FullMap.show()
+				$Map/OverlayMap.hide()
 
 
 func _on_QuitMenu_pressed():

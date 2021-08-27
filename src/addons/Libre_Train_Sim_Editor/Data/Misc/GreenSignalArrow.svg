@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="43"
+   height="58"
+   viewBox="0 0 43.000001 58"
+   sodipodi:docname="GreenSignalArrow.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="9.0683715"
+     inkscape:cx="0.93732375"
+     inkscape:cy="24.039597"
+     inkscape:window-width="1920"
+     inkscape:window-height="1042"
+     inkscape:window-x="0"
+     inkscape:window-y="18"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="false"
+     inkscape:snap-bbox-midpoints="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <sodipodi:guide
+       position="21.333331,21.333332"
+       orientation="1,0"
+       id="guide1434" />
+  </sodipodi:namedview>
+  <defs
+     id="defs6" />
+  <g
+     id="g8"
+     transform="translate(3.5762787e-7,14.401875)">
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.37415;stroke-dashoffset:2.11654;stroke-opacity:1"
+       id="path526"
+       cx="21.499929"
+       cy="21.823332"
+       rx="20.146255"
+       ry="20.146257" />
+    <ellipse
+       style="fill:#3a9929;fill-opacity:1;stroke:none;stroke-width:2.1299;stroke-dashoffset:2.11654;stroke-opacity:1"
+       id="ellipse2209"
+       cx="21.499929"
+       cy="21.823332"
+       rx="18.073582"
+       ry="18.073584" />
+    <path
+       id="ellipse1079"
+       style="color:#000000;fill:#ffffff;stroke-dashoffset:2.11654;-inkscape-stroke:none"
+       d="M 21.500584,-13.911875 10.094334,2.566641 c 7.059984,-4.0760844 15.752516,-4.0760846 22.8125,0 z" />
+  </g>
+</svg>

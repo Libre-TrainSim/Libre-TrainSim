@@ -20,8 +20,7 @@ var warnSpeed = -1 # Displays the speed of the following speedlimit. Just used f
 
 export var blockSignal = false
 
-var orange = false setget set_orange
-
+var is_orange = false setget set_orange
 
 
 export var visualInstancePath = ""
@@ -103,7 +102,7 @@ func set_status(new_val):
 	emit_signal("status_changed", self)
 
 func set_orange(new_val):
-	orange = new_val
+	is_orange = new_val
 	emit_signal("status_changed", self)
 
 func setToRail(newvar):

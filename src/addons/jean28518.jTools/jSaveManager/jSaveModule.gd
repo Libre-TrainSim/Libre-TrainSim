@@ -38,6 +38,6 @@ func _load_current_config():
 	
 	var dir = Directory.new()
 	if not dir.dir_exists(save_path.get_base_dir()):
-		Directory.make_dir_recursiv(save_path.get_base_dir())
+		dir.make_dir_recursive(save_path.get_base_dir())
 	
 	_config.load(save_path)

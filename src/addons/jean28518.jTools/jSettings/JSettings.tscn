@@ -193,7 +193,7 @@ margin_right = 473.0
 margin_bottom = 449.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
-text = "Main Volume"
+text = "MENU_MAIN_VOLUME"
 
 [node name="MainVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
@@ -215,7 +215,7 @@ margin_right = 473.0
 margin_bottom = 498.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
-text = "Game Volume"
+text = "MENU_GAME_VOLUME"
 
 [node name="GameVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0
@@ -237,7 +237,7 @@ margin_right = 473.0
 margin_bottom = 547.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
-text = "MENU_MUSIC"
+text = "MENU_MUSIC_VOLUME"
 
 [node name="MusicVolume" type="HSlider" parent="ScrollContainer/GridContainer"]
 margin_left = 477.0

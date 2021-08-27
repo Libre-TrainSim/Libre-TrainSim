@@ -95,8 +95,8 @@ func spawnRandomPerson():
 	personI.add_child(personVI.instance())
 	personI.attachedStation = self
 	personI.transform = getRandomTransformAtPlatform()
-	personI.owner = world
 	personsNode.add_child(personI)
+	personI.owner = world
 	
 	attachedPersons.append(personI)
 	

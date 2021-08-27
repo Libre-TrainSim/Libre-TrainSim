@@ -69,8 +69,8 @@ func _ready():
 		## Create Persons-Node:
 		var personsNode = Spatial.new()
 		personsNode.name = "Persons"
-		personsNode.owner = self
 		add_child(personsNode)
+		personsNode.owner = self
 		
 		for personVisualInstancesPath in personVisualInstancesPathes:
 			personVisualInstances.append(load(personVisualInstancesPath))
@@ -219,7 +219,6 @@ func save_chunk(position):
 
 
 func unload_chunk(position : Vector3):
-	
 	var chunk = $jSaveModule.get_value(chunk2String(position), null)
 	if chunk == null:
 		return

@@ -204,5 +204,6 @@ func update_nextTable(delta):
 				break
 				
 
-	
+func is_full_map_visible():
+	return map_status == MapStatus.FULL
 

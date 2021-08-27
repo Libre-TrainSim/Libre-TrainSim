@@ -381,7 +381,7 @@ func _input(event):
 		
 	if event.is_pressed():
 		# zoom in
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP) and not $HUD.is_full_map_visible():
 			if camera_state == CameraState.CABIN_VIEW:
 				camera_fov_soll = camera_fov + 5
 			elif camera_state == CameraState.OUTER_VIEW:
@@ -389,7 +389,7 @@ func _input(event):
 				has_camera_distance_changed = true
 			# call the zoom function
 		# zoom out
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN) and not $HUD.is_full_map_visible():
 			if camera_state == CameraState.CABIN_VIEW:
 				camera_fov_soll = camera_fov - 5
 			elif camera_state == CameraState.OUTER_VIEW:

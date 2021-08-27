@@ -190,7 +190,7 @@ func _on_signal_changed(signal_instance):
 	var sprite: Sprite = $Signals.get_node(signal_instance.name)
 	if signal_instance.status == 0:
 		sprite.texture = signal_red
-	elif signal_instance.orange == true:
+	elif signal_instance.is_orange == true:
 		sprite.texture = signal_orange
 	else:
 		sprite.texture = signal_green
@@ -247,15 +247,6 @@ func find_max_coords(points):
 		active_route_rect.size.x = max_x - active_route_rect.position.x
 	if max_y > rect_max_y:
 		active_route_rect.size.y = max_y - active_route_rect.position.y
-
-# like Curve2D.tesselate 
-# reduces the amount of points per rail
-# if a rail is 100% straight, it will only output 2 points (start & end)
-# the stronger the curve is, the more points it will output in that area
-func tessellate_rail(rail):
-	# TODO: not super complicated, but I cba right now
-	pass
-
 
 func build_rail(rail) -> Array:
 	var points = []

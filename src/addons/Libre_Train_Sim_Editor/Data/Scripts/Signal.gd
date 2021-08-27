@@ -19,7 +19,7 @@ var warnSpeed = -1 # Displays the speed of the following speedlimit. Just used f
 
 export var blockSignal = false
 
-var orange = false
+var is_orange = false
 
 
 

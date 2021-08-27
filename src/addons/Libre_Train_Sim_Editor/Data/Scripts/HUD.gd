@@ -131,7 +131,7 @@ func update_nextTable(delta):
 			0:
 				$IngameInformation/Next/GridContainer/Signal.texture = redSignal
 			1:
-				if player.nextSignal.orange:
+				if player.nextSignal.is_orange:
 					$IngameInformation/Next/GridContainer/Signal.texture = orangeSignal
 				else:
 					$IngameInformation/Next/GridContainer/Signal.texture = greenSignal

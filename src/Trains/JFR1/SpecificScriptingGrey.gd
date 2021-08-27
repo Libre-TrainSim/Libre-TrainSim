@@ -6,7 +6,7 @@ extends Node
 # var b = "text"
 onready var player = get_parent()
 
-var ready = false
+var is_ready = false
 # Called when the node enters the scene tree for the first time.
 func ready():
 	if player.ai: return
@@ -29,8 +29,8 @@ func ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if player.ai: return
-	if not ready: 
-		ready = true
+	if not is_ready: 
+		is_ready = true
 		ready()
 	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforcedBreaking, player.sifa, player.automaticDriving, player.currentSpeedLimit, player.engine)
 

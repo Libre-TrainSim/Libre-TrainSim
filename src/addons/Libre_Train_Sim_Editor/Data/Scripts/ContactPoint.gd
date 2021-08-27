@@ -7,7 +7,7 @@ export var affectedSignal = ""
 export var bySpecificTrain = ""
 export var newStatus = 1
 export var newSpeed = -1
-export var affectTime = 0
+export var affectTime = 0.1
 
 export (String) var attachedRail
 export (int) var onRailPosition
@@ -26,7 +26,7 @@ func _ready():
 		signals.add_child(self)
 		setToRail(true)
 	if not Engine.is_editor_hint():
-		$Timer.wait_time = affectTime
+		$Timer.wait_time = affectTime # affectTime MUST be > 0!
 		$MeshInstance.queue_free()
 		setToRail(true)
 
@@ -70,7 +70,7 @@ func reset():
 	affectedSignal = ""
 	bySpecificTrain = ""
 	newStatus = 1
-	affectTime = 0
+	affectTime = 0.1
 
 func activateContactPoint(trainName):
 	if affectedSignal == "": return

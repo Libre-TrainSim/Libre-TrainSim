@@ -132,6 +132,8 @@ func get_scenario_settings(): # fills the settings field with saved values
 func save_general_scenario_settings():
 	if currentScenario == "": return
 	var sData = $jSaveModule.get_value("scenario_data", {})
+	if not sData.has(currentScenario):
+		sData[currentScenario] = {}
 	sData[currentScenario]["TimeH"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value
 	sData[currentScenario]["TimeM"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value
 	sData[currentScenario]["TimeS"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value

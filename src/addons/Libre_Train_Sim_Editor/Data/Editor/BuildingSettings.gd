@@ -11,6 +11,9 @@ var requested_content_selector = false
 onready var editor = find_parent("Editor")
 onready var content_selector = editor.get_node("EditorHUD/Content_Selector")
 
+func _ready():
+	configure_mouse_signals($"Material-1")
+
 func _input(event):
 	if not is_instance_valid(current_mesh):
 		hide()
@@ -33,6 +36,7 @@ func set_mesh(mesh : MeshInstance):
 		new_child.get_node("Label").text += String(i)
 		add_child(new_child)
 		new_child.show()
+		configure_mouse_signals(new_child)
 	
 	## Add Update Button:
 	var button = Button.new()
@@ -41,6 +45,8 @@ func set_mesh(mesh : MeshInstance):
 	button.connect("pressed", self, "set_current_config_to_mesh")
 	button.connect("pressed", self, "emit_signal_updated")
 	add_child(button)
+	button.connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
+	button.connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")
 	
 	show()
 
@@ -96,3 +102,9 @@ func get_material_array():
 		else:
 			array.append("")
 	return array
+	
+func configure_mouse_signals(node):
+	node.get_node("LineEdit").connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
+	node.get_node("LineEdit").connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")
+	node.get_node("Button").connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
+	node.get_node("Button").connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")

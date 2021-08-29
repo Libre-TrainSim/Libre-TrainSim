@@ -14,28 +14,56 @@ func _on_ShowMenu_pressed():
 		hide_menu()
 		
 func show_menu():
-	$ItemList.show()
+	$Menu1.show()
 	$ShowMenu.text = " - "
 
 func hide_menu():
-	$ItemList.hide()
+	$Menu1.hide()
+	$RailLogicMenu.hide()
 	$ShowMenu.text = " + "
+	get_parent()._on_dialog_closed()
 
 var current_waiting_index = -1
 func _on_ItemList_item_selected(index):
 	var editor = find_parent("Editor")
-	$ItemList.unselect_all()
+	$Menu1.unselect_all()
 	if index == 0: # Rail
 		editor.add_rail()
+		hide_menu()
 	if index == 1: # Object
 		var content_selector = get_parent().get_node("Content_Selector")
 		content_selector.set_type(content_selector.OBJECTS)
 		content_selector.show()
 		current_waiting_index = 1
-		pass
-		
-	hide_menu()
+		hide_menu()
+	if index == 2: # Rail Logic
+		if find_parent("Editor").selected_object_type != "Rail":
+			find_parent("Editor").send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
+			hide_menu()
+		else:
+			$RailLogicMenu.show()
+
 	
+func _on_RailLogicMenu_item_selected(index):
+	var editor = find_parent("Editor")
+	hide_menu()
+	if find_parent("Editor").selected_object_type != "Rail":
+		find_parent("Editor").send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
+		return
+	match index:
+		0:
+			editor.add_signal_to_selected_rail()
+		1:
+			editor.add_station_to_selected_rail()
+		2: 
+			editor.add_speed_limit_to_selected_rail()
+		3: 
+			editor.add_warn_speed_limit_to_selected_rail()
+		4: 
+			editor.add_contact_point_to_selected_rail()
+			
+		
+	pass
 
 		
 	
@@ -52,3 +80,6 @@ func _on_Content_Selector_resource_selected(complete_path):
 		find_parent("Editor").add_object(complete_path)
 		current_waiting_index = -1
 	pass # Replace with function body.
+
+
+

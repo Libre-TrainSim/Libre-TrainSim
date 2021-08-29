@@ -17,13 +17,13 @@ export var setPassAtS = 0
 export var speed = -1 # SpeedLimit, which will be applied to the train. If -1: Speed Limit won't be changed by overdriving.
 var warnSpeed = -1 # Displays the speed of the following speedlimit. Just used for the player train. It doesn't affect any train..
 
-export var blockSignal = false
+export var blockSignal = false setget on_update_block_signal_setting
 
 var orange = false
 
 
 
-export var visualInstancePath = ""
+export var visualInstancePath = "res://Resources/Basic/RailTypes/Default.tscn"
 export (String) var attachedRail # Internal. Never change this via script.
 var attachedRailNode
 export var forward = true # Internal. Never change this via script.
@@ -38,7 +38,7 @@ func _process(delta):
 		return
 	timer = 0
 
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not Root.Editor:
 		if world.time[0] == setPassAtH and world.time[1] == setPassAtM and world.time[2] == setPassAtS:
 			status = 1
 	updateVisualInstance()
@@ -71,7 +71,7 @@ func updateVisualInstance():
 
 
 func update():
-	if Engine.is_editor_hint() and blockSignal:
+	if (Engine.is_editor_hint() or Root.Editor) and blockSignal:
 		status = 1
 	if world == null:
 		world = find_parent("World")
@@ -153,3 +153,8 @@ func reset():
 	setPassAtS = 0
 	speed = -1
 	blockSignal = false
+
+func on_update_block_signal_setting(new_value):
+	if new_value == false:
+		status = 0
+	blockSignal = new_value

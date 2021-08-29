@@ -4,10 +4,12 @@ extends Spatial
 var type = "ContactPoint"
 
 export var affectedSignal = ""
-export var bySpecificTrain = ""
+export var disabled = false
 export var newStatus = 1
 export var newSpeed = -1
 export var affectTime = 0
+export var enable_for_all_trains = true
+export var bySpecificTrain = ""
 
 export (String) var attachedRail
 export (int) var onRailPosition
@@ -25,7 +27,7 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		setToRail(true)
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not Root.Editor:
 		$Timer.wait_time = affectTime
 		$MeshInstance.queue_free()
 		setToRail(true)
@@ -73,9 +75,10 @@ func reset():
 	affectTime = 0
 
 func activateContactPoint(trainName):
+	if disabled: return
 	if affectedSignal == "": return
-	if bySpecificTrain != "" and trainName != bySpecificTrain: return
-	$Timer.start()
+	if enable_for_all_trains or trainName == bySpecificTrain:
+		$Timer.start()
 
 func _on_Timer_timeout():
 	var signalN = get_parent().get_node(affectedSignal)

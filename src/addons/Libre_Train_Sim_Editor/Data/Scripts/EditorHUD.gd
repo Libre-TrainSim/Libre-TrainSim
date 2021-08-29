@@ -37,7 +37,13 @@ func _input(event):
 			$Pause.show()
 			get_tree().paused = true
 	
+	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == true:
+		
+		$Dummy.grab_focus()
+	
 	handle_object_transform_field()
+	
+
 
 	
 
@@ -78,6 +84,7 @@ func show_current_object_transform():
 
 func _on_ClearCurrentObject_pressed():
 	get_parent().clear_selected_object()
+	_on_dialog_closed()
 
 
 func _on_CurrentObjectRename_pressed():
@@ -86,6 +93,7 @@ func _on_CurrentObjectRename_pressed():
 
 func _on_DeleteCurrentObject_pressed():
 	get_parent().delete_selected_object()
+	_on_dialog_closed()
 
 
 func _on_Pause_Back_pressed():
@@ -132,12 +140,16 @@ func _onObjectName_text_entered(new_text):
 	
 func show_building_settings():
 	show_settings()
-	$Settings/TabContainer.current_tab = 3
+	$Settings/TabContainer.current_tab = 4
+
+func show_signal_settings():
+	show_settings()
+	$Settings/TabContainer.current_tab = 2
 
 func ensure_rail_settings():
 	show_settings()
-	if $Settings/TabContainer.current_tab > 2:
-		$Settings/TabContainer.current_tab = 0
+	if not $Settings/TabContainer.current_tab == 1 and not $Settings/TabContainer.current_tab == 3:
+		$Settings/TabContainer.current_tab = 1
 
 
 func  _on_DuplicateObject_pressed():
@@ -152,7 +164,13 @@ func _on_Mouse_entered_UI():
 	
 func _on_Mouse_exited_UI():
 	mouse_ui_index -= 1
+	mouse_ui_index = max(0, mouse_ui_index)
 	mouse_over_ui =  mouse_ui_index != 0
+
+# Should be called after a dialog in Editor HUD was closed.
+func _on_dialog_closed():
+	mouse_ui_index = 0
+	mouse_over_ui = mouse_ui_index != 0
 
 func register_signals_for_escaping_mouse_clicks_from_ui(node : Node) -> void:
 	print("CONNECTING SIGNALS:::::")

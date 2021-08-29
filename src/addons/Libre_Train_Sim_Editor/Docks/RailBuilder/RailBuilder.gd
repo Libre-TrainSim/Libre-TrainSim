@@ -17,7 +17,7 @@ func _ready():
 func _process(delta):
 	var editor = find_parent("Editor")
 	if editor:
-		visible = is_instance_valid(currentRail) and get_parent().current_tab == 0
+		visible = is_instance_valid(currentRail) and get_parent().current_tab == 1
 	pass
 
 

@@ -2,6 +2,8 @@ tool
 extends Control
 class_name TimeField
 
+signal time_set()
+
 func _ready():
 	pass # Replace with function body.
 
@@ -26,3 +28,7 @@ func update_button_text():
 func _on_Okay_pressed():
 	update_button_text()
 	$Popup.hide()
+	emit_signal("time_set")
+	if Root.Editor:
+		find_parent("EditorHUD")._on_dialog_closed()
+		

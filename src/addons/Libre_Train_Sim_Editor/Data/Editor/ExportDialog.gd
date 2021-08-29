@@ -15,6 +15,7 @@ func show_up(predefined_path):
 
 func _on_Cancel_pressed():
 	hide()
+	get_parent()._on_dialog_closed()
 
 
 
@@ -29,3 +30,4 @@ func _on_Export_pressed():
 	$Export.hide()
 	$Label.show()
 	emit_signal("export_confirmed", $LineEdit.text)
+	get_parent()._on_dialog_closed()

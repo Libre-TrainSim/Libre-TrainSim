@@ -25,6 +25,8 @@ func set_type(type):
 	clear_text()
 	crawl_directory_for_resources()
 	update_ItemList()
+	$HBoxContainer/LineEdit.grab_focus()
+	show()
 
 var current_resources = []
 func crawl_directory_for_resources():
@@ -107,6 +109,7 @@ func emit_selected_resource():
 		complete_path += "/Textures" + resource.right(split_position) + ".png"
 		
 	hide()
+	get_parent()._on_dialog_closed()
 	emit_signal("resource_selected", complete_path)
 	
 	
@@ -114,6 +117,7 @@ func emit_selected_resource():
 
 func _on_Select_pressed():
 	emit_selected_resource()
+	get_parent()._on_dialog_closed()
 	
 
 
@@ -122,3 +126,4 @@ func _on_Cancel_pressed():
 	hide()
 	clear_text()
 	emit_signal("resource_selected", "")
+	get_parent()._on_dialog_closed()

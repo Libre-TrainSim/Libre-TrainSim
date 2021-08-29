@@ -6,6 +6,8 @@ var editor_directory = ""
 var selected_object = null
 var selected_object_type = ""
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_world()
@@ -17,14 +19,17 @@ func _process(delta):
 	## Bouncing Effect at selected object
 	if is_instance_valid(selected_object):
 		bouncing_timer += delta
-		var bounce_factor = 1 + 0.02 * sin(bouncing_timer*5.0) + 0.02
 		if selected_object_type == "Building":
+			var bounce_factor = 1 + 0.02 * sin(bouncing_timer*5.0) + 0.02
 			selected_object.scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 		if selected_object_type == "Rail":
-			bounce_factor = 1 + 0.2 * sin(bouncing_timer*5.0) + 0.2
+			var bounce_factor = 1 + 0.2 * sin(bouncing_timer*5.0) + 0.2
 			selected_object.get_node("Ending").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 			selected_object.get_node("Mid").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 			selected_object.get_node("Beginning").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
+		if selected_object_type == "Signal":
+			var bounce_factor = 1 + 0.1 * sin(bouncing_timer*5.0)
+			selected_object.scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 	else:
 		clear_selected_object()
 		
@@ -44,6 +49,9 @@ func _input(event):
 	
 	if Input.is_action_just_pressed("delete"):
 		delete_selected_object()
+	
+	if Input.is_action_just_pressed("ui_accept") and $EditorHUD/Message.visible:
+		_on_MessageClose_pressed()
 
 
 
@@ -60,6 +68,7 @@ func select_object_under_mouse():
 	if result.has("collider"):
 		set_selected_object(result["collider"].get_parent())
 		provide_settings_for_selected_object()
+		print("selected!")
 		
 
 func clear_selected_object():
@@ -78,6 +87,8 @@ func clear_selected_object():
 			for child in selected_object.get_children():
 				if child.is_in_group("Gizmo"):
 					child.queue_free()
+		if selected_object_type == "Signal":
+			selected_object.scale = Vector3(1,1,1)
 			
 	
 	selected_object = null
@@ -89,6 +100,8 @@ func get_type_of_object(object):
 		return "Building"
 	if object.is_in_group("Rail"):
 		return "Rail"
+	if object.is_in_group("Signal"):
+		return "Signal"
 	else:
 		return "Unknown"
 
@@ -100,6 +113,9 @@ func provide_settings_for_selected_object():
 	if selected_object_type == "Building":
 		$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(selected_object)
 		$EditorHUD.show_building_settings()
+	if selected_object_type == "Signal":
+		$EditorHUD/Settings/TabContainer/RailLogic.set_rail_logic(selected_object)
+		$EditorHUD.show_signal_settings()
 	$EditorHUD.update_ShowSettingsButton()
 
 ## Should be used, if world is loaded into scene.
@@ -126,6 +142,9 @@ func load_world():
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
 		building.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	for signal_ins in $World/Signals.get_children():
+#		if signal_ins.type == "Signal":
+		signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	 
 	
 func save_world():
@@ -302,6 +321,7 @@ func send_message(message):
 
 func _on_MessageClose_pressed():
 	$EditorHUD/Message.hide()
+	$EditorHUD._on_dialog_closed()
 	if not has_node("World"):
 		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 
@@ -316,4 +336,74 @@ func duplicate_selected_object():
 		$World/Buildings.add_child(new_object)
 		new_object.set_owner($World)
 		set_selected_object(new_object)
+
+
+func add_signal_to_selected_rail():
+	if selected_object_type != "Rail":
+		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
+		return
+	var signal_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn")
+	var signal_ins = signal_res.instance()
+	Root.name_node_appropriate(signal_ins, "Signal", $World/Signals)
+	$World/Signals.add_child(signal_ins)
+	signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	signal_ins.set_owner($World)
+	signal_ins.attachedRail = selected_object.name
+	signal_ins.setToRail(true)
+	set_selected_object(signal_ins)
 	
+func add_station_to_selected_rail():
+	if selected_object_type != "Rail":
+		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
+		return
+	var station_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Station.tscn")
+	var station_ins = station_res.instance()
+	Root.name_node_appropriate(station_ins, "Station", $World/Signals)
+	$World/Signals.add_child(station_ins)
+	station_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	station_ins.set_owner($World)
+	station_ins.attachedRail = selected_object.name
+	station_ins.setToRail(true)
+	set_selected_object(station_ins)
+
+func add_speed_limit_to_selected_rail():
+	if selected_object_type != "Rail":
+		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
+		return
+	var speed_limit_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit.tscn")
+	var speed_limit_ins = speed_limit_res.instance()
+	Root.name_node_appropriate(speed_limit_ins, "SpeedLimit", $World/Signals)
+	$World/Signals.add_child(speed_limit_ins)
+	speed_limit_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	speed_limit_ins.set_owner($World)
+	speed_limit_ins.attachedRail = selected_object.name
+	speed_limit_ins.setToRail(true)
+	set_selected_object(speed_limit_ins)
+
+func add_warn_speed_limit_to_selected_rail():
+	if selected_object_type != "Rail":
+		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
+		return
+	var war_speed_limit_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit.tscn")
+	var warn_speed_limit_ins = war_speed_limit_res.instance()
+	Root.name_node_appropriate(warn_speed_limit_ins, "SpeedLimit", $World/Signals)
+	$World/Signals.add_child(warn_speed_limit_ins)
+	warn_speed_limit_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	warn_speed_limit_ins.set_owner($World)
+	warn_speed_limit_ins.attachedRail = selected_object.name
+	warn_speed_limit_ins.setToRail(true)
+	set_selected_object(warn_speed_limit_ins)
+
+func add_contact_point_to_selected_rail():
+	if selected_object_type != "Rail":
+		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
+		return
+	var contact_point_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/ContactPoint.tscn")
+	var contact_point_ins = contact_point_res.instance()
+	Root.name_node_appropriate(contact_point_ins, "ContactPoint", $World/Signals)
+	$World/Signals.add_child(contact_point_ins)
+	contact_point_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	contact_point_ins.set_owner($World)
+	contact_point_ins.attachedRail = selected_object.name
+	contact_point_ins.setToRail(true)
+	set_selected_object(contact_point_ins)

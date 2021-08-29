@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Editor.gd" type="Script" id=2]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/RailLogic.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailBuilder/RailBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Docks/RailAttachments/RailAttachments.tscn" type="PackedScene" id=7]
@@ -83,6 +84,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Configuration" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 8 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
 [node name="RailBuilder" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 6 )]
 visible = false
 margin_left = 4.0
@@ -90,14 +97,14 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 7 )]
+[node name="RailLogic" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 3 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Configuration" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 8 )]
+[node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 7 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0
@@ -313,7 +320,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemList" type="ItemList" parent="EditorHUD/AddObjects"]
+[node name="Menu1" type="ItemList" parent="EditorHUD/AddObjects"]
 visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -322,6 +329,19 @@ margin_top = -94.0
 margin_right = 173.0
 margin_bottom = -31.0
 items = [ "Rail", null, false, "Object", null, false, "Rail Logic", null, false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RailLogicMenu" type="ItemList" parent="EditorHUD/AddObjects"]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -130.0
+margin_right = 173.0
+margin_bottom = -31.0
+items = [ "Signal", null, false, "Station", null, false, "Speed Limit", null, false, "Warn Speed Limit", null, false, "Contact Point", null, false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -388,55 +408,6 @@ text = "Exporting track...
 This could take some minutes..."
 align = 1
 
-[node name="Pause" type="Control" parent="EditorHUD"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="EditorHUD/Pause"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.784314 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="EditorHUD/Pause"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -131.0
-margin_top = -80.5
-margin_right = 131.0
-margin_bottom = 80.5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Back" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
-margin_right = 262.0
-margin_bottom = 51.0
-custom_fonts/font = ExtResource( 5 )
-text = "BACK"
-
-[node name="SaveAndExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
-margin_top = 55.0
-margin_right = 262.0
-margin_bottom = 106.0
-custom_fonts/font = ExtResource( 5 )
-text = "SAVE_AND_EXIT"
-
-[node name="SaveWithoutExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
-margin_top = 110.0
-margin_right = 262.0
-margin_bottom = 161.0
-custom_fonts/font = ExtResource( 5 )
-text = "EXIT_WITHOUT_SAVING"
-
 [node name="Content_Selector" parent="EditorHUD" instance=ExtResource( 11 )]
 visible = false
 anchor_left = 0.5
@@ -489,6 +460,64 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Pause" type="Control" parent="EditorHUD"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="EditorHUD/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EditorHUD/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -131.0
+margin_top = -80.5
+margin_right = 131.0
+margin_bottom = 80.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
+margin_right = 262.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 5 )
+text = "BACK"
+
+[node name="SaveAndExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
+margin_top = 55.0
+margin_right = 262.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 5 )
+text = "SAVE_AND_EXIT"
+
+[node name="SaveWithoutExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
+margin_top = 110.0
+margin_right = 262.0
+margin_bottom = 161.0
+custom_fonts/font = ExtResource( 5 )
+text = "EXIT_WITHOUT_SAVING"
+
+[node name="Dummy" type="Button" parent="EditorHUD"]
+margin_left = -56.215
+margin_top = -51.2652
+margin_right = -44.215
+margin_bottom = -31.2652
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="single_rightclick" from="FreeCamera" to="." method="_on_FreeCamera_single_rightclick"]
 [connection signal="mouse_entered" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_Mouse_exited_UI"]
@@ -520,22 +549,24 @@ __meta__ = {
 [connection signal="mouse_entered" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD/AddObjects" method="_on_ShowMenu_pressed"]
-[connection signal="item_selected" from="EditorHUD/AddObjects/ItemList" to="EditorHUD/AddObjects" method="_on_ItemList_item_selected"]
-[connection signal="mouse_entered" from="EditorHUD/AddObjects/ItemList" to="EditorHUD" method="_on_Mouse_entered_UI"]
-[connection signal="mouse_exited" from="EditorHUD/AddObjects/ItemList" to="EditorHUD" method="_on_Mouse_exited_UI"]
+[connection signal="item_selected" from="EditorHUD/AddObjects/Menu1" to="EditorHUD/AddObjects" method="_on_ItemList_item_selected"]
+[connection signal="mouse_entered" from="EditorHUD/AddObjects/Menu1" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/AddObjects/Menu1" to="EditorHUD" method="_on_Mouse_exited_UI"]
+[connection signal="item_selected" from="EditorHUD/AddObjects/RailLogicMenu" to="EditorHUD/AddObjects" method="_on_RailLogicMenu_item_selected"]
 [connection signal="export_confirmed" from="EditorHUD/ExportDialog" to="." method="_on_ExportDialog_export_confirmed"]
 [connection signal="mouse_entered" from="EditorHUD/ExportDialog" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/ExportDialog" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/ExportDialog/Cancel" to="EditorHUD/ExportDialog" method="_on_Cancel_pressed"]
 [connection signal="pressed" from="EditorHUD/ExportDialog/Export" to="EditorHUD/ExportDialog" method="_on_Export_pressed"]
-[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD" method="_on_Pause_Back_pressed"]
-[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD" method="_on_SaveAndExit_pressed"]
-[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveWithoutExit" to="EditorHUD" method="_on_SaveWithoutExit_pressed"]
 [connection signal="mouse_entered" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_exited_UI"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailLogic" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="mouse_entered" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]
+[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD" method="_on_Pause_Back_pressed"]
+[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD" method="_on_SaveAndExit_pressed"]
+[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveWithoutExit" to="EditorHUD" method="_on_SaveWithoutExit_pressed"]

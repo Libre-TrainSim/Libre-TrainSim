@@ -51,6 +51,9 @@ var saved_mouse_position = Vector2(0,0)
 
 var mouse_not_moved = false
 func _input(event):
+	if Root.Editor and get_parent().get_node("EditorHUD").mouse_over_ui:
+		return
+		
 	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		mouseMotion = mouseMotion + event.relative
 		if event.relative != Vector2(0,0):

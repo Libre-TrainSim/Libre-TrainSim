@@ -312,7 +312,7 @@ func _on_Options_pressed_delme():
 	jSettings.open_window()
 
 
-func _on_Editor_Configuration_Back_Button_pressed():
+func hide_editor_configuration():
 	$MenuBackground.hide()
 	$Editor_Configuration.hide()
 	$Front.show()

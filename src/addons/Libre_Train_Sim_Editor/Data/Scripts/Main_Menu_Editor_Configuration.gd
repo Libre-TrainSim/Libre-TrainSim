@@ -5,6 +5,7 @@ var editor_directory
 func _ready():
 	initialize_UI()
 	initialize_editor_directory()
+	load_additional_resources()
 	
 func initialize_UI():
 	editor_directory = jSaveManager.get_setting("editor_directory_path", OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)+"Libre-TrainSim-Editor/")
@@ -96,3 +97,23 @@ func _on_TracksList_user_pressed_action(entry_names):
 	var entry_name = entry_names[0]
 	Root.current_editor_track = entry_name
 	get_tree().change_scene_to(load("res://addons/Libre_Train_Sim_Editor/Data/Modules/Editor.tscn"))
+
+
+func _on_ImportResources_pressed():
+	$VBoxContainer.hide()
+	$ResourceImporter.show()
+	$ResourceImporter.update_lists_ui()
+
+func load_additional_resources():
+	var pck_file = editor_directory + "/.cache/additional_resources.pck"
+	if jEssentials.does_path_exist(pck_file):
+		ProjectSettings.load_resource_pack(pck_file)
+
+
+func _on_Back_pressed():
+	get_parent().hide_editor_configuration()
+
+
+func _on_ResourceImporter_Back_pressed():
+	$VBoxContainer.show()
+	$ResourceImporter.hide()

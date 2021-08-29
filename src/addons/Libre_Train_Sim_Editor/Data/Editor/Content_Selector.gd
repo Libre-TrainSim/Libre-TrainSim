@@ -32,6 +32,7 @@ var current_resources = []
 func crawl_directory_for_resources():
 	current_resources.clear()
 	var resource_subfolders = Root.get_subfolders_of("res://Resources")
+	print(resource_subfolders)
 	if current_type == MATERIALS:
 		for resource_subfolder in resource_subfolders:
 			var found_files = {"Array" : []}
@@ -41,9 +42,10 @@ func crawl_directory_for_resources():
 	if current_type == OBJECTS:
 		for resource_subfolder in resource_subfolders:
 			var found_files = {"Array" : []}
+			Root.crawlDirectory("res://Resources/"+ resource_subfolder + "/Objects", found_files, "import")
 			Root.crawlDirectory("res://Resources/"+ resource_subfolder + "/Objects", found_files, "obj")
 			for file in found_files["Array"]:
-				current_resources.append(file.replace("res://Resources/", "").replace("/Objects", "").get_basename())
+				current_resources.append(file.replace("res://Resources/", "").replace("/Objects", "").get_basename().get_basename())
 	if current_type == RAIL_TYPES:
 		for resource_subfolder in resource_subfolders:
 			var found_files = {"Array" : []}

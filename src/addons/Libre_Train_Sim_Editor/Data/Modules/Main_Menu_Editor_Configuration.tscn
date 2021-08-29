@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Main_Menu_Editor_Configuration.gd" type="Script" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=3]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame_Small.tres" type="DynamicFont" id=4]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame_Small_Bold.tres" type="DynamicFont" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Editor/ResourceImporter.gd" type="Script" id=6]
 
 [node name="Editor_Configuration" type="Control"]
 anchor_right = 1.0
@@ -46,12 +49,30 @@ margin_bottom = 55.0
 custom_fonts/font = ExtResource( 3 )
 text = "UPDATE"
 
+[node name="ImportResources" type="Button" parent="VBoxContainer"]
+margin_left = 281.0
+margin_top = 59.0
+margin_right = 519.0
+margin_bottom = 110.0
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 3 )
+text = "IMPORT_RESOURCES"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 114.0
+margin_right = 800.0
+margin_bottom = 119.0
+rect_min_size = Vector2( 0, 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TracksList" parent="VBoxContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 59.0
+margin_top = 123.0
 margin_right = 800.0
-margin_bottom = 600.0
+margin_bottom = 576.0
 size_flags_vertical = 3
 multi_selection_allowed = false
 custom_font_path = "res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres"
@@ -64,7 +85,103 @@ rename_button_text = "RENAME"
 duplicate_button_text = "DUPLICATE"
 action_button_text = "OPEN"
 
+[node name="Back" type="Button" parent="VBoxContainer"]
+margin_top = 580.0
+margin_right = 800.0
+margin_bottom = 600.0
+
+[node name="ResourceImporter" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ResourceImporter"]
+margin_right = 800.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 5 )
+text = "ABSOLUTE_EDITOR_PATH: "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ResourceImporter"]
+margin_top = 32.0
+margin_right = 800.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+
+[node name="LoadedAdditionalResources" type="VBoxContainer" parent="ResourceImporter/HBoxContainer"]
+margin_right = 398.0
+margin_bottom = 568.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ResourceImporter/HBoxContainer/LoadedAdditionalResources"]
+margin_right = 398.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 5 )
+text = "LOADED_RESOURCES:"
+
+[node name="ItemList" type="ItemList" parent="ResourceImporter/HBoxContainer/LoadedAdditionalResources"]
+margin_top = 32.0
+margin_right = 398.0
+margin_bottom = 496.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+
+[node name="RemoveSelecedResource" type="Button" parent="ResourceImporter/HBoxContainer/LoadedAdditionalResources"]
+margin_top = 500.0
+margin_right = 398.0
+margin_bottom = 532.0
+custom_fonts/font = ExtResource( 4 )
+text = "REMOVE_SELECTED_RESOURCE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpdateAllAdditionalResources" type="Button" parent="ResourceImporter/HBoxContainer/LoadedAdditionalResources"]
+margin_top = 536.0
+margin_right = 398.0
+margin_bottom = 568.0
+custom_fonts/font = ExtResource( 4 )
+text = "UPDATE_ALL_ADDITIONAL_RESOURCES"
+
+[node name="FoundAdditionalResources" type="VBoxContainer" parent="ResourceImporter/HBoxContainer"]
+margin_left = 402.0
+margin_right = 800.0
+margin_bottom = 568.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ResourceImporter/HBoxContainer/FoundAdditionalResources"]
+margin_right = 398.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 5 )
+text = "FOUND_NEW_RESOURCES:"
+
+[node name="ItemList" type="ItemList" parent="ResourceImporter/HBoxContainer/FoundAdditionalResources"]
+margin_top = 32.0
+margin_right = 398.0
+margin_bottom = 532.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+
+[node name="ImportAdditionalResource" type="Button" parent="ResourceImporter/HBoxContainer/FoundAdditionalResources"]
+margin_top = 536.0
+margin_right = 398.0
+margin_bottom = 568.0
+custom_fonts/font = ExtResource( 4 )
+text = "IMPORT_ADDITIONAL_RESOURCES"
+
+[node name="Back" type="Button" parent="ResourceImporter"]
+margin_right = 12.0
+margin_bottom = 20.0
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/UpdateEditorPathButton" to="." method="_on_UpdateEditorPathButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ImportResources" to="." method="_on_ImportResources_pressed"]
 [connection signal="user_added_entry" from="VBoxContainer/TracksList" to="." method="_on_TracksList_user_added_entry"]
 [connection signal="user_pressed_action" from="VBoxContainer/TracksList" to="." method="_on_TracksList_user_pressed_action"]
 [connection signal="user_renamed_entry" from="VBoxContainer/TracksList" to="." method="_on_TracksList_user_renamed_entry"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="ResourceImporter/HBoxContainer/FoundAdditionalResources/ImportAdditionalResource" to="ResourceImporter" method="_on_ImportAdditionalResource_pressed"]
+[connection signal="pressed" from="ResourceImporter/Back" to="." method="_on_ResourceImporter_Back_pressed"]

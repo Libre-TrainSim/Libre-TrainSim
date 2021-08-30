@@ -18,7 +18,7 @@ __meta__ = {
 }
 
 [node name="ItemList" type="ItemList" parent="VBoxContainer"]
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 572.0
 rect_clip_content = false
 size_flags_horizontal = 3
@@ -27,26 +27,26 @@ select_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 576.0
-margin_right = 1024.0
+margin_right = 800.0
 margin_bottom = 600.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-margin_right = 915.0
+margin_right = 691.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Add" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 919.0
-margin_right = 956.0
+margin_left = 695.0
+margin_right = 732.0
 margin_bottom = 24.0
 text = "Add"
 
 [node name="Remove" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 960.0
-margin_right = 1024.0
+margin_left = 736.0
+margin_right = 800.0
 margin_bottom = 24.0
 text = "Remove"
 
@@ -85,22 +85,29 @@ margin_right = 1024.0
 margin_bottom = 24.0
 text = "Save"
 
+[node name="Action" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 924.0
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Custom Action"
+
 [node name="PopupDialog" type="PopupDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -137.466
-margin_top = -60.7126
-margin_right = 138.534
-margin_bottom = 70.2874
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 262.534
+margin_top = 239.287
+margin_right = -261.466
+margin_bottom = -229.713
 popup_exclusive = true
 
 [node name="Label" type="Label" parent="PopupDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 13.0
 margin_top = 22.0
-margin_right = 265.0
-margin_bottom = 87.0
+margin_right = -11.0
+margin_bottom = -44.0
 text = "Lorem ipsum..."
 __meta__ = {
 "_edit_use_anchors_": false
@@ -110,14 +117,15 @@ __meta__ = {
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 109.67
-margin_top = -29.3439
-margin_right = -92.3303
-margin_bottom = -9.3439
+margin_left = 106.697
+margin_top = -41.8306
+margin_right = -95.3033
+margin_bottom = -21.8306
 text = "Okay"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="item_activated" from="VBoxContainer/ItemList" to="." method="_on_ItemList_item_activated"]
 [connection signal="multi_selected" from="VBoxContainer/ItemList" to="." method="_on_ItemList_multi_selected"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Add" to="." method="_on_Add_pressed"]
@@ -127,4 +135,5 @@ __meta__ = {
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Paste" to="." method="_on_Paste_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Action" to="." method="_on_Action_pressed"]
 [connection signal="pressed" from="PopupDialog/Okay" to="." method="_on_PopupDiaglog_Okay_pressed"]

@@ -6,9 +6,14 @@ var currentTrain
 var EasyMode = true
 var mobile_version = false
 
+var start_menu_in_play_menu = false
+
 
 
 var world ## Reference to world
+
+var Editor = false
+var current_editor_track = ""  # Name of track
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,6 +22,28 @@ var world ## Reference to world
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor
+func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node): 
+	# Remove last Numbers from wanted name
+	while(wanted_name[-1].is_valid_integer()):
+		wanted_name.erase(wanted_name.length() -1, 1)
+	
+	wanted_name = wanted_name.replace(" " , "")
+	wanted_name = wanted_name.validate_node_name()
+		
+	if not parent_node.has_node(wanted_name):
+		node.name = wanted_name
+		return wanted_name
+	var counter = 2
+	var base_name = wanted_name
+	while(true):
+		var new_name = base_name + String(counter)
+		if not parent_node.has_node(new_name):
+			node.name = new_name
+			return new_name
+		counter += 1
+	
 
 func checkAndLoadTranslationsForTrack(trackName): # Searches for translation files with trackName in res://Translations/
 	print(trackName.get_file().get_basename())
@@ -78,6 +105,20 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 					exportString = directoryPath +"/"+file
 				foundFiles["Array"].append(exportString)
 	dir.list_dir_end()
+	
+func get_subfolders_of(directoryPath):
+	var dir = Directory.new()
+	if dir.open(directoryPath) != OK: return
+	dir.list_dir_begin()
+	var folder_names = []
+	while(true):
+		var file = dir.get_next()
+		if file == "": break
+		if file.begins_with("."): continue
+		if dir.current_is_dir():
+			folder_names.append(file)
+	dir.list_dir_end()
+	return folder_names
 	
 # approaches 'ist' value to 'soll' value in one second  (=smooth transitions from current 'ist' value to 'soll' value)
 func clampViaTime(soll : float, ist : float, delta : float):

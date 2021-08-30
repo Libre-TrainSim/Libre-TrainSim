@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/DriversStand.obj-70e6e50b35d878dc3433cc38d4fd1e37.mesh"
+
+[deps]
+
+files=[ "res://.import/DriversStand.obj-70e6e50b35d878dc3433cc38d4fd1e37.mesh" ]
+
+source_file="res://Resources/Basic/Objects/DriversStand.obj"
+dest_files=[ "res://.import/DriversStand.obj-70e6e50b35d878dc3433cc38d4fd1e37.mesh", "res://.import/DriversStand.obj-70e6e50b35d878dc3433cc38d4fd1e37.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

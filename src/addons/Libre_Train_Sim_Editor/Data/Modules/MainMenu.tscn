@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://screenshot.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres" type="DynamicFont" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" type="AudioStream" id=6]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Main_Menu_Editor_Configuration.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=8]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -390,6 +392,28 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_RELOAD"
 
+[node name="Editor_Configuration" parent="." instance=ExtResource( 7 )]
+visible = false
+margin_left = 24.0
+margin_top = 20.0
+margin_right = -28.0
+margin_bottom = -86.0
+
+[node name="Editor_Configuration_Back_Button" type="Button" parent="Editor_Configuration"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -374.707
+margin_top = 6.98279
+margin_right = 373.293
+margin_bottom = 57.9828
+custom_fonts/font = ExtResource( 5 )
+text = "BACK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Loading" type="Label" parent="."]
 visible = false
 anchor_left = 1.0
@@ -487,6 +511,8 @@ stream = ExtResource( 6 )
 volume_db = -25.384
 bus = "Music"
 
+[node name="jSaveModule" parent="." instance=ExtResource( 8 )]
+
 [connection signal="pressed" from="Front/VBoxContainer/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Content" to="." method="_on_Content_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Create" to="." method="_on_FrontCreate_pressed"]
@@ -503,5 +529,6 @@ bus = "Music"
 [connection signal="pressed" from="Play/Buttons/Play" to="." method="_on_PlayPlay_pressed"]
 [connection signal="pressed" from="Content/Buttons/Back" to="." method="_on_BackContent_pressed"]
 [connection signal="pressed" from="Content/Buttons/Reload" to="." method="_on_ReloadContent_pressed"]
+[connection signal="pressed" from="Editor_Configuration/Editor_Configuration_Back_Button" to="." method="_on_Editor_Configuration_Back_Button_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/Later" to="." method="_on_Later_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/OpenWebBrowser" to="." method="_on_OpenWebBrowser_pressed"]

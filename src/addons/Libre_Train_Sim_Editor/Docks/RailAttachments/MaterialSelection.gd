@@ -9,7 +9,6 @@ extends HBoxContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("HUHU2")
 	pass # Replace with function body.
 
 
@@ -19,7 +18,9 @@ func _ready():
 
 
 func _on_Pick_pressed():
-	print("HUHU")
-	find_parent("Rail Attachments").currentMaterial = int(name[-1])
-	find_parent("Rail Attachments")._on_PickMaterial_pressed()
+	find_parent("RailAttachments").currentMaterial = get_position_in_parent()
+	find_parent("RailAttachments")._on_PickMaterial_pressed()
 	
+
+
+

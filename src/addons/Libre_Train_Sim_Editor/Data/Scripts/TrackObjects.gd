@@ -6,7 +6,7 @@ export (String) var attachedRail
 export (float) var onRailPosition
 export (float) var length
 
-export (String) var objectPath
+export (String) var objectPath = ""
 export var materialPaths = []
 export (int) var sides = 0#0: No Side, 1: Left, 2: Right 4: Both
 export (float) var spawnRate = 1
@@ -159,8 +159,11 @@ func _update(newvar):
 		translation = rail.get_pos_at_RailDistance(onRailPosition)
 	
 	
-	if objectPath == "" : return
-	var mesh = load(objectPath).duplicate(true)
+	var mesh_res = load(objectPath)
+	if mesh_res == null: 
+		printerr("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
+		return
+	var mesh = mesh_res.duplicate(true)
 	multimesh.mesh = mesh
 	
 	for x in range(materialPaths.size()):

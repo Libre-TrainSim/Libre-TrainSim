@@ -8,7 +8,7 @@ var personsNode
 export (int) var stationLength
 
 
-export (int) var platformSide
+export (int) var platformSide = 0
 export (bool) var personSystem = true
 export (float) var platformHeight = 1.2
 export (float) var platformStart = 2.5
@@ -33,7 +33,7 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		setToRail(true)
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not Root.Editor:
 		$MeshInstance.queue_free()
 		setToRail(true)
 		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
@@ -43,7 +43,7 @@ func _process(delta):
 	if rail == null:
 		setToRail(true)
 	
-	if not Engine.editor_hint:
+	if not Engine.editor_hint and not Root.Editor:
 		if personSystem:
 			handlePersons()
 

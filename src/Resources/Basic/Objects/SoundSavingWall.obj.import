@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/SoundSavingWall.obj-5a969e949adebbb019772216c37bdc70.mesh"
+
+[deps]
+
+files=[ "res://.import/SoundSavingWall.obj-5a969e949adebbb019772216c37bdc70.mesh" ]
+
+source_file="res://Resources/Basic/Objects/SoundSavingWall.obj"
+dest_files=[ "res://.import/SoundSavingWall.obj-5a969e949adebbb019772216c37bdc70.mesh", "res://.import/SoundSavingWall.obj-5a969e949adebbb019772216c37bdc70.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

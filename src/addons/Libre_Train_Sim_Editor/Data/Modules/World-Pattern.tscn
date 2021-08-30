@@ -1,12 +1,12 @@
 [gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Basic/BasicSun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Basic/Enviroment/BasicSun.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Basic/Materials/Grass.tres" type="Material" id=3]
-[ext_resource path="res://Resources/Basic/grass.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://Resources/Basic/Objects/grass.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Resources/Basic/BasicWorldEnviroment.tres" type="Environment" id=7]
+[ext_resource path="res://Resources/Basic/Enviroment/BasicWorldEnviroment.tres" type="Environment" id=7]
 [ext_resource path="res://Resources/Basic/Materials/EasyTree.tres" type="Material" id=8]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/BuildingsNode.gd" type="Script" id=9]
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=10]
@@ -30,7 +30,7 @@ surfaces/0 = {
 "vertex_count": 12
 }
 
-[sub_resource type="MultiMesh" id=2]
+[sub_resource type="MultiMesh" id=6]
 transform_format = 1
 instance_count = 60
 visible_instance_count = 60
@@ -91,7 +91,7 @@ surfaces/3 = {
 "vertex_count": 1400
 }
 
-[sub_resource type="MultiMesh" id=4]
+[sub_resource type="MultiMesh" id=5]
 transform_format = 1
 instance_count = 3
 visible_instance_count = 3
@@ -127,9 +127,8 @@ __meta__ = {
 length = 160.0
 visibleSegments = 178.778
 endpos = Vector3( 160, 0, 0 )
-otherRadius = 1995.5
-otherLength = 997.75
-Outlength = 94.8772
+otherLength = 160.0
+Outlength = 160.0
 automaticTendency = false
 
 [node name="Buildings" type="Spatial" parent="."]
@@ -140,11 +139,11 @@ script = ExtResource( 9 )
 [node name="TrackObjects" type="Spatial" parent="."]
 
 [node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 6 )]
-multimesh = SubResource( 2 )
+multimesh = SubResource( 6 )
 description = "Tree"
 attachedRail = "Rail"
 length = 160.0
-objectPath = "res://Resources/Basic/EasyTree_big.obj"
+objectPath = "res://Resources/Basic/Objects/EasyTree_big.obj"
 materialPaths = [ "res://Resources/Basic/Materials/EasyTree.tres" ]
 sides = 1
 rows = 5.0
@@ -159,11 +158,11 @@ randomScaleFactor = 0.3
 wholeRail = true
 
 [node name="Rail Poles" parent="TrackObjects" instance=ExtResource( 6 )]
-multimesh = SubResource( 4 )
+multimesh = SubResource( 5 )
 description = "Poles"
 attachedRail = "Rail"
 length = 160.0
-objectPath = "res://Resources/Basic/Pole1.obj"
+objectPath = "res://Resources/Basic/Objects/Pole1.obj"
 materialPaths = [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ]
 sides = 2
 rows = 1.0
@@ -174,3 +173,5 @@ wholeRail = true
 
 [node name="jSaveModule" parent="." instance=ExtResource( 10 )]
 save_path = "res://Worlds/Name Me!/Name Me!.save"
+
+[node name="jSaveModuleScenarios" parent="." instance=ExtResource( 10 )]

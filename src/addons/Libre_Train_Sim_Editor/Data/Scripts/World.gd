@@ -50,9 +50,16 @@ func _ready():
 	if trackName == null:
 		trackName = FileName
 	print("trackName: " +trackName + " " + FileName)
-	$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
+	if Root.Editor:
+		$jSaveModule.set_save_path(String(find_parent("Editor").editor_directory + "/Worlds/" + trackName + "/" + trackName + ".save"))
+	else:
+		$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
 	
-	if Engine.editor_hint:
+	if Engine.editor_hint or Root.Editor:
+		if Root.Editor:
+			$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
+			$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+			
 #		update_all_rails_overhead_line_setting(false)
 		return
 
@@ -115,7 +122,7 @@ func apply_user_settings():
 	$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
 	
 func _process(delta):
-	if not Engine.editor_hint:
+	if not (Engine.editor_hint or Root.Editor):
 		time(delta)
 		checkTrainSpawn(delta)
 		handle_chunk()
@@ -463,7 +470,7 @@ func apply_scenario_to_signals(signals):
 		if signals.has(signalN.name):
 			signalN.set_scenario_data(signals[signalN.name])
 			
-func get_signal_data_for_scenario():
+func get_signal_scenario_data():
 	var signals = {}
 	for s in $Signals.get_children():
 		signals[s.name] = s.get_scenario_data()
@@ -471,9 +478,8 @@ func get_signal_data_for_scenario():
 	
 func set_scenario_to_world():
 	var Ssave_path = "res://Worlds/" + trackName + "/" + trackName + "-scenarios.cfg"
-	var sConfig = ConfigFile.new()
-	var load_response = sConfig.load(Ssave_path)
-	var sData = sConfig.get_value("Scenarios", "sData", {})
+	$jSaveModuleScenarios.set_save_path(Ssave_path)
+	var sData = $jSaveModuleScenarios.get_value("scenario_data")
 	var scenario = sData[currentScenario]
 	# set world Time:
 	timeHour = scenario["TimeH"]
@@ -496,10 +502,7 @@ func spawnTrain(trainName):
 	if $Players.has_node(trainName):
 		print("Train is already loaded! - Abortet loading...")
 		return
-	var Ssave_path = "res://Worlds/" + trackName + "/" + trackName + "-scenarios.cfg"
-	var sConfig = ConfigFile.new()
-	var load_response = sConfig.load(Ssave_path)
-	var sData = sConfig.get_value("Scenarios", "sData", {})
+	var sData = $jSaveModuleScenarios.get_value("scenario_data")
 	var scenario = sData[currentScenario]
 	var spawnTime = scenario["Trains"][trainName]["SpawnTime"]
 	if scenario["Trains"][trainName]["SpawnTime"][0] != -1 and not (spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]):
@@ -702,3 +705,7 @@ func update_all_rails_overhead_line_setting(overhead_line : bool): # Not called 
 		rail.overheadLine = overhead_line
 		rail.updateOverheadLine()
 	
+
+## Should be later used if we have a real heightmap
+func get_terrain_height_at(Position : Vector2):
+	return 0

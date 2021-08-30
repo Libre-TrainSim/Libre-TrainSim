@@ -9,12 +9,15 @@ signal user_copied_entries(entry_names)
 signal user_pasted_entries(source_entry_names, source_jList_id, pasted_entry_names) 
 signal user_pressed_save(data) # array of strings (equal to entry_names)
 signal user_selected_entry(entry_name) # string
+signal user_pressed_action(entry_names) # array of strings (equal to entry_names)
 
 export (String) var _id = "_random"
 var id 
 export (String) var entry_duplicate_text = "_duplicate"
 
 export (bool) var only_unique_entries_allowed = true
+export (bool) var multi_selection_allowed = true
+export (String) var custom_font_path = ""
 export (bool) var enable_add_button = true
 export (bool) var enable_remove_button = true
 export (bool) var enable_rename_button = false
@@ -22,6 +25,7 @@ export (bool) var enable_duplicate_button = false
 export (bool) var enable_copy_button = false 
 export (bool) var enable_paste_button = false 
 export (bool) var enable_save_button = false 
+export (bool) var enable_action_button = false
 
 export (String) var add_button_text = "Add"
 export (String) var remove_button_text = "Remove"
@@ -30,6 +34,7 @@ export (String) var duplicate_button_text = "Duplicate"
 export (String) var copy_button_text = "Copy"
 export (String) var paste_button_text = "Paste"
 export (String) var save_button_text = "Save"
+export (String) var action_button_text = "Custom Action"
 
 
 export (bool) var update setget update_visible_buttons
@@ -91,6 +96,10 @@ var undo_buffer = null
 
 func _ready():
 	update_visible_buttons(true)
+	if multi_selection_allowed:
+		$VBoxContainer/ItemList.select_mode = ItemList.SELECT_MULTI
+	else:
+		$VBoxContainer/ItemList.select_mode = ItemList.SELECT_SINGLE
 	
 func _process(delta):
 	if $VBoxContainer/HBoxContainer/LineEdit.has_focus() and enable_add_button and  Input.is_action_just_pressed("jList_enter"):
@@ -139,6 +148,7 @@ func update_visible_buttons(newvar):
 	$VBoxContainer/HBoxContainer/Copy.visible = enable_copy_button
 	$VBoxContainer/HBoxContainer/Paste.visible = enable_paste_button
 	$VBoxContainer/HBoxContainer/Save.visible = enable_save_button
+	$VBoxContainer/HBoxContainer/Action.visible = enable_action_button
 	
 	$VBoxContainer/HBoxContainer/Add.text = TranslationServer.translate(add_button_text)
 	$VBoxContainer/HBoxContainer/Remove.text = TranslationServer.translate(remove_button_text)
@@ -147,9 +157,30 @@ func update_visible_buttons(newvar):
 	$VBoxContainer/HBoxContainer/Copy.text = TranslationServer.translate(copy_button_text)
 	$VBoxContainer/HBoxContainer/Paste.text = TranslationServer.translate(paste_button_text)
 	$VBoxContainer/HBoxContainer/Save.text = TranslationServer.translate(save_button_text)
+	$VBoxContainer/HBoxContainer/Action.text = TranslationServer.translate(action_button_text)
 	
+	_update_fonts()
 	update = false
-
+	
+func _update_fonts():
+	if custom_font_path == "":
+		return
+	if not jEssentials.does_path_exist(custom_font_path):
+		return
+	var font = load(custom_font_path)
+	$VBoxContainer/HBoxContainer/LineEdit.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Add.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Remove.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Rename.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Duplicate.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Copy.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Paste.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Save.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Action.add_font_override("font", font)
+	
+	$VBoxContainer/ItemList.add_font_override("font", font)
+	$PopupDialog/Label.add_font_override("font", font)
+	$PopupDialog/Okay.add_font_override("font", font)
 
 ## Button Signals ##############################################################
 func _enter_tree():
@@ -236,6 +267,15 @@ func _on_Paste_pressed(): # Adds entry_names from global buffer into jList.
 
 func _on_Save_pressed():
 	emit_signal("user_pressed_save", get_data())
+
+func _on_Action_pressed():
+	if  item_list.get_selected_items().size() == 0:
+		return
+	var source_entry_names = []
+	var source_entry_ids = item_list.get_selected_items()
+	for entry_id in source_entry_ids:
+		source_entry_names.append(item_list.get_item_text(entry_id))
+	emit_signal("user_pressed_action", source_entry_names)
 	
 
 func _on_ItemList_item_activated(index):
@@ -248,3 +288,4 @@ func _on_ItemList_multi_selected(index, selected):
 	var selected_items = item_list.get_selected_items()
 	if selected_items.size() == 1:
 		emit_signal("user_selected_entry", item_list.get_item_text(selected_items[0]))
+

@@ -1,5 +1,7 @@
 extends Camera
 
+signal single_rightclick() # Rightclick without moving the mouse
+
 # General purpose configurable camera script
 # later getting things like "follow player" for camera at stations
 
@@ -23,29 +25,51 @@ onready var cameraZeroTransform = transform
 const refDelta = 0.0167 # 1.0 / 60
 
 
-onready var world = find_parent("World")
+var world
 
 # used for accel if any.
-onready var player = world.find_node("Player")
+var player
 
 func _ready():
 	# Initialization here
 	self.set_process_input(true)
 	self.set_process(true)
+	
 	#set mouse position
 
 
 func _enter_tree():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if not Root.Editor:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _exit_tree():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 var mouseMotion = Vector2(0,0)
 
+var saved_mouse_position = Vector2(0,0)
+
+var mouse_not_moved = false
 func _input(event):
-	if current and event is InputEventMouseMotion:
+	if Root.Editor and get_parent().get_node("EditorHUD").mouse_over_ui:
+		return
+		
+	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		mouseMotion = mouseMotion + event.relative
+		if event.relative != Vector2(0,0):
+			mouse_not_moved = false
+	
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == true:
+		saved_mouse_position = get_viewport().get_mouse_position()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		mouse_not_moved = true
+	
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		get_viewport().warp_mouse(saved_mouse_position)
+	
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and mouse_not_moved:
+		emit_signal("single_rightclick")
 
 onready var cameraY = rotation_degrees.y - 90.0
 onready var cameraX = -rotation_degrees.x
@@ -53,12 +77,19 @@ onready var cameraX = -rotation_degrees.x
 func _process(delta):
 	if not current:
 		pass
+	if not world:
+		world = find_parent("World")
+	if not player and world != null:
+		player = world.find_node("Player")
+		
+	cameraY = rotation_degrees.y - 90.0
+	cameraX = -rotation_degrees.x
 	#mouse movement
 
-	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version:
+	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-	if mouseMotion.length() > 0:
+	if mouseMotion.length() > 0 and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
 		cameraY += -mouseMotion.x * motionFactor
 		cameraX += +mouseMotion.y * motionFactor
@@ -78,7 +109,7 @@ func _process(delta):
 		var missingCameraPosition = translation.x - sollCameraPosition
 		translation.x -= missingCameraPosition * delta
 
-	if not fixed:
+	if not fixed and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		var deltaFlyspeed = (delta / refDelta) * flyspeed
 
 		if(Input.is_key_pressed(KEY_W)):

@@ -29,6 +29,11 @@ func _ready():
 
 	if mobile_version:
 		set_menu_to_mobile()
+	
+	if Root.start_menu_in_play_menu:
+		Root.start_menu_in_play_menu = false
+		$FeedBack.hide()
+		_on_PlayFront_pressed()
 
 	
 func set_menu_to_mobile():
@@ -149,12 +154,10 @@ func _on_PlayPlay_pressed():
 	$MenuBackground.hide()
 	$Play.hide()
 	$Loading.show()
-	## Load Texture
+	## Load 
+	var track_name = foundTracks[index].get_basename().get_file()
 	var save_path = foundTracks[index].get_basename() + "-scenarios.cfg"
-	var config = ConfigFile.new()
-	var load_response = config.load(save_path)
-	var wData = config.get_value("WorldConfig", "Data", null)
-	$Background.texture = load(wData["ThumbnailPath"])
+	$Background.texture = load("res://Worlds/"+track_name + "/screenshot.png")
 	loadScenePath = foundTracks[index]
 
 var loadScenePath = ""
@@ -170,10 +173,9 @@ func _on_ItemList_itemTracks_selected(index):
 	Root.checkAndLoadTranslationsForTrack(currentTrack.get_file().get_basename())
 	currentScenario = ""
 	var save_path = foundTracks[index].get_basename() + "-scenarios.cfg"
-	var config = ConfigFile.new()
-	var load_response = config.load(save_path)
+	$jSaveModule.set_save_path(save_path)
 
-	var wData = config.get_value("WorldConfig", "Data", null)
+	var wData = $jSaveModule.get_value("world_config", null)
 	if wData == null:
 		print(save_path)
 		$Play/Info/Description.text = TranslationServer.translate("MENU_NO_SCENARIO_FOUND")
@@ -183,13 +185,16 @@ func _on_ItemList_itemTracks_selected(index):
 	$Play/Info/Description.text = TranslationServer.translate(wData["TrackDesciption"])
 	$Play/Info/Info/Author.text = " "+ TranslationServer.translate("MENU_AUTHOR") + ": " + wData["Author"] + " "
 	$Play/Info/Info/ReleaseDate.text = " "+ TranslationServer.translate("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
-	$Play/Info/Screenshot.texture = load(wData["ThumbnailPath"])
+	var track_name = currentTrack.get_basename().get_file()
+	print(track_name)
+	$Play/Info/Screenshot.texture = load("res://Worlds/"+track_name + "/screenshot.png")
+
 
 	$Play/Selection/Scenarios.show()
 	$Play/Selection/Scenarios/ItemList.clear()
 	$Play/Selection/Trains.hide()
 	$Play/Info/Info/EasyMode.hide()
-	var scenarios = config.get_value("Scenarios", "List", [])
+	var scenarios = $jSaveModule.get_value("scenario_list", [])
 	for scenario in scenarios:
 		if mobile_version and (scenario == "The Basics" or scenario == "Advanced Train Driving"):
 			continue
@@ -219,9 +224,7 @@ func _on_ReloadContent_pressed():
 func _on_ItemList_scenario_selected(index):
 	currentScenario = $Play/Selection/Scenarios/ItemList.get_item_text(index)
 	var save_path = foundTracks[$Play/Selection/Tracks/ItemList.get_selected_items()[0]].get_basename() + "-scenarios.cfg"
-	var config = ConfigFile.new()
-	var load_response = config.load(save_path)
-	var sData = config.get_value("Scenarios", "sData", {})
+	var sData = $jSaveModule.get_value("scenario_data")
 	$Play/Info/Description.text = TranslationServer.translate(sData[currentScenario]["Description"])
 	$Play/Info/Info/Duration.text = TranslationServer.translate("MENU_DURATION")+": " + String(sData[currentScenario]["Duration"]) + " min"
 	$Play/Selection/Trains.show()
@@ -296,10 +299,24 @@ func update_project_for_mobile(value):
 
 
 func _on_FrontCreate_pressed():
-	OS.shell_open("https://www.libre-trainsim.de/contribute")
+#	OS.shell_open("https://www.libre-trainsim.de/contribute")
+	$Editor_Configuration._ready()
+	$MenuBackground.show()
+	$Editor_Configuration.show()
+	$Front.hide()
 
 
 
 
 func _on_Options_pressed_delme():
 	jSettings.open_window()
+
+
+func hide_editor_configuration():
+	$MenuBackground.hide()
+	$Editor_Configuration.hide()
+	$Front.show()
+
+
+func _on_Editor_Configuration_Back_Button_pressed():
+	hide_editor_configuration()

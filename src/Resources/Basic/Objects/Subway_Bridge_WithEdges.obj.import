@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Subway_Bridge_WithEdges.obj-58dc4b273e84b975e8ee009bf622e9f8.mesh"
+
+[deps]
+
+files=[ "res://.import/Subway_Bridge_WithEdges.obj-58dc4b273e84b975e8ee009bf622e9f8.mesh" ]
+
+source_file="res://Resources/Basic/Objects/Subway_Bridge_WithEdges.obj"
+dest_files=[ "res://.import/Subway_Bridge_WithEdges.obj-58dc4b273e84b975e8ee009bf622e9f8.mesh", "res://.import/Subway_Bridge_WithEdges.obj-58dc4b273e84b975e8ee009bf622e9f8.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

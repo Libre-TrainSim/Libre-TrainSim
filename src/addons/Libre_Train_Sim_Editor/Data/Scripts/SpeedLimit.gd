@@ -30,8 +30,8 @@ func _ready():
 func setToRail(newvar):
 	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	var texture = $Viewport.get_texture()
-	$Object/Display.material_override = $Object/Display.material_override.duplicate(true)
-	$Object/Display.material_override.albedo_texture = texture
+	$MeshInstance/Display.material_override = $MeshInstance/Display.material_override.duplicate(true)
+	$MeshInstance/Display.material_override.albedo_texture = texture
 	
 	
 	if speed - 100 >= 0:

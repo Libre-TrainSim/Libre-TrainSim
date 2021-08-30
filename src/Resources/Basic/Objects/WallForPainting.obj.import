@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/WallForPainting.obj-d6cca8d135a298893cc658eff3628eaa.mesh"
+
+[deps]
+
+files=[ "res://.import/WallForPainting.obj-d6cca8d135a298893cc658eff3628eaa.mesh" ]
+
+source_file="res://Resources/Basic/Objects/WallForPainting.obj"
+dest_files=[ "res://.import/WallForPainting.obj-d6cca8d135a298893cc658eff3628eaa.mesh", "res://.import/WallForPainting.obj-d6cca8d135a298893cc658eff3628eaa.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

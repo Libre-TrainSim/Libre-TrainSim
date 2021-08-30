@@ -78,9 +78,10 @@ var attachedSignals = {}
 func _ready():
 	manualMoving = false
 	_update(false)
-	if not Engine.is_editor_hint():
+	if not (Engine.is_editor_hint() or Root.Editor):
 		$Beginning.queue_free()
 		$Ending.queue_free()
+		$Mid.queue_free()
 	pass # Replace with function body.
 
 var EditorUpdateTimer = 0
@@ -89,7 +90,7 @@ func _process(delta):
 	if visible and not overheadLineBuilded:
 		updateOverheadLine()
 		overheadLineBuilded = true
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or Root.Editor:
 		EditorUpdateTimer += delta
 		if EditorUpdateTimer < 0.25:
 			return
@@ -106,10 +107,21 @@ func _process(delta):
 			name = name.replace(" ", "_")
 		## Move Buildings to the Buildings Node
 		for child in get_children():
-			if not child.owner == self:
+			if not child.owner == self and not child.is_in_group("Gizmo"):
 				remove_child(child)
 				buildings.add_child(child)
 				child.owner = world
+
+func _exit_tree():
+	for track_object in trackObjects:
+		track_object.queue_free()
+
+func rename(new_name):
+	var old_name = name
+	Root.name_node_appropriate(self, new_name, get_parent())
+	for track_object in trackObjects:
+		track_object.name = name + " " + track_object.description
+		track_object.attachedRail = name
 
 func _update(newvar):
 	if ResourceLoader.exists(railTypePath):
@@ -152,8 +164,9 @@ func _update(newvar):
 	buildRail()
 	updateOverheadLine()
 
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or Root.Editor:
 		$Ending.translation = get_local_transform_at_rail_distance(length).origin
+		$Mid.translation = get_local_transform_at_rail_distance(length/2.0).origin
 
 
 func checkVisualInstance():
@@ -166,6 +179,8 @@ func checkVisualInstance():
 
 func get_track_object(track_object_name : String): # (Searches for the description of track objects
 	for track_object in trackObjects:
+		if not is_instance_valid(track_object):
+			continue
 		if track_object.description == track_object_name:
 			return track_object
 	return null
@@ -262,6 +277,8 @@ func unload_visible_Instance():
 	print("Unloading visible Instance for Rail "+name)
 	visible = false
 	$MultiMeshInstance.queue_free()
+	for track_object in trackObjects:
+		track_object.queue_free()
 
 func load_visible_Instance():
 	visible = true
@@ -419,7 +436,7 @@ func updateOverheadLine():
 	polePositions.append(0)
 	
 	for trackObject in trackObjects:
-		if trackObject == null:
+		if not is_instance_valid(trackObject):
 			continue
 		print(trackObject.description)
 		if trackObject.description.begins_with("Pole"):

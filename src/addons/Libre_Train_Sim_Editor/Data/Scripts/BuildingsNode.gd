@@ -15,6 +15,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var updateTimer = 0
 func _process(delta):
+	if Root.Editor:
+		return
 	updateTimer += delta
 	if updateTimer > 0.5:
 		updateTimer = 0

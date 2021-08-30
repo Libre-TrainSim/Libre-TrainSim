@@ -2,20 +2,20 @@
 
 [ext_resource path="res://Resources/Basic/Textures/Orange.png" type="Texture" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Resources/Basic/Warn__Speed_Sign.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Resources/Basic/Objects/Warn__Speed_Sign.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/WarnSpeedLimit.gd" type="Script" id=4]
 [ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=5]
 
 [sub_resource type="SpatialMaterial" id=1]
 params_cull_mode = 2
-albedo_color = Color( 1, 0.678431, 0, 1 )
+albedo_color = Color( 0.968627, 0.447059, 0.0666667, 1 )
 
-[sub_resource type="ViewportTexture" id=2]
+[sub_resource type="ViewportTexture" id=6]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=7]
 flags_transparent = true
 params_cull_mode = 2
-albedo_texture = SubResource( 2 )
+albedo_texture = SubResource( 6 )
 
 [sub_resource type="QuadMesh" id=4]
 size = Vector2( 0.5, 0.6 )
@@ -24,18 +24,20 @@ size = Vector2( 0.5, 0.6 )
 size = 500
 font_data = ExtResource( 2 )
 
-[node name="WarnSpeedLimit" type="Spatial"]
+[node name="WarnSpeedLimit" type="Spatial" groups=[
+"Signal",
+]]
 script = ExtResource( 4 )
 
-[node name="Object" type="MeshInstance" parent="."]
+[node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 1.75625 )
 mesh = ExtResource( 3 )
 material/0 = ExtResource( 5 )
 material/1 = SubResource( 1 )
 
-[node name="Display" type="MeshInstance" parent="Object"]
+[node name="Display" type="MeshInstance" parent="MeshInstance"]
 transform = Transform( 0.76918, 0, 0, 0, -0.76918, 3.25841e-07, 0, -2.50631e-07, -1, 0, 1.60504, 0.0795861 )
-material_override = SubResource( 3 )
+material_override = SubResource( 7 )
 mesh = SubResource( 4 )
 material/0 = null
 
@@ -57,7 +59,7 @@ margin_top = -114.002
 margin_right = 511.747
 margin_bottom = 627.998
 custom_fonts/font = SubResource( 5 )
-text = "12"
+text = " 0"
 autowrap = true
 max_lines_visible = 1
 __meta__ = {

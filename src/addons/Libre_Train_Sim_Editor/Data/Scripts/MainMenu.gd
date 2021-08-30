@@ -309,7 +309,7 @@ func update_project_for_mobile(value):
 
 func _on_FrontCreate_pressed():
 #	OS.shell_open("https://www.libre-trainsim.de/contribute")
-	$Editor_Configuration._ready()
+	$Editor_Configuration.init()
 	$MenuBackground.show()
 	$Editor_Configuration.show()
 	$Front.hide()

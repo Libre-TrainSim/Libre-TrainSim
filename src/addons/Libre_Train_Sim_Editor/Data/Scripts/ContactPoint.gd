@@ -7,6 +7,8 @@ export var affectedSignal = ""
 export var disabled = false
 export var newStatus = 1
 export var newSpeed = -1
+export var enable_for_all_trains = true
+export var bySpecificTrain = ""
 export var affectTime = 0.1
 
 export (String) var attachedRail

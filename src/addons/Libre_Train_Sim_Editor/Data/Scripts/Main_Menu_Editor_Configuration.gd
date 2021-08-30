@@ -2,10 +2,11 @@ extends Control
 
 var editor_directory
 
-func _ready():
+func init():
 	initialize_UI()
 	initialize_editor_directory()
 	load_additional_resources()
+
 	
 func initialize_UI():
 	editor_directory = jSaveManager.get_setting("editor_directory_path", OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)+"Libre-TrainSim-Editor/")

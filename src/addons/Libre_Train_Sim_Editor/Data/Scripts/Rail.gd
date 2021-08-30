@@ -165,8 +165,8 @@ func _update(newvar):
 	updateOverheadLine()
 
 	if Engine.is_editor_hint() or Root.Editor:
-		$Ending.translation = get_local_transform_at_rail_distance(length).origin
-		$Mid.translation = get_local_transform_at_rail_distance(length/2.0).origin
+		$Ending.transform = get_local_transform_at_rail_distance(length)
+		$Mid.transform = get_local_transform_at_rail_distance(length/2.0)
 
 
 func checkVisualInstance():

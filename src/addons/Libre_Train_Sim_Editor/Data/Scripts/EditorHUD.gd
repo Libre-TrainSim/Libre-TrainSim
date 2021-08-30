@@ -173,9 +173,25 @@ func _on_dialog_closed():
 	mouse_over_ui = mouse_ui_index != 0
 
 func register_signals_for_escaping_mouse_clicks_from_ui(node : Node) -> void:
-	print("CONNECTING SIGNALS:::::")
 	for child in node.get_children():
 		if child.has_signal("mouse_entered"): 
 			child.connect("mouse_entered", child.find_parent("EditorHUD"), "_on_Mouse_entered_UI")
 			child.connect("mouse_exited", child.find_parent("EditorHUD"), "_on_Mouse_exited_UI")
 		register_signals_for_escaping_mouse_clicks_from_ui(child)
+
+
+func _on_JumpToStation_pressed():
+	$JumpToStation/ItemList.clear()
+	var station_node_names = get_parent().get_all_station_node_names_in_world()
+	for station_node_name in station_node_names:
+		$JumpToStation/ItemList.add_item(station_node_name)
+	$JumpToStation/ItemList.sort_items_by_text()
+	$JumpToStation/ItemList.show()
+	$JumpToStation/ItemList.grab_focus()
+
+
+func _on_JumpToStationItemList_item_selected(index):
+	$JumpToStation/ItemList.hide()
+	_on_dialog_closed()
+	get_parent().jump_to_station($JumpToStation/ItemList.get_item_text(index))
+	

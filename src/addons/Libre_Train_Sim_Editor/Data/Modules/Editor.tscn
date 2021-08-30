@@ -55,6 +55,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="JumpToStation" type="Button" parent="EditorHUD"]
+margin_left = 6.60713
+margin_top = 90.087
+margin_right = 95.6071
+margin_bottom = 110.087
+text = "Jump To Station"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="EditorHUD/JumpToStation"]
+visible = false
+margin_left = 0.114761
+margin_top = 20.304
+margin_right = 166.115
+margin_bottom = 55.304
+auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TestTrack" type="Button" parent="EditorHUD"]
 margin_left = 6.60713
 margin_top = 34.4249
@@ -528,6 +549,10 @@ __meta__ = {
 [connection signal="mouse_entered" from="EditorHUD/ExportTrack" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/ExportTrack" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/ExportTrack" to="." method="_on_ExportTrack_pressed"]
+[connection signal="mouse_entered" from="EditorHUD/JumpToStation" to="EditorHUD" method="_on_Mouse_entered_UI"]
+[connection signal="mouse_exited" from="EditorHUD/JumpToStation" to="EditorHUD" method="_on_Mouse_exited_UI"]
+[connection signal="pressed" from="EditorHUD/JumpToStation" to="EditorHUD" method="_on_JumpToStation_pressed"]
+[connection signal="item_selected" from="EditorHUD/JumpToStation/ItemList" to="EditorHUD" method="_on_JumpToStationItemList_item_selected"]
 [connection signal="mouse_entered" from="EditorHUD/TestTrack" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/TestTrack" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/TestTrack" to="." method="_on_TestTrack_pressed"]
@@ -560,10 +585,10 @@ __meta__ = {
 [connection signal="pressed" from="EditorHUD/ExportDialog/Export" to="EditorHUD/ExportDialog" method="_on_Export_pressed"]
 [connection signal="mouse_entered" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_exited_UI"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailLogic" method="_on_Content_Selector_resource_selected"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="mouse_entered" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]

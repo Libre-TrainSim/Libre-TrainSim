@@ -56,7 +56,7 @@ func setToRail(newvar):
 	if find_parent("World").has_node("Rails/"+attachedRail) and attachedRail != "":
 		rail = get_parent().get_parent().get_node("Rails/"+attachedRail)
 		rail.register_signal(self.name, onRailPosition)
-		self.translation = rail.get_pos_at_RailDistance(onRailPosition)
+		self.transform = rail.get_global_transform_at_rail_distance(onRailPosition)
 		
 		
 func get_scenario_data():

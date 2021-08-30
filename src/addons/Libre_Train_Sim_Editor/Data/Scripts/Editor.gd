@@ -409,3 +409,18 @@ func add_contact_point_to_selected_rail():
 	contact_point_ins.attachedRail = selected_object.name
 	contact_point_ins.setToRail(true)
 	set_selected_object(contact_point_ins)
+
+
+func get_all_station_node_names_in_world():
+	var station_node_names = []
+	for signal_node in $World/Signals.get_children():
+		if signal_node.type == "Station":
+			station_node_names.append(signal_node.name)
+	return station_node_names
+
+func jump_to_station(station_node_name):
+	var station_node = $World/Signals.get_node(station_node_name)
+	if station_node == null:
+		print_debug("Station not found:" + station_node_name)
+	$FreeCamera.transform = station_node.transform.translated(Vector3(0, 5, 0))
+	$FreeCamera.rotation_degrees.y -= 90

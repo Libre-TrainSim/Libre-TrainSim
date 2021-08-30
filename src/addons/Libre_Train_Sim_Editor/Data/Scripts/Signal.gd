@@ -23,7 +23,7 @@ export var blockSignal = false setget on_update_block_signal_setting
 var is_orange = false setget set_orange
 
 
-export var visualInstancePath = "res://Resources/Basic/RailTypes/Default.tscn"
+export var visualInstancePath = "res://Resources/Basic/SignalTypes/Default/Default.tscn"
 export (String) var attachedRail # Internal. Never change this via script.
 var attachedRailNode
 export var forward = true # Internal. Never change this via script.
@@ -62,7 +62,7 @@ func updateVisualInstance():
 		if visualInstancePath != "":
 			visualInstanceResource = load(visualInstancePath)
 		if visualInstanceResource == null:
-			visualInstanceResource = load("res://Resources/Basic/Signals/Default.tscn")
+			visualInstanceResource = preload("res://Resources/Basic/SignalTypes/Default/Default.tscn")
 		var visualInstance = visualInstanceResource.instance()
 		add_child(visualInstance)
 		visualInstance.name = "VisualInstance"

@@ -254,6 +254,7 @@ func test_track_pck():
 
 func export_track_pck(export_path):
 	var track_name = Root.current_editor_track
+	export_path += "/" + track_name + ".pck"
 	$World.force_load_all_chunks()
 	var packer = PCKPacker.new()
 	packer.pck_start(export_path)
@@ -278,6 +279,7 @@ func export_track_pck(export_path):
 	
 	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
 	var dependencies_export = []
+	print("Dependencies: " + String(dependencies_raw))
 	for dependence in dependencies_raw:
 		if not dependence.begins_with("res://addons/") and ResourceLoader.exists(dependence):
 			dependencies_export.append(dependence)

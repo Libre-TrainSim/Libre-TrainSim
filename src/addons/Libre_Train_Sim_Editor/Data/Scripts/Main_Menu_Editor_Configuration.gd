@@ -99,21 +99,8 @@ func _on_TracksList_user_pressed_action(entry_names):
 	get_tree().change_scene_to(load("res://addons/Libre_Train_Sim_Editor/Data/Modules/Editor.tscn"))
 
 
-func _on_ImportResources_pressed():
-	$VBoxContainer.hide()
-	$ResourceImporter.show()
-	$ResourceImporter.update_lists_ui()
-
 func load_additional_resources():
 	var pck_file = editor_directory + "/.cache/additional_resources.pck"
 	if jEssentials.does_path_exist(pck_file):
 		ProjectSettings.load_resource_pack(pck_file)
 
-
-func _on_Back_pressed():
-	get_parent().hide_editor_configuration()
-
-
-func _on_ResourceImporter_Back_pressed():
-	$VBoxContainer.show()
-	$ResourceImporter.hide()

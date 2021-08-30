@@ -95,8 +95,8 @@ func spawnRandomPerson():
 	personI.add_child(personVI.instance())
 	personI.attachedStation = self
 	personI.transform = getRandomTransformAtPlatform()
-	personI.owner = world
 	personsNode.add_child(personI)
+	personI.owner = world
 	
 	attachedPersons.append(personI)
 	
@@ -139,6 +139,6 @@ func deregisterPerson(personToDelete):
 func registerPerson(personNode):
 	attachedPersons.append(personNode)
 	personNode.get_parent().remove_child(personNode)
-	personNode.owner = world
 	personsNode.add_child(personNode)
+	personNode.owner = world
 	personNode.destinationPos.append(getRandomTransformAtPlatform().origin)

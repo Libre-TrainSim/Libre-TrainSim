@@ -166,7 +166,11 @@ func _update(newvar):
 	var mesh = mesh_res.duplicate(true)
 	multimesh.mesh = mesh
 	
-	for x in range(materialPaths.size()):
+	# This was sometimes out of bounds!!
+	#for x in range(materialPaths.size()):
+	# FIX: 
+	var count = min(multimesh.mesh.get_surface_count(), materialPaths.size())
+	for x in range(count):
 		if materialPaths[x] != "":
 			multimesh.mesh.surface_set_material(x, load(materialPaths[x]))
 	

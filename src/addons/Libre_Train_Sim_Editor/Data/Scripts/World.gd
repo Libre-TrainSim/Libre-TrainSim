@@ -76,8 +76,8 @@ func _ready():
 		## Create Persons-Node:
 		var personsNode = Spatial.new()
 		personsNode.name = "Persons"
-		personsNode.owner = self
 		add_child(personsNode)
+		personsNode.owner = self
 		
 		for personVisualInstancesPath in personVisualInstancesPathes:
 			personVisualInstances.append(load(personVisualInstancesPath))
@@ -96,6 +96,8 @@ func _ready():
 
 		player = $Players/Player
 		lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
+		
+		player.init_map()
 		
 		apply_user_settings()
 
@@ -224,7 +226,6 @@ func save_chunk(position):
 
 
 func unload_chunk(position : Vector3):
-	
 	var chunk = $jSaveModule.get_value(chunk2String(position), null)
 	if chunk == null:
 		return
@@ -263,10 +264,6 @@ func unload_chunk(position : Vector3):
 	
 	
 func load_chunk(position : Vector3):
-	
-
-	
-	
 	print("Loading Chunk " + chunk2String(position))
 	
 	var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
@@ -441,10 +438,11 @@ func checkBigChunk():
 		updateWorldTransform_bchunk(deltaChunk)
 		
 
-
+signal bchunk_updated_world_transform(deltaTranslation)
 func updateWorldTransform_bchunk(deltachunk):
 	var deltaTranslation = Vector3(deltachunk.x*5000, 0, deltachunk.y*5000)
-	print(deltaTranslation)
+	print("UPDATING WORLD ORIGIN: ",deltaTranslation)
+	emit_signal("bchunk_updated_world_transform", deltaTranslation)
 	for player in $Players.get_children():
 		player.translation += deltaTranslation
 	for rail in $Rails.get_children():

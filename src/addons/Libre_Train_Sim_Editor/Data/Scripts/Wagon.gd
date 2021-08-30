@@ -218,8 +218,8 @@ func registerPerson(person, door):
 		return
 	attachedPersons.append(person)
 	person.get_parent().remove_child(person)
-	person.owner = self
 	$Persons.add_child(person)
+	person.owner = self
 	person.translation = door.translation
 	
 	var passengerRoutePath = getPathFromTo(door, seats[seatIndex]) 

@@ -68,13 +68,33 @@ export (String) var author = ""
 export (String) var releaseDate = ""
 export (String) var screenshotPath = ""
 
-var cameraState = 1 ## 0: Free View 1: Cabin View, 2: Outer View
-var cameraMidPoint = Vector3(0,2,0)
+## 0: Free View 1: Cabin View, 2: Outer View
+enum CameraState {
+	FREE_VIEW = 0,
+	CABIN_VIEW = 1,
+	OUTER_VIEW = 2
+}
+var camera_state = CameraState.CABIN_VIEW
+
+var camera_mid_point = Vector3(0,2,0)
 var cameraY = 90
 var cameraX = 0
-var cameraDistance = 20
+
 var mouseSensitivity = 10
+
+var camera_distance = 20
+var has_camera_distance_changed = false
+const CAMERA_DISTANCE_MIN = 5
+const CAMERA_DISTANCE_MAX = 200
+
+var ref_fov = 42.7 # reference FOV for camera movement multiplier
+var camera_fov = 42.7 # current FOV
+var camera_fov_soll = 42.7 # FOV user wants
+const CAMERA_FOV_MIN = 20
+const CAMERA_FOV_MAX = 60
+
 var soundMode = 0 # 0: Interior, 1: Outer   ## Not currently used
+
 
 export (Array, NodePath) var wagons 
 export var wagonDistance = 0.5 ## Distance between the wagons
@@ -129,16 +149,22 @@ var startRail # Rail, on which the train is starting. Set by the scenario manger
 # Reference delta at 60fps
 const refDelta = 0.0167 # 1.0 / 60
 
-var cameraDistanceChanged = false
-
 
 
 onready var cameraNode = $Camera
 var cameraZeroTransform # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
 func ready(): ## Called by World!
+	
+	# capture mouse
+	# TODO: input mapping to release mouse for interaction?
+	# FIXME: mouse is visible in Grey Train, but not in Red Train, why?
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 	if not ai:
 		cameraZeroTransform = cameraNode.transform
+		cameraX = -$Camera.rotation_degrees.x
+		cameraY = $Camera.rotation_degrees.y
 		$Camera.current = true
 	world = get_parent().get_parent()
 	
@@ -200,11 +226,16 @@ func ready(): ## Called by World!
 		$Cabin.queue_free()
 		$Camera.queue_free()
 		$HUD.queue_free()
-		cameraState = 1 # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
+		camera_state = CameraState.CABIN_VIEW # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
 		insideLight = true
 		frontLight = true
-		
+	
 	print("Train " + name + " spawned sucessfully at " + currentRail.name)
+
+
+func init_map():
+	$HUD.init_map()
+
 
 var initialSwitchCheck = false
 var processLongDelta = 0.5 # Definition of Period, every which seconds the function is called.
@@ -235,26 +266,7 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 var processLongTimer = 0
 
 func _process(delta):
-	
-			
-	if Input.is_action_just_pressed("debug")  and not ai:
-		debug = !debug
-		if debug:
-			send_message(TranslationServer.translate("DEBUG_MODE_ENABLED"))
-			force_close_doors()
-			force_pantograph_up()
-			startEngine()
-			overrunRedSignal = false
-			enforcedBreaking = false
-			command = 0
-			soll_command = 0
-			
-		else:
-			overrunRedSignal = false
-			enforcedBreaking = false
-			command = 0
-			soll_command = 0
-			send_message(TranslationServer.translate("DEBUG_MODE_DISABLED"))
+
 	
 	processLongTimer += delta
 	if processLongTimer > processLongDelta:
@@ -320,9 +332,25 @@ func _process(delta):
 	
 	check_overdriving_a_switch()
 	
-	
-	
-	
+func _unhandled_key_input(event):
+	if Input.is_action_just_pressed("debug") and not ai:
+		debug = !debug
+		if debug:
+			send_message("DEBUG_MODE_ENABLED")
+			force_close_doors()
+			force_pantograph_up()
+			startEngine()
+			overrunRedSignal = false
+			enforcedBreaking = false
+			command = 0
+			soll_command = 0
+			
+		else:
+			overrunRedSignal = false
+			enforcedBreaking = false
+			command = 0
+			soll_command = 0
+			send_message("DEBUG_MODE_DISABLED")
 
 func handleEngine():
 	if not pantograph:
@@ -352,33 +380,38 @@ func _input(event):
 		
 	if event.is_pressed():
 		# zoom in
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
-			cameraDistance += cameraDistance*0.2
-			cameraDistanceChanged = true
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP) and not $HUD.is_full_map_visible():
+			if camera_state == CameraState.CABIN_VIEW:
+				camera_fov_soll = camera_fov + 5
+			elif camera_state == CameraState.OUTER_VIEW:
+				camera_distance += camera_distance*0.2
+				has_camera_distance_changed = true
 			# call the zoom function
 		# zoom out
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
-			cameraDistance -= cameraDistance*0.2
-			cameraDistanceChanged = true
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN) and not $HUD.is_full_map_visible():
+			if camera_state == CameraState.CABIN_VIEW:
+				camera_fov_soll = camera_fov - 5
+			elif camera_state == CameraState.OUTER_VIEW:
+				camera_distance -= camera_distance*0.2
+				has_camera_distance_changed = true
 			# call the zoom function
-		if cameraDistance < 5 :
-			cameraDistance = 5
-		if cameraDistance > 200:
-			cameraDistance = 200
+		
+		camera_fov_soll = clamp(camera_fov_soll, CAMERA_FOV_MIN, CAMERA_FOV_MAX)
+		camera_distance = clamp(camera_distance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
 
 func getCommand(delta):
 	if controlType == 0 and not automaticDriving: ## Combi Roll
-		if Input.is_action_pressed("ui_up"):
+		if Input.is_action_pressed("acc+"):
 			soll_command += 0.7 * delta
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed("acc-"):
 			soll_command -= 0.7 * delta
 		if soll_command >= 1:
 			soll_command = 1
 		if soll_command <= -1:
 			soll_command = -1
-		if Input.is_action_pressed("ui_left"):
+		if Input.is_action_pressed("brake-"):
 			soll_command = 0
-		if Input.is_action_pressed("ui_right"):
+		if Input.is_action_pressed("brake+"):
 			soll_command = 1
 		if soll_command > 1: soll_command = 1
 		if soll_command < -1: soll_command = -1
@@ -559,17 +592,22 @@ func remove_free_camera():
 		
 
 func switch_to_cabin_view():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	cameraState = 1
+	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	camera_state = CameraState.CABIN_VIEW
 	wagonsVisible = false
 	cameraNode.transform = cameraZeroTransform
+	cameraX = -cameraNode.rotation_degrees.x
+	cameraY = cameraNode.rotation_degrees.y
+	$Camera.fov = camera_fov # reset to first person FOV (zoom)
 	$Cabin.show()
 	remove_free_camera()
 	$Camera.current = true
 
 func switch_to_outer_view():
 	wagonsVisible = true
-	cameraState = 2
+	camera_state = CameraState.OUTER_VIEW
+	has_camera_distance_changed = true # FIX for camera not properly setting itself until 1st input
+	$Camera.fov = ref_fov # reset to reference FOV, zooming works different in this view
 	$Cabin.hide()
 	remove_free_camera()
 	$Camera.current = true
@@ -583,23 +621,23 @@ func handleCamera(delta):
 	if Input.is_action_just_pressed("FreeCamera"):
 		$Cabin.hide()
 		wagonsVisible = true
-		cameraState = 0
+		camera_state = CameraState.FREE_VIEW
 		get_node("Camera").current = false
 		var cam = load("res://addons/Libre_Train_Sim_Editor/Data/Modules/FreeCamera.tscn").instance()
 		cam.current = true
 		world.add_child(cam)
 		cam.owner = world
-		cam.transform = transform.translated(cameraMidPoint)
+		cam.transform = transform.translated(camera_mid_point)
 	var playerCameras = get_tree().get_nodes_in_group("PlayerCameras")
 	for i in range(3, 9):
 		if Input.is_action_just_pressed("player_camera_" + str(i)) and playerCameras.size() >= i - 2:
 			wagonsVisible = true
-			cameraState = i
+			camera_state = i
 			playerCameras[i -3].current = true
 			$Cabin.hide()
 			remove_free_camera()
 
-	if cameraState == 1: # Inner Position
+	if camera_state == CameraState.CABIN_VIEW:
 		## Camera x Position
 		var sollCameraPosition_x = cameraZeroTransform.origin.x + (currentRealAcceleration/20.0 * -cameraFactor)
 		if speed == 0 or debug:
@@ -610,27 +648,37 @@ func handleCamera(delta):
 		
 		## Handle Camera Shaking:
 		soll_camera_translation += get_camera_shaking(delta)
-		
-		
-		
-		
 		cameraNode.translation = soll_camera_translation
-	elif cameraState == 2: ## Outer Position
-		if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if mouseMotion.length() > 0 or cameraDistanceChanged:
+		
+		# FIXME: in the first frame, delta == 0, why?
+		if mouseMotion.length() > 0 and delta > 0:
+			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * (camera_fov / ref_fov)
+			cameraY += -mouseMotion.x * motionFactor
+			cameraX += +mouseMotion.y * motionFactor
+			cameraX = clamp(cameraX, -85, 85)
+			cameraNode.rotation_degrees.y = cameraY
+			cameraNode.rotation_degrees.x = -cameraX
+			mouseMotion = Vector2(0,0)
+		
+		if abs(camera_fov - camera_fov_soll) > 1:
+			camera_fov += sign(camera_fov_soll-camera_fov)
+			cameraNode.fov = camera_fov
+		
+	elif camera_state == CameraState.OUTER_VIEW:
+		#if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if mouseMotion.length() > 0 or has_camera_distance_changed:
 			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
 			cameraY += -mouseMotion.x * motionFactor
 			cameraX += +mouseMotion.y * motionFactor
-			if cameraX > 85: cameraX = 85
-			if cameraX < -85: cameraX = -85
-			var cameraVector = Vector3(cameraDistance, 0, 0)
+			cameraX = clamp(cameraX, -85, 85)
+			var cameraVector = Vector3(camera_distance, 0, 0)
 			cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
-			cameraNode.translation = cameraVector + cameraMidPoint
-			cameraNode.rotation_degrees.y = cameraY +90
+			cameraNode.translation = cameraVector + camera_mid_point
+			cameraNode.rotation_degrees.y = cameraY + 90
 			cameraNode.rotation_degrees.x = -cameraX
 			mouseMotion = Vector2(0,0)
-			cameraDistanceChanged = false
+			has_camera_distance_changed = false
 		
 
 
@@ -662,7 +710,7 @@ func handle_signal(signalname):
 		if signal.warnSpeed != -1: 
 			pass
 		if signal.status == 0:
-			send_message(TranslationServer.translate("YOU_OVERRUN_RED_SIGNAL"))
+			send_message("YOU_OVERRUN_RED_SIGNAL")
 			overrunRedSignal = true
 		else:
 			freeLastSignalAfterDrivenTrainLength()
@@ -685,7 +733,7 @@ func handle_signal(signalname):
 			3:
 				endStation = true
 				stationBeginning = false
-		currentStationName = stations["stationName"][current_station_index]		
+		currentStationName = stations["stationName"][current_station_index]
 		isInStation = false
 		platformSide = signal.platformSide
 		stationHaltTime = stations["haltTime"][current_station_index]
@@ -724,29 +772,31 @@ func check_station(delta):
 	if currentStationName != "":
 		if (speed == 0 and not isInStation and distance-distanceOnStationBeginning+GOODWILL_DISTANCE<length) and not wholeTrainNotInStation and not stationBeginning:
 			wholeTrainNotInStation = true
-			send_message(TranslationServer.translate("END_OF_YOUR_TRAIN_NOT_IN_STATION"))
+			send_message("END_OF_YOUR_TRAIN_NOT_IN_STATION")
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and not (doorLeft or doorRight)):
 			doorOpenMessageSentTimer += delta
 			if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
-				send_message(TranslationServer.translate("HINT_OPEN_DOORS"))
+				send_message("HINT_OPEN_DOORS", ["doorLeft", "doorRight"])
 				doorOpenMessageSent = true
 		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight or platformSide == 0)) or (stationBeginning and not isInStation):
 			realArrivalTime = time
 			var lateMessage = ". "
 			if not stationBeginning:
 				var secondsLater = -arrivalTime[2] + realArrivalTime[2] + (-arrivalTime[1] + realArrivalTime[1])*60 + (-arrivalTime[0] + realArrivalTime[0])*3600
-				if secondsLater > 120:
-					lateMessage += TranslationServer.translate("YOU_ARE_LATE_1") + " " + String(int(secondsLater/60)) + " " + TranslationServer.translate("YOU_ARE_LATE_2_ONE_MINUTE")
-				elif secondsLater > 60:
-					lateMessage += TranslationServer.translate("YOU_ARE_LATE_1") + " " + String(int(secondsLater/60)) + " " + TranslationServer.translate("YOU_ARE_LATE_2")
+				if secondsLater < 60:
+					lateMessage = ""
+				elif secondsLater < 120:
+					lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2_ONE_MINUTE")]
+				else:
+					lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2")]
 			if stationBeginning:
 				currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
-				jEssentials.call_delayed(1.2, self, "send_message", [TranslationServer.translate("WELCOME_TO") + " " + currentStationName])
+				jEssentials.call_delayed(1.2, self, "send_message", [tr("WELCOME_TO") + " " + currentStationName])
 			else:
-				send_message(TranslationServer.translate("WELCOME_TO") + " " + currentStationName + lateMessage)
+				send_message(tr("WELCOME_TO") + " " + currentStationName + lateMessage)
 				
 			
-			if cameraState != 1:
+			if camera_state != CameraState.CABIN_VIEW:
 				for wagon in wagonsI:
 					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
 			elif not ai:
@@ -758,7 +808,7 @@ func check_station(delta):
 		elif (speed == 0 and isInStation ) :
 			if stationTimer > stationHaltTime:
 				if endStation:
-					send_message(TranslationServer.translate("SCENARIO_FINISHED"))
+					send_message("SCENARIO_FINISHED")
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
 					currentStationName = ""
 					nextStation = ""
@@ -769,22 +819,22 @@ func check_station(delta):
 					return
 				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
 					nextStation = null
-					send_message(TranslationServer.translate("YOU_CAN_DEPART"))
+					send_message("YOU_CAN_DEPART")
 					stations["passed"][stations["stationName"].find(currentStationName)] = true
-					if cameraState != 1:
+					if camera_state != CameraState.CABIN_VIEW:
 						for wagon in wagonsI:
 							wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
 					elif not ai:
 						jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
 					leave_current_station()
 		elif (speed != 0 and isInStation) and not (doorLeft or doorRight):
-			send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
+			send_message("YOU_DEPARTED_EARLIER")
 			leave_current_station()
 		elif (stationLength+GOODWILL_DISTANCE<distance-distanceOnStationBeginning) and currentStationName != "" and not stationBeginning:
 			if isInStation:
-				send_message(TranslationServer.translate("YOU_DEPARTED_EARLIER"))
+				send_message("YOU_DEPARTED_EARLIER")
 			else:
-				send_message(TranslationServer.translate("YOU_MISSED_A_STATION"))
+				send_message("YOU_MISSED_A_STATION")
 			leave_current_station()
 		stationTimer += delta
 		if (speed != 0):
@@ -841,15 +891,14 @@ func checkSpeedLimit(delta):
 	hardOverSpeeding = Math.speedToKmH(speed) > currentSpeedLimit + 10
 	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
-		send_message( TranslationServer.translate("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
+		send_message(tr("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
 	checkSpeedLimitTimer += delta
 
-	
-func send_message(string):
+
+func send_message(string : String, actions := []):
 	if not ai:
-		print("Sending Message: " + string )
-		$HUD.send_Message(string)
-		
+		print("Sending Message: " + tr(string) % actions )
+		$HUD.send_message(string, actions)
 
 ## Doors:
 
@@ -1041,8 +1090,8 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 				distanceS = "1km"
 			else:
 				distanceS+= "m"
-			send_message(TranslationServer.translate("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + TranslationServer.translate("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + TranslationServer.translate("THE_NEXT_STATION_IS_3"))
-			if cameraState != 2 and cameraState != 0 and not ai:
+			send_message(tr("THE_NEXT_STATION_IS_1") + " " + stations["stationName"][stations["nodeName"].find(nextStation)]+ ". " + tr("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + tr("THE_NEXT_STATION_IS_3"))
+			if camera_state != CameraState.OUTER_VIEW and camera_state != CameraState.FREE_VIEW and not ai:
 #				print(name + ": Playing Sound.......................................................")
 				jTools.call_delayed(10, jAudioManager, "play_game_sound", [stations["approachAnnouncePath"][stations["nodeName"].find(nextStation)]])
 #				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
@@ -1062,18 +1111,18 @@ func check_for_player_help(delta):
 		check_for_player_helpTimer += delta
 		if check_for_player_helpTimer > 8 and not pantographUp and not check_for_player_helpSent:
 			if not Root.mobile_version:
-				send_message(TranslationServer.translate("HINT_F2"))
+				send_message("HINT_F2", ["trainInfoAbove"])
 			check_for_player_helpSent = true
 		if check_for_player_helpTimer > 15 and command < -0.5 and not check_for_player_helpSent:
 			if not Root.mobile_version:
-				send_message(TranslationServer.translate("HINT_F2"))
+				send_message("HINT_F2", ["trainInfoAbove"])
 			check_for_player_helpSent = true
 	else:
 		check_for_player_helpTimer = 0
 	
 	check_for_player_helpTimer2 += delta
 	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and not (doorRight or doorLeft) and not overrunRedSignal and check_for_player_helpTimer2 > 10 and not isInStation:
-		send_message(TranslationServer.translate("HINT_ADVANCED_DRIVING"))
+		send_message("HINT_ADVANCED_DRIVING", ["acc-", "acc+"])
 		check_for_player_helpTimer2 = 0
 		
 
@@ -1127,7 +1176,6 @@ func spawnWagons():
 	for wagon in wagons:
 		var wagonNode = get_node(wagon)
 		var newWagon = wagonNode.duplicate()
-		newWagon.owner = self.owner
 		newWagon.show()
 		newWagon.baked_route = baked_route
 		newWagon.baked_route_direction = baked_route_direction
@@ -1141,6 +1189,7 @@ func spawnWagons():
 		else:
 			nextWagonPosition += wagonNode.length + wagonDistance
 		get_parent().add_child(newWagon)
+		newWagon.owner = self.owner
 		wagonsI.append(newWagon)
 	
 	# Handle Cabin:
@@ -1369,7 +1418,7 @@ func fixObsoleteStations(): ## Checks, if there are stations in the stations tab
 #				stations.passed[i] = true
 
 func updateTrainAudioBus():
-	if cameraState == 0 or cameraState == 2:
+	if camera_state == CameraState.FREE_VIEW or camera_state == CameraState.OUTER_VIEW:
 		AudioServer.set_bus_volume_db(2,0)
 	else:
 		AudioServer.set_bus_volume_db(2,soundIsolation)

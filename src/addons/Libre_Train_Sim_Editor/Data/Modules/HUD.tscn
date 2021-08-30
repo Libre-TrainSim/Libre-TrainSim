@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Resources/Basic/Textures/Black.png" type="Texture" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/MobileHUD.tscn" type="PackedScene" id=2]
@@ -16,10 +16,18 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/SpeedLimit.png" type="Texture" id=14]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/NextTable.png" type="Texture" id=15]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=16]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/InputLabel.gd" type="Script" id=17]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/RailMap.tscn" type="PackedScene" id=18]
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("Map/ViewportContainer/RailMap")
+
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("Map/ViewportContainer/RailMap")
 
 [sub_resource type="Animation" id=1]
 tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer/Label:modulate")
+tracks/0/path = NodePath("MarginContainer/Message:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -31,7 +39,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("MarginContainer/Label:rect_position")
+tracks/1/path = NodePath("MarginContainer/Message:rect_position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -45,7 +53,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=2]
 tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer/Label:modulate")
+tracks/0/path = NodePath("MarginContainer/Message:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -57,7 +65,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("MarginContainer/Label:rect_position")
+tracks/1/path = NodePath("MarginContainer/Message:rect_position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -270,6 +278,70 @@ scale = Vector2( 0.4, 0.4 )
 [node name="TrainInfoAbove" parent="IngameInformation" instance=ExtResource( 7 )]
 visible = false
 
+[node name="Map" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Map"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RailMap" parent="Map/ViewportContainer" instance=ExtResource( 18 )]
+size = Vector2( 800, 600 )
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="FullMap" type="Control" parent="Map"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="Map/FullMap"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.25098, 0.25098, 0.25098, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RenderTexture" type="TextureRect" parent="Map/FullMap"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+texture = SubResource( 4 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OverlayMap" type="TextureRect" parent="Map"]
+visible = false
+anchor_right = 0.33
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource( 5 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MobileHUD" parent="." instance=ExtResource( 2 )]
 visible = false
 
@@ -399,7 +471,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="MarginContainer"]
+[node name="Message" type="Label" parent="MarginContainer"]
 modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_top = 1.0
@@ -412,9 +484,7 @@ margin_bottom = 5.0
 custom_fonts/font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 17 )
 
 [node name="Pause" type="Control" parent="."]
 visible = false

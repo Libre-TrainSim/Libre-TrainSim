@@ -7,9 +7,7 @@ export var affectedSignal = ""
 export var disabled = false
 export var newStatus = 1
 export var newSpeed = -1
-export var affectTime = 0
-export var enable_for_all_trains = true
-export var bySpecificTrain = ""
+export var affectTime = 0.1
 
 export (String) var attachedRail
 export (int) var onRailPosition
@@ -27,8 +25,8 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		setToRail(true)
-	if not Engine.is_editor_hint() and not Root.Editor:
-		$Timer.wait_time = affectTime
+	if not Engine.is_editor_hint():
+		$Timer.wait_time = affectTime # affectTime MUST be > 0!
 		$MeshInstance.queue_free()
 		setToRail(true)
 
@@ -39,7 +37,7 @@ func setToRail(newvar):
 	if not find_parent("World"):
 		print("SpeedSign can't find World Parent!'")
 		return
-	
+
 	if find_parent("World").has_node("Rails/"+attachedRail) and attachedRail != "":
 		var rail = find_parent("World").get_node("Rails/"+attachedRail)
 		rail.register_signal(self.name, onRailPosition)
@@ -57,7 +55,7 @@ func set_scenario_data(d):
 	a.newStatus = b.newStatus
 	a.affectTime = b.affectTime
 	a.newSpeed = b.get("newSpeed", -1)
-	
+
 func get_scenario_data():
 	var a = {}
 	var b = self
@@ -67,12 +65,12 @@ func get_scenario_data():
 	a.affectTime = b.affectTime
 	a.newSpeed = b.newSpeed
 	return a
-	
+
 func reset():
 	affectedSignal = ""
 	bySpecificTrain = ""
 	newStatus = 1
-	affectTime = 0
+	affectTime = 0.1
 
 func activateContactPoint(trainName):
 	if disabled: return
@@ -82,7 +80,7 @@ func activateContactPoint(trainName):
 
 func _on_Timer_timeout():
 	var signalN = get_parent().get_node(affectedSignal)
-	if signalN == null: 
+	if signalN == null:
 		print("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...")
 		return
 	if signalN.type != "Signal":

@@ -2,11 +2,16 @@
 
 importer="texture"
 type="StreamTexture"
-valid=false
+path="res://.import/GreenSignalArrow.svg-6c1b6ea78f817218d284859446a0593a.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://Resources/Basic/Textures/StonePlates_Red.png"
+source_file="res://addons/Libre_Train_Sim_Editor/Data/Misc/GreenSignalArrow.svg"
+dest_files=[ "res://.import/GreenSignalArrow.svg-6c1b6ea78f817218d284859446a0593a.stex" ]
+
 [params]
 
 compress/mode=0

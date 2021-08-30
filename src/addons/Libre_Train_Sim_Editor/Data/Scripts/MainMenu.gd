@@ -102,29 +102,37 @@ func _on_SettingsFront_pressed():
 #	$MenuBackground.show()
 #	$Settings.show()
 
-func update_config():
-	## Get All .pck files:
-	foundContentPacks = []
+
+func _search_for_pcks(path: String) -> void:
 	var dir = Directory.new()
-	dir.open(OS.get_executable_path().get_base_dir())
+	dir.open(path)
 	dir.list_dir_begin()
 	while(true):
 		var file = dir.get_next()
 		if file == "":
 			break
 		if file.get_extension() == "pck":
-			foundContentPacks.append(file)
+			foundContentPacks.append(path + file)
 	dir.list_dir_end()
-	print("Found Content Packs: " + String(foundContentPacks))
 
+
+func update_config():
+	## Get All .pck files:
+	foundContentPacks = []
+	if OS.has_feature("standalone"):
+		_search_for_pcks(OS.get_executable_path().get_base_dir())
+		_search_for_pcks("user://addons/")
+	else:
+		print("Skipping pack loading in editor build, because of https://github.com/godotengine/godot/issues/16798")
+	print("Found Content Packs: %s" % [foundContentPacks])
+	
 	for contentPack in foundContentPacks:
 		if ProjectSettings.load_resource_pack(contentPack, false):
-			print("Loading Content Pack "+ contentPack+" successfully finished")
+			print("Loading Content Pack %s successfully finished" % contentPack)
 
 	## Get all Tracks:
 	var foundFiles = {"Array": []}
 	Root.crawlDirectory("res://Worlds",foundFiles,"tscn")
-	print(foundFiles)
 	foundTracks = foundFiles["Array"].duplicate(true)
 
 	## Get all Trains
@@ -204,7 +212,8 @@ func _on_ItemList_itemTracks_selected(index):
 
 ## Content Page:
 func update_content():
-	$Content/Label.text = TranslationServer.translate("MENU_TO_ADD_CONTENT") + " " + OS.get_executable_path().get_base_dir()
+	$Content/Label.text = tr("MENU_TO_ADD_CONTENT") + " %s, %s" % \
+			[OS.get_executable_path().get_base_dir(), OS.get_user_data_dir() + "/addons"]
 	$Content/ItemList.clear()
 	for contentPack in foundContentPacks:
 		$Content/ItemList.add_item(contentPack)

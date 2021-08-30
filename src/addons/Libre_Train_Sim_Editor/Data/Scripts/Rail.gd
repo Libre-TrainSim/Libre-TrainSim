@@ -295,7 +295,8 @@ func get_shifted_local_pos_at_RailDistance(distance, shift):
 func unload_visible_Instance():
 	print("Unloading visible Instance for Rail "+name)
 	visible = false
-	$MultiMeshInstance.queue_free()
+	if has_node("MultiMeshInstance"):
+		$MultiMeshInstance.queue_free()
 	for track_object in trackObjects:
 		track_object.queue_free()
 

@@ -4,33 +4,40 @@ extends Node
 # Example: "res://Levels/Level1/Level1.save"
 export (String) var save_path = ""
 
-
 func set_save_path(save_path : String):
 	self.save_path = save_path
-	reload()
+	_load_current_config()
 
 func save_value(key : String, value):
-	if _config == null:
-		print_debug("Save path not configured correctly. Don't saving anything...")
-		return
-		
-	_config.set_value("Main", key, value)
-	_config.save(save_path)
+	_cache_main[key] = value
+
 
 func get_value(key,  default_value = null):
+	if _cache_main.has(key):
+		return _cache_main[key]
 	if _config == null:
 		print_debug("Save path not configured correctly. Returning default_value.")
 		return default_value
-		
 	if _config.has_section_key("Main", key):
-		return _config.get_value("Main", key, default_value)
+		var value =  _config.get_value("Main", key, default_value)
+		_cache_main[key] = value
+		return value
 	return default_value
 
 func reload():
 	_load_current_config()
-	
+
+func write_to_disk():
+	if _config == null:
+		print_debug("Save path not configured correctly. Don't saving anything...")
+		return
+	for key in _cache_main.keys():
+		_config.set_value("Main", key, _cache_main[key])
+	_config.save(save_path)
+
 ## Internal Code ###############################################################
 var _config
+var _cache_main = {}
 
 func _ready():
 	_load_current_config()
@@ -39,9 +46,17 @@ func _load_current_config():
 	if save_path == "":
 		print_debug("Save path not configured correctly. Not initializing jSaveModlue "+ name + ".")
 	_config = ConfigFile.new()
-	
+
 	var dir = Directory.new()
 	if not dir.dir_exists(save_path.get_base_dir()):
 		dir.make_dir_recursive(save_path.get_base_dir())
-	
+
 	_config.load(save_path)
+
+
+func _enter_tree():
+	pass
+
+
+func _exit_tree():
+	write_to_disk()

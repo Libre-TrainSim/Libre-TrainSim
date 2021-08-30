@@ -644,9 +644,9 @@ func save_chunks(chunks_to_save : Array):
 	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
 	for chunk_to_save in chunks_to_save:
 		if current_unloaded_chunks.has(chunk_to_save): # If chunk is loaded but unloaded at the same time
-			print("Chunk conflict: " + chunk_to_save + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
-			load_chunk(string2Chunk(chunk_to_save))
-			save_chunk(string2Chunk(chunk_to_save))
+#			print("Chunk conflict: " + chunk_to_save + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
+#			load_chunk(string2Chunk(chunk_to_save))
+#			save_chunk(string2Chunk(chunk_to_save))
 			continue
 		save_chunk(string2Chunk(chunk_to_save))
 	print("Saved chunks sucessfully.")

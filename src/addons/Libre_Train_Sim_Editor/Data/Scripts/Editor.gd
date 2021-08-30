@@ -157,6 +157,8 @@ func save_world():
 	last_editor_camera_transforms[Root.current_editor_track] = $FreeCamera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
+	$World.unload_and_save_all_chunks()
+
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
@@ -166,7 +168,13 @@ func save_world():
 			return
 	
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
+	$World/jSaveModule.write_to_disk()
+	$World/jSaveModuleScenarios.write_to_disk()
+	
+#	$World.force_load_all_chunks()
 	send_message("World successfully saved!")
+	
+	
 	
 	generate_grass_panes()
 
@@ -434,11 +442,11 @@ func jump_to_station(station_node_name):
 var all_chunks = []
 var GRASS_HEIGHT = -0.5
 func generate_grass_panes():
-	for child in $Landscape.get_children():
-		child.queue_free()
 	var all_chunks_new = $World.get_all_chunks_vector3()
 	if all_chunks_new.size() == all_chunks.size():
 		return
+	for child in $Landscape.get_children():
+		child.queue_free()
 	all_chunks = all_chunks_new
 	var mesh_resource = preload("res://Resources/Basic/Objects/grass_square.obj")
 	for chunk in all_chunks:

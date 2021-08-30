@@ -19,8 +19,8 @@ onready var trackName = FileName.rsplit("/")[0]
 var chunkSize = 1000
 
 var all_chunks = [] # All Chunks of the world
-var istChunks = [] # All Current loaded Chunks
-var sollChunks = [] # All Chunks, which should be loaded immediately
+var istChunks = [] # All Current loaded Chunks, array of strings
+var sollChunks = [] # All Chunks, which should be loaded immediately, array of strings
 
 var activeChunk = string2Chunk("0,0") # Current Chunk of the player (ingame)
 
@@ -71,6 +71,8 @@ func _ready():
 		trainFiles = trainFiles["Array"]
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
+		
+		jEssentials.call_delayed(1.0, self, "load_configs_to_cache")
 		
 		
 		## Create Persons-Node:
@@ -350,9 +352,11 @@ func load_chunk(position : Vector3):
 	var unloaded_chunks = get_value("unloaded_chunks", [])
 	unloaded_chunks.erase(chunk2String(position))
 	save_value("unloaded_chunks", unloaded_chunks)
+	istChunks.append(chunk2String(position))
+	istChunks = jEssentials.remove_duplicates(istChunks)
 	
 	print("Chunk " + chunk2String(position) + " loaded")
-	pass
+
 
 func get_all_chunks(): # Returns Array of Strings
 	all_chunks = []
@@ -706,8 +710,20 @@ func update_all_rails_overhead_line_setting(overhead_line : bool): # Not called 
 	for rail in $Rails.get_children():
 		rail.overheadLine = overhead_line
 		rail.updateOverheadLine()
-	
+
 
 ## Should be later used if we have a real heightmap
 func get_terrain_height_at(Position : Vector2):
 	return 0
+
+
+func get_chunks_around_position(position):
+	var mid_chunk = pos2Chunk(position)
+	var neighbour_chunks = getChunkeighbours(mid_chunk)
+	neighbour_chunks.append(mid_chunk)
+	return neighbour_chunks
+
+
+func load_configs_to_cache():
+	$jSaveModule.load_everything_into_cache()
+	$jSaveModuleScenarios.load_everything_into_cache()

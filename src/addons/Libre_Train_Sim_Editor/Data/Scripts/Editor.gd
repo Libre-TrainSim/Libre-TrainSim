@@ -14,6 +14,7 @@ func _ready():
 	pass # Replace with function body.
 
 var bouncing_timer = 0
+var one_second_timer = 0
 func _process(delta):
 
 	
@@ -33,6 +34,12 @@ func _process(delta):
 			selected_object.scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 	else:
 		clear_selected_object()
+	
+	one_second_timer += delta
+	if one_second_timer > 1:
+		one_second_timer = 0
+		load_chunks_near_camera()
+	
 		
 
 func _enter_tree():
@@ -149,6 +156,8 @@ func load_world():
 	
 	$World/Grass.hide()
 	generate_grass_panes()
+	
+	Root.fix_frame_drop()
 	 
 	
 func save_world():
@@ -158,7 +167,10 @@ func save_world():
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
 	$World.unload_and_save_all_chunks()
+	
+	jEssentials.call_delayed(0.1, self, "save_world_step_2")
 
+func save_world_step_2():
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
@@ -170,6 +182,8 @@ func save_world():
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
 	$World/jSaveModule.write_to_disk()
 	$World/jSaveModuleScenarios.write_to_disk()
+	
+	ist_chunks.clear()
 	
 #	$World.force_load_all_chunks()
 	send_message("World successfully saved!")
@@ -300,7 +314,6 @@ func export_track_pck(export_path):
 		print(dependence)
 		packer.add_file(dependence, dependence)
 	
-	$World.unload_and_save_all_chunks()
 	save_world()
 	
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
@@ -439,6 +452,7 @@ func jump_to_station(station_node_name):
 	$FreeCamera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	$FreeCamera.rotation_degrees.y -= 90
 
+
 var all_chunks = []
 var GRASS_HEIGHT = -0.5
 func generate_grass_panes():
@@ -456,5 +470,11 @@ func generate_grass_panes():
 		mesh_instance.translation = (chunk * 1000) + (Vector3(0, GRASS_HEIGHT, 0))
 		$Landscape.add_child(mesh_instance)
 		mesh_instance.owner = self
-	
-		
+
+var ist_chunks = []
+func load_chunks_near_camera():
+	var wanted_chunks = $World.get_chunks_around_position($FreeCamera.translation)
+	for wanted_chunk in wanted_chunks:
+		if not ist_chunks.has(wanted_chunk):
+			$World.load_chunk(wanted_chunk)
+			ist_chunks.append(wanted_chunk)

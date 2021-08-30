@@ -134,6 +134,7 @@ size_flags_horizontal = 4
 text = "Save World Config"
 
 [node name="HSeparator" type="HSeparator" parent="World Configuration"]
+visible = false
 margin_top = 202.0
 margin_right = 792.0
 margin_bottom = 206.0
@@ -142,6 +143,7 @@ __meta__ = {
 }
 
 [node name="WorldLoading" type="VBoxContainer" parent="World Configuration"]
+visible = false
 margin_top = 210.0
 margin_right = 792.0
 margin_bottom = 314.0
@@ -217,15 +219,15 @@ margin_bottom = 20.0
 text = "Load Chunks"
 
 [node name="HSeparator2" type="HSeparator" parent="World Configuration"]
-margin_top = 318.0
+margin_top = 202.0
 margin_right = 792.0
-margin_bottom = 322.0
+margin_bottom = 206.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Notes" type="VBoxContainer" parent="World Configuration"]
-margin_top = 326.0
+margin_top = 210.0
 margin_right = 792.0
 margin_bottom = 564.0
 size_flags_vertical = 3
@@ -242,15 +244,15 @@ align = 1
 [node name="RichTextLabel" type="TextEdit" parent="World Configuration/Notes"]
 margin_top = 18.0
 margin_right = 792.0
-margin_bottom = 214.0
+margin_bottom = 330.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 3
 
 [node name="Save" type="Button" parent="World Configuration/Notes"]
 margin_left = 354.0
-margin_top = 218.0
+margin_top = 334.0
 margin_right = 437.0
-margin_bottom = 238.0
+margin_bottom = 354.0
 size_flags_horizontal = 4
 text = "Save Notes"
 

@@ -57,6 +57,8 @@ func setToRail(newvar):
 		rail = get_parent().get_parent().get_node("Rails/"+attachedRail)
 		rail.register_signal(self.name, onRailPosition)
 		self.transform = rail.get_global_transform_at_rail_distance(onRailPosition)
+		if not forward:
+			rotation_degrees.y += 180
 		
 		
 func get_scenario_data():

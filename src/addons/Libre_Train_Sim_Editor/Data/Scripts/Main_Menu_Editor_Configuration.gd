@@ -104,3 +104,15 @@ func load_additional_resources():
 	if jEssentials.does_path_exist(pck_file):
 		ProjectSettings.load_resource_pack(pck_file)
 
+
+func _on_ImportDescriptionOkay_pressed():
+	$ImportDescription.hide()
+
+
+func _on_DonwloadResourceImporter_pressed():
+	OS.shell_open("https://github.com/Jean28518/Libre-TrainSim-Resource-Importer/releases/latest")
+
+
+func _on_ImportResources_pressed():
+	$ImportDescription/VBoxContainer/RichTextLabel.text = tr("IMPORT_DESCRIPTION")
+	$ImportDescription.show()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Main_Menu_Editor_Configuration.gd" type="Script" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=3]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame_Small.tres" type="DynamicFont" id=4]
 
 [node name="Editor_Configuration" type="Control"]
 anchor_right = 1.0
@@ -46,10 +47,20 @@ margin_bottom = 55.0
 custom_fonts/font = ExtResource( 3 )
 text = "UPDATE"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="ImportResources" type="Button" parent="VBoxContainer"]
 margin_top = 59.0
 margin_right = 800.0
-margin_bottom = 64.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 3 )
+text = "IMPORT_RESOURCES"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 114.0
+margin_right = 800.0
+margin_bottom = 119.0
 rect_min_size = Vector2( 0, 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -58,7 +69,7 @@ __meta__ = {
 [node name="TracksList" parent="VBoxContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 68.0
+margin_top = 123.0
 margin_right = 800.0
 margin_bottom = 600.0
 size_flags_vertical = 3
@@ -73,7 +84,61 @@ rename_button_text = "RENAME"
 duplicate_button_text = "DUPLICATE"
 action_button_text = "OPEN"
 
+[node name="ImportDescription" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportDescription"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ImportDescription/VBoxContainer"]
+margin_right = 780.0
+margin_bottom = 519.0
+size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 4 )
+text = "IMPORT_DESCRIPTION"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportDescription/VBoxContainer"]
+margin_top = 529.0
+margin_right = 780.0
+margin_bottom = 580.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="Okay" type="Button" parent="ImportDescription/VBoxContainer/HBoxContainer"]
+margin_left = 148.0
+margin_right = 220.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 3 )
+text = "OKAY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DonwloadResourceImporter" type="Button" parent="ImportDescription/VBoxContainer/HBoxContainer"]
+margin_left = 240.0
+margin_right = 631.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 3 )
+text = "DOWNLOAD_RESOURCE_IMPORTER"
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/UpdateEditorPathButton" to="." method="_on_UpdateEditorPathButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ImportResources" to="." method="_on_ImportResources_pressed"]
 [connection signal="user_added_entry" from="VBoxContainer/TracksList" to="." method="_on_TracksList_user_added_entry"]
 [connection signal="user_pressed_action" from="VBoxContainer/TracksList" to="." method="_on_TracksList_user_pressed_action"]
 [connection signal="user_renamed_entry" from="VBoxContainer/TracksList" to="." method="_on_TracksList_user_renamed_entry"]
+[connection signal="pressed" from="ImportDescription/VBoxContainer/HBoxContainer/Okay" to="." method="_on_ImportDescriptionOkay_pressed"]
+[connection signal="pressed" from="ImportDescription/VBoxContainer/HBoxContainer/DonwloadResourceImporter" to="." method="_on_DonwloadResourceImporter_pressed"]

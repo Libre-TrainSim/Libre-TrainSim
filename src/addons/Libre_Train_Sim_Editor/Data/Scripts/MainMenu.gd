@@ -316,3 +316,7 @@ func hide_editor_configuration():
 	$MenuBackground.hide()
 	$Editor_Configuration.hide()
 	$Front.show()
+
+
+func _on_Editor_Configuration_Back_Button_pressed():
+	hide_editor_configuration()

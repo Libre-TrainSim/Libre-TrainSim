@@ -274,6 +274,7 @@ func _on_Content_Selector_resource_selected(complete_path):
 		if complete_path == "":
 			return
 		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = complete_path
+		apply_object_tab()
 		update_current_rail_attachment() # update
 	
 	
@@ -310,9 +311,11 @@ func update_material_list():
 
 
 func apply_object_tab():
+	currentTO.objectPath = $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text
+	currentTO._update(true)
+	update_material_list()
 	var material_array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
 	currentTO.materialPaths = material_array
-	currentTO.objectPath = $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text
 	currentTO._update(true)
 
 func _on_BuildingSettings_updated():

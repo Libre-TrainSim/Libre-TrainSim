@@ -46,6 +46,7 @@ func crawl_directory_for_resources():
 			Root.crawlDirectory("res://Resources/"+ resource_subfolder + "/Objects", found_files, "obj")
 			for file in found_files["Array"]:
 				current_resources.append(file.replace("res://Resources/", "").replace("/Objects", "").get_basename().get_basename())
+	current_resources = jEssentials.remove_duplicates(current_resources)
 	if current_type == RAIL_TYPES:
 		for resource_subfolder in resource_subfolders:
 			var found_files = {"Array" : []}

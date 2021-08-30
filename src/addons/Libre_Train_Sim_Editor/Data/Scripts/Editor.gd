@@ -15,6 +15,7 @@ func _ready():
 
 var bouncing_timer = 0
 func _process(delta):
+
 	
 	## Bouncing Effect at selected object
 	if is_instance_valid(selected_object):
@@ -145,6 +146,9 @@ func load_world():
 	for signal_ins in $World/Signals.get_children():
 #		if signal_ins.type == "Signal":
 		signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+	
+	$World/Grass.hide()
+	generate_grass_panes()
 	 
 	
 func save_world():
@@ -164,6 +168,7 @@ func save_world():
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
 	send_message("World successfully saved!")
 	
+	generate_grass_panes()
 
 
 
@@ -418,9 +423,30 @@ func get_all_station_node_names_in_world():
 			station_node_names.append(signal_node.name)
 	return station_node_names
 
+
 func jump_to_station(station_node_name):
 	var station_node = $World/Signals.get_node(station_node_name)
 	if station_node == null:
 		print_debug("Station not found:" + station_node_name)
 	$FreeCamera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	$FreeCamera.rotation_degrees.y -= 90
+
+var all_chunks = []
+var GRASS_HEIGHT = -0.5
+func generate_grass_panes():
+	for child in $Landscape.get_children():
+		child.queue_free()
+	var all_chunks_new = $World.get_all_chunks_vector3()
+	if all_chunks_new.size() == all_chunks.size():
+		return
+	all_chunks = all_chunks_new
+	var mesh_resource = preload("res://Resources/Basic/Objects/grass_square.obj")
+	for chunk in all_chunks:
+		var mesh_instance = MeshInstance.new()
+		mesh_instance.mesh = mesh_resource
+		mesh_instance.set_surface_material(0, preload("res://Resources/Basic/Materials/Grass.tres"))
+		mesh_instance.translation = (chunk * 1000) + (Vector3(0, GRASS_HEIGHT, 0))
+		$Landscape.add_child(mesh_instance)
+		mesh_instance.owner = self
+	
+		

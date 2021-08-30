@@ -60,7 +60,7 @@ window/size/heigt="720"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Libre_Train_Sim_Editor", "jean28518.jTools" )
+enabled=PoolStringArray( "res://addons/jean28518.jTools/plugin.cfg" )
 
 [global]
 

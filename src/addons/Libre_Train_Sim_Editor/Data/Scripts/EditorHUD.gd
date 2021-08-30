@@ -181,6 +181,10 @@ func register_signals_for_escaping_mouse_clicks_from_ui(node : Node) -> void:
 
 
 func _on_JumpToStation_pressed():
+	if $JumpToStation/ItemList.visible:
+		$JumpToStation/ItemList.hide()
+		_on_dialog_closed()
+		return
 	$JumpToStation/ItemList.clear()
 	var station_node_names = get_parent().get_all_station_node_names_in_world()
 	for station_node_name in station_node_names:

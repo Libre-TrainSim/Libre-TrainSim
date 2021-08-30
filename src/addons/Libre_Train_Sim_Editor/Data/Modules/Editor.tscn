@@ -539,6 +539,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Landscape" type="Spatial" parent="."]
+
 [connection signal="single_rightclick" from="FreeCamera" to="." method="_on_FreeCamera_single_rightclick"]
 [connection signal="mouse_entered" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_Mouse_exited_UI"]

@@ -362,17 +362,21 @@ func get_all_chunks(): # Returns Array of Strings
 		return
 	for rail in railNode.get_children():
 		var railChunk = pos2Chunk(rail.translation)
-		all_chunks = add_single_to_array(all_chunks, chunk2String(railChunk))
+		all_chunks.append(chunk2String(railChunk))
 
 		for chunk in getChunkeighbours(railChunk):
-			all_chunks = add_single_to_array(all_chunks, chunk2String(chunk))
+			all_chunks.append(chunk2String(chunk))
+	all_chunks = jEssentials.remove_duplicates(all_chunks)
 	return all_chunks
 
-func add_single_to_array(array, value):
-	if not array.has(value):
-		array.append(value)
-	return array
-	
+
+func get_all_chunks_vector3(): # Like get_all_chunks(), just returns array of Vector3
+	var all_chunks_strings = get_all_chunks()
+	var all_chunks = []
+	for chunk_string in all_chunks_strings:
+		all_chunks.append(string2Chunk(chunk_string))
+	return all_chunks
+
 
 func configure_soll_chunks(chunk):
 	sollChunks = []

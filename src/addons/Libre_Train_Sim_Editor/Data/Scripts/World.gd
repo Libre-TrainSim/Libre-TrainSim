@@ -326,6 +326,9 @@ func _chunk_loader_thread_function(userdata):
 		
 		var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
 		if chunk.has("empty"):
+			_chunk_loader_mutex.lock()
+			_actually_changing_world = false
+			_chunk_loader_mutex.unlock()
 			continue
 		
 		## Buildings:
@@ -378,7 +381,6 @@ func _chunk_loader_thread_function(userdata):
 				nodeI.name = nodeArray[node].name
 				nodeI.set_data(nodeArray[node].data)
 				nodeI.transform = nodeArray[node].transform
-				print(nodeI.name + "   " +  String(nodeI.translation) + "  #######    "  + String(getNewPos_bchunk(nodeI.translation)) )
 				nodeI.translation = getNewPos_bchunk(nodeI.translation)
 				nodeI.update($Rails.get_node(nodeI.attachedRail), obj_cache)
 				ready_track_objects.append(nodeI)

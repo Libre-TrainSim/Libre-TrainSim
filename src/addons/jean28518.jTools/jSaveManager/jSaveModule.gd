@@ -9,6 +9,7 @@ func set_save_path(save_path : String):
 	_load_current_config()
 
 func save_value(key : String, value):
+	_value_changed = true
 	_cache_main[key] = value
 
 func get_value(key,  default_value = null):
@@ -44,6 +45,7 @@ func load_everything_into_cache():
 ## Internal Code ###############################################################
 var _config
 var _cache_main = {}
+var _value_changed = false
 
 func _invalidate_cache():
 	_cache_main = {}
@@ -68,4 +70,5 @@ func _enter_tree():
 
 
 func _exit_tree():
-	write_to_disk()
+	if _value_changed:
+		write_to_disk()

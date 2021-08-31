@@ -253,9 +253,6 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 	checkVisibility(delta)
 	if automaticDriving:
 		autopilot(delta)
-	if name == "npc3":
-		print(currentRail.name)
-		print(distanceOnRail)
 		
 	if not initialSwitchCheck:
 		updateSwitchOnNextChange()
@@ -1370,7 +1367,7 @@ func checkVisibility(delta):
 	if checkVisibilityTimer < 1: return
 	if ai: 
 		var currentChunk = world.pos2Chunk(world.getOriginalPos_bchunk(translation))
-		rendering = world.ist_chunks.has(world.chunk2String(currentChunk))
+		rendering = world.ist_chunks.has(currentChunk)
 		self.visible = rendering
 		wagonsVisible = rendering
 			 

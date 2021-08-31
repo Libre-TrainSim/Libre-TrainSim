@@ -103,25 +103,12 @@ func _on_SettingsFront_pressed():
 #	$Settings.show()
 
 
-func _search_for_pcks(path: String) -> void:
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin()
-	while(true):
-		var file = dir.get_next()
-		if file == "":
-			break
-		if file.get_extension() == "pck":
-			foundContentPacks.append(path + file)
-	dir.list_dir_end()
-
-
 func update_config():
 	## Get All .pck files:
 	foundContentPacks = []
 	if OS.has_feature("standalone"):
-		_search_for_pcks(OS.get_executable_path().get_base_dir())
-		_search_for_pcks("user://addons/")
+		foundContentPacks.append_array(jEssentials.crawl_directory_for(OS.get_executable_path().get_base_dir(), "pck"))
+		foundContentPacks.append_array(jEssentials.crawl_directory_for("user://addons/", "pck"))
 	else:
 		print("Skipping pack loading in editor build, because of https://github.com/godotengine/godot/issues/16798")
 	print("Found Content Packs: %s" % [foundContentPacks])

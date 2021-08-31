@@ -31,11 +31,8 @@ export (bool) var wholeRail
 var material_updated = false
 
 
-export (bool) var update setget _update
-
-
 onready var world = find_parent("World")
-var rail
+var rail_node
 var updated = false
 
 func get_data():
@@ -96,89 +93,57 @@ func set_data(d):
 	if d.has("applySlopeRotation"):
 		applySlopeRotation = d.applySlopeRotation
 
-func _ready():
-	world = find_parent("World")
-#	attach_to_rail()
-	_update(true)
-	pass
-		
-func _process(delta):
-	if world == null:
-		world = find_parent("World")
-		if world != null:
-			print("Updating Track Object...")
-			_update(true)
-		else:
-			print("TrackObject cant find World Node, retrying..")
-			return
-	if rail == null:
-		attach_to_rail()
-	if not material_updated:
-		_update(true)
-		material_updated = true
-	if updated == false:
-		_update(true)
-			
 
-func attach_to_rail():
-	if world == null: 
-		return
-	var rail = world.get_node("Rails").get_node_or_null(attachedRail)
-	if rail != null:
-		if not rail.trackObjects.has(self):
-			rail.trackObjects.append(self)#
-	else:
-		print("TrackObject " + name + " can't find rail! Deleting...")
-		queue_free()
+func attach_to_rail(_rail_node):
+	rail_node = _rail_node
+	rail_node.trackObjects.append(self)
 
 func unattach_from_rail():
-	var rail = world.get_node("Rails").get_node_or_null(attachedRail)
-	if rail != null:
-		if rail.trackObjects.has(self):
-			rail.trackObjects.erase(self)
+	if rail_node == null:
+		return
+	rail_node.trackObjects.erase(self)
 
 func _exit_tree():
 	unattach_from_rail()
 
-func _update(newvar):
-	updated = true
-	world = find_parent("World")
-	if world == null: return
+func update(_rail_node, res_cache = {}):
+	attach_to_rail(_rail_node)
 	self.set_multimesh(self.multimesh.duplicate(false))
 	if wholeRail:
-		var rail = world.get_node("Rails").get_node(attachedRail)
-		if rail == null:
-			queue_free()
-			return
 		onRailPosition = 0
-		length = rail.length
-	attach_to_rail()
-	## Set to Rail:
-	if world.has_node("Rails/"+attachedRail) and attachedRail != "":
-		rail = world.get_node("Rails/"+attachedRail)
-		translation = rail.get_pos_at_RailDistance(onRailPosition)
+		length = rail_node.length
 	
-	
-	var mesh_res = load(objectPath)
-	if mesh_res == null: 
-		printerr("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
-		return
-	var mesh = mesh_res.duplicate(true)
-	multimesh.mesh = mesh
+	translation = rail_node.get_pos_at_RailDistance(onRailPosition)
+	var mesh_res
+	if not res_cache.has(objectPath):
+		if not ResourceLoader.exists(objectPath):
+			printerr("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
+			return
+		res_cache[objectPath] = load(objectPath)
+	mesh_res = res_cache[objectPath]
+#	mesh_res = load(objectPath)
+
+	multimesh.mesh = load(objectPath).duplicate()
 	
 	# This was sometimes out of bounds!!
 	#for x in range(materialPaths.size()):
 	# FIX: 
+	
 	var count = min(multimesh.mesh.get_surface_count(), materialPaths.size())
 	for x in range(count):
 		if materialPaths[x] != "":
-			multimesh.mesh.surface_set_material(x, load(materialPaths[x]))
+			var material_path = materialPaths[x]
+			var material_res
+			if not res_cache.has(material_path):
+				if not ResourceLoader.exists(material_path):
+					continue
+				res_cache[material_path] = load(material_path)
+			multimesh.mesh.surface_set_material(x, res_cache[material_path])
 	
 	var straightCount = int(length / distanceLength)
 	if placeLast:
 		straightCount += 1
 
-	
 	self.multimesh.instance_count = 0
 	multimesh.visible_instance_count = 0
 	if sides == 0:
@@ -194,19 +159,19 @@ func _update(newvar):
 		for b in range(rows):
 			if sides == 1 or sides == 3: ## Left Side
 				if rand_range(0,1) < spawnRate:
-					var position = rail.get_shifted_pos_at_RailDistance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+					var position = rail_node.get_shifted_pos_at_RailDistance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
 						position += Vector3(shiftx, 0, shiftz)
-					var rot = rail.get_deg_at_RailDistance(railpos)
+					var rot = rail_node.get_deg_at_RailDistance(railpos)
 					if randomRotation:
 						rot = rand_range(0,360)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0
 					if applySlopeRotation:
-						slopeRot = rail.get_heightRot(railpos)
+						slopeRot = rail_node.get_heightRot(railpos)
 					var scale = Vector3(1,1,1)
 					if randomScale:
 						var scaleval = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
@@ -215,19 +180,19 @@ func _update(newvar):
 					idx += 1
 			if sides == 2 or sides == 3: ## Right Side
 				if rand_range(0,1) < spawnRate:
-					var position = rail.get_shifted_pos_at_RailDistance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+					var position = rail_node.get_shifted_pos_at_RailDistance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
 						position += Vector3(shiftx, 0, shiftz)
-					var rot = rail.get_deg_at_RailDistance(railpos)
+					var rot = rail_node.get_deg_at_RailDistance(railpos)
 					if randomRotation:
 						rot = rand_range(0,360)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0
 					if applySlopeRotation:
-						slopeRot = rail.get_heightRot(railpos)
+						slopeRot = rail_node.get_heightRot(railpos)
 					var scale = Vector3(1,1,1)
 					if randomScale:
 						var scaleval = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
@@ -236,7 +201,6 @@ func _update(newvar):
 					idx += 1
 		railpos += distanceLength
 		self.multimesh.visible_instance_count = idx
-#	meshSet = true
 
 
 func newSeed():

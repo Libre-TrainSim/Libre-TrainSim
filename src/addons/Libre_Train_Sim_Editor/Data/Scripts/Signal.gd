@@ -45,9 +45,10 @@ func _process(delta):
 
 func updateVisualInstance():
 	update()
-	if attachedRailNode == null:
-		attachedRailNode = find_parent("World").get_node("Rails" + "/" + attachedRail)
+	if not is_instance_valid(attachedRailNode):
+		attachedRailNode = find_parent("World").get_node("Rails/" + attachedRail)
 		if attachedRailNode == null:
+			queue_free()
 			return
 
 	visible = attachedRailNode.visible

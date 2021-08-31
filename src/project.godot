@@ -48,7 +48,7 @@ jListManager="*res://addons/jean28518.jTools/jList/jListManager.gd"
 
 [debug]
 
-settings/fps/force_fps=60
+settings/fps/force_fps=40
 settings/stdout/verbose_stdout=true
 
 [display]

@@ -42,6 +42,11 @@ var personVisualInstancesPathes = [
 ]
 var personVisualInstances = []
 
+# Used by chunk loading thread and bigChunk system.
+# If true, then other critical actions shouldn't done..
+# For accessing this variable _chunk_loader_mutex should be locked and unlocked.
+var _actually_changing_world = false
+
 
 func _ready():
 	_chunk_loader_thread = Thread.new()
@@ -128,8 +133,8 @@ func _process(delta):
 	if not (Engine.editor_hint or Root.Editor):
 		time(delta)
 		checkTrainSpawn(delta)
-		handle_chunk()
 		checkBigChunk()
+		handle_chunk()
 	else:
 		var buildings = get_node("Buildings")
 		for child in get_children():
@@ -303,6 +308,13 @@ func _chunk_loader_thread_function(userdata):
 			_chunk_loader_mutex.unlock()
 			print("Chunk already in ist_chunks!")
 			continue
+		# Wait, if some critical action is done..
+		if _actually_changing_world:
+			_chunk_loader_queue.push_front(position)
+			_chunk_loader_mutex.unlock()
+			OS.delay_msec(100)
+			continue
+		_actually_changing_world = true
 		_chunk_loader_mutex.unlock()
 		
 		
@@ -366,6 +378,7 @@ func _chunk_loader_thread_function(userdata):
 				nodeI.name = nodeArray[node].name
 				nodeI.set_data(nodeArray[node].data)
 				nodeI.transform = nodeArray[node].transform
+				print(nodeI.name + "   " +  String(nodeI.translation) + "  #######    "  + String(getNewPos_bchunk(nodeI.translation)) )
 				nodeI.translation = getNewPos_bchunk(nodeI.translation)
 				nodeI.update($Rails.get_node(nodeI.attachedRail), obj_cache)
 				ready_track_objects.append(nodeI)
@@ -373,8 +386,8 @@ func _chunk_loader_thread_function(userdata):
 #			OS.delay_msec(1)
 #			track_objects_node.call_deferred("update", $Rails.get_node(track_objects_node.attachedRail), obj_cache)
 			track_objects_node.call_deferred("add_child", ready_track_object)
+			
 #			ready_track_object.set_owner(self)
-
 		## Rails:
 		var Rails = chunk.Rails
 		var calculated_data_array = {}
@@ -388,13 +401,12 @@ func _chunk_loader_thread_function(userdata):
 #				OS.delay_msec(1)
 				rail_node.call_deferred("update_with_calculated_data", calculated_data_array[rail])
 
-		
-		
 #		var unloaded_chunks = get_value("unloaded_chunks", [])
 #		unloaded_chunks.erase(chunk2String(position))
 #		save_value("unloaded_chunks", unloaded_chunks)
 		_chunk_loader_mutex.lock()
 		ist_chunks.append(position)
+		_actually_changing_world = false
 		_chunk_loader_mutex.unlock()
 		
 		print("Chunk " + chunk2String(position) + " loaded")
@@ -460,7 +472,8 @@ var currentbigchunk = Vector2(0,0)
 
 func pos2bchunk(pos):
 	return Vector2(int(pos.x/5000), int(pos.z/5000))+currentbigchunk
-	
+
+# Returns new position within 5000. 
 func getNewPos_bchunk(pos):
 	return Vector3(pos.x-currentbigchunk.x*5000.0, pos.y, pos.z-currentbigchunk.y*5000.0)
 	
@@ -472,12 +485,24 @@ func checkBigChunk():
 	var newchunk = pos2bchunk(player.translation)
 
 	if (newchunk != currentbigchunk):
+		
+		_chunk_loader_mutex.lock()
+		if _actually_changing_world:
+			_chunk_loader_mutex.unlock()
+			return
+		_actually_changing_world = true
+		_chunk_loader_mutex.unlock()
+		
 		var deltaChunk = currentbigchunk - newchunk
 		currentbigchunk = newchunk
 		print (newchunk)
 		print(currentbigchunk)
 		print("Changed to new big Chunk. Changing Objects translation..")
 		updateWorldTransform_bchunk(deltaChunk)
+		
+		_chunk_loader_mutex.lock()
+		_actually_changing_world = false
+		_chunk_loader_mutex.unlock()
 		
 
 signal bchunk_updated_world_transform(deltaTranslation)
@@ -489,7 +514,7 @@ func updateWorldTransform_bchunk(deltachunk):
 		player.translation += deltaTranslation
 	for rail in $Rails.get_children():
 		rail.translation += deltaTranslation
-		rail._update(true)
+		rail.update()
 	for signalN in $Signals.get_children():
 		signalN.translation += deltaTranslation
 	for building in $Buildings.get_children():

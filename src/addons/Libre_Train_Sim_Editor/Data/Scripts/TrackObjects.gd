@@ -107,6 +107,7 @@ func _exit_tree():
 	unattach_from_rail()
 
 func update(_rail_node, res_cache = {}):
+#	print("Loading Rail Attachment..")
 	attach_to_rail(_rail_node)
 	self.set_multimesh(self.multimesh.duplicate(false))
 	if wholeRail:

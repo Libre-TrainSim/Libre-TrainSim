@@ -26,7 +26,7 @@ func update_selected_rail(node):
 		currentRail = node
 		$CurrentRail/Name.text = node.name
 		$ManualMoving.pressed = currentRail.manualMoving
-		currentRail._update(true)
+		currentRail.update()
 		$S.visible = true
 		$RotationHeight.visible = true
 		update_RotationHeightData()

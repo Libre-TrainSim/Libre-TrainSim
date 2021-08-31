@@ -42,9 +42,9 @@ func kmHToSpeed(speed):
 	return speed/3.6
 	
 func normDeg(degree):
-	while degree > 180.0:
+	while degree > 360.0:
 		degree -= 360.0
-	while degree < -180.0:
+	while degree < 0:
 		degree += 360.0
 	return degree
 
@@ -54,40 +54,15 @@ func normDeg(degree):
 # angle_dist_deg(45, -45) = 90
 # angle_dist_deg(-45, 45) = 90
 # angle_dist_deg(0, 170) = 170
-# angle_dist_deg(0, 190) = 170
 func angle_distance_deg(rot1, rot2) -> float:
 	var normed1 = normDeg(rot1)
 	var normed2 = normDeg(rot2)
-	return abs(normDeg(normed1 - normed2))
+	return 180.0 - abs(abs(normed1 - normed2) - 180.0)
 
-#func sort_signals(signalTable, forward = true):
-#	var signalT = [signalTable.values(), signalTable.keys()]
-#	var exportT = [] 
-#	for a in range(0, signalT[0].size()):
-#		var minimum = 0
-#		for i in range(0, signalT[0].size()):
-#			if signalT[0][i] < signalT[0][minimum]:
-#				minimum = i
-#		exportT.append(signalT[1][minimum])
-#		signalT[0].remove(minimum)
-#		signalT[1].remove(minimum)
-#	if forward:
-#		return exportT
-#	else:
-#		exportT.invert()
-#		return exportT
 
 func sort_signals(signalTable, forward = true): # Gets A Dict like {"name": [], "position" : []}, returns the array of the signal	
 	var signalT = signalTable.duplicate(true)
-#	if not signalT.has("position"):
-#		signalT["position"] = []
-#		for signalS in signalT["name"]:
-#			var signalN = Root.world.get_node("Signals").get_node(signalS)
-#			if signalN != null:
-#				signalT["position"].append(signalN.onRailPosition)
-#			else:
-#				signalT["position"] = -1
-#				print("Math.sort_signals: Some Signal not found!")
+
 
 	var exportT = [] 
 	for a in range(0, signalT["name"].size()):
@@ -104,7 +79,7 @@ func sort_signals(signalTable, forward = true): # Gets A Dict like {"name": [], 
 		exportT.invert()
 		return exportT
 
-		
+
 func time2String(time):
 	var hour = String(time[0])
 	var minute = String(time[1])
@@ -116,7 +91,8 @@ func time2String(time):
 	if second.length() == 1:
 		second = "0" + second
 	return (hour + ":" + minute +":" + second)
-	
+
+
 func distance2String(distance):
 	if distance > 10000:
 		return String(int(distance/1000)) + " km"

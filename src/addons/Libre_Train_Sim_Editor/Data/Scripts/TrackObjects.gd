@@ -2,8 +2,8 @@ tool
 extends MultiMeshInstance
 
 export (String) var description = ""
-export (String) var attachedRail 
-export (float) var onRailPosition
+export (String) var attached_rail 
+export (float) var on_rail_position
 export (float) var length
 
 export (String) var objectPath = ""
@@ -38,8 +38,8 @@ var updated = false
 func get_data():
 	var d = {}
 	d.description = description
-	d.attachedRail = attachedRail
-	d.onRailPosition = onRailPosition
+	d.attached_rail = attached_rail
+	d.on_rail_position = on_rail_position
 	d.length = length
 	d.objectPath = objectPath
 	d.materialPaths = materialPaths.duplicate()
@@ -67,8 +67,8 @@ func get_data():
 	
 func set_data(d):
 	description = d.description
-	attachedRail = d.attachedRail
-	onRailPosition = d.onRailPosition
+	attached_rail = d.attached_rail
+	on_rail_position = d.on_rail_position
 	length = d.length
 	objectPath = d.objectPath
 	materialPaths = d.materialPaths
@@ -110,10 +110,10 @@ func update(_rail_node, res_cache = {}):
 	attach_to_rail(_rail_node)
 	self.set_multimesh(self.multimesh.duplicate(false))
 	if wholeRail:
-		onRailPosition = 0
+		on_rail_position = 0
 		length = rail_node.length
 	
-	translation = rail_node.get_pos_at_RailDistance(onRailPosition)
+	translation = rail_node.get_pos_at_RailDistance(on_rail_position)
 	var mesh_res
 	if not res_cache.has(objectPath):
 		if not ResourceLoader.exists(objectPath):
@@ -153,7 +153,7 @@ func update(_rail_node, res_cache = {}):
 	if sides == 3: 
 		self.multimesh.instance_count = int(straightCount * rows)*2
 	var idx = 0
-	var railpos = onRailPosition
+	var railpos = on_rail_position
 	seed(randomSeed)
 	for a in range(straightCount):
 		for b in range(rows):

@@ -377,8 +377,8 @@ func add_signal_to_selected_rail():
 	$World/Signals.add_child(signal_ins)
 	signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	signal_ins.set_owner($World)
-	signal_ins.attachedRail = selected_object.name
-	signal_ins.setToRail(true)
+	signal_ins.attached_rail = selected_object.name
+	signal_ins.set_to_rail(true)
 	set_selected_object(signal_ins)
 	
 func add_station_to_selected_rail():
@@ -391,8 +391,8 @@ func add_station_to_selected_rail():
 	$World/Signals.add_child(station_ins)
 	station_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	station_ins.set_owner($World)
-	station_ins.attachedRail = selected_object.name
-	station_ins.setToRail(true)
+	station_ins.attached_rail = selected_object.name
+	station_ins.set_to_rail(true)
 	set_selected_object(station_ins)
 
 func add_speed_limit_to_selected_rail():
@@ -405,8 +405,8 @@ func add_speed_limit_to_selected_rail():
 	$World/Signals.add_child(speed_limit_ins)
 	speed_limit_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	speed_limit_ins.set_owner($World)
-	speed_limit_ins.attachedRail = selected_object.name
-	speed_limit_ins.setToRail(true)
+	speed_limit_ins.attached_rail = selected_object.name
+	speed_limit_ins.set_to_rail(true)
 	set_selected_object(speed_limit_ins)
 
 func add_warn_speed_limit_to_selected_rail():
@@ -419,8 +419,8 @@ func add_warn_speed_limit_to_selected_rail():
 	$World/Signals.add_child(warn_speed_limit_ins)
 	warn_speed_limit_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	warn_speed_limit_ins.set_owner($World)
-	warn_speed_limit_ins.attachedRail = selected_object.name
-	warn_speed_limit_ins.setToRail(true)
+	warn_speed_limit_ins.attached_rail = selected_object.name
+	warn_speed_limit_ins.set_to_rail(true)
 	set_selected_object(warn_speed_limit_ins)
 
 func add_contact_point_to_selected_rail():
@@ -433,8 +433,8 @@ func add_contact_point_to_selected_rail():
 	$World/Signals.add_child(contact_point_ins)
 	contact_point_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	contact_point_ins.set_owner($World)
-	contact_point_ins.attachedRail = selected_object.name
-	contact_point_ins.setToRail(true)
+	contact_point_ins.attached_rail = selected_object.name
+	contact_point_ins.set_to_rail(true)
 	set_selected_object(contact_point_ins)
 
 

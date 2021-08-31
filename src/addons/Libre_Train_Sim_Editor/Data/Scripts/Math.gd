@@ -84,7 +84,7 @@ func sort_signals(signalTable, forward = true): # Gets A Dict like {"name": [], 
 #		for signalS in signalT["name"]:
 #			var signalN = Root.world.get_node("Signals").get_node(signalS)
 #			if signalN != null:
-#				signalT["position"].append(signalN.onRailPosition)
+#				signalT["position"].append(signalN.on_rail_position)
 #			else:
 #				signalT["position"] = -1
 #				print("Math.sort_signals: Some Signal not found!")

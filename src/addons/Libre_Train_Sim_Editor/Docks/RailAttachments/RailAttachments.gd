@@ -81,7 +81,7 @@ func _on_jListTrackObjects_user_added_entry(entry_name):
 	var track_object = track_object_resource.instance()
 	track_object.description = entry_name
 	track_object.name = currentRail.name + " " + entry_name
-	track_object.attachedRail = currentRail.name
+	track_object.attached_rail = currentRail.name
 	track_object.materialPaths = []
 	world.get_node("TrackObjects").add_child(track_object)
 	track_object.set_owner(world)
@@ -112,7 +112,7 @@ func copy_track_object_to_current_rail(source_track_object : Node, new_descripti
 	new_track_object.set_data(data)
 	new_track_object.name = currentRail.name + " " + new_description
 	new_track_object.description = new_description
-	new_track_object.attachedRail = currentRail.name
+	new_track_object.attached_rail = currentRail.name
 	world.get_node("TrackObjects").add_child(new_track_object)
 	if mirror:
 		new_track_object.rotationObjects = source_track_object.rotationObjects + 180.0
@@ -143,8 +143,8 @@ func update_Position():
 	if currentTO == null: return
 	$Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed = currentTO.wholeRail
 	
-	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.onRailPosition
-	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.onRailPosition + currentTO.length
+	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
+	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
 	_on_AssignWholeRail_pressed()
 
 
@@ -152,8 +152,8 @@ func _on_AssignWholeRail_pressed():
 	$Tab/TrackObjects/Settings/Tab/Position/StartPos.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
 	
-	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.onRailPosition
-	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.onRailPosition + currentTO.length
+	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
+	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
 	
 	_on_SavePosition_pressed()
 	update_current_rail_attachment()
@@ -171,7 +171,7 @@ func _on_SavePosition_pressed():
 	if $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value < $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value:
 		$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.wholeRail = false
-	currentTO.onRailPosition = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
+	currentTO.on_rail_position = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.length = $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value - $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO._update(true)
 	print("Position Saved")

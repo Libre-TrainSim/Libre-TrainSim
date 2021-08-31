@@ -7,7 +7,7 @@
 "Signal",
 ]]
 script = ExtResource( 4 )
-setPassAtH = 25
-visualInstancePath = ""
+set_pass_at_h = 25
+visual_instance_path = ""
 
 [node name="VisualInstance" parent="." instance=ExtResource( 2 )]

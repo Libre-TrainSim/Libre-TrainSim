@@ -152,7 +152,11 @@ func _on_PlayPlay_pressed():
 	## Load 
 	var track_name = foundTracks[index].get_basename().get_file()
 	var save_path = foundTracks[index].get_basename() + "-scenarios.cfg"
-	$Background.texture = load("res://Worlds/"+track_name + "/screenshot.png")
+	
+	if currentTrack.get_basename().get_file() == "Tutorials":
+		$Background.texture = load("res://Worlds/"+track_name + "/screenshot.png")
+	else:
+		$Background.texture = _current_track_screenshot_texture
 	loadScenePath = foundTracks[index]
 
 var loadScenePath = ""
@@ -163,6 +167,7 @@ func load_scene(delta):
 		if load_scene_timer > 0.2:
 			get_tree().change_scene(loadScenePath)
 
+var _current_track_screenshot_texture
 func _on_ItemList_itemTracks_selected(index):
 	currentTrack = foundTracks[index]
 	Root.checkAndLoadTranslationsForTrack(currentTrack.get_file().get_basename())
@@ -182,7 +187,16 @@ func _on_ItemList_itemTracks_selected(index):
 	$Play/Info/Info/ReleaseDate.text = " "+ TranslationServer.translate("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
 	var track_name = currentTrack.get_basename().get_file()
 	print(track_name)
-	$Play/Info/Screenshot.texture = load("res://Worlds/"+track_name + "/screenshot.png")
+	
+	if track_name == "Tutorials":
+		$Play/Info/Screenshot.texture = load("res://Worlds/"+track_name + "/screenshot.png")
+	else:
+		# Import at runtime:
+		var screenshot = Image.new()
+		screenshot.load("res://Worlds/"+track_name + "/screenshot.png")
+		_current_track_screenshot_texture = ImageTexture.new()
+		_current_track_screenshot_texture.create_from_image(screenshot)
+		$Play/Info/Screenshot.texture = _current_track_screenshot_texture
 
 
 	$Play/Selection/Scenarios.show()

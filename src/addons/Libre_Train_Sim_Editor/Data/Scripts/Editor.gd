@@ -283,7 +283,6 @@ func test_track_pck():
 func export_track_pck(export_path):
 	var track_name = Root.current_editor_track
 	export_path += "/" + track_name + ".pck"
-	$World.load_all_chunks()
 	var packer = PCKPacker.new()
 	packer.pck_start(export_path)
 	
@@ -292,30 +291,74 @@ func export_track_pck(export_path):
 
 	$World/jSaveModuleScenarios.set_save_path(editor_directory + "/Worlds/" + track_name + "/" + track_name + "-scenarios.cfg")
 	var scenario_data = $World/jSaveModuleScenarios.get_value("scenario_data")
-	for scenario in scenario_data:
-		for train in scenario_data[scenario]["Trains"]:
-			if not scenario_data[scenario]["Trains"][train].has("approachAnnouncePath"): continue
-			for path in scenario_data[scenario]["Trains"][train]["approachAnnouncePath"]:
+	for scenario in scenario_data.keys():
+		for train in scenario_data[scenario]["Trains"].keys():
+			if not scenario_data[scenario]["Trains"][train]["Stations"].has("approachAnnouncePath"): 
+				continue
+			for path in scenario_data[scenario]["Trains"][train]["Stations"]["approachAnnouncePath"]:
 				dependencies_raw.append(path)
-			for path in scenario_data[scenario]["Trains"][train]["arrivalAnnouncePath"]:
+			for path in scenario_data[scenario]["Trains"][train]["Stations"]["arrivalAnnouncePath"]:
 				dependencies_raw.append(path)
-			for path in scenario_data[scenario]["Trains"][train]["departureAnnouncePath"]:
+			for path in scenario_data[scenario]["Trains"][train]["Stations"]["departureAnnouncePath"]:
 				dependencies_raw.append(path)
-				
-		
-	
-	
 	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-	var dependencies_export = []
-	print("Dependencies: " + String(dependencies_raw))
+	
+	# Get all dependencies of track objects, buildings, etc..
+	for chunk in $World.get_all_chunks():
+		var chunk_data = $World/jSaveModule.get_value($World.chunk2String(chunk))
+		for building_key in chunk_data["Buildings"].keys():
+			dependencies_raw.append(chunk_data["Buildings"][building_key]["mesh_path"])
+			dependencies_raw.append_array(chunk_data["Buildings"][building_key]["surfaceArr"])
+		for track_object_key in chunk_data["TrackObjects"].keys():
+			dependencies_raw.append(chunk_data["TrackObjects"][track_object_key]["data"]["objectPath"])
+			dependencies_raw.append_array(chunk_data["TrackObjects"][track_object_key]["data"]["materialPaths"])
+	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+	for rail_node in $World/Rails.get_children():
+		dependencies_raw.append(rail_node.railTypePath)
+	for signal_node in $World/Signals.get_children():
+		if signal_node.type == "Signal":
+			dependencies_raw.append(signal_node.visualInstancePath)
+	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+	
+	
+	## Convert some resources to resource pathes
 	for dependence in dependencies_raw:
-		if not dependence.begins_with("res://addons/") and ResourceLoader.exists(dependence):
+		if not dependence is String:
+			dependencies_raw.append(dependence.resource_path)
+			dependencies_raw.erase(dependence)
+	
+	## Get dependencies of dependencies:
+	for dependence in dependencies_raw:
+		if not dependence is String:
+			dependencies_raw.append_array(ResourceLoader.get_dependencies(dependence.resource_path))
+			continue
+		dependencies_raw.append_array(ResourceLoader.get_dependencies(dependence))
+	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+	
+	## Get import files with resource pathes:
+	for dependence in dependencies_raw:
+		if not dependence is String:
+			continue
+		if dependence.ends_with("obj") or dependence.ends_with("png") or dependence.ends_with("ogg"):
+			var dependence_import_file = dependence + ".import"
+			dependencies_raw.append_array(get_imported_cache_file_path_of_import_file(dependence_import_file))
+			dependencies_raw.append(dependence_import_file)
+#			dependencies_raw.erase(dependence)
+	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+		
+	var dependencies_export = []
+	for dependence in dependencies_raw:
+		if dependence == null:
+			continue
+		if not dependence is String:
+			dependencies_export.append(dependence.resource_path)
+#			print(dependence.resource_path)
+			continue
+		if not dependence.begins_with("res://addons/") and jEssentials.does_path_exist(dependence):
 			dependencies_export.append(dependence)
 	for dependence in dependencies_export:
 		print(dependence)
 		packer.add_file(dependence, dependence)
-	
-	save_world()
 	
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
@@ -325,8 +368,6 @@ func export_track_pck(export_path):
 	packer.flush()
 	send_message("Track successfully exported to: " + export_path)
 	$EditorHUD/ExportDialog.hide()
-	
-	save_world()
 	
 	
 func _on_ExportTrack_pressed():
@@ -480,3 +521,17 @@ func load_chunks_near_camera():
 			wanted_chunks.erase(wanted_chunk)
 	$World.load_chunks(wanted_chunks)
 	ist_chunks.append_array(wanted_chunks)
+
+
+func get_imported_cache_file_path_of_import_file(file_path):
+	var config = ConfigFile.new()
+	config.load(file_path)
+	var return_values = []
+	var value = config.get_value("remap", "path")
+	if value == null:
+		return_values.append(config.get_value("remap", "path.s3tc"))
+		return_values.append(config.get_value("remap", "path.etc2"))
+		print("No cached import file found of " + file_path)
+	else:
+		return_values.append(value)
+	return return_values

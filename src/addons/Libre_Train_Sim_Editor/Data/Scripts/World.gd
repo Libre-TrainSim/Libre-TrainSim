@@ -1,4 +1,3 @@
-tool
 extends Spatial
 
 var timeHour 
@@ -18,9 +17,8 @@ export (String) var FileName = "Name Me!"
 onready var trackName = FileName.rsplit("/")[0]
 var chunkSize = 1000
 
-var all_chunks = [] # All Chunks of the world
-var istChunks = [] # All Current loaded Chunks, array of strings
-var sollChunks = [] # All Chunks, which should be loaded immediately, array of strings
+var ist_chunks = [] # All Current loaded Chunks, array of Vector3
+var soll_chunks = [] # All Chunks, which should be loaded immediately, array of Vector3
 
 var activeChunk = string2Chunk("0,0") # Current Chunk of the player (ingame)
 
@@ -46,6 +44,9 @@ var personVisualInstances = []
 
 
 func _ready():
+	_chunk_loader_thread = Thread.new()
+	_chunk_loader_thread.start(self, "_chunk_loader_thread_function")
+	
 	jEssentials.call_delayed(2.0, self, "get_actual_loaded_chunks")
 	if trackName == null:
 		trackName = FileName
@@ -55,12 +56,13 @@ func _ready():
 	else:
 		$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
 	
-	if Engine.editor_hint or Root.Editor:
+	if not Root.Editor:
+		$Grass.show()
+	
+	if Root.Editor:
 		if Root.Editor:
 			$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
 			$DirectionalLight.shadow_enabled = jSettings.get_shadows()
-			
-#		update_all_rails_overhead_line_setting(false)
 		return
 
 	if not Engine.editor_hint:
@@ -89,9 +91,6 @@ func _ready():
 				signalN.personsNode = personsNode
 				signalN.spawnPersonsAtBeginning()
 		
-		all_chunks = get_all_chunks()
-		
-		istChunks = []
 		configure_soll_chunks(activeChunk)
 
 		apply_soll_chunks()
@@ -235,13 +234,13 @@ func unload_chunk(position : Vector3):
 	for rail in Rails:
 		if compareChunks(pos2Chunk(rail.translation), position):
 			if chunk.Rails.has(rail.name):
-				rail.unload_visible_Instance()
+				rail.unload_visible_instance()
 	
 	var Buildings = get_node("Buildings").get_children()
 	for building in Buildings:
 		if compareChunks(pos2Chunk(building.translation), position):
 			if chunk.Buildings.has(building.name):
-				building.queue_free()
+				building.free()
 			else:
 				print("Object not saved! I wont unload this for you...")
 	
@@ -249,7 +248,7 @@ func unload_chunk(position : Vector3):
 	for forest in Flora:
 		if compareChunks(pos2Chunk(forest.translation), position):
 			if chunk.Flora.has(forest.name):
-				forest.queue_free()
+				forest.free()
 			else:
 				print("Object not saved! I wont unload this for you...")
 	
@@ -257,153 +256,188 @@ func unload_chunk(position : Vector3):
 	for node in TrackObjects:
 		if compareChunks(pos2Chunk(node.translation), position):
 			if chunk.TrackObjects.has(node.name):
-				node.queue_free()
+				node.free()
 			else:
 				print("Object not saved! I wont unload this for you...")
 	
+	ist_chunks.erase(position)
 	print("Unloaded Chunk " + chunk2String(position))
 	
 	
-	
-func load_chunk(position : Vector3):
-	print("Loading Chunk " + chunk2String(position))
-	
-	var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
+var _chunk_loader_thread
+var _chunk_loader_semaphore = Semaphore.new()
+var _chunk_loader_mutex = Mutex.new()
+var _chunk_loader_queue = []
+var _DEAD_PILL = Vector3(-324987123,-13847,12309123)
+var LOAD_DELAY_MSEC = 100
 
-	if chunk.has("empty"):
-		print("Chunk "+chunk2String(position) + " not found in Save File. Chunk not loaded!")
+func _add_work_packages_to_chunk_loader(positions : Array):
+	if positions.size() == 0:
 		return
-	## Rails:
-	var Rails = chunk.Rails
-	for rail in Rails:
-		print("Loading Rail: " + rail)
-		## IF YOU GET HERE AN ERROR: Do Save and Create Chunks, and check, if only Rails are assigned to the "Rails" Node
-		if $Rails.get_node(rail) != null: 
-			$Rails.get_node(rail).load_visible_Instance()
-		else:
-			printerr("WARNING: Rail "+ rail+ " not found in scene tree, but was saved in chunk. That shouldn't be.")
+	_chunk_loader_mutex.lock()
+	for position in positions:
+		_chunk_loader_queue.push_back(position)
+		_chunk_loader_semaphore.post()
+	_chunk_loader_mutex.unlock()
+	print(positions)
+
+func _quit_chunk_load_thread():
+	_chunk_loader_mutex.lock()
+	_chunk_loader_queue.push_back(_DEAD_PILL)
+	_chunk_loader_mutex.unlock()
+	_chunk_loader_semaphore.post()
+
+
+func _chunk_loader_thread_function(userdata):
+	var rails_node = $Rails
+	var buildings_node = $Buildings
+	var flora_node = $Flora
+	var forest_resource = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Forest.tscn")
+	var track_objects_node = $TrackObjects
+	var obj_cache = {}
+	while(true):
+		_chunk_loader_semaphore.wait()
+		_chunk_loader_mutex.lock()
+		var position = _chunk_loader_queue.pop_front()
+		if ist_chunks.has(position):
+			_chunk_loader_mutex.unlock()
+			print("Chunk already in ist_chunks!")
+			continue
+		_chunk_loader_mutex.unlock()
 		
-
-	##buildings:
-	var buildingsNode = get_node("Buildings")
-	var Buildings = chunk.Buildings
-	for building in Buildings:
-		if buildingsNode.find_node(building) == null:
-			var meshInstance = MeshInstance.new()
-			meshInstance.name = Buildings[building].name
-			meshInstance.set_mesh(load(Buildings[building].mesh_path))
-			meshInstance.transform = Buildings[building].transform
-			meshInstance.translation = getNewPos_bchunk(meshInstance.translation)
-			var surfaceArr = Buildings[building].surfaceArr
-			if surfaceArr == null:
-				surfaceArr = []
-			print(surfaceArr)
-			for i in range (surfaceArr.size()):
-				meshInstance.set_surface_material(i, surfaceArr[i])
-			buildingsNode.add_child(meshInstance)
-			meshInstance.set_owner(self)
-		else:
-			print("Node " + building + " already loaded!") 
-	
-	
-	##Flora:
-	var floraNode = get_node("Flora")
-	var Flora = chunk.Flora
-	var forestNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Forest.tscn")
-	for forest in Flora:#
-		if floraNode.find_node(forest) == null:
-			var forestInstance = forestNode.instance()
-			forestInstance.name = Flora[forest].name
-			forestInstance.multimesh = Flora[forest].multimesh
-			forestInstance.randomLocation = Flora[forest].randomLocation
-			forestInstance.randomLocationFactor = Flora[forest].randomLocationFactor
-			forestInstance.randomRotation = Flora[forest].randomRotation
-			forestInstance.randomScale = Flora[forest].randomScale
-			forestInstance.randomScaleFactor = Flora[forest].randomScaleFactor
-			forestInstance.spacing = Flora[forest].spacing
-			forestInstance.transform = Flora[forest].transform
-			forestInstance.translation = getNewPos_bchunk(forestInstance.translation)
-			forestInstance.x = Flora[forest].x
-			forestInstance.z = Flora[forest].z
-			forestInstance.material_override = Flora[forest].material_override
-			floraNode.add_child(forestInstance)
-			forestInstance.set_owner(self)
-			get_node("Flora/"+forest)._update(true)
-		else:
-			print("Node " + forest + " already loaded!") 
+		
+		
+		if position == _DEAD_PILL:
+			return
 			
-			
-	##TrackObjects:
-	var ParentNode = get_node("TrackObjects")
-	var nodeArray = chunk.TrackObjects
-	var nodeIInstance = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
-	for node in nodeArray:
-		if ParentNode.find_node(node) == null:
-			var nodeI = nodeIInstance.instance()
-			nodeI.name = nodeArray[node].name
-			nodeI.set_data(nodeArray[node].data)
-			nodeI.transform = nodeArray[node].transform
-			nodeI.translation = getNewPos_bchunk(nodeI.translation)
-			ParentNode.add_child(nodeI)
-			nodeI.set_owner(self)
-		else:
-			print("Node " + node + " already loaded!") 
-	
-	var unloaded_chunks = get_value("unloaded_chunks", [])
-	unloaded_chunks.erase(chunk2String(position))
-	save_value("unloaded_chunks", unloaded_chunks)
-	istChunks.append(chunk2String(position))
-	istChunks = jEssentials.remove_duplicates(istChunks)
-	
-	print("Chunk " + chunk2String(position) + " loaded")
+		print("Loading chunk in background: " +chunk2String(position))
+		
+		var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
+		if chunk.has("empty"):
+			continue
+		
+		## Buildings:
+		var buildings_data = chunk.Buildings
+		for building_data in buildings_data:
+			if buildings_node.get_node_or_null(building_data) == null:
+				var meshInstance = MeshInstance.new()
+				meshInstance.name = buildings_data[building_data].name
+				meshInstance.set_mesh(load(buildings_data[building_data].mesh_path))
+				meshInstance.transform = buildings_data[building_data].transform
+				meshInstance.translation = getNewPos_bchunk(meshInstance.translation)
+				var surfaceArr = buildings_data[building_data].surfaceArr
+				if surfaceArr == null:
+					surfaceArr = []
+				for i in range (surfaceArr.size()):
+					meshInstance.set_surface_material(i, surfaceArr[i])
+				buildings_node.call_deferred("add_child", meshInstance)
+				meshInstance.set_owner(self)
+		
+		## Forests (Flora), deprecated:
+		var Flora = chunk.Flora
+		for forest in Flora:#
+			if flora_node.get_node_or_null(forest) == null:
+				var forest_instance = forest_resource.instance()
+				forest_instance.name = Flora[forest].name
+				forest_instance.multimesh = Flora[forest].multimesh
+				forest_instance.randomLocation = Flora[forest].randomLocation
+				forest_instance.randomLocationFactor = Flora[forest].randomLocationFactor
+				forest_instance.randomRotation = Flora[forest].randomRotation
+				forest_instance.randomScale = Flora[forest].randomScale
+				forest_instance.randomScaleFactor = Flora[forest].randomScaleFactor
+				forest_instance.spacing = Flora[forest].spacing
+				forest_instance.transform = Flora[forest].transform
+				forest_instance.translation = getNewPos_bchunk(forest_instance.translation)
+				forest_instance.x = Flora[forest].x
+				forest_instance.z = Flora[forest].z
+				forest_instance.material_override = Flora[forest].material_override
+				flora_node.call_deferred("add_child", forest_instance)
+				forest_instance.set_owner(self)
+#				forest_instance.call_deferred("_update", true)
+				forest_instance._update()
+
+		##TrackObjects:
+		var ready_track_objects = []
+		var nodeArray = chunk.TrackObjects
+		var nodeIInstance = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/TrackObjects.tscn")
+		for node in nodeArray:
+			if track_objects_node.get_node_or_null(node) == null:
+				var nodeI = nodeIInstance.instance()
+				nodeI.name = nodeArray[node].name
+				nodeI.set_data(nodeArray[node].data)
+				nodeI.transform = nodeArray[node].transform
+				nodeI.translation = getNewPos_bchunk(nodeI.translation)
+				nodeI.update($Rails.get_node(nodeI.attachedRail), obj_cache)
+				ready_track_objects.append(nodeI)
+		for ready_track_object in ready_track_objects:
+#			OS.delay_msec(1)
+#			track_objects_node.call_deferred("update", $Rails.get_node(track_objects_node.attachedRail), obj_cache)
+			track_objects_node.call_deferred("add_child", ready_track_object)
+#			ready_track_object.set_owner(self)
+
+		## Rails:
+		var Rails = chunk.Rails
+		var calculated_data_array = {}
+		for rail in Rails:
+			var rail_node = rails_node.get_node(rail)
+			if rail_node != null: 
+				calculated_data_array[rail] = rail_node.calculate_update()
+		for rail in Rails:
+			var rail_node = rails_node.get_node(rail)
+			if rail_node != null: 
+#				OS.delay_msec(1)
+				rail_node.call_deferred("update_with_calculated_data", calculated_data_array[rail])
+
+		
+		
+#		var unloaded_chunks = get_value("unloaded_chunks", [])
+#		unloaded_chunks.erase(chunk2String(position))
+#		save_value("unloaded_chunks", unloaded_chunks)
+		_chunk_loader_mutex.lock()
+		ist_chunks.append(position)
+		_chunk_loader_mutex.unlock()
+		
+		print("Chunk " + chunk2String(position) + " loaded")
 
 
-func get_all_chunks(): # Returns Array of Strings
-	all_chunks = []
+var _all_chunks = []
+func get_all_chunks(): # Returns Array of Vector3
+	if not Root.Editor and _all_chunks.size() != 0:
+		return _all_chunks
+	_all_chunks = []
 	var railNode = get_node("Rails")
 	if railNode == null:
 		printerr("Rail Node not found. World is corrupt!")
 		return
 	for rail in railNode.get_children():
 		var railChunk = pos2Chunk(rail.translation)
-		all_chunks.append(chunk2String(railChunk))
+		_all_chunks.append(railChunk)
 
 		for chunk in getChunkeighbours(railChunk):
-			all_chunks.append(chunk2String(chunk))
-	all_chunks = jEssentials.remove_duplicates(all_chunks)
-	return all_chunks
-
-
-func get_all_chunks_vector3(): # Like get_all_chunks(), just returns array of Vector3
-	var all_chunks_strings = get_all_chunks()
-	var all_chunks = []
-	for chunk_string in all_chunks_strings:
-		all_chunks.append(string2Chunk(chunk_string))
-	return all_chunks
-
+			_all_chunks.append(chunk)
+	_all_chunks = jEssentials.remove_duplicates(_all_chunks)
+	return _all_chunks
 
 func configure_soll_chunks(chunk):
-	sollChunks = []
-	sollChunks.append(chunk2String(chunk))
+	soll_chunks = []
+	soll_chunks.append(chunk)
 	for a in getChunkeighbours(chunk):
-		sollChunks.append(chunk2String(a))
+		soll_chunks.append(a)
 	pass
 
+
+## This function doesn't save chunks!
 func apply_soll_chunks():
-	print("applying soll chunks...")
-	print("istChunks: " + String(istChunks))
-	print("sollChunks: " + String(sollChunks))
-	var oldistChunks = istChunks.duplicate()
-	for a in oldistChunks:
-		if not sollChunks.has(a):
-			unload_chunk(string2Chunk(a))
-			istChunks.remove(istChunks.find(a))
-	print("istChunks: " + String(istChunks))
-	for a in sollChunks:
-		if not istChunks.has(a):
-			load_chunk(string2Chunk(a))
-			istChunks.append(a)
-			
+	for ist_chunk in ist_chunks.duplicate():
+		if not soll_chunks.has(ist_chunk):
+			unload_chunk(ist_chunk)
+	var chunks_to_load = []
+	for soll_chunk in soll_chunks:
+		if not ist_chunks.has(soll_chunk):
+			chunks_to_load.append(soll_chunk)
+	load_chunks(chunks_to_load)
+
+
 var lastchunk
 func handle_chunk():
 	var player = $Players/Player
@@ -638,45 +672,43 @@ func get_actual_loaded_chunks():
 	return actual_loaded_chunks
 
 # loads all chunks (for Editor Use) (even if some chunks are loaded, and others not.)
-func force_load_all_chunks():
-	sollChunks = get_all_chunks()
-	istChunks = []
-	apply_soll_chunks()
+func load_all_chunks():
+	load_chunks(get_all_chunks())
 
-# Accepts an array of chunks noted as strings
+# Accepts an array of chunks noted as vector3
 func save_chunks(chunks_to_save : Array):
-	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
+#	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
 	for chunk_to_save in chunks_to_save:
-		if current_unloaded_chunks.has(chunk_to_save): # If chunk is loaded but unloaded at the same time
-#			print("Chunk conflict: " + chunk_to_save + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
-#			load_chunk(string2Chunk(chunk_to_save))
-#			save_chunk(string2Chunk(chunk_to_save))
-			continue
-		save_chunk(string2Chunk(chunk_to_save))
-	print("Saved chunks sucessfully.")
+#		if current_unloaded_chunks.has(chunk_to_save): # If chunk is loaded but unloaded at the same time
+##			print("Chunk conflict: " + chunk_to_save + " is unloaded, but there are existing some currently loaded objects in this chunk! Trying to fix that...")
+##			load_chunk(string2Chunk(chunk_to_save))
+##			save_chunk(string2Chunk(chunk_to_save))
+#			continue
+		if ist_chunks.has(chunk_to_save):
+			save_chunk(chunk_to_save)
+#	print("Saved chunks sucessfully.")
 	
-# Accepts an array of chunks noted as strings
+# Accepts an array of chunks noted as Vector3
 func unload_and_save_chunks(chunks_to_unload : Array):
 	save_chunks(chunks_to_unload)
 	
-	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
+#	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
 	for chunk_to_unload in chunks_to_unload:
-		unload_chunk(string2Chunk(chunk_to_unload))
-		current_unloaded_chunks.append(chunk_to_unload)
-	current_unloaded_chunks = jEssentials.remove_duplicates(current_unloaded_chunks)
-	save_value("unloaded_chunks", current_unloaded_chunks)
-	print("Unloaded chunks sucessfully.")
+		unload_chunk(chunk_to_unload)
+#		current_unloaded_chunks.append(chunk_to_unload)
+#	current_unloaded_chunks = jEssentials.remove_duplicates(current_unloaded_chunks)
+#	save_value("unloaded_chunks", current_unloaded_chunks)
+#	print("Unloaded chunks sucessfully.")
 
-# Accepts an array of chunks noted as strings
+# Accepts an array of chunks noted as Vector3
 func load_chunks(chunks_to_load : Array):
-	for chunk in chunks_to_load:
-		load_chunk(string2Chunk(chunk))
+	_add_work_packages_to_chunk_loader(chunks_to_load)
 
 func unload_and_save_all_chunks():
 	unload_and_save_chunks(get_all_chunks())
 
-func save_all_chunks():
-	save_chunks(get_all_chunks())
+#func save_all_chunks():
+#	save_chunks(get_all_chunks())
 
 # Returns all chunks in form of strings.
 func get_chunks_between_rails(start_rail : String, destination_rail : String, include_neighbour_chunks : bool = false):
@@ -727,3 +759,8 @@ func get_chunks_around_position(position):
 func load_configs_to_cache():
 	$jSaveModule.load_everything_into_cache()
 	$jSaveModuleScenarios.load_everything_into_cache()
+
+
+func _exit_tree():
+	_quit_chunk_load_thread()
+	_chunk_loader_thread.wait_to_finish()

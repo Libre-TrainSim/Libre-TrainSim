@@ -41,9 +41,10 @@ export (bool) var update setget setToRail # Just uesd for the editor. If it will
 var timer
 func updateVisualInstance():
 	update()
-	if attachedRailNode == null:
-		attachedRailNode = find_parent("World").get_node("Rails" + "/" + attachedRail)
+	if not is_instance_valid(attachedRailNode):
+		attachedRailNode = find_parent("World").get_node("Rails/" + attachedRail)
 		if attachedRailNode == null:
+			queue_free()
 			return
 
 	visible = attachedRailNode.visible

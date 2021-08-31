@@ -44,10 +44,21 @@ func kmHToSpeed(speed):
 func normDeg(degree):
 	while degree > 180.0:
 		degree -= 360.0
-	while degree < 180.0:
+	while degree < -180.0:
 		degree += 360.0
 	return degree
-	
+
+# returns the distance in degrees between the 2 rotations, also in degrees
+# the SMALLER of the 2 possible angles is chosen!
+# examples:
+# angle_dist_deg(45, -45) = 90
+# angle_dist_deg(-45, 45) = 90
+# angle_dist_deg(0, 170) = 170
+# angle_dist_deg(0, 190) = 170
+func angle_distance_deg(rot1, rot2) -> float:
+	var normed1 = normDeg(rot1)
+	var normed2 = normDeg(rot2)
+	return abs(normDeg(normed1 - normed2))
 
 #func sort_signals(signalTable, forward = true):
 #	var signalT = [signalTable.values(), signalTable.keys()]

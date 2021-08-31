@@ -59,6 +59,8 @@ func setToRail(newvar):
 		self.transform = rail.get_global_transform_at_rail_distance(onRailPosition)
 		if not forward:
 			rotation_degrees.y += 180
+	else:
+		queue_free()
 		
 		
 func get_scenario_data():

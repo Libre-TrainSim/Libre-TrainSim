@@ -969,9 +969,9 @@ func bake_route(): ## Generate the whole route for the train.
 	while(true): ## Find next Rail
 		var possibleRails = []
 		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
-			if currentpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.startrot))) < 1 and rail.name != currentR.name:
+			if rail.name != currentR.name and currentpos.distance_to(rail.startpos) < 0.1 and Math.angle_distance_deg(currentrot, rail.startrot) < 1:
 				possibleRails.append(rail.name)
-			elif currentpos.distance_to(rail.endpos) < 0.1 and abs(Math.normDeg(currentrot) - abs(Math.normDeg(rail.endrot+180.0))) < 1 and rail.name != currentR.name:
+			elif rail.name != currentR.name and currentpos.distance_to(rail.endpos) < 0.1 and Math.angle_distance_deg(currentrot, rail.endrot+180) < 1:
 				possibleRails.append(rail.name)
 		
 		if possibleRails.size() == 0: ## If no Rail was found

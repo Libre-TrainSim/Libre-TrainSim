@@ -1,6 +1,6 @@
 extends Viewport
 
-const LINE_POINT_INTERVAL = 25 # 1 line point for every 25 meters of track
+const LINE_POINT_INTERVAL = 15 # 1 line point for every 15 meters of track
 
 onready var train_world = find_parent("World")
 onready var camera = $Camera2D

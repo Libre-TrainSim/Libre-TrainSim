@@ -263,6 +263,7 @@ func _on_FreeCamera_single_rightclick():
 		clear_selected_object()
 
 func test_track_pck():
+	save_world()
 	var dir = Directory.new()
 	dir.make_dir_recursive(editor_directory + "/.cache/")
 	var pck_path = editor_directory + "/.cache/" + Root.current_editor_track + ".pck"
@@ -282,7 +283,7 @@ func test_track_pck():
 func export_track_pck(export_path):
 	var track_name = Root.current_editor_track
 	export_path += "/" + track_name + ".pck"
-	$World.force_load_all_chunks()
+	$World.load_all_chunks()
 	var packer = PCKPacker.new()
 	packer.pck_start(export_path)
 	
@@ -456,7 +457,7 @@ func jump_to_station(station_node_name):
 var all_chunks = []
 var GRASS_HEIGHT = -0.5
 func generate_grass_panes():
-	var all_chunks_new = $World.get_all_chunks_vector3()
+	var all_chunks_new = $World.get_all_chunks()
 	if all_chunks_new.size() == all_chunks.size():
 		return
 	for child in $Landscape.get_children():
@@ -474,7 +475,8 @@ func generate_grass_panes():
 var ist_chunks = []
 func load_chunks_near_camera():
 	var wanted_chunks = $World.get_chunks_around_position($FreeCamera.translation)
-	for wanted_chunk in wanted_chunks:
-		if not ist_chunks.has(wanted_chunk):
-			$World.load_chunk(wanted_chunk)
-			ist_chunks.append(wanted_chunk)
+	for wanted_chunk in wanted_chunks.duplicate():
+		if ist_chunks.has(wanted_chunk):
+			wanted_chunks.erase(wanted_chunk)
+	$World.load_chunks(wanted_chunks)
+	ist_chunks.append_array(wanted_chunks)

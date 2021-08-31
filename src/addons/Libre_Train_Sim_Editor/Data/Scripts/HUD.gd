@@ -56,6 +56,7 @@ func _unhandled_input(_event) -> void:
 	
 	check_trainInfo()
 	check_trainInfoAbove()
+	check_map()
 
 
 var messages := 0
@@ -106,7 +107,7 @@ func check_trainInfo():
 		$IngameInformation/TrainInfo.modulate = Color( 1, 1, 1, modulation)
 
 
-func check_map(delta):
+func check_map():
 	if Input.is_action_just_pressed("map_open"):
 		map_status = (map_status + 1) % 3
 		match map_status:

@@ -11,7 +11,6 @@ func set_save_path(save_path : String):
 func save_value(key : String, value):
 	_cache_main[key] = value
 
-
 func get_value(key,  default_value = null):
 	if _cache_main.has(key):
 		return _cache_main[key]
@@ -25,6 +24,7 @@ func get_value(key,  default_value = null):
 	return default_value
 
 func reload():
+	_invalidate_cache()
 	_load_current_config()
 
 func write_to_disk():
@@ -44,6 +44,9 @@ func load_everything_into_cache():
 ## Internal Code ###############################################################
 var _config
 var _cache_main = {}
+
+func _invalidate_cache():
+	_cache_main = {}
 
 func _ready():
 	_load_current_config()

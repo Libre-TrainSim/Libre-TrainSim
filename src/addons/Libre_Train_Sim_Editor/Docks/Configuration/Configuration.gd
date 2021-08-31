@@ -37,6 +37,7 @@ func _on_NewScenario_pressed():
 	var sData = $jSaveModule.get_value("scenario_data", {})
 	$jSaveModule.save_value("scenario_list", scenarioList)
 	$jSaveModule.save_value("scenario_data", sData)
+	$jSaveModule.write_to_disk()
 	currentScenario = sName
 	update_scenario_list()
 	print("Scenario added.")
@@ -51,6 +52,7 @@ func _on_RenameScenario_pressed():
 	sData[sName] = sData[currentScenario]
 	$jSaveModule.save_value("scenario_data", sData)
 	$jSaveModule.save_value("scenario_list", scenarioList)
+	$jSaveModule.write_to_disk()
 	currentScenario = sName
 	update_scenario_list()
 	print("Scenario renamed.")
@@ -64,6 +66,7 @@ func _on_DuplicateScenario_pressed():
 	sData[sName] = sData[currentScenario].duplicate()
 	$jSaveModule.save_value("scenario_data", sData)
 	$jSaveModule.save_value("scenario_list", scenarioList)
+	$jSaveModule.write_to_disk()
 	$jSaveModule.reload()
 	currentScenario = sName
 	print("Scenario dulicated.")
@@ -78,6 +81,7 @@ func _on_DeleteScenario_pressed():
 	sData.erase(currentScenario)
 	$jSaveModule.save_value("scenario_data", sData)
 	$jSaveModule.save_value("scenario_list", scenarioList)
+	$jSaveModule.write_to_disk()
 	currentScenario = ""
 	update_scenario_list()
 	print("Scenario deleted.")
@@ -89,6 +93,7 @@ func _process(delta):
 		return
 	if oldworld != world:
 		update_save_path()
+		$jSaveModule.reload()
 		update_save_pathuration()
 		update_scenario_list()
 		currentScenario = ""
@@ -109,7 +114,6 @@ func _process(delta):
 	$Scenarios/VBoxContainer/SaveSignalData.visible = currentScenario != ""
 	$Scenarios/VBoxContainer/CopySignalDataFrom.visible = currentScenario != ""
 	$Scenarios/VBoxContainer/ResetSignals.visible = currentScenario != ""
-
 
 func get_scenario_settings(): # fills the settings field with saved values
 	clear_general_scenario_settings_fields()
@@ -141,6 +145,7 @@ func save_general_scenario_settings():
 	sData[currentScenario]["Description"] = $Scenarios/VBoxContainer/Settings/Tab/General/Description.text
 	sData[currentScenario]["Duration"] = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value
 	$jSaveModule.save_value("scenario_data", sData)
+	$jSaveModule.write_to_disk()
 	print("Scenario General Settings saved")
 
 func clear_general_scenario_settings_fields():
@@ -199,6 +204,7 @@ func _on_SaveWorldConfig_pressed():
 	d["TrackDesciption"] = $"World Configuration/GridContainer/TrackDescription".text
 
 	$jSaveModule.save_value("world_config", d)
+	$jSaveModule.write_to_disk()
 	print("World Config saved.")
 
 func update_save_pathuration():
@@ -273,6 +279,7 @@ func set_train_settings():
 		sData[currentScenario]["Trains"] = {}
 	sData[currentScenario]["Trains"][currentTrain] = train
 	$jSaveModule.save_value("scenario_data", sData)
+	$jSaveModule.write_to_disk()
 	print("Train "+ currentTrain + " saved.")
 
 #var entriesCount = 0
@@ -433,6 +440,7 @@ func delete_train(train):
 	trains.erase(train)
 	sData[currentScenario]["Trains"] = trains
 	$jSaveModule.save_value("scenario_data", sData)
+	$jSaveModule.write_to_disk()
 
 
 func _on_DeleteTrain_pressed():
@@ -534,6 +542,7 @@ func _on_Chunks_Save_pressed():
 
 func _on_Notes_Save_pressed():
 	world.save_value("notes", $"World Configuration/Notes/RichTextLabel".text)
+	world.get_node("jSaveModule").write_to_disk()
 
 ## Signals: ####################################################################
 
@@ -548,6 +557,7 @@ func save_signal_data_to_current_scenario():
 		sData[currentScenario] = {}
 	sData[currentScenario]["Signals"] = signal_data
 	$jSaveModule.save_value("scenario_data", sData)
+	$jSaveModule.write_to_disk()
 
 
 func _on_CopyAndOverwriteSignalDataFrom_pressed():
@@ -576,6 +586,7 @@ func _on_PopupMenu_Copy_SignalDataFrom_index_pressed(index):
 	var scenario_data = $jSaveModule.get_value("scenario_data")
 	scenario_data[currentScenario] = scenario_data[scenario_source].duplicate()
 	$jSaveModule.save_value("scenario_data", scenario_data)
+	$jSaveModule.write_to_disk()
 	$jSaveModule.reload()
 	load_signal_data_from_current_scenario_to_world()
 	jEssentials.show_message("Scenario Data successfully imported from scenario: " + scenario_source)

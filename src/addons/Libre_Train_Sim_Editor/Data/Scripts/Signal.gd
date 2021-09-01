@@ -63,7 +63,7 @@ func create_visual_instance():
 	if visual_instance_path != "":
 		visual_instance_resource = load(visual_instance_path)
 	if visual_instance_resource == null:
-		visual_instance_resource = load("res://Resources/Basic/Signals/Default.tscn")
+		visual_instance_resource = preload("res://Resources/Basic/SignalTypes/Default/Default.tscn")
 	var visual_instance = visual_instance_resource.instance()
 	add_child(visual_instance)
 	visual_instance.name = "VisualInstance"
@@ -88,7 +88,7 @@ func update():
 	if signal_after_node == null and signal_after != "":
 		signal_after_node = world.get_node("Signals/"+String(signal_after))
 	
-	if not did_set_pass and not Engine.is_editor_hint() and world.time != null:
+	if not did_set_pass and not Engine.is_editor_hint() and not Root.Editor and world.time != null:
 		if world.time[0] >= set_pass_at_h and world.time[1] >= set_pass_at_m and world.time[2] >= set_pass_at_s:
 			set_status(SignalStatus.GREEN)
 			did_set_pass = true

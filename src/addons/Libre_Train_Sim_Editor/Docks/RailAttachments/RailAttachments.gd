@@ -173,7 +173,7 @@ func _on_SavePosition_pressed():
 	currentTO.wholeRail = false
 	currentTO.on_rail_position = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.length = $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value - $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
-	currentTO._update(true)
+	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 	print("Position Saved")
 
 
@@ -220,9 +220,9 @@ func update_positioning():
 
 func update_current_rail_attachment(): ## UPDATE
 	print("Updating...")
-	currentTO._update(true)
+	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 	if currentTO.description.begins_with("Pole"):
-		currentRail.updateOverheadLine()
+		currentRail.update()
 
 func _on_jListTrackObjects_user_copied_entries(entry_names):
 	if entry_names.size() == 0:
@@ -312,11 +312,11 @@ func update_material_list():
 
 func apply_object_tab():
 	currentTO.objectPath = $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text
-	currentTO._update(true)
+	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 	update_material_list()
 	var material_array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
 	currentTO.materialPaths = material_array
-	currentTO._update(true)
+	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 
 func _on_BuildingSettings_updated():
 	apply_object_tab()

@@ -102,7 +102,7 @@ func _on_Update_pressed():
 			currentRail.radius = radius
 		currentRail.set_tendSlopeData(self.get_tendSlopeData())
 	
-	currentRail._update(true)
+	currentRail.update()
 	update_selected_rail(currentRail)
 	print("Rail updated.")
 	pass # Replace with function body.

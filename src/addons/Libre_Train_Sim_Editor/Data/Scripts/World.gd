@@ -382,11 +382,11 @@ func _chunk_loader_thread_function(userdata):
 				nodeI.set_data(nodeArray[node].data)
 				nodeI.transform = nodeArray[node].transform
 				nodeI.translation = getNewPos_bchunk(nodeI.translation)
-				nodeI.update($Rails.get_node(nodeI.attachedRail), obj_cache)
+				nodeI.update($Rails.get_node(nodeI.attached_rail), obj_cache)
 				ready_track_objects.append(nodeI)
 		for ready_track_object in ready_track_objects:
 #			OS.delay_msec(1)
-#			track_objects_node.call_deferred("update", $Rails.get_node(track_objects_node.attachedRail), obj_cache)
+#			track_objects_node.call_deferred("update", $Rails.get_node(track_objects_node.attached_rail), obj_cache)
 			track_objects_node.call_deferred("add_child", ready_track_object)
 			
 #			ready_track_object.set_owner(self)

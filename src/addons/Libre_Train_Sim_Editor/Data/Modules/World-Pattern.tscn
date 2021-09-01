@@ -141,7 +141,7 @@ script = ExtResource( 9 )
 [node name="Rail Tree" parent="TrackObjects" instance=ExtResource( 6 )]
 multimesh = SubResource( 2 )
 description = "Tree"
-attachedRail = "Rail"
+attached_rail = "Rail"
 length = 160.0
 objectPath = "res://Resources/Basic/Objects/EasyTree_big.obj"
 materialPaths = [ "res://Resources/Basic/Materials/EasyTree.tres" ]
@@ -160,7 +160,7 @@ wholeRail = true
 [node name="Rail Poles" parent="TrackObjects" instance=ExtResource( 6 )]
 multimesh = SubResource( 4 )
 description = "Poles"
-attachedRail = "Rail"
+attached_rail = "Rail"
 length = 160.0
 objectPath = "res://Resources/Basic/Objects/Pole1.obj"
 materialPaths = [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ]

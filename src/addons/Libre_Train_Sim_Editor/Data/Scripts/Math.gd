@@ -62,8 +62,6 @@ func angle_distance_deg(rot1, rot2) -> float:
 
 func sort_signals(signalTable, forward = true): # Gets A Dict like {"name": [], "position" : []}, returns the array of the signal	
 	var signalT = signalTable.duplicate(true)
-
-
 	var exportT = [] 
 	for a in range(0, signalT["name"].size()):
 		var minimum = 0

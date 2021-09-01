@@ -11,7 +11,7 @@ unloaded_chunks=[  ]
 "Rail Bumper": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail",
+"attached_rail": "Rail",
 "description": "Bumper",
 "distanceLength": 10.0,
 "distanceRows": 0.0,
@@ -19,7 +19,7 @@ unloaded_chunks=[  ]
 "length": 5.0,
 "materialPaths": [ "res://Resources/Basic/Materials/Black_Plastic.tres", "res://Resources/Basic/Materials/Metal_Grey_Light.tres", "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/Red_Plastic.tres", "res://Resources/Basic/Materials/Metal_Grey_Light.tres" ],
 "objectPath": "res://Resources/Basic/Objects/bumper.obj",
-"onRailPosition": 5.0,
+"on_rail_position": 5.0,
 "placeLast": true,
 "randomLocation": false,
 "randomLocationFactor": 0.3,
@@ -40,7 +40,7 @@ unloaded_chunks=[  ]
 "Rail Platform": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail",
+"attached_rail": "Rail",
 "description": "Platform",
 "distanceLength": 10.0,
 "distanceRows": 0.0,
@@ -48,7 +48,7 @@ unloaded_chunks=[  ]
 "length": 200.0,
 "materialPaths": [ "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/PlasterStones.tres", "res://Resources/Basic/Materials/PlasterStonesLight.tres", "res://Resources/Basic/Materials/Metal.tres" ],
 "objectPath": "res://Resources/Basic/Objects/Platform-1.obj",
-"onRailPosition": 0.0,
+"on_rail_position": 0.0,
 "placeLast": false,
 "randomLocation": false,
 "randomLocationFactor": 0.3,
@@ -69,7 +69,7 @@ unloaded_chunks=[  ]
 "Rail Poles_single": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail",
+"attached_rail": "Rail",
 "description": "Poles_single",
 "distanceLength": 50.0,
 "distanceRows": 0.0,
@@ -77,7 +77,7 @@ unloaded_chunks=[  ]
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ],
 "objectPath": "res://Resources/Basic/Objects/Pole1.obj",
-"onRailPosition": 0,
+"on_rail_position": 0,
 "placeLast": false,
 "randomLocation": false,
 "randomLocationFactor": 0.3,
@@ -98,7 +98,7 @@ unloaded_chunks=[  ]
 "Rail Tree": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail",
+"attached_rail": "Rail",
 "description": "Tree",
 "distanceLength": 13.0,
 "distanceRows": 13.0,
@@ -106,7 +106,7 @@ unloaded_chunks=[  ]
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Basic/Materials/EasyTree.tres" ],
 "objectPath": "res://Resources/Basic/Objects/EasyTree_big.obj",
-"onRailPosition": 0,
+"on_rail_position": 0,
 "placeLast": false,
 "randomLocation": true,
 "randomLocationFactor": 0.3,
@@ -127,7 +127,7 @@ unloaded_chunks=[  ]
 "Rail2 Poles": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail2",
+"attached_rail": "Rail2",
 "description": "Poles",
 "distanceLength": 50.0,
 "distanceRows": 0.0,
@@ -135,7 +135,7 @@ unloaded_chunks=[  ]
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Basic/Materials/Beton.tres", "res://Resources/Basic/Materials/Metal_Green.tres", "res://Resources/Basic/Materials/Metal.tres", "res://Resources/Basic/Materials/Metal_Brown.tres" ],
 "objectPath": "res://Resources/Basic/Objects/Pole1.obj",
-"onRailPosition": 0,
+"on_rail_position": 0,
 "placeLast": true,
 "randomLocation": false,
 "randomLocationFactor": 0.3,
@@ -156,7 +156,7 @@ unloaded_chunks=[  ]
 "Rail2 Tree": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail2",
+"attached_rail": "Rail2",
 "description": "Tree",
 "distanceLength": 13.0,
 "distanceRows": 13.0,
@@ -164,7 +164,7 @@ unloaded_chunks=[  ]
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Basic/Materials/EasyTree.tres" ],
 "objectPath": "res://Resources/Basic/Objects/EasyTree_big.obj",
-"onRailPosition": 0,
+"on_rail_position": 0,
 "placeLast": false,
 "randomLocation": true,
 "randomLocationFactor": 0.3,
@@ -205,7 +205,7 @@ unloaded_chunks=[  ]
 "Rail2 Bumper": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail2",
+"attached_rail": "Rail2",
 "description": "Bumper",
 "distanceLength": 10.0,
 "distanceRows": 0.0,
@@ -213,7 +213,7 @@ unloaded_chunks=[  ]
 "length": 5.0,
 "materialPaths": [ "res://Resources/Basic/Materials/Black_Plastic.tres", "res://Resources/Basic/Materials/Metal_Grey_Light.tres", "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/Red_Plastic.tres", "res://Resources/Basic/Materials/Metal_Grey_Light.tres" ],
 "objectPath": "res://Resources/Basic/Objects/bumper.obj",
-"onRailPosition": 995.0,
+"on_rail_position": 995.0,
 "placeLast": true,
 "randomLocation": false,
 "randomLocationFactor": 0.3,
@@ -234,7 +234,7 @@ unloaded_chunks=[  ]
 "Rail2 Platform": {
 "data": {
 "applySlopeRotation": false,
-"attachedRail": "Rail2",
+"attached_rail": "Rail2",
 "description": "Platform",
 "distanceLength": 10.0,
 "distanceRows": 0.0,
@@ -242,7 +242,7 @@ unloaded_chunks=[  ]
 "length": 200.0,
 "materialPaths": [ "res://Resources/Basic/Materials/White_Plastic.tres", "res://Resources/Basic/Materials/PlasterStones.tres", "res://Resources/Basic/Materials/PlasterStonesLight.tres", "res://Resources/Basic/Materials/Metal.tres" ],
 "objectPath": "res://Resources/Basic/Objects/Platform-1.obj",
-"onRailPosition": 600.0,
+"on_rail_position": 600.0,
 "placeLast": false,
 "randomLocation": false,
 "randomLocationFactor": 0.3,

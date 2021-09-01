@@ -35,17 +35,17 @@ func set_rail_logic(rail_logic):
 			update_contact_point_settings_ui()
 
 func update_general_settings_ui():
-	$GeneralSettings/Distance.value = current_rail_logic.onRailPosition
+	$GeneralSettings/Distance.value = current_rail_logic.on_rail_position
 	$GeneralSettings/Forwad.pressed = current_rail_logic.forward
 
 func _on_Distance_value_changed(value):
-	$GeneralSettings/Distance.value = clamp($GeneralSettings/Distance.value, 0, find_parent("Editor").get_node("World/Rails/" + current_rail_logic.attachedRail).length)
-	current_rail_logic.onRailPosition = $GeneralSettings/Distance.value
-	current_rail_logic.setToRail(true)
+	$GeneralSettings/Distance.value = clamp($GeneralSettings/Distance.value, 0, find_parent("Editor").get_node("World/Rails/" + current_rail_logic.attached_rail).length)
+	current_rail_logic.on_rail_position = $GeneralSettings/Distance.value
+	current_rail_logic.set_to_rail(true)
 
 func _on_Forwad_pressed():
 	current_rail_logic.forward = $GeneralSettings/Forwad.pressed
-	current_rail_logic.setToRail(true)
+	current_rail_logic.set_to_rail(true)
 	
 
 
@@ -59,19 +59,19 @@ func _on_PickVisibleInstance_pressed():
 
 
 func _on_Block_Signal_pressed():
-	current_rail_logic.blockSignal = $SignalSettings/BlockSignal.pressed
+	current_rail_logic.is_block_signal = $SignalSettings/BlockSignal.pressed
 	update_signal_settings_ui()
 	
 func update_signal_settings_ui():
 	$SignalSettings/SpeedLimit.value = current_rail_logic.speed
-	$SignalSettings/BlockSignal.pressed = current_rail_logic.blockSignal
-	$SignalSettings/VisibleInstance/LineEdit.text = current_rail_logic.visualInstancePath
+	$SignalSettings/BlockSignal.pressed = current_rail_logic.is_block_signal
+	$SignalSettings/VisibleInstance/LineEdit.text = current_rail_logic.visual_instance_path
 	$SignalSettings/Status.value = current_rail_logic.status
-	$SignalSettings/Status.visible = not current_rail_logic.blockSignal
-	$SignalSettings/LabelStatus.visible = not current_rail_logic.blockSignal
-	$SignalSettings/Label4.visible = not current_rail_logic.blockSignal
-	$SignalSettings/EnableTimedFree.visible = not current_rail_logic.blockSignal
-	$SignalSettings/EnableTimedFree.pressed = not current_rail_logic.setPassAtH < 0 and not current_rail_logic.setPassAtH > 23
+	$SignalSettings/Status.visible = not current_rail_logic.is_block_signal
+	$SignalSettings/LabelStatus.visible = not current_rail_logic.is_block_signal
+	$SignalSettings/Label4.visible = not current_rail_logic.is_block_signal
+	$SignalSettings/EnableTimedFree.visible = not current_rail_logic.is_block_signal
+	$SignalSettings/EnableTimedFree.pressed = not current_rail_logic.set_pass_at_h < 0 and not current_rail_logic.set_pass_at_h > 23
 	update_signal_time_free_ui()
 	
 
@@ -81,8 +81,8 @@ func _on_Content_Selector_resource_selected(complete_path):
 	resource_selector_called = false
 	if complete_path == "": return
 	$SignalSettings/VisibleInstance/LineEdit.text = complete_path
-	current_rail_logic.visualInstancePath = complete_path
-	current_rail_logic.updateVisualInstance()
+	current_rail_logic.visual_instance_path = complete_path
+	current_rail_logic.update_visual_instance()
 
 
 func _on_Status_value_changed(value):
@@ -92,20 +92,20 @@ func _on_Status_value_changed(value):
 
 func _on_EnableTimedFree_pressed():
 	if not $SignalSettings/EnableTimedFree.pressed:
-		current_rail_logic.setPassAtH = 25 # Disable timed free
+		current_rail_logic.set_pass_at_h = 25 # Disable timed free
 	update_signal_time_free_ui()
 	
 func update_signal_time_free_ui():
 	$SignalSettings/Label3.visible = $SignalSettings/EnableTimedFree.pressed and not $SignalSettings/BlockSignal.pressed
 	$SignalSettings/TimedFree.visible = $SignalSettings/EnableTimedFree.pressed and not $SignalSettings/BlockSignal.pressed
-	$SignalSettings/TimedFree.set_data([current_rail_logic.setPassAtH, current_rail_logic.setPassAtM, current_rail_logic.setPassAtS])
+	$SignalSettings/TimedFree.set_data([current_rail_logic.set_pass_at_h, current_rail_logic.set_pass_at_m, current_rail_logic.set_pass_at_s])
 
 
 func _on_TimedFree_time_set():
 	var time_data = $SignalSettings/TimedFree.get_data()
-	current_rail_logic.setPassAtH = time_data[0]
-	current_rail_logic.setPassAtM = time_data[1]
-	current_rail_logic.setPassAtS = time_data[2]
+	current_rail_logic.set_pass_at_h = time_data[0]
+	current_rail_logic.set_pass_at_m = time_data[1]
+	current_rail_logic.set_pass_at_s = time_data[2]
 
 
 func _on_SpeedLimitSignalSettings_value_changed(value):
@@ -167,17 +167,17 @@ func update_speed_limit_settings_ui():
 
 func _on_SpeedLimit_SpeedLimit_value_changed(value):
 	current_rail_logic.speed = $SpeedLimitSettings/SpeedLimit.value
-	current_rail_logic.setToRail(true)
+	current_rail_logic.set_to_rail(true)
 
 
 
 
 func update_warn_speed_limit_settings_ui():
-	$WarnSpeedLimitSettings/SpeedLimit.value = current_rail_logic.warnSpeed
+	$WarnSpeedLimitSettings/SpeedLimit.value = current_rail_logic.warn_speed
 
 func _on_WarnSpeedLimit_value_changed(value):
-	current_rail_logic.warnSpeed = $WarnSpeedLimitSettings/SpeedLimit.value
-	current_rail_logic.setToRail(true)
+	current_rail_logic.warn_speed = $WarnSpeedLimitSettings/SpeedLimit.value
+	current_rail_logic.set_to_rail(true)
 
 
 

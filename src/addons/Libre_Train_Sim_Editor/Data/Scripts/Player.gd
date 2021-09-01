@@ -704,14 +704,14 @@ func handle_signal(signalname):
 	if signal.type == "Signal": ## Signal
 		if signal.speed != -1:
 			currentSpeedLimit = signal.speed
-		if signal.warnSpeed != -1: 
+		if signal.warn_speed != -1: 
 			pass
-		if signal.status == 0:
+		if signal.status == SignalStatus.RED:
 			send_message("YOU_OVERRUN_RED_SIGNAL")
 			overrunRedSignal = true
 		else:
 			freeLastSignalAfterDrivenTrainLength()
-		signal.status = 0
+		signal.set_status(SignalStatus.RED)
 		lastDrivenSignal = signal
 	elif signal.type == "Station": ## Station
 		if not stations["nodeName"].has(signal.name):
@@ -747,7 +747,7 @@ func handle_signal(signalname):
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
-		print(name + ": Next Speed Limit: "+String(signal.warnSpeed))
+		print(name + ": Next Speed Limit: "+String(signal.warn_speed))
 	elif signal.type == "ContactPoint":
 		signal.activateContactPoint(name)
 	pass
@@ -1030,14 +1030,14 @@ func get_all_upcoming_signalPoints_of_types(types : Array): # returns an sorted 
 			if types.has(signalN.type) and signalN.forward == baked_route_direction[index]:
 				if rail != currentRail:
 					signalsAtRail["name"].append(signalName)
-					signalsAtRail["position"].append(signalN.onRailPosition)
+					signalsAtRail["position"].append(signalN.on_rail_position)
 				else:
-					if forward and signalN.onRailPosition > distanceOnRail:
+					if forward and signalN.on_rail_position > distanceOnRail:
 						signalsAtRail["name"].append(signalName)
-						signalsAtRail["position"].append(signalN.onRailPosition)
-					elif not forward and  signalN.onRailPosition < distanceOnRail:
+						signalsAtRail["position"].append(signalN.on_rail_position)
+					elif not forward and  signalN.on_rail_position < distanceOnRail:
 						signalsAtRail["name"].append(signalName)
-						signalsAtRail["position"].append(signalN.onRailPosition)
+						signalsAtRail["position"].append(signalN.on_rail_position)
 						
 		var sortedSignals = Math.sort_signals(signalsAtRail, baked_route_direction[index])
 		for signalName in sortedSignals:
@@ -1048,11 +1048,11 @@ func get_all_upcoming_signalPoints_of_types(types : Array): # returns an sorted 
 func get_distance_to_signal(signalName):
 	var signalN = world.get_node("Signals").get_node(signalName)
 	
-	if signalN.attachedRail == currentRail.name:
+	if signalN.attached_rail == currentRail.name:
 		if forward:
-			return signalN.onRailPosition - distanceOnRail
+			return signalN.on_rail_position - distanceOnRail
 		else:
-			return distanceOnRail - signalN.onRailPosition
+			return distanceOnRail - signalN.on_rail_position
 			
 	var returnValue = 0
 	if forward:
@@ -1060,16 +1060,16 @@ func get_distance_to_signal(signalName):
 	else:
 		returnValue += distanceOnRail
 	var index = routeIndex +1 
-	var searchedRailName =  signalN.attachedRail
+	var searchedRailName =  signalN.attached_rail
 	while(index != baked_route.size()):
 
 		if baked_route[index] != searchedRailName:
 			returnValue += baked_route_railLength[index]
 		else: ## End Rail Found (where Signal is Standing)
 			if baked_route_direction[index]:
-				returnValue += signalN.onRailPosition
+				returnValue += signalN.on_rail_position
 			else:
-				returnValue += baked_route_railLength[index] - signalN.onRailPosition
+				returnValue += baked_route_railLength[index] - signalN.on_rail_position
 			break
 		index += 1
 	return returnValue
@@ -1170,14 +1170,14 @@ func set_signalWarnLimits(): # Called in the beginning of the route
 			if signalN.speed < limit and i > 0:
 				var signalNBefore = world.get_node("Signals").get_node(sortedSignals[i-1])
 				if signalNBefore.type == "Signal":
-					signalNBefore.warnSpeed = signalN.speed
+					signalNBefore.warn_speed = signalN.speed
 			limit = signalN.speed
 
 func set_signalAfters():
 	var signals = get_all_upcoming_signalPoints_of_types(["Signal"])
 	for i in range(1,signals.size()):
 		var signalN = world.get_node("Signals").get_node(signals[i-1])
-		signalN.signalAfter = signals[i]
+		signalN.signal_after = signals[i]
 		
 
 func spawnWagons():
@@ -1284,7 +1284,7 @@ func autopilot(delta):
 	
 	## Red Signal:
 	sollSpeedArr[0] = speedLimit
-	if nextSignal != null and nextSignal.status == 0:
+	if nextSignal != null and nextSignal.status == SignalStatus.RED:
 		sollSpeedArr[0] = min(sqrt(15*distanceToNextSignal+20), (distanceToNextSignal+10)/4.0)
 		if sollSpeedArr[0] < 10:
 			sollSpeedArr[0] = 0
@@ -1407,11 +1407,11 @@ func freeLastSignalAfterDrivenTrainLength(): # Called, when overdrove the next s
 
 func checkFreeLastSignal(delta): #called by process
 	if freeLastSignalBoolean and ((distance - newSignalDistance) > length) and lastDrivenSignalTmp != null:
-		lastDrivenSignalTmp.giveSignalFree()
+		lastDrivenSignalTmp.give_signal_free()
 		
 func freeLastSignalBecauseOfDespawn():
 	if  lastDrivenSignal != null:
-		lastDrivenSignal.giveSignalFree()
+		lastDrivenSignal.give_signal_free()
 	
 func fixObsoleteStations(): ## Checks, if there are stations in the stations table, wich are not passed, but unreachable. For them it sets them to passed. Thats good for the Screen in the train.
 	pass # doesn't work as expected..

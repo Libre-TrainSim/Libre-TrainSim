@@ -119,7 +119,7 @@ func rename(new_name):
 	Root.name_node_appropriate(self, new_name, get_parent())
 	for track_object in trackObjects:
 		track_object.name = name + " " + track_object.description
-		track_object.attachedRail = name
+		track_object.attached_rail = name
 
 func update_parallel_rail_settings():
 	if parallelRail == "":
@@ -486,10 +486,10 @@ func calculate_overhadline_mesh():
 			continue
 		if trackObject.description.begins_with("Pole"):
 			var pos = 0
-			if trackObject.onRailPosition == 0:
+			if trackObject.on_rail_position == 0:
 				pos += trackObject.distanceLength
 			while pos <= trackObject.length:
-				polePositions.append(pos + trackObject.onRailPosition)
+				polePositions.append(pos + trackObject.on_rail_position)
 				pos += trackObject.distanceLength
 			if not trackObject.placeLast and polePositions.size() > 1:
 				polePositions.remove(polePositions.size()-1)

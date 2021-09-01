@@ -23,7 +23,8 @@ func _ready():
 	walkingSpeed = rand_range(walkingSpeed, walkingSpeed+0.3)
 
 func _process(delta):
-	handleWalk(delta)
+	if not get_tree().paused:
+		handleWalk(delta)
 
 var leave_wagon_timer = 0
 func handleWalk(delta):

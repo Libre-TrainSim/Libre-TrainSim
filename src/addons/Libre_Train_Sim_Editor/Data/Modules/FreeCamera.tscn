@@ -3,6 +3,7 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Camera.gd" type="Script" id=1]
 
 [node name="FreeCamera" type="Camera"]
+pause_mode = 2
 far = 1000.0
 script = ExtResource( 1 )
 fixed = false

@@ -60,7 +60,7 @@ func remove_duplicates(array : Array):
 			return_value.append(item)
 	return return_value
 
-
+var _saved_mouse_mode 
 func show_message(message : String, title : String = ""):
 	var message_box = AcceptDialog.new()
 	message_box.dialog_text = message
@@ -70,6 +70,10 @@ func show_message(message : String, title : String = ""):
 	message_box.anchor_right = 0.5
 	message_box.anchor_top = 0.5
 	message_box.anchor_bottom = 0.5
+	message_box.pause_mode = Node.PAUSE_MODE_PROCESS
+	_saved_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	message_box.connect("confirmed", self, "_on_message_box_okay_pressed")
 	message_box.show()
 
 
@@ -103,6 +107,7 @@ func get_subfolders_of(directory_path : String):
 
 
 func _ready():
+	pause_mode = Node.PAUSE_MODE_PROCESS
 	initialize_delayed_call_table()
 
 
@@ -111,6 +116,8 @@ func initialize_delayed_call_table():
 
 
 func _process(delta):
+	if get_tree().paused:
+		return
 	_handle_delayed_calls(delta)
 
 
@@ -200,3 +207,6 @@ func _crawl_directory_for_helper(directory_path : String, found_files : Dictiona
 					export_string = directory_path + "/" + file
 				found_files["Array"].append(export_string)
 	dir.list_dir_end()
+
+func _on_message_box_okay_pressed():
+	Input.set_mouse_mode(_saved_mouse_mode)

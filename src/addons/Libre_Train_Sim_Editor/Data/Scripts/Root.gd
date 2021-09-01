@@ -8,6 +8,8 @@ var mobile_version = false
 
 var start_menu_in_play_menu = false
 
+var ingame_pause = false
+
 
 
 var world ## Reference to world
@@ -15,13 +17,25 @@ var world ## Reference to world
 var Editor = false
 var current_editor_track = ""  # Name of track
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pause_mode = Node.PAUSE_MODE_PROCESS
 	pass # Replace with function body.
+
+
+func _input(event):
+	if Engine.is_editor_hint():
+		return
+	if Input.is_action_just_pressed("ingame_pause"):
+		if not Root.Editor and not Engine.is_editor_hint():
+			if ingame_pause:
+				get_tree().paused = false
+				ingame_pause = false
+			else:
+				get_tree().paused = true
+				ingame_pause = true
+				jEssentials.show_message(tr("PAUSE_MODE_ENABLED"))
+
 
 ## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor
 func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node): 

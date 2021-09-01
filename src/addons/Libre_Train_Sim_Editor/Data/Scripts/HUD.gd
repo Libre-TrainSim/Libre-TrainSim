@@ -29,11 +29,12 @@ func init_map():
 
 func _process(_delta) -> void:
 	$FPS.text = String(Engine.get_frames_per_second())
-	if $Pause.visible or $TextBox.visible or $MobileHUD/Pause.visible:
+	if $Pause.visible or $TextBox.visible or $MobileHUD/Pause.visible or Root.ingame_pause:
 		get_tree().paused = true
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		$MarginContainer/Message.hide()
 	else:
 		get_tree().paused = false
+		$MarginContainer/Message.show()
 		
 	update_nextTable()
 	$IngameInformation/TrainInfo/Screen1.update_display(Math.speedToKmH(player.speed), \
@@ -41,7 +42,7 @@ func _process(_delta) -> void:
 			player.enforcedBreaking, player.sifa, player.automaticDriving,\
 			player.currentSpeedLimit, player.engine)
 
-
+var _saved_ingame_pause 
 func _unhandled_input(_event) -> void:
 	if $TextBox.visible:
 		if Input.is_action_just_pressed("ui_accept"):
@@ -50,6 +51,14 @@ func _unhandled_input(_event) -> void:
 	if Input.is_action_just_pressed("Escape"):
 		get_tree().paused = !get_tree().paused
 		$Pause.visible = !$Pause.visible
+		if $Pause.visible:
+			_saved_ingame_pause = Root.ingame_pause
+			Root.ingame_pause = false
+			_saved_mouse_mode = Input.get_mouse_mode()
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(_saved_mouse_mode)
+			Root.ingame_pause = _saved_ingame_pause
 	
 	if Input.is_action_just_pressed("nextTable"):
 		$IngameInformation/Next.visible = !$IngameInformation/Next.visible
@@ -78,13 +87,17 @@ func send_message(text: String, actions := []) -> void:
 func _on_Back_pressed():
 	get_tree().paused = false
 	$Pause.visible = false
+	Input.set_mouse_mode(_saved_mouse_mode)
+	Root.ingame_pause = _saved_ingame_pause
 
 
 func _on_Quit_pressed():
 	get_tree().quit()
 
-
+var _saved_mouse_mode
 func show_textbox_message(string):
+	_saved_mouse_mode = Input.get_mouse_mode()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$TextBox/RichTextLabel.text = string
 	$TextBox/RichTextLabelMobile.text = string
 	get_tree().paused = true
@@ -95,7 +108,10 @@ func _on_OkTextBox_pressed():
 	get_tree().paused = false
 	$TextBox.visible = false
 	if $Black.visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		$Black/AnimationPlayer.play("FadeOut")
+	else:
+		Input.set_mouse_mode(_saved_mouse_mode)
 
 
 var modulation = 0

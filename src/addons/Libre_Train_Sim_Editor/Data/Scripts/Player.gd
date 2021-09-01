@@ -156,6 +156,9 @@ var cameraZeroTransform # Saves the camera position at the beginning. The Camera
 
 func ready(): ## Called by World!
 	
+	pause_mode = Node.PAUSE_MODE_PROCESS
+	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
+	
 	# capture mouse
 	# TODO: input mapping to release mouse for interaction?
 	# FIXME: mouse is visible in Grey Train, but not in Red Train, why?
@@ -259,25 +262,29 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 		initialSwitchCheck = true
 
 
-
 var processLongTimer = 0
-
 func _process(delta):
-
+	if get_tree().paused and not Root.ingame_pause:
+		return
+		
+	if world == null:
+		return
+	
+	if not ai:
+		handleCamera(delta)
+	
+	if get_tree().paused:
+		return
 	
 	processLongTimer += delta
 	if processLongTimer > processLongDelta:
 		processLong(processLongTimer)
 		processLongTimer = 0
 	
-	if world == null:
-		return
-	
 	if Root.EasyMode and not ai:
 		if Input.is_action_just_pressed("autopilot"):
 			jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 			toggle_automatic_driving()
-	
 	
 	if sollSpeedEnabled:
 		handleSollSpeed(delta)
@@ -291,11 +298,6 @@ func _process(delta):
 	
 	if despawning: 
 		queue_free()
-
-	if not ai:
-		handleCamera(delta)
-	
-
 	
 	if electric:
 		check_pantograph(delta)
@@ -310,12 +312,8 @@ func _process(delta):
 	
 	check_station(delta)
 	
-	
-	
 	if sifaEnabled:
 		check_sifa(delta)
-	
-	
 	
 	handle_input()
 	
@@ -323,12 +321,12 @@ func _process(delta):
 	
 	if not ai:
 		updateTrainAudioBus()
-		
 	
 	handleEngine()
 	
 	check_overdriving_a_switch()
-	
+
+
 func _unhandled_key_input(event):
 	if Input.is_action_just_pressed("debug") and not ai:
 		debug = !debug
@@ -371,6 +369,8 @@ func get_time():
 
 func _input(event):
 	if ai:
+		return
+	if get_tree().paused and not Root.ingame_pause:
 		return
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
@@ -662,8 +662,6 @@ func handleCamera(delta):
 			cameraNode.fov = camera_fov
 		
 	elif camera_state == CameraState.OUTER_VIEW:
-		#if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if mouseMotion.length() > 0 or has_camera_distance_changed:
 			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
 			cameraY += -mouseMotion.x * motionFactor
@@ -1186,12 +1184,12 @@ func spawnWagons():
 		var wagonNode = get_node(wagon)
 		var newWagon = wagonNode.duplicate()
 		newWagon.show()
+		newWagon.player = self
 		newWagon.baked_route = baked_route
 		newWagon.baked_route_direction = baked_route_direction
 		newWagon.forward = forward
 		newWagon.currentRail = currentRail
 		newWagon.distanceOnRail = nextWagonPosition
-		newWagon.player = self
 		newWagon.world = world
 		if forward:
 			nextWagonPosition -= wagonNode.length + wagonDistance

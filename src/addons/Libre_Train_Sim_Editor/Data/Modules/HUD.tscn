@@ -19,13 +19,13 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/InputLabel.gd" type="Script" id=17]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/RailMap.tscn" type="PackedScene" id=18]
 
-[sub_resource type="ViewportTexture" id=4]
+[sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Map/ViewportContainer/RailMap")
 
-[sub_resource type="ViewportTexture" id=5]
+[sub_resource type="ViewportTexture" id=2]
 viewport_path = NodePath("Map/ViewportContainer/RailMap")
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Message:modulate")
 tracks/0/interp = 1
@@ -51,7 +51,7 @@ tracks/1/keys = {
 "values": [ Vector2( -857.701, 0 ), Vector2( -857.701, -20 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/Message:modulate")
 tracks/0/interp = 1
@@ -77,8 +77,7 @@ tracks/1/keys = {
 "values": [ Vector2( -857.701, -20 ), Vector2( -857.701, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "FadeOut"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
@@ -322,7 +321,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_clip_content = true
-texture = SubResource( 4 )
+texture = SubResource( 1 )
 expand = true
 stretch_mode = 6
 __meta__ = {
@@ -335,7 +334,7 @@ anchor_right = 0.33
 anchor_bottom = 1.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = SubResource( 5 )
+texture = SubResource( 2 )
 expand = true
 stretch_mode = 6
 __meta__ = {
@@ -354,8 +353,8 @@ __meta__ = {
 }
 
 [node name="Message" type="AnimationPlayer" parent="."]
-anims/FadeIn = SubResource( 1 )
-anims/FadeOut = SubResource( 2 )
+anims/FadeIn = SubResource( 3 )
+anims/FadeOut = SubResource( 4 )
 
 [node name="Bling" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
@@ -369,7 +368,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Black"]
-anims/FadeOut = SubResource( 3 )
+anims/FadeOut = SubResource( 5 )
 
 [node name="Label" type="Label" parent="Black"]
 margin_left = 39.2001

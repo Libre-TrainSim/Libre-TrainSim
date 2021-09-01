@@ -38,12 +38,15 @@ var attachedPersons = []
 var initialSet = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pause_mode = Node.PAUSE_MODE_PROCESS
 	if cabinMode:
 		length = 4
 		return
 	registerDoors()
 	registerPassengerPathNodes()
 	registerSeats()
+	
+	$MeshInstance.show()
 	
 	var personsNode = Spatial.new()
 	personsNode.name = "Persons"
@@ -56,7 +59,10 @@ func _ready():
 var initialSwitchCheck = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+	if get_tree().paused:
+		if player != null and not cabinMode:
+			visible = player.wagonsVisible
+		return
 	
 	if player == null or player.despawning: 
 		queue_free()
@@ -72,13 +78,11 @@ func _process(delta):
 		drive(delta)
 		return
 	
-	$MeshInstance.show()
+
 	if get_parent().name != "Players": return
 	if distanceToPlayer == -1:
 		distanceToPlayer = abs(player.distanceOnRail - distanceOnRail)
 	visible = player.wagonsVisible
-	if not initialSet or not visible:
-		$MeshInstance.hide()
 	if speed != 0 or not initialSet: 
 		drive(delta)
 		initialSet = true

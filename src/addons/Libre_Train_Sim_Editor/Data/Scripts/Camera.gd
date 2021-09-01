@@ -42,8 +42,8 @@ func _enter_tree():
 	if not Root.Editor:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _exit_tree():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+#func _exit_tree():
+#	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 var mouseMotion = Vector2(0,0)
 
@@ -75,6 +75,8 @@ onready var cameraY = rotation_degrees.y - 90.0
 onready var cameraX = -rotation_degrees.x
 
 func _process(delta):
+	if get_tree().paused and not Root.ingame_pause:
+		return
 	if not current:
 		pass
 	if not world:
@@ -86,7 +88,7 @@ func _process(delta):
 	cameraX = -rotation_degrees.x
 	#mouse movement
 
-	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor:
+	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor and not Root.pause_mode:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	if mouseMotion.length() > 0 and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):

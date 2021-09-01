@@ -253,9 +253,6 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 	checkVisibility(delta)
 	if automaticDriving:
 		autopilot(delta)
-	if name == "npc3":
-		print(currentRail.name)
-		print(distanceOnRail)
 		
 	if not initialSwitchCheck:
 		updateSwitchOnNextChange()
@@ -969,9 +966,20 @@ func bake_route(): ## Generate the whole route for the train.
 	while(true): ## Find next Rail
 		var possibleRails = []
 		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
-			if rail.name != currentR.name and currentpos.distance_to(rail.startpos) < 0.1 and Math.angle_distance_deg(currentrot, rail.startrot) < 1:
+			# Could be useful for debugging:
+#			if rail.name == "HarrasPConnector" and currentR.name == "HarrasP":
+#				print("########")
+#				print(currentpos)
+#				print(rail.startpos)
+#				print(rail.endpos)
+#				print(currentrot)
+#				print(rail.startrot)
+#				print(rail.endrot)
+#				print(currentpos.distance_to(rail.endpos))
+#				print(Math.angle_distance_deg(currentrot, rail.endrot+180))
+			if rail.name != currentR.name and currentpos.distance_to(rail.startpos) < 0.2 and Math.angle_distance_deg(currentrot, rail.startrot) < 1:
 				possibleRails.append(rail.name)
-			elif rail.name != currentR.name and currentpos.distance_to(rail.endpos) < 0.1 and Math.angle_distance_deg(currentrot, rail.endrot+180) < 1:
+			elif rail.name != currentR.name and currentpos.distance_to(rail.endpos) < 0.2 and Math.angle_distance_deg(currentrot, rail.endrot+180) < 1:
 				possibleRails.append(rail.name)
 		
 		if possibleRails.size() == 0: ## If no Rail was found
@@ -1004,6 +1012,7 @@ func bake_route(): ## Generate the whole route for the train.
 	print(name + ": Baking Route finished:")
 	print(name + ": Baked Route: "+ String(baked_route))
 	print(name + ": Baked Route: Direction "+ String(baked_route_direction))
+	
 	
 func show_textbox_message(string):
 	$HUD.show_textbox_message(string)
@@ -1358,7 +1367,7 @@ func checkVisibility(delta):
 	if checkVisibilityTimer < 1: return
 	if ai: 
 		var currentChunk = world.pos2Chunk(world.getOriginalPos_bchunk(translation))
-		rendering = world.istChunks.has(world.chunk2String(currentChunk))
+		rendering = world.ist_chunks.has(currentChunk)
 		self.visible = rendering
 		wagonsVisible = rendering
 			 

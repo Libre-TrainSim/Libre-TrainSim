@@ -214,12 +214,15 @@ func unload_visible_instance():
 	if get_node_or_null("OverheadLine") != null:
 		$OverheadLine.free()
 	for track_object in trackObjects:
-		track_object.queue_free()
+		if is_instance_valid(track_object):
+			track_object.queue_free()
+	trackObjects.clear()
 
 
 func update():
 	if not visible:
 		unload_visible_instance()
+		update_positions_and_rotations()
 	else:
 		var calculated_data = calculate_update()
 		update_with_calculated_data(calculated_data)
@@ -260,6 +263,8 @@ func get_local_transform_at_rail_distance(distance):
 	if parallelRail == "":
 		return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) )
 	else:
+		if parRail == null:
+			update_parallel_rail_settings()
 		var parDistance = distance/length * parRail.length
 		return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(parRail.get_tend_at_rail_distance(parDistance))).rotated(Vector3(0,0,1), deg2rad(parRail.get_heightRot(parDistance))).rotated(Vector3(0,1,0), deg2rad(parRail.circle_get_deg(parRail.radius, parDistance))), parRail.get_shifted_local_pos_at_RailDistance(parDistance, distanceToParallelRail)+ ((parRail.startpos-startpos).rotated(Vector3(0,1,0), deg2rad(-rotation_degrees.y))))#+(-translation+parRail.translation).rotated(Vector3(0,1,0), deg2rad(rotation_degrees.y)) )
 

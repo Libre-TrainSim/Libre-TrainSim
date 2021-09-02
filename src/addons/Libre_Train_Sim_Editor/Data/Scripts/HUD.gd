@@ -182,7 +182,7 @@ func update_nextTable():
 	
 	## Update Next Station 
 	var stations = player.stations
-	if stations.passed.size() == 0 or (player.endStation and player.isInStation):
+	if stations.passed.size() == 0 or (player.is_last_station and player.isInStation):
 		$IngameInformation/Next/GridContainer/Arrival.text = "-"
 		$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 	else:

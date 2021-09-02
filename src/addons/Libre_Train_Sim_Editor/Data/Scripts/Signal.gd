@@ -97,7 +97,6 @@ func update():
 	if signal_type != SignalType.MAIN and status == SignalStatus.GREEN and signal_after_node != null and signal_after_node.status == SignalStatus.RED:
 		set_status(SignalStatus.ORANGE)
 
-
 func _ready():
 	timer = Timer.new()
 	timer.connect("timeout", self, "update_visual_instance")
@@ -115,12 +114,13 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		update()
-
+	
 	if is_block_signal:
 		set_status(SignalStatus.GREEN)
-
+	
 	set_to_rail(true)
 	update()
+
 
 # signals necessary for RailMap to work
 func set_status(new_val):
@@ -130,6 +130,11 @@ func set_status(new_val):
 	if signal_type == SignalType.MAIN and new_val == SignalStatus.ORANGE:
 		print(name, ": Cannot set a main signal to orange!")
 		return
+	
+	# make sure signal does not become green when it should be orange
+	if signal_type != SignalType.MAIN and new_val == SignalStatus.GREEN and signal_after_node != null and signal_after_node.status == SignalStatus.RED:
+		new_val = SignalStatus.ORANGE
+	
 	status = new_val
 	emit_signal("status_changed", self)
 
@@ -142,6 +147,7 @@ func set_speed(new_speed):
 func set_warn_speed(new_speed):
 	warn_speed = new_speed
 	emit_signal("warn_speed_changed", new_speed)
+
 
 
 func set_to_rail(newvar):
@@ -157,11 +163,9 @@ func set_to_rail(newvar):
 		if not forward:
 			self.rotation_degrees.y += 180
 
-
 func give_signal_free():
 	if is_block_signal:
 		set_status(SignalStatus.GREEN)
-
 
 func get_scenario_data():
 	var d = {}

@@ -41,7 +41,7 @@ var reverser = ReverserState.NEUTRAL
 
 ## For current Station:
 var currentStationName = "" # If we are in a station, this variable stores the current station name
-var wholeTrainNotInStation = false # true if speed = 0, and the train is not fully in the station
+var whole_train_in_station = false # true if speed = 0, and the train is fully in the station
 var isInStation = false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
 var realArrivalTime = time # Time is set if train successfully arrived
 var stationLength = 0 # stores the stationlength
@@ -758,14 +758,14 @@ func handle_signal(signal_name):
 			0:
 				stations["passed"][current_station_index] = true
 			1:
-				endStation = false
-				stationBeginning = false
+				is_last_station = false
+				is_first_station = false
 			2:
-				endStation = false
-				stationBeginning = true
+				is_last_station = false
+				is_first_station = true
 			3:
-				endStation = true
-				stationBeginning = false
+				is_last_station = true
+				is_first_station = false
 		currentStationName = stations["stationName"][current_station_index]
 		isInStation = false
 		platform_side = signal_passed.platform_side
@@ -777,7 +777,7 @@ func handle_signal(signal_name):
 		doorOpenMessageSentTimer = 0
 		doorOpenMessageSent = false
 		currentStationNode = signal_passed
-		if not stationBeginning:
+		if not is_first_station:
 			for wagonI in wagonsI:
 				wagonI.sendPersonsToDoor(platform_side, stations["leavingPersons"][current_station_index]/100.0)
 		
@@ -796,87 +796,117 @@ func handle_signal(signal_name):
 
 
 ## For Station:
-var GOODWILL_DISTANCE = 10 # The distance the player can overdrive a station, or it's train end isn't in the station.
-var endStation = false
-var stationBeginning = true
+var GOODWILL_DISTANCE = 10 # distance the player can overdrive a station, or it's train end isn't in the station.
+var is_last_station = false # if this is the last station on the route
+var is_first_station = true # if this is the first station (where the player spawns)
 var stationTimer = 0
-var distanceOnStationBeginning = 0
+var distanceOnStationBeginning = 0 # distance of the station begin on route
 var doorOpenMessageSentTimer = 0
 var doorOpenMessageSent = false
 var currentStationNode 
 var current_station_index = 0
 func check_station(delta):
-	if currentStationName != "":
-		if (speed == 0 and not isInStation and distance_on_route-distanceOnStationBeginning+GOODWILL_DISTANCE<length) and not wholeTrainNotInStation and not stationBeginning:
-			wholeTrainNotInStation = true
-			send_message("END_OF_YOUR_TRAIN_NOT_IN_STATION")
-		if ((speed == 0 and not isInStation and distance_on_route-distanceOnStationBeginning>=length) and not (doorLeft or doorRight)):
-			doorOpenMessageSentTimer += delta
-			if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
-				send_message("HINT_OPEN_DOORS", ["doorLeft", "doorRight"])
-				doorOpenMessageSent = true
-		if ((speed == 0 and not isInStation and distance_on_route-distanceOnStationBeginning>=length) and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (stationBeginning and not isInStation):
-			realArrivalTime = time
-			var lateMessage = ". "
-			if not stationBeginning:
-				var secondsLater = -arrivalTime[2] + realArrivalTime[2] + (-arrivalTime[1] + realArrivalTime[1])*60 + (-arrivalTime[0] + realArrivalTime[0])*3600
-				if secondsLater < 60:
-					lateMessage = ""
-				elif secondsLater < 120:
-					lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2_ONE_MINUTE")]
-				else:
-					lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2")]
-			if stationBeginning:
-				currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
-				jEssentials.call_delayed(1.2, self, "send_message", [tr("WELCOME_TO") + " " + currentStationName])
-			else:
-				send_message(tr("WELCOME_TO") + " " + currentStationName + lateMessage)
-				
-			
-			if camera_state != CameraState.CABIN_VIEW:
-				for wagon in wagonsI:
-					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
-			elif not ai:
-				jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
-			stationTimer = 0
-			isInStation = true
-			if not endStation:
-				sendDoorPositionsToCurrentStation()
-		elif (speed == 0 and isInStation ) :
-			if stationTimer > stationHaltTime:
-				if endStation:
-					send_message("SCENARIO_FINISHED")
-					stations["passed"][stations["stationName"].find(currentStationName)] = true
-					currentStationName = ""
-					nextStation = ""
-					isInStation = false
-					nextStationNode = null
-					currentStationNode = null
-					update_waiting_persons_on_next_station()
-					return
-				if depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
-					nextStation = null
-					send_message("YOU_CAN_DEPART")
-					stations["passed"][stations["stationName"].find(currentStationName)] = true
-					if camera_state != CameraState.CABIN_VIEW:
-						for wagon in wagonsI:
-							wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
-					elif not ai:
-						jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
-					leave_current_station()
-		elif (speed != 0 and isInStation) and not (doorLeft or doorRight):
+	if currentStationName == "":
+		return
+
+	var distance_in_station = distance_on_route - distanceOnStationBeginning
+
+	# handle speed > 0:
+	if speed != 0:
+		whole_train_in_station = true
+		if isInStation and not (doorLeft or doorRight):
 			send_message("YOU_DEPARTED_EARLIER")
 			leave_current_station()
-		elif (stationLength+GOODWILL_DISTANCE<distance_on_route-distanceOnStationBeginning) and currentStationName != "" and not stationBeginning:
-			if isInStation:
-				send_message("YOU_DEPARTED_EARLIER")
+		return
+
+	# handle speed == 0:
+	# train not fully in station
+	if not isInStation and distance_in_station+GOODWILL_DISTANCE<length and whole_train_in_station and not is_first_station:
+		whole_train_in_station = false
+		send_message("END_OF_YOUR_TRAIN_NOT_IN_STATION")
+	
+	# train in station but doors closed
+	if not isInStation and distance_in_station>=length and not (doorLeft or doorRight):
+		doorOpenMessageSentTimer += delta
+		if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
+			send_message("HINT_OPEN_DOORS", ["doorLeft", "doorRight"])
+			doorOpenMessageSent = true
+	
+	# train just now fully in station and doors opened, or first station 
+	if (not isInStation and distance_in_station>=length and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (is_first_station and not isInStation):
+		isInStation = true
+		stationTimer = 0
+		realArrivalTime = time
+		
+		# send a "you are x minutes late" message if player is late
+		var lateMessage = ". "
+		if not is_first_station:
+			var secondsLater = -arrivalTime[2] + realArrivalTime[2] + (-arrivalTime[1] + realArrivalTime[1])*60 + (-arrivalTime[0] + realArrivalTime[0])*3600
+			if secondsLater < 60:
+				lateMessage = ""
+			elif secondsLater < 120:
+				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2_ONE_MINUTE")]
 			else:
-				send_message("YOU_MISSED_A_STATION")
+				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2")]
+		
+		# send "welcome to station" message
+		if is_first_station:
+			currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
+			jEssentials.call_delayed(1.2, self, "send_message", [tr("WELCOME_TO") + " " + currentStationName])
+		else:
+			send_message(tr("WELCOME_TO") + " " + currentStationName + lateMessage)
+		
+		# play station announcement
+		if camera_state != CameraState.CABIN_VIEW:
+			for wagon in wagonsI:
+				jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
+		elif not ai:
+			jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
+		
+		# send door position, so persons can get in
+		if not is_last_station:
+			sendDoorPositionsToCurrentStation()
+	
+	# train waited long enough in station
+	elif isInStation and stationTimer > stationHaltTime:
+		# scenario finished if last station
+		if is_last_station:
+			send_message("SCENARIO_FINISHED")
+			stations["passed"][stations["stationName"].find(currentStationName)] = true
+			currentStationName = ""
+			nextStation = ""
+			isInStation = false
+			nextStationNode = null
+			currentStationNode = null
+			update_waiting_persons_on_next_station()
+			return
+		# else, send "you can depart" message once the time is up
+		elif depatureTime[0] <= time[0] and depatureTime[1] <= time[1] and depatureTime[2] <= time[2]:
+			nextStation = null
+			send_message("YOU_CAN_DEPART")
+			stations["passed"][stations["stationName"].find(currentStationName)] = true
+			if camera_state != CameraState.CABIN_VIEW:
+				for wagon in wagonsI:
+					wagon.play_outside_announcement(stations["departureAnnouncePath"][current_station_index])
+			elif not ai:
+				jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
 			leave_current_station()
-		stationTimer += delta
-		if (speed != 0):
-			wholeTrainNotInStation = false
-			
+	
+	# whole train drove further than distance is long (except first station)
+	# if part of train is still within station, this will not trigger (allow player to back into station again)
+	elif distance_in_station > stationLength+length+GOODWILL_DISTANCE and not is_first_station:
+		# if train was already stopped at station, it departed early
+		if isInStation:
+			send_message("YOU_DEPARTED_EARLIER")
+		# if it hadn't stopped yet, it missed the station
+		else:
+			send_message("YOU_MISSED_A_STATION")
+		# finally, leave the station
+		leave_current_station()
+	
+	stationTimer += delta
+
+
 func leave_current_station():
 	stations["passed"][stations["stationName"].find(currentStationName)] = true
 	currentStationName = ""
@@ -886,6 +916,7 @@ func leave_current_station():
 	currentStationNode = null
 	update_waiting_persons_on_next_station()
 
+
 func update_waiting_persons_on_next_station():
 	var station_nodes = get_all_upcoming_signals_of_types(["Station"])
 	if station_nodes.size() != 0:
@@ -893,9 +924,9 @@ func update_waiting_persons_on_next_station():
 		var index = stations["nodeName"].find(station_node.name)
 		station_node.set_waiting_persons(stations["waitingPersons"][index]/100.0 * world.default_persons_at_station)
 
+
 ## Pantograph
 var pantographTimer = 0
-
 func force_pantograph_up():
 	pantograph = true
 	pantographUp = true
@@ -920,7 +951,6 @@ func check_pantograph(delta):
 		voltage = voltage + (20-voltage)*delta*2.0
 	else:
 		voltage = voltage + (0-voltage)*delta*2.0
-		
 
 
 var checkSpeedLimitTimer = 0
@@ -1465,8 +1495,9 @@ func free_signal_after_driven_train_length(signal_instance): # Called, when over
 	signal_to_free_distance = distance_on_route
 
 func checkFreeLastSignal(delta): #called by process
-	if ((distance_on_route - signal_to_free_distance) > length) and signal_to_free != null:
-		signal_to_free.giveSignalFree()
+	if signal_to_free != null and (distance_on_route - signal_to_free_distance) > length:
+		signal_to_free.give_signal_free()
+		signal_to_free = null # sucessfully freed, don't do it again :)
 		
 func freeLastSignalBecauseOfDespawn():
 	if  last_driven_signal != null:

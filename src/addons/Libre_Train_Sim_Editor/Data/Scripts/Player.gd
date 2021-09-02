@@ -811,7 +811,21 @@ func check_station(delta):
 
 	var distance_in_station = distance_on_route - distanceOnStationBeginning
 
-	# handle speed > 0:
+	# handle code independent of speed
+	# whole train drove further than distance is long (except first station)
+	# if part of train is still within station, this will not trigger (allow player to back into station again)
+	if distance_in_station > stationLength+length+GOODWILL_DISTANCE and not is_first_station:
+		# if train was already stopped at station, it departed early
+		if isInStation:
+			send_message("YOU_DEPARTED_EARLIER")
+		# if it hadn't stopped yet, it missed the station
+		else:
+			send_message("YOU_MISSED_A_STATION")
+		# finally, leave the station
+		leave_current_station()
+		return
+
+	# handle cases when speed > 0:
 	if speed != 0:
 		whole_train_in_station = true
 		if isInStation and not (doorLeft or doorRight):
@@ -821,19 +835,23 @@ func check_station(delta):
 
 	# handle speed == 0:
 	# train not fully in station
-	if not isInStation and distance_in_station+GOODWILL_DISTANCE<length and whole_train_in_station and not is_first_station:
-		whole_train_in_station = false
-		send_message("END_OF_YOUR_TRAIN_NOT_IN_STATION")
+	if not isInStation and whole_train_in_station and not is_first_station:
+		if distance_in_station+GOODWILL_DISTANCE < length:
+			whole_train_in_station = false
+			send_message("END_OF_YOUR_TRAIN_NOT_IN_STATION")
+		if distance_in_station > stationLength+GOODWILL_DISTANCE:
+			whole_train_in_station = false
+			send_message("FRONT_OF_YOUR_TRAIN_NOT_IN_STATION")
 	
 	# train in station but doors closed
-	if not isInStation and distance_in_station>=length and not (doorLeft or doorRight):
+	if not isInStation and whole_train_in_station and not (doorLeft or doorRight):
 		doorOpenMessageSentTimer += delta
 		if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
 			send_message("HINT_OPEN_DOORS", ["doorLeft", "doorRight"])
 			doorOpenMessageSent = true
 	
 	# train just now fully in station and doors opened, or first station 
-	if (not isInStation and distance_in_station>=length and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (is_first_station and not isInStation):
+	if (not isInStation and whole_train_in_station and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (is_first_station and not isInStation):
 		isInStation = true
 		stationTimer = 0
 		realArrivalTime = time
@@ -891,19 +909,7 @@ func check_station(delta):
 			elif not ai:
 				jAudioManager.play_game_sound(stations["departureAnnouncePath"][current_station_index])
 			leave_current_station()
-	
-	# whole train drove further than distance is long (except first station)
-	# if part of train is still within station, this will not trigger (allow player to back into station again)
-	elif distance_in_station > stationLength+length+GOODWILL_DISTANCE and not is_first_station:
-		# if train was already stopped at station, it departed early
-		if isInStation:
-			send_message("YOU_DEPARTED_EARLIER")
-		# if it hadn't stopped yet, it missed the station
-		else:
-			send_message("YOU_MISSED_A_STATION")
-		# finally, leave the station
-		leave_current_station()
-	
+
 	stationTimer += delta
 
 

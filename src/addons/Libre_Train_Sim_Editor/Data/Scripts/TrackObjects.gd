@@ -96,7 +96,8 @@ func set_data(d):
 
 func attach_to_rail(_rail_node):
 	rail_node = _rail_node
-	rail_node.trackObjects.append(self)
+	if not rail_node.trackObjects.has(self):
+		rail_node.trackObjects.append(self)
 
 func unattach_from_rail():
 	if rail_node == null:
@@ -118,7 +119,7 @@ func update(_rail_node, res_cache = {}):
 	var mesh_res
 	if not res_cache.has(objectPath):
 		if not ResourceLoader.exists(objectPath):
-			printerr("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
+			print("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
 			return
 		res_cache[objectPath] = load(objectPath)
 	mesh_res = res_cache[objectPath]

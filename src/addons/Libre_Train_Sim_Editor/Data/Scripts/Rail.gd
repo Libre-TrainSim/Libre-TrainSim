@@ -205,6 +205,8 @@ func update_with_calculated_data(calculated_data):
 	if Engine.is_editor_hint() or Root.Editor:
 		$Ending.transform = get_local_transform_at_rail_distance(length)
 		$Mid.transform = get_local_transform_at_rail_distance(length/2.0)
+		for track_object in trackObjects:
+			track_object.update(self)
 	
 	
 func unload_visible_instance():

@@ -22,7 +22,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-#	$Tab/TrackObjects/Settings.visible = is_instance_valid(currentTO)
+	$Tab/TrackObjects/Settings.visible = is_instance_valid(currentTO)
 	pass
 
 
@@ -58,6 +58,7 @@ func update_selected_rail(node):
 func update_itemList():
 	$Tab/TrackObjects/jListTrackObjects.clear()
 	var track_objects = currentRail.trackObjects
+	print(track_objects)
 	for x in range(track_objects.size()):
 		if track_objects[x].description == null:
 			track_objects[x].queue_free()
@@ -66,6 +67,7 @@ func update_itemList():
 
 
 func _on_jListTrackObjects_user_removed_entries(entry_names):
+	print(currentRail.trackObjects)
 	for entry_name in entry_names:
 		var track_object = currentRail.get_track_object(entry_name)
 		var track_object_name = track_object.name
@@ -85,6 +87,7 @@ func _on_jListTrackObjects_user_added_entry(entry_name):
 	track_object.materialPaths = []
 	world.get_node("TrackObjects").add_child(track_object)
 	track_object.set_owner(world)
+	track_object.attach_to_rail(currentRail)
 	
 	print("Created track object " + track_object.name)
 	
@@ -121,7 +124,7 @@ func copy_track_object_to_current_rail(source_track_object : Node, new_descripti
 		elif source_track_object.sides == 2:
 			new_track_object.sides = 1
 	new_track_object.set_owner(world)
-	new_track_object._update(true)
+	new_track_object.update(currentRail)
 
 
 	
@@ -290,7 +293,8 @@ func update_object_tab():
 	if not is_instance_valid(currentTO):
 		$Tab/TrackObjects/Settings/Tab/Object.hide()
 		return
-	$Tab/TrackObjects/Settings/Tab/Object.show()
+	if $Tab/TrackObjects/Settings/Tab.current_tab == 0:
+		$Tab/TrackObjects/Settings/Tab/Object.show()
 	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = currentTO.objectPath
 	update_material_list()
 
@@ -298,8 +302,10 @@ func update_material_list():
 	if not ResourceLoader.exists(currentTO.objectPath):
 		$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(null)
 		return
-	var mesh_instance = MeshInstance.new()
-	mesh_instance.mesh = load(currentTO.objectPath)
+	var mesh_instance = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.current_mesh
+	if not is_instance_valid(mesh_instance) or mesh_instance.mesh.resource_path != currentTO.objectPath:
+		mesh_instance = MeshInstance.new()
+		mesh_instance.mesh = load(currentTO.objectPath)
 	var material_array = currentTO.materialPaths
 	for i in range(mesh_instance.get_surface_material_count()):
 		if i < material_array.size() and ResourceLoader.exists(material_array[i]):
@@ -312,11 +318,16 @@ func update_material_list():
 
 func apply_object_tab():
 	currentTO.objectPath = $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text
-	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 	update_material_list()
 	var material_array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
 	currentTO.materialPaths = material_array
 	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 
 func _on_BuildingSettings_updated():
+	find_parent("EditorHUD")._on_dialog_closed()
 	apply_object_tab()
+
+
+func _on_OptionButton_item_selected(index):
+	find_parent("EditorHUD")._on_dialog_closed()
+

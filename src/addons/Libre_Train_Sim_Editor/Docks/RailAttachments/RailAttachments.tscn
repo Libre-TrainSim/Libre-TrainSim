@@ -24,7 +24,7 @@ size_flags_horizontal = 3
 [node name="Tab" type="TabContainer" parent="."]
 margin_top = 28.0
 margin_right = 800.0
-margin_bottom = 364.0
+margin_bottom = 260.0
 tab_align = 0
 
 [node name="TrackObjects" type="VBoxContainer" parent="Tab"]
@@ -68,6 +68,7 @@ __meta__ = {
 }
 
 [node name="Settings" type="VBoxContainer" parent="Tab/TrackObjects"]
+visible = false
 margin_top = 200.0
 margin_right = 792.0
 margin_bottom = 300.0
@@ -524,6 +525,7 @@ current_path = "res://Resources/"
 [connection signal="updated" from="Tab/TrackObjects/Settings/Tab/Object/BuildingSettings" to="." method="_on_BuildingSettings_updated"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/SaveAndUpdate" to="." method="_on_SavePosition_pressed"]
+[connection signal="item_selected" from="Tab/TrackObjects/Settings/Tab/Object Positioning/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/SaveAndUpdate" to="." method="_on_SavePositioning_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Randomize" to="." method="_on_Randomize_pressed"]
 [connection signal="file_selected" from="FileDialogObjects" to="." method="_on_FileDialog_onject_selected"]

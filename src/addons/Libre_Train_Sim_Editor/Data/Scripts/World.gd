@@ -326,6 +326,8 @@ func _chunk_loader_thread_function(userdata):
 		
 		var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
 		if chunk.has("empty"):
+			ist_chunks.append(position)
+			print("Chunk " + chunk2String(position) + " is empty.")
 			_chunk_loader_mutex.lock()
 			_actually_changing_world = false
 			_chunk_loader_mutex.unlock()
@@ -420,9 +422,6 @@ func get_all_chunks(): # Returns Array of Vector3
 		return _all_chunks
 	_all_chunks = []
 	var railNode = get_node("Rails")
-	if railNode == null:
-		printerr("Rail Node not found. World is corrupt!")
-		return
 	for rail in railNode.get_children():
 		var railChunk = pos2Chunk(rail.translation)
 		_all_chunks.append(railChunk)

@@ -8,7 +8,7 @@ var personsNode
 export (int) var stationLength
 
 
-export (int) var platformSide = 0
+export (int, "None", "Left", "Right", "Both") var platformSide = PlatformSide.NONE
 export (bool) var personSystem = true
 export (float) var platformHeight = 1.2
 export (float) var platformStart = 2.5
@@ -71,7 +71,7 @@ func set_scenario_data(d):
 func spawnPersonsAtBeginning():
 	if not personSystem:
 		return
-	if platformSide == 0:
+	if platformSide == PlatformSide.NONE:
 		return
 	while(rail.visible and attachedPersons.size() < waitingPersonCount):
 		spawnRandomPerson()
@@ -82,7 +82,7 @@ func set_waiting_persons(count : int):
 	
 
 func handlePersons():
-	if platformSide == 0:
+	if platformSide == PlatformSide.NONE:
 		return
 	if rail == null:
 		return
@@ -108,15 +108,15 @@ func spawnRandomPerson():
 func getRandomTransformAtPlatform():
 	if forward:
 		var randRailDistance = int(rand_range(on_rail_position, on_rail_position+stationLength))
-		if platformSide == 1: # Left
+		if platformSide == PlatformSide.LEFT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)),  rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
-		if platformSide == 2: ## right
+		if platformSide == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 	else:
 		var randRailDistance = int(rand_range(on_rail_position, on_rail_position-stationLength))
-		if platformSide == 1: # Left
+		if platformSide == PlatformSide.LEFT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
-		if platformSide == 2: ## right
+		if platformSide == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 		
 func setDoorPositions(doors, doorsWagon): ## Called by the train

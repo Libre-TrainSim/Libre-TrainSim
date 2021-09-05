@@ -1310,8 +1310,9 @@ var autoPilotInStation = true
 var updateNextSignalTimer = 0
 func updateNextSignal(delta):
 	if nextSignal == null:
-		var upcoming = get_next_Signal()
-		if upcoming == null: return
+		var upcoming = get_next_signal()
+		if upcoming == null:
+			return
 		nextSignal = world.get_node("Signals/"+upcoming)
 		updateNextSignalTimer = 1 ## Force Update Signal
 	updateNextSignalTimer += delta
@@ -1319,7 +1320,7 @@ func updateNextSignal(delta):
 		distanceToNextSignal = get_distance_to_signal(nextSignal.name)
 		updateNextSignalTimer = 0
 
-func get_next_Signal():
+func get_next_signal():
 	var all = get_all_upcoming_signals_of_types(["Signal"])
 	if all.size() > 0:
 		return all[0]
@@ -1350,13 +1351,14 @@ var distanceToNextStation = 0
 var updateNextStationTimer = 0
 func updateNextStation(delta):  ## Used for Autopilot
 	if nextStationNode == null:
-		var upcoming = get_next_Station()
-		if upcoming == null: return
+		var upcoming = get_next_station()
+		if upcoming == null:
+			return
 		nextStationNode = world.get_node("Signals").get_node(upcoming)
 		nextStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
 	distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
 
-func get_next_Station():
+func get_next_station():
 	var all = get_all_upcoming_signals_of_types(["Station"])
 	if all.size() > 0:
 		return all[0]
@@ -1406,7 +1408,7 @@ func autopilot(delta):
 
 			
 	## Open Doors:
-	if (currentStationName != "" and speed == 0 and not isInStation and distance_on_route-distanceOnStationBeginning>=length):
+	if (currentStationName != "" and speed == 0 and not isInStation and distance_on_route - distanceOnStationBeginning >= length):
 		if nextStationNode.platform_side == PlatformSide.LEFT:
 			doorLeft = true
 			$Sound/DoorsOpen.play()

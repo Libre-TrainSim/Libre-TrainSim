@@ -67,10 +67,10 @@ func update_info(player):
 			$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = green
 
 	## Reverser:
-	if player.reverser == player.ReverserState.NEUTRAL:
-		$"ScrollContainer/VBoxContainer/Reverser/dot".texture = red
+	if player.reverser == ReverserState.NEUTRAL:
+		$ScrollContainer/VBoxContainer/Reverser/Dot.texture = red
 	else:
-		$"ScrollContainer/VBoxContainer/Reverser/dot".texture = green
+		$ScrollContainer/VBoxContainer/Reverser/Dot.texture = green
 
 
 	## Acceleration:

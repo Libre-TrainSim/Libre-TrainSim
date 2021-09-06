@@ -38,12 +38,8 @@ func _ready():
 	#set mouse position
 
 
-func _enter_tree():
-	if not Root.Editor:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#set mouse position
 
-#func _exit_tree():
-#	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 var mouseMotion = Vector2(0,0)
 

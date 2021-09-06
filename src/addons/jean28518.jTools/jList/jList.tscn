@@ -52,8 +52,8 @@ text = "Remove"
 
 [node name="Rename" type="Button" parent="VBoxContainer/HBoxContainer"]
 visible = false
-margin_left = 612.0
-margin_right = 712.0
+margin_left = 736.0
+margin_right = 800.0
 margin_bottom = 24.0
 text = "Rename"
 

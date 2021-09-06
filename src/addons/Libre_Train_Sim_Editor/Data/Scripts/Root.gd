@@ -4,7 +4,7 @@ extends Node
 var currentScenario
 var currentTrain
 var EasyMode = true
-var mobile_version = false
+var mobile_version = OS.has_feature("mobile")
 
 var start_menu_in_play_menu = false
 
@@ -17,10 +17,10 @@ var world ## Reference to world
 var Editor = false
 var current_editor_track = ""  # Name of track
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	pause_mode = Node.PAUSE_MODE_PROCESS
-	pass # Replace with function body.
+	set_low_resolution(mobile_version)
 
 
 func _unhandled_key_input(_event):

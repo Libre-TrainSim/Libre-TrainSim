@@ -1,0 +1,211 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontIngame.tres" type="DynamicFont" id=2]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/styles/panel_background.tres" type="StyleBox" id=3]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/styles/button_right.tres" type="Theme" id=4]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/styles/button_left.tres" type="Theme" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/colored_item_list.gd" type="Script" id=6]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/play_menu.gd" type="Script" id=7]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/styles/item_list.tres" type="Theme" id=10]
+
+[node name="PanelContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = 12.0
+margin_right = -12.0
+margin_bottom = -12.0
+custom_styles/panel = ExtResource( 3 )
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="VBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 10.0
+margin_right = 770.0
+margin_bottom = 572.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Selection" type="HBoxContainer" parent="Play"]
+margin_right = 764.0
+margin_bottom = 305.0
+size_flags_vertical = 3
+
+[node name="Tracks" type="VBoxContainer" parent="Play/Selection"]
+margin_right = 764.0
+margin_bottom = 305.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Play/Selection/Tracks"]
+margin_right = 764.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "MENU_TRACKS:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tracks" type="ItemList" parent="Play/Selection/Tracks"]
+margin_top = 49.0
+margin_right = 764.0
+margin_bottom = 305.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 10 )
+items = [ "Strecke 1", null, false, "Item 1", null, false ]
+script = ExtResource( 6 )
+
+[node name="Scenarios" type="VBoxContainer" parent="Play/Selection"]
+visible = false
+margin_left = 256.0
+margin_right = 508.0
+margin_bottom = 307.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Play/Selection/Scenarios"]
+margin_right = 252.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "MENU_SCENARIOS:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scenarios" type="ItemList" parent="Play/Selection/Scenarios"]
+margin_top = 49.0
+margin_right = 252.0
+margin_bottom = 307.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 10 )
+items = [ "Strecke 1", null, false ]
+script = ExtResource( 6 )
+
+[node name="Trains" type="VBoxContainer" parent="Play/Selection"]
+visible = false
+margin_left = 384.0
+margin_right = 764.0
+margin_bottom = 307.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Play/Selection/Trains"]
+margin_right = 380.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "MENU_TRAIN:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Trains" type="ItemList" parent="Play/Selection/Trains"]
+margin_top = 49.0
+margin_right = 380.0
+margin_bottom = 307.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 10 )
+items = [ "Strecke 1", null, false ]
+script = ExtResource( 6 )
+
+[node name="Info" type="HBoxContainer" parent="Play"]
+margin_top = 309.0
+margin_right = 764.0
+margin_bottom = 509.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="Description" type="RichTextLabel" parent="Play/Info"]
+margin_right = 400.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+custom_fonts/normal_font = ExtResource( 2 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+
+[node name="Info" type="VBoxContainer" parent="Play/Info"]
+margin_left = 404.0
+margin_right = 404.0
+margin_bottom = 200.0
+
+[node name="Author" type="Label" parent="Play/Info/Info"]
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="ReleaseDate" type="Label" parent="Play/Info/Info"]
+margin_top = 34.0
+margin_bottom = 64.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="Duration" type="Label" parent="Play/Info/Info"]
+margin_top = 68.0
+margin_bottom = 98.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="EasyMode" type="CheckBox" parent="Play/Info/Info"]
+visible = false
+margin_top = 102.0
+margin_right = 165.0
+margin_bottom = 140.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+pressed = true
+text = "MENU_EASY_MODE"
+
+[node name="Screenshot" type="TextureRect" parent="Play/Info"]
+margin_left = 408.0
+margin_right = 764.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 356, 0 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="HBoxContainer" parent="Play"]
+margin_top = 513.0
+margin_right = 764.0
+margin_bottom = 562.0
+
+[node name="Back" type="Button" parent="Play/Buttons"]
+margin_right = 380.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+theme = ExtResource( 5 )
+custom_fonts/font = ExtResource( 1 )
+text = "MENU_BACK"
+
+[node name="Play" type="Button" parent="Play/Buttons"]
+margin_left = 384.0
+margin_right = 764.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+theme = ExtResource( 4 )
+custom_fonts/font = ExtResource( 1 )
+text = "MENU_PLAY"
+
+[node name="jSaveModule" parent="." instance=ExtResource( 8 )]
+
+[connection signal="item_selected" from="Play/Selection/Tracks/Tracks" to="." method="_on_Tracks_item_selected"]
+[connection signal="item_selected" from="Play/Selection/Scenarios/Scenarios" to="." method="_on_Scenarios_item_selected"]
+[connection signal="item_selected" from="Play/Selection/Trains/Trains" to="." method="_on_Trains_item_selected"]
+[connection signal="pressed" from="Play/Buttons/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="Play/Buttons/Play" to="." method="_on_Play_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://screenshot.png" type="Texture" id=2]
@@ -8,6 +8,11 @@
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" type="AudioStream" id=6]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Main_Menu_Editor_Configuration.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMediumBold.tres" type="DynamicFont" id=9]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/MenuAbout.gd" type="Script" id=10]
+[ext_resource path="res://Resources/Basic/UI/AboutAuthorLabel.tscn" type="PackedScene" id=11]
+[ext_resource path="res://about_authors.tres" type="Resource" id=12]
+[ext_resource path="res://Resources/Basic/UI/AboutLanguageLabel.tscn" type="PackedScene" id=13]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -31,6 +36,8 @@ __meta__ = {
 [node name="Front" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -1.05945
+margin_bottom = -1.05945
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -45,45 +52,54 @@ __meta__ = {
 }
 
 [node name="Play" type="Button" parent="Front/VBoxContainer"]
-margin_top = 164.0
+margin_top = 137.0
 margin_right = 232.0
-margin_bottom = 215.0
+margin_bottom = 188.0
 rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_PLAY"
 
 [node name="Content" type="Button" parent="Front/VBoxContainer"]
-margin_top = 219.0
+margin_top = 192.0
 margin_right = 232.0
-margin_bottom = 270.0
+margin_bottom = 243.0
 rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_CONTENT"
 
 [node name="Create" type="Button" parent="Front/VBoxContainer"]
-margin_top = 274.0
+margin_top = 247.0
 margin_right = 232.0
-margin_bottom = 325.0
+margin_bottom = 298.0
 rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_CREATE"
 
 [node name="Settings" type="Button" parent="Front/VBoxContainer"]
-margin_top = 329.0
+margin_top = 302.0
 margin_right = 232.0
-margin_bottom = 380.0
+margin_bottom = 353.0
 rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_SETTINGS"
 
-[node name="Quit" type="Button" parent="Front/VBoxContainer"]
-margin_top = 384.0
+[node name="About" type="Button" parent="Front/VBoxContainer"]
+margin_top = 357.0
 margin_right = 232.0
-margin_bottom = 435.0
+margin_bottom = 408.0
+rect_min_size = Vector2( 180, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
+text = "MENU_ABOUT"
+
+[node name="Quit" type="Button" parent="Front/VBoxContainer"]
+margin_top = 412.0
+margin_right = 232.0
+margin_bottom = 463.0
 rect_min_size = Vector2( 180, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
@@ -100,18 +116,18 @@ __meta__ = {
 }
 
 [node name="Play" type="Button" parent="Front/VBoxContainerAndoid"]
-margin_top = 116.0
+margin_top = 114.0
 margin_right = 600.0
-margin_bottom = 236.0
+margin_bottom = 234.0
 rect_min_size = Vector2( 600, 120 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 4 )
 text = "MENU_PLAY"
 
 [node name="Feedback" type="Button" parent="Front/VBoxContainerAndoid"]
-margin_top = 240.0
+margin_top = 238.0
 margin_right = 600.0
-margin_bottom = 360.0
+margin_bottom = 358.0
 grow_horizontal = 0
 rect_min_size = Vector2( 0, 120 )
 custom_fonts/font = ExtResource( 4 )
@@ -120,10 +136,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Quit" type="Button" parent="Front/VBoxContainerAndoid"]
-margin_top = 364.0
+[node name="About" type="Button" parent="Front/VBoxContainerAndoid"]
+margin_top = 362.0
 margin_right = 600.0
-margin_bottom = 484.0
+margin_bottom = 482.0
+grow_horizontal = 0
+rect_min_size = Vector2( 0, 120 )
+custom_fonts/font = ExtResource( 4 )
+text = "MENU_ABOUT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="Front/VBoxContainerAndoid"]
+margin_top = 486.0
+margin_right = 600.0
+margin_bottom = 606.0
 rect_min_size = Vector2( 200, 120 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 4 )
@@ -162,6 +190,187 @@ margin_bottom = 570.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.180392, 0.184314, 0.223529, 0.960784 )
+
+[node name="About" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+developers_vbox = NodePath("ColorRect/Control/ScrollContainer/VBoxAbout/Developers/VBoxContainer")
+contributors_vbox = NodePath("ColorRect/Control/ScrollContainer/VBoxAbout/Contributors/VBoxContainer")
+translators_vbox = NodePath("ColorRect/Control/ScrollContainer/VBoxAbout/Translators/VBoxContainer")
+authors = ExtResource( 12 )
+
+[node name="ColorRect" type="ColorRect" parent="About"]
+margin_right = 760.0
+margin_bottom = 570.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.180392, 0.184314, 0.223529, 0.960784 )
+
+[node name="Control" type="Control" parent="About/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelAbout" type="Label" parent="About/ColorRect/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -150.5
+margin_top = 20.0
+margin_right = 150.5
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 4 )
+text = "MENU_ABOUT"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="About/ColorRect/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 45.0
+margin_top = 116.0
+margin_right = -45.0
+margin_bottom = -65.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxAbout" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer"]
+margin_right = 670.0
+margin_bottom = 398.0
+size_flags_horizontal = 3
+custom_constants/separation = 15
+alignment = 1
+
+[node name="Developers" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout"]
+margin_right = 658.0
+margin_bottom = 105.0
+size_flags_horizontal = 3
+custom_constants/separation = 7
+alignment = 1
+
+[node name="Developers" type="Label" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Developers"]
+margin_right = 658.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 9 )
+text = "ABOUT_DEVELOPERS"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Developers"]
+margin_top = 60.0
+margin_right = 658.0
+margin_bottom = 105.0
+custom_constants/separation = 4
+alignment = 1
+
+[node name="Dev1" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Developers/VBoxContainer" instance=ExtResource( 11 )]
+margin_right = 658.0
+
+[node name="Contributors" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout"]
+margin_top = 120.0
+margin_right = 658.0
+margin_bottom = 225.0
+size_flags_horizontal = 3
+custom_constants/separation = 7
+alignment = 1
+
+[node name="Contributors" type="Label" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Contributors"]
+margin_right = 658.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 9 )
+text = "ABOUT_CONTRIBUTORS"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Contributors"]
+margin_top = 60.0
+margin_right = 658.0
+margin_bottom = 105.0
+custom_constants/separation = 4
+alignment = 1
+
+[node name="Dev1" type="Label" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Contributors/VBoxContainer"]
+margin_right = 658.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 5 )
+text = "Jean28518"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Translators" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout"]
+margin_top = 240.0
+margin_right = 658.0
+margin_bottom = 398.0
+size_flags_horizontal = 3
+custom_constants/separation = 7
+alignment = 1
+
+[node name="Translators" type="Label" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Translators"]
+margin_right = 658.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 9 )
+text = "ABOUT_TRANSLATORS"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Translators"]
+margin_top = 60.0
+margin_right = 658.0
+margin_bottom = 158.0
+custom_constants/separation = 4
+alignment = 1
+
+[node name="Language" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Translators/VBoxContainer" instance=ExtResource( 13 )]
+margin_bottom = 49.0
+text = "English"
+
+[node name="Contributor" type="Label" parent="About/ColorRect/Control/ScrollContainer/VBoxAbout/Translators/VBoxContainer"]
+margin_top = 53.0
+margin_right = 658.0
+margin_bottom = 98.0
+custom_fonts/font = ExtResource( 5 )
+text = "Jean28518"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="About/ColorRect/Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -51.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
+text = "MENU_BACK"
 
 [node name="Play" type="VBoxContainer" parent="."]
 visible = false
@@ -517,11 +726,14 @@ bus = "Music"
 [connection signal="pressed" from="Front/VBoxContainer/Content" to="." method="_on_Content_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Create" to="." method="_on_FrontCreate_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Settings" to="." method="_on_SettingsFront_pressed"]
+[connection signal="pressed" from="Front/VBoxContainer/About" to="." method="_on_AboutFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="Front/VBoxContainerAndoid/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainerAndoid/Feedback" to="." method="_on_ButtonFeedback_pressed"]
+[connection signal="pressed" from="Front/VBoxContainerAndoid/About" to="." method="_on_AboutFront_pressed"]
 [connection signal="pressed" from="Front/VBoxContainerAndoid/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="Front/Feedback" to="." method="_on_ButtonFeedback_pressed"]
+[connection signal="pressed" from="About/ColorRect/Control/Back" to="." method="_on_BackAbout_pressed"]
 [connection signal="item_selected" from="Play/Selection/Tracks/ItemList" to="." method="_on_ItemList_itemTracks_selected"]
 [connection signal="item_selected" from="Play/Selection/Scenarios/ItemList" to="." method="_on_ItemList_scenario_selected"]
 [connection signal="item_selected" from="Play/Selection/Trains/ItemList" to="." method="_on_ItemList_Train_selected"]

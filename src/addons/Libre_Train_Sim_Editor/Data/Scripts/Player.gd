@@ -386,7 +386,10 @@ func _input(event):
 		return
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
-		
+	
+	if Input.is_action_just_pressed("acc+") and reverser == ReverserState.NEUTRAL:
+		send_message("HINT_REVERSER_NEUTRAL", ["reverser+", "reverser-"])
+	
 	if event.is_pressed():
 		# zoom in
 		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP) and not $HUD.is_full_map_visible():

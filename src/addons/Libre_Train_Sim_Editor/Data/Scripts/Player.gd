@@ -841,7 +841,7 @@ func check_station(delta):
 			send_message("END_OF_YOUR_TRAIN_NOT_IN_STATION")
 		if distance_in_station > stationLength+GOODWILL_DISTANCE:
 			whole_train_in_station = false
-			send_message("FRONT_OF_YOUR_TRAIN_NOT_IN_STATION")
+			send_message("FRONT_OF_YOUR_TRAIN_NOT_IN_STATION", ["reverser+", "reverser-"])
 	
 	# train in station but doors closed
 	if not isInStation and whole_train_in_station and not (doorLeft or doorRight):

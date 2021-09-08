@@ -1002,12 +1002,20 @@ func check_doors(delta):
 		close_doors()
 	if Input.is_action_just_pressed("doorLeft") and not ai:
 		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-		open_left_doors()
+		if doorLeft:
+			close_doors()
+		else:
+			open_left_doors()
 	if Input.is_action_just_pressed("doorRight") and not ai:
 		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-		open_right_doors()
+		if doorRight:
+			close_doors()
+		else:
+			open_right_doors()
+	
 	if doorsClosing:
 		doorsClosingTimer += delta
+	
 	if doorsClosingTimer > doorsClosingTime:
 		doorsClosing = false
 		doorRight = false

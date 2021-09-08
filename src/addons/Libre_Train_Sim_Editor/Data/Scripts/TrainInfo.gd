@@ -46,7 +46,7 @@ func update_info(player):
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = red
 	
 	## Control Type:
-	if player.controlType == 0:
+	if player.control_type == player.ControlType.COMBINED:
 		$"ScrollContainer/VBoxContainer/Brakes-1".hide()
 		$"ScrollContainer/VBoxContainer/Acceleration-1".hide()
 	else:

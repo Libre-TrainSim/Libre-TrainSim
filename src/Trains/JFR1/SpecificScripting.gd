@@ -43,7 +43,7 @@ func _process(delta):
 	var stations = player.stations
 	get_node("../Cabin/DisplayRight/ScreenRight").update_display(stations["arrivalTime"], stations["departureTime"], stations["stationName"], stations["stopType"], stations["passed"], player.isInStation)
 	
-	if player.controlType == 0:
+	if player.control_type == player.ControlType.COMBINED:
 		update_Brake_Roll(player.soll_command, get_node("../Cabin/BrakeRoll"))
 		update_Acc_Roll(player.soll_command, get_node("../Cabin/AccRoll"))
 	else:

@@ -13,7 +13,12 @@ export (float) var brakeAcceleration # Unit: m/(s*s)
 export (float) var friction # (-> Speed = Speed - Speed * fritction (*delta) )
 export (float) var length # Train length. # Used in Train Stations for example
 export (float) var speedLimit # Maximum Speed, the train can drive. (Unit: km/h)
-export (int) var controlType = 0 # 0: Arrowkeys (Combi Control), 1: WASD (Separate brake and speed)
+
+enum ControlType {
+	COMBINED = 0,  # Arrow Keys (Combined Control)
+	SEPARATE = 1   # WASD (Separate Brake and Speed)
+}
+export (int, "Combined", "Separate") var control_type = ControlType.COMBINED
 export (bool) var electric = true
 var pantograph = false   ## Please just use this variable, if to check, if pantograph is up or down. true: up
 var pantographUp = false ## is true, if pantograph is rising.
@@ -179,7 +184,7 @@ func ready(): ## Called by World!
 	
 	if Root.EasyMode or ai:
 		pantograph = true
-		controlType = 0
+		control_type = ControlType.COMBINED
 		sifaEnabled = false
 		reverser = ReverserState.FORWARD
 
@@ -412,7 +417,7 @@ func _input(event):
 		camera_distance = clamp(camera_distance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
 
 func getCommand(delta):
-	if controlType == 0 and not automaticDriving: ## Combi Roll
+	if control_type == ControlType.COMBINED and not automaticDriving:
 		if Input.is_action_pressed("acc+"):
 			soll_command += 0.7 * delta
 		if Input.is_action_pressed("acc-"):
@@ -428,7 +433,7 @@ func getCommand(delta):
 		if soll_command > 1: soll_command = 1
 		if soll_command < -1: soll_command = -1
 		
-	elif controlType == 1 and not automaticDriving: ## Seperate Brake and Acceleration
+	elif control_type == ControlType.SEPARATE and not automaticDriving:
 		if Input.is_action_pressed("acc+"):
 			accRoll += 0.7 * delta
 		if Input.is_action_pressed("acc-"):

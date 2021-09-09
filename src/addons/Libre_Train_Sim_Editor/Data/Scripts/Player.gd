@@ -1314,6 +1314,7 @@ func spawnWagons():
 	$Cabin.world = world
 
 func toggle_automatic_driving():
+	reverser = ReverserState.FORWARD
 	automaticDriving = !automaticDriving
 	if not automaticDriving:
 		sollSpeedEnabled = false

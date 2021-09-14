@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=1]
+
+[node name="Author" type="Label"]
+margin_right = 670.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Jean28518"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

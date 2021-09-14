@@ -102,6 +102,14 @@ func _on_SettingsFront_pressed():
 #	$MenuBackground.show()
 #	$Settings.show()
 
+func _on_AboutFront_pressed():
+	$Front.hide()
+	$About.show()
+
+func _on_BackAbout_pressed():
+	$About.hide()
+	$Front.show()
+
 
 func update_config():
 	## Get All .pck files:
@@ -330,3 +338,4 @@ func hide_editor_configuration():
 
 func _on_Editor_Configuration_Back_Button_pressed():
 	hide_editor_configuration()
+

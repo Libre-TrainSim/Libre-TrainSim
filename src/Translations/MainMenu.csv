@@ -4,6 +4,7 @@ MENU_BACK,Back,Zurück,Indietro,戻る,Wroć,Назад
 MENU_CONTENT,Content,Inhalt,Contenuti,コンテンツ,zawartość,Вміст
 MENU_CREATE,Create,Erstellen,Crea,作成,Utworz,Створити
 MENU_SETTINGS,Settings,Einstellungen,Impostazioni,設定,Ustawienia,Налаштування
+MENU_ABOUT,About,,,,,
 MENU_QUIT,Quit,Beenden,Esci,終了,Wyjdź,Вийти
 MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!,Dicci la tua opinione!,あなたのフェードバックが必要です,,Ваш відгук важливий!
 MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież,Перезавантажити
@@ -12,6 +13,10 @@ MENU_TRACKS:,Tracks:,Strecken:,Tracciati:,路線:,Tory,Траси:
 MENU_SCENARIOS:,Szenarios:,Szenarien:,Scenari:,シナリオ:,Scenariusze,Сценарії:
 MENU_TRAIN:,Train:,Zug:,Treno:,列車:,Pociąg,Поїзди:
 ,,,,,,
+ABOUT_DEVELOPERS,Developers,,,,,
+ABOUT_CONTRIBUTORS,Contributors,,,,,
+ABOUT_TRANSLATORS,Translators,,,,,
+ABOUT_BIGTHANKYOU,Big thank you,,,,,
 MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella",コンテンツを追加する場合は次の場所に.pckファイルを置いてください  ,Aby dodać zawartość musisz  umieścić pliki .Pck w,"Щоб додати вміст, вам потрібно вставити .pck файл сюди:"
 MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:,現在ロードされているコンテンツパック:,Załadowane paczki zawartości,Зараз завантажені такі файли:
 MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre,"Порада: Якщо ви оновили вміст пакунків, вам потрібно перезапустити гру"

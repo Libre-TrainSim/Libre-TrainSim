@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://authors.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+developers = [ "Jean3219 - Jean28518" ]
+contributors = [ "Johannes Witt - HaSa1002", "Das Capschen - DasCapschen", "librebob", "Bohdan Matviiv - bodamat", "Michele Comignano - comick", "Matthew - skyace65", "Yann Dirson - ydirson", "IntinteDAO", "Uli Horn - ulihorn", "ghost", "simfann", "SeaMac", "JupiterRider", "rogerm4242" ]
+translators = [ [ "Ukrainian", "Bohdan Matviiv" ], [ "Polish", "toxicnet" ], [ "Japanese", "paontv" ] ]

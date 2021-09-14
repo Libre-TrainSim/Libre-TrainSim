@@ -119,7 +119,7 @@ func _on_SpeedLimitSignalSettings_value_changed(value):
 func update_station_settings_ui():
 	$StationSettings/Name.text = current_rail_logic.name
 	$StationSettings/Length.value = current_rail_logic.stationLength
-	$StationSettings/PlatformSide.selected = current_rail_logic.platformSide
+	$StationSettings/PlatformSide.selected = current_rail_logic.platform_side
 	$StationSettings/EnablePersonSystem.pressed = current_rail_logic.personSystem
 	$StationSettings/PlatformHeight.visible = current_rail_logic.personSystem
 	$StationSettings/Label4.visible = current_rail_logic.personSystem
@@ -143,7 +143,7 @@ func _on_Length_value_changed(value):
 	current_rail_logic.stationLength = $StationSettings/Length.value
 
 func _on_PlatformSide_item_selected(index):
-	current_rail_logic.platformSide = index
+	current_rail_logic.platform_side = index
 
 func _on_EnablePersonSystem_pressed():
 	current_rail_logic.personSystem = $StationSettings/EnablePersonSystem.pressed

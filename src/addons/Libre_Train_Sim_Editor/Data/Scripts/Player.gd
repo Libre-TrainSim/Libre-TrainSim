@@ -47,7 +47,7 @@ var stationLength = 0 # stores the stationlength
 var stationHaltTime = 0 # stores the minimal halt time from station 
 var arrivalTime = time # stores the arrival time. (from the timetable)
 var depatureTime = time # stores the departure time. (from the timetable)
-var platformSide = 0 # Stores where the plaform is. #0: No platform, 1: at left side, 2: at right side, 3: at both sides
+var platform_side = PlatformSide.NONE
 
 export var doors = true 
 export var doorsClosingTime = 7
@@ -730,7 +730,7 @@ func handle_signal(signalname):
 				stationBeginning = false
 		currentStationName = stations["stationName"][current_station_index]
 		isInStation = false
-		platformSide = signal.platformSide
+		platform_side = signal.platform_side
 		stationHaltTime = stations["haltTime"][current_station_index]
 		stationLength = signal.stationLength
 		distanceOnStationBeginning = distance
@@ -741,7 +741,7 @@ func handle_signal(signalname):
 		currentStationNode = signal
 		if not stationBeginning:
 			for wagonI in wagonsI:
-				wagonI.sendPersonsToDoor(platformSide, stations["leavingPersons"][current_station_index]/100.0)
+				wagonI.sendPersonsToDoor(platform_side, stations["leavingPersons"][current_station_index]/100.0)
 	elif signal.type == "Speed":
 		currentSpeedLimit = signal.speed
 	elif signal.type == "WarnSpeed":
@@ -773,7 +773,7 @@ func check_station(delta):
 			if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
 				send_message("HINT_OPEN_DOORS", ["doorLeft", "doorRight"])
 				doorOpenMessageSent = true
-		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight or platformSide == 0)) or (stationBeginning and not isInStation):
+		if ((speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length) and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (stationBeginning and not isInStation):
 			realArrivalTime = time
 			var lateMessage = ". "
 			if not stationBeginning:
@@ -1308,13 +1308,13 @@ func autopilot(delta):
 			
 	## Open Doors:
 	if (currentStationName != "" and speed == 0 and not isInStation and distance-distanceOnStationBeginning>=length):
-		if nextStationNode.platformSide == 1:
+		if nextStationNode.platform_side == PlatformSide.LEFT:
 			doorLeft = true
 			$Sound/DoorsOpen.play()
-		elif nextStationNode.platformSide == 2:
+		elif nextStationNode.platform_side == PlatformSide.RIGHT:
 			doorRight = true
 			$Sound/DoorsOpen.play()
-		elif nextStationNode.platformSide == 3:
+		elif nextStationNode.platform_side == PlatformSide.BOTH:
 			doorLeft = true
 			doorRight = true
 			$Sound/DoorsOpen.play()
@@ -1443,12 +1443,12 @@ func sendDoorPositionsToCurrentStation():
 			var backward_basis = forward_transform.basis.rotated(Vector3(0,1,0), deg2rad(180)) # Maybe this could break on ascending/descanding rails..
 			var backward_transform = Transform(backward_basis, forward_transform.origin)
 			wagonTransform = backward_transform
-		if (currentStationNode.platformSide == 1): # Left
+		if (currentStationNode.platform_side == PlatformSide.LEFT):
 			for door in wagon.leftDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)
 				doorsWagon.append(wagon)
-		if (currentStationNode.platformSide == 2): # Right
+		if (currentStationNode.platform_side == PlatformSide.RIGHT):
 			for door in wagon.rightDoors:
 				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doors.append(door)

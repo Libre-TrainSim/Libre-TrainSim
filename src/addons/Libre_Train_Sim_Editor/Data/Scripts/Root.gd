@@ -23,7 +23,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _input(event):
+func _unhandled_key_input(_event):
 	if Engine.is_editor_hint():
 		return
 	if Input.is_action_just_pressed("ingame_pause"):
@@ -35,6 +35,8 @@ func _input(event):
 				get_tree().paused = true
 				ingame_pause = true
 				jEssentials.show_message(tr("PAUSE_MODE_ENABLED"))
+	if Input.is_action_just_released("fullscreen"):
+		jSettings.set_fullscreen(!OS.window_fullscreen)
 
 
 ## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor

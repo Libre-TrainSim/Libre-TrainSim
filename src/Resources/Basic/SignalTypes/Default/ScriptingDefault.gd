@@ -21,6 +21,8 @@ func _ready():
 	texture = $Viewport2.get_texture()
 	$Screen2.material_override = $Screen2.material_override.duplicate(true)
 	$Screen2.material_override.emission_texture = texture
+	
+	update_status(signal_logic)
 
 
 func blink():

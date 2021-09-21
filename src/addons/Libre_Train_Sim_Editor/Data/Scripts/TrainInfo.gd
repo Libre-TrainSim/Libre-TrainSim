@@ -46,7 +46,7 @@ func update_info(player):
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = red
 	
 	## Control Type:
-	if player.controlType == 0:
+	if player.control_type == player.ControlType.COMBINED:
 		$"ScrollContainer/VBoxContainer/Brakes-1".hide()
 		$"ScrollContainer/VBoxContainer/Acceleration-1".hide()
 	else:
@@ -65,7 +65,14 @@ func update_info(player):
 		else:
 			$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = green
 			$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = green
-	
+
+	## Reverser:
+	if player.reverser == ReverserState.NEUTRAL:
+		$ScrollContainer/VBoxContainer/Reverser/Dot.texture = red
+	else:
+		$ScrollContainer/VBoxContainer/Reverser/Dot.texture = green
+
+
 	## Acceleration:
 	if player.blockedAcceleration:
 		$"ScrollContainer/VBoxContainer/Acceleration-0/dot".texture = red

@@ -22,6 +22,7 @@ func _process(delta):
 	
 	if player.automaticDriving:
 		soll_command = 0
+	
 	$ColorRect.visible = not player.automaticDriving
 	$ProgressBar.visible = not player.automaticDriving
 	
@@ -53,16 +54,28 @@ func update_player_control():
 var soll_command = -1
 func _on_Up_pressed():
 	jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-	soll_command += COMMAND_STEP
-	if soll_command > 1.0:
-		soll_command = 1.0
+	if player.speed == 0:
+		player.reverser = ReverserState.FORWARD
+	
+	if player.reverser == ReverserState.FORWARD:
+		soll_command += COMMAND_STEP
+	elif player.reverser == ReverserState.REVERSE:
+		soll_command -= COMMAND_STEP
+	
+	soll_command = clamp(soll_command, -1, 1)
 	update_player_control()
 
 func _on_Down_pressed():
 	jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-	soll_command -= COMMAND_STEP
-	if soll_command < -1.0:
-		soll_command = -1.0
+	if player.speed == 0:
+		player.reverser = ReverserState.REVERSE
+	
+	if player.reverser == ReverserState.FORWARD:
+		soll_command -= COMMAND_STEP
+	elif player.reverser == ReverserState.REVERSE:
+		soll_command += COMMAND_STEP
+	
+	soll_command = clamp(soll_command, -1, 1)
 	update_player_control()
 	
 

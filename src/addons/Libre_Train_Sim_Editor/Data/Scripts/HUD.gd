@@ -40,7 +40,7 @@ func _process(_delta) -> void:
 	$IngameInformation/TrainInfo/Screen1.update_display(Math.speedToKmH(player.speed), \
 			player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing,\
 			player.enforcedBreaking, player.sifa, player.automaticDriving,\
-			player.currentSpeedLimit, player.engine)
+			player.currentSpeedLimit, player.engine, player.reverser)
 
 var _saved_ingame_pause 
 func _unhandled_input(_event) -> void:
@@ -182,7 +182,7 @@ func update_nextTable():
 	
 	## Update Next Station 
 	var stations = player.stations
-	if stations.passed.size() == 0 or (player.endStation and player.isInStation):
+	if stations.passed.size() == 0 or (player.is_last_station and player.isInStation):
 		$IngameInformation/Next/GridContainer/Arrival.text = "-"
 		$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 	else:

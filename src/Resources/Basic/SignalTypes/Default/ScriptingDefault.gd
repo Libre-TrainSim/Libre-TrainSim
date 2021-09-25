@@ -35,6 +35,8 @@ func update_status(instance):
 		SignalStatus.GREEN: green()
 		SignalStatus.ORANGE: orange()
 		SignalStatus.OFF: off()
+	update_warn_speed(instance.warn_speed)
+	update_speed(instance.speed)
 
 
 func green():
@@ -72,7 +74,7 @@ func off():
 
 
 func update_speed(new_speed):
-	if new_speed < 0:
+	if new_speed < 0 or signal_logic.status == 0:
 		$Screen2.visible = false
 	else:
 		if new_speed - 100 >= 0:
@@ -86,7 +88,7 @@ func update_speed(new_speed):
 
 
 func update_warn_speed(new_speed):
-	if new_speed < 0:
+	if new_speed < 0 or signal_logic.status == 0:
 		$Screen1.visible = false
 	else:
 		if new_speed - 100 >= 0:

@@ -30,7 +30,7 @@ func ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if player.ai: return
+	if player.ai or player.failed_scenario: return
 	if not is_ready: 
 		is_ready = true
 		ready()

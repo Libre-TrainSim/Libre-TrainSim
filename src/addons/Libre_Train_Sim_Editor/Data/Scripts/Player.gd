@@ -133,6 +133,8 @@ var currentRailRadius = 0
 
 export (float) var soundIsolation = -8
 
+var failed_scenario = false # True, if player drive beyond last rail or drove over a red signal
+
 ## callable functions:
 # send_message()
 # show_textbox_message(string)
@@ -575,9 +577,13 @@ func change_to_next_rail():
 				route_index = baked_route.size() -1
 				distance_on_route = complete_route_length
 		else:
-			print(name + ": Route no more rail found, despawning me...")
-			despawn()
-			return
+			if ai:
+				print(name + ": Route no more rail found, despawning me...")
+				despawn()
+			else:
+				fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_LAST_RAIL"))
+				return
+
 
 	currentRail =  world.get_node("Rails").get_node(baked_route[route_index])
 	forward = baked_route_direction[route_index]
@@ -750,7 +756,9 @@ func handle_signal(signal_name):
 			if signal_passed.warn_speed != -1: 
 				pass
 			if signal_passed.status == SignalStatus.RED:
-				send_message("YOU_OVERRUN_RED_SIGNAL")
+				if not ai and not debug: # If player train
+					fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_RED_SIGNAL"))
+					
 				overrunRedSignal = true
 			else:
 				free_signal_after_driven_train_length(last_driven_signal)
@@ -1705,3 +1713,7 @@ func handle_input():
 
 	if Input.is_action_just_pressed("reverser-"):
 		change_reverser(-1)
+
+func fail_scenario(text):
+	failed_scenario = true
+	show_textbox_message(text)

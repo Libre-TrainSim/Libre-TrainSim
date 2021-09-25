@@ -105,6 +105,9 @@ func show_textbox_message(string):
 
 
 func _on_OkTextBox_pressed():
+	if player.failed_scenario:
+		_on_QuitMenu_pressed()
+		return
 	get_tree().paused = false
 	$TextBox.visible = false
 	if $Black.visible:

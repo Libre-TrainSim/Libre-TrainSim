@@ -19,7 +19,9 @@ func show_menu():
 
 func hide_menu():
 	$Menu1.hide()
+	$Menu1.unselect_all()
 	$RailLogicMenu.hide()
+	$RailLogicMenu.unselect_all()
 	$ShowMenu.text = " + "
 	get_parent()._on_dialog_closed()
 

@@ -10,6 +10,8 @@ export (bool) var cabinMode = false
 
 var baked_route
 var baked_route_direction
+var baked_route_is_loop = false
+var complete_route_length = 0
 var route_index = 0
 var forward
 var currentRail 
@@ -146,10 +148,18 @@ func change_to_next_rail():
 	else:
 		route_index += 1
 
-	if baked_route.size() == route_index:
-		print(name + ": Route no more rail found, despawning me...")
-		queue_free()
-		return
+	if baked_route.size() == route_index or route_index == -1:
+		if baked_route_is_loop:
+			if route_index == baked_route.size():
+				route_index = 0
+				distance_on_route = 0
+			else:
+				route_index = baked_route.size() -1
+				distance_on_route = complete_route_length
+		else:
+			print(name + ": Route no more rail found, despawning me...")
+			despawn()
+			return
 
 	currentRail =  world.get_node("Rails").get_node(baked_route[route_index])
 	forward = baked_route_direction[route_index]
@@ -180,6 +190,7 @@ func check_doors():
 	lastDoorLeft = player.doorLeft
 	lastDoorsClosing = player.doorsClosing
 
+
 var lastPantograph = false
 var lastPantographUp = false
 func check_pantograph():
@@ -192,6 +203,9 @@ func check_pantograph():
 	lastPantograph = player.pantograph
 	lastPantographUp = player.pantographUp
 
+
+func despawn():
+	queue_free()
 
 ## This function is very very basic.. It only checks, if the "end" of the current Rail, or the "beginning" of the next rail is a switch. Otherwise it sets nextSwitchRail to null..
 #var nextSwitchRail = null

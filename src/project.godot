@@ -24,6 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/PlatformSide.gd"
 }, {
+"base": "Reference",
 "class": "ReverserState",
 "language": "GDScript",
 "path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/reverser_state.gd"

@@ -207,3 +207,15 @@ func update_nextTable():
 
 func is_full_map_visible():
 	return map_status == MapStatus.FULL
+
+
+func _on_JumpToStation_pressed():
+	$Pause/StationJumper.update_list(player)
+	$Pause/StationJumper.show()
+
+
+func _on_StationJumper_station_index_selected(station_index):
+	_on_Back_pressed()
+	find_parent("World").jump_player_to_station(station_index)
+
+

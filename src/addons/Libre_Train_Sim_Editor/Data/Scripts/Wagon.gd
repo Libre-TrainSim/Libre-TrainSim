@@ -31,7 +31,6 @@ var distanceToPlayer = -1
 
 export var pantographEnabled = false
 
-
 var player
 var world
 

@@ -241,7 +241,6 @@ func ready(): ## Called by World!
 		soundMode = 1
 		wagonsVisible = true
 		automaticDriving = true
-		$Cabin.queue_free()
 		$Camera.queue_free()
 		$HUD.queue_free()
 		camera_state = CameraState.CABIN_VIEW # Not for the camera, for the components who want to see, if the player sees the train from the inside or outside. AI is seen from outside whole time ;)
@@ -364,6 +363,12 @@ func _unhandled_key_input(event):
 			command = 0
 			soll_command = 0
 			send_message("DEBUG_MODE_DISABLED")
+
+
+func set_speed_to_zero():
+	command = 0
+	soll_command = 0
+	speed = 0
 
 
 func handleEngine():
@@ -571,11 +576,11 @@ func change_to_next_rail():
 		if baked_route_is_loop:
 			if route_index == baked_route.size():
 				route_index = 0
-				distance_on_route = 0
+				distance_on_route -= complete_route_length
 				next_signal_index = 0 # Just reset signal index, if we drive our normal route forward
 			else: # If we drive backwards (reverse)
 				route_index = baked_route.size() -1
-				distance_on_route = complete_route_length
+				distance_on_route += complete_route_length
 		else:
 			if ai:
 				print(name + ": Route no more rail found, despawning me...")
@@ -750,6 +755,9 @@ func handle_signal(signal_name):
 	print(name + ": SIGNAL: " + signal_passed.name)
 
 	if signal_passed.type == "Signal": ## Signal
+		if speed == 0: # Train is standing, and a signal get's activated that only happens at beginning or after jumping
+			print("Ignoring signal " + signal_name)
+			return
 		if reverser == ReverserState.FORWARD:
 			if signal_passed.speed != -1:
 				currentSpeedLimit = signal_passed.speed
@@ -796,7 +804,7 @@ func handle_signal(signal_name):
 		platform_side = signal_passed.platform_side
 		stationHaltTime = stations["haltTime"][current_station_index]
 		stationLength = signal_passed.stationLength
-		distanceOnStationBeginning = distance_on_route
+		distanceOnStationBeginning = baked_route_signal_positions[stations["nodeName"][current_station_index]]
 		arrivalTime = stations["arrivalTime"][current_station_index]
 		depatureTime = stations["departureTime"][current_station_index]
 		doorOpenMessageSentTimer = 0
@@ -1334,6 +1342,7 @@ func spawnWagons():
 		newWagon.distance_on_rail = nextWagonPosition
 		newWagon.player = self
 		newWagon.world = world
+		newWagon.add_to_group("Wagon")
 		if forward:
 			nextWagonPosition -= wagonNode.length + wagonDistance
 		else:
@@ -1343,6 +1352,9 @@ func spawnWagons():
 		wagonsI.append(newWagon)
 	
 	# Handle Cabin:
+	if ai:
+		$Cabin.queue_free()
+		return
 	$Cabin.baked_route = baked_route
 	$Cabin.baked_route_direction = baked_route_direction
 	$Cabin.baked_route_is_loop = baked_route_is_loop
@@ -1352,6 +1364,7 @@ func spawnWagons():
 	$Cabin.distance_on_rail = nextWagonPosition
 	$Cabin.player = self
 	$Cabin.world = world
+	$Cabin.add_to_group("Cabin")
 
 func toggle_automatic_driving():
 	reverser = ReverserState.FORWARD
@@ -1717,3 +1730,82 @@ func handle_input():
 func fail_scenario(text):
 	failed_scenario = true
 	show_textbox_message(text)
+
+# rail has to be in baked_route
+func jump_to_rail(rail_name, distance, forward : bool = true):
+	set_speed_to_zero()
+	currentRail = world.get_rail(rail_name)
+	distance_on_rail = distance
+	self.forward = forward
+	
+	# Calculate new distance on route and set new route_index
+	distance_on_route = 0
+	for baked_route_index in range(baked_route.size()):
+		var baked_rail_name = baked_route[baked_route_index]
+		if baked_rail_name == rail_name and forward == baked_route_direction[baked_route_index] and route_index <= baked_route_index:
+			route_index = baked_route_index
+			break
+		distance_on_route += world.get_rail(baked_rail_name).length
+	if forward:
+		distance_on_route += distance
+	else:
+		distance_on_route += currentRail.length - distance
+	
+	drive(0)
+	
+	for wagon in wagonsI:
+		wagon.route_index = route_index
+		wagon.currentRail = currentRail
+		wagon.forward = forward
+		if forward:
+			wagon.distance_on_rail = distance_on_rail - wagon.distanceToPlayer
+			wagon.distance_on_route = distance_on_route - wagon.distanceToPlayer
+		else:
+			wagon.distance_on_rail = distance_on_rail + wagon.distanceToPlayer
+			wagon.distance_on_route = distance_on_route + wagon.distanceToPlayer
+		wagon.drive(0)
+
+
+func jump_to_station(station_table_index : int):
+	
+	set_speed_to_zero()
+	
+	var station_node = world.get_signal(stations["nodeName"][station_table_index])
+	var rail_name = station_node.rail.name
+	var local_forward = station_node.forward
+	var local_distance_on_rail = get_perfect_rail_distance_for_station_halt(station_node, local_forward)
+	jump_to_rail(rail_name, local_distance_on_rail, local_forward)
+	
+	force_to_be_in_station(station_table_index)
+
+	
+	# Update station_table
+	for i in range(station_table_index):
+		stations["passed"][i] = true
+
+
+func get_perfect_rail_distance_for_station_halt(station_node, forward):
+	if forward:
+		return station_node.on_rail_position + station_node.stationLength - (station_node.stationLength-length)/2.0
+	else:
+		return station_node.on_rail_position - station_node.stationLength + (station_node.stationLength-length)/2.0
+
+
+func force_to_be_in_station(station_table_index):
+	currentStationNode = world.get_signal(stations["nodeName"][station_table_index])
+	is_last_station = stations["stopType"][station_table_index] == 3
+	is_first_station = stations["stopType"][station_table_index] == 2
+	stationTimer = 0
+#	distanceOnStationBeginning = baked_route_signal_positions[stations["nodeName"][station_table_index]]
+	distanceOnStationBeginning = distance_on_route - length - 1.0
+	doorOpenMessageSentTimer = 0
+	doorOpenMessageSent = false
+	currentStationName = currentStationNode.name
+	whole_train_in_station = true
+	if currentStationNode.platform_side == PlatformSide.LEFT:
+		open_left_doors()
+	if currentStationNode.platform_side == PlatformSide.RIGHT:
+		open_right_doors()
+	
+	
+	

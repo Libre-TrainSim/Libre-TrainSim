@@ -1,8 +1,8 @@
 extends Spatial
 
-var timeHour 
-var timeMinute
-var timeSecond 
+var timeHour # Wont't be updated during game. Use time instead.
+var timeMinute # Wont't be updated during game. Use time instead.
+var timeSecond  # Wont't be updated during game. Use time instead.
 var timeMSeconds = 0
 onready var time = [timeHour,timeMinute,timeSecond]
 
@@ -592,9 +592,10 @@ func spawnTrain(trainName):
 		if player == null:
 			print("Preferred train not found. Loading player train...")
 			player = load(Root.currentTrain).instance()
-		
+	
 	player.name = trainName
 	$Players.add_child(player)
+	player.add_to_group("Player")
 	player.owner = self
 	if player.length  +25 > scenario["TrainLength"]:
 		player.length = scenario["TrainLength"] -25
@@ -611,9 +612,7 @@ func spawnTrain(trainName):
 	player.initialSpeed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))
 	if scenario["Trains"][trainName].get("InitialSpeedLimit", -1) != -1:
 		player.currentSpeedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
-	
-		
-	
+
 	var doorStatus = scenario["Trains"][trainName]["DoorConfiguration"]
 	match doorStatus:
 		0:
@@ -627,6 +626,7 @@ func spawnTrain(trainName):
 			player.doorRight = true
 	
 	player.ready()
+	
 	
 
 var checkTrainSpawnTimer = 0
@@ -647,6 +647,7 @@ func update_rail_connections():
 	for rail_node in $Rails.get_children():
 		rail_node.update_connections()
 
+# Ensure you called update_rail_connections() before.
 # pathfinding from a start rail to an end rail. returns an array of rail nodes
 func get_path_from_to(start_rail : Node, forward : bool, destination_rail : Node):
 	if Engine.editor_hint:
@@ -790,3 +791,31 @@ func load_configs_to_cache():
 func _exit_tree():
 	_quit_chunk_load_thread()
 	_chunk_loader_thread.wait_to_finish()
+
+
+func jump_player_to_station(station_table_index : int):
+	print("Jumping player to station " + player.stations["stationName"][station_table_index])
+	var new_station_node = $Signals.get_node(player.stations["nodeName"][station_table_index])
+
+	time = player.stations["arrivalTime"][station_table_index].duplicate()
+
+	# Delete npcs with are crossing rails with player route to station
+	update_rail_connections()
+	var route_player_to_station = get_path_from_to(player.currentRail, player.forward, new_station_node.rail)
+	for player_node in $Players.get_children():
+		if player_node == player or not player_node.is_in_group("Player"):
+			continue
+		for rail in route_player_to_station:
+			if player_node.baked_route.has(rail):
+				player_node.despawn()
+				continue
+				
+	player.jump_to_station(station_table_index)
+
+
+func get_rail(rail_name : String):
+	return $Rails.get_node(rail_name)
+
+
+func get_signal(signal_name : String):
+	return $Signals.get_node(signal_name)

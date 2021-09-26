@@ -106,7 +106,7 @@ func show_textbox_message(string):
 
 func _on_OkTextBox_pressed():
 	if player.failed_scenario:
-		_on_QuitMenu_pressed()
+		_on_RestartScenario_pressed()
 		return
 	get_tree().paused = false
 	$TextBox.visible = false
@@ -219,3 +219,9 @@ func _on_StationJumper_station_index_selected(station_index):
 	find_parent("World").jump_player_to_station(station_index)
 
 
+
+
+func _on_RestartScenario_pressed():
+	jEssentials.remove_all_pending_delayed_calls()
+	jAudioManager.clear_all_sounds()
+	get_tree().reload_current_scene()

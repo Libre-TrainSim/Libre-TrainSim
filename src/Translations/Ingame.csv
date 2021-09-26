@@ -3,6 +3,7 @@ PAUSE,Pause,Pause,Pausa,一時停止,Pauza,Пауза
 BACK,Back,Zurück,Indietro,戻る,Wróć,Назад
 QUIT_TO_MENU,Quit to Menu,Beenden und zum Hauptmenü,Torna al menu,終了してメニューに戻る,Wyjdź do Menu,Вийти в меню
 QUIT_TO_OS,Quit to OS,Beenden und zum Betriebssystem,Esci dal gioco,終了してOSに戻る,Wyjdź do Systemu,Вийти з гри
+RESTART_SCENARIO,Restart scenario,Starte Szenario neu,,,,
 OK,OK,Okay,OK,了解,OK,Добре
 STARTING_SIMULATION,Starting Simulation…,Starte Simulation…,,,,
 ,,,,,,

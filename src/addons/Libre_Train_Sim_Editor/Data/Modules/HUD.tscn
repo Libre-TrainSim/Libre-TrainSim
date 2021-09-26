@@ -485,6 +485,9 @@ custom_fonts/font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
 align = 1
 script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Pause" type="Control" parent="."]
 visible = false
@@ -538,6 +541,13 @@ margin_bottom = 110.0
 custom_fonts/font = ExtResource( 4 )
 text = "JUMP_TO_STATION"
 
+[node name="RestartScenario" type="Button" parent="Pause/HBox"]
+margin_top = 74.0
+margin_right = 214.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 4 )
+text = "RESTART_SCENARIO"
+
 [node name="QuitMenu" type="Button" parent="Pause/HBox"]
 margin_top = 114.0
 margin_right = 214.0
@@ -562,6 +572,7 @@ margin_bottom = -141.0
 [connection signal="pressed" from="TextBox/Ok" to="." method="_on_OkTextBox_pressed"]
 [connection signal="pressed" from="Pause/HBox/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="Pause/HBox/JumpToStation" to="." method="_on_JumpToStation_pressed"]
+[connection signal="pressed" from="Pause/HBox/RestartScenario" to="." method="_on_RestartScenario_pressed"]
 [connection signal="pressed" from="Pause/HBox/QuitMenu" to="." method="_on_QuitMenu_pressed"]
 [connection signal="pressed" from="Pause/HBox/QuitOS" to="." method="_on_Quit_pressed"]
 [connection signal="station_index_selected" from="Pause/StationJumper" to="." method="_on_StationJumper_station_index_selected"]

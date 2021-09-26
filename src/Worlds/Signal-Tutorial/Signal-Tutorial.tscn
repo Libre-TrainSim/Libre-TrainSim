@@ -1,0 +1,420 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Basic/Enviroment/BasicSun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Basic/Materials/Grass.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Basic/Objects/grass.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://Worlds/Signal-Tutorial/Scripting.gd" type="Script" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/Basic/Enviroment/BasicWorldEnviroment.tres" type="Environment" id=7]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit_Lf7.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/BuildingsNode.gd" type="Script" id=9]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=10]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn" type="PackedScene" id=11]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit_Lf6.tscn" type="PackedScene" id=12]
+
+[node name="World" type="Spatial"]
+script = ExtResource( 1 )
+FileName = "Signal-Tutorial"
+
+[node name="DirectionalLight" parent="." instance=ExtResource( 2 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 7 )
+
+[node name="Players" type="Spatial" parent="."]
+
+[node name="Grass" type="Spatial" parent="."]
+visible = false
+
+[node name="grass" type="MeshInstance" parent="Grass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.515472, 0 )
+material_override = ExtResource( 3 )
+mesh = ExtResource( 4 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Signals" type="Spatial" parent="."]
+
+[node name="KS_Signal_1" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
+attached_rail = "KS_Rail"
+on_rail_position = 200
+
+[node name="KS_Signal_2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
+attached_rail = "KS_Rail"
+on_rail_position = 500
+
+[node name="KS_Signal_5" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
+attached_rail = "KS_Rail"
+on_rail_position = 900
+
+[node name="KS_Signal_3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+speed = 60
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
+attached_rail = "KS_Rail2"
+on_rail_position = 150
+
+[node name="KS_Signal_6" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
+attached_rail = "KS_Rail2"
+on_rail_position = 500
+
+[node name="KS_Signal_4" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
+attached_rail = "KS_Rail2"
+on_rail_position = 990
+
+[node name="HPF_Signal_1" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Form/HpForm.tscn"
+attached_rail = "HV_Form_Rail"
+on_rail_position = 200
+
+[node name="VOF_Signal_1" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Vo/Form/VoForm.tscn"
+attached_rail = "HV_Form_Rail"
+on_rail_position = 450
+
+[node name="HPF_Signal_2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Form/HpForm.tscn"
+attached_rail = "HV_Form_Rail"
+on_rail_position = 550
+
+[node name="VOF_Signal_2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Vo/Form/VoForm.tscn"
+attached_rail = "HV_Form_Rail"
+on_rail_position = 700
+
+[node name="HPF_Signal_3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+status = 1
+speed = 40
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Form/HpForm.tscn"
+attached_rail = "HV_Form_Rail"
+on_rail_position = 990
+
+[node name="WarnSpeed_HPF" parent="Signals" instance=ExtResource( 12 )]
+warn_speed = 20
+attached_rail = "HV_Form_Rail2"
+on_rail_position = 300
+
+[node name="Speed_HPF" parent="Signals" instance=ExtResource( 8 )]
+speed = 20
+attached_rail = "HV_Form_Rail2"
+on_rail_position = 500
+forward = true
+
+[node name="VOF_Signal_3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Vo/Form/VoForm.tscn"
+attached_rail = "HV_Form_Rail2"
+on_rail_position = 700
+
+[node name="HPF_Signal_4" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Form/HpForm.tscn"
+attached_rail = "HV_Form_Rail2"
+on_rail_position = 990
+
+[node name="HPL_Signal_1" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Light/HpLight.tscn"
+attached_rail = "HV_Light_Rail"
+on_rail_position = 200
+
+[node name="VOL_Signal_1" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Vo/Light/VoLight.tscn"
+attached_rail = "HV_Light_Rail"
+on_rail_position = 450
+
+[node name="HPL_Signal_2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Light/HpLight.tscn"
+attached_rail = "HV_Light_Rail"
+on_rail_position = 550
+
+[node name="VOL_Signal_2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Vo/Light/VoLight.tscn"
+attached_rail = "HV_Light_Rail"
+on_rail_position = 700
+
+[node name="HPL_Signal_3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+status = 1
+speed = 40
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Light/HpLight.tscn"
+attached_rail = "HV_Light_Rail"
+on_rail_position = 990
+
+[node name="WarnSpeed_HPL" parent="Signals" instance=ExtResource( 12 )]
+warn_speed = 20
+attached_rail = "HV_Light_Rail2"
+on_rail_position = 300
+
+[node name="Speed_HPL" parent="Signals" instance=ExtResource( 8 )]
+speed = 20
+attached_rail = "HV_Light_Rail2"
+on_rail_position = 500
+forward = true
+
+[node name="VOL_Signal_3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Vo/Light/VoLight.tscn"
+attached_rail = "HV_Light_Rail2"
+on_rail_position = 700
+
+[node name="HPL_Signal_4" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+signal_type = 1
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hp/Light/HpLight.tscn"
+attached_rail = "HV_Light_Rail2"
+on_rail_position = 990
+
+[node name="HL_Signal_1" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail"
+on_rail_position = 200
+
+[node name="HL_Signal_2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail"
+on_rail_position = 400
+
+[node name="HL_Signal_3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+speed = 100
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail"
+on_rail_position = 700
+
+[node name="HL_Signal_4" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+speed = 100
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail"
+on_rail_position = 990
+
+[node name="HL_Signal_5" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+speed = 60
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail2"
+on_rail_position = 200
+
+[node name="HL_Signal_6" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+speed = 40
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail2"
+on_rail_position = 400
+
+[node name="HL_Signal_7" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+status = 1
+speed = 160
+is_block_signal = true
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail2"
+on_rail_position = 700
+
+[node name="HL_Signal_8" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 100, 0, 0 )
+visible = false
+visual_instance_path = "res://Resources/Basic/SignalTypes/Hl/Hl.tscn"
+attached_rail = "HL_Rail2"
+on_rail_position = 990
+
+[node name="Rails" type="Spatial" parent="."]
+
+[node name="HV_Form_Rail" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 0, 0, 50 )
+endpos = Vector3( 1000, 0, 50 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="KS_Rail" parent="Rails" instance=ExtResource( 6 )]
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+endpos = Vector3( 1000, 0, 0 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="HV_Light_Rail" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 0, 0, 100 )
+endpos = Vector3( 1000, 0, 100 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="HL_Rail" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 0, 0, 150 )
+endpos = Vector3( 1000, 0, 150 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="KS_Rail2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 1000, 0, 0 )
+endpos = Vector3( 2000, 0, 0 )
+isSwitchPart = [ "", "" ]
+
+[node name="HV_Form_Rail2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 50 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 1000, 0, 50 )
+endpos = Vector3( 2000, 0, 50 )
+isSwitchPart = [ "", "" ]
+
+[node name="HV_Light_Rail2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 100 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 1000, 0, 100 )
+endpos = Vector3( 2000, 0, 100 )
+isSwitchPart = [ "", "" ]
+
+[node name="HL_Rail2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 150 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 1000, 0, 150 )
+endpos = Vector3( 2000, 0, 150 )
+isSwitchPart = [ "", "" ]
+
+[node name="Buildings" type="Spatial" parent="."]
+script = ExtResource( 9 )
+
+[node name="Flora" type="Spatial" parent="."]
+
+[node name="TrackObjects" type="Spatial" parent="."]
+
+[node name="jSaveModule" parent="." instance=ExtResource( 10 )]
+save_path = "/home/dascapschen/Projects/Games/Godot/Libre-TrainSim/src//Worlds/Signal-Tutorial/Signal-Tutorial.save"
+
+[node name="jSaveModuleScenarios" parent="." instance=ExtResource( 10 )]
+
+[node name="Scripting" type="Node" parent="."]
+script = ExtResource( 5 )

@@ -14,3 +14,9 @@ src/.import/
 *.translation
 
 src/android/*
+
+*.blend1
+
+# ignore jetbrains IDE files
+.idea/
+src/.idea/

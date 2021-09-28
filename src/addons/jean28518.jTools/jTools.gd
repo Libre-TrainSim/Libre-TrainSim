@@ -2,6 +2,8 @@ tool
 extends Node
 
 
+var delayed_call_table = {"delay" : [], "object" : [], "method" : [], "arg_array" : [] }
+
 
 func call_delayed(delay : float, object : Object, method : String, arg_array : Array = []):
 	delayed_call_table.delay.append(delay)
@@ -11,17 +13,14 @@ func call_delayed(delay : float, object : Object, method : String, arg_array : A
 
 ## Internal Functions ##########################################################
 
-func _ready():
-	delayed_call_table = {"delay" : [], "object" : [], "method" : [], "arg_array" : [] }
 
 func _process(delta):
 	handle_delayed_calls(delta)
 
-var delayed_call_table
 
 func handle_delayed_calls(delta):
 	var i = 0
-	while(i < delayed_call_table.delay.size()): ## We need here a while loop, because want to keep track of the (changing) table size. 
+	while(i < delayed_call_table.delay.size()): ## We need here a while loop, because want to keep track of the (changing) table size.
 		delayed_call_table.delay[i] -= delta
 		if delayed_call_table.delay[i] <= 0:
 			var object = delayed_call_table.object[i]
@@ -32,6 +31,3 @@ func handle_delayed_calls(delta):
 			delayed_call_table.arg_array.remove(i)
 			i -= 1 ## Because we remove here an entry
 		i += 1
-
-
-			

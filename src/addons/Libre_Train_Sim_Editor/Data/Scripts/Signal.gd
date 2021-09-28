@@ -76,18 +76,18 @@ func connect_visual_instance():
 func update():
 	if Engine.is_editor_hint() and is_block_signal:
 		set_status(SignalStatus.GREEN)
-	
+
 	if world == null:
 		world = find_parent("World")
-	
+
 	if signal_after_node == null and signal_after != "":
 		signal_after_node = world.get_node("Signals/"+String(signal_after))
-	
+
 	if not did_set_pass and not Engine.is_editor_hint() and not Root.Editor and world.time != null:
 		if world.time[0] >= set_pass_at_h and world.time[1] >= set_pass_at_m and world.time[2] >= set_pass_at_s:
 			set_status(SignalStatus.GREEN)
 			did_set_pass = true
-	
+
 	# set signal orange if next signal is RED and this signal is not RED, but only for Pre- and Combined Signals
 	if signal_type != SignalType.MAIN and status == SignalStatus.GREEN and signal_after_node != null and signal_after_node.status == SignalStatus.RED:
 		set_status(SignalStatus.ORANGE)
@@ -97,10 +97,10 @@ func _ready():
 	timer.connect("timeout", self, "update_visual_instance")
 	self.add_child(timer)
 	timer.start()
-	
+
 	if get_node_or_null("VisualInstance") != null:
 		connect_visual_instance()
-	
+
 	# Set Signal while adding to the Signals node
 	if Engine.is_editor_hint() and not get_parent().name == "Signals":
 		if get_parent().is_in_group("Rail"):
@@ -109,10 +109,10 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		update()
-	
+
 	if is_block_signal:
 		set_status(SignalStatus.GREEN)
-	
+
 	set_to_rail(true)
 	update()
 
@@ -125,11 +125,11 @@ func set_status(new_val):
 	if signal_type == SignalType.MAIN and new_val == SignalStatus.ORANGE:
 		print(name, ": Cannot set a main signal to orange!")
 		return
-	
+
 	# make sure signal does not become green when it should be orange
 	if signal_type != SignalType.MAIN and new_val == SignalStatus.GREEN and signal_after_node != null and signal_after_node.status == SignalStatus.RED:
 		new_val = SignalStatus.ORANGE
-	
+
 	status = new_val
 	emit_signal("signal_changed", self)
 
@@ -146,7 +146,8 @@ func set_warn_speed(new_speed):
 
 
 func set_to_rail(newvar):
-	var world = find_parent("World")
+	if !is_inside_tree():
+		return
 	if world == null:
 		print(name, ": CAN'T FIND WORLD NODE!")
 		return

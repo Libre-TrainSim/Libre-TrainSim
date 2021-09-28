@@ -1,0 +1,15 @@
+[gd_resource type="SpatialMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Resources/Basic/SignalTypes/Hp/Form/FormHpSignal.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Basic/SignalTypes/Hp/Form/FormHpSignal_metallic.png" type="Texture" id=2]
+
+[resource]
+resource_name = "CombinedMat"
+vertex_color_use_as_albedo = true
+params_cull_mode = 2
+albedo_color = Color( 0.906332, 0.906332, 0.906332, 1 )
+albedo_texture = ExtResource( 1 )
+metallic = 1.0
+metallic_specular = 0.4
+metallic_texture = ExtResource( 2 )
+roughness = 0.8

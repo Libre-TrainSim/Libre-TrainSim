@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/hektometertafel.obj-3fe70fe5959d1f6db1e7115b20e0ede5.mesh"
+
+[deps]
+
+files=[ "res://.import/hektometertafel.obj-3fe70fe5959d1f6db1e7115b20e0ede5.mesh" ]
+
+source_file="res://Resources/Basic/Objects/hektometertafel.obj"
+dest_files=[ "res://.import/hektometertafel.obj-3fe70fe5959d1f6db1e7115b20e0ede5.mesh", "res://.import/hektometertafel.obj-3fe70fe5959d1f6db1e7115b20e0ede5.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

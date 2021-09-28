@@ -22,19 +22,20 @@ func _ready():
 	$Screen2.material_override = $Screen2.material_override.duplicate(true)
 	$Screen2.material_override.emission_texture = texture
 	
+	
 	match signal_logic.signal_type:
 		signal_logic.SignalType.MAIN:
 			$HpTafel.visible = true
 			$VoTafel.visible = false
 			$KsTafel.visible = false
 		signal_logic.SignalType.PRESIGNAL:
-			$VoTafel.visible = true
 			$HpTafel.visible = false
+			$VoTafel.visible = true
 			$KsTafel.visible = false
 		signal_logic.SignalType.COMBINED:
 			$HpTafel.visible = true
-			$KsTafel.visible = true
 			$VoTafel.visible = false
+			$KsTafel.visible = true
 	
 	# initialize signal
 	update_visual_instance(signal_logic)

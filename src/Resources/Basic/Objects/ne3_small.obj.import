@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ne3_small.obj-5486aa816ccac7a6fe542721942a39ae.mesh"
+
+[deps]
+
+files=[ "res://.import/ne3_small.obj-5486aa816ccac7a6fe542721942a39ae.mesh" ]
+
+source_file="res://Resources/Basic/Objects/ne3_small.obj"
+dest_files=[ "res://.import/ne3_small.obj-5486aa816ccac7a6fe542721942a39ae.mesh", "res://.import/ne3_small.obj-5486aa816ccac7a6fe542721942a39ae.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

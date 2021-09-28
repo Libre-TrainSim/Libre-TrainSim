@@ -182,7 +182,7 @@ func create_signal(signal_instance):
 	sprite.name = signal_instance.name
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
-	signal_instance.connect("status_changed", self, "_on_signal_changed")
+	signal_instance.connect("signal_changed", self, "_on_signal_changed")
 	_on_signal_changed(signal_instance) # call once to init
 
 

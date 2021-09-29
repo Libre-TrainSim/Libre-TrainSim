@@ -11,7 +11,7 @@ enum SignalType {
 export(SignalType) var signal_type = SignalType.COMBINED
 
 export var status = SignalStatus.RED setget set_status
-signal status_changed(signal_instance)
+signal signal_changed(signal_instance)
 
 var signal_after = "" # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 var signal_after_node # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
@@ -24,12 +24,9 @@ var did_set_pass = false
 export var speed = -1 setget set_speed # SpeedLimit, which will be applied to the train. If -1: Speed Limit won't be changed by overdriving.
 var warn_speed = -1 setget set_warn_speed # Displays the speed of the following speedlimit. Just used for the player train. It doesn't affect any train..
 
-signal warn_speed_changed(new_speed)
-signal speed_changed(new_speed)
-
 export var is_block_signal = false setget on_update_block_signal_setting
 
-export var visual_instance_path = "res://Resources/Basic/SignalTypes/Default/Default.tscn"
+export var visual_instance_path = "res://Resources/Basic/SignalTypes/Ks/Ks.tscn"
 export (String) var attached_rail # Internal. Never change this via script.
 var attached_rail_node
 export var forward = true # Internal. Never change this via script.
@@ -63,7 +60,7 @@ func create_visual_instance():
 	if visual_instance_path != "":
 		visual_instance_resource = load(visual_instance_path)
 	if visual_instance_resource == null:
-		visual_instance_resource = preload("res://Resources/Basic/SignalTypes/Default/Default.tscn")
+		visual_instance_resource = preload("res://Resources/Basic/SignalTypes/Ks/Ks.tscn")
 	var visual_instance = visual_instance_resource.instance()
 	add_child(visual_instance)
 	visual_instance.name = "VisualInstance"
@@ -73,9 +70,7 @@ func create_visual_instance():
 
 func connect_visual_instance():
 	var visual_instance = get_node_or_null("VisualInstance")
-	self.connect("status_changed", visual_instance, "update_status")
-	self.connect("speed_changed", visual_instance, "update_speed")
-	self.connect("warn_speed_changed", visual_instance, "update_warn_speed")
+	self.connect("signal_changed", visual_instance, "update_visual_instance")
 
 
 func update():
@@ -136,17 +131,17 @@ func set_status(new_val):
 		new_val = SignalStatus.ORANGE
 	
 	status = new_val
-	emit_signal("status_changed", self)
+	emit_signal("signal_changed", self)
 
 
 func set_speed(new_speed):
 	speed = new_speed
-	emit_signal("speed_changed", new_speed)
+	emit_signal("signal_changed", self)
 
 
 func set_warn_speed(new_speed):
 	warn_speed = new_speed
-	emit_signal("warn_speed_changed", new_speed)
+	emit_signal("signal_changed", self)
 
 
 

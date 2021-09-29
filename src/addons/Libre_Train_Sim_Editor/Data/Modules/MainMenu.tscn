@@ -549,21 +549,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Content"]
+[node name="Label2" type="Label" parent="Content"]
 margin_right = 746.0
 margin_bottom = 30.0
-custom_fonts/font = ExtResource( 3 )
-text = "MENU_TO_ADD_CONTENT"
-
-[node name="Label2" type="Label" parent="Content"]
-margin_top = 34.0
-margin_right = 746.0
-margin_bottom = 64.0
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_CURRENT_LOADED_PACKS"
 
 [node name="ItemList" type="ItemList" parent="Content"]
-margin_top = 68.0
+margin_top = 34.0
 margin_right = 746.0
 margin_bottom = 474.0
 size_flags_vertical = 3
@@ -592,14 +585,24 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
 text = "MENU_BACK"
 
-[node name="Reload" type="Button" parent="Content/Buttons"]
+[node name="Import" type="Button" parent="Content/Buttons"]
 margin_left = 375.0
 margin_right = 746.0
 margin_bottom = 51.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
-text = "MENU_RELOAD"
+text = "MENU_IMPORT"
+
+[node name="FileDialog" type="FileDialog" parent="Content"]
+margin_right = 315.0
+margin_bottom = 130.0
+window_title = "Open File(s)"
+mode = 1
+access = 2
+filters = PoolStringArray( "*.pck ; Content Packs" )
+current_dir = "/ssd-data/jean/Nextcloud/PC-Files/Programmieren/GoDot/Libre-TrainSim/src"
+current_path = "/ssd-data/jean/Nextcloud/PC-Files/Programmieren/GoDot/Libre-TrainSim/src/"
 
 [node name="Editor_Configuration" parent="." instance=ExtResource( 7 )]
 visible = false
@@ -740,7 +743,9 @@ bus = "Music"
 [connection signal="pressed" from="Play/Buttons/Back" to="." method="_on_BackPlay_pressed"]
 [connection signal="pressed" from="Play/Buttons/Play" to="." method="_on_PlayPlay_pressed"]
 [connection signal="pressed" from="Content/Buttons/Back" to="." method="_on_BackContent_pressed"]
-[connection signal="pressed" from="Content/Buttons/Reload" to="." method="_on_ReloadContent_pressed"]
+[connection signal="pressed" from="Content/Buttons/Import" to="." method="_on_Import_pressed"]
+[connection signal="file_selected" from="Content/FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="files_selected" from="Content/FileDialog" to="." method="_on_FileDialog_files_selected"]
 [connection signal="pressed" from="Editor_Configuration/Editor_Configuration_Back_Button" to="." method="_on_Editor_Configuration_Back_Button_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/Later" to="." method="_on_Later_pressed"]
 [connection signal="pressed" from="FeedBack/VBoxContainer/HBoxContainer/OpenWebBrowser" to="." method="_on_OpenWebBrowser_pressed"]

@@ -91,7 +91,7 @@ func _on_PlayFront_pressed():
 	$Version.hide()
 
 func _on_Content_pressed():
-	update_content()
+	update_content_list()
 	$Front.hide()
 	$MenuBackground.show()
 	$Content.show()
@@ -110,7 +110,7 @@ func _on_BackAbout_pressed():
 	$About.hide()
 	$Front.show()
 
-
+# Find all content packs, and load them in
 func update_config():
 	## Get All .pck files:
 	foundContentPacks = []
@@ -220,23 +220,25 @@ func _on_ItemList_itemTracks_selected(index):
 		$Play/Selection/Scenarios/ItemList.add_item(scenario)
 
 ## Content Page:
-func update_content():
-	$Content/Label.text = tr("MENU_TO_ADD_CONTENT") + " %s, %s" % \
-			[OS.get_executable_path().get_base_dir(), OS.get_user_data_dir() + "/addons"]
+func update_content_list():
 	$Content/ItemList.clear()
 	for contentPack in foundContentPacks:
 		$Content/ItemList.add_item(contentPack)
 
+
+func _on_ShowInFileManager1_pressed():
+#	OS.
+	pass # Replace with function body.
+
+
+func _on_ShowInFileManager2_pressed():
+	pass # Replace with function body.
 
 
 func _on_BackContent_pressed():
 	$MenuBackground.hide()
 	$Content.hide()
 	$Front.show()
-
-func _on_ReloadContent_pressed():
-	update_config()
-	update_content()
 
 
 func _on_ItemList_scenario_selected(index):
@@ -300,20 +302,9 @@ func _on_Later_pressed():
 	$FeedBack.hide()
 
 
-
-
-
-
-
-
-
 func update_project_for_mobile(value):
 	Root.set_low_resolution(value)
 	mobile_version = value
-
-
-
-
 
 
 func _on_FrontCreate_pressed():
@@ -322,8 +313,6 @@ func _on_FrontCreate_pressed():
 	$MenuBackground.show()
 	$Editor_Configuration.show()
 	$Front.hide()
-
-
 
 
 func _on_Options_pressed_delme():
@@ -339,3 +328,29 @@ func hide_editor_configuration():
 func _on_Editor_Configuration_Back_Button_pressed():
 	hide_editor_configuration()
 
+
+func _on_Import_pressed():
+	$Content/FileDialog.current_path = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
+	$Content/FileDialog.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
+	$Content/FileDialog.popup_centered(Vector2(500,500))
+	
+	
+	pass # Replace with function body.
+
+
+func _on_FileDialog_file_selected(path):
+	_on_FileDialog_files_selected([path])
+
+
+func _on_FileDialog_files_selected(paths):
+	var dir = Directory.new()
+	if not dir.dir_exists("user://addons/"):
+		dir.make_dir("user://addons/")
+	for path in paths:
+		print(path)
+		print("user://addons/%s" % path.get_file())
+		var err = dir.copy(path, "user://addons/%s" % path.get_file()) 
+		if err:
+			jEssentials.show_message("Failed for: %s \nError code: %s" % [path, String(err)])
+	update_config()
+	update_content_list()

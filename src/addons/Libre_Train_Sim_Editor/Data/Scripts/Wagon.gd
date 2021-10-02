@@ -156,7 +156,7 @@ func change_to_next_rail():
 				route_index = baked_route.size() -1
 				distance_on_route = complete_route_length
 		else:
-			print(name + ": Route no more rail found, despawning me...")
+			Logger.vlog(name + ": Route no more rail found, despawning me...", self)
 			despawn()
 			return
 
@@ -195,7 +195,7 @@ var lastPantographUp = false
 func check_pantograph():
 	if not self.has_node("Pantograph"): return
 	if not lastPantographUp and player.pantographUp:
-		print("Started Pantograph Animation")
+		Logger.vlog("Started Pantograph Animation")
 		$Pantograph/AnimationPlayer.play("Up")
 	if lastPantograph and not player.pantograph:
 		$Pantograph/AnimationPlayer.play_backwards("Up")
@@ -258,7 +258,7 @@ func registerPerson(person, door):
 
 	var passengerRoutePath = getPathFromTo(door, seats[seatIndex])
 	if passengerRoutePath == null:
-		printerr("Some seats of "+ name + " are not reachable from every door!!")
+		Logger.err("Some seats of "+ name + " are not reachable from every door!!", self)
 		return
 #	print(passengerRoutePath)
 	person.destinationPos = passengerRoutePath
@@ -350,7 +350,7 @@ func sendPersonsToDoor(doorDirection, proportion : float = 0.5):
 
 
 	if possibleDoors.empty():
-		print(name + ": No Doors found for doorDirection: " + String(doorDirection) )
+		Logger.err(name + ": No Doors found for doorDirection: " + String(doorDirection), self)
 		return
 
 	randomize()
@@ -365,12 +365,12 @@ func sendPersonsToDoor(doorDirection, proportion : float = 0.5):
 					seatIndex = i
 					break
 			if seatIndex == -1:
-				print(name + ": Error: Seat from person" + personNode.name+  " not found!")
+				Logger.err(name + ": Error: Seat from person" + personNode.name+  " not found!", self)
 				return
 
 			var passengerRoutePath = getPathFromTo(seats[seatIndex], randomDoor)
 			if passengerRoutePath == null:
-				printerr("Some doors are not reachable from every door! Check your Path configuration")
+				Logger.err("Some doors are not reachable from every door! Check your Path configuration", self)
 				return
 
 			# Update position of door. (The Persons should stick inside the train while waiting ;)

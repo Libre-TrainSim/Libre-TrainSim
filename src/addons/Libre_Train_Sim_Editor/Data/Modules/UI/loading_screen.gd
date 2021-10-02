@@ -45,11 +45,10 @@ func _process(_delta: float) -> void:
 		elif err == OK:
 			update_progress_bar()
 		else: # error during loading
-			printerr("An error occured during loading!");
-			print(err)
+			Logger.err("An error occured during loading! (%s)" % err, self);
 			loader = null
 			OS.shell_open(ProjectSettings.globalize_path("user://logs/"))
-			get_tree().quit(1)
+			get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/main_menu.tscn")
 			break
 
 

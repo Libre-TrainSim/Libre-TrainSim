@@ -20,6 +20,8 @@ func _ready():
 		_on_PlayFront_pressed()
 
 	updateBottmLabels()
+	Logger.log("Using version: %s" % version)
+	Logger.vlog("Main menu loaded")
 
 
 func _on_Quit_pressed():

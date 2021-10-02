@@ -58,7 +58,7 @@ func update_selected_rail(node):
 func update_itemList():
 	$Tab/TrackObjects/jListTrackObjects.clear()
 	var track_objects = currentRail.trackObjects
-	print(track_objects)
+	Logger.vlog(track_objects)
 	for x in range(track_objects.size()):
 		if track_objects[x].description == null:
 			track_objects[x].queue_free()
@@ -67,19 +67,19 @@ func update_itemList():
 
 
 func _on_jListTrackObjects_user_removed_entries(entry_names):
-	print(currentRail.trackObjects)
+	Logger.vlog(currentRail.trackObjects)
 	for entry_name in entry_names:
 		var track_object = currentRail.get_track_object(entry_name)
 		var track_object_name = track_object.name
 		track_object.queue_free()
 		currentRail.trackObjects.erase(track_object)
-		print("TrackObject " + track_object_name + " deleted")
+		Logger.log("TrackObject " + track_object_name + " deleted")
 	update_itemList()
 
 
 
 func _on_jListTrackObjects_user_added_entry(entry_name):
-	print(entry_name)
+	Logger.vlog(entry_name)
 	var track_object = track_object_resource.instance()
 	track_object.description = entry_name
 	track_object.name = currentRail.name + " " + entry_name
@@ -89,7 +89,7 @@ func _on_jListTrackObjects_user_added_entry(entry_name):
 	track_object.set_owner(world)
 	track_object.attach_to_rail(currentRail)
 
-	print("Created track object " + track_object.name)
+	Logger.log("Created track object " + track_object.name)
 
 	update_object_tab()
 
@@ -97,7 +97,7 @@ func _on_jListTrackObjects_user_renamed_entry(old_name, new_name):
 	var track_object = currentRail.get_track_object(old_name)
 	track_object.description = new_name
 	track_object.name = currentRail.name + " " + new_name
-	print("TrackObject renamed from "+ old_name + " to " + new_name)
+	Logger.log("TrackObject renamed from "+ old_name + " to " + new_name)
 
 
 func _on_jListTrackObjects_user_duplicated_entries(source_entry_names, duplicated_entry_names):
@@ -106,7 +106,7 @@ func _on_jListTrackObjects_user_duplicated_entries(source_entry_names, duplicate
 		var duplicated_entry_name = duplicated_entry_names[i]
 		var source_track_object = currentRail.get_track_object(source_entry_name)
 		copy_track_object_to_current_rail(source_track_object, duplicated_entry_name)
-		print("TrackObject " +  source_entry_name + " duplicated.")
+		Logger.log("TrackObject " +  source_entry_name + " duplicated.")
 	pass # Replace with function body.
 
 func copy_track_object_to_current_rail(source_track_object : Node, new_description : String, mirror : bool  = false):
@@ -177,7 +177,7 @@ func _on_SavePosition_pressed():
 	currentTO.on_rail_position = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.length = $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value - $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
-	print("Position Saved")
+	Logger.log("Position Saved")
 
 
 
@@ -197,7 +197,7 @@ func _on_SavePositioning_pressed():
 	currentTO.rotationObjects = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value
 	currentTO.placeLast = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed
 	currentTO.applySlopeRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed
-	print("Positioning Saved")
+	Logger.log("Positioning Saved")
 	update_current_rail_attachment()
 
 func update_positioning():
@@ -217,12 +217,12 @@ func update_positioning():
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed = currentTO.placeLast
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed = currentTO.applySlopeRotation
-	print("Updating...")
+	Logger.log("Updating...")
 
 
 
 func update_current_rail_attachment(): ## UPDATE
-	print("Updating...")
+	Logger.log("Updating...")
 	currentTO.update(world.get_node("Rails/"+currentTO.attached_rail))
 	if currentTO.description.begins_with("Pole"):
 		currentRail.update()
@@ -235,7 +235,7 @@ func _on_jListTrackObjects_user_copied_entries(entry_names):
 	for entry_name in entry_names:
 		copyTOArray.append(currentRail.get_track_object(entry_name))
 	$"Tab/TrackObjects/Settings".visible = true
-	print("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pasted a copy of it/them.")
+	Logger.log("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pasted a copy of it/them.")
 
 
 func _on_jListTrackObjects_user_pasted_entries(source_entry_names, source_jList_id, pasted_entry_names):

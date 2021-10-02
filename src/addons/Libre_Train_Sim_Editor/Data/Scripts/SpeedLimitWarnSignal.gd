@@ -29,7 +29,7 @@ func set_to_rail():
 	if !is_inside_tree():
 		return
 	if not find_parent("World"):
-		print(name, " can't find World Parent!")
+		Logger.err(name + " can't find World Parent!", self)
 		return
 
 	$Viewport/Node2D/Label.text = str(int(warn_speed/10))

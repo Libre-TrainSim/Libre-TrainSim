@@ -66,7 +66,6 @@ func _on_OptionButton_item_selected(id):
 		$S/Settings/Angle.visible = true
 
 func _on_Update_pressed():
-	print("TEST")
 	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
@@ -92,10 +91,10 @@ func _on_Update_pressed():
 				radius = 0
 			else:
 				radius = length / ((angle/360.0)*2.0*PI)
-			print(radius)
+			Logger.vlog(radius)
 
 		if length > 1000:
-			print("MaxRailLength of 1000 exceedet! Canceling..")
+			Logger.log("MaxRailLength of 1000 exceedet! Canceling..", self)
 			return
 		if length != 0:
 			currentRail.length = length
@@ -104,7 +103,7 @@ func _on_Update_pressed():
 
 	currentRail.update()
 	update_selected_rail(currentRail)
-	print("Rail updated.")
+	Logger.log("Rail updated.")
 	pass # Replace with function body.
 
 
@@ -117,7 +116,7 @@ func _on_AddRail_pressed():
 		var RailParent = world.get_node("Rails")
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 		var newRail = RailNode.instance()
-		print(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
+		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
 		newRail.translation = currentRail.endpos
 		newRail.rotation_degrees.y = currentRail.endrot
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -137,7 +136,7 @@ func _on_AddRail_pressed():
 		var RailParent = currentRail.get_parent()
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 		var newRail = RailNode.instance()
-		print(Root.name_node_appropriate(newRail, currentRail.name + "P", RailParent))
+		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name + "P", RailParent))
 		newRail.parallelRail = currentRail.name
 		newRail.distanceToParallelRail = float($AddRail/ParallelDistance/LineEdit.text)
 #		currentRail.othersDistance = float($AddRail/ParallelDistance/LineEdit.text)
@@ -158,7 +157,7 @@ func _on_AddRail_pressed():
 		var RailParent = currentRail.get_parent()
 		var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
 		var newRail = RailNode.instance()
-		print(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
+		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
 		newRail.translation = currentRail.translation
 		newRail.rotation_degrees.y = currentRail.rotation_degrees.y + 180
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -180,7 +179,7 @@ func _on_AddRail_pressed():
 	var editor = find_parent("Editor")
 	if editor != null:
 		editor.set_selected_object(currentRail)
-	print("Rail added.")
+	Logger.log("Rail added.")
 	pass # Replace with function body.
 
 
@@ -192,7 +191,7 @@ func _on_Rename_pressed():
 	var editor = find_parent("Editor")
 	if editor:
 		editor.set_selected_object(currentRail)
-	print("Rail renamed.")
+	Logger.log("Rail renamed.")
 	pass # Replace with function body.
 
 
@@ -200,7 +199,7 @@ func _on_Delete_pressed():
 	currentRail.free()
 	currentRail = null
 	update_selected_rail(self)
-	print("Rail deleted.")
+	Logger.log("Rail deleted.")
 	pass # Replace with function body.
 
 
@@ -220,7 +219,7 @@ func _on_ShiftButton_pressed():
 		currentRail.InShift = currentRail.InShift*-1
 	currentRail.calcShift(true)
 	if currentRail.Outlength > 1000:
-		print("MaxRailLength of 1000 exceedet! Canceling..")
+		Logger.err("MaxRailLength of 1000 exceedet! Canceling..", self)
 		return
 	currentRail.length = currentRail.Outlength
 	currentRail._update(true)
@@ -236,7 +235,7 @@ func _on_Shift2Button_pressed():
 
 	var data = calc_shift(float($S/Settings/Shift2/LengthForward/LineEdit.text), float($S/Settings/Shift2/Shift/LineEdit.text))
 	if data[1] > 1000:
-		print("MaxRailLength of 1000 exceedet! Canceling..")
+		Logger.err("MaxRailLength of 1000 exceedet! Canceling..", self)
 		return
 	currentRail.length = data[1]
 	currentRail.radius = data[0]
@@ -267,9 +266,9 @@ func _on_Connect_pressed():
 	var firstRail = RailParent.get_node($RailConnector/FirstRail/LineEdit.text)
 	var secondRail = RailParent.get_node($RailConnector/SecondRail/LineEdit.text)
 	if not (firstRail.is_in_group("Rail") and secondRail.is_in_group("Rail")) :
-		print("Some Rail not found. Check your spelling!")
+		Logger.err("Some Rail not found. Check your spelling!", "%s, %s" % [firstRail, secondRail])
 		return
-	print("Rails connected.")
+	Logger.log("Rails connected.")
 
 	firstRail._update(true)
 	secondRail._update(true)
@@ -292,7 +291,7 @@ func _on_Connect_pressed():
 		rot2 = secondRail.endrot
 
 	var vector = (pos2 - pos1)/2
-	print(vector)
+	Logger.vlog(vector)
 	vector = vector.rotated(Vector3(0,1,0), -deg2rad(rot1))
 
 	var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")

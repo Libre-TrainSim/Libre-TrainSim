@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://addons/jean28518.jTools/jAudioManager/JAudioManager.gd" type="Script" id=1]
-
-[node name="JAudioManager" type="Node"]
-pause_mode = 2
-script = ExtResource( 1 )

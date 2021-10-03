@@ -514,7 +514,7 @@ func calculate_overhadline_mesh():
 	arrays[Mesh.ARRAY_INDEX] = indices
 
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Black_Plastic.tres"))
+	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Overhead_Line.tres"))
 	return mesh
 
 func buildOverheadLineSegment(start, end):

@@ -440,7 +440,7 @@ func add_speed_limit_to_selected_rail():
 	if selected_object_type != "Rail":
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
-	var speed_limit_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit.tscn")
+	var speed_limit_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SpeedLimit_Lf7.tscn")
 	var speed_limit_ins = speed_limit_res.instance()
 	Root.name_node_appropriate(speed_limit_ins, "SpeedLimit", $World/Signals)
 	$World/Signals.add_child(speed_limit_ins)
@@ -454,7 +454,7 @@ func add_warn_speed_limit_to_selected_rail():
 	if selected_object_type != "Rail":
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
-	var war_speed_limit_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit.tscn")
+	var war_speed_limit_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/WarnSpeedLimit_Lf6.tscn")
 	var warn_speed_limit_ins = war_speed_limit_res.instance()
 	Root.name_node_appropriate(warn_speed_limit_ins, "SpeedLimit", $World/Signals)
 	$World/Signals.add_child(warn_speed_limit_ins)

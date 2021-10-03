@@ -412,7 +412,7 @@ script = ExtResource( 9 )
 [node name="TrackObjects" type="Spatial" parent="."]
 
 [node name="jSaveModule" parent="." instance=ExtResource( 10 )]
-save_path = "/home/dascapschen/Projects/Games/Godot/Libre-TrainSim/src//Worlds/Signal-Tutorial/Signal-Tutorial.save"
+save_path = "res://Worlds/Signal-Tutorial/Signal-Tutorial.save"
 
 [node name="jSaveModuleScenarios" parent="." instance=ExtResource( 10 )]
 

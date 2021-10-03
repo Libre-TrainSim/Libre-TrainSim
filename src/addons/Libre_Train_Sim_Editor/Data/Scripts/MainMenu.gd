@@ -7,7 +7,7 @@ extends Control
 # var b = "text"
 export var version = ""
 export (bool) var mobile_version setget update_project_for_mobile
-var save_path = OS.get_executable_path().get_base_dir()+"config.cfg"
+var save_path = "user://config.cfg"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -908,12 +908,13 @@ func check_station(delta):
 			send_message(tr("WELCOME_TO") + " " + currentStationName + lateMessage)
 		
 		# play station announcement
-		if camera_state != CameraState.CABIN_VIEW:
-			for wagon in wagonsI:
-				jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
-		elif not ai:
-			jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
-		
+		if !stations["arrivalAnnouncePath"][current_station_index].empty():
+			if camera_state != CameraState.CABIN_VIEW:
+				for wagon in wagonsI:
+					jTools.call_delayed(1, wagon, "play_outside_announcement", [stations["arrivalAnnouncePath"][current_station_index]])
+			elif not ai:
+				jTools.call_delayed(1, jAudioManager, "play_game_sound", [stations["arrivalAnnouncePath"][current_station_index]])
+
 		# send door position, so persons can get in
 		if not is_last_station:
 			sendDoorPositionsToCurrentStation()

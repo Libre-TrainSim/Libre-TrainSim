@@ -38,6 +38,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+descriptions = [ "Loading world...", "Building tracks", "Placing stations", "Measuring distances", "Adding timetables", "Spawning trains", "Creating traffic jams", "Spawning people", "Making trees", "Moving signals", "Cleaning train", "Joining world..." ]
 
 [node name="Screenshot" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -98,18 +99,6 @@ margin_right = 800.0
 margin_bottom = 45.0
 rect_pivot_offset = Vector2( -477.088, -120.927 )
 custom_fonts/font = ExtResource( 3 )
-text = "Loading world...
-Building tracks
-Placing stations
-Measuring distances
-Adding timetables
-Spawning trains
-Creating traffic jams
-Spawning people
-Making trees
-Moving signals
-Cleaning train
-Joining world..."
 align = 1
 max_lines_visible = 1
 __meta__ = {

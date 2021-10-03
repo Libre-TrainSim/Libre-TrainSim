@@ -1,0 +1,213 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  GODOT_VERSION: 3.3.3
+  EXPORT_NAME: Libre_TrainSim
+
+jobs:
+# TODO: Use native export platforms and add code sign/adhoc notarization
+  export-windows:
+    name: Windows Export (Release)
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Load Cache
+        uses: actions/cache@v2
+        with:
+          path: src/.import
+          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.BASE_BRANCH}}
+        continue-on-error: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Windows Build
+        run: |
+          mkdir -v -p build/windows
+          cd src
+          godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows
+          path: build/windows
+  
+  export-windows-debug:
+    name: Windows Export (Debug)
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Load Cache
+        uses: actions/cache@v2
+        with:
+          path: src/.import
+          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.BASE_BRANCH}}
+        continue-on-error: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Windows Build
+        run: |
+          mkdir -v -p build/windows-debug
+          cd src
+          godot -v --export-debug "Windows Desktop" ../build/windows-debug/${EXPORT_NAME}_debug.exe
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows-debug
+          path: build/windows-debug
+
+  export-linux:
+    name: Linux Export (Release)
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Load Cache
+        uses: actions/cache@v2
+        with:
+          path: src/.import
+          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.BASE_BRANCH}}
+        continue-on-error: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Linux Build
+        run: |
+          mkdir -v -p build/linux
+          cd src
+          godot -v --export "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux
+          path: build/linux
+
+  export-linux-debug:
+    name: Linux Export (Debug)
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Load Cache
+        uses: actions/cache@v2
+        with:
+          path: src/.import
+          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.BASE_BRANCH}}
+        continue-on-error: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Linux Build
+        run: |
+          mkdir -v -p build/linux-debug
+          cd src
+          godot -v --export-debug "Linux/X11" ../build/linux-debug/${EXPORT_NAME}_debug.x86_64
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux-debug
+          path: build/linux-debug
+
+  export-mac:
+    name: Mac Export (Release)
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Load Cache
+        uses: actions/cache@v2
+        with:
+          path: src/.import
+          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.BASE_BRANCH}}
+        continue-on-error: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Mac Build
+        run: |
+          mkdir -v -p build/mac
+          cd src
+          godot -v --export "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: mac
+          path: build/mac
+  
+  export-mac-debug:
+    name: Mac Export (Debug)
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.3.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Load Cache
+        uses: actions/cache@v2
+        with:
+          path: src/.import
+          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          restore-keys: |
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
+            ${{github.job}}-${{env.BASE_BRANCH}}
+        continue-on-error: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Mac Build
+        run: |
+          mkdir -v -p build/mac-debug
+          cd src
+          godot -v --export-debug "Mac OSX" ../build/mac-debug/${EXPORT_NAME}_debug.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: mac-debug
+          path: build/mac-debug
+
+# Add Android (https://github.com/abarichello/godot-ci/blob/master/.gitlab-ci.yml#L63-L99)
+# Add automatic versioning

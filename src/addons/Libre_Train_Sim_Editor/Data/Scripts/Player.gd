@@ -36,7 +36,7 @@ var brakeRoll = -1 # describes the user input (0 to -1)
 var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagtive) - JJust from brakes and engines
 var currentRealAcceleration = 0
 var time = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Second
-var enforcedBreaking = false 
+var enforced_braking = false
 var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
 var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []} 
@@ -273,7 +273,7 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 	if name == "npc3":
 		print(currentRail.name)
 		print(distance_on_rail)
-		
+
 	if not initialSwitchCheck:
 		updateSwitchOnNextChange()
 		initialSwitchCheck = true
@@ -353,13 +353,13 @@ func _unhandled_key_input(event):
 			force_pantograph_up()
 			startEngine()
 			overrunRedSignal = false
-			enforcedBreaking = false
+			enforced_braking = false
 			command = 0
 			soll_command = 0
 			
 		else:
 			overrunRedSignal = false
-			enforcedBreaking = false
+			enforced_braking = false
 			command = 0
 			soll_command = 0
 			send_message("DEBUG_MODE_DISABLED")
@@ -398,10 +398,10 @@ func _input(event):
 		return
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
-	
+
 	if Input.is_action_just_pressed("acc+") and reverser == ReverserState.NEUTRAL:
 		send_message("HINT_REVERSER_NEUTRAL", ["reverser+", "reverser-"])
-	
+
 	if event.is_pressed():
 		# zoom in
 		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP) and not $HUD.is_full_map_visible():
@@ -457,7 +457,7 @@ func getCommand(delta):
 		soll_command = accRoll
 		if brakeRoll != 0: soll_command = brakeRoll
 		
-	if soll_command == 0 or Root.EasyMode or ai and not enforcedBreaking:
+	if soll_command == 0 or Root.EasyMode or ai and not enforced_braking:
 		blockedAcceleration = false
 	if command < 0 and not Root.EasyMode and not ai:
 		blockedAcceleration = true
@@ -465,13 +465,13 @@ func getCommand(delta):
 		blockedAcceleration = true
 	if reverser == ReverserState.NEUTRAL:
 		blockedAcceleration = true
-		
+
 	technicalSoll = soll_command
 	
 	if technicalSoll > 0 and blockedAcceleration:
 		technicalSoll = 0
 	
-	if enforcedBreaking and not debug:
+	if enforced_braking and not debug:
 		technicalSoll = -1
 	
 	
@@ -494,7 +494,7 @@ func getCommand(delta):
 	
 	
 func getSpeed(delta):
-	if initialSpeed != -1 and not enforcedBreaking and command > 0 and ai:
+	if initialSpeed != -1 and not enforced_braking and command > 0 and ai:
 		speed = initialSpeed
 		initialSpeed = -1
 		return
@@ -558,7 +558,7 @@ func change_to_next_rail():
 	var old_radius = currentRail.radius
 	if forward:
 		old_radius = -old_radius
-	
+
 	if forward and (reverser == ReverserState.FORWARD):
 		distance_on_rail -= currentRail.length
 	if not forward and (reverser == ReverserState.REVERSE):
@@ -664,7 +664,7 @@ func handleCamera(delta):
 		world.add_child(cam)
 		cam.owner = world
 		cam.transform = transform.translated(camera_mid_point)
-	
+
 	var playerCameras = get_tree().get_nodes_in_group("PlayerCameras")
 	for i in range(3, 9):
 		if Input.is_action_just_pressed("player_camera_" + str(i)) and playerCameras.size() >= i - 2:
@@ -761,12 +761,12 @@ func handle_signal(signal_name):
 		if reverser == ReverserState.FORWARD:
 			if signal_passed.speed != -1:
 				currentSpeedLimit = signal_passed.speed
-			if signal_passed.warn_speed != -1: 
+			if signal_passed.warn_speed != -1:
 				pass
 			if signal_passed.status == SignalStatus.RED:
 				if not ai and not debug: # If player train
 					fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_RED_SIGNAL"))
-					
+
 				overrunRedSignal = true
 			else:
 				free_signal_after_driven_train_length(last_driven_signal)
@@ -781,7 +781,7 @@ func handle_signal(signal_name):
 			if prev.size() > 0:
 				last_driven_signal = world.get_node("Signals/"+prev[0])
 				last_driven_signal.set_status(SignalStatus.RED)
-	
+
 	elif signal_passed.type == "Station": ## Station
 		if not stations["nodeName"].has(signal_passed.name):
 			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...")
@@ -813,7 +813,7 @@ func handle_signal(signal_name):
 		if not is_first_station:
 			for wagonI in wagonsI:
 				wagonI.sendPersonsToDoor(platform_side, stations["leavingPersons"][current_station_index]/100.0)
-		
+
 	elif signal_passed.type == "Speed":
 		if reverser == ReverserState.REVERSE:
 			currentSpeedLimit = find_previous_speed_limit()
@@ -875,20 +875,20 @@ func check_station(delta):
 		if distance_in_station > stationLength+GOODWILL_DISTANCE:
 			whole_train_in_station = false
 			send_message("FRONT_OF_YOUR_TRAIN_NOT_IN_STATION", ["reverser+", "reverser-"])
-	
+
 	# train in station but doors closed
 	if not isInStation and whole_train_in_station and not (doorLeft or doorRight):
 		doorOpenMessageSentTimer += delta
 		if doorOpenMessageSentTimer > 5 and not doorOpenMessageSent:
 			send_message("HINT_OPEN_DOORS", ["doorLeft", "doorRight"])
 			doorOpenMessageSent = true
-	
-	# train just now fully in station and doors opened, or first station 
+
+	# train just now fully in station and doors opened, or first station
 	if (not isInStation and whole_train_in_station and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (is_first_station and not isInStation):
 		isInStation = true
 		stationTimer = 0
 		realArrivalTime = time
-		
+
 		# send a "you are x minutes late" message if player is late
 		var lateMessage = ". "
 		if not is_first_station:
@@ -899,14 +899,14 @@ func check_station(delta):
 				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2_ONE_MINUTE")]
 			else:
 				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2")]
-		
+
 		# send "welcome to station" message
 		if is_first_station:
 			currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
 			jEssentials.call_delayed(1.2, self, "send_message", [tr("WELCOME_TO") + " " + currentStationName])
 		else:
 			send_message(tr("WELCOME_TO") + " " + currentStationName + lateMessage)
-		
+
 		# play station announcement
 		if !stations["arrivalAnnouncePath"][current_station_index].empty():
 			if camera_state != CameraState.CABIN_VIEW:
@@ -918,7 +918,7 @@ func check_station(delta):
 		# send door position, so persons can get in
 		if not is_last_station:
 			sendDoorPositionsToCurrentStation()
-	
+
 	# train waited long enough in station
 	elif isInStation and stationTimer > stationHaltTime:
 		# scenario finished if last station
@@ -1046,23 +1046,23 @@ func check_doors(delta):
 			close_doors()
 		else:
 			open_right_doors()
-	
+
 	if doorsClosing:
 		doorsClosingTimer += delta
-	
+
 	if doorsClosingTimer > doorsClosingTime:
 		doorsClosing = false
 		doorRight = false
 		doorLeft = false
 		doorsClosingTimer = 0
-		
-	
+
+
 ## BAKING
 func sort_signals_by_distance(a, b):
 	if a["distance"] < b["distance"]:
 		return true
 	return false
-	
+
 var baked_route ## Route, which will be generated at start of the game. Array of strings
 var baked_route_direction # Array of booleans
 var baked_route_signal_names = [] # sorted array of all signal names along the route
@@ -1087,16 +1087,16 @@ func bake_route(): ## Generate the whole route for the train.
 
 	var rail_signals = currentR.attachedSignals
 	rail_signals.sort_custom(self, "sort_signals_by_distance")
-	if not currentF: 
+	if not currentF:
 		rail_signals.invert()
 	for signal_dict in rail_signals:
 		var signal_instance = world.get_node("Signals/"+signal_dict["name"])
-		if signal_instance.forward != currentF: 
+		if signal_instance.forward != currentF:
 			continue
 		var position_on_route = complete_route_length
-		if currentF: 
+		if currentF:
 			position_on_route += signal_dict["distance"]
-		else: 
+		else:
 			position_on_route += currentR.length - signal_dict["distance"]
 		baked_route_signal_names.append(signal_dict["name"])
 		baked_route_signal_positions[signal_dict["name"]] = position_on_route
@@ -1134,7 +1134,7 @@ func bake_route(): ## Generate the whole route for the train.
 						selectedRail = rail
 						break
 			rail_candidate = selectedRail
-		
+
 		
 		## Set Rail to "End" of newly added Rail
 		currentR = world.get_node("Rails").get_node(rail_candidate) ## Get "current Rail"
@@ -1142,7 +1142,7 @@ func bake_route(): ## Generate the whole route for the train.
 			currentF = true
 		else:
 			currentF = false
-		
+
 		# Check for loop:
 		if baked_route.has(rail_candidate) and baked_route_direction[baked_route.find(rail_candidate)] == currentF:
 			print("found loop for " + name)
@@ -1156,16 +1156,16 @@ func bake_route(): ## Generate the whole route for the train.
 		# bake signals
 		rail_signals = currentR.attachedSignals
 		rail_signals.sort_custom(self, "sort_signals_by_distance")
-		if not currentF: 
+		if not currentF:
 			rail_signals.invert()
 		for signal_dict in rail_signals:
 			var signal_instance = world.get_node("Signals/"+signal_dict["name"])
-			if signal_instance.forward != currentF: 
+			if signal_instance.forward != currentF:
 				continue
 			var position_on_route = complete_route_length
-			if currentF: 
+			if currentF:
 				position_on_route += signal_dict["distance"]
-			else: 
+			else:
 				position_on_route += currentR.length - signal_dict["distance"]
 			baked_route_signal_names.append(signal_dict["name"])
 			baked_route_signal_positions[signal_dict["name"]] = position_on_route
@@ -1255,9 +1255,9 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 		
 
 func check_security():#
-	var oldEnforcedBrake = 	enforcedBreaking
-	enforcedBreaking = hardOverSpeeding or overrunRedSignal or not engine or sifaTimer > 33 
-	if not oldEnforcedBrake and enforcedBreaking and speed > 0 and not ai:
+	var oldEnforcedBrake = 	enforced_braking
+	enforced_braking = hardOverSpeeding or overrunRedSignal or not engine or sifaTimer > 33
+	if not oldEnforcedBrake and enforced_braking and speed > 0 and not ai:
 		$Sound/EnforcedBrake.play()
 
 var check_for_player_helpTimer = 0

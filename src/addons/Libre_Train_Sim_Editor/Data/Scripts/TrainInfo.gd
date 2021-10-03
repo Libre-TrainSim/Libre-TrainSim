@@ -82,7 +82,7 @@ func update_info(player):
 		$"ScrollContainer/VBoxContainer/Acceleration-1/dot".texture = green
 	
 	## EnforcedBreake
-	if player.enforcedBreaking:
+	if player.enforced_braking:
 		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = red
 	else:
 		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = green

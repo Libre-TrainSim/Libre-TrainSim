@@ -34,7 +34,7 @@ func _process(delta):
 	if not is_ready: 
 		is_ready = true
 		ready()
-	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforcedBreaking, player.sifa, player.automaticDriving, player.currentSpeedLimit, player.engine, player.reverser)
+	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforced_braking, player.sifa, player.automaticDriving, player.currentSpeedLimit, player.engine, player.reverser)
 
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_time(player.time)
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_voltage(player.voltage)

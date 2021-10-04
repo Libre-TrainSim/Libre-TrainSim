@@ -103,7 +103,7 @@ jobs:
         run: |
           mkdir -v -p build/linux
           cd src
-          godot -v --export "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
+          godot -v --export "Linux64" ../build/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
@@ -136,7 +136,7 @@ jobs:
         run: |
           mkdir -v -p build/linux-debug
           cd src
-          godot -v --export-debug "Linux/X11" ../build/linux-debug/${EXPORT_NAME}_debug.x86_64
+          godot -v --export-debug "Linux64" ../build/linux-debug/${EXPORT_NAME}_debug.x86_64
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:

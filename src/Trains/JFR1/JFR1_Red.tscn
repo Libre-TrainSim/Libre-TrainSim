@@ -1,13 +1,11 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=63 format=2]
 
-[ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Basic/Materials/Cabin.tres" type="Material" id=1]
 [ext_resource path="res://Resources/Basic/Materials/Black_Plastic.tres" type="Material" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Player.gd" type="Script" id=3]
 [ext_resource path="res://Trains/JFR1/Sound.gd" type="Script" id=4]
 [ext_resource path="res://Trains/JFR1/SpecificScripting.gd" type="Script" id=5]
-[ext_resource path="res://Resources/Basic/Materials/Blue_Plastic.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=7]
-[ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=8]
 [ext_resource path="res://Resources/Basic/Screens/ScreenReverser/reverser.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerDoor.tscn" type="PackedScene" id=10]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerPathNode.tscn" type="PackedScene" id=11]
@@ -94,7 +92,7 @@ emission_energy = 1.0
 emission_operator = 1
 emission_on_uv2 = false
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Doors/DoorR1:translation")
@@ -169,7 +167,7 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Doors/DoorR12:translation")
@@ -244,7 +242,7 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, -1.51171 ), Vector3( 5.05345, 1.02943, -1.5828 ), Vector3( 5.76987, 1.02943, -1.5828 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=10]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
@@ -467,7 +465,7 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=16]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
@@ -518,11 +516,11 @@ tracks/3/keys = {
 "values": [ Vector3( 0, 0, 12.649 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="SphereMesh" id=19]
+[sub_resource type="SphereMesh" id=17]
 radius = 0.06
 height = 0.12
 
-[sub_resource type="SpatialMaterial" id=20]
+[sub_resource type="SpatialMaterial" id=18]
 albedo_color = Color( 1, 0.211765, 0, 1 )
 emission_enabled = true
 emission = Color( 1, 0, 0, 1 )
@@ -533,11 +531,11 @@ distance_fade_mode = 1
 distance_fade_min_distance = 50.0
 distance_fade_max_distance = 150.0
 
-[sub_resource type="SphereMesh" id=21]
+[sub_resource type="SphereMesh" id=19]
 radius = 0.06
 height = 0.12
 
-[sub_resource type="SpatialMaterial" id=22]
+[sub_resource type="SpatialMaterial" id=20]
 albedo_color = Color( 1, 0, 0, 1 )
 emission_enabled = true
 emission = Color( 1, 0, 0, 1 )
@@ -545,7 +543,7 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=21]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Doors/DoorR1:translation")
@@ -620,7 +618,7 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=22]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Doors/DoorR12:translation")
@@ -721,7 +719,6 @@ far = 1000.0
 script = ExtResource( 5 )
 
 [node name="Cabin" type="Spatial" parent="."]
-visible = false
 script = ExtResource( 26 )
 cabinMode = true
 
@@ -769,11 +766,9 @@ render_target_v_flip = true
 [node name="Cabin" type="MeshInstance" parent="Cabin"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.27351, 0, 0 )
 mesh = ExtResource( 15 )
-material/0 = ExtResource( 1 )
-material/1 = ExtResource( 6 )
-material/2 = ExtResource( 8 )
-material/3 = ExtResource( 45 )
-material/4 = ExtResource( 2 )
+material/0 = ExtResource( 45 )
+material/1 = ExtResource( 2 )
+material/2 = ExtResource( 1 )
 
 [node name="BrakeRoll" type="MeshInstance" parent="Cabin"]
 transform = Transform( 0.810062, -0.586344, 0, 0.586344, 0.810062, 0, 0, 0, 1, 7.046, 2.477, 0.2 )
@@ -810,6 +805,9 @@ render_target_v_flip = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84215, 0, 0 )
 
 [node name="AdvancedEngineSound" parent="Cabin" instance=ExtResource( 13 )]
+
+[node name="SpotLight" type="SpotLight" parent="Cabin"]
+transform = Transform( -4.37114e-08, 0.5, -0.866025, 0, 0.866025, 0.5, 1, 2.18557e-08, -3.78552e-08, 5.34039, 3.64751, 0 )
 
 [node name="Wagon1" type="Spatial" parent="."]
 visible = false
@@ -885,7 +883,7 @@ spot_angle = 77.4
 
 [node name="DoorRight" type="AnimationPlayer" parent="Wagon1/Doors"]
 root_node = NodePath("../..")
-anims/open = SubResource( 9 )
+anims/open = SubResource( 8 )
 
 [node name="DoorR1" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
@@ -925,7 +923,7 @@ material/1 = ExtResource( 31 )
 
 [node name="DoorLeft" type="AnimationPlayer" parent="Wagon1/Doors"]
 root_node = NodePath("../..")
-anims/open = SubResource( 10 )
+anims/open = SubResource( 9 )
 
 [node name="DoorR12" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
@@ -1157,7 +1155,7 @@ material/2 = ExtResource( 30 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16962, 3.77014, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinF/Pantograph"]
-anims/Up = SubResource( 16 )
+anims/Up = SubResource( 10 )
 
 [node name="Pantograph_1_B" type="MeshInstance" parent="DriverCabinF/Pantograph"]
 transform = Transform( 0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0 )
@@ -1558,7 +1556,7 @@ material/2 = ExtResource( 30 )
 transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, -4.23426, 3.77014, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinB/Pantograph"]
-anims/Up = SubResource( 23 )
+anims/Up = SubResource( 16 )
 
 [node name="Pantograph_1_B" type="MeshInstance" parent="DriverCabinB/Pantograph"]
 transform = Transform( 0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0 )
@@ -1600,23 +1598,23 @@ omni_range = 0.6
 
 [node name="LightBulb5" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, 1.05747 )
-mesh = SubResource( 19 )
-material/0 = SubResource( 20 )
+mesh = SubResource( 17 )
+material/0 = SubResource( 18 )
 
 [node name="LightBulb6" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, -1.05558 )
-mesh = SubResource( 19 )
-material/0 = SubResource( 20 )
+mesh = SubResource( 17 )
+material/0 = SubResource( 18 )
 
 [node name="LightBulb7" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.95212, 1.61106, 1.05527 )
-mesh = SubResource( 21 )
-material/0 = SubResource( 22 )
+mesh = SubResource( 19 )
+material/0 = SubResource( 20 )
 
 [node name="LightBulb8" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.94702, 1.61106, -1.05467 )
-mesh = SubResource( 21 )
-material/0 = SubResource( 22 )
+mesh = SubResource( 19 )
+material/0 = SubResource( 20 )
 
 [node name="InteriorLights" type="Spatial" parent="DriverCabinB"]
 
@@ -1728,7 +1726,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
 
 [node name="DoorRight" type="AnimationPlayer" parent="DriverCabinB/Doors"]
 root_node = NodePath("../..")
-anims/open = SubResource( 17 )
+anims/open = SubResource( 21 )
 
 [node name="DoorR1" type="MeshInstance" parent="DriverCabinB/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
@@ -1768,7 +1766,7 @@ material/1 = ExtResource( 31 )
 
 [node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinB/Doors"]
 root_node = NodePath("../..")
-anims/open = SubResource( 18 )
+anims/open = SubResource( 22 )
 
 [node name="DoorR12" type="MeshInstance" parent="DriverCabinB/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )

@@ -64,9 +64,6 @@ export var brakeReleaseSpeed = 0.2
 export var accelerationSpeed = 0.2
 export var accerationReleaseSpeed = 0.5
 
-export var sifaEnabled = true
-var sifa = false # If this is true, the player has to press the sifa key (Space)
-
 export (String) var description = ""
 export (String) var author = ""
 export (String) var releaseDate = ""
@@ -179,7 +176,6 @@ func ready(): ## Called by World!
 	if Root.EasyMode or ai:
 		pantograph = true
 		control_type = ControlType.COMBINED
-		sifaEnabled = false
 		reverser = ReverserState.FORWARD
 
 	if not doors:
@@ -190,9 +186,6 @@ func ready(): ## Called by World!
 	if not electric:
 		pantograph = true
 		voltage = 15
-
-	if sifaEnabled:
-		$Sound/SiFa.play()
 
 	## Get driving handled
 	## Set the Train at the beginning of the rail, and after that set the distance on the Rail forward, which is standing in var startPosition
@@ -314,9 +307,6 @@ func _process(delta):
 	check_signals()
 
 	check_station(delta)
-
-	if sifaEnabled:
-		check_sifa(delta)
 
 	handle_input()
 
@@ -1271,17 +1261,6 @@ func horn():
 		jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
 	$Sound/Horn.play()
 
-var sifaTimer = 0
-func check_sifa(delta):
-	if automaticDriving:
-		sifaTimer = 0
-	sifaTimer += delta
-	if speed == 0 or Input.is_action_just_pressed("SiFa"):
-		if Input.is_action_just_pressed("SiFa"):
-			jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-		sifaTimer = 0
-	sifa =  sifaTimer > 25
-	$Sound/SiFa.stream_paused = not sifaTimer > 30
 
 func set_signalWarnLimits(): # Called in the beginning of the route
 	var signals = get_all_upcoming_signals_of_types(["Signal"])

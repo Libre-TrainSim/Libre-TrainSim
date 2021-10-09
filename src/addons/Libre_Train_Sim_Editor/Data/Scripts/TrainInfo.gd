@@ -87,15 +87,6 @@ func update_info(player):
 	else:
 		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = green
 
-	## SiFa
-	$ScrollContainer/VBoxContainer/SiFa.visible = player.sifaEnabled
-	if player.sifaTimer > 35:
-		$ScrollContainer/VBoxContainer/SiFa/dot.texture = red
-	elif player.sifaTimer > 25:
-		$ScrollContainer/VBoxContainer/SiFa/dot.texture = orange
-	else:
-		$ScrollContainer/VBoxContainer/SiFa/dot.texture = green
-
 	$ScrollContainer/VBoxContainer/Autopilot.visible = Root.EasyMode
 	if player.automaticDriving:
 		$ScrollContainer/VBoxContainer/Autopilot/dot.texture = green

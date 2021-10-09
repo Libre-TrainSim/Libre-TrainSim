@@ -36,7 +36,9 @@ func _ready():
 	CommandPointerZero = $CommandPointer.rotation_degrees
 	CommandPerPercent = (CommandPointerRotationAt100-CommandPointerZero)/100.0
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
-	pass # Replace with function body.
+
+	$Info/Sifa.visible = false
+
 
 var SollCommandPointer = 0
 var SollSpeedLimitPointer = 0
@@ -57,7 +59,7 @@ func _process(delta):
 
 
 var lastAutoPilot = false
-func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforced_braking, sifa, autopilot, speedLimit, engine, reverser):
+func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforced_braking, autopilot, speedLimit, engine, reverser):
 	## Tachos:
 	$SpeedPointer.rotation_degrees = SpeedPointerZero+SpeedPerKmH*speed
 	SollCommandPointer = CommandPointerZero+CommandPerPercent*command*100
@@ -68,17 +70,14 @@ func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforced_
 	$Time.text = Math.time2String(world.time)
 
 	## Engine:
-	$Engine.visible = !engine
-
+	$Info/Engine.visible = !engine
+	
 	## Enforced Breaking
 	if enforced_braking:
-		$EnforcedBraking.visible = blinkStatus
+		$Info/EnforcedBraking.visible = blinkStatus
 	else:
-		$EnforcedBraking.visible = false
-
-	## Sifa:
-	$Sifa.visible = sifa
-
+		$Info/EnforcedBraking.visible = false
+	
 	## Doors:
 	if doorsClosing:
 		$Doors.visible = blinkStatus
@@ -94,13 +93,9 @@ func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforced_
 
 #	if not lastAutoPilot and autopilot:
 #		$AnimationPlayerAutoPilot.play("autopilot")
-	$Autopilot.visible = autopilot and blinkStatus
+	$Info/Autopilot.visible = autopilot and blinkStatus
 #	lastAutoPilot = autopilot
 
 
-
-
-
-
-
-
+func _on_sifa_visual_hint(is_turned_on) -> void:
+	$Info/Sifa.visible = is_turned_on

@@ -16,7 +16,7 @@ func _process(delta):
 		player.force_pantograph_up()
 		player.startEngine()
 		player.overrunRedSignal = false
-		player.enforcedBreaking = false
+		player.enforced_braking = false
 		player.command = 0
 		player.soll_command = 0
 

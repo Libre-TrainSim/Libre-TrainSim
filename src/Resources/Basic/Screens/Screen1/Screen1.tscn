@@ -12,6 +12,7 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/richtung_fwd.png" type="Texture" id=10]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/richtung_bwd.png" type="Texture" id=11]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/richtung_neutral.png" type="Texture" id=12]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/PZB.gd" type="Script" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
@@ -206,6 +207,141 @@ size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "AUTOMATIC_DRIVING"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PZB" type="GridContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 738.0
+margin_top = 614.0
+margin_right = 1258.0
+margin_bottom = 744.0
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8
+columns = 3
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="U" type="ColorRect" parent="PZB"]
+margin_right = 168.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0.25098, 1, 1 )
+
+[node name="Label" type="Label" parent="PZB/U"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "55"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="M" type="ColorRect" parent="PZB"]
+margin_left = 176.0
+margin_right = 344.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0.25098, 1, 1 )
+
+[node name="Label" type="Label" parent="PZB/M"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "70"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="O" type="ColorRect" parent="PZB"]
+margin_left = 352.0
+margin_right = 520.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0.25098, 1, 1 )
+
+[node name="Label" type="Label" parent="PZB/O"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "85"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Befehl40" type="ColorRect" parent="PZB"]
+margin_top = 69.0
+margin_right = 168.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="PZB/Befehl40"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Befehl 40"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="500Hz" type="ColorRect" parent="PZB"]
+margin_left = 176.0
+margin_top = 69.0
+margin_right = 344.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 1, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="PZB/500Hz"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "500 Hz"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1000Hz" type="ColorRect" parent="PZB"]
+margin_left = 352.0
+margin_top = 69.0
+margin_right = 520.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 1, 1, 0, 1 )
+
+[node name="Label" type="Label" parent="PZB/1000Hz"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "1000 Hz"
 align = 1
 valign = 1
 __meta__ = {

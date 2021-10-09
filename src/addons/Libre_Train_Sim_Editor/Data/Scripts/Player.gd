@@ -159,6 +159,10 @@ const refDelta = 0.0167 # 1.0 / 60
 onready var cameraNode = $Camera
 var cameraZeroTransform # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
+
+signal passed_signal(signal_instance)
+signal reverser_changed(reverser_state)
+
 func ready(): ## Called by World!
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
@@ -794,7 +798,8 @@ func handle_signal(signal_name):
 		Logger.log(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
 	elif signal_passed.type == "ContactPoint":
 		signal_passed.activateContactPoint(name)
-	pass
+
+	emit_signal("passed_signal", signal_passed)
 
 
 
@@ -1661,6 +1666,8 @@ func change_reverser(change):
 			if change > 0:
 				reverser = ReverserState.NEUTRAL
 				jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
+	
+	emit_signal("reverser_changed", reverser)
 
 
 func handle_input():

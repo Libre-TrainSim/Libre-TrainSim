@@ -1,0 +1,195 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/PZBModule.gd" type="Script" id=1]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/DistanceMonitor.gd" type="Script" id=2]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/PZB_Debug_Monitor.gd" type="Script" id=3]
+
+[node name="PZBModule" type="Node"]
+pause_mode = 1
+script = ExtResource( 1 )
+
+[node name="AckTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="RestrictiveTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[node name="153mMonitor" type="Node" parent="."]
+script = ExtResource( 2 )
+_distance = 153
+
+[node name="250mMonitor" type="Node" parent="."]
+script = ExtResource( 2 )
+_distance = 250
+
+[node name="700mMonitor" type="Node" parent="."]
+script = ExtResource( 2 )
+_distance = 700
+
+[node name="1250mMonitor" type="Node" parent="."]
+script = ExtResource( 2 )
+_distance = 1250
+
+[node name="DEBUG" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="DEBUG"]
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 14.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="DEBUG/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 136.0
+margin_bottom = 201.0
+columns = 2
+
+[node name="PZBType_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_right = 125.0
+margin_bottom = 14.0
+text = "PZB Type: "
+
+[node name="PZBType" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_right = 129.0
+margin_bottom = 14.0
+
+[node name="PZBMode_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 18.0
+margin_right = 125.0
+margin_bottom = 32.0
+text = "PZB Mode: "
+
+[node name="PZBMode" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 18.0
+margin_right = 129.0
+margin_bottom = 32.0
+
+[node name="PZBMagnet_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 36.0
+margin_right = 125.0
+margin_bottom = 50.0
+text = "PZB Magnet:"
+
+[node name="PZBMagnet" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 36.0
+margin_right = 129.0
+margin_bottom = 50.0
+
+[node name="PZBSpeed_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 54.0
+margin_right = 125.0
+margin_bottom = 68.0
+text = "PZB Speed:"
+
+[node name="PZBSpeed" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 54.0
+margin_right = 129.0
+margin_bottom = 68.0
+
+[node name="AckTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 72.0
+margin_right = 125.0
+margin_bottom = 86.0
+text = "Ack Timer: "
+
+[node name="AckTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 72.0
+margin_right = 129.0
+margin_bottom = 86.0
+
+[node name="RestrictiveTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 90.0
+margin_right = 125.0
+margin_bottom = 104.0
+text = "Restrictive Timer: "
+
+[node name="RestrictiveTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 90.0
+margin_right = 129.0
+margin_bottom = 104.0
+
+[node name="Monitor153m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 108.0
+margin_right = 125.0
+margin_bottom = 122.0
+text = "153m: "
+
+[node name="Monitor153m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 108.0
+margin_right = 129.0
+margin_bottom = 122.0
+
+[node name="Monitor250m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 126.0
+margin_right = 125.0
+margin_bottom = 140.0
+text = "250m: "
+
+[node name="Monitor250m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 126.0
+margin_right = 129.0
+margin_bottom = 140.0
+
+[node name="Monitor700m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 144.0
+margin_right = 125.0
+margin_bottom = 158.0
+text = "700m: "
+
+[node name="Monitor700m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 144.0
+margin_right = 129.0
+margin_bottom = 158.0
+
+[node name="Monitor1250m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 162.0
+margin_right = 125.0
+margin_bottom = 176.0
+text = "1250m: "
+
+[node name="Monitor1250m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 162.0
+margin_right = 129.0
+margin_bottom = 176.0
+
+[node name="Brakes_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 180.0
+margin_right = 125.0
+margin_bottom = 194.0
+text = "Emergency Brakes: "
+
+[node name="Brakes" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 180.0
+margin_right = 129.0
+margin_bottom = 194.0
+
+[connection signal="timeout" from="AckTimer" to="." method="emergency_brake"]
+[connection signal="timeout" from="RestrictiveTimer" to="." method="restrictive_mode"]
+[connection signal="reached" from="153mMonitor" to="." method="_on_153m_reached"]
+[connection signal="reached" from="250mMonitor" to="." method="_on_250m_reached"]
+[connection signal="reached" from="700mMonitor" to="." method="_on_700m_reached"]
+[connection signal="reached" from="1250mMonitor" to="." method="_on_1250m_reached"]

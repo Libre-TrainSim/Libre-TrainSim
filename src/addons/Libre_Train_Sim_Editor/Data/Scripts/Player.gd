@@ -27,7 +27,6 @@ var voltage = 0 # If this value = 0, the train wont drive unless you press ingam
 export (float) var pantographTime = 5
 var speed = 0 # Initiats the speed. (Unit: m/s) ## You can convert it with var kmhSpeed = Math.speed2kmh(speed)
 onready var currentSpeedLimit = speedLimit # Unit: km/h # holds the current speedlimit
-var hardOverSpeeding = false # If Speed > speedlimit + 10 this is set to true
 var command = -1 # If Command is < 0 the train will brake, if command > 0 the train will accelerate. Set by the player with Arrow Keys.
 var technicalSoll = 0 # Soll Command. This variable describes the "aim" of command
 var blockedAcceleration = false ## If true, then acceleration is blocked. e.g.  brakes, dooors, engine,....
@@ -37,7 +36,6 @@ var currentAcceleration = 0 # Current Acceleration in m/(s*s) (Can also be neagt
 var currentRealAcceleration = 0
 var time = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Second
 var enforced_braking = false
-var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
 var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []}
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
@@ -165,7 +163,6 @@ onready var cameraNode = $Camera
 var cameraZeroTransform # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
 func ready(): ## Called by World!
-
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
 
@@ -229,8 +226,6 @@ func ready(): ## Called by World!
 	if not ai:
 		set_signalWarnLimits()
 		set_signalAfters()
-
-
 
 	if ai:
 		soundMode = 1
@@ -343,13 +338,10 @@ func _unhandled_key_input(event):
 			force_close_doors()
 			force_pantograph_up()
 			startEngine()
-			overrunRedSignal = false
 			enforced_braking = false
 			command = 0
 			soll_command = 0
-
 		else:
-			overrunRedSignal = false
 			enforced_braking = false
 			command = 0
 			soll_command = 0
@@ -757,8 +749,6 @@ func handle_signal(signal_name):
 			if signal_passed.status == SignalStatus.RED:
 				if not ai and not debug: # If player train
 					fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_RED_SIGNAL"))
-
-				overrunRedSignal = true
 			else:
 				free_signal_after_driven_train_length(last_driven_signal)
 			signal_passed.set_status(SignalStatus.RED)
@@ -986,7 +976,6 @@ func check_pantograph(delta):
 
 var checkSpeedLimitTimer = 0
 func checkSpeedLimit(delta):
-	hardOverSpeeding = Math.speedToKmH(speed) > currentSpeedLimit + 10
 	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
 		send_message(tr("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
@@ -1244,9 +1233,13 @@ func check_for_next_station(delta):  ## Used for displaying (In 1000m there is .
 #				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
 
 
-func check_security():#
-	var oldEnforcedBrake = 	enforced_braking
-	enforced_braking = hardOverSpeeding or overrunRedSignal or not engine or sifaTimer > 33
+func check_security():
+	var oldEnforcedBrake = enforced_braking
+
+	enforced_braking = not engine
+	for sys in $SafetySystems.get_children():
+		enforced_braking = enforced_braking or sys.requires_emergency_braking
+
 	if not oldEnforcedBrake and enforced_braking and speed > 0 and not ai:
 		$Sound/EnforcedBrake.play()
 
@@ -1268,7 +1261,7 @@ func check_for_player_help(delta):
 		check_for_player_helpTimer = 0
 
 	check_for_player_helpTimer2 += delta
-	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and not (doorRight or doorLeft) and not overrunRedSignal and check_for_player_helpTimer2 > 10 and not isInStation:
+	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and not (doorRight or doorLeft) and check_for_player_helpTimer2 > 10 and not isInStation:
 		send_message("HINT_ADVANCED_DRIVING", ["acc-", "acc+"])
 		check_for_player_helpTimer2 = 0
 
@@ -1442,8 +1435,6 @@ func autopilot(delta):
 		doorsClosing = true
 		$Sound/DoorsClose.play()
 
-
-
 	var sollSpeedArr = {}
 
 	## Red Signal:
@@ -1471,7 +1462,6 @@ func autopilot(delta):
 		else:
 			nextStationNode = null
 
-
 	## Open Doors:
 	if (currentStationName != "" and speed == 0 and not isInStation and distance_on_route - distanceOnStationBeginning >= length):
 		if nextStationNode.platform_side == PlatformSide.LEFT:
@@ -1485,9 +1475,7 @@ func autopilot(delta):
 			doorRight = true
 			$Sound/DoorsOpen.play()
 
-
 	sollSpeedArr[3] = currentSpeedLimit
-
 
 #	print("0: "+ String(sollSpeedArr[0]))
 #	print("1: "+ String(sollSpeedArr[1]))
@@ -1495,9 +1483,6 @@ func autopilot(delta):
 #	print("3: "+ String(sollSpeedArr[3]))
 	sollSpeed = sollSpeedArr.values().min()
 	sollSpeedEnabled = true
-
-
-
 
 
 func handleSollSpeed(delta):
@@ -1544,7 +1529,6 @@ func debugLights(node):
 		node.visible = false
 		node.visible = true
 		Logger.log("Spotlight updated")
-
 
 
 func toggle_cabin_light():

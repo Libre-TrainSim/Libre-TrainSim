@@ -6,7 +6,7 @@ export var version = ""
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+
 	$Version.text = "Version: %s" % version
 	var openTimes = jSaveManager.get_value("open_times", 0)
 	openTimes += 1

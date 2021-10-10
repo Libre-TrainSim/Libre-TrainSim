@@ -34,9 +34,9 @@ func _ready():
 			print(name, ": CAN'T FIND ATTACHED SIGNAL NODE! (", attached_signal,")")
 			#queue_free()
 			return
-	
+
 	attached_signal_node.connect("signal_changed", self, "update_active")
-	
+
 	set_to_rail(true)
 	update_active(true)
 
@@ -48,7 +48,7 @@ func update_active(_signal_instance):
 			hz = 2000
 		else:
 			hz = 1000
-	
+
 	# handle activation
 	if hz == 500 or hz == 2000:
 		is_active = (attached_signal_node.status == SignalStatus.RED)

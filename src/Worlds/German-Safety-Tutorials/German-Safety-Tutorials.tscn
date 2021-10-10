@@ -1,0 +1,191 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/World.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Basic/Enviroment/BasicSun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Basic/Materials/Grass.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Basic/Objects/grass.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://Worlds/German-Safety-Tutorials/SafetyTutorialScript.gd" type="Script" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/Basic/Enviroment/BasicWorldEnviroment.tres" type="Environment" id=7]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/Signal.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/BuildingsNode.gd" type="Script" id=9]
+[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=10]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PZBMagnet.tscn" type="PackedScene" id=11]
+
+[node name="World" type="Spatial"]
+script = ExtResource( 1 )
+FileName = "German-Safety-Tutorials"
+
+[node name="DirectionalLight" parent="." instance=ExtResource( 2 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 7 )
+
+[node name="Players" type="Spatial" parent="."]
+
+[node name="Grass" type="Spatial" parent="."]
+visible = false
+
+[node name="grass" type="MeshInstance" parent="Grass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.515472, 0 )
+material_override = ExtResource( 3 )
+mesh = ExtResource( 4 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Signals" type="Spatial" parent="."]
+
+[node name="Signal" parent="Signals" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2883, 0, -11.4469 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "VisualInstance"
+attached_rail = "Rail"
+on_rail_position = 2
+
+[node name="PZBMagnet" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
+hz = 1000
+attached_rail = NodePath("../../Rails/Rail")
+attached_signal = NodePath("../Signal")
+
+[node name="PZBMagnet2" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 966.288, 0, -11.4469 )
+hz = 500
+on_rail_position = 750
+attached_rail = NodePath("../../Rails/Rail2")
+attached_signal = NodePath("../Signal2")
+
+[node name="Signal2" parent="Signals" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
+visible = false
+signal_type = 1
+visual_instance_path = "VisualInstance"
+attached_rail = "Rail2"
+on_rail_position = 1000
+
+[node name="PZBMagnet3" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1214.29, 0, -11.4469 )
+hz = 2000
+on_rail_position = 998
+attached_rail = NodePath("../../Rails/Rail2")
+attached_signal = NodePath("../Signal2")
+
+[node name="Signal3" parent="Signals" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1716.29, 0, -11.4469 )
+visible = false
+signal_type = 2
+status = 1
+is_block_signal = true
+visual_instance_path = "VisualInstance"
+attached_rail = "Rail3"
+on_rail_position = 500
+
+[node name="PZBMagnet4" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1714.29, 0, -11.4469 )
+hz = 1000
+on_rail_position = 498
+attached_rail = NodePath("../../Rails/Rail3")
+attached_signal = NodePath("../Signal3")
+
+[node name="PZBMagnet5" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2676.29, 0, -11.4469 )
+hz = 500
+on_rail_position = 460
+attached_rail = NodePath("../../Rails/Rail5")
+attached_signal = NodePath("../Signal4")
+
+[node name="Signal4" parent="Signals" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2916.29, 0, -11.4469 )
+visible = false
+signal_type = 1
+visual_instance_path = "VisualInstance"
+attached_rail = "Rail5"
+on_rail_position = 700
+
+[node name="PZBMagnet6" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2914.29, 0, -11.4469 )
+hz = 2000
+on_rail_position = 698
+attached_rail = NodePath("../../Rails/Rail5")
+attached_signal = NodePath("../Signal4")
+
+[node name="Rails" type="Spatial" parent="."]
+
+[node name="Rail" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
+visible = false
+length = 200.0
+visibleSegments = 223.222
+startpos = Vector3( 16.2883, 0, -11.4469 )
+endpos = Vector3( 216.288, 0, -11.4469 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="Rail2" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 216.288, 0, -11.4469 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 216.288, 0, -11.4469 )
+endpos = Vector3( 1216.29, 0, -11.4469 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="Rail3" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 1216.29, 0, -11.4469 )
+endpos = Vector3( 2216.29, 0, -11.4469 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="Rail4" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -483.712, 0, -11.447 )
+visible = false
+length = 500.0
+visibleSegments = 556.556
+startpos = Vector3( -483.712, 0, -11.447 )
+endpos = Vector3( 16.288, 0, -11.447 )
+automaticTendency = false
+isSwitchPart = [ "", "" ]
+
+[node name="Rail5" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2216.29, 0, -11.4469 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 2216.29, 0, -11.4469 )
+endpos = Vector3( 3216.29, 0, -11.4469 )
+isSwitchPart = [ "", "" ]
+
+[node name="Rail6" parent="Rails" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
+visible = false
+length = 1000.0
+visibleSegments = 1112.11
+startpos = Vector3( 3216.29, 0, -11.4469 )
+endpos = Vector3( 4216.29, 0, -11.4469 )
+isSwitchPart = [ "", "" ]
+
+[node name="Buildings" type="Spatial" parent="."]
+script = ExtResource( 9 )
+
+[node name="Flora" type="Spatial" parent="."]
+
+[node name="TrackObjects" type="Spatial" parent="."]
+
+[node name="jSaveModule" parent="." instance=ExtResource( 10 )]
+save_path = "/home/dascapschen/Projects/Games/Godot/Libre-TrainSim/src//Worlds/German-Safety-Tutorials/German-Safety-Tutorials.save"
+
+[node name="jSaveModuleScenarios" parent="." instance=ExtResource( 10 )]
+save_path = "/home/dascapschen/Projects/Games/Libre-TrainSim-Editor//Worlds/German-Safety-Tutorials/German-Safety-Tutorials-scenarios.cfg"
+
+[node name="Scripting" type="Node" parent="."]
+script = ExtResource( 5 )

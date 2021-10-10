@@ -71,13 +71,13 @@ func update_display(speed, command, doorLeft, doorRight, doorsClosing, enforced_
 
 	## Engine:
 	$Info/Engine.visible = !engine
-	
+
 	## Enforced Breaking
 	if enforced_braking:
 		$Info/EnforcedBraking.visible = blinkStatus
 	else:
 		$Info/EnforcedBraking.visible = false
-	
+
 	## Doors:
 	if doorsClosing:
 		$Doors.visible = blinkStatus

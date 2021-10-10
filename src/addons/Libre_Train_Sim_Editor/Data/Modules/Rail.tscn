@@ -13,8 +13,8 @@ distance_fade_mode = 1
 distance_fade_min_distance = 0.0
 distance_fade_max_distance = 10.0
 
-[sub_resource type="ConvexPolygonShape" id=3]
-points = PoolVector3Array( 0.070819, 0.5, -0.429181, 0.070819, 0.5, 0.570819, -0.929181, 0.5, -0.429181, -0.929181, 0.5, 0.570819, -0.929181, 0.5, 0.570819, -0.929181, -0.5, 0.570819, -0.929181, 0.5, -0.429181, -0.929181, -0.5, -0.429181, -0.929181, 0.5, -0.429181, -0.929181, -0.5, -0.429181, 0.070819, 0.5, -0.429181, 0.070819, -0.5, -0.429181, 0.070819, -0.5, 0.570819, 0.070819, -0.5, -0.429181, -0.929181, -0.5, 0.570819, -0.929181, -0.5, -0.429181, 0.070819, 0.5, 0.570819, 0.070819, -0.5, 0.570819, -0.929181, 0.5, 0.570819, -0.929181, -0.5, 0.570819, 1.57509, 0.5, 0.070819, 1.57509, -0.5, 0.070819, 0.070819, 0.5, 1.03461, 0.070819, -0.5, 1.03461, 0.070819, -0.5, 0.570819, 0.070819, 0.5, 0.570819, 0.070819, -0.5, 1.03461, 0.070819, 0.5, 1.03461, 1.57509, -0.5, 0.070819, 1.57509, 0.5, 0.070819, 0.070819, 0.5, -0.892973, 0.070819, -0.5, 1.03461, 0.070819, 0.5, -0.429181, 0.070819, -0.5, -0.429181, 0.070819, 0.5, -0.892973, 0.070819, -0.5, -0.892973, 1.57509, -0.5, 0.070819, 1.57509, 0.5, 0.070819, 0.070819, -0.5, -0.892973, 0.070819, 0.5, -0.892973, 0.070819, -0.5, -0.429181, 1.57509, -0.5, 0.070819, 0.070819, -0.5, -0.892973, 0.070819, 0.5, 0.570819, 1.57509, 0.5, 0.070819, 0.070819, 0.5, 1.03461 )
+[sub_resource type="SphereShape" id=7]
+radius = 2.0
 
 [sub_resource type="SpatialMaterial" id=4]
 
@@ -46,15 +46,13 @@ railTypePath = "Rail"
 length = 100.0
 buildDistance = 0.9
 endpos = Vector3( 100, 0, 0 )
-otherLength = 100.0
-Outlength = 100.0
 overheadLine = true
 isSwitchPart = [ "Rail2", "" ]
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 1 )
 
-[node name="Beginning" type="StaticBody" parent="."]
+[node name="Beginning" type="Area" parent="."]
 
 [node name="Beginning" type="MeshInstance" parent="Beginning"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
@@ -64,20 +62,19 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Beginning"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 7 )
 
 [node name="Mid" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 0 )
 
 [node name="Beginning" type="MeshInstance" parent="Mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 mesh = ExtResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Mid"]
-shape = SubResource( 3 )
+shape = SubResource( 7 )
 
-[node name="Ending" type="StaticBody" parent="."]
+[node name="Ending" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )
 
 [node name="Ending" type="MeshInstance" parent="Ending"]
@@ -86,7 +83,7 @@ mesh = ExtResource( 3 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Ending"]
-shape = SubResource( 3 )
+shape = SubResource( 7 )
 
 [node name="OverheadLine" type="MeshInstance" parent="."]
 mesh = SubResource( 6 )

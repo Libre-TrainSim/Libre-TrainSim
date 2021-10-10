@@ -343,6 +343,37 @@ func get_shifted_local_pos_at_RailDistance(distance, shift):
 
 
 ################################################### Easy Circle Functions:
+func calculate_from_start_end(new_endpos):
+	var end = (new_endpos - startpos).rotated(Vector3.UP, deg2rad(-startrot))
+	end.z = -end.z  # fix because in godot -z is forward, not +z
+	end.x = max(end.x, 0)  # do not allow negative x, max angle is 180°!
+	
+	if abs(end.z) < 0.01:
+		radius = 0
+		length = end.length()
+		update()
+		return
+	
+	# m = end.z / end.x
+	# m2 = - 1 / m
+	# b = z - m2 * x
+	var b = end.z + (end.x / end.z) * end.x
+
+	radius = b/2
+	# minimum radius! TODO: sensible value?
+	if radius < 0 and radius > -10:
+		radius = -10
+	elif radius > 0 and radius < 10:
+		radius = 10
+	
+	var angle = 2 * asin(end.length() / b) # asin( (len/2) / r )
+	length = radius * angle
+	
+	endrot = startrot + angle
+	
+	update()
+
+
 func circle_get_pos(radius, distance):
 	if radius == 0:
 		return Vector2(distance, 0)

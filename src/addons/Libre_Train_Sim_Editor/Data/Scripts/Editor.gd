@@ -13,6 +13,7 @@ func _ready():
 	save_world(false)  # yes, really, gras sometimes breaks if we don't *sigh*
 
 
+
 var bouncing_timer = 0
 var one_second_timer = 0
 func _process(delta):
@@ -49,8 +50,14 @@ func _exit_tree():
 
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed == false and not $EditorHUD.mouse_over_ui:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and not $EditorHUD.mouse_over_ui:
 		select_object_under_mouse()
+
+	if event is InputEventMouseButton and not event.pressed and drag_mode:
+		end_drag_mode()
+
+	if event is InputEventMouseMotion and drag_mode:
+		handle_drag_mode()
 
 	if Input.is_action_just_pressed("save"):
 		save_world()
@@ -62,9 +69,38 @@ func _input(event):
 		_on_MessageClose_pressed()
 
 
+var drag_mode = false
+func begin_drag_mode():
+	drag_mode = true
+	#print("DRAG MODE START")
+
+
+func end_drag_mode():
+	drag_mode = false
+	#print("DRAG MODE END")
+
+
+func handle_drag_mode():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var plane = Plane(Vector3(0,1,0), selected_object.startpos.y)
+	var mouse_pos_3d = plane.intersects_ray($FreeCamera.project_ray_origin(mouse_pos), $FreeCamera.project_ray_normal(mouse_pos))
+	if mouse_pos_3d != null:
+		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
+		provide_settings_for_selected_object()  # update ui
+
+	# wait for physics update, else we can never un-snap
+	yield(get_tree(), "idle_frame")
+
+	# lazy snapping done via collision areas
+	var overlaps = selected_object.get_node("Ending").get_overlapping_areas()
+	if not overlaps.empty():
+		for area in overlaps:
+			if get_type_of_object(area.get_parent()) == "Rail" and area.get_parent() != selected_object:
+				selected_object.calculate_from_start_end(area.global_transform.origin)
+				break
+
 
 func select_object_under_mouse():
-
 	var ray_length = 1000
 	var mouse_pos = get_viewport().get_mouse_position()
 	var from = camera.project_ray_origin(mouse_pos)
@@ -72,9 +108,14 @@ func select_object_under_mouse():
 
 	var space_state = get_world().get_direct_space_state()
 	# use global coordinates, not local to node
-	var result = space_state.intersect_ray( from, to)
+	var result = space_state.intersect_ray(from, to, [  ], 0x7FFFFFFF, true, true)
 	if result.has("collider"):
-		set_selected_object(result["collider"].get_parent())
+		var obj_to_select = result["collider"].get_parent()
+
+		if get_type_of_object(obj_to_select) == "Rail" and result.collider.name == "Ending":
+			begin_drag_mode()
+
+		set_selected_object(obj_to_select)
 		provide_settings_for_selected_object()
 		Logger.vlog("selected!")
 
@@ -97,7 +138,6 @@ func clear_selected_object():
 					child.queue_free()
 		if selected_object_type == "Signal":
 			selected_object.scale = Vector3(1,1,1)
-
 
 	selected_object = null
 	selected_object_type = ""
@@ -127,6 +167,7 @@ func provide_settings_for_selected_object():
 		$EditorHUD/Settings/TabContainer/RailLogic.set_rail_logic(selected_object)
 		$EditorHUD.show_signal_settings()
 	$EditorHUD.update_ShowSettingsButton()
+
 
 ## Should be used, if world is loaded into scene.
 func load_world():
@@ -192,17 +233,21 @@ func save_world_step_2(send_message: bool = true):
 func _on_SaveWorldButton_pressed():
 	save_world()
 
+
 func rename_selected_object(new_name):
 	Root.name_node_appropriate(selected_object, new_name, selected_object.get_parent())
 	$EditorHUD.set_current_object_name(selected_object.name)
 	provide_settings_for_selected_object()
 
+
 func delete_selected_object():
 	selected_object.queue_free()
 	clear_selected_object()
 
+
 func get_rail(name : String):
 	return $World/Rails.get_node_or_null(name)
+
 
 func set_selected_object(object):
 	clear_selected_object()
@@ -222,6 +267,7 @@ func set_selected_object(object):
 
 	provide_settings_for_selected_object()
 
+
 func add_rail():
 	var position = get_current_ground_position()
 	var rail_res = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
@@ -233,10 +279,12 @@ func add_rail():
 #	rail_instance._update()
 	set_selected_object(rail_instance)
 
+
 func get_current_ground_position() -> Vector3:
 	var position = camera.translation
 	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
 	return position
+
 
 func add_object(complete_path : String):
 	var position = get_current_ground_position()
@@ -365,9 +413,6 @@ func _on_ExportTrack_pressed():
 	$EditorHUD/ExportDialog.show_up(editor_directory)
 
 
-
-
-
 func _on_TestTrack_pressed():
 	test_track_pck()
 
@@ -375,16 +420,19 @@ func _on_TestTrack_pressed():
 func _on_ExportDialog_export_confirmed(path):
 	export_track_pck(path)
 
+
 func send_message(message):
 	Logger.log("Editor sends message: " + message)
 	$EditorHUD/Message/RichTextLabel.text = message
 	$EditorHUD/Message.show()
+
 
 func _on_MessageClose_pressed():
 	$EditorHUD/Message.hide()
 	$EditorHUD._on_dialog_closed()
 	if not has_node("World"):
 		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+
 
 func duplicate_selected_object():
 	Logger.vlog(selected_object_type)
@@ -413,6 +461,7 @@ func add_signal_to_selected_rail():
 	signal_ins.set_to_rail(true)
 	set_selected_object(signal_ins)
 
+
 func add_station_to_selected_rail():
 	if selected_object_type != "Rail":
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
@@ -426,6 +475,7 @@ func add_station_to_selected_rail():
 	station_ins.attached_rail = selected_object.name
 	station_ins.set_to_rail(true)
 	set_selected_object(station_ins)
+
 
 func add_speed_limit_to_selected_rail():
 	if selected_object_type != "Rail":
@@ -441,6 +491,7 @@ func add_speed_limit_to_selected_rail():
 	speed_limit_ins.set_to_rail(true)
 	set_selected_object(speed_limit_ins)
 
+
 func add_warn_speed_limit_to_selected_rail():
 	if selected_object_type != "Rail":
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
@@ -454,6 +505,7 @@ func add_warn_speed_limit_to_selected_rail():
 	warn_speed_limit_ins.attached_rail = selected_object.name
 	warn_speed_limit_ins.set_to_rail(true)
 	set_selected_object(warn_speed_limit_ins)
+
 
 func add_contact_point_to_selected_rail():
 	if selected_object_type != "Rail":
@@ -487,6 +539,7 @@ func jump_to_station(station_node_name):
 	camera.rotation_degrees.y -= 90
 
 
+
 var ist_chunks = []
 func load_chunks_near_camera():
 	var wanted_chunks = $World.get_chunks_around_position(camera.translation)
@@ -509,3 +562,4 @@ func get_imported_cache_file_path_of_import_file(file_path):
 	else:
 		return_values.append(value)
 	return return_values
+

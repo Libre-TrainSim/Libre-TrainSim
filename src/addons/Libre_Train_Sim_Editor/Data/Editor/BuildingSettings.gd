@@ -37,7 +37,7 @@ func set_mesh(mesh : MeshInstance):
 		add_child(new_child)
 		new_child.show()
 		configure_mouse_signals(new_child)
-	
+
 	## Add Update Button:
 	var button = Button.new()
 	button.name = "Button"
@@ -47,7 +47,7 @@ func set_mesh(mesh : MeshInstance):
 	add_child(button)
 	button.connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
 	button.connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")
-	
+
 	show()
 
 func set_current_config_to_mesh():
@@ -61,9 +61,9 @@ func set_current_config_to_mesh():
 		if ResourceLoader.exists(material_path):
 			current_mesh.set_surface_material(counter, load(material_path))
 		counter += 1
-			
-		
-	
+
+
+
 
 func clear_materials_list():
 	for child in get_children():
@@ -102,7 +102,7 @@ func get_material_array():
 		else:
 			array.append("")
 	return array
-	
+
 func configure_mouse_signals(node):
 	node.get_node("LineEdit").connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
 	node.get_node("LineEdit").connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")

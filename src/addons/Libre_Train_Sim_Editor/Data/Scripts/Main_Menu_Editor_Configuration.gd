@@ -7,27 +7,27 @@ func init():
 	initialize_editor_directory()
 	load_additional_resources()
 
-	
+
 func initialize_UI():
 	editor_directory = jSaveManager.get_setting("editor_directory_path", OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)+"Libre-TrainSim-Editor/")
 	jSaveManager.save_setting("editor_directory_path", editor_directory)
 	$VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
-	
+
 	var track_paths = jEssentials.find_files_recursively(editor_directory + "Worlds/", "tscn")
 	var tracks = []
 	for track_path in track_paths:
 		tracks.append(track_path.get_file().get_basename())
-		
+
 	$VBoxContainer/TracksList.set_data(tracks)
-		
-	
-	
+
+
+
 func initialize_editor_directory():
 	var dir = Directory.new()
 	dir.make_dir_recursive(editor_directory)
 	dir.make_dir_recursive(editor_directory + "Resources/")
 	dir.make_dir_recursive(editor_directory + "Worlds/")
-	
+
 
 func _on_UpdateEditorPathButton_pressed():
 	editor_directory = $VBoxContainer/HBoxContainer/EditorPath.text
@@ -42,9 +42,9 @@ func initialize_track_directory(entry_name):
 	dir.make_dir_recursive(editor_directory + "Worlds/" + entry_name)
 
 	create_resource_directory_structure(entry_name)
-	
+
 	dir.copy("res://addons/Libre_Train_Sim_Editor/Data/Modules/World-Pattern.tscn", editor_directory + "Worlds/" + entry_name + "/" + entry_name + ".tscn")
-		
+
 
 func create_resource_directory_structure(track_name):
 	var dir = Directory.new()
@@ -55,7 +55,7 @@ func create_resource_directory_structure(track_name):
 	dir.make_dir_recursive(editor_directory + "Resources/" + track_name + "/Signals")
 	dir.make_dir_recursive(editor_directory + "Resources/" + track_name + "/Sounds")
 	dir.make_dir_recursive(editor_directory + "Resources/" + track_name + "/Textures")
-	
+
 
 func _on_TracksList_user_added_entry(entry_name):
 	$VBoxContainer/TracksList.remove_entry(entry_name)
@@ -71,12 +71,12 @@ func remove_inappropriate_signs_from_track_name(track_name):
 
 func _on_TracksList_user_renamed_entry(old_name, new_name):
 	rename_track(old_name, new_name)
-	
+
 func rename_track(old_name, new_name):
 	new_name = remove_inappropriate_signs_from_track_name(new_name)
-	
+
 	jEssentials.copy_folder_recursively(editor_directory + "Worlds/" + old_name, editor_directory + "Worlds/" + new_name)
-	
+
 	var dir = Directory.new()
 	if dir.open(editor_directory + "Worlds/" + new_name) != OK: return
 	dir.list_dir_begin()
@@ -88,9 +88,9 @@ func rename_track(old_name, new_name):
 		var dir2 = Directory.new()
 		dir2.rename(editor_directory + "Worlds/" + new_name + "/" + file, editor_directory + "Worlds/" + new_name + "/" + file.replace(old_name, new_name))
 	dir.list_dir_end()
-	
+
 	jEssentials.remove_folder_recursively(editor_directory + "Worlds/" + old_name)
-	
+
 	create_resource_directory_structure(new_name)
 
 

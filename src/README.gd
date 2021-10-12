@@ -26,7 +26,7 @@ extends Node
 ## Some more Objects And Tracks.
 ## Main Menu
 ## More scenarios per Track
-## 
+##
 ## Addon Support
 ## Sound
 ## Detailed Cockpits

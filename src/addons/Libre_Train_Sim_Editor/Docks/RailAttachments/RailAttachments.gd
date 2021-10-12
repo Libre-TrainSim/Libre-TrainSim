@@ -41,15 +41,15 @@ func update_selected_rail(node):
 		update_itemList()
 		update_object_tab()
 		update_positioning()
-		
+
 		# if jList has description, select this one..
 		if $Tab/TrackObjects/jListTrackObjects.has_entry(track_object_name):
 			$Tab/TrackObjects/jListTrackObjects.select_entry(track_object_name)
 			_on_jListTrackObjects_user_selected_entry(track_object_name)
 		else:
 			currentTO = null
-			
-			
+
+
 	else:
 		currentRail = null
 		$CurrentRail/Name.text = ""
@@ -88,9 +88,9 @@ func _on_jListTrackObjects_user_added_entry(entry_name):
 	world.get_node("TrackObjects").add_child(track_object)
 	track_object.set_owner(world)
 	track_object.attach_to_rail(currentRail)
-	
+
 	print("Created track object " + track_object.name)
-	
+
 	update_object_tab()
 
 func _on_jListTrackObjects_user_renamed_entry(old_name, new_name):
@@ -127,7 +127,7 @@ func copy_track_object_to_current_rail(source_track_object : Node, new_descripti
 	new_track_object.update(currentRail)
 
 
-	
+
 func _on_jListTrackObjects_user_selected_entry(entry_name):
 	currentTO = currentRail.get_track_object(entry_name)
 	if currentTO == null:
@@ -139,13 +139,13 @@ func _on_jListTrackObjects_user_selected_entry(entry_name):
 	update_positioning()
 	update_Position()
 	pass # Replace with function body.
-	
 
-		
+
+
 func update_Position():
 	if currentTO == null: return
 	$Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed = currentTO.wholeRail
-	
+
 	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
 	_on_AssignWholeRail_pressed()
@@ -154,13 +154,13 @@ func update_Position():
 func _on_AssignWholeRail_pressed():
 	$Tab/TrackObjects/Settings/Tab/Position/StartPos.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
-	
+
 	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
-	
+
 	_on_SavePosition_pressed()
 	update_current_rail_attachment()
-	
+
 
 
 func _on_SavePosition_pressed():
@@ -242,7 +242,7 @@ func _on_jListTrackObjects_user_pasted_entries(source_entry_names, source_jList_
 	assert(pasted_entry_names.size() == copyTOArray.size())
 	for i in range (pasted_entry_names.size()):
 		copy_track_object_to_current_rail(copyTOArray[i], pasted_entry_names[i], $Tab/TrackObjects/MirrorPastedObjects.pressed)
-			
+
 
 
 func _on_Randomize_pressed():
@@ -265,11 +265,11 @@ func _on_PickObject_pressed():
 	requested_content_selector_id = -1
 	content_selector.set_type(content_selector.OBJECTS)
 	content_selector.show()
-	
+
 
 func _on_Content_Selector_resource_selected(complete_path):
 	$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings._on_Content_Selector_resource_selected(complete_path)
-	
+
 	if requested_content_selector_id == -2:
 		return
 	if requested_content_selector_id == -1: # Obj File
@@ -279,11 +279,11 @@ func _on_Content_Selector_resource_selected(complete_path):
 		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = complete_path
 		apply_object_tab()
 		update_current_rail_attachment() # update
-	
-	
 
 
-	
+
+
+
 
 func _on_FileDialog_onject_selected(path):
 	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = path

@@ -16,7 +16,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	
+
 func handle_object_transform_field():
 	$ObjectName/Name/Duplicate.visible = get_parent().selected_object_type == "Building"
 	if not $ObjectTransform.visible:
@@ -26,8 +26,8 @@ func handle_object_transform_field():
 	$ObjectTransform/HBoxContainer/y.value = selected_object.translation.y
 	$ObjectTransform/HBoxContainer/z.value = selected_object.translation.z
 	$ObjectTransform/HBoxContainer/y_rot.value = selected_object.rotation_degrees.y
-	
-	
+
+
 
 func _input(event):
 	if Input.is_action_just_pressed("Escape"):
@@ -36,16 +36,16 @@ func _input(event):
 		else:
 			$Pause.show()
 			get_tree().paused = true
-	
+
 	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == true:
-		
+
 		$Dummy.grab_focus()
-	
+
 	handle_object_transform_field()
-	
 
 
-	
+
+
 
 func update_ShowSettingsButton():
 	if not $Settings.visible:
@@ -59,8 +59,8 @@ func _on_ShowSettings_pressed():
 	else:
 		show_settings()
 	update_ShowSettingsButton()
-		
-	
+
+
 func hide_settings():
 	$Settings.hide()
 
@@ -76,7 +76,7 @@ func clear_current_object_name():
 
 func hide_current_object_transform():
 	$ObjectTransform.hide()
-	
+
 func show_current_object_transform():
 	$ObjectTransform.show()
 	handle_object_transform_field()
@@ -113,7 +113,7 @@ func _on_SaveWithoutExit_pressed():
 
 
 
-	
+
 
 func _on_x_value_changed(value):
 	var selected_object = get_parent().selected_object
@@ -137,7 +137,7 @@ func _on_y_rot_value_changed(value):
 
 func _onObjectName_text_entered(new_text):
 	_on_CurrentObjectRename_pressed()
-	
+
 func show_building_settings():
 	show_settings()
 	$Settings/TabContainer.current_tab = 4
@@ -161,7 +161,7 @@ var mouse_ui_index = 0
 func _on_Mouse_entered_UI():
 	mouse_ui_index += 1
 	mouse_over_ui = mouse_ui_index != 0
-	
+
 func _on_Mouse_exited_UI():
 	mouse_ui_index -= 1
 	mouse_ui_index = max(0, mouse_ui_index)
@@ -174,7 +174,7 @@ func _on_dialog_closed():
 
 func register_signals_for_escaping_mouse_clicks_from_ui(node : Node) -> void:
 	for child in node.get_children():
-		if child.has_signal("mouse_entered"): 
+		if child.has_signal("mouse_entered"):
 			child.connect("mouse_entered", child.find_parent("EditorHUD"), "_on_Mouse_entered_UI")
 			child.connect("mouse_exited", child.find_parent("EditorHUD"), "_on_Mouse_exited_UI")
 		register_signals_for_escaping_mouse_clicks_from_ui(child)
@@ -198,4 +198,4 @@ func _on_JumpToStationItemList_item_selected(index):
 	$JumpToStation/ItemList.hide()
 	_on_dialog_closed()
 	get_parent().jump_to_station($JumpToStation/ItemList.get_item_text(index))
-	
+

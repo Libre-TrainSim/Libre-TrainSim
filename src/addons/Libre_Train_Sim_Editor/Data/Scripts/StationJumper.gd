@@ -18,7 +18,7 @@ func update_list(player):
 		current_station_indices.pop_front()
 	for station_index in current_station_indices:
 		$StationJumper/ItemList.add_item(stations["stationName"][station_index])
-	
+
 	$StationJumper/Label2.text = tr("WARNING_JUMPING_SCENARIO")
 
 func _on_Jump_pressed():

@@ -17,7 +17,7 @@ var bouncing_timer = 0
 var one_second_timer = 0
 func _process(delta):
 
-	
+
 	## Bouncing Effect at selected object
 	if is_instance_valid(selected_object):
 		bouncing_timer += delta
@@ -34,13 +34,13 @@ func _process(delta):
 			selected_object.scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
 	else:
 		clear_selected_object()
-	
+
 	one_second_timer += delta
 	if one_second_timer > 1:
 		one_second_timer = 0
 		load_chunks_near_camera()
-	
-		
+
+
 
 func _enter_tree():
 	Root.Editor = true
@@ -51,25 +51,25 @@ func _exit_tree():
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed == false and not $EditorHUD.mouse_over_ui:
 		select_object_under_mouse()
-	
+
 	if Input.is_action_just_pressed("save"):
 		save_world()
-	
+
 	if Input.is_action_just_pressed("delete"):
 		delete_selected_object()
-	
+
 	if Input.is_action_just_pressed("ui_accept") and $EditorHUD/Message.visible:
 		_on_MessageClose_pressed()
 
 
 
 func select_object_under_mouse():
-	
+
 	var ray_length = 1000
 	var mouse_pos = get_viewport().get_mouse_position()
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
-	
+
 	var space_state = get_world().get_direct_space_state()
 	# use global coordinates, not local to node
 	var result = space_state.intersect_ray( from, to)
@@ -77,7 +77,7 @@ func select_object_under_mouse():
 		set_selected_object(result["collider"].get_parent())
 		provide_settings_for_selected_object()
 		print("selected!")
-		
+
 
 func clear_selected_object():
 	# Reset scale of current object because of editor "bouncing"
@@ -97,8 +97,8 @@ func clear_selected_object():
 					child.queue_free()
 		if selected_object_type == "Signal":
 			selected_object.scale = Vector3(1,1,1)
-			
-	
+
+
 	selected_object = null
 	selected_object_type = ""
 	$EditorHUD.clear_current_object_name()
@@ -153,13 +153,13 @@ func load_world():
 	for signal_ins in $World/Signals.get_children():
 #		if signal_ins.type == "Signal":
 		signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
-	
+
 	$World/Grass.hide()
 	generate_grass_panes()
-	
+
 	Root.fix_frame_drop()
-	 
-	
+
+
 func save_world():
 	## Save Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
@@ -167,29 +167,29 @@ func save_world():
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
 	$World.unload_and_save_all_chunks()
-	
+
 	jEssentials.call_delayed(0.1, self, "save_world_step_2")
 
 func save_world_step_2():
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
-		var error = ResourceSaver.save(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn", packed_scene) 
+		var error = ResourceSaver.save(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn", packed_scene)
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
-	
+
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
 	$World/jSaveModule.write_to_disk()
 	$World/jSaveModuleScenarios.write_to_disk()
-	
+
 	ist_chunks.clear()
-	
+
 #	$World.force_load_all_chunks()
 	send_message("World successfully saved!")
-	
-	
-	
+
+
+
 	generate_grass_panes()
 
 
@@ -205,17 +205,17 @@ func rename_selected_object(new_name):
 func delete_selected_object():
 	selected_object.queue_free()
 	clear_selected_object()
-	
+
 func get_rail(name : String):
 	return $World/Rails.get_node_or_null(name)
-	
+
 func set_selected_object(object):
 	clear_selected_object()
-	
+
 	selected_object = object
 	$EditorHUD.set_current_object_name(selected_object.name)
 	selected_object_type = get_type_of_object(selected_object)
-	
+
 	if selected_object_type == "Building":
 		selected_object.get_node("SelectCollider").hide()
 		selected_object.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Gizmo.tscn").instance())
@@ -224,7 +224,7 @@ func set_selected_object(object):
 		if selected_object.manualMoving:
 			selected_object.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Gizmo.tscn").instance())
 			$EditorHUD.show_current_object_transform()
-	
+
 	provide_settings_for_selected_object()
 
 func add_rail():
@@ -239,7 +239,7 @@ func add_rail():
 	set_selected_object(rail_instance)
 
 func get_current_ground_position() -> Vector3:
-	var position = $FreeCamera.translation 
+	var position = $FreeCamera.translation
 	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
 	return position
 
@@ -255,7 +255,7 @@ func add_object(complete_path : String):
 	mesh_instance.set_owner($World)
 	mesh_instance.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	set_selected_object(mesh_instance)
-	
+
 
 
 func _on_FreeCamera_single_rightclick():
@@ -269,7 +269,7 @@ func test_track_pck():
 	var pck_path = editor_directory + "/.cache/" + Root.current_editor_track + ".pck"
 	var packer = PCKPacker.new()
 	packer.pck_start(pck_path)
-	
+
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg")
@@ -285,7 +285,7 @@ func export_track_pck(export_path):
 	export_path += "/" + track_name + ".pck"
 	var packer = PCKPacker.new()
 	packer.pck_start(export_path)
-	
+
 	## Handle dependencies
 	var dependencies_raw = ResourceLoader.get_dependencies(editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
 
@@ -293,7 +293,7 @@ func export_track_pck(export_path):
 	var scenario_data = $World/jSaveModuleScenarios.get_value("scenario_data")
 	for scenario in scenario_data.keys():
 		for train in scenario_data[scenario]["Trains"].keys():
-			if not scenario_data[scenario]["Trains"][train]["Stations"].has("approachAnnouncePath"): 
+			if not scenario_data[scenario]["Trains"][train]["Stations"].has("approachAnnouncePath"):
 				continue
 			for path in scenario_data[scenario]["Trains"][train]["Stations"]["approachAnnouncePath"]:
 				dependencies_raw.append(path)
@@ -302,7 +302,7 @@ func export_track_pck(export_path):
 			for path in scenario_data[scenario]["Trains"][train]["Stations"]["departureAnnouncePath"]:
 				dependencies_raw.append(path)
 	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-	
+
 	# Get all dependencies of track objects, buildings, etc..
 	for chunk in $World.get_all_chunks():
 		var chunk_data = $World/jSaveModule.get_value($World.chunk2String(chunk))
@@ -319,14 +319,14 @@ func export_track_pck(export_path):
 		if signal_node.type == "Signal":
 			dependencies_raw.append(signal_node.visualInstancePath)
 	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-	
-	
+
+
 	## Convert some resources to resource pathes
 	for dependence in dependencies_raw:
 		if not dependence is String:
 			dependencies_raw.append(dependence.resource_path)
 			dependencies_raw.erase(dependence)
-	
+
 	## Get dependencies of dependencies:
 	for dependence in dependencies_raw:
 		if not dependence is String:
@@ -334,7 +334,7 @@ func export_track_pck(export_path):
 			continue
 		dependencies_raw.append_array(ResourceLoader.get_dependencies(dependence))
 	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-	
+
 	## Get import files with resource pathes:
 	for dependence in dependencies_raw:
 		if not dependence is String:
@@ -345,7 +345,7 @@ func export_track_pck(export_path):
 			dependencies_raw.append(dependence_import_file)
 #			dependencies_raw.erase(dependence)
 	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-		
+
 	var dependencies_export = []
 	for dependence in dependencies_raw:
 		if dependence == null:
@@ -359,21 +359,21 @@ func export_track_pck(export_path):
 	for dependence in dependencies_export:
 		print(dependence)
 		packer.add_file(dependence, dependence)
-	
+
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg")
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/screenshot.png", editor_directory + "/Worlds/"+Root.current_editor_track+"/screenshot.png")
-	
+
 	packer.flush()
 	send_message("Track successfully exported to: " + export_path)
 	$EditorHUD/ExportDialog.hide()
-	
-	
+
+
 func _on_ExportTrack_pressed():
 	$EditorHUD/ExportDialog.show_up(editor_directory)
-	
-	
+
+
 
 
 
@@ -421,7 +421,7 @@ func add_signal_to_selected_rail():
 	signal_ins.attached_rail = selected_object.name
 	signal_ins.set_to_rail(true)
 	set_selected_object(signal_ins)
-	
+
 func add_station_to_selected_rail():
 	if selected_object_type != "Rail":
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")

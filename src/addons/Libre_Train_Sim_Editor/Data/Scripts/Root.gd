@@ -40,14 +40,14 @@ func _unhandled_key_input(_event):
 
 
 ## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor
-func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node): 
+func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node):
 	# Remove last Numbers from wanted name
 	while(wanted_name[-1].is_valid_integer()):
 		wanted_name.erase(wanted_name.length() -1, 1)
-	
+
 	wanted_name = wanted_name.replace(" " , "")
 	wanted_name = wanted_name.validate_node_name()
-		
+
 	if not parent_node.has_node(wanted_name):
 		node.name = wanted_name
 		return wanted_name
@@ -59,7 +59,7 @@ func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node
 			node.name = new_name
 			return new_name
 		counter += 1
-	
+
 
 func checkAndLoadTranslationsForTrack(trackName): # Searches for translation files with trackName in res://Translations/
 	print(trackName.get_file().get_basename())
@@ -99,7 +99,7 @@ func checkAndLoadTranslationsForTrain(trainDirPath): # Searches for translation 
 		TranslationServer.add_translation(tainTranslation)
 
 ## foundFiles has to be an dict: {"Array" : []}
-func crawlDirectory(directoryPath,foundFiles,fileExtension): 
+func crawlDirectory(directoryPath,foundFiles,fileExtension):
 	var dir = Directory.new()
 	if dir.open(directoryPath) != OK: return
 	dir.list_dir_begin()
@@ -114,14 +114,14 @@ func crawlDirectory(directoryPath,foundFiles,fileExtension):
 				crawlDirectory(directoryPath+"/"+file, foundFiles, fileExtension)
 		else:
 			if file.get_extension() == fileExtension:
-				var exportString 
+				var exportString
 				if directoryPath.ends_with("/"):
 					exportString = directoryPath +file
 				else:
 					exportString = directoryPath +"/"+file
 				foundFiles["Array"].append(exportString)
 	dir.list_dir_end()
-	
+
 func get_subfolders_of(directoryPath):
 	var dir = Directory.new()
 	if dir.open(directoryPath) != OK: return
@@ -135,7 +135,7 @@ func get_subfolders_of(directoryPath):
 			folder_names.append(file)
 	dir.list_dir_end()
 	return folder_names
-	
+
 # approaches 'ist' value to 'soll' value in one second  (=smooth transitions from current 'ist' value to 'soll' value)
 func clampViaTime(soll : float, ist : float, delta : float):
 	ist += (soll-ist)*delta
@@ -146,7 +146,7 @@ func fix_frame_drop():
 		return
 	jEssentials.call_delayed(0.7, self,  "set_fullscreen", [!jSettings.get_fullscreen()])
 	jEssentials.call_delayed(0.9, self,  "set_fullscreen", [jSettings.get_fullscreen()])
-	
+
 func set_fullscreen(value : bool):
 	OS.window_fullscreen = value
 

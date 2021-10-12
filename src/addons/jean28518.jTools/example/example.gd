@@ -5,11 +5,11 @@ func _ready():
 	var tableData = jSaveManager.get_value("tableSettings") # Load Table from File.
 	if tableData != null:
 		$Table/jTable.set_data(tableData)
-		
+
 	## Load jList data
 	$Page2/jListExample2/jList.set_data(jSaveManager.get_value("jListExample2", []))
-	
-	
+
+
 	## Play Music: (The music also plays while level loading ;)
 	jAudioManager.play_music("res://addons/jean28518.jTools/example/SampleMusic.ogg")
 
@@ -28,11 +28,11 @@ func _on_jTable_saved_pressed(tableData):
 	# }
 
 	jSaveManager.save_value("tableSettings", tableData)
-	
+
 	print("Saved Table Data successfully. \nHint: For saving you have to care yourself. See example.gd for required code.")
 
 ## Option Button ###############################################################
-# You just need to call this function jSettings.openSettings(), 
+# You just need to call this function jSettings.openSettings(),
 # and the settings window opens. Completely irrelevant from where you call this.
 
 func _on_Options_pressed():
@@ -42,7 +42,7 @@ func _on_Options_pressed():
 ## Easy Save/Load Example ######################################################
 func _on_SaveSingleValue_pressed():
 	jSaveManager.save_value("exampleValue", $ColorRect/LineEdit.text)
-	
+
 
 func _on_Load_pressed():
 	if jSaveManager.get_value("exampleValue") != null:
@@ -75,7 +75,7 @@ func _on_jListExample2_user_pressed_save(data):
 
 func _on_jListExample1_user_selected_entry(entry_name):
 	print("User selected " + entry_name)
-	
+
 ## (Pages) #####################################################################
 func _on_Page1_pressed():
 	$Table.show()

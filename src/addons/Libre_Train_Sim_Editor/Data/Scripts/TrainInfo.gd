@@ -23,8 +23,8 @@ func update_info(player):
 		$ScrollContainer/VBoxContainer/Engine/dot.texture = green
 	else:
 		$ScrollContainer/VBoxContainer/Engine/dot.texture = red
-	
-	
+
+
 	## Pantograph:
 	$ScrollContainer/VBoxContainer/Pantograpgh.visible = player.electric
 	if player.pantograph:
@@ -34,7 +34,7 @@ func update_info(player):
 			$ScrollContainer/VBoxContainer/Pantograpgh/dot.texture = orange
 		else:
 			$ScrollContainer/VBoxContainer/Pantograpgh/dot.texture = red
-	
+
 	## Doors:
 	$ScrollContainer/VBoxContainer/Doors.visible = player.doors
 	if not (player.doorLeft or player.doorRight):
@@ -44,7 +44,7 @@ func update_info(player):
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = orange
 		else:
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = red
-	
+
 	## Control Type:
 	if player.control_type == player.ControlType.COMBINED:
 		$"ScrollContainer/VBoxContainer/Brakes-1".hide()
@@ -52,8 +52,8 @@ func update_info(player):
 	else:
 		$"ScrollContainer/VBoxContainer/Brakes-0".hide()
 		$"ScrollContainer/VBoxContainer/Acceleration-0".hide()
-		
-		
+
+
 	## Brakes:
 	if player.technicalSoll < 0:
 		$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = red
@@ -80,13 +80,13 @@ func update_info(player):
 	else:
 		$"ScrollContainer/VBoxContainer/Acceleration-0/dot".texture = green
 		$"ScrollContainer/VBoxContainer/Acceleration-1/dot".texture = green
-	
+
 	## EnforcedBreake
 	if player.enforced_braking:
 		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = red
 	else:
 		$ScrollContainer/VBoxContainer/EnforcedBreaking/dot.texture = green
-	
+
 	## SiFa
 	$ScrollContainer/VBoxContainer/SiFa.visible = player.sifaEnabled
 	if player.sifaTimer > 35:
@@ -95,18 +95,18 @@ func update_info(player):
 		$ScrollContainer/VBoxContainer/SiFa/dot.texture = orange
 	else:
 		$ScrollContainer/VBoxContainer/SiFa/dot.texture = green
-	
+
 	$ScrollContainer/VBoxContainer/Autopilot.visible = Root.EasyMode
 	if player.automaticDriving:
 		$ScrollContainer/VBoxContainer/Autopilot/dot.texture = green
 	else:
 		$ScrollContainer/VBoxContainer/Autopilot/dot.texture = red
-	
+
 	if player.frontLight:
 		$ScrollContainer/VBoxContainer/FrontLight/dot.texture = green
 	else:
 		$ScrollContainer/VBoxContainer/FrontLight/dot.texture = red
-	
+
 	if player.insideLight:
 		$ScrollContainer/VBoxContainer/InsideLight/dot.texture = green
 	else:

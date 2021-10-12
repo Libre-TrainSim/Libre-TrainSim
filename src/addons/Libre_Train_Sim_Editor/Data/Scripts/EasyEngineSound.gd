@@ -9,28 +9,28 @@ export (String) var accelerationPath = "res://Resources/Basic/Sounds/Acceleratio
 func _ready():
 	$Idle.stream = load(engineIdlePath)
 	$Acceleration.stream = load(accelerationPath)
-	
+
 	$Idle.unit_db = -50
 	$Acceleration.unit_db = -50
-	
+
 func _process(delta):
 	if player == null:
 		player = get_parent().player
-		return	
-	
-	
+		return
+
+
 	if player.engine:
 		$Idle.unit_db = Root.clampViaTime(0, $Idle.unit_db, delta)
 	else:
 		$Idle.unit_db = Root.clampViaTime(-50, $Idle.unit_db, delta)
-		
+
 	var sollAcceleration = -50
 	if player.command > 0 and player.engine and player.speed != 0:
 		if  Math.speedToKmH(player.speed) < 60:
 			sollAcceleration = -30 + abs(player.command*30)
 		else:
 			sollAcceleration = -30 + abs(player.command*30) - (Math.speedToKmH(player.speed)-60)*3.0
-	
+
 	$Acceleration.unit_db = Root.clampViaTime(sollAcceleration, $Acceleration.unit_db, delta)
 
 	$Idle.stream_paused = not wagon.visible
@@ -54,7 +54,7 @@ func _process(delta):
 #		driveSoundDb = 10
 #	if player.speed == 0:
 #		driveSoundDb = -50.0
-#	$DriveSound.unit_db = Root.clampViaTime(driveSoundDb, $DriveSound.unit_db, delta) 
+#	$DriveSound.unit_db = Root.clampViaTime(driveSoundDb, $DriveSound.unit_db, delta)
 #
 #	var sollBreakSound = -50.0
 #	if not (player.speed >= 5 or player.command >= 0 or player.speed == 0):

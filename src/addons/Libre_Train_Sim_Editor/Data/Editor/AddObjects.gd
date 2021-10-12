@@ -12,7 +12,7 @@ func _on_ShowMenu_pressed():
 		show_menu()
 	else:
 		hide_menu()
-		
+
 func show_menu():
 	$Menu1.show()
 	$ShowMenu.text = " - "
@@ -45,7 +45,7 @@ func _on_ItemList_item_selected(index):
 		else:
 			$RailLogicMenu.show()
 
-	
+
 func _on_RailLogicMenu_item_selected(index):
 	var editor = find_parent("Editor")
 	hide_menu()
@@ -57,20 +57,20 @@ func _on_RailLogicMenu_item_selected(index):
 			editor.add_signal_to_selected_rail()
 		1:
 			editor.add_station_to_selected_rail()
-		2: 
+		2:
 			editor.add_speed_limit_to_selected_rail()
-		3: 
+		3:
 			editor.add_warn_speed_limit_to_selected_rail()
-		4: 
+		4:
 			editor.add_contact_point_to_selected_rail()
-			
-		
+
+
 	pass
 
-		
-	
-	
-		
+
+
+
+
 
 
 func _on_Content_Selector_resource_selected(complete_path):

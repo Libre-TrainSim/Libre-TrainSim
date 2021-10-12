@@ -10,13 +10,13 @@ func _ready():
 
 func get_data():
 	return [$Popup/HBoxContainer/H.value, $Popup/HBoxContainer/M.value, $Popup/HBoxContainer/S.value]
-	
+
 func set_data(time_array : Array):
 	$Popup/HBoxContainer/H.value = time_array[0]
 	$Popup/HBoxContainer/M.value = time_array[1]
 	$Popup/HBoxContainer/S.value = time_array[2]
 	update_button_text()
-	
+
 
 
 func _on_TimeButton_pressed():
@@ -31,4 +31,4 @@ func _on_Okay_pressed():
 	emit_signal("time_set")
 	if Root.Editor:
 		find_parent("EditorHUD")._on_dialog_closed()
-		
+

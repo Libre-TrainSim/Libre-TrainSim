@@ -40,15 +40,15 @@ func update_selected_rail(node):
 		$S/Settings/Length/LineEdit.text = String(node.length)
 		$S/Settings/Radius/LineEdit.text = String(node.radius)
 		$S/Settings/Angle/LineEdit.text =  String(currentRail.endrot - currentRail.startrot)
-		
-		
+
+
 		self.set_tendSlopeData(currentRail.get_tendSlopeData())
 	else:
 		currentRail = null
 		$CurrentRail/Name.text = ""
 		$RotationHeight.visible = false
 		$S.visible = false
-		
+
 
 
 func _on_OptionButton_item_selected(id):
@@ -67,17 +67,17 @@ func _on_OptionButton_item_selected(id):
 
 func _on_Update_pressed():
 	print("TEST")
-	if $CurrentRail/Name.text != currentRail.name: 
+	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
 	if currentRail == null: return
-	
+
 	currentRail.railTypePath = $S/General/RailType/LineEdit.text
 	currentRail.distanceToParallelRail = float($S/General/ParallelRail/ParallelDistance.text)
 	if $S/Settings.visible:
 		var radius
 		var length
-		
+
 		if $S/Settings/OptionButton.selected == 0: ## Radius - Length
 			radius = float($S/Settings/Radius/LineEdit.text)
 			length = float($S/Settings/Length/LineEdit.text)
@@ -90,10 +90,10 @@ func _on_Update_pressed():
 			var angle = float($S/Settings/Angle/LineEdit.text)
 			if angle == 0:
 				radius = 0
-			else: 
+			else:
 				radius = length / ((angle/360.0)*2.0*PI)
 			print(radius)
-		
+
 		if length > 1000:
 			print("MaxRailLength of 1000 exceedet! Canceling..")
 			return
@@ -101,7 +101,7 @@ func _on_Update_pressed():
 			currentRail.length = length
 			currentRail.radius = radius
 		currentRail.set_tendSlopeData(self.get_tendSlopeData())
-	
+
 	currentRail.update()
 	update_selected_rail(currentRail)
 	print("Rail updated.")
@@ -110,7 +110,7 @@ func _on_Update_pressed():
 
 func _on_AddRail_pressed():
 	if currentRail == null: return
-	if $CurrentRail/Name.text != currentRail.name: 
+	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
 	if $AddRail/Mode.selected == 0: ## After Rail
@@ -174,9 +174,9 @@ func _on_AddRail_pressed():
 		if eds != null:
 			eds.clear()
 			eds.add_node(newRail)
-		
-	
-		
+
+
+
 	var editor = find_parent("Editor")
 	if editor != null:
 		editor.set_selected_object(currentRail)
@@ -210,10 +210,10 @@ func _on_Mode_item_selected(id):
 
 func _on_ShiftButton_pressed():
 	if currentRail == null: return
-	if $CurrentRail/Name.text != currentRail.name: 
+	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
-	
+
 	currentRail.radius = float($S/Settings/Shift/Radius/LineEdit.text)
 	currentRail.InShift = float($S/Settings/Shift/Shift/LineEdit.text)
 	if currentRail.radius < 0 and currentRail.InShift > 0:
@@ -230,10 +230,10 @@ func _on_ShiftButton_pressed():
 
 func _on_Shift2Button_pressed():
 	if currentRail == null: return
-	if $CurrentRail/Name.text != currentRail.name: 
+	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
-		
+
 	var data = calc_shift(float($S/Settings/Shift2/LengthForward/LineEdit.text), float($S/Settings/Shift2/Shift/LineEdit.text))
 	if data[1] > 1000:
 		print("MaxRailLength of 1000 exceedet! Canceling..")
@@ -241,7 +241,7 @@ func _on_Shift2Button_pressed():
 	currentRail.length = data[1]
 	currentRail.radius = data[0]
 	currentRail._update(true)
-	
+
 	pass # Replace with function body.
 
 ## Calculate the shift of an Rail, given with relational length and shift
@@ -256,7 +256,7 @@ func calc_shift(x, y): ## This is 2 dimensional
 
 	var a = (b / cos(deg2rad(gamma)))/2 ## Radius of "Rail Circle"
 
-	
+
 	var length = (beta*2)/360 * 2*PI*a ## Lenght of the rail
 	return [a, length]
 
@@ -270,7 +270,7 @@ func _on_Connect_pressed():
 		print("Some Rail not found. Check your spelling!")
 		return
 	print("Rails connected.")
-	
+
 	firstRail._update(true)
 	secondRail._update(true)
 	var pos1
@@ -281,7 +281,7 @@ func _on_Connect_pressed():
 	else:
 		pos1 = firstRail.endpos
 		rot1 = firstRail.endrot
-		
+
 	var pos2
 	var rot2
 	if $RailConnector/SecondRail/OptionButton.selected == 0:
@@ -290,13 +290,13 @@ func _on_Connect_pressed():
 	else:
 		pos2 = secondRail.endpos
 		rot2 = secondRail.endrot
-	
+
 	var vector = (pos2 - pos1)/2
 	print(vector)
 	vector = vector.rotated(Vector3(0,1,0), -deg2rad(rot1))
-	
+
 	var RailNode = preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/Rail.tscn")
-	
+
 	## Rail 1:
 	var newRail = RailNode.instance()
 	newRail.name = firstRail.name + "Connector"
@@ -309,7 +309,7 @@ func _on_Connect_pressed():
 	newRail.set_owner(currentRail.find_parent("World"))
 	pos2 = newRail.endpos
 	rot2 = newRail.endrot
-	
+
 	## Rail 2:
 	newRail = RailNode.instance()
 	newRail.name = secondRail.name + "Connector"
@@ -326,7 +326,7 @@ func _on_Connect_pressed():
 
 
 func _on_Select_FirstRail_pressed():
-	if $CurrentRail/Name.text != currentRail.name: 
+	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
 	if currentRail == null: return
@@ -334,7 +334,7 @@ func _on_Select_FirstRail_pressed():
 
 
 func _on_Select_SecondRail_pressed():
-	if $CurrentRail/Name.text != currentRail.name: 
+	if $CurrentRail/Name.text != currentRail.name:
 		currentRail = null
 		update_selected_rail(self)
 	if currentRail == null: return
@@ -394,8 +394,8 @@ func set_tendSlopeData(data):
 	$S/Settings/Tendency/S2/Tend1.editable = !s.automaticTendency
 	$S/Settings/Tendency/S2/Tend2Pos.editable = !s.automaticTendency
 	$S/Settings/Tendency/S2/Tend2.editable = !s.automaticTendency
-	
-	
+
+
 
 func update_RotationHeightData():
 	$RotationHeight/StartRotation.text = String(currentRail.startrot)
@@ -408,7 +408,7 @@ func update_generalInformation():
 	$S/General/OverheadLine.pressed = currentRail.overheadLine
 	$S/General/ParallelRail/ParallelRail.text = currentRail.parallelRail
 	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distanceToParallelRail)
-	
+
 
 
 func _on_ManualMoving_pressed():
@@ -416,7 +416,7 @@ func _on_ManualMoving_pressed():
 	var editor = find_parent("Editor")
 	if editor:
 		editor.set_selected_object(currentRail)
-	
+
 
 
 func _on_automaticTendency_pressed():
@@ -424,8 +424,8 @@ func _on_automaticTendency_pressed():
 	currentRail.updateAutomaticTendency()
 	set_tendSlopeData(currentRail.get_tendSlopeData())
 	currentRail._update(true)
-	
-	
+
+
 
 
 

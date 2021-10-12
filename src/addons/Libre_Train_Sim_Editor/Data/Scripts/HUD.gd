@@ -35,19 +35,19 @@ func _process(_delta) -> void:
 	else:
 		get_tree().paused = false
 		$MarginContainer/Message.show()
-		
+
 	update_nextTable()
 	$IngameInformation/TrainInfo/Screen1.update_display(Math.speedToKmH(player.speed), \
 			player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing,\
 			player.enforced_braking, player.sifa, player.automaticDriving,\
 			player.currentSpeedLimit, player.engine, player.reverser)
 
-var _saved_ingame_pause 
+var _saved_ingame_pause
 func _unhandled_input(_event) -> void:
 	if $TextBox.visible:
 		if Input.is_action_just_pressed("ui_accept"):
 			_on_OkTextBox_pressed()
-	
+
 	if Input.is_action_just_pressed("Escape"):
 		get_tree().paused = !get_tree().paused
 		$Pause.visible = !$Pause.visible
@@ -59,10 +59,10 @@ func _unhandled_input(_event) -> void:
 		else:
 			Input.set_mouse_mode(_saved_mouse_mode)
 			Root.ingame_pause = _saved_ingame_pause
-	
+
 	if Input.is_action_just_pressed("nextTable"):
 		$IngameInformation/Next.visible = !$IngameInformation/Next.visible
-	
+
 	check_trainInfo()
 	check_trainInfoAbove()
 	check_map()
@@ -121,7 +121,7 @@ var modulation = 0
 func check_trainInfo():
 	if Input.is_action_just_pressed("trainInfo"):
 		modulation += 0.5
-		if modulation > 1: 
+		if modulation > 1:
 			modulation = 0
 		$IngameInformation/TrainInfo.modulate = Color( 1, 1, 1, modulation)
 
@@ -174,16 +174,16 @@ func update_nextTable():
 				$IngameInformation/Next/GridContainer/Signal.texture = greenSignal
 			SignalStatus.ORANGE:
 				$IngameInformation/Next/GridContainer/Signal.texture = orangeSignal
-				
-	
+
+
 	## Update next Speedlimit
 	if player.nextSpeedLimitNode != null:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = Math.distance2String(player.distanceToNextSpeedLimit)
 		$IngameInformation/Next/GridContainer/SpeedLimit.text = String(player.nextSpeedLimitNode.speed) + " km/h"
 	else:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = "-"
-	
-	## Update Next Station 
+
+	## Update Next Station
 	var stations = player.stations
 	if stations.passed.size() == 0 or (player.is_last_station and player.isInStation):
 		$IngameInformation/Next/GridContainer/Arrival.text = "-"
@@ -194,15 +194,15 @@ func update_nextTable():
 				if stations.passed[i]: continue
 				$IngameInformation/Next/GridContainer/Arrival.text = Math.time2String(player.stations["departureTime"][i])
 				$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
-				
+
 				break
 		else:
 			for i in range (0, stations.passed.size()):
-				
+
 				if stations.passed[i] or stations.nodeName[i] != player.nextStation: continue
 				$IngameInformation/Next/GridContainer/Arrival.text = Math.time2String(player.stations["arrivalTime"][i])
 				$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance2String(player.distanceToNextStation)
-				
+
 				break
 
 func is_full_map_visible():

@@ -29,13 +29,13 @@ func _ready():
 
 	if mobile_version:
 		set_menu_to_mobile()
-	
+
 	if Root.start_menu_in_play_menu:
 		Root.start_menu_in_play_menu = false
 		$FeedBack.hide()
 		_on_PlayFront_pressed()
 
-	
+
 func set_menu_to_mobile():
 	$Front/VBoxContainer.hide()
 	$Front/VBoxContainerAndoid.show()
@@ -48,7 +48,7 @@ func set_menu_to_mobile():
 	$Play/Selection/Scenarios/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/Label.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
 	$Play/Selection/Trains/ItemList.add_font_override("font", preload("res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMenu.tres"))
-	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -120,7 +120,7 @@ func update_config():
 	else:
 		print("Skipping pack loading in editor build, because of https://github.com/godotengine/godot/issues/16798")
 	print("Found Content Packs: %s" % [foundContentPacks])
-	
+
 	for contentPack in foundContentPacks:
 		if ProjectSettings.load_resource_pack(contentPack, false):
 			print("Loading Content Pack %s successfully finished" % contentPack)
@@ -157,10 +157,10 @@ func _on_PlayPlay_pressed():
 	$MenuBackground.hide()
 	$Play.hide()
 	$Loading.show()
-	## Load 
+	## Load
 	var track_name = foundTracks[index].get_basename().get_file()
 	var save_path = foundTracks[index].get_basename() + "-scenarios.cfg"
-	
+
 	if currentTrack.get_basename().get_file() == "Tutorials":
 		$Background.texture = load("res://Worlds/"+track_name + "/screenshot.png")
 	else:
@@ -195,7 +195,7 @@ func _on_ItemList_itemTracks_selected(index):
 	$Play/Info/Info/ReleaseDate.text = " "+ TranslationServer.translate("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
 	var track_name = currentTrack.get_basename().get_file()
 	print(track_name)
-	
+
 	if track_name == "Tutorials":
 		$Play/Info/Screenshot.texture = load("res://Worlds/"+track_name + "/screenshot.png")
 	else:
@@ -333,8 +333,8 @@ func _on_Import_pressed():
 	$Content/FileDialog.current_path = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
 	$Content/FileDialog.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
 	$Content/FileDialog.popup_centered(Vector2(500,500))
-	
-	
+
+
 	pass # Replace with function body.
 
 
@@ -349,7 +349,7 @@ func _on_FileDialog_files_selected(paths):
 	for path in paths:
 		print(path)
 		print("user://addons/%s" % path.get_file())
-		var err = dir.copy(path, "user://addons/%s" % path.get_file()) 
+		var err = dir.copy(path, "user://addons/%s" % path.get_file())
 		if err:
 			jEssentials.show_message("Failed for: %s \nError code: %s" % [path, String(err)])
 	update_config()

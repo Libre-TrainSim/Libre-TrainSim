@@ -16,7 +16,7 @@ func update_visual_instance(instance):
 		SignalStatus.RED: hp0()
 		SignalStatus.GREEN: hp1()
 		SignalStatus.OFF: off()
-	
+
 	if instance.signal_after_node != null:
 		match instance.signal_after_node.status:
 			SignalStatus.RED: vr0()

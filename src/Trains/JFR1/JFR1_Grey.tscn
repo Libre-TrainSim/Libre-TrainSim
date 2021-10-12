@@ -1,10 +1,10 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://Trains/JFR1/Door.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Resources/Basic/Materials/White_Plastic.tres" type="Material" id=2]
+[ext_resource path="res://Resources/Basic/Materials/Cabin.tres" type="Material" id=2]
 [ext_resource path="res://Resources/Basic/Materials/Black_Plastic.tres" type="Material" id=3]
-[ext_resource path="res://Resources/Basic/Materials/LEDLamp.tres" type="Material" id=4]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Grey.tres" type="Material" id=5]
+[ext_resource path="res://Trains/JFR1/Wagon_Grey.tres" type="Material" id=4]
+[ext_resource path="res://Resources/Basic/Materials/LEDLamp_Bright.tres" type="Material" id=5]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Player.gd" type="Script" id=6]
 [ext_resource path="res://Resources/Basic/reverser.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" type="ArrayMesh" id=8]
@@ -14,26 +14,18 @@
 [ext_resource path="res://Resources/Basic/Materials/ScreenBook.tres" type="Material" id=12]
 [ext_resource path="res://Resources/Basic/Objects/Control-Roll.obj" type="ArrayMesh" id=13]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/HUD.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Blue_Light.tres" type="Material" id=15]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Red.tres" type="Material" id=16]
+[ext_resource path="res://Trains/JFR1/Wagon_WithDriverStand_Grey.tres" type="Material" id=15]
 [ext_resource path="res://Trains/JFR1/SpecificScriptingGrey.gd" type="Script" id=17]
-[ext_resource path="res://Resources/Basic/Materials/FoldingBallows.tres" type="Material" id=18]
 [ext_resource path="res://Resources/Basic/Sounds/Horn.ogg" type="AudioStream" id=19]
 [ext_resource path="res://Resources/Basic/Screens/ScreenRight/ScreenRight.tscn" type="PackedScene" id=20]
-[ext_resource path="res://Resources/Basic/Materials/Blue_Plastic.tres" type="Material" id=21]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Grey_Light.tres" type="Material" id=22]
-[ext_resource path="res://Resources/Basic/Materials/Red_Plastic.tres" type="Material" id=23]
 [ext_resource path="res://Resources/Basic/Materials/GlassInvisible.tres" type="Material" id=24]
 [ext_resource path="res://Trains/JFR1/Sound.gd" type="Script" id=25]
 [ext_resource path="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.png" type="Texture" id=26]
 [ext_resource path="res://Trains/JFR1/Wagon_1.obj" type="ArrayMesh" id=27]
-[ext_resource path="res://Resources/Basic/Materials/LightBlue_Plastic.tres" type="Material" id=28]
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=29]
 [ext_resource path="res://Resources/Basic/Materials/Metal_Black.tres" type="Material" id=30]
 [ext_resource path="res://Trains/JFR1/Pantograph_1_T.obj" type="ArrayMesh" id=31]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Brown.tres" type="Material" id=32]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Wagon.gd" type="Script" id=33]
-[ext_resource path="res://Resources/Basic/Materials/Carpet_Blue.tres" type="Material" id=34]
 [ext_resource path="res://Resources/Basic/Sounds/DoorsClosing2.ogg" type="AudioStream" id=35]
 [ext_resource path="res://Resources/Basic/Sounds/EnforcedBreake.ogg" type="AudioStream" id=36]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.tscn" type="PackedScene" id=37]
@@ -89,7 +81,7 @@ emission_texture = ExtResource( 26 )
 [sub_resource type="QuadMesh" id=6]
 size = Vector2( 1, 0.75 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=8]
 albedo_color = Color( 0, 0, 0, 1 )
 metallic = 0.1
 roughness = 0.9
@@ -99,13 +91,13 @@ emission_energy = 1.0
 emission_operator = 1
 emission_on_uv2 = false
 
-[sub_resource type="QuadMesh" id=8]
+[sub_resource type="QuadMesh" id=9]
 size = Vector2( 1, 0.75 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("DoorR1:translation")
+tracks/0/path = NodePath("Doors/DoorR1:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -117,7 +109,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("DoorR2:translation")
+tracks/1/path = NodePath("Doors/DoorR2:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -129,7 +121,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("DoorR4:translation")
+tracks/2/path = NodePath("Doors/DoorR4:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -141,7 +133,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("DoorR3:translation")
+tracks/3/path = NodePath("Doors/DoorR3:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -153,7 +145,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("DoorR6:translation")
+tracks/4/path = NodePath("Doors/DoorR6:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -165,7 +157,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("DoorR5:translation")
+tracks/5/path = NodePath("Doors/DoorR5:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -175,163 +167,12 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
-}
-
-[sub_resource type="Animation" id=10]
-resource_name = "open"
-length = 4.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("DoorR12:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("DoorR11:translation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("DoorR10:translation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("DoorR9:translation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("DoorR8:translation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("DoorR7:translation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 5.05345, 1.02943, -1.51171 ), Vector3( 5.05345, 1.02943, -1.5828 ), Vector3( 5.76987, 1.02943, -1.5828 ) ]
 }
 
 [sub_resource type="Animation" id=11]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("DoorR1:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("DoorR2:translation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("DoorR4:translation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("DoorR3:translation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("DoorR6:translation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("DoorR5:translation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
-}
-
-[sub_resource type="Animation" id=12]
-length = 4.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("DoorR12:translation")
+tracks/0/path = NodePath("Doors/DoorR12:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -343,7 +184,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("DoorR11:translation")
+tracks/1/path = NodePath("Doors/DoorR11:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -355,7 +196,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("DoorR10:translation")
+tracks/2/path = NodePath("Doors/DoorR10:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -367,7 +208,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("DoorR9:translation")
+tracks/3/path = NodePath("Doors/DoorR9:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -379,7 +220,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("DoorR8:translation")
+tracks/4/path = NodePath("Doors/DoorR8:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -391,7 +232,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("DoorR7:translation")
+tracks/5/path = NodePath("Doors/DoorR7:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -403,29 +244,7 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, -1.51171 ), Vector3( 5.05345, 1.02943, -1.5828 ), Vector3( 5.76987, 1.02943, -1.5828 ) ]
 }
 
-[sub_resource type="SphereMesh" id=13]
-radius = 0.06
-height = 0.12
-
-[sub_resource type="SpatialMaterial" id=14]
-emission_enabled = true
-emission = Color( 1, 1, 1, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
-distance_fade_mode = 1
-distance_fade_min_distance = 50.0
-distance_fade_max_distance = 150.0
-
-[sub_resource type="SpatialMaterial" id=15]
-albedo_color = Color( 0.717647, 1, 0.968627, 1 )
-emission_enabled = true
-emission = Color( 0.839216, 1, 0.996078, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
@@ -476,10 +295,10 @@ tracks/3/keys = {
 "values": [ Vector3( 0, 0, 12.649 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=12]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("DoorR1:translation")
+tracks/0/path = NodePath("Doors/DoorR1:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -491,7 +310,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("DoorR2:translation")
+tracks/1/path = NodePath("Doors/DoorR2:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -503,7 +322,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("DoorR4:translation")
+tracks/2/path = NodePath("Doors/DoorR4:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -515,7 +334,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("DoorR3:translation")
+tracks/3/path = NodePath("Doors/DoorR3:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -527,7 +346,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("DoorR6:translation")
+tracks/4/path = NodePath("Doors/DoorR6:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -539,7 +358,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("DoorR5:translation")
+tracks/5/path = NodePath("Doors/DoorR5:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -551,10 +370,10 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=13]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("DoorR12:translation")
+tracks/0/path = NodePath("Doors/DoorR12:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -566,7 +385,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("DoorR11:translation")
+tracks/1/path = NodePath("Doors/DoorR11:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -578,7 +397,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("DoorR10:translation")
+tracks/2/path = NodePath("Doors/DoorR10:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -590,7 +409,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("DoorR9:translation")
+tracks/3/path = NodePath("Doors/DoorR9:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -602,7 +421,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("DoorR8:translation")
+tracks/4/path = NodePath("Doors/DoorR8:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -614,7 +433,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("DoorR7:translation")
+tracks/5/path = NodePath("Doors/DoorR7:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -626,7 +445,230 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, -1.51171 ), Vector3( 5.05345, 1.02943, -1.5828 ), Vector3( 5.76987, 1.02943, -1.5828 ) ]
 }
 
-[sub_resource type="SpatialMaterial" id=19]
+[sub_resource type="SphereMesh" id=14]
+radius = 0.06
+height = 0.12
+
+[sub_resource type="SpatialMaterial" id=15]
+emission_enabled = true
+emission = Color( 1, 1, 1, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+distance_fade_mode = 1
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0.717647, 1, 0.968627, 1 )
+emission_enabled = true
+emission = Color( 0.839216, 1, 0.996078, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Animation" id=23]
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -16.342 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pantograph_1_T2:translation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.0941203, 0.344003, 0 ), Vector3( 0.086, 1.495, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pantograph_1_T:translation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 4.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 2.41134, 0.150598, 0 ), Vector3( 2.30133, 0.801956, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pantograph_1_T:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 4.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 12.649 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Doors/DoorR1:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Doors/DoorR2:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Doors/DoorR4:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Doors/DoorR3:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Doors/DoorR6:translation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Doors/DoorR5:translation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Doors/DoorR12:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Doors/DoorR11:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Doors/DoorR10:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Doors/DoorR9:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Doors/DoorR8:translation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Doors/DoorR7:translation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 5.05345, 1.02943, -1.51171 ), Vector3( 5.05345, 1.02943, -1.5828 ), Vector3( 5.76987, 1.02943, -1.5828 ) ]
+}
+
+[sub_resource type="SpatialMaterial" id=20]
 albedo_color = Color( 1, 0.211765, 0, 1 )
 emission_enabled = true
 emission = Color( 1, 0, 0, 1 )
@@ -637,68 +679,17 @@ distance_fade_mode = 1
 distance_fade_min_distance = 50.0
 distance_fade_max_distance = 150.0
 
-[sub_resource type="SphereMesh" id=20]
+[sub_resource type="SphereMesh" id=21]
 radius = 0.06
 height = 0.12
 
-[sub_resource type="SpatialMaterial" id=21]
+[sub_resource type="SpatialMaterial" id=22]
 albedo_color = Color( 1, 0, 0, 1 )
 emission_enabled = true
 emission = Color( 1, 0, 0, 1 )
 emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
-
-[sub_resource type="Animation" id=22]
-length = 5.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 4.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, -16.342 ), Vector3( 0, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pantograph_1_T2:translation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 4.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.0941203, 0.344003, 0 ), Vector3( 0.086, 1.495, 0 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Pantograph_1_T:translation")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 4.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 2.41134, 0.150598, 0 ), Vector3( 2.30133, 0.801956, 0 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Pantograph_1_T:rotation_degrees")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 4.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 12.649 ), Vector3( 0, 0, 0 ) ]
-}
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 6 )
@@ -726,6 +717,7 @@ far = 1000.0
 script = ExtResource( 17 )
 
 [node name="Cabin" type="Spatial" parent="."]
+visible = false
 script = ExtResource( 33 )
 cabinMode = true
 
@@ -773,11 +765,9 @@ render_target_v_flip = true
 [node name="Cabin" type="MeshInstance" parent="Cabin"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.27351, 0, 0 )
 mesh = ExtResource( 11 )
-material/0 = ExtResource( 5 )
-material/1 = ExtResource( 21 )
-material/2 = ExtResource( 28 )
-material/3 = ExtResource( 12 )
-material/4 = ExtResource( 3 )
+material/0 = ExtResource( 12 )
+material/1 = ExtResource( 3 )
+material/2 = ExtResource( 2 )
 
 [node name="Reverser" type="MeshInstance" parent="Cabin"]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.046, 2.5135, 0.0444686 )
@@ -786,9 +776,9 @@ material/0 = ExtResource( 3 )
 
 [node name="ScreenReverser" type="MeshInstance" parent="Cabin"]
 transform = Transform( -6.11959e-09, 0.14, 4.37114e-08, 0, -6.11959e-09, 1, 0.14, 6.11959e-09, 1.91069e-15, 7.046, 2.51304, 0 )
-material_override = SubResource( 7 )
+material_override = SubResource( 8 )
 cast_shadow = 0
-mesh = SubResource( 8 )
+mesh = SubResource( 9 )
 material/0 = null
 
 [node name="DisplayReverser" type="Viewport" parent="Cabin"]
@@ -808,6 +798,9 @@ material/1 = ExtResource( 3 )
 
 [node name="EasyEngineSound" parent="Cabin" instance=ExtResource( 41 )]
 
+[node name="SpotLight" type="SpotLight" parent="Cabin"]
+transform = Transform( -4.37114e-08, 0.5, -0.866025, 0, 0.866025, 0.5, 1, 2.18557e-08, -3.78552e-08, 5.34039, 3.64751, 0 )
+
 [node name="Wagon1" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 33 )
@@ -816,275 +809,318 @@ length = 14.0
 [node name="MeshInstance" type="MeshInstance" parent="Wagon1"]
 mesh = ExtResource( 27 )
 material/0 = ExtResource( 24 )
-material/1 = ExtResource( 15 )
-material/2 = ExtResource( 22 )
-material/3 = ExtResource( 5 )
-material/4 = ExtResource( 21 )
-material/5 = ExtResource( 2 )
-material/6 = ExtResource( 2 )
-material/7 = ExtResource( 30 )
-material/8 = ExtResource( 2 )
-material/9 = ExtResource( 34 )
-material/10 = ExtResource( 4 )
-material/11 = ExtResource( 3 )
-material/12 = ExtResource( 5 )
-material/13 = ExtResource( 23 )
-material/14 = ExtResource( 30 )
-material/15 = ExtResource( 18 )
+material/1 = ExtResource( 5 )
+material/2 = ExtResource( 4 )
 
-[node name="DoorRight" type="AnimationPlayer" parent="Wagon1"]
-anims/open = SubResource( 9 )
+[node name="WagonSound" parent="Wagon1" instance=ExtResource( 45 )]
 
-[node name="DoorR1" type="MeshInstance" parent="Wagon1"]
+[node name="PathNodes" type="Spatial" parent="Wagon1"]
+
+[node name="PassengerPathNode" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
+connections = [ "PassengerSeat", "PassengerSeat2", "PassengerSeat3", "PassengerSeat4", "PassengerSeat5", "PassengerSeat6", "PassengerSeat7", "PassengerSeat8", "PassengerPathNode2", "PassengerPathNode3" ]
+
+[node name="PassengerPathNode3" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor3", "PassengerDoor4", "PassengerPathNode6", "PassengerPathNode7" ]
+
+[node name="PassengerPathNode7" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode8", "PassengerPathNode3", "PassengerSeat21", "PassengerSeat22", "PassengerSeat23", "PassengerSeat24", "PassengerSeat25", "PassengerSeat26", "PassengerSeat27", "PassengerSeat28" ]
+
+[node name="PassengerPathNode8" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode4", "PassengerPathNode7", "PassengerSeat29", "PassengerSeat30", "PassengerSeat31", "PassengerSeat32", "PassengerSeat33", "PassengerSeat34", "PassengerSeat35", "PassengerSeat36" ]
+
+[node name="PassengerPathNode6" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode", "PassengerPathNode3", "PassengerSeat13", "PassengerSeat14", "PassengerSeat15", "PassengerSeat16", "PassengerSeat17", "PassengerSeat18", "PassengerSeat19", "PassengerSeat20" ]
+
+[node name="PassengerPathNode4" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor", "PassengerDoor2", "PassengerPathNode8", "PassengerPathNode9" ]
+
+[node name="PassengerPathNode9" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode4", "PassengerSeat37", "PassengerSeat38", "PassengerSeat39", "PassengerSeat40" ]
+
+[node name="PassengerPathNode2" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "PassengerPathNode5" ]
+
+[node name="PassengerPathNode5" parent="Wagon1/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
+
+[node name="Seats" type="Spatial" parent="Wagon1"]
+
+[node name="PassengerSeat" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 1.20888 )
+
+[node name="PassengerSeat2" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 0.680868 )
+
+[node name="PassengerSeat3" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 1.20888 )
+
+[node name="PassengerSeat4" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 0.680868 )
+
+[node name="PassengerSeat5" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -0.683424 )
+
+[node name="PassengerSeat6" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -1.21144 )
+
+[node name="PassengerSeat7" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -0.683424 )
+
+[node name="PassengerSeat8" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -1.21144 )
+
+[node name="PassengerSeat13" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 1.20888 )
+
+[node name="PassengerSeat14" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 0.680868 )
+
+[node name="PassengerSeat15" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 1.20888 )
+
+[node name="PassengerSeat16" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 0.680868 )
+
+[node name="PassengerSeat17" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -0.683424 )
+
+[node name="PassengerSeat18" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -1.21144 )
+
+[node name="PassengerSeat19" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -0.683424 )
+
+[node name="PassengerSeat20" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -1.21144 )
+
+[node name="PassengerSeat21" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 1.20888 )
+
+[node name="PassengerSeat22" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 0.680868 )
+
+[node name="PassengerSeat23" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 1.20888 )
+
+[node name="PassengerSeat24" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 0.680868 )
+
+[node name="PassengerSeat25" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -0.683424 )
+
+[node name="PassengerSeat26" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -1.21144 )
+
+[node name="PassengerSeat27" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -0.683424 )
+
+[node name="PassengerSeat28" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -1.21144 )
+
+[node name="PassengerSeat29" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 1.20888 )
+
+[node name="PassengerSeat30" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 0.680868 )
+
+[node name="PassengerSeat31" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 1.20888 )
+
+[node name="PassengerSeat32" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 0.680868 )
+
+[node name="PassengerSeat33" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -0.683424 )
+
+[node name="PassengerSeat34" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -1.21144 )
+
+[node name="PassengerSeat37" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 1.20888 )
+
+[node name="PassengerSeat38" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 0.680868 )
+
+[node name="PassengerSeat39" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -0.683424 )
+
+[node name="PassengerSeat40" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -1.21144 )
+
+[node name="PassengerSeat35" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -0.683424 )
+
+[node name="PassengerSeat36" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -1.21144 )
+
+[node name="PassengerSeat9" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 1.20888 )
+
+[node name="PassengerSeat10" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 0.680868 )
+
+[node name="PassengerSeat11" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -0.683424 )
+
+[node name="PassengerSeat12" parent="Wagon1/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -1.21144 )
+
+[node name="Doors" type="Spatial" parent="Wagon1"]
+
+[node name="PassengerDoor" parent="Wagon1/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
+
+[node name="PassengerDoor3" parent="Wagon1/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
+
+[node name="PassengerDoor2" parent="Wagon1/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
+
+[node name="PassengerDoor4" parent="Wagon1/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )
+
+[node name="PassengerDoor5" parent="Wagon1/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
+
+[node name="PassengerDoor6" parent="Wagon1/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
+
+[node name="DoorRight" type="AnimationPlayer" parent="Wagon1/Doors"]
+anims/open = SubResource( 10 )
+
+[node name="DoorR1" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR2" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR2" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR4" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR4" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR3" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR3" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR6" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR6" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR5" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR5" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorLeft" type="AnimationPlayer" parent="Wagon1"]
-anims/open = SubResource( 10 )
+[node name="DoorLeft" type="AnimationPlayer" parent="Wagon1/Doors"]
+anims/open = SubResource( 11 )
 
-[node name="DoorR12" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR12" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR11" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR11" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR10" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR10" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR9" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR9" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR8" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR8" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="DoorR7" type="MeshInstance" parent="Wagon1"]
+[node name="DoorR7" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
-[node name="PassengerDoor" parent="Wagon1" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
+[node name="Lights" type="Spatial" parent="Wagon1"]
 
-[node name="PassengerDoor3" parent="Wagon1" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
+[node name="SpotLight" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.834057, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerDoor2" parent="Wagon1" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
+[node name="SpotLight6" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.61931, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerDoor4" parent="Wagon1" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )
+[node name="SpotLight7" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.24211, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerDoor5" parent="Wagon1" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
+[node name="SpotLight8" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -5.85416, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerDoor6" parent="Wagon1" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
+[node name="SpotLight2" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.889559, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerSeat" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 1.20888 )
+[node name="SpotLight3" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.66996, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerSeat2" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 0.680868 )
+[node name="SpotLight4" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.31903, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
-[node name="PassengerSeat3" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 1.20888 )
-
-[node name="PassengerSeat4" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 0.680868 )
-
-[node name="PassengerSeat5" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -0.683424 )
-
-[node name="PassengerSeat6" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -1.21144 )
-
-[node name="PassengerSeat7" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -0.683424 )
-
-[node name="PassengerSeat8" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -1.21144 )
-
-[node name="PassengerSeat13" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 1.20888 )
-
-[node name="PassengerSeat14" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 0.680868 )
-
-[node name="PassengerSeat15" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 1.20888 )
-
-[node name="PassengerSeat16" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 0.680868 )
-
-[node name="PassengerSeat17" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -0.683424 )
-
-[node name="PassengerSeat18" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -1.21144 )
-
-[node name="PassengerSeat19" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -0.683424 )
-
-[node name="PassengerSeat20" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -1.21144 )
-
-[node name="PassengerSeat21" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 1.20888 )
-
-[node name="PassengerSeat22" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 0.680868 )
-
-[node name="PassengerSeat23" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 1.20888 )
-
-[node name="PassengerSeat24" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 0.680868 )
-
-[node name="PassengerSeat25" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -0.683424 )
-
-[node name="PassengerSeat26" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -1.21144 )
-
-[node name="PassengerSeat27" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -0.683424 )
-
-[node name="PassengerSeat28" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -1.21144 )
-
-[node name="PassengerSeat29" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 1.20888 )
-
-[node name="PassengerSeat30" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 0.680868 )
-
-[node name="PassengerSeat31" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 1.20888 )
-
-[node name="PassengerSeat32" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 0.680868 )
-
-[node name="PassengerSeat33" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -0.683424 )
-
-[node name="PassengerSeat34" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -1.21144 )
-
-[node name="PassengerSeat37" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 1.20888 )
-
-[node name="PassengerSeat38" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 0.680868 )
-
-[node name="PassengerSeat39" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -0.683424 )
-
-[node name="PassengerSeat40" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -1.21144 )
-
-[node name="PassengerSeat35" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -0.683424 )
-
-[node name="PassengerSeat36" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -1.21144 )
-
-[node name="PassengerSeat9" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 1.20888 )
-
-[node name="PassengerSeat10" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 0.680868 )
-
-[node name="PassengerSeat11" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -0.683424 )
-
-[node name="PassengerSeat12" parent="Wagon1" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -1.21144 )
-
-[node name="PassengerPathNode" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
-connections = [ "PassengerSeat", "PassengerSeat2", "PassengerSeat3", "PassengerSeat4", "PassengerSeat5", "PassengerSeat6", "PassengerSeat7", "PassengerSeat8", "PassengerPathNode2", "PassengerPathNode3" ]
-
-[node name="PassengerPathNode3" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor3", "PassengerDoor4", "PassengerPathNode6", "PassengerPathNode7" ]
-
-[node name="PassengerPathNode7" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode8", "PassengerPathNode3", "PassengerSeat21", "PassengerSeat22", "PassengerSeat23", "PassengerSeat24", "PassengerSeat25", "PassengerSeat26", "PassengerSeat27", "PassengerSeat28" ]
-
-[node name="PassengerPathNode8" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode4", "PassengerPathNode7", "PassengerSeat29", "PassengerSeat30", "PassengerSeat31", "PassengerSeat32", "PassengerSeat33", "PassengerSeat34", "PassengerSeat35", "PassengerSeat36" ]
-
-[node name="PassengerPathNode6" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode", "PassengerPathNode3", "PassengerSeat13", "PassengerSeat14", "PassengerSeat15", "PassengerSeat16", "PassengerSeat17", "PassengerSeat18", "PassengerSeat19", "PassengerSeat20" ]
-
-[node name="PassengerPathNode4" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor", "PassengerDoor2", "PassengerPathNode8", "PassengerPathNode9" ]
-
-[node name="PassengerPathNode9" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode4", "PassengerSeat37", "PassengerSeat38", "PassengerSeat39", "PassengerSeat40" ]
-
-[node name="PassengerPathNode2" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "PassengerPathNode5" ]
-
-[node name="PassengerPathNode5" parent="Wagon1" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
-
-[node name="WagonSound" parent="Wagon1" instance=ExtResource( 45 )]
+[node name="SpotLight5" type="SpotLight" parent="Wagon1/Lights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.85229, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
 [node name="DriverCabinF" type="Spatial" parent="."]
 visible = false
@@ -1095,333 +1131,19 @@ length = 14.0
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 mesh = ExtResource( 8 )
 material/0 = ExtResource( 24 )
-material/1 = ExtResource( 15 )
-material/2 = ExtResource( 22 )
-material/3 = ExtResource( 5 )
-material/4 = ExtResource( 21 )
-material/5 = ExtResource( 2 )
-material/6 = ExtResource( 2 )
-material/7 = ExtResource( 30 )
-material/8 = ExtResource( 2 )
-material/9 = ExtResource( 34 )
-material/10 = ExtResource( 4 )
-material/11 = ExtResource( 3 )
-material/12 = ExtResource( 5 )
-material/13 = ExtResource( 16 )
-material/14 = ExtResource( 30 )
-material/15 = ExtResource( 18 )
-material/16 = ExtResource( 28 )
-material/17 = ExtResource( 21 )
-material/18 = ExtResource( 32 )
-material/19 = ExtResource( 29 )
-
-[node name="DoorRight" type="AnimationPlayer" parent="DriverCabinF"]
-anims/open = SubResource( 11 )
-
-[node name="DoorR1" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR2" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR4" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR3" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR6" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR5" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinF"]
-anims/open = SubResource( 12 )
-
-[node name="DoorR12" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR11" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR10" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR9" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR8" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR7" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="OmniLight" type="OmniLight" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.9803, 1.6188, 1.06283 )
-light_energy = 2.63
-omni_range = 0.8
-
-[node name="OmniLight2" type="OmniLight" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.9803, 1.6188, -1.05703 )
-light_energy = 2.63
-omni_range = 0.6
-
-[node name="OmniLight3" type="OmniLight" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09056, 3.49111, 0.00171482 )
-light_energy = 2.63
-omni_range = 0.6
-
-[node name="LightBulb" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92197, 1.59974, 1.05747 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 14 )
-
-[node name="LightBulb2" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92197, 1.59974, -1.07249 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 14 )
-
-[node name="LightBulb3" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.12134, 3.50845, -0.0044162 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 14 )
-
-[node name="LightBulb4" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.95602, 1.61265, 1.05747 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 15 )
-
-[node name="LightBulb5" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.95602, 1.61265, -1.06143 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 15 )
-
-[node name="LightBulb6" type="MeshInstance" parent="DriverCabinF"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.07961, 3.45851, -0.00425051 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 15 )
+material/1 = ExtResource( 5 )
+material/2 = ExtResource( 15 )
 
 [node name="WagonSound" parent="DriverCabinF" instance=ExtResource( 45 )]
 
 [node name="EasyEngineSound" parent="DriverCabinF" instance=ExtResource( 41 )]
-
-[node name="PassengerDoor" parent="DriverCabinF" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
-
-[node name="PassengerDoor3" parent="DriverCabinF" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
-
-[node name="PassengerDoor2" parent="DriverCabinF" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
-
-[node name="PassengerDoor4" parent="DriverCabinF" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )
-
-[node name="PassengerDoor5" parent="DriverCabinF" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
-
-[node name="PassengerDoor6" parent="DriverCabinF" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
-
-[node name="PassengerSeat" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 1.20888 )
-
-[node name="PassengerSeat2" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 0.680868 )
-
-[node name="PassengerSeat3" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 1.20888 )
-
-[node name="PassengerSeat4" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 0.680868 )
-
-[node name="PassengerSeat5" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -0.683424 )
-
-[node name="PassengerSeat6" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -1.21144 )
-
-[node name="PassengerSeat7" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -0.683424 )
-
-[node name="PassengerSeat8" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -1.21144 )
-
-[node name="PassengerSeat13" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 1.20888 )
-
-[node name="PassengerSeat14" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 0.680868 )
-
-[node name="PassengerSeat15" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 1.20888 )
-
-[node name="PassengerSeat16" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 0.680868 )
-
-[node name="PassengerSeat17" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -0.683424 )
-
-[node name="PassengerSeat18" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -1.21144 )
-
-[node name="PassengerSeat19" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -0.683424 )
-
-[node name="PassengerSeat20" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -1.21144 )
-
-[node name="PassengerSeat21" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 1.20888 )
-
-[node name="PassengerSeat22" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 0.680868 )
-
-[node name="PassengerSeat23" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 1.20888 )
-
-[node name="PassengerSeat24" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 0.680868 )
-
-[node name="PassengerSeat25" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -0.683424 )
-
-[node name="PassengerSeat26" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -1.21144 )
-
-[node name="PassengerSeat27" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -0.683424 )
-
-[node name="PassengerSeat28" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -1.21144 )
-
-[node name="PassengerSeat29" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 1.20888 )
-
-[node name="PassengerSeat30" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 0.680868 )
-
-[node name="PassengerSeat31" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 1.20888 )
-
-[node name="PassengerSeat32" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 0.680868 )
-
-[node name="PassengerSeat33" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -0.683424 )
-
-[node name="PassengerSeat34" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -1.21144 )
-
-[node name="PassengerSeat37" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 1.20888 )
-
-[node name="PassengerSeat38" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 0.680868 )
-
-[node name="PassengerSeat39" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -0.683424 )
-
-[node name="PassengerSeat40" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -1.21144 )
-
-[node name="PassengerSeat35" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -0.683424 )
-
-[node name="PassengerSeat36" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -1.21144 )
-
-[node name="PassengerSeat9" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 1.20888 )
-
-[node name="PassengerSeat10" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 0.680868 )
-
-[node name="PassengerSeat11" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -0.683424 )
-
-[node name="PassengerSeat12" parent="DriverCabinF" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -1.21144 )
-
-[node name="PassengerPathNode" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
-connections = [ "PassengerSeat", "PassengerSeat2", "PassengerSeat3", "PassengerSeat4", "PassengerSeat5", "PassengerSeat6", "PassengerSeat7", "PassengerSeat8", "PassengerPathNode2", "PassengerPathNode3" ]
-
-[node name="PassengerPathNode3" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor3", "PassengerDoor4", "PassengerPathNode6", "PassengerPathNode7" ]
-
-[node name="PassengerPathNode7" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode8", "PassengerPathNode3", "PassengerSeat21", "PassengerSeat22", "PassengerSeat23", "PassengerSeat24", "PassengerSeat25", "PassengerSeat26", "PassengerSeat27", "PassengerSeat28" ]
-
-[node name="PassengerPathNode8" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode4", "PassengerPathNode7", "PassengerSeat29", "PassengerSeat30", "PassengerSeat31", "PassengerSeat32", "PassengerSeat33", "PassengerSeat34", "PassengerSeat35", "PassengerSeat36" ]
-
-[node name="PassengerPathNode6" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode", "PassengerPathNode3", "PassengerSeat13", "PassengerSeat14", "PassengerSeat15", "PassengerSeat16", "PassengerSeat17", "PassengerSeat18", "PassengerSeat19", "PassengerSeat20" ]
-
-[node name="PassengerPathNode4" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor", "PassengerDoor2", "PassengerPathNode8", "PassengerPathNode9" ]
-
-[node name="PassengerPathNode9" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode4", "PassengerSeat37", "PassengerSeat38", "PassengerSeat39", "PassengerSeat40" ]
-
-[node name="PassengerPathNode2" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "PassengerPathNode5" ]
-
-[node name="PassengerPathNode5" parent="DriverCabinF" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
 
 [node name="Pantograph" type="Spatial" parent="DriverCabinF"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.16962, 3.77014, 0 )
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinF/Pantograph"]
-anims/Up = SubResource( 16 )
+anims/Up = SubResource( 17 )
 
 [node name="Pantograph_1_B" type="MeshInstance" parent="DriverCabinF/Pantograph"]
 transform = Transform( 0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0 )
@@ -1438,6 +1160,361 @@ transform = Transform( 0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.4
 mesh = ExtResource( 31 )
 material/0 = ExtResource( 30 )
 
+[node name="PathNodes" type="Spatial" parent="DriverCabinF"]
+
+[node name="PassengerPathNode" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
+connections = [ "PassengerSeat", "PassengerSeat2", "PassengerSeat3", "PassengerSeat4", "PassengerSeat5", "PassengerSeat6", "PassengerSeat7", "PassengerSeat8", "PassengerPathNode2", "PassengerPathNode3" ]
+
+[node name="PassengerPathNode3" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor3", "PassengerDoor4", "PassengerPathNode6", "PassengerPathNode7" ]
+
+[node name="PassengerPathNode7" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode8", "PassengerPathNode3", "PassengerSeat21", "PassengerSeat22", "PassengerSeat23", "PassengerSeat24", "PassengerSeat25", "PassengerSeat26", "PassengerSeat27", "PassengerSeat28" ]
+
+[node name="PassengerPathNode8" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode4", "PassengerPathNode7", "PassengerSeat29", "PassengerSeat30", "PassengerSeat31", "PassengerSeat32", "PassengerSeat33", "PassengerSeat34", "PassengerSeat35", "PassengerSeat36" ]
+
+[node name="PassengerPathNode6" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode", "PassengerPathNode3", "PassengerSeat13", "PassengerSeat14", "PassengerSeat15", "PassengerSeat16", "PassengerSeat17", "PassengerSeat18", "PassengerSeat19", "PassengerSeat20" ]
+
+[node name="PassengerPathNode4" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor", "PassengerDoor2", "PassengerPathNode8", "PassengerPathNode9" ]
+
+[node name="PassengerPathNode9" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode4", "PassengerSeat37", "PassengerSeat38", "PassengerSeat39", "PassengerSeat40" ]
+
+[node name="PassengerPathNode2" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "PassengerPathNode5" ]
+
+[node name="PassengerPathNode5" parent="DriverCabinF/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
+
+[node name="Seats" type="Spatial" parent="DriverCabinF"]
+
+[node name="PassengerSeat" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 1.20888 )
+
+[node name="PassengerSeat2" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 0.680868 )
+
+[node name="PassengerSeat3" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 1.20888 )
+
+[node name="PassengerSeat4" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 0.680868 )
+
+[node name="PassengerSeat5" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -0.683424 )
+
+[node name="PassengerSeat6" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -1.21144 )
+
+[node name="PassengerSeat7" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -0.683424 )
+
+[node name="PassengerSeat8" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -1.21144 )
+
+[node name="PassengerSeat13" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 1.20888 )
+
+[node name="PassengerSeat14" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 0.680868 )
+
+[node name="PassengerSeat15" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 1.20888 )
+
+[node name="PassengerSeat16" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 0.680868 )
+
+[node name="PassengerSeat17" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -0.683424 )
+
+[node name="PassengerSeat18" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -1.21144 )
+
+[node name="PassengerSeat19" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -0.683424 )
+
+[node name="PassengerSeat20" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -1.21144 )
+
+[node name="PassengerSeat21" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 1.20888 )
+
+[node name="PassengerSeat22" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 0.680868 )
+
+[node name="PassengerSeat23" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 1.20888 )
+
+[node name="PassengerSeat24" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 0.680868 )
+
+[node name="PassengerSeat25" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -0.683424 )
+
+[node name="PassengerSeat26" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -1.21144 )
+
+[node name="PassengerSeat27" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -0.683424 )
+
+[node name="PassengerSeat28" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -1.21144 )
+
+[node name="PassengerSeat29" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 1.20888 )
+
+[node name="PassengerSeat30" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 0.680868 )
+
+[node name="PassengerSeat31" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 1.20888 )
+
+[node name="PassengerSeat32" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 0.680868 )
+
+[node name="PassengerSeat33" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -0.683424 )
+
+[node name="PassengerSeat34" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -1.21144 )
+
+[node name="PassengerSeat37" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 1.20888 )
+
+[node name="PassengerSeat38" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 0.680868 )
+
+[node name="PassengerSeat39" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -0.683424 )
+
+[node name="PassengerSeat40" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -1.21144 )
+
+[node name="PassengerSeat35" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -0.683424 )
+
+[node name="PassengerSeat36" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -1.21144 )
+
+[node name="PassengerSeat9" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 1.20888 )
+
+[node name="PassengerSeat10" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 0.680868 )
+
+[node name="PassengerSeat11" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -0.683424 )
+
+[node name="PassengerSeat12" parent="DriverCabinF/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -1.21144 )
+
+[node name="Doors" type="Spatial" parent="DriverCabinF"]
+
+[node name="PassengerDoor" parent="DriverCabinF/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
+
+[node name="PassengerDoor3" parent="DriverCabinF/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
+
+[node name="PassengerDoor2" parent="DriverCabinF/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
+
+[node name="PassengerDoor4" parent="DriverCabinF/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )
+
+[node name="PassengerDoor5" parent="DriverCabinF/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
+
+[node name="PassengerDoor6" parent="DriverCabinF/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
+
+[node name="DoorRight" type="AnimationPlayer" parent="DriverCabinF/Doors"]
+anims/open = SubResource( 12 )
+
+[node name="DoorR1" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR2" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR4" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR3" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR6" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR5" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinF/Doors"]
+anims/open = SubResource( 13 )
+
+[node name="DoorR12" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR11" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR10" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR9" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR8" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR7" type="MeshInstance" parent="DriverCabinF/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="ExteriorLights" type="Spatial" parent="DriverCabinF"]
+
+[node name="OmniLight" type="OmniLight" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.17784, 1.6188, 1.06283 )
+light_energy = 2.63
+omni_range = 0.8
+
+[node name="OmniLight2" type="OmniLight" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.17784, 1.6188, -1.05703 )
+light_energy = 2.63
+omni_range = 0.6
+
+[node name="OmniLight3" type="OmniLight" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.21622, 3.55498, 0.00171482 )
+light_energy = 2.63
+omni_range = 0.6
+
+[node name="LightBulb" type="MeshInstance" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92197, 1.59974, 1.05747 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 15 )
+
+[node name="LightBulb2" type="MeshInstance" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92197, 1.59974, -1.07249 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 15 )
+
+[node name="LightBulb3" type="MeshInstance" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.12134, 3.50845, -0.0044162 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 15 )
+
+[node name="LightBulb4" type="MeshInstance" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.95602, 1.61265, 1.05747 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 16 )
+
+[node name="LightBulb5" type="MeshInstance" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.95602, 1.61265, -1.06143 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 16 )
+
+[node name="LightBulb6" type="MeshInstance" parent="DriverCabinF/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.07961, 3.45851, -0.00425051 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 16 )
+
+[node name="InteriorLights" type="Spatial" parent="DriverCabinF"]
+
+[node name="SpotLight1" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.834057, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight6" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.58392, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight7" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.25348, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight8" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -5.91054, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight2" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.842499, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight3" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.6424, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight4" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.24894, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight5" type="SpotLight" parent="DriverCabinF/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.90145, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
 [node name="DriverCabinB" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 33 )
@@ -1447,318 +1524,19 @@ pantographEnabled = true
 [node name="MeshInstance" type="MeshInstance" parent="DriverCabinB"]
 mesh = ExtResource( 8 )
 material/0 = ExtResource( 24 )
-material/1 = ExtResource( 15 )
-material/2 = ExtResource( 22 )
-material/3 = ExtResource( 5 )
-material/4 = ExtResource( 21 )
-material/5 = ExtResource( 2 )
-material/6 = ExtResource( 2 )
-material/7 = ExtResource( 30 )
-material/8 = ExtResource( 2 )
-material/9 = ExtResource( 34 )
-material/10 = ExtResource( 4 )
-material/11 = ExtResource( 3 )
-material/12 = ExtResource( 5 )
-material/13 = ExtResource( 16 )
-material/14 = ExtResource( 30 )
-material/15 = ExtResource( 18 )
-material/16 = ExtResource( 28 )
-material/17 = ExtResource( 21 )
-material/18 = ExtResource( 32 )
-material/19 = ExtResource( 29 )
-
-[node name="DoorRight" type="AnimationPlayer" parent="DriverCabinB"]
-anims/open = SubResource( 17 )
-
-[node name="DoorR1" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR2" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR4" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR3" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR6" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR5" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinB"]
-anims/open = SubResource( 18 )
-
-[node name="DoorR12" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR11" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR10" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR9" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR8" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="DoorR7" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 24 )
-material/1 = ExtResource( 47 )
-
-[node name="OmniLight5" type="OmniLight" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.98819, 1.6188, 1.06283 )
-light_color = Color( 0.992157, 0.00392157, 0.00392157, 1 )
-omni_range = 0.8
-
-[node name="OmniLight4" type="OmniLight" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.98906, 1.6188, -1.05703 )
-light_color = Color( 1, 0, 0, 1 )
-omni_range = 0.6
-
-[node name="LightBulb5" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, 1.05747 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 19 )
-
-[node name="LightBulb6" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, -1.05558 )
-mesh = SubResource( 13 )
-material/0 = SubResource( 19 )
-
-[node name="LightBulb7" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.95212, 1.61106, 1.05527 )
-mesh = SubResource( 20 )
-material/0 = SubResource( 21 )
-
-[node name="LightBulb8" type="MeshInstance" parent="DriverCabinB"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.94702, 1.61106, -1.05467 )
-mesh = SubResource( 20 )
-material/0 = SubResource( 21 )
+material/1 = ExtResource( 5 )
+material/2 = ExtResource( 15 )
 
 [node name="WagonSound" parent="DriverCabinB" instance=ExtResource( 45 )]
 
 [node name="EasyEngineSound" parent="DriverCabinB" instance=ExtResource( 41 )]
-
-[node name="PassengerDoor" parent="DriverCabinB" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
-
-[node name="PassengerDoor3" parent="DriverCabinB" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
-
-[node name="PassengerDoor2" parent="DriverCabinB" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
-
-[node name="PassengerDoor4" parent="DriverCabinB" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )
-
-[node name="PassengerDoor5" parent="DriverCabinB" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
-
-[node name="PassengerDoor6" parent="DriverCabinB" instance=ExtResource( 43 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
-
-[node name="PassengerSeat" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 1.20888 )
-
-[node name="PassengerSeat2" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 0.680868 )
-
-[node name="PassengerSeat3" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 1.20888 )
-
-[node name="PassengerSeat4" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 0.680868 )
-
-[node name="PassengerSeat5" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -0.683424 )
-
-[node name="PassengerSeat6" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -1.21144 )
-
-[node name="PassengerSeat7" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -0.683424 )
-
-[node name="PassengerSeat8" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -1.21144 )
-
-[node name="PassengerSeat13" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 1.20888 )
-
-[node name="PassengerSeat14" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 0.680868 )
-
-[node name="PassengerSeat15" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 1.20888 )
-
-[node name="PassengerSeat16" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 0.680868 )
-
-[node name="PassengerSeat17" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -0.683424 )
-
-[node name="PassengerSeat18" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -1.21144 )
-
-[node name="PassengerSeat19" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -0.683424 )
-
-[node name="PassengerSeat20" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -1.21144 )
-
-[node name="PassengerSeat21" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 1.20888 )
-
-[node name="PassengerSeat22" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 0.680868 )
-
-[node name="PassengerSeat23" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 1.20888 )
-
-[node name="PassengerSeat24" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 0.680868 )
-
-[node name="PassengerSeat25" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -0.683424 )
-
-[node name="PassengerSeat26" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -1.21144 )
-
-[node name="PassengerSeat27" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -0.683424 )
-
-[node name="PassengerSeat28" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -1.21144 )
-
-[node name="PassengerSeat29" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 1.20888 )
-
-[node name="PassengerSeat30" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 0.680868 )
-
-[node name="PassengerSeat31" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 1.20888 )
-
-[node name="PassengerSeat32" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 0.680868 )
-
-[node name="PassengerSeat33" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -0.683424 )
-
-[node name="PassengerSeat34" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -1.21144 )
-
-[node name="PassengerSeat37" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 1.20888 )
-
-[node name="PassengerSeat38" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 0.680868 )
-
-[node name="PassengerSeat39" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -0.683424 )
-
-[node name="PassengerSeat40" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -1.21144 )
-
-[node name="PassengerSeat35" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -0.683424 )
-
-[node name="PassengerSeat36" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -1.21144 )
-
-[node name="PassengerSeat9" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 1.20888 )
-
-[node name="PassengerSeat10" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 0.680868 )
-
-[node name="PassengerSeat11" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -0.683424 )
-
-[node name="PassengerSeat12" parent="DriverCabinB" instance=ExtResource( 44 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -1.21144 )
-
-[node name="PassengerPathNode" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
-connections = [ "PassengerSeat", "PassengerSeat2", "PassengerSeat3", "PassengerSeat4", "PassengerSeat5", "PassengerSeat6", "PassengerSeat7", "PassengerSeat8", "PassengerPathNode2", "PassengerPathNode3" ]
-
-[node name="PassengerPathNode3" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor3", "PassengerDoor4", "PassengerPathNode6", "PassengerPathNode7" ]
-
-[node name="PassengerPathNode7" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode8", "PassengerPathNode3", "PassengerSeat21", "PassengerSeat22", "PassengerSeat23", "PassengerSeat24", "PassengerSeat25", "PassengerSeat26", "PassengerSeat27", "PassengerSeat28" ]
-
-[node name="PassengerPathNode8" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode4", "PassengerPathNode7", "PassengerSeat29", "PassengerSeat30", "PassengerSeat31", "PassengerSeat32", "PassengerSeat33", "PassengerSeat34", "PassengerSeat35", "PassengerSeat36" ]
-
-[node name="PassengerPathNode6" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode", "PassengerPathNode3", "PassengerSeat13", "PassengerSeat14", "PassengerSeat15", "PassengerSeat16", "PassengerSeat17", "PassengerSeat18", "PassengerSeat19", "PassengerSeat20" ]
-
-[node name="PassengerPathNode4" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor", "PassengerDoor2", "PassengerPathNode8", "PassengerPathNode9" ]
-
-[node name="PassengerPathNode9" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode4", "PassengerSeat37", "PassengerSeat38", "PassengerSeat39", "PassengerSeat40" ]
-
-[node name="PassengerPathNode2" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
-connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "PassengerPathNode5" ]
-
-[node name="PassengerPathNode5" parent="DriverCabinB" instance=ExtResource( 42 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
-connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
 
 [node name="Pantograph" type="Spatial" parent="DriverCabinB"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.23426, 3.77014, 0 )
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinB/Pantograph"]
-anims/Up = SubResource( 22 )
+anims/Up = SubResource( 23 )
 
 [node name="Pantograph_1_B" type="MeshInstance" parent="DriverCabinB/Pantograph"]
 transform = Transform( 0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0 )
@@ -1774,6 +1552,396 @@ material/0 = ExtResource( 30 )
 transform = Transform( 0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.41134, 0.150598, 0 )
 mesh = ExtResource( 31 )
 material/0 = ExtResource( 30 )
+
+[node name="InteriorLights" type="Spatial" parent="DriverCabinB"]
+
+[node name="SpotLight1" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.834057, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight6" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.58392, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight7" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.25348, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight8" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -5.91054, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight2" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.842499, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight3" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.6424, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight4" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.24894, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight5" type="SpotLight" parent="DriverCabinB/InteriorLights"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.90145, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="PathNodes" type="Spatial" parent="DriverCabinB"]
+
+[node name="PassengerPathNode" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
+connections = [ "PassengerSeat", "PassengerSeat2", "PassengerSeat3", "PassengerSeat4", "PassengerSeat5", "PassengerSeat6", "PassengerSeat7", "PassengerSeat8", "PassengerPathNode2", "PassengerPathNode3" ]
+
+[node name="PassengerPathNode3" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor3", "PassengerDoor4", "PassengerPathNode6", "PassengerPathNode7" ]
+
+[node name="PassengerPathNode7" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode8", "PassengerPathNode3", "PassengerSeat21", "PassengerSeat22", "PassengerSeat23", "PassengerSeat24", "PassengerSeat25", "PassengerSeat26", "PassengerSeat27", "PassengerSeat28" ]
+
+[node name="PassengerPathNode8" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode4", "PassengerPathNode7", "PassengerSeat29", "PassengerSeat30", "PassengerSeat31", "PassengerSeat32", "PassengerSeat33", "PassengerSeat34", "PassengerSeat35", "PassengerSeat36" ]
+
+[node name="PassengerPathNode6" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode", "PassengerPathNode3", "PassengerSeat13", "PassengerSeat14", "PassengerSeat15", "PassengerSeat16", "PassengerSeat17", "PassengerSeat18", "PassengerSeat19", "PassengerSeat20" ]
+
+[node name="PassengerPathNode4" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor", "PassengerDoor2", "PassengerPathNode8", "PassengerPathNode9" ]
+
+[node name="PassengerPathNode9" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode4", "PassengerSeat37", "PassengerSeat38", "PassengerSeat39", "PassengerSeat40" ]
+
+[node name="PassengerPathNode2" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
+connections = [ "PassengerDoor5", "PassengerDoor6", "PassengerPathNode", "PassengerPathNode5" ]
+
+[node name="PassengerPathNode5" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
+connections = [ "PassengerPathNode2", "PassengerSeat9", "PassengerSeat10", "PassengerSeat11", "PassengerSeat12" ]
+
+[node name="Seats" type="Spatial" parent="DriverCabinB"]
+
+[node name="PassengerSeat" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 1.20888 )
+
+[node name="PassengerSeat2" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, 0.680868 )
+
+[node name="PassengerSeat3" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 1.20888 )
+
+[node name="PassengerSeat4" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, 0.680868 )
+
+[node name="PassengerSeat5" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -0.683424 )
+
+[node name="PassengerSeat6" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61693, 1.16981, -1.21144 )
+
+[node name="PassengerSeat7" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -0.683424 )
+
+[node name="PassengerSeat8" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -2.68675, 1.16981, -1.21144 )
+
+[node name="PassengerSeat13" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 1.20888 )
+
+[node name="PassengerSeat14" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, 0.680868 )
+
+[node name="PassengerSeat15" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 1.20888 )
+
+[node name="PassengerSeat16" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, 0.680868 )
+
+[node name="PassengerSeat17" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -0.683424 )
+
+[node name="PassengerSeat18" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03254, 1.16981, -1.21144 )
+
+[node name="PassengerSeat19" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -0.683424 )
+
+[node name="PassengerSeat20" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -1.10236, 1.16981, -1.21144 )
+
+[node name="PassengerSeat21" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 1.20888 )
+
+[node name="PassengerSeat22" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, 0.680868 )
+
+[node name="PassengerSeat23" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 1.20888 )
+
+[node name="PassengerSeat24" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, 0.680868 )
+
+[node name="PassengerSeat25" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -0.683424 )
+
+[node name="PassengerSeat26" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11208, 1.16981, -1.21144 )
+
+[node name="PassengerSeat27" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -0.683424 )
+
+[node name="PassengerSeat28" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 2.04226, 1.16981, -1.21144 )
+
+[node name="PassengerSeat29" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 1.20888 )
+
+[node name="PassengerSeat30" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, 0.680868 )
+
+[node name="PassengerSeat31" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 1.20888 )
+
+[node name="PassengerSeat32" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, 0.680868 )
+
+[node name="PassengerSeat33" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -0.683424 )
+
+[node name="PassengerSeat34" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69647, 1.16981, -1.21144 )
+
+[node name="PassengerSeat37" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 1.20888 )
+
+[node name="PassengerSeat38" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, 0.680868 )
+
+[node name="PassengerSeat39" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -0.683424 )
+
+[node name="PassengerSeat40" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.82703, 1.16981, -1.21144 )
+
+[node name="PassengerSeat35" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -0.683424 )
+
+[node name="PassengerSeat36" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 3.62665, 1.16981, -1.21144 )
+
+[node name="PassengerSeat9" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 1.20888 )
+
+[node name="PassengerSeat10" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, 0.680868 )
+
+[node name="PassengerSeat11" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -0.683424 )
+
+[node name="PassengerSeat12" parent="DriverCabinB/Seats" instance=ExtResource( 44 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.76272, 1.16981, -1.21144 )
+
+[node name="Doors" type="Spatial" parent="DriverCabinB"]
+
+[node name="PassengerDoor" parent="DriverCabinB/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
+
+[node name="PassengerDoor3" parent="DriverCabinB/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
+
+[node name="PassengerDoor2" parent="DriverCabinB/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
+
+[node name="PassengerDoor4" parent="DriverCabinB/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )
+
+[node name="PassengerDoor5" parent="DriverCabinB/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
+
+[node name="PassengerDoor6" parent="DriverCabinB/Doors" instance=ExtResource( 43 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
+
+[node name="DoorRight" type="AnimationPlayer" parent="DriverCabinB/Doors"]
+anims/open = SubResource( 18 )
+
+[node name="DoorR1" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR2" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR4" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR3" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR6" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR5" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinB/Doors"]
+anims/open = SubResource( 19 )
+
+[node name="DoorR12" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR11" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR10" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR9" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR8" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="DoorR7" type="MeshInstance" parent="DriverCabinB/Doors"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 47 )
+
+[node name="ExteriorLights" type="Spatial" parent="DriverCabinB"]
+
+[node name="OmniLight5" type="OmniLight" parent="DriverCabinB/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.22632, 1.6188, 1.06283 )
+light_color = Color( 0.992157, 0.00392157, 0.00392157, 1 )
+omni_range = 0.8
+
+[node name="OmniLight4" type="OmniLight" parent="DriverCabinB/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.22719, 1.6188, -1.05703 )
+light_color = Color( 1, 0, 0, 1 )
+omni_range = 0.6
+
+[node name="LightBulb5" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, 1.05747 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 20 )
+
+[node name="LightBulb6" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, -1.05558 )
+mesh = SubResource( 14 )
+material/0 = SubResource( 20 )
+
+[node name="LightBulb7" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.95212, 1.61106, 1.05527 )
+mesh = SubResource( 21 )
+material/0 = SubResource( 22 )
+
+[node name="LightBulb8" type="MeshInstance" parent="DriverCabinB/ExteriorLights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.94702, 1.61106, -1.05467 )
+mesh = SubResource( 21 )
+material/0 = SubResource( 22 )
+
+[node name="InteriorLights2" type="Spatial" parent="DriverCabinB"]
+
+[node name="SpotLight" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.834057, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight6" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.63804, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight7" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.29457, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight8" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -5.82334, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight2" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.859692, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight3" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.61941, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight4" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.27381, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
+
+[node name="SpotLight5" type="SpotLight" parent="DriverCabinB/InteriorLights2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.90978, 3.18098, 0 )
+light_energy = 2.0
+spot_range = 4.0
+spot_angle = 77.4
 
 [node name="Sound" type="Spatial" parent="."]
 script = ExtResource( 25 )

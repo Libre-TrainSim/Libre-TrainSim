@@ -176,13 +176,13 @@ var lastDoorLeft = false
 var lastDoorsClosing = false
 func check_doors():
 	if player.doorRight and not lastDoorRight:
-		$DoorRight.play("open")
+		$Doors/DoorRight.play("open")
 	if player.doorRight and not lastDoorsClosing and player.doorsClosing:
-		$DoorRight.play_backwards("open")
+		$Doors/DoorRight.play_backwards("open")
 	if player.doorLeft and not lastDoorLeft:
-		$DoorLeft.play("open")
+		$Doors/DoorLeft.play("open")
 	if player.doorLeft and not lastDoorsClosing and player.doorsClosing:
-		$DoorLeft.play_backwards("open")
+		$Doors/DoorLeft.play_backwards("open")
 		
 	
 	lastDoorRight = player.doorRight
@@ -236,7 +236,7 @@ func despawn():
 
 
 func registerDoors():
-	for child in get_children():
+	for child in $Doors.get_children():
 		if child.is_in_group("PassengerDoor"):
 			if child.translation[2] > 0:
 				child.translation += Vector3(0,0,0.5)
@@ -321,15 +321,17 @@ func getPathFromToHelper(start, destination, visitedNodes): ## Recursion, Simple
 
 	
 func registerPassengerPathNodes():
-	for child in get_children():
+	for child in $PathNodes.get_children():
 		if child.is_in_group("PassengerPathNode"):
 			passengerPathNodes.append(child)
 
+
 func registerSeats():
-	for child in get_children():
+	for child in $Seats.get_children():
 		if child.is_in_group("PassengerSeat"):
 			seats.append(child)
 			seatsOccupancy.append(null)
+
 
 var leavingPassengerNodes = []
 ## Called by the train when arriving

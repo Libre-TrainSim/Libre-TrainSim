@@ -347,13 +347,13 @@ func calculate_from_start_end(new_endpos):
 	var end = (new_endpos - startpos).rotated(Vector3.UP, deg2rad(-startrot))
 	end.z = -end.z  # fix because in godot -z is forward, not +z
 	end.x = max(end.x, 0)  # do not allow negative x, max angle is 180°!
-	
+
 	if abs(end.z) < 0.01:
 		radius = 0
 		length = end.length()
 		update()
 		return
-	
+
 	# m = end.z / end.x
 	# m2 = - 1 / m
 	# b = z - m2 * x
@@ -365,12 +365,12 @@ func calculate_from_start_end(new_endpos):
 		radius = -10
 	elif radius > 0 and radius < 10:
 		radius = 10
-	
+
 	var angle = 2 * asin(end.length() / b) # asin( (len/2) / r )
 	length = radius * angle
-	
+
 	endrot = startrot + angle
-	
+
 	update()
 
 

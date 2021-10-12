@@ -158,10 +158,8 @@ func set_low_resolution(value : bool):
 		ProjectSettings.set_setting("display/window/stretch/aspect", "keep")
 		ProjectSettings.set_setting("display/window/size/width", "1280")
 		ProjectSettings.set_setting("display/window/size/height", "720")
-		ProjectSettings.save()
 	else:
 		ProjectSettings.set_setting("display/window/stretch/mode", "disabled")
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
 		ProjectSettings.set_setting("display/window/size/width", "800")
 		ProjectSettings.set_setting("display/window/size/height", "600")
-		ProjectSettings.save()

@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var camera = get_node("FreeCamera")
+onready var camera = $Camera
 var editor_directory = ""
 
 var selected_object = null
@@ -145,7 +145,7 @@ func load_world():
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(Root.current_editor_track):
-		$FreeCamera.transform = last_editor_camera_transforms[Root.current_editor_track]
+		camera.transform = last_editor_camera_transforms[Root.current_editor_track]
 
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
@@ -163,7 +163,7 @@ func load_world():
 func save_world():
 	## Save Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
-	last_editor_camera_transforms[Root.current_editor_track] = $FreeCamera.transform
+	last_editor_camera_transforms[Root.current_editor_track] = camera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
 	$World.unload_and_save_all_chunks()
@@ -239,7 +239,7 @@ func add_rail():
 	set_selected_object(rail_instance)
 
 func get_current_ground_position() -> Vector3:
-	var position = $FreeCamera.translation
+	var position = camera.translation
 	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
 	return position
 
@@ -256,11 +256,6 @@ func add_object(complete_path : String):
 	mesh_instance.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	set_selected_object(mesh_instance)
 
-
-
-func _on_FreeCamera_single_rightclick():
-	if not $EditorHUD.mouse_over_ui:
-		clear_selected_object()
 
 func test_track_pck():
 	save_world()
@@ -491,8 +486,8 @@ func jump_to_station(station_node_name):
 	var station_node = $World/Signals.get_node(station_node_name)
 	if station_node == null:
 		print_debug("Station not found:" + station_node_name)
-	$FreeCamera.transform = station_node.transform.translated(Vector3(0, 5, 0))
-	$FreeCamera.rotation_degrees.y -= 90
+	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
+	camera.rotation_degrees.y -= 90
 
 
 var all_chunks = []
@@ -515,7 +510,7 @@ func generate_grass_panes():
 
 var ist_chunks = []
 func load_chunks_near_camera():
-	var wanted_chunks = $World.get_chunks_around_position($FreeCamera.translation)
+	var wanted_chunks = $World.get_chunks_around_position(camera.translation)
 	for wanted_chunk in wanted_chunks.duplicate():
 		if ist_chunks.has(wanted_chunk):
 			wanted_chunks.erase(wanted_chunk)

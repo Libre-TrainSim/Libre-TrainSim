@@ -118,25 +118,6 @@ func _on_Autopilot_pressed():
 	player.toggle_automatic_driving()
 
 
-func _on_Pause_Back_pressed():
-	$Pause.hide()
-	get_tree().paused = false
-
-
-
-
-func _on_Pause_QuitMenu_pressed():
-	get_tree().paused = false
-	jAudioManager.clear_all_sounds()
-	jEssentials.remove_all_pending_delayed_calls()
-	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
-
-
-func _on_PauseButton_pressed():
-	$Pause.show()
-	get_tree().paused = true
-
-
 func _on_Lights_pressed():
 	player.toggle_front_light()
 	player.toggle_cabin_light()

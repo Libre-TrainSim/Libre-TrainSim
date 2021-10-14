@@ -2,23 +2,24 @@ extends Control
 
 var editor_directory
 
-func init():
+func show():
 	initialize_UI()
 	initialize_editor_directory()
 	load_additional_resources()
+	.show()
 
 
 func initialize_UI():
 	editor_directory = jSaveManager.get_setting("editor_directory_path", OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)+"Libre-TrainSim-Editor/")
 	jSaveManager.save_setting("editor_directory_path", editor_directory)
-	$VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
+	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
 
 	var track_paths = jEssentials.find_files_recursively(editor_directory + "Worlds/", "tscn")
 	var tracks = []
 	for track_path in track_paths:
 		tracks.append(track_path.get_file().get_basename())
 
-	$VBoxContainer/TracksList.set_data(tracks)
+	$PanelContainer/VBoxContainer/TracksList.set_data(tracks)
 
 
 
@@ -30,14 +31,14 @@ func initialize_editor_directory():
 
 
 func _on_UpdateEditorPathButton_pressed():
-	editor_directory = $VBoxContainer/HBoxContainer/EditorPath.text
+	editor_directory = $PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text
 	initialize_editor_directory()
 	jSaveManager.save_setting("editor_directory_path", editor_directory)
 
 func initialize_track_directory(entry_name):
 	var dir = Directory.new()
 	if dir.dir_exists(editor_directory + "Worlds/" + entry_name):
-		$VBoxContainer/TracksList.revoke_last_user_action("Given Directory " + editor_directory + "Worlds/" + entry_name + " already exists.\nPlease delete this direcotry to create a new track with this name!")
+		$PanelContainer/VBoxContainer/TracksList.revoke_last_user_action("Given Directory " + editor_directory + "Worlds/" + entry_name + " already exists.\nPlease delete this direcotry to create a new track with this name!")
 		return
 	dir.make_dir_recursive(editor_directory + "Worlds/" + entry_name)
 
@@ -58,9 +59,9 @@ func create_resource_directory_structure(track_name):
 
 
 func _on_TracksList_user_added_entry(entry_name):
-	$VBoxContainer/TracksList.remove_entry(entry_name)
+	$PanelContainer/VBoxContainer/TracksList.remove_entry(entry_name)
 	entry_name = remove_inappropriate_signs_from_track_name(entry_name)
-	$VBoxContainer/TracksList.add_entry(entry_name)
+	$PanelContainer/VBoxContainer/TracksList.add_entry(entry_name)
 	initialize_track_directory(entry_name)
 
 func remove_inappropriate_signs_from_track_name(track_name):
@@ -117,3 +118,7 @@ func _on_DonwloadResourceImporter_pressed():
 func _on_ImportResources_pressed():
 	$ImportDescription/VBoxContainer/RichTextLabel.text = tr("IMPORT_DESCRIPTION")
 	$ImportDescription.show()
+
+
+func _on_Back_pressed() -> void:
+	hide()

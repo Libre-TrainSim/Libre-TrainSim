@@ -16,6 +16,13 @@ var active_route_rect = Rect2(2e31, 2e31, 0, 0)
 
 var chunk_origin = Vector2()
 
+
+func _ready():
+	render_target_update_mode = Viewport.UPDATE_ALWAYS
+	yield(get_tree(), "idle_frame")
+	init_map()
+
+
 func init_map():
 	if train_world == null:
 		print("RAILMAP: Could not find world! Despawning!")
@@ -39,8 +46,8 @@ func init_map():
 
 
 func open_full_map():
-	self.set_process(true)
-	self.set_process_input(true)
+	set_process(true)
+	set_process_unhandled_input(true)
 
 	self.size = OS.window_size
 	overlay = false
@@ -58,8 +65,8 @@ func open_full_map():
 
 
 func open_overlay_map():
-	self.set_process(true)
-	self.set_process_input(false)
+	set_process(true)
+	set_process_unhandled_input(false)
 
 	var os_size = OS.window_size
 	self.size = Vector2(os_size.x*0.33,os_size.y)
@@ -91,32 +98,37 @@ func open_overlay_map():
 
 
 func close_map():
-	self.set_process(false)
-	self.set_process_input(false)
+	set_process(false)
+	set_process_unhandled_input(false)
 
 
 var mouse_motion = Vector2(0,0)
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action("zoom_in"):
 		var zoom = $Camera2D.zoom
 		zoom.x = clamp(zoom.x*0.8, 0.01, 2.5)
 		zoom.y = clamp(zoom.y*0.8, 0.01, 2.5)
 		$Camera2D.zoom = zoom
+		get_tree().set_input_as_handled()
 
 	if event.is_action("zoom_out"):
 		var zoom = $Camera2D.zoom
 		zoom.x = clamp(zoom.x*1.25, 0.01, 3)
 		zoom.y = clamp(zoom.y*1.25, 0.01, 3)
 		$Camera2D.zoom = zoom
+		get_tree().set_input_as_handled()
 
 	if not overlay:
 		if event.is_action_pressed("map_center_player"):
 			follow_player = true
+			get_tree().set_input_as_handled()
 		if event is InputEventMouseButton:
 			if event.button_index == BUTTON_MIDDLE:
 				follow_player = false
+				get_tree().set_input_as_handled()
 		if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
 			mouse_motion -= event.relative
+			get_tree().set_input_as_handled()
 
 
 func _process(delta: float) -> void:

@@ -36,7 +36,7 @@ func _on_jTable_saved_pressed(tableData):
 # and the settings window opens. Completely irrelevant from where you call this.
 
 func _on_Options_pressed():
-	jSettings.open_window()
+	jSettings.popup()
 
 
 ## Easy Save/Load Example ######################################################

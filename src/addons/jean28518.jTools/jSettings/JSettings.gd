@@ -1,19 +1,15 @@
-extends Control
+extends CanvasLayer
 
-func open_window():
-	var node = get_tree().get_current_scene()
-	var instance = self.duplicate()
-	node.add_child(instance)
-	instance.owner = node
-	instance.update_and_prepare_language_handling()
-	instance.update_settings_window()
-	instance.show()
+func popup():
+	update_and_prepare_language_handling()
+	update_settings_window()
+	$JSettings.show()
 
 ################################################################################
 
 func _ready():
 	if get_parent().name == "root":
-		hide()
+		$JSettings.hide()
 
 	if get_fullscreen() == null:
 		set_fullscreen(true)
@@ -52,23 +48,23 @@ func apply_saved_settings():
 
 
 func update_settings_window():
-	$ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
-	$ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
-	$ScrollContainer/GridContainer/Fog.pressed = get_fog()
-	$ScrollContainer/GridContainer/Persons.pressed = get_persons()
-	$ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
-	$ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
-	$ScrollContainer/GridContainer/AntiAliasing.selected = get_anti_aliasing()
-	$ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
-	$ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
-	$ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
-	$ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = get_fog()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = get_persons()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/AntiAliasing.selected = get_anti_aliasing()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
 
 	if not jConfig.enable_jAudioManager:
-		$ScrollContainer/GridContainer/Label4.hide()
-		$ScrollContainer/GridContainer/GameVolume.hide()
-		$ScrollContainer/GridContainer/Label5.hide()
-		$ScrollContainer/GridContainer/MusicVolume.hide()
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Label4.hide()
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/GameVolume.hide()
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Label5.hide()
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.hide()
 
 ## Setter/Getter ###############################################################
 
@@ -162,8 +158,8 @@ func update_and_prepare_language_handling():
 	var language_codes = TranslationServer.get_loaded_locales()
 	language_codes = jEssentials.remove_duplicates(language_codes)
 	if language_codes.size() == 0:
-		$ScrollContainer/GridContainer/Label7.hide()
-		$ScrollContainer/GridContainer/Language.hide()
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Label7.hide()
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.hide()
 		return
 
 
@@ -175,9 +171,9 @@ func update_and_prepare_language_handling():
 
 	# Prepare language
 	for index in range(_language_table.size()):
-		$ScrollContainer/GridContainer/Language.add_item("",index)
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
 	for language in _language_table.keys():
-		$ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
+		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
 
 	# If Language is not found, select one language, which is available
 	var language_code = get_language()
@@ -196,20 +192,24 @@ func _id_to_language_code(id : int):
 ## Other Signals ###############################################################
 
 func _on_Back_pressed():
-	queue_free()
+	$JSettings.hide()
+
 
 func _on_Fullscreen_pressed():
-	set_fullscreen($ScrollContainer/GridContainer/Fullscreen.pressed)
+	set_fullscreen($JSettings/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed)
+
 
 func _on_Shadows_pressed():
-	set_shadows($ScrollContainer/GridContainer/Shadows.pressed)
+	set_shadows($JSettings/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed)
+
 
 func _on_Language_item_selected(index):
 	set_language(_id_to_language_code(index))
 
+
 func _on_Fog_pressed():
-	set_fog($ScrollContainer/GridContainer/Fog.pressed)
+	set_fog($JSettings/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed)
 
 
 func _on_Persons_pressed():
-	set_persons($ScrollContainer/GridContainer/Persons.pressed)
+	set_persons($JSettings/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed)

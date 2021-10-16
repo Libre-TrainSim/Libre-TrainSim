@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var camera = $Camera
+onready var camera := $Camera as EditorCamera
 var editor_directory = ""
 
 var selected_object = null
@@ -312,7 +312,7 @@ func load_world():
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(Root.current_editor_track):
-		camera.transform = last_editor_camera_transforms[Root.current_editor_track]
+		camera.load_from_transform(last_editor_camera_transforms[Root.current_editor_track])
 
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
@@ -663,6 +663,7 @@ func jump_to_station(station_node_name):
 		return
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation_degrees.y -= 90
+	camera.load_from_transform(camera.transform)
 
 
 

@@ -13,6 +13,11 @@ var is_moving_first_person := false
 var is_panning := false
 
 
+func load_from_transform(new_transform: Transform) -> void:
+	transform = new_transform
+	rot = Vector2(rotation.y, rotation.x)
+
+
 # TODO: F to focus on selected object
 # TODO: Fix Pan speed depending on distance to ground or zoom
 #	needs object picking

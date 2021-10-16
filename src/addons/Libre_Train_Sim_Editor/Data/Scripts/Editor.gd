@@ -126,22 +126,25 @@ func handle_drag_mode():
 		elif Math.angle_distance_deg(startrot, snap_rot) < 1:
 			if _local_x_distance(startrot, selected_object.startpos, snap_pos) < 20:
 				return
-			$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
-			$EditorHUD/SnapDialog.popup_centered()
-			_last_connected_signal = "_snap_simple_connector"
-			$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_simple_connector"):
+				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
+				$EditorHUD/SnapDialog.popup_centered()
+				_last_connected_signal = "_snap_simple_connector"
+				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 		elif abs(Math.angle_distance_deg(startrot, snap_rot) - 90) < 1:
 			# right angle, can be done with straight rail + 90deg curve
-			$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
-			$EditorHUD/SnapDialog.popup_centered()
-			_last_connected_signal = "_snap_90deg_connector"
-			$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_90deg_connector"):
+				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
+				$EditorHUD/SnapDialog.popup_centered()
+				_last_connected_signal = "_snap_90deg_connector"
+				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 		else:
 			# complicated snapping I don't know how to do yet
-			$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR_TODO")
-			$EditorHUD/SnapDialog.popup_centered()
-			_last_connected_signal = "_snap_complex_connector"
-			$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_complex_connector"):
+				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR_TODO")
+				$EditorHUD/SnapDialog.popup_centered()
+				_last_connected_signal = "_snap_complex_connector"
+				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 	else:
 		if _last_connected_signal != "" and $EditorHUD/SnapDialog.is_connected("confirmed", self, _last_connected_signal):
 			$EditorHUD/SnapDialog.disconnect("confirmed", self, _last_connected_signal)

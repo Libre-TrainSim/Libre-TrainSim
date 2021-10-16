@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Trains/JFR1/Door.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://Resources/Basic/Materials/Cabin.tres" type="Material" id=2]
@@ -15,7 +15,9 @@
 [ext_resource path="res://Resources/Basic/Objects/Control-Roll.obj" type="ArrayMesh" id=13]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/HUD.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Trains/JFR1/Wagon_WithDriverStand_Grey.tres" type="Material" id=15]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SifaModule.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Trains/JFR1/SpecificScriptingGrey.gd" type="Script" id=17]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PZBModule.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Resources/Basic/Sounds/Horn.ogg" type="AudioStream" id=19]
 [ext_resource path="res://Resources/Basic/Screens/ScreenRight/ScreenRight.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Resources/Basic/Materials/GlassInvisible.tres" type="Material" id=24]
@@ -81,7 +83,7 @@ emission_texture = ExtResource( 26 )
 [sub_resource type="QuadMesh" id=6]
 size = Vector2( 1, 0.75 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0, 0, 0, 1 )
 metallic = 0.1
 roughness = 0.9
@@ -91,10 +93,10 @@ emission_energy = 1.0
 emission_operator = 1
 emission_on_uv2 = false
 
-[sub_resource type="QuadMesh" id=9]
+[sub_resource type="QuadMesh" id=8]
 size = Vector2( 1, 0.75 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Doors/DoorR1:translation")
@@ -169,7 +171,7 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, 1.51497 ), Vector3( 5.05345, 1.02943, 1.56736 ), Vector3( 5.80366, 1.02943, 1.56736 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Doors/DoorR12:translation")
@@ -244,7 +246,7 @@ tracks/5/keys = {
 "values": [ Vector3( 5.05345, 1.02943, -1.51171 ), Vector3( 5.05345, 1.02943, -1.5828 ), Vector3( 5.76987, 1.02943, -1.5828 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=11]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
@@ -467,7 +469,7 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=17]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pantograph_1_B:rotation_degrees")
@@ -716,6 +718,12 @@ far = 1000.0
 [node name="SpecificScripting" type="Node" parent="."]
 script = ExtResource( 17 )
 
+[node name="SafetySystems" type="Node" parent="."]
+
+[node name="PZBModule" parent="SafetySystems" instance=ExtResource( 18 )]
+
+[node name="SifaModule" parent="SafetySystems" instance=ExtResource( 16 )]
+
 [node name="Cabin" type="Spatial" parent="."]
 visible = false
 script = ExtResource( 33 )
@@ -776,9 +784,9 @@ material/0 = ExtResource( 3 )
 
 [node name="ScreenReverser" type="MeshInstance" parent="Cabin"]
 transform = Transform( -6.11959e-09, 0.14, 4.37114e-08, 0, -6.11959e-09, 1, 0.14, 6.11959e-09, 1.91069e-15, 7.046, 2.51304, 0 )
-material_override = SubResource( 8 )
+material_override = SubResource( 7 )
 cast_shadow = 0
-mesh = SubResource( 9 )
+mesh = SubResource( 8 )
 material/0 = null
 
 [node name="DisplayReverser" type="Viewport" parent="Cabin"]
@@ -995,7 +1003,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098 )
 
 [node name="DoorRight" type="AnimationPlayer" parent="Wagon1/Doors"]
-anims/open = SubResource( 10 )
+anims/open = SubResource( 9 )
 
 [node name="DoorR1" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497 )
@@ -1034,7 +1042,7 @@ material/0 = ExtResource( 24 )
 material/1 = ExtResource( 47 )
 
 [node name="DoorLeft" type="AnimationPlayer" parent="Wagon1/Doors"]
-anims/open = SubResource( 11 )
+anims/open = SubResource( 10 )
 
 [node name="DoorR12" type="MeshInstance" parent="Wagon1/Doors"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171 )
@@ -1143,7 +1151,7 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.16962
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinF/Pantograph"]
-anims/Up = SubResource( 17 )
+anims/Up = SubResource( 11 )
 
 [node name="Pantograph_1_B" type="MeshInstance" parent="DriverCabinF/Pantograph"]
 transform = Transform( 0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0 )
@@ -1536,7 +1544,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.23426, 3.77014, 0 )
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinB/Pantograph"]
-anims/Up = SubResource( 23 )
+anims/Up = SubResource( 17 )
 
 [node name="Pantograph_1_B" type="MeshInstance" parent="DriverCabinB/Pantograph"]
 transform = Transform( 0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0 )
@@ -1997,3 +2005,7 @@ visible = false
 transform = Transform( -3.30409e-08, 0.654701, -0.755888, 2.86179e-08, 0.755888, 0.654701, 1, 0, -4.37114e-08, 5.44394, 3.40882, 0 )
 light_color = Color( 1, 0.890196, 0.890196, 1 )
 light_energy = 3.0
+
+[connection signal="passed_signal" from="." to="SafetySystems/PZBModule" method="_on_passed_signal"]
+[connection signal="reverser_changed" from="." to="SafetySystems/PZBModule" method="_on_reverser_changed"]
+[connection signal="sifa_visual_hint" from="SafetySystems/SifaModule" to="Cabin/DisplayMiddle/Display" method="_on_sifa_visual_hint"]

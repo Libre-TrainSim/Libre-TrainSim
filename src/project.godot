@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/InputLabel.gd"
 }, {
+"base": "Object",
+"class": "Logger",
+"language": "GDScript",
+"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/logger.gd"
+}, {
 "base": "Control",
 "class": "Map",
 "language": "GDScript",
@@ -81,6 +86,7 @@ _global_script_class_icons={
 "ColoredItemList": "",
 "EditorCamera": "",
 "InputLabel": "",
+"Logger": "",
 "Map": "",
 "Pause": "",
 "PlatformSide": "",

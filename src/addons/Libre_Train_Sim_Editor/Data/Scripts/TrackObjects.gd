@@ -119,7 +119,7 @@ func update(_rail_node, res_cache = {}):
 	var mesh_res
 	if not res_cache.has(objectPath):
 		if not ResourceLoader.exists(objectPath):
-			print("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...")
+			Logger.err("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...", self)
 			return
 		res_cache[objectPath] = load(objectPath)
 	mesh_res = res_cache[objectPath]

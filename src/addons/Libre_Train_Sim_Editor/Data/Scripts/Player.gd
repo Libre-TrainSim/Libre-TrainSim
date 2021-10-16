@@ -202,7 +202,7 @@ func ready(): ## Called by World!
 	distance_on_rail = startPosition
 	currentRail = world.get_node("Rails/"+startRail)
 	if currentRail == null:
-		printerr("Can't find Rail. Check the route of the Train "+ self.name)
+		Logger.err("Can't find Rail. Check the route of the Train "+ self.name, self)
 		return
 	if forward:
 		distance_on_route = startPosition
@@ -242,7 +242,7 @@ func ready(): ## Called by World!
 		insideLight = true
 		frontLight = true
 
-	print("Train " + name + " spawned sucessfully at " + currentRail.name)
+	Logger.log("Train " + name + " spawned sucessfully at " + currentRail.name)
 
 
 var initialSwitchCheck = false
@@ -262,8 +262,8 @@ func processLong(delta): ## All functions in it are called every (processLongDel
 	if automaticDriving:
 		autopilot(delta)
 	if name == "npc3":
-		print(currentRail.name)
-		print(distance_on_rail)
+		Logger.vlog(currentRail.name)
+		Logger.vlog(distance_on_rail)
 
 	if not initialSwitchCheck:
 		updateSwitchOnNextChange()
@@ -556,7 +556,7 @@ func change_to_next_rail():
 		distance_on_rail -= currentRail.length
 
 	if not ai:
-		print("Player: Changing Rail...")
+		Logger.vlog("Player: Changing Rail...")
 
 	if reverser == ReverserState.REVERSE:
 		route_index -= 1
@@ -574,7 +574,7 @@ func change_to_next_rail():
 				distance_on_route += complete_route_length
 		else:
 			if ai:
-				print(name + ": Route no more rail found, despawning me...")
+				Logger.log(name + ": Route no more rail found, despawning me...")
 				despawn()
 			else:
 				fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_LAST_RAIL"))
@@ -601,10 +601,10 @@ func change_to_next_rail():
 		new_radius = 1000000000
 	var radius_difference_factor = abs(1/new_radius - 1/old_radius)*2000
 
-	print(new_radius)
-	print(old_radius)
+	Logger.vlog(new_radius)
+	Logger.vlog(old_radius)
 
-	print (radius_difference_factor)
+	Logger.vlog(radius_difference_factor)
 	curve_shaking_factor = radius_difference_factor * Math.speedToKmH(speed) / 100.0 * camera_shaking_factor
 
 
@@ -743,11 +743,11 @@ func handle_signal(signal_name):
 	var signal_passed = world.get_node("Signals/"+signal_name)
 	if signal_passed.forward != forward: return
 
-	print(name + ": SIGNAL: " + signal_passed.name)
+	Logger.log(name + ": SIGNAL: " + signal_passed.name)
 
 	if signal_passed.type == "Signal": ## Signal
 		if speed == 0: # Train is standing, and a signal get's activated that only happens at beginning or after jumping
-			print("Ignoring signal " + signal_name)
+			Logger.log("Ignoring signal " + signal_name)
 			return
 		if reverser == ReverserState.FORWARD:
 			if signal_passed.speed != -1:
@@ -775,7 +775,7 @@ func handle_signal(signal_name):
 
 	elif signal_passed.type == "Station": ## Station
 		if not stations["nodeName"].has(signal_passed.name):
-			print(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...")
+			Logger.warn(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...", self)
 			return
 		current_station_index = stations["nodeName"].find(signal_passed.name)
 		match stations["stopType"][current_station_index]:
@@ -811,7 +811,7 @@ func handle_signal(signal_name):
 		else:
 			currentSpeedLimit = signal_passed.speed
 	elif signal_passed.type == "WarnSpeed":
-		print(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
+		Logger.log(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
 	elif signal_passed.type == "ContactPoint":
 		signal_passed.activateContactPoint(name)
 	pass
@@ -995,7 +995,7 @@ func checkSpeedLimit(delta):
 
 func send_message(string : String, actions := []):
 	if not ai:
-		print("Sending Message: " + tr(string) % actions )
+		Logger.log("Sending Message: " + tr(string) % actions )
 		$HUD.send_message(string, actions)
 
 ## Doors:
@@ -1135,7 +1135,7 @@ func bake_route(): ## Generate the whole route for the train.
 
 		# Check for loop:
 		if baked_route.has(rail_candidate) and baked_route_direction[baked_route.find(rail_candidate)] == currentF:
-			print("found loop for " + name)
+			Logger.log("found loop for " + name)
 			baked_route_is_loop = true
 			break
 		else:
@@ -1167,9 +1167,9 @@ func bake_route(): ## Generate the whole route for the train.
 		else: ## Backward
 			currentpos = currentR.startpos
 			currentrot = currentR.startrot - 180.0
-	print(name + ": Baking Route finished:")
-	print(name + ": Baked Route: "+ String(baked_route))
-	print(name + ": Baked Route: Direction "+ String(baked_route_direction))
+	Logger.log(name + ": Baking Route finished:")
+	Logger.log(name + ": Baked Route: "+ String(baked_route))
+	Logger.log(name + ": Baked Route: Direction "+ String(baked_route_direction))
 
 
 func show_textbox_message(string):
@@ -1362,9 +1362,9 @@ func toggle_automatic_driving():
 	automaticDriving = !automaticDriving
 	if not automaticDriving:
 		sollSpeedEnabled = false
-		print("AutomaticDriving disabled")
+		Logger.log("AutomaticDriving disabled")
 	else:
-		print("AutomaticDriving enabled")
+		Logger.log("AutomaticDriving enabled")
 
 var autoPilotInStation = true
 
@@ -1522,7 +1522,7 @@ func checkDespawn():
 
 func despawn():
 	freeLastSignalBecauseOfDespawn()
-	print("Despawning Train: " + name)
+	Logger.log("Despawning Train: " + name)
 	despawning = true
 
 var checkVisibilityTimer = 0
@@ -1543,7 +1543,7 @@ func debugLights(node):
 	if node.has_meta("energy"):
 		node.visible = false
 		node.visible = true
-		print("Spotlight updated")
+		Logger.log("Spotlight updated")
 
 
 
@@ -1596,7 +1596,7 @@ func updateTrainAudioBus():
 		AudioServer.set_bus_volume_db(2,soundIsolation)
 
 func sendDoorPositionsToCurrentStation():
-	print("Sending Door Postions...")
+	Logger.log("Sending Door Postions...")
 	var doors = []
 	var doorsWagon = []
 	for wagon in wagonsI:

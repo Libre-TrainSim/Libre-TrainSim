@@ -62,7 +62,7 @@ func name_node_appropriate(node : Node, wanted_name : String, parent_node : Node
 
 
 func checkAndLoadTranslationsForTrack(trackName): # Searches for translation files with trackName in res://Translations/
-	print(trackName.get_file().get_basename())
+	Logger.vlog(trackName.get_file().get_basename())
 	var trackTranslations = []
 	var dir = Directory.new()
 	dir.open("res://Translations")
@@ -74,14 +74,14 @@ func checkAndLoadTranslationsForTrack(trackName): # Searches for translation fil
 		if file.get_extension() == "translation":
 			if file.get_file().begins_with(trackName):
 				trackTranslations.append("res://Translations/" + file.get_file())
-				print("Track Translation Found " + "res://Translations/" + file.get_file())
+				Logger.vlog("Track Translation Found " + "res://Translations/" + file.get_file())
 	for trackTranslationPath in trackTranslations:
 		var trackTranslation = load(trackTranslationPath)
-		print(trackTranslation.locale)
+		Logger.vlog(trackTranslation.locale)
 		TranslationServer.add_translation(trackTranslation)
 
 func checkAndLoadTranslationsForTrain(trainDirPath): # Searches for translation files wich are located in the same folder as the train.tscn. Gets the full path to train.tscn as input
-	print(trainDirPath)
+	Logger.vlog(trainDirPath)
 	var trainTranslations = []
 	var dir = Directory.new()
 	dir.open(trainDirPath)
@@ -92,10 +92,10 @@ func checkAndLoadTranslationsForTrain(trainDirPath): # Searches for translation 
 				break
 		if file.get_extension() == "translation":
 			trainTranslations.append(trainDirPath+"/"+file)
-			print("Track Translation Found " + "res://Translations/" + file.get_file())
+			Logger.vlog("Track Translation Found " + "res://Translations/" + file.get_file())
 	for trainTranslationPath in trainTranslations:
 		var tainTranslation = load(trainTranslationPath)
-		print(tainTranslation.locale)
+		Logger.vlog(tainTranslation.locale)
 		TranslationServer.add_translation(tainTranslation)
 
 ## foundFiles has to be an dict: {"Array" : []}

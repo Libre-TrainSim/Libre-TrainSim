@@ -120,10 +120,10 @@ func _ready():
 # signals necessary for RailMap to work
 func set_status(new_val):
 	if signal_type == SignalType.PRESIGNAL and new_val == SignalStatus.RED:
-		print(name, ": Cannot set a presignal to red!")
+		Logger.err(name + ": Cannot set a presignal to red!", self)
 		return
 	if signal_type == SignalType.MAIN and new_val == SignalStatus.ORANGE:
-		print(name, ": Cannot set a main signal to orange!")
+		Logger.err(name + ": Cannot set a main signal to orange!", self)
 		return
 
 	# make sure signal does not become green when it should be orange
@@ -149,7 +149,7 @@ func set_to_rail(newvar):
 	if !is_inside_tree():
 		return
 	if world == null:
-		print(name, ": CAN'T FIND WORLD NODE!")
+		Logger.err(name + ": CAN'T FIND WORLD NODE!", self)
 		return
 	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
 		var rail = get_parent().get_parent().get_node("Rails/"+attached_rail)

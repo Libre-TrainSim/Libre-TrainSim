@@ -52,16 +52,15 @@ func _on_Tracks_item_selected(index: int) -> void:
 
 	var wData = $jSaveModule.get_value("world_config", null)
 	if wData == null:
-		print(save_path)
+		Logger.err("No scenarios found.", save_path)
 		$Play/Info/Description.text = tr("MENU_NO_SCENARIO_FOUND")
-		$Play/Info/Description.text = tr(save_path)
 		$Play/Selection/Scenarios.hide()
 		return
 	$Play/Info/Description.text = tr(wData["TrackDesciption"])
 	$Play/Info/Info/Author.text = " "+ tr("MENU_AUTHOR") + ": " + wData["Author"] + " "
 	$Play/Info/Info/ReleaseDate.text = " "+ tr("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
 	var track_name = currentTrack.get_basename().get_file()
-	print(track_name)
+	Logger.vlog(track_name)
 	$Play/Info/Screenshot.texture = _make_image("res://Worlds/"+track_name + "/screenshot.png")
 
 
@@ -105,7 +104,7 @@ func _on_Trains_item_selected(index: int) -> void:
 	# FIXME: this should not happen in the menu. The trains can get huge, so we should
 	# add a resource holding information about the trains
 	var train = load(currentTrain).instance()
-	print("Current Train: "+currentTrain)
+	Logger.vlog("Current Train: "+currentTrain)
 	$Play/Info/Description.text = tr(train.description)
 	$Play/Info/Info/ReleaseDate.text = tr("MENU_RELEASE")+": "+ train.releaseDate
 	$Play/Info/Info/Author.text = tr("MENU_AUTHOR")+": "+ train.author

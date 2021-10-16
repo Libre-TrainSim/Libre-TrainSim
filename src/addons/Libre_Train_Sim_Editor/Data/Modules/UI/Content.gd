@@ -37,8 +37,8 @@ func _on_FileDialog_files_selected(paths):
 	var dir = Directory.new()
 	dir.open("user://")
 	for path in paths:
-		print(path)
-		print("user://addons/%s" % path.get_file())
+		Logger.vlog(path)
+		Logger.vlog("user://addons/%s" % path.get_file())
 		var err = dir.copy(path, "user://addons/%s" % path.get_file())
 		if err:
 			jEssentials.show_message("Failed for: %s \nError code: %s" % [path, String(err)])

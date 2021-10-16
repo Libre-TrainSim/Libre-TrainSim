@@ -40,8 +40,8 @@ func _unhandled_input(event):
 				last_control_type = ControlType.XBox
 			"030000004c050000cc09000000000000":
 				last_control_type = ControlType.Playstation
-			_:
-				print("Unknown input device (Please report): ", Input.get_joy_guid(event.device))
+			var guid:
+				Logger.err("Unknown input device (Please report): %s" % guid, self)
 				last_control_type = ControlType.Joypad
 		make_string()
 

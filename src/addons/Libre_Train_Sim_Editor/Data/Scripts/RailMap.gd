@@ -25,8 +25,9 @@ func _ready():
 
 func init_map():
 	if train_world == null:
-		print("RAILMAP: Could not find world! Despawning!")
+		Logger.err("RAILMAP: Could not find world! Despawning!", self)
 		queue_free()
+		return
 
 	train_world.connect("bchunk_updated_world_transform", self, "_on_chunk_world_transform_update")
 
@@ -167,7 +168,7 @@ func update_active_lines_width(width):
 func create_station(signal_instance):
 	var index = train_world.player.stations["nodeName"].find(signal_instance.name)
 	if index < 0:
-		print("Station Name not found: ", signal_instance.name, "! Probably not a stop in the current scenario!")
+		Logger.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
 		return
 
 	var node = Node2D.new()
@@ -207,7 +208,7 @@ func _on_signal_changed(signal_instance):
 
 
 func _on_chunk_world_transform_update(deltaTranslation):
-	print("RAIL MAP: UPDATING WORLD ORIGIN")
+	Logger.log("RAIL MAP: UPDATING WORLD ORIGIN")
 	chunk_origin += Vector2(deltaTranslation.x, deltaTranslation.z)
 
 

@@ -37,7 +37,7 @@ func _ready():
 # warning-ignore:unused_argument
 func set_to_rail(newvar):
 	if not find_parent("World"):
-		print("SpeedSign can't find World Parent!'")
+		Logger.err("ContactPoint can't find World Parent!", self)
 		return
 
 	if find_parent("World").has_node("Rails/"+attached_rail) and attached_rail != "":
@@ -83,10 +83,10 @@ func activateContactPoint(trainName):
 func _on_Timer_timeout():
 	var signalN = get_parent().get_node(affectedSignal)
 	if signalN == null:
-		print("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...")
+		Logger.err("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...", self)
 		return
 	if signalN.type != "Signal":
-		print("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...")
+		Logger.err("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...", self)
 		return
 	signalN.set_status(newStatus)
 	signalN.set_speed(newSpeed)

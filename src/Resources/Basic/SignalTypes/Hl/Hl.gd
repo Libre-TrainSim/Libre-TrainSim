@@ -13,7 +13,7 @@ func _ready():
 	signal_logic.signal_type = signal_logic.SignalType.COMBINED
 
 	if signal_logic.speed == -1:
-		printerr(signal_logic.name, ": HL Signals cannot have Speed -1! Please set a speed limit for this Signal! Setting to 160 km/h")
+		Logger.warn("HL Signals cannot have Speed -1! Please set a speed limit for this Signal! Setting to 160 km/h", signal_logic.name)
 		signal_logic.speed = 160
 
 	# Hl signals ALWAYS have a speed limit! NEVER -1 !!!

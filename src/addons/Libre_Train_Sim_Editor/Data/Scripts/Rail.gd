@@ -126,7 +126,7 @@ func update_parallel_rail_settings():
 		return
 	parRail = get_parent().get_node(parallelRail)
 	if parRail == null:
-		print("Cant find parallel rail. Updating Rail canceled..")
+		Logger.err("Cant find parallel rail. Updating Rail canceled..", self)
 		return null
 
 	if parRail.radius == 0:
@@ -163,7 +163,7 @@ func calculate_update():
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
-		print(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
+		Logger.log(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
 
 	update_positions_and_rotations()
 	visibleSegments = length / buildDistance +1
@@ -299,7 +299,7 @@ func speedToKmH(speed):
 #	Outlength = 2.0 * PI * radius * angle / 360.0
 
 func register_signal(name, distance):
-	print("Signal " + name + " registered at rail.")
+	Logger.vlog("Signal " + name + " registered at rail.")
 	attachedSignals.append({"name": name, "distance": distance})
 
 func get_pos_at_RailDistance(distance):
@@ -621,7 +621,6 @@ var _connected_rails_at_ending = [] # Array of rail nodes
 # This function should be called before get_connected_rails_at_beginning()
 # or get_connected_rails_at_ending once.
 func update_connections():
-	print("HUHU")
 	_connected_rails_at_beginning = []
 	_connected_rails_at_ending = []
 	for rail in world.get_node("Rails").get_children():

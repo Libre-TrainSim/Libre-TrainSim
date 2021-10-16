@@ -76,7 +76,7 @@ func select_object_under_mouse():
 	if result.has("collider"):
 		set_selected_object(result["collider"].get_parent())
 		provide_settings_for_selected_object()
-		print("selected!")
+		Logger.vlog("selected!")
 
 
 func clear_selected_object():
@@ -266,7 +266,7 @@ func test_track_pck():
 	packer.flush()
 
 	if ProjectSettings.load_resource_pack(pck_path, true):
-		print("Loading Content Pack "+ pck_path+" successfully finished")
+		Logger.log("Loading Content Pack "+ pck_path+" successfully finished")
 	Root.start_menu_in_play_menu = true
 	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 
@@ -348,7 +348,7 @@ func export_track_pck(export_path):
 		if not dependence.begins_with("res://addons/") and jEssentials.does_path_exist(dependence):
 			dependencies_export.append(dependence)
 	for dependence in dependencies_export:
-		print(dependence)
+		Logger.vlog(dependence)
 		packer.add_file(dependence, dependence)
 
 	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
@@ -376,7 +376,7 @@ func _on_ExportDialog_export_confirmed(path):
 	export_track_pck(path)
 
 func send_message(message):
-	print("Editor sends message: " + message)
+	Logger.log("Editor sends message: " + message)
 	$EditorHUD/Message/RichTextLabel.text = message
 	$EditorHUD/Message.show()
 
@@ -387,11 +387,11 @@ func _on_MessageClose_pressed():
 		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 
 func duplicate_selected_object():
-	print(selected_object_type)
+	Logger.vlog(selected_object_type)
 	if selected_object_type != "Building":
 		return
 	else:
-		print("Duplicating " + selected_object.name + " ...")
+		Logger.vlog("Duplicating " + selected_object.name + " ...")
 		var new_object = selected_object.duplicate()
 		Root.name_node_appropriate(new_object, new_object.name, $World/Buildings)
 		$World/Buildings.add_child(new_object)
@@ -481,7 +481,8 @@ func get_all_station_node_names_in_world():
 func jump_to_station(station_node_name):
 	var station_node = $World/Signals.get_node(station_node_name)
 	if station_node == null:
-		print_debug("Station not found:" + station_node_name)
+		Logger.err("Station not found:" + station_node_name, self)
+		return
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation_degrees.y -= 90
 
@@ -504,7 +505,7 @@ func get_imported_cache_file_path_of_import_file(file_path):
 	if value == null:
 		return_values.append(config.get_value("remap", "path.s3tc"))
 		return_values.append(config.get_value("remap", "path.etc2"))
-		print("No cached import file found of " + file_path)
+		Logger.warn("No cached import file found of " + file_path, self)
 	else:
 		return_values.append(value)
 	return return_values

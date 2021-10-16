@@ -51,15 +51,10 @@ func _exit_tree():
 	Root.Editor = false
 
 
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and not $EditorHUD.mouse_over_ui:
+func _unhandled_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb != null and mb.button_index == BUTTON_LEFT and mb.pressed:
 		select_object_under_mouse()
-
-	if event is InputEventMouseButton and not event.pressed and drag_mode:
-		end_drag_mode()
-
-	if event is InputEventMouseMotion and drag_mode:
-		handle_drag_mode()
 
 	if Input.is_action_just_pressed("save"):
 		save_world()
@@ -69,6 +64,14 @@ func _input(event):
 
 	if Input.is_action_just_pressed("ui_accept") and $EditorHUD/Message.visible:
 		_on_MessageClose_pressed()
+
+
+func _input(event):
+	if event is InputEventMouseButton and not event.pressed and drag_mode:
+		end_drag_mode()
+
+	if event is InputEventMouseMotion and drag_mode:
+		handle_drag_mode()
 
 
 var drag_mode = false
@@ -555,7 +558,6 @@ func send_message(message):
 
 func _on_MessageClose_pressed():
 	$EditorHUD/Message.hide()
-	$EditorHUD._on_dialog_closed()
 	if not has_node("World"):
 		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
 

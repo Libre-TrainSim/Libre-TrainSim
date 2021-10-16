@@ -47,8 +47,18 @@ var personVisualInstances = []
 # For accessing this variable _chunk_loader_mutex should be locked and unlocked.
 var _actually_changing_world = false
 
+const GRASS_HEIGHT = -0.5
+var grass_mesh
 
 func _ready():
+	grass_mesh = PlaneMesh.new()
+	grass_mesh.size = Vector2(500, 500)
+	grass_mesh.material = preload("res://Resources/Basic/Materials/Grass_new.tres")
+
+	# backward compat
+	if has_node("Grass"):
+		$Grass.queue_free()
+
 	_chunk_loader_thread = Thread.new()
 	_chunk_loader_thread.start(self, "_chunk_loader_thread_function")
 
@@ -61,13 +71,13 @@ func _ready():
 	else:
 		$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
 
-	if not Root.Editor:
-		$Grass.show()
 
 	if Root.Editor:
-		if Root.Editor:
-			$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
-			$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+		$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
+		$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+
+		configure_soll_chunks(activeChunk)
+		apply_soll_chunks()
 		return
 
 	if not Engine.editor_hint:
@@ -186,7 +196,6 @@ func getChunkeighbours(chunk):
 	]
 
 func save_chunk(position):
-
 	var chunk = {} #"position" : position, "Rails" : {}, "Buildings" : {}, "Flora" : {}}
 	chunk.position = position
 	chunk.Rails = {}
@@ -313,8 +322,6 @@ func _chunk_loader_thread_function(userdata):
 		_actually_changing_world = true
 		_chunk_loader_mutex.unlock()
 
-
-
 		if position == _DEAD_PILL:
 			return
 
@@ -328,6 +335,28 @@ func _chunk_loader_thread_function(userdata):
 			_actually_changing_world = false
 			_chunk_loader_mutex.unlock()
 			continue
+
+		## Landscape:
+		# fix for backwards compat
+		if not has_node("Landscape"):
+			var landscape = Spatial.new()
+			landscape.name = "Landscape"
+			add_child(landscape)
+			landscape.owner = self
+
+		var has_landscape = chunk.has("Landscape") and not chunk.Landscape.empty()
+		if not has_landscape:
+			# generate grass planes
+			for i in range(2):
+				for j in range(2):
+					var mesh_instance = MeshInstance.new()
+					mesh_instance.mesh = grass_mesh
+					mesh_instance.translation = (position * 1000) + (Vector3(250+500*i, GRASS_HEIGHT, -250-500*j))
+					$Landscape.add_child(mesh_instance)
+					mesh_instance.owner = self
+		else:
+			# TODO: load landscape (heightmap, whatever), not implemented yet
+			pass
 
 		## Buildings:
 		var buildings_data = chunk.Buildings

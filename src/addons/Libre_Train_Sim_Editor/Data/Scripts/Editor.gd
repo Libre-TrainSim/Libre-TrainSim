@@ -7,17 +7,15 @@ var selected_object = null
 var selected_object_type = ""
 
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	load_world()
-	pass # Replace with function body.
+	yield(get_tree(), "idle_frame")
+	save_world(false)  # yes, really, gras sometimes breaks if we don't *sigh*
+
 
 var bouncing_timer = 0
 var one_second_timer = 0
 func _process(delta):
-
-
 	## Bouncing Effect at selected object
 	if is_instance_valid(selected_object):
 		bouncing_timer += delta
@@ -45,8 +43,10 @@ func _process(delta):
 func _enter_tree():
 	Root.Editor = true
 
+
 func _exit_tree():
 	Root.Editor = false
+
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed == false and not $EditorHUD.mouse_over_ui:
@@ -103,6 +103,7 @@ func clear_selected_object():
 	selected_object_type = ""
 	$EditorHUD.clear_current_object_name()
 
+
 func get_type_of_object(object):
 	if object is MeshInstance:
 		return "Building"
@@ -112,6 +113,7 @@ func get_type_of_object(object):
 		return "Signal"
 	else:
 		return "Unknown"
+
 
 func provide_settings_for_selected_object():
 	if selected_object_type == "Rail":
@@ -154,13 +156,10 @@ func load_world():
 #		if signal_ins.type == "Signal":
 		signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 
-	$World/Grass.hide()
-	generate_grass_panes()
-
 	Root.fix_frame_drop()
 
 
-func save_world():
+func save_world(send_message: bool = true):
 	## Save Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	last_editor_camera_transforms[Root.current_editor_track] = camera.transform
@@ -168,9 +167,9 @@ func save_world():
 
 	$World.unload_and_save_all_chunks()
 
-	jEssentials.call_delayed(0.1, self, "save_world_step_2")
+	jEssentials.call_delayed(0.1, self, "save_world_step_2", [send_message])
 
-func save_world_step_2():
+func save_world_step_2(send_message: bool = true):
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
@@ -186,12 +185,8 @@ func save_world_step_2():
 	ist_chunks.clear()
 
 #	$World.force_load_all_chunks()
-	send_message("World successfully saved!")
-
-
-
-	generate_grass_panes()
-
+	if send_message:
+		send_message("World successfully saved!")
 
 
 func _on_SaveWorldButton_pressed():
@@ -274,6 +269,7 @@ func test_track_pck():
 		print("Loading Content Pack "+ pck_path+" successfully finished")
 	Root.start_menu_in_play_menu = true
 	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+
 
 func export_track_pck(export_path):
 	var track_name = Root.current_editor_track
@@ -489,24 +485,6 @@ func jump_to_station(station_node_name):
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation_degrees.y -= 90
 
-
-var all_chunks = []
-var GRASS_HEIGHT = -0.5
-func generate_grass_panes():
-	var all_chunks_new = $World.get_all_chunks()
-	if all_chunks_new.size() == all_chunks.size():
-		return
-	for child in $Landscape.get_children():
-		child.queue_free()
-	all_chunks = all_chunks_new
-	var mesh_resource = preload("res://Resources/Basic/Objects/grass_square.obj")
-	for chunk in all_chunks:
-		var mesh_instance = MeshInstance.new()
-		mesh_instance.mesh = mesh_resource
-		mesh_instance.set_surface_material(0, preload("res://Resources/Basic/Materials/Grass.tres"))
-		mesh_instance.translation = (chunk * 1000) + (Vector3(0, GRASS_HEIGHT, 0))
-		$Landscape.add_child(mesh_instance)
-		mesh_instance.owner = self
 
 var ist_chunks = []
 func load_chunks_near_camera():

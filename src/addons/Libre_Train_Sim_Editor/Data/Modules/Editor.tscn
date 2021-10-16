@@ -537,6 +537,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SnapDialog" type="ConfirmationDialog" parent="EditorHUD"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -54.5
+margin_right = 150.0
+margin_bottom = 54.5
+window_title = "Please confirm..."
+dialog_text = "Do you want to automatically correct this rail so it is drivable?"
+dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Landscape" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="."]
@@ -589,10 +605,10 @@ script = ExtResource( 1 )
 [connection signal="pressed" from="EditorHUD/ExportDialog/Export" to="EditorHUD/ExportDialog" method="_on_Export_pressed"]
 [connection signal="mouse_entered" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/Content_Selector" to="EditorHUD" method="_on_Mouse_exited_UI"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailLogic" method="_on_Content_Selector_resource_selected"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
+[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="mouse_entered" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_entered_UI"]
 [connection signal="mouse_exited" from="EditorHUD/Message" to="EditorHUD" method="_on_Mouse_exited_UI"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]

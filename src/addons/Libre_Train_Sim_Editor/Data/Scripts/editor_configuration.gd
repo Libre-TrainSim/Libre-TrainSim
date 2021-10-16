@@ -45,6 +45,7 @@ func initialize_track_directory(entry_name):
 	create_resource_directory_structure(entry_name)
 
 	dir.copy("res://addons/Libre_Train_Sim_Editor/Data/Modules/World-Pattern.tscn", editor_directory + "Worlds/" + entry_name + "/" + entry_name + ".tscn")
+	dir.copy("res://addons/Libre_Train_Sim_Editor/Data/Modules/World-Pattern.save", editor_directory + "Worlds/" + entry_name + "/" + entry_name + ".save")
 
 
 func create_resource_directory_structure(track_name):

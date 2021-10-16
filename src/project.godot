@@ -126,15 +126,15 @@ config/quit_on_go_back=false
 
 [autoload]
 
-Math="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Math.gd"
-Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Root.gd"
+Math="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/Math.gd"
+Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/Root.gd"
 jConfig="*res://addons/jean28518.jTools/jConfig.gd"
 jTools="*res://addons/jean28518.jTools/jTools.gd"
 jEssentials="*res://addons/jean28518.jTools/jEssentials/jEssentials.gd"
 jAudioManager="*res://addons/jean28518.jTools/jAudioManager/JAudioManager.gd"
 jSaveManager="*res://addons/jean28518.jTools/jSaveManager/jSaveManager.gd"
 jSettings="*res://addons/jean28518.jTools/jSettings/JSettings.tscn"
-ContentLoader="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/content_loader.gd"
+ContentLoader="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/content_loader.gd"
 LoadingScreen="*res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/loading_screen.tscn"
 InputHelper="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/input_helper.gd"
 

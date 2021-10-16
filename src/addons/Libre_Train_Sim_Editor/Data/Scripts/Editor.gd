@@ -301,9 +301,9 @@ func load_world():
 		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
 		return
 	var world = world_resource.instance()
+	add_child(world)
 	world.owner = self
 	world.FileName = Root.current_editor_track
-	add_child(world)
 
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World

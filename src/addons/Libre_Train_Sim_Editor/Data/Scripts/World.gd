@@ -373,7 +373,7 @@ func _chunk_loader_thread_function(userdata):
 				for i in range (surfaceArr.size()):
 					meshInstance.set_surface_material(i, surfaceArr[i])
 				buildings_node.call_deferred("add_child", meshInstance)
-				meshInstance.set_owner(self)
+				meshInstance.call_deferred("set_owner", self)
 
 		## Forests (Flora), deprecated:
 		var Flora = chunk.Flora
@@ -394,7 +394,7 @@ func _chunk_loader_thread_function(userdata):
 				forest_instance.z = Flora[forest].z
 				forest_instance.material_override = Flora[forest].material_override
 				flora_node.call_deferred("add_child", forest_instance)
-				forest_instance.set_owner(self)
+				forest_instance.call_deferred("set_owner", self)
 #				forest_instance.call_deferred("_update", true)
 				forest_instance._update()
 

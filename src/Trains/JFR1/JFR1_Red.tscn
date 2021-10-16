@@ -1,11 +1,13 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Resources/Basic/Materials/Cabin.tres" type="Material" id=1]
 [ext_resource path="res://Resources/Basic/Materials/Black_Plastic.tres" type="Material" id=2]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Player.gd" type="Script" id=3]
 [ext_resource path="res://Trains/JFR1/Sound.gd" type="Script" id=4]
 [ext_resource path="res://Trains/JFR1/SpecificScripting.gd" type="Script" id=5]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SifaModule.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=7]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PZBModule.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Resources/Basic/Screens/ScreenReverser/reverser.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerDoor.tscn" type="PackedScene" id=10]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerPathNode.tscn" type="PackedScene" id=11]
@@ -717,6 +719,12 @@ far = 1000.0
 
 [node name="SpecificScripting" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[node name="SafetySystems" type="Node" parent="."]
+
+[node name="PZBModule" parent="SafetySystems" instance=ExtResource( 8 )]
+
+[node name="SifaModule" parent="SafetySystems" instance=ExtResource( 6 )]
 
 [node name="Cabin" type="Spatial" parent="."]
 script = ExtResource( 26 )
@@ -1983,3 +1991,7 @@ visible = false
 transform = Transform( -3.30409e-08, 0.654701, -0.755888, 2.86179e-08, 0.755888, 0.654701, 1, 0, -4.37114e-08, 5.44394, 3.40882, 0 )
 light_color = Color( 1, 0.890196, 0.890196, 1 )
 light_energy = 3.0
+
+[connection signal="passed_signal" from="." to="SafetySystems/PZBModule" method="_on_passed_signal"]
+[connection signal="reverser_changed" from="." to="SafetySystems/PZBModule" method="_on_reverser_changed"]
+[connection signal="sifa_visual_hint" from="SafetySystems/SifaModule" to="Cabin/DisplayMiddle/Display" method="_on_sifa_visual_hint"]

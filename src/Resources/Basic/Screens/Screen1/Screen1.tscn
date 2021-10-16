@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.png" type="Texture" id=2]
@@ -6,12 +6,13 @@
 [ext_resource path="res://Resources/Basic/Screens/Screen1/DoorRight.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/DoorLeft.png" type="Texture" id=5]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/Doors.png" type="Texture" id=6]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMedium.tres" type="DynamicFont" id=7]
+[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/FontMediumBold.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/SpeedLimit.png" type="Texture" id=8]
 [ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Misc/Oswald-Regular.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/richtung_fwd.png" type="Texture" id=10]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/richtung_bwd.png" type="Texture" id=11]
 [ext_resource path="res://Resources/Basic/Screens/Screen1/richtung_neutral.png" type="Texture" id=12]
+[ext_resource path="res://Resources/Basic/Screens/Screen1/PZB.gd" type="Script" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
@@ -106,23 +107,29 @@ texture = ExtResource( 5 )
 [node name="Right" type="Sprite" parent="Doors"]
 texture = ExtResource( 4 )
 
-[node name="EnforcedBraking" type="ColorRect" parent="."]
-margin_left = 738.296
-margin_top = 686.163
-margin_right = 1255.3
-margin_bottom = 741.163
+[node name="Info" type="Control" parent="."]
+margin_left = 42.0
+margin_top = 614.0
+margin_right = 562.0
+margin_bottom = 744.0
+
+[node name="EnforcedBraking" type="ColorRect" parent="Info"]
+margin_right = 256.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 color = Color( 0.866667, 0.054902, 0.054902, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="EnforcedBraking"]
-margin_left = 55.0
-margin_right = 465.0
-margin_bottom = 53.0
+[node name="Label" type="Label" parent="Info/EnforcedBraking"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "ENFORCED_BREAKING"
 align = 1
 valign = 1
@@ -130,23 +137,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Engine" type="ColorRect" parent="."]
-margin_left = 738.367
-margin_top = 613.604
-margin_right = 1255.37
-margin_bottom = 668.604
+[node name="Engine" type="ColorRect" parent="Info"]
+margin_left = 264.0
+margin_right = 520.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 color = Color( 0.745098, 0.564706, 0.0745098, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Engine"]
-margin_left = 55.0
-margin_right = 465.0
-margin_bottom = 53.0
+[node name="Label" type="Label" parent="Info/Engine"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "ENGINE_OFF"
 align = 1
 valign = 1
@@ -154,23 +162,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sifa" type="ColorRect" parent="."]
-margin_left = 41.5861
-margin_top = 686.163
-margin_right = 558.59
-margin_bottom = 741.163
+[node name="Sifa" type="ColorRect" parent="Info"]
+margin_top = 69.0
+margin_right = 256.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 256, 61 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Sifa"]
-modulate = Color( 0, 0, 0, 1 )
-margin_left = 55.0
-margin_right = 465.0
-margin_bottom = 55.0
+[node name="Label" type="Label" parent="Info/Sifa"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SIFA"
 align = 1
 valign = 1
@@ -178,26 +187,161 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Autopilot" type="ColorRect" parent="."]
-modulate = Color( 1, 1, 1, 0.71263 )
-margin_left = 41.5861
-margin_top = 613.604
-margin_right = 558.59
-margin_bottom = 668.604
+[node name="Autopilot" type="ColorRect" parent="Info"]
+margin_left = 264.0
+margin_top = 69.0
+margin_right = 520.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 color = Color( 0.290196, 0.909804, 0.92549, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Autopilot"]
-modulate = Color( 0, 0, 0, 1 )
-margin_left = 55.0
-margin_right = 465.0
-margin_bottom = 54.0
+[node name="Label" type="Label" parent="Info/Autopilot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "AUTOMATIC_DRIVING"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PZB" type="GridContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 738.0
+margin_top = 614.0
+margin_right = 1258.0
+margin_bottom = 744.0
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8
+columns = 3
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="U" type="ColorRect" parent="PZB"]
+margin_right = 168.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0.25098, 1, 1 )
+
+[node name="Label" type="Label" parent="PZB/U"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "55"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="M" type="ColorRect" parent="PZB"]
+margin_left = 176.0
+margin_right = 344.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0.25098, 1, 1 )
+
+[node name="Label" type="Label" parent="PZB/M"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "70"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="O" type="ColorRect" parent="PZB"]
+margin_left = 352.0
+margin_right = 520.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0.25098, 1, 1 )
+
+[node name="Label" type="Label" parent="PZB/O"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "85"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Befehl40" type="ColorRect" parent="PZB"]
+margin_top = 69.0
+margin_right = 168.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="PZB/Befehl40"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Befehl 40"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="500Hz" type="ColorRect" parent="PZB"]
+margin_left = 176.0
+margin_top = 69.0
+margin_right = 344.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 1, 0, 0, 1 )
+
+[node name="Label" type="Label" parent="PZB/500Hz"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "500 Hz"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1000Hz" type="ColorRect" parent="PZB"]
+margin_left = 352.0
+margin_top = 69.0
+margin_right = 520.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 1, 1, 0, 1 )
+
+[node name="Label" type="Label" parent="PZB/1000Hz"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "1000 Hz"
 align = 1
 valign = 1
 __meta__ = {

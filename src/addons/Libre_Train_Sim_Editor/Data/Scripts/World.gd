@@ -262,6 +262,10 @@ func unload_chunk(position : Vector3):
 			else:
 				Logger.err("Object not saved! I wont unload this for you...", forest)
 
+	for mesh in $Landscape.get_children():
+		if compareChunks(pos2Chunk(mesh.translation), position):
+			mesh.free()
+
 	var TrackObjects = get_node("TrackObjects").get_children()
 	for node in TrackObjects:
 		if compareChunks(pos2Chunk(node.translation), position):

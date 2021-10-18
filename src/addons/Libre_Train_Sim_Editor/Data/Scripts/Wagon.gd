@@ -14,7 +14,7 @@ var baked_route_is_loop = false
 var complete_route_length = 0
 var route_index = 0
 var forward
-var currentRail 
+var currentRail
 var distance_on_rail = 0
 var distance_on_route = 0
 var speed = 0
@@ -46,14 +46,14 @@ func _ready():
 	registerDoors()
 	registerPassengerPathNodes()
 	registerSeats()
-	
+
 	$MeshInstance.show()
-	
+
 	var personsNode = Spatial.new()
 	personsNode.name = "Persons"
 	add_child(personsNode)
 	personsNode.owner = self
-	
+
 	initialize_outside_announcement_player()
 	pass # Replace with function body.
 
@@ -64,45 +64,45 @@ func _process(delta):
 		if player != null and not cabinMode:
 			visible = player.wagonsVisible
 		return
-	
-	if player == null or player.despawning: 
+
+	if player == null or player.despawning:
 		queue_free()
 		return
-	
+
 	if not initialSwitchCheck:
 		updateSwitchOnNextChange()
 		initialSwitchCheck = true
-		
+
 	speed = player.speed
-	
+
 	if cabinMode:
 		drive(delta)
 		return
-	
+
 
 	if get_parent().name != "Players": return
 	if distanceToPlayer == -1:
 		distanceToPlayer = abs(player.distance_on_rail - distance_on_rail)
 	visible = player.wagonsVisible
-	if speed != 0 or not initialSet: 
+	if speed != 0 or not initialSet:
 		drive(delta)
 		initialSet = true
 	check_doors()
-	
+
 	if pantographEnabled:
 		check_pantograph()
-	
+
 	if not visible: return
 	if forward:
 		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
 	else:
 		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
-	
+
 	if has_node("InsideLight"):
 		$InsideLight.visible = player.insideLight
-	
-	
+
+
 
 
 
@@ -119,7 +119,7 @@ func drive(delta):
 			distance_on_route = player.distance_on_route + distanceToPlayer
 			if distance_on_rail < 0:
 				change_to_next_rail()
-	else: 
+	else:
 		## Real Driving - Only used, if wagon isn't at the same rail as his player.
 		var driven_distance = speed * delta
 		if player.reverser == ReverserState.REVERSE:
@@ -156,7 +156,7 @@ func change_to_next_rail():
 				route_index = baked_route.size() -1
 				distance_on_route = complete_route_length
 		else:
-			print(name + ": Route no more rail found, despawning me...")
+			Logger.vlog(name + ": Route no more rail found, despawning me...", self)
 			despawn()
 			return
 
@@ -176,15 +176,15 @@ var lastDoorLeft = false
 var lastDoorsClosing = false
 func check_doors():
 	if player.doorRight and not lastDoorRight:
-		$DoorRight.play("open")
+		$Doors/DoorRight.play("open")
 	if player.doorRight and not lastDoorsClosing and player.doorsClosing:
-		$DoorRight.play_backwards("open")
+		$Doors/DoorRight.play_backwards("open")
 	if player.doorLeft and not lastDoorLeft:
-		$DoorLeft.play("open")
+		$Doors/DoorLeft.play("open")
 	if player.doorLeft and not lastDoorsClosing and player.doorsClosing:
-		$DoorLeft.play_backwards("open")
-		
-	
+		$Doors/DoorLeft.play_backwards("open")
+
+
 	lastDoorRight = player.doorRight
 	lastDoorLeft = player.doorLeft
 	lastDoorsClosing = player.doorsClosing
@@ -195,7 +195,7 @@ var lastPantographUp = false
 func check_pantograph():
 	if not self.has_node("Pantograph"): return
 	if not lastPantographUp and player.pantographUp:
-		print("Started Pantograph Animation")
+		Logger.vlog("Started Pantograph Animation")
 		$Pantograph/AnimationPlayer.play("Up")
 	if lastPantograph and not player.pantograph:
 		$Pantograph/AnimationPlayer.play_backwards("Up")
@@ -232,11 +232,11 @@ func despawn():
 #			return
 #
 #	nextSwitchRail = null
-	
+
 
 
 func registerDoors():
-	for child in get_children():
+	for child in $Doors.get_children():
 		if child.is_in_group("PassengerDoor"):
 			if child.translation[2] > 0:
 				child.translation += Vector3(0,0,0.5)
@@ -255,18 +255,18 @@ func registerPerson(person, door):
 	$Persons.add_child(person)
 	person.owner = self
 	person.translation = door.translation
-	
-	var passengerRoutePath = getPathFromTo(door, seats[seatIndex]) 
+
+	var passengerRoutePath = getPathFromTo(door, seats[seatIndex])
 	if passengerRoutePath == null:
-		printerr("Some seats of "+ name + " are not reachable from every door!!")
+		Logger.err("Some seats of "+ name + " are not reachable from every door!!", self)
 		return
 #	print(passengerRoutePath)
 	person.destinationPos = passengerRoutePath
 	person.destinationIsSeat = true
 	person.attachedSeat = seats[seatIndex]
 	seatsOccupancy[seatIndex] = person
-	
-	
+
+
 
 func getRandomFreeSeatIndex():
 	if attachedPersons.size()+1 > seats.size():
@@ -275,8 +275,8 @@ func getRandomFreeSeatIndex():
 		var randIndex = int(rand_range(0, seats.size()))
 		if seatsOccupancy[randIndex] == null:
 			return randIndex
-			
-			
+
+
 func getPathFromTo(start, destination):
 	var passengerRoutePath = [] ## Array of Vector3
 	var realStartNode = start
@@ -291,11 +291,11 @@ func getPathFromTo(start, destination):
 #					print("Equals!")
 					realStartNode = passengerPathNode
 #					print(realStartNode.name)
-	
+
 	if not realStartNode.is_in_group("PassengerPathNode"):
 #		printerr("At " + name + " " + start.name + " is not connected to a passengerPathNode!")
 		return null
-	
+
 	var restOfpassengerRoutePath = getPathFromToHelper(realStartNode, destination, [])
 	if restOfpassengerRoutePath == null:
 		return null
@@ -319,23 +319,25 @@ func getPathFromToHelper(start, destination, visitedNodes): ## Recursion, Simple
 				return passengerRoutePath
 	return null
 
-	
+
 func registerPassengerPathNodes():
-	for child in get_children():
+	for child in $PathNodes.get_children():
 		if child.is_in_group("PassengerPathNode"):
 			passengerPathNodes.append(child)
 
+
 func registerSeats():
-	for child in get_children():
+	for child in $Seats.get_children():
 		if child.is_in_group("PassengerSeat"):
 			seats.append(child)
 			seatsOccupancy.append(null)
+
 
 var leavingPassengerNodes = []
 ## Called by the train when arriving
 ## Randomly picks some to the waggon attached persons, picks randomly a door
 ## on the given side, sends the routeInformation for that to the persons.
-func sendPersonsToDoor(doorDirection, proportion : float = 0.5): 
+func sendPersonsToDoor(doorDirection, proportion : float = 0.5):
 	leavingPassengerNodes.clear()
 	 #0: No platform, 1: at left side, 2: at right side, 3: at both sides
 	var possibleDoors = []
@@ -345,32 +347,32 @@ func sendPersonsToDoor(doorDirection, proportion : float = 0.5):
 	if doorDirection == 2 or doorDirection == 3: # Right
 		for door in rightDoors:
 			possibleDoors.append(door)
-		
-		
+
+
 	if possibleDoors.empty():
-		print(name + ": No Doors found for doorDirection: " + String(doorDirection) )
+		Logger.err(name + ": No Doors found for doorDirection: " + String(doorDirection), self)
 		return
-		
+
 	randomize()
 	for personNode in $Persons.get_children():
 		if rand_range(0, 1) < proportion:
 			leavingPassengerNodes.append(personNode)
 			var randomDoor = possibleDoors[int(rand_range(0, possibleDoors.size()))]
-			
+
 			var seatIndex = -1
 			for i in range(seatsOccupancy.size()):
 				if seatsOccupancy[i] == personNode:
 					seatIndex = i
 					break
 			if seatIndex == -1:
-				print(name + ": Error: Seat from person" + personNode.name+  " not found!")
+				Logger.err(name + ": Error: Seat from person" + personNode.name+  " not found!", self)
 				return
-			
+
 			var passengerRoutePath = getPathFromTo(seats[seatIndex], randomDoor)
 			if passengerRoutePath == null:
-				printerr("Some doors are not reachable from every door! Check your Path configuration")
+				Logger.err("Some doors are not reachable from every door! Check your Path configuration", self)
 				return
-			
+
 			# Update position of door. (The Persons should stick inside the train while waiting ;)
 			if passengerRoutePath.back().z < 0:
 				passengerRoutePath[passengerRoutePath.size()-1].z += 1.3
@@ -394,11 +396,11 @@ func deregisterPerson(personNode):
 var outside_announcement_player
 func initialize_outside_announcement_player():
 	var audioStreamPlayer = AudioStreamPlayer3D.new()
-	
+
 	audioStreamPlayer.unit_size = 10
 	audioStreamPlayer.bus = "Game"
 	outside_announcement_player = audioStreamPlayer
-	
+
 	add_child(audioStreamPlayer)
 
 func play_outside_announcement(sound_path : String):
@@ -413,7 +415,7 @@ func play_outside_announcement(sound_path : String):
 	if stream != null:
 		outside_announcement_player.stream = stream
 		outside_announcement_player.play()
-	
+
 var switch_on_next_change = false
 func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these are needed: When the player drives over many small rails that could be inaccurate..
 	if forward and currentRail.isSwitchPart[1] != "":
@@ -422,7 +424,7 @@ func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these 
 	elif not forward and currentRail.isSwitchPart[0] != "":
 		switch_on_next_change = true
 		return
-	
+
 	if baked_route.size() > route_index+1:
 		var nextRail = world.get_node("Rails").get_node(baked_route[route_index+1])
 		var nextForward = baked_route_direction[route_index+1]
@@ -432,5 +434,5 @@ func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these 
 		elif not nextForward and nextRail.isSwitchPart[1] != "":
 			switch_on_next_change = true
 			return
-			
+
 	switch_on_next_change = false

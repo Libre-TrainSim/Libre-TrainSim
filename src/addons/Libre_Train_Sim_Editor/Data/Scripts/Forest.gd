@@ -7,7 +7,7 @@ export (float) var spacing = 4
 export (bool) var randomLocation
 export (float) var randomLocationFactor = 0.3
 export (bool) var randomRotation
-export (bool) var randomScale 
+export (bool) var randomScale
 export (float) var randomScaleFactor = 0.2
 export (bool) var update setget _update
 
@@ -31,7 +31,7 @@ func _update(newvar):
 				var shiftz = rand_range(-spacing * randomLocationFactor, spacing * randomLocationFactor)
 				position += Vector3(shiftx, 0, shiftz)
 				#position = position.translated(Vector3(shiftx, 0, shiftz))
-			
+
 			var rot = 0
 			if randomRotation:
 				rot = rand_range(0,1)
@@ -41,6 +41,6 @@ func _update(newvar):
 			if randomScale:
 				var scaleval = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 				scale = Vector3(scaleval, scaleval, scaleval)
-				
+
 			self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,1,0), rot).scaled(scale), position))
 			idx += 1

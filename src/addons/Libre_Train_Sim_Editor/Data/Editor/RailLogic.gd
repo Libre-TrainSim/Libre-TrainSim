@@ -46,7 +46,7 @@ func _on_Distance_value_changed(value):
 func _on_Forwad_pressed():
 	current_rail_logic.forward = $GeneralSettings/Forwad.pressed
 	current_rail_logic.set_to_rail(true)
-	
+
 
 
 var resource_selector_called = false
@@ -61,7 +61,7 @@ func _on_PickVisibleInstance_pressed():
 func _on_Block_Signal_pressed():
 	current_rail_logic.is_block_signal = $SignalSettings/BlockSignal.pressed
 	update_signal_settings_ui()
-	
+
 func update_signal_settings_ui():
 	$SignalSettings/SpeedLimit.value = current_rail_logic.speed
 	$SignalSettings/BlockSignal.pressed = current_rail_logic.is_block_signal
@@ -73,7 +73,7 @@ func update_signal_settings_ui():
 	$SignalSettings/EnableTimedFree.visible = not current_rail_logic.is_block_signal
 	$SignalSettings/EnableTimedFree.pressed = not current_rail_logic.set_pass_at_h < 0 and not current_rail_logic.set_pass_at_h > 23
 	update_signal_time_free_ui()
-	
+
 
 
 func _on_Content_Selector_resource_selected(complete_path):
@@ -94,7 +94,7 @@ func _on_EnableTimedFree_pressed():
 	if not $SignalSettings/EnableTimedFree.pressed:
 		current_rail_logic.set_pass_at_h = 25 # Disable timed free
 	update_signal_time_free_ui()
-	
+
 func update_signal_time_free_ui():
 	$SignalSettings/Label3.visible = $SignalSettings/EnableTimedFree.pressed and not $SignalSettings/BlockSignal.pressed
 	$SignalSettings/TimedFree.visible = $SignalSettings/EnableTimedFree.pressed and not $SignalSettings/BlockSignal.pressed
@@ -156,9 +156,9 @@ func _on_PlatformStart_value_changed(value):
 
 func _on_PlatformEnd_value_changed(value):
 	current_rail_logic.platformEnd = value
-	
-	
-	
+
+
+
 
 
 
@@ -189,7 +189,7 @@ func update_contact_point_settings_ui():
 	$ContactPointSettings/NewStatus.value = current_rail_logic.newStatus
 	$ContactPointSettings/EnableForAllTrains.pressed = current_rail_logic.enable_for_all_trains
 	$ContactPointSettings/OnlySpecificTrain.text = current_rail_logic.bySpecificTrain
-	
+
 	$ContactPointSettings/Label4.visible = not current_rail_logic.disabled
 	$ContactPointSettings/AffectTime.visible = not current_rail_logic.disabled
 	$ContactPointSettings/Label2.visible = not current_rail_logic.disabled

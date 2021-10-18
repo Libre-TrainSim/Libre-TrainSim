@@ -16,11 +16,11 @@ func _process(delta):
 		player.force_pantograph_up()
 		player.startEngine()
 		player.overrunRedSignal = false
-		player.enforcedBreaking = false
+		player.enforced_braking = false
 		player.command = 0
 		player.soll_command = 0
-		
-		
+
+
 	send_message(delta)
 	if scenario == "H/V Form Signals":
 		hv_form_signals()
@@ -34,7 +34,7 @@ func _process(delta):
 	elif scenario == "HL Signals":
 		hl_signals()
 		return
-		
+
 	message_sent = true
 
 func hv_form_signals():
@@ -43,11 +43,11 @@ func hv_form_signals():
 			message = tr("TUTORIAL_HV_FORM_0")
 			if player.distance_on_route >= 120:
 				next_step()
-		1: 
+		1:
 			message = tr("TUTORIAL_HV_FORM_1")
 			if player.distance_on_route >= 380:
 				next_step()
-		2: 
+		2:
 			message = tr("TUTORIAL_HV_FORM_2")
 			if player.distance_on_route >= 620:
 				next_step()
@@ -85,11 +85,11 @@ func hv_light_signals():
 			message = tr("TUTORIAL_HV_LIGHT_0")
 			if player.distance_on_route >= 120:
 				next_step()
-		1: 
+		1:
 			message = tr("TUTORIAL_HV_LIGHT_1")
 			if player.distance_on_route >= 380:
 				next_step()
-		2: 
+		2:
 			message = tr("TUTORIAL_HV_LIGHT_2")
 			if player.distance_on_route >= 620:
 				next_step()
@@ -124,7 +124,7 @@ func hv_light_signals():
 
 func ks_signals():
 	match step:
-		0: 
+		0:
 			message = tr("TUTORIAL_KS_0")
 			if player.distance_on_route >= 120:
 				next_step()
@@ -136,7 +136,7 @@ func ks_signals():
 			message = tr("TUTORIAL_KS_2")
 			if player.distance_on_route >= 820:
 				next_step()
-		3: 
+		3:
 			message = tr("TUTORIAL_KS_3")
 			if player.distance_on_route >= 1080:
 				next_step()
@@ -159,7 +159,7 @@ func ks_signals():
 
 func hl_signals():
 	match step:
-		0: 
+		0:
 			message = tr("TUTORIAL_HL_0")
 			if player.distance_on_route >= 120:
 				next_step()
@@ -171,7 +171,7 @@ func hl_signals():
 			message = tr("TUTORIAL_HL_2")
 			if player.distance_on_route >= 620:
 				next_step()
-		3: 
+		3:
 			message = tr("TUTORIAL_HL_3")
 			if player.distance_on_route >= 910:
 				next_step()
@@ -187,7 +187,7 @@ func hl_signals():
 			message = tr("TUTORIAL_HL_6")
 			if player.distance_on_route >= 1620:
 				next_step()
-		7: 
+		7:
 			message = tr("TUTORIAL_HL_7")
 			if player.distance_on_route >= 1910:
 				next_step()

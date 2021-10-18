@@ -1,6 +1,7 @@
 src/Worlds/*
 !src/Worlds/Tutorial/
 !src/Worlds/Tutorials/
+!src/Worlds/German-Safety-Tutorials/
 
 src/Resources/*
 !src/Resources/Tutorials
@@ -16,6 +17,9 @@ src/.import/
 src/android/*
 
 *.blend1
+
+# ignore Dolphin file manager files
+*.directory
 
 # ignore jetbrains IDE files
 .idea/

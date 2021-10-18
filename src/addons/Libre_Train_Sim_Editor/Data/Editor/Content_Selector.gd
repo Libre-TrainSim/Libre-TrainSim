@@ -32,7 +32,7 @@ var current_resources = []
 func crawl_directory_for_resources():
 	current_resources.clear()
 	var resource_subfolders = Root.get_subfolders_of("res://Resources")
-	print(resource_subfolders)
+	Logger.vlog(resource_subfolders)
 	if current_type == MATERIALS:
 		for resource_subfolder in resource_subfolders:
 			var found_files = {"Array" : []}
@@ -71,7 +71,7 @@ func crawl_directory_for_resources():
 			Root.crawlDirectory("res://Resources/"+ resource_subfolder + "/Textures", found_files, "png")
 			for file in found_files["Array"]:
 				current_resources.append(file.replace("res://Resources/", "").replace("/Texutres", "").get_basename())
-	print(current_resources)
+	Logger.vlog(current_resources)
 
 func update_ItemList():
 	$ItemList.clear()
@@ -110,18 +110,18 @@ func emit_selected_resource():
 		complete_path += "/Sounds" + resource.right(split_position) + ".ogg"
 	elif current_type == TEXTURES:
 		complete_path += "/Textures" + resource.right(split_position) + ".png"
-		
+
 	hide()
 	get_parent()._on_dialog_closed()
 	emit_signal("resource_selected", complete_path)
-	
-	
+
+
 
 
 func _on_Select_pressed():
 	emit_selected_resource()
 	get_parent()._on_dialog_closed()
-	
+
 
 
 

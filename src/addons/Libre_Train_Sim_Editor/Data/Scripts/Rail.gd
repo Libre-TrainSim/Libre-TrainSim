@@ -61,7 +61,7 @@ var overheadLineBuilded = false
 
 var parRail
 
-var railTypeNode 
+var railTypeNode
 
 
 
@@ -126,7 +126,7 @@ func update_parallel_rail_settings():
 		return
 	parRail = get_parent().get_node(parallelRail)
 	if parRail == null:
-		print("Cant find parallel rail. Updating Rail canceled..")
+		Logger.err("Cant find parallel rail. Updating Rail canceled..", self)
 		return null
 
 	if parRail.radius == 0:
@@ -142,29 +142,29 @@ func update_parallel_rail_settings():
 # Thread safe
 func calculate_update():
 	var calculated_data = {}
-	
-	var rail_type_node 
+
+	var rail_type_node
 	if ResourceLoader.exists(railTypePath):
 		 rail_type_node = load(railTypePath).instance()
 	if rail_type_node == null:
 		rail_type_node = preload("res://Resources/Basic/RailTypes/Default.tscn").instance()
-	
+
 	buildDistance = rail_type_node.buildDistance
 	overheadLineHeight1 = rail_type_node.overheadLineHeight1
 	overheadLineHeight2 = rail_type_node.overheadLineHeight2
 	overheadLineThinkness = rail_type_node.overheadLineThinkness
 	line2HeightChangingFactor = rail_type_node.line2HeightChangingFactor
 	calculated_data["rail_type_node"] = rail_type_node
-	
+
 	if parallelRail == "":
 		updateAutomaticTendency()
 	if parallelRail != "":
 		update_parallel_rail_settings()
-	
+
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
-		print(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
-	
+		Logger.log(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
+
 	update_positions_and_rotations()
 	visibleSegments = length / buildDistance +1
 
@@ -181,10 +181,10 @@ func calculate_update():
 		multimesh.set_instance_transform(i, get_local_transform_at_rail_distance(distance))
 		distance += buildDistance
 	calculated_data["multimesh"] = multimesh
-	
-	if overheadLine: 
+
+	if overheadLine:
 		calculated_data["overheadline_mesh"] = calculate_overhadline_mesh()
-	
+
 	return calculated_data
 
 
@@ -192,23 +192,23 @@ func update_with_calculated_data(calculated_data):
 	# Ensure visible Instance:
 	visible = true
 	var multimeshI = get_node_or_null("MultiMeshInstance")
-	if multimeshI == null: 
+	if multimeshI == null:
 		multimeshI = MultiMeshInstance.new()
 		multimeshI.name = "MultiMeshInstance"
 		add_child(multimeshI)
 		multimeshI.set_owner(self)
 	multimeshI.multimesh = calculated_data["multimesh"]
-	
+
 	if overheadLine:
 		update_overheadline(calculated_data["overheadline_mesh"])
-	
+
 	if Engine.is_editor_hint() or Root.Editor:
 		$Ending.transform = get_local_transform_at_rail_distance(length)
 		$Mid.transform = get_local_transform_at_rail_distance(length/2.0)
 		for track_object in trackObjects:
 			track_object.update(self)
-	
-	
+
+
 func unload_visible_instance():
 	visible = false
 	if get_node_or_null("MultiMeshInstance") != null:
@@ -228,7 +228,7 @@ func update():
 	else:
 		var calculated_data = calculate_update()
 		update_with_calculated_data(calculated_data)
-		
+
 
 #func checkVisualInstance():
 #	if visible:
@@ -299,7 +299,7 @@ func speedToKmH(speed):
 #	Outlength = 2.0 * PI * radius * angle / 360.0
 
 func register_signal(name, distance):
-	print("Signal " + name + " registered at rail.")
+	Logger.vlog("Signal " + name + " registered at rail.")
 	attachedSignals.append({"name": name, "distance": distance})
 
 func get_pos_at_RailDistance(distance):
@@ -343,6 +343,37 @@ func get_shifted_local_pos_at_RailDistance(distance, shift):
 
 
 ################################################### Easy Circle Functions:
+func calculate_from_start_end(new_endpos):
+	var end = (new_endpos - startpos).rotated(Vector3.UP, deg2rad(-startrot))
+	end.z = -end.z  # fix because in godot -z is forward, not +z
+	end.x = max(end.x, 0)  # do not allow negative x, max angle is 180°!
+
+	if abs(end.z) < 0.01:
+		radius = 0
+		length = end.length()
+		update()
+		return
+
+	# m = end.z / end.x
+	# m2 = - 1 / m
+	# b = z - m2 * x
+	var b = end.z + (end.x / end.z) * end.x
+
+	radius = b/2
+	# minimum radius! TODO: sensible value?
+	if radius < 0 and radius > -10:
+		radius = -10
+	elif radius > 0 and radius < 10:
+		radius = 10
+
+	var angle = 2 * asin(end.length() / b) # asin( (len/2) / r )
+	length = radius * angle
+
+	endrot = startrot + angle
+
+	update()
+
+
 func circle_get_pos(radius, distance):
 	if radius == 0:
 		return Vector2(distance, 0)
@@ -482,7 +513,7 @@ func calculate_overhadline_mesh():
 	## Get Pole Points:
 	var polePositions = []
 	polePositions.append(0)
-	
+
 	for trackObject in trackObjects:
 		if not is_instance_valid(trackObject):
 			continue
@@ -500,12 +531,12 @@ func calculate_overhadline_mesh():
 	polePositions = jEssentials.remove_duplicates(polePositions)
 	for i in range (polePositions.size()-2):
 		buildOverheadLineSegment(polePositions[i], polePositions[i+1])
-		
+
 	if polePositions[polePositions.size()-2] != length:
 		buildOverheadLineSegment(polePositions[polePositions.size()-2], length)
-		
-		
-	
+
+
+
 	var mesh = ArrayMesh.new()
 
 	var arrays = []
@@ -514,7 +545,7 @@ func calculate_overhadline_mesh():
 	arrays[Mesh.ARRAY_INDEX] = indices
 
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Black_Plastic.tres"))
+	mesh.surface_set_material(0, preload("res://Resources/Basic/Materials/Overhead_Line.tres"))
 	return mesh
 
 func buildOverheadLineSegment(start, end):
@@ -522,9 +553,9 @@ func buildOverheadLineSegment(start, end):
 	var endPos = get_local_pos_at_RailDistance(end)+Vector3(0,overheadLineHeight1,0)
 	var directVector = (endPos-startPos).normalized()
 	var directDistance = startPos.distance_to(endPos)
-	
+
 	create3DLine(get_local_pos_at_RailDistance(start)+Vector3(0,overheadLineHeight1,0), get_local_pos_at_RailDistance(end)+Vector3(0,overheadLineHeight1,0), overheadLineThinkness)
-	
+
 	var segments = int(directDistance/10)
 	if segments == 0:
 		segments = 1
@@ -539,9 +570,9 @@ func buildOverheadLineSegment(start, end):
 		currentPos1+=directVector*segmentDistance
 		currentPos2+=directVector*segmentDistance
 	return {"vertices" : vertices, "indices" : indices}
-	
-	
-	
+
+
+
 
 func create3DLine(start, end, thinkness):
 	var x = vertices.size()
@@ -549,28 +580,28 @@ func create3DLine(start, end, thinkness):
 	vertices.push_back(start + Vector3(0,0,-thinkness))
 	vertices.push_back(start + Vector3(0,-thinkness,0))
 	vertices.push_back(start + Vector3(0,0,thinkness))
-	
+
 	vertices.push_back(end + Vector3(0,thinkness,0))
 	vertices.push_back(end + Vector3(0,0,-thinkness))
 	vertices.push_back(end + Vector3(0,-thinkness,0))
 	vertices.push_back(end + Vector3(0,0,thinkness))
-	
+
 	var indices_array = PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
 
 	indices.append_array(indices_array)
-	
+
 func create3DLineUp(start, end, thinkness):
 	var x = vertices.size()
 	vertices.push_back(start + Vector3(thinkness,0,0))
 	vertices.push_back(start + Vector3(0,0,-thinkness))
 	vertices.push_back(start + Vector3(-thinkness,0,0))
 	vertices.push_back(start + Vector3(0,0,thinkness))
-	
+
 	vertices.push_back(end + Vector3(thinkness,0,0))
 	vertices.push_back(end + Vector3(0,0,-thinkness))
 	vertices.push_back(end + Vector3(-thinkness,0,0))
 	vertices.push_back(end + Vector3(0,0,thinkness))
-	
+
 	var indices_array = PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
 
 	indices.append_array(indices_array)
@@ -583,7 +614,7 @@ func update_positions_and_rotations():
 	endpos = get_pos_at_RailDistance(length)
 
 export var isSwitchPart = ["", ""]
-# 0: is Rail at beginning part of switch? 1: is the rail at end part of switch if not 
+# 0: is Rail at beginning part of switch? 1: is the rail at end part of switch if not
 # It is saved the name of the other rail which is part of switch
 func update_is_switch_part():
 	isSwitchPart = ["", ""]
@@ -602,11 +633,11 @@ func update_is_switch_part():
 			foundRailsAtEnding.append(rail.name)
 		elif endpos.distance_to(rail.endpos) < 0.1 and abs((Math.normDeg(endrot) - Math.normDeg(rail.endrot))) < 1:
 			foundRailsAtEnding.append(rail.name)
-			
+
 	if foundRailsAtBeginning.size() > 0:
 		isSwitchPart[0] = foundRailsAtBeginning[0]
 		pass
-	
+
 	if foundRailsAtEnding.size() > 0:
 		isSwitchPart[1] = foundRailsAtEnding[0]
 		pass
@@ -614,14 +645,13 @@ func update_is_switch_part():
 
 var _connected_rails_at_beginning = [] # Array of rail nodes
 var _connected_rails_at_ending = [] # Array of rail nodes
-# The code of update_connections and update_is_switch_part can't be summarized, because 
-# we are searching for different rails in these functions. (Rotation of searched 
+# The code of update_connections and update_is_switch_part can't be summarized, because
+# we are searching for different rails in these functions. (Rotation of searched
 # rails differs by 180 degrees)
 
-# This function should be called before get_connected_rails_at_beginning() 
+# This function should be called before get_connected_rails_at_beginning()
 # or get_connected_rails_at_ending once.
 func update_connections():
-	print("HUHU")
 	_connected_rails_at_beginning = []
 	_connected_rails_at_ending = []
 	for rail in world.get_node("Rails").get_children():

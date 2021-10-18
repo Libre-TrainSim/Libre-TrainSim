@@ -24,7 +24,7 @@ func update_save_path():
 func check_duplicate_scenario(sName): # gives true, if duplicate was found
 	for otherSName in get_all_scenarios():
 		if otherSName == sName:
-			print("There already exists a scenario with this name!")
+			Logger.err("There already exists a scenario with this name!", self)
 			return true
 	return false
 
@@ -40,7 +40,7 @@ func _on_NewScenario_pressed():
 	$jSaveModule.write_to_disk()
 	currentScenario = sName
 	update_scenario_list()
-	print("Scenario added.")
+	Logger.log("Scenario added.")
 
 func _on_RenameScenario_pressed():
 	var sName = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text
@@ -55,7 +55,7 @@ func _on_RenameScenario_pressed():
 	$jSaveModule.write_to_disk()
 	currentScenario = sName
 	update_scenario_list()
-	print("Scenario renamed.")
+	Logger.log("Scenario renamed.")
 
 func _on_DuplicateScenario_pressed():
 	var sName = currentScenario + " (Duplicate)"
@@ -69,7 +69,7 @@ func _on_DuplicateScenario_pressed():
 	$jSaveModule.write_to_disk()
 	$jSaveModule.reload()
 	currentScenario = sName
-	print("Scenario dulicated.")
+	Logger.log("Scenario dulicated.")
 	update_scenario_list()
 	pass # Replace with function body.
 
@@ -84,7 +84,7 @@ func _on_DeleteScenario_pressed():
 	$jSaveModule.write_to_disk()
 	currentScenario = ""
 	update_scenario_list()
-	print("Scenario deleted.")
+	Logger.log("Scenario deleted.")
 
 var oldworld
 func _process(delta):
@@ -121,7 +121,7 @@ func get_scenario_settings(): # fills the settings field with saved values
 	if not sData.has(currentScenario): return
 	var s = sData[currentScenario]
 #	print(s)
-	
+
 	if s.size() == 0:
 		return
 
@@ -131,7 +131,7 @@ func get_scenario_settings(): # fills the settings field with saved values
 	$Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value = s["TrainLength"]
 	$Scenarios/VBoxContainer/Settings/Tab/General/Description.text = s["Description"]
 	$Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value = s["Duration"]
-	print("Scenario Settings loaded")
+	Logger.log("Scenario Settings loaded")
 
 func save_general_scenario_settings():
 	if currentScenario == "": return
@@ -146,7 +146,7 @@ func save_general_scenario_settings():
 	sData[currentScenario]["Duration"] = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value
 	$jSaveModule.save_value("scenario_data", sData)
 	$jSaveModule.write_to_disk()
-	print("Scenario General Settings saved")
+	Logger.log("Scenario General Settings saved")
 
 func clear_general_scenario_settings_fields():
 	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value = 12
@@ -161,7 +161,7 @@ func update_scenario_list():
 	var scenarios = $jSaveModule.get_value("scenario_list", [])
 	for scenario in scenarios:
 		$Scenarios/VBoxContainer/ItemList.add_item(scenario)
-	print("Scenario List updated.")
+	Logger.log("Scenario List updated.")
 
 func update_train_list():
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.clear()
@@ -171,7 +171,7 @@ func update_train_list():
 	var trains = sData[currentScenario]["Trains"].keys()
 	for train in trains:
 		$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(train)
-	print("Train List updated.")
+	Logger.log("Train List updated.")
 
 func _on_SaveGeneral_pressed():
 	save_general_scenario_settings()
@@ -193,7 +193,7 @@ func _on_ItemList_item_selected(index):
 	get_scenario_settings()
 
 func _on_SaveChunks_pressed():
-	print("Saving and Creating World Chunks..")
+	Logger.log("Saving and Creating World Chunks..")
 	world.save_world(true)
 
 func _on_SaveWorldConfig_pressed():
@@ -205,7 +205,7 @@ func _on_SaveWorldConfig_pressed():
 
 	$jSaveModule.save_value("world_config", d)
 	$jSaveModule.write_to_disk()
-	print("World Config saved.")
+	Logger.log("World Config saved.")
 
 func update_save_pathuration():
 	var d = $jSaveModule.get_value("world_config", null)
@@ -235,7 +235,7 @@ func get_train_settings():
 	if not sData.has(currentScenario): return
 	if not sData[currentScenario].has("Trains"): return
 	if not sData[currentScenario]["Trains"].has(currentTrain):
-		print("No Train Data for "+ currentTrain + " found. - No data loaded.")
+		Logger.err("No Train Data for "+ currentTrain + " found. - No data loaded.", self)
 		clear_train_settings_view()
 		return
 	var trains = sData[currentScenario]["Trains"]
@@ -248,7 +248,7 @@ func get_train_settings():
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRailPosition.value = train["StartRailPosition"]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/Direction.selected = train["Direction"]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DoorConfiguration.selected = train["DoorConfiguration"]
-	print(train)
+	Logger.vlog(train)
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.set_data(train["Stations"])
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/H.value = train["SpawnTime"][0]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = train["SpawnTime"][1]
@@ -256,7 +256,7 @@ func get_train_settings():
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text = train["DespawnRail"]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeed.value = train.get("InitialSpeed", 0)
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value = train.get("InitialSpeedLimit", -1)
-	print("Train "+ currentTrain + " loaded.")
+	Logger.log("Train "+ currentTrain + " loaded.")
 
 func set_train_settings():
 	var train = {}
@@ -280,7 +280,7 @@ func set_train_settings():
 	sData[currentScenario]["Trains"][currentTrain] = train
 	$jSaveModule.save_value("scenario_data", sData)
 	$jSaveModule.write_to_disk()
-	print("Train "+ currentTrain + " saved.")
+	Logger.log("Train "+ currentTrain + " saved.")
 
 #var entriesCount = 0
 #const stationTableColumns = 8
@@ -402,14 +402,14 @@ func _on_NewTrain_pressed():
 
 func _on_RenameTrain_pressed():
 	if currentTrain == "Player":
-		print("You can't rename the player train!")
+		Logger.err("You can't rename the player train!", self)
 		return
 	var oldTrain = currentTrain
 	var trainName = $Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
 	if trainName == "": return
 	for  i in range(0, $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_count()):
 		if $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_text(i) == trainName:
-			print("There already exists a train whith this train name, aborting...")
+			Logger.err("There already exists a train whith this train name, aborting...", self)
 			return
 	get_train_settings()
 	currentTrain = trainName
@@ -445,10 +445,10 @@ func delete_train(train):
 
 func _on_DeleteTrain_pressed():
 	if currentTrain == "Player":
-		print ("You cant delete the player train!")
+		Logger.err("You cant delete the player train!", self)
 		return
 	delete_train(currentTrain)
-	print("Train deleted.")
+	Logger.log("Train deleted.")
 	currentTrain = ""
 	update_train_list()
 	clear_train_settings_view()
@@ -499,7 +499,7 @@ func _on_WorldLoading_AllChunks_pressed():
 func _on_WorldLoading_Unload_pressed():
 	if $"World Configuration/WorldLoading/AllChunks".pressed:
 		world.unload_and_save_all_chunks()
-		print("Unloaded all chunks.")
+		Logger.log("Unloaded all chunks.")
 		return
 	var chunks = world.get_chunks_between_rails(
 		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
@@ -514,7 +514,7 @@ func _on_WorldLoading_Unload_pressed():
 func _on_WorldLoading_Load_pressed():
 	if $"World Configuration/WorldLoading/AllChunks".pressed:
 		world.force_load_all_chunks()
-		print("Loaded all chunks.")
+		Logger.log("Loaded all chunks.")
 		return
 	var chunks = world.get_chunks_between_rails(
 		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
@@ -523,13 +523,13 @@ func _on_WorldLoading_Load_pressed():
 	if chunks == null:
 		return
 	world.load_chunks(chunks)
-	print("Loaded Chunks " + String(chunks))
+	Logger.log("Loaded Chunks " + String(chunks))
 
 
 func _on_Chunks_Save_pressed():
 	if $"World Configuration/WorldLoading/AllChunks".pressed:
 		world.save_all_chunks()
-		print("Saved all chunks.")
+		Logger.log("Saved all chunks.")
 		return
 	var chunks = world.get_chunks_between_rails(
 		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,

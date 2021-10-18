@@ -47,27 +47,37 @@ var personVisualInstances = []
 # For accessing this variable _chunk_loader_mutex should be locked and unlocked.
 var _actually_changing_world = false
 
+const GRASS_HEIGHT = -0.5
+var grass_mesh
 
 func _ready():
+	grass_mesh = PlaneMesh.new()
+	grass_mesh.size = Vector2(500, 500)
+	grass_mesh.material = preload("res://Resources/Basic/Materials/Grass_new.tres")
+
+	# backward compat
+	if has_node("Grass"):
+		$Grass.queue_free()
+
 	_chunk_loader_thread = Thread.new()
 	_chunk_loader_thread.start(self, "_chunk_loader_thread_function")
-	
+
 	jEssentials.call_delayed(2.0, self, "get_actual_loaded_chunks")
 	if trackName == null:
 		trackName = FileName
-	print("trackName: " +trackName + " " + FileName)
+	Logger.log("trackName: " +trackName + " " + FileName)
 	if Root.Editor:
 		$jSaveModule.set_save_path(String(find_parent("Editor").editor_directory + "/Worlds/" + trackName + "/" + trackName + ".save"))
 	else:
 		$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
-	
-	if not Root.Editor:
-		$Grass.show()
-	
+
+
 	if Root.Editor:
-		if Root.Editor:
-			$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
-			$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+		$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
+		$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+
+		configure_soll_chunks(activeChunk)
+		apply_soll_chunks()
 		return
 
 	if not Engine.editor_hint:
@@ -78,41 +88,37 @@ func _ready():
 		trainFiles = trainFiles["Array"]
 		currentScenario = Root.currentScenario
 		set_scenario_to_world()
-		
+
 		jEssentials.call_delayed(1.0, self, "load_configs_to_cache")
-		
-		
+
+
 		## Create Persons-Node:
 		var personsNode = Spatial.new()
 		personsNode.name = "Persons"
 		add_child(personsNode)
 		personsNode.owner = self
-		
+
 		for personVisualInstancesPath in personVisualInstancesPathes:
 			personVisualInstances.append(load(personVisualInstancesPath))
-			
+
 		for signalN in $Signals.get_children():
 			if signalN.type == "Station":
 				signalN.personsNode = personsNode
 				signalN.spawnPersonsAtBeginning()
-		
+
 		configure_soll_chunks(activeChunk)
 
 		apply_soll_chunks()
 
 		player = $Players/Player
 		lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
-		
-		player.init_map()
-		
+
 		apply_user_settings()
 
 
-	pass
-	
 func save_value(key : String, value):
 	return $jSaveModule.save_value(key, value)
-	
+
 func get_value(key : String,  default_value = null):
 	return $jSaveModule.get_value(key,  default_value)
 
@@ -128,7 +134,7 @@ func apply_user_settings():
 	player.get_node("Camera").far = jSettings.get_view_distance()
 	get_viewport().set_msaa(jSettings.get_anti_aliasing())
 	$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
-	
+
 func _process(delta):
 	if not (Engine.editor_hint or Root.Editor):
 		time(delta)
@@ -166,31 +172,30 @@ func time(delta):
 
 func pos2Chunk(position):
 	return Vector3(int(position.x / chunkSize), 0, int(position.z / chunkSize))
-	
+
 func compareChunks(pos1, pos2):
 	return (pos1.x == pos2.x && pos1.z == pos2.z)
-	
+
 func chunk2String(position : Vector3):
 	return (String(position.x) + ","+String(position.z))
-	
+
 func string2Chunk(string : String):
 	var array = string.split(",")
 	return Vector3(int(array[0]), 0 , int(array[1]))
 
 func getChunkeighbours(chunk):
 	return [
-		Vector3(chunk.x+1, 0, chunk.z+1), 
-		Vector3(chunk.x+1, 0, chunk.z), 
-		Vector3(chunk.x+1, 0, chunk.z-1), 
-		Vector3(chunk.x, 0, chunk.z+1), 
-		Vector3(chunk.x, 0, chunk.z-1), 
-		Vector3(chunk.x-1, 0, chunk.z+1), 
-		Vector3(chunk.x-1, 0, chunk.z), 
+		Vector3(chunk.x+1, 0, chunk.z+1),
+		Vector3(chunk.x+1, 0, chunk.z),
+		Vector3(chunk.x+1, 0, chunk.z-1),
+		Vector3(chunk.x, 0, chunk.z+1),
+		Vector3(chunk.x, 0, chunk.z-1),
+		Vector3(chunk.x-1, 0, chunk.z+1),
+		Vector3(chunk.x-1, 0, chunk.z),
 		Vector3(chunk.x-1, 0, chunk.z-1)
 	]
 
 func save_chunk(position):
-	
 	var chunk = {} #"position" : position, "Rails" : {}, "Buildings" : {}, "Flora" : {}}
 	chunk.position = position
 	chunk.Rails = {}
@@ -201,7 +206,7 @@ func save_chunk(position):
 			rail.update_is_switch_part()
 			chunk.Rails.append(rail.name)
 
-	
+
 	chunk.Buildings = {}
 	var Buildings = get_node("Buildings").get_children()
 	for building in Buildings:
@@ -216,9 +221,9 @@ func save_chunk(position):
 	for forest in Flora:
 		if compareChunks(pos2Chunk(forest.translation), position):
 			chunk.Flora[forest.name] = {name = forest.name, transform = forest.transform, x = forest.x, z = forest.z, spacing = forest.spacing, randomLocation = forest.randomLocation, randomLocationFactor = forest.randomLocationFactor, randomRotation = forest.randomRotation, randomScale = forest.randomScale, randomScaleFactor = forest.randomScaleFactor, multimesh = forest.multimesh, material_override = forest.material_override}
-	
 
-	
+
+
 	chunk.TrackObjects = {}
 	var trackObjects = get_node("TrackObjects").get_children()
 	for trackObject in trackObjects:
@@ -227,8 +232,8 @@ func save_chunk(position):
 			chunk.TrackObjects[trackObject.name] = {name = trackObject.name, transform = trackObject.transform, data = trackObject.get_data()}
 	$jSaveModule.save_value(chunk2String(position), null)
 	$jSaveModule.save_value(chunk2String(position), chunk)
-	print("Saved Chunk " + chunk2String(position))
-	
+	Logger.log("Saved Chunk " + chunk2String(position))
+
 
 
 func unload_chunk(position : Vector3):
@@ -240,35 +245,35 @@ func unload_chunk(position : Vector3):
 		if compareChunks(pos2Chunk(rail.translation), position):
 			if chunk.Rails.has(rail.name):
 				rail.unload_visible_instance()
-	
+
 	var Buildings = get_node("Buildings").get_children()
 	for building in Buildings:
 		if compareChunks(pos2Chunk(building.translation), position):
 			if chunk.Buildings.has(building.name):
 				building.free()
 			else:
-				print("Object not saved! I wont unload this for you...")
-	
+				Logger.err("Object not saved! I wont unload this for you...", building)
+
 	var Flora = get_node("Flora").get_children()
 	for forest in Flora:
 		if compareChunks(pos2Chunk(forest.translation), position):
 			if chunk.Flora.has(forest.name):
 				forest.free()
 			else:
-				print("Object not saved! I wont unload this for you...")
-	
+				Logger.err("Object not saved! I wont unload this for you...", forest)
+
 	var TrackObjects = get_node("TrackObjects").get_children()
 	for node in TrackObjects:
 		if compareChunks(pos2Chunk(node.translation), position):
 			if chunk.TrackObjects.has(node.name):
 				node.free()
 			else:
-				print("Object not saved! I wont unload this for you...")
-	
+				Logger.err("Object not saved! I wont unload this for you...", node)
+
 	ist_chunks.erase(position)
-	print("Unloaded Chunk " + chunk2String(position))
-	
-	
+	Logger.log("Unloaded Chunk " + chunk2String(position))
+
+
 var _chunk_loader_thread
 var _chunk_loader_semaphore = Semaphore.new()
 var _chunk_loader_mutex = Mutex.new()
@@ -284,7 +289,7 @@ func _add_work_packages_to_chunk_loader(positions : Array):
 		_chunk_loader_queue.push_back(position)
 		_chunk_loader_semaphore.post()
 	_chunk_loader_mutex.unlock()
-	print(positions)
+	Logger.vlog(str(positions))
 
 func _quit_chunk_load_thread():
 	_chunk_loader_mutex.lock()
@@ -306,7 +311,7 @@ func _chunk_loader_thread_function(userdata):
 		var position = _chunk_loader_queue.pop_front()
 		if ist_chunks.has(position):
 			_chunk_loader_mutex.unlock()
-			print("Chunk already in ist_chunks!")
+			Logger.err("Chunk already in ist_chunks!", position)
 			continue
 		# Wait, if some critical action is done..
 		if _actually_changing_world:
@@ -316,23 +321,43 @@ func _chunk_loader_thread_function(userdata):
 			continue
 		_actually_changing_world = true
 		_chunk_loader_mutex.unlock()
-		
-		
-		
+
 		if position == _DEAD_PILL:
 			return
-			
-		print("Loading chunk in background: " +chunk2String(position))
-		
+
+		Logger.vlog("Loading chunk in background: " +chunk2String(position))
+
 		var chunk = $jSaveModule.get_value(chunk2String(position), {"empty" : true})
 		if chunk.has("empty"):
 			ist_chunks.append(position)
-			print("Chunk " + chunk2String(position) + " is empty.")
+			Logger.warn("Chunk " + chunk2String(position) + " is empty.", position)
 			_chunk_loader_mutex.lock()
 			_actually_changing_world = false
 			_chunk_loader_mutex.unlock()
 			continue
-		
+
+		## Landscape:
+		# fix for backwards compat
+		if not has_node("Landscape"):
+			var landscape = Spatial.new()
+			landscape.name = "Landscape"
+			add_child(landscape)
+			landscape.owner = self
+
+		var has_landscape = chunk.has("Landscape") and not chunk.Landscape.empty()
+		if not has_landscape:
+			# generate grass planes
+			for i in range(2):
+				for j in range(2):
+					var mesh_instance = MeshInstance.new()
+					mesh_instance.mesh = grass_mesh
+					mesh_instance.translation = (position * 1000) + (Vector3(250+500*i, GRASS_HEIGHT, -250-500*j))
+					$Landscape.add_child(mesh_instance)
+					mesh_instance.owner = self
+		else:
+			# TODO: load landscape (heightmap, whatever), not implemented yet
+			pass
+
 		## Buildings:
 		var buildings_data = chunk.Buildings
 		for building_data in buildings_data:
@@ -349,7 +374,7 @@ func _chunk_loader_thread_function(userdata):
 					meshInstance.set_surface_material(i, surfaceArr[i])
 				buildings_node.call_deferred("add_child", meshInstance)
 				meshInstance.set_owner(self)
-		
+
 		## Forests (Flora), deprecated:
 		var Flora = chunk.Flora
 		for forest in Flora:#
@@ -390,18 +415,18 @@ func _chunk_loader_thread_function(userdata):
 #			OS.delay_msec(1)
 #			track_objects_node.call_deferred("update", $Rails.get_node(track_objects_node.attached_rail), obj_cache)
 			track_objects_node.call_deferred("add_child", ready_track_object)
-			
+
 #			ready_track_object.set_owner(self)
 		## Rails:
 		var Rails = chunk.Rails
 		var calculated_data_array = {}
 		for rail in Rails:
 			var rail_node = rails_node.get_node(rail)
-			if rail_node != null: 
+			if rail_node != null:
 				calculated_data_array[rail] = rail_node.calculate_update()
 		for rail in Rails:
 			var rail_node = rails_node.get_node(rail)
-			if rail_node != null: 
+			if rail_node != null:
 #				OS.delay_msec(1)
 				rail_node.call_deferred("update_with_calculated_data", calculated_data_array[rail])
 
@@ -412,8 +437,8 @@ func _chunk_loader_thread_function(userdata):
 		ist_chunks.append(position)
 		_actually_changing_world = false
 		_chunk_loader_mutex.unlock()
-		
-		print("Chunk " + chunk2String(position) + " loaded")
+
+		Logger.log("Chunk " + chunk2String(position) + " loaded")
 
 
 var _all_chunks = []
@@ -474,42 +499,42 @@ var currentbigchunk = Vector2(0,0)
 func pos2bchunk(pos):
 	return Vector2(int(pos.x/5000), int(pos.z/5000))+currentbigchunk
 
-# Returns new position within 5000. 
+# Returns new position within 5000.
 func getNewPos_bchunk(pos):
 	return Vector3(pos.x-currentbigchunk.x*5000.0, pos.y, pos.z-currentbigchunk.y*5000.0)
-	
+
 func getOriginalPos_bchunk(pos):
 	return Vector3(pos.x+currentbigchunk.x*5000.0, pos.y, pos.z+currentbigchunk.y*5000.0)
-		
+
 func checkBigChunk():
 	var player = $Players/Player
 	var newchunk = pos2bchunk(player.translation)
 
 	if (newchunk != currentbigchunk):
-		
+
 		_chunk_loader_mutex.lock()
 		if _actually_changing_world:
 			_chunk_loader_mutex.unlock()
 			return
 		_actually_changing_world = true
 		_chunk_loader_mutex.unlock()
-		
+
 		var deltaChunk = currentbigchunk - newchunk
 		currentbigchunk = newchunk
-		print (newchunk)
-		print(currentbigchunk)
-		print("Changed to new big Chunk. Changing Objects translation..")
+		Logger.log(newchunk)
+		Logger.log(currentbigchunk)
+		Logger.log("Changed to new big Chunk. Changing Objects translation..")
 		updateWorldTransform_bchunk(deltaChunk)
-		
+
 		_chunk_loader_mutex.lock()
 		_actually_changing_world = false
 		_chunk_loader_mutex.unlock()
-		
+
 
 signal bchunk_updated_world_transform(deltaTranslation)
 func updateWorldTransform_bchunk(deltachunk):
 	var deltaTranslation = Vector3(deltachunk.x*5000, 0, deltachunk.y*5000)
-	print("UPDATING WORLD ORIGIN: ",deltaTranslation)
+	Logger.log("UPDATING WORLD ORIGIN: %s" % deltaTranslation)
 	emit_signal("bchunk_updated_world_transform", deltaTranslation)
 	for player in $Players.get_children():
 		player.translation += deltaTranslation
@@ -526,8 +551,8 @@ func updateWorldTransform_bchunk(deltachunk):
 		to.translation += deltaTranslation
 	for person in $Persons.get_children():
 		person.translation += deltaTranslation
-	
-		
+
+
 
 
 func apply_scenario_to_signals(signals):
@@ -535,13 +560,13 @@ func apply_scenario_to_signals(signals):
 	for signalN in  $Signals.get_children():
 		if signals.has(signalN.name):
 			signalN.set_scenario_data(signals[signalN.name])
-			
+
 func get_signal_scenario_data():
 	var signals = {}
 	for s in $Signals.get_children():
 		signals[s.name] = s.get_scenario_data()
 	return signals
-	
+
 func set_scenario_to_world():
 	var Ssave_path = "res://Worlds/" + trackName + "/" + trackName + "-scenarios.cfg"
 	$jSaveModuleScenarios.set_save_path(Ssave_path)
@@ -552,13 +577,13 @@ func set_scenario_to_world():
 	timeMinute = scenario["TimeM"]
 	timeSecond = scenario["TimeS"]
 	time = [timeHour,timeMinute,timeSecond]
-	
+
 	apply_scenario_to_signals(scenario["Signals"])
-	
+
 	## SPAWN TRAINS:
 	for train in scenario["Trains"].keys():
 		spawnTrain(train)
-	
+
 	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [TranslationServer.translate(scenario["Description"])])
 #	$Players/Player.show_textbox_message(TranslationServer.translate(scenario["Description"]))
 
@@ -566,13 +591,13 @@ func set_scenario_to_world():
 
 func spawnTrain(trainName):
 	if $Players.has_node(trainName):
-		print("Train is already loaded! - Abortet loading...")
+		Logger.err("Train is already loaded! - Aborted loading...", trainName)
 		return
 	var sData = $jSaveModuleScenarios.get_value("scenario_data")
 	var scenario = sData[currentScenario]
 	var spawnTime = scenario["Trains"][trainName]["SpawnTime"]
 	if scenario["Trains"][trainName]["SpawnTime"][0] != -1 and not (spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]):
-		print("Spawn Time of "+trainName + " not reached, doing spawn later...")
+		Logger.log("Spawn Time of "+trainName + " not reached, spawning later...")
 		pendingTrains["TrainName"].append(trainName)
 		pendingTrains["SpawnTime"].append(scenario["Trains"][trainName]["SpawnTime"].duplicate())
 		return
@@ -581,18 +606,18 @@ func spawnTrain(trainName):
 	var preferredTrain = scenario["Trains"][trainName].get("PreferredTrain", "")
 	if (preferredTrain == "" and not trainName == "Player") or trainName == "Player":
 		if not trainName == "Player":
-			print("no preferred train specified. Loading player train...")
+			Logger.warn("no preferred train specified. Loading player train...", self)
 		player = load(Root.currentTrain).instance()
 	else:
 		for trainFile in trainFiles:
-			print(trainFile)
-			print(preferredTrain)
+			Logger.vlog(trainFile)
+			Logger.log(preferredTrain)
 			if trainFile.find(preferredTrain) != -1:
 				player = load(trainFile).instance()
 		if player == null:
-			print("Preferred train not found. Loading player train...")
+			Logger.warn("Preferred train not found. Loading player train...", preferredTrain)
 			player = load(Root.currentTrain).instance()
-	
+
 	player.name = trainName
 	$Players.add_child(player)
 	player.add_to_group("Player")
@@ -617,17 +642,17 @@ func spawnTrain(trainName):
 	match doorStatus:
 		0:
 			pass
-		1: 
+		1:
 			player.doorLeft = true
 		2:
 			player.doorRight = true
 		3:
 			player.doorLeft = true
 			player.doorRight = true
-	
+
 	player.ready()
-	
-	
+
+
 
 var checkTrainSpawnTimer = 0
 func checkTrainSpawn(delta):
@@ -639,7 +664,7 @@ func checkTrainSpawn(delta):
 		if spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]:
 			pendingTrains["SpawnTime"][i] = [-1, 0, 0]
 			spawnTrain(pendingTrains["TrainName"][i])
-			
+
 
 func update_rail_connections():
 	for rail_node in $Rails.get_children():
@@ -653,15 +678,15 @@ func get_path_from_to(start_rail : Node, forward : bool, destination_rail : Node
 	if Engine.editor_hint:
 		update_rail_connections()
 	else:
-		print_debug("Be sure you called update_rail_connections once before..")
+		Logger.warn("Be sure you called update_rail_connections once before..", self)
 	var route = _get_path_from_to_helper(start_rail, forward, [], destination_rail)
-	print_debug(route)
+	Logger.vlog(str(route))
 	return route
 
 # Recursive Function
 func _get_path_from_to_helper(start_rail : Node, forward : bool, already_visited_rails : Array, destination_rail : Node):
 	already_visited_rails.append(start_rail)
-	print(already_visited_rails)
+	Logger.vlog(already_visited_rails)
 	if start_rail == destination_rail:
 		return already_visited_rails
 	else:
@@ -671,7 +696,7 @@ func _get_path_from_to_helper(start_rail : Node, forward : bool, already_visited
 		else:
 			possbile_rails = start_rail.get_connected_rails_at_beginning()
 		for rail_node in possbile_rails:
-			print("Possible Rails" + String(possbile_rails))
+			Logger.vlog("Possible Rails" + String(possbile_rails))
 			if not already_visited_rails.has(rail_node):
 				if rail_node.get_connected_rails_at_ending().has(start_rail):
 					forward = false
@@ -687,15 +712,15 @@ func _get_path_from_to_helper(start_rail : Node, forward : bool, already_visited
 func get_actual_loaded_chunks():
 	var actual_loaded_chunks = []
 	for rail_node in $Rails.get_children():
-		if rail_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(rail_node.translation))): 
+		if rail_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(rail_node.translation))):
 			actual_loaded_chunks.append(chunk2String(pos2Chunk(rail_node.translation)))
 	for building_node in $Buildings.get_children():
-		if building_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(building_node.translation))): 
+		if building_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(building_node.translation))):
 			actual_loaded_chunks.append(chunk2String(pos2Chunk(building_node.translation)))
 	for flora_node in $Flora.get_children():
-		if flora_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(flora_node.translation))): 
+		if flora_node.visible and not actual_loaded_chunks.has(chunk2String(pos2Chunk(flora_node.translation))):
 			actual_loaded_chunks.append(chunk2String(pos2Chunk(flora_node.translation)))
-	
+
 	return actual_loaded_chunks
 
 # loads all chunks (for Editor Use) (even if some chunks are loaded, and others not.)
@@ -714,11 +739,11 @@ func save_chunks(chunks_to_save : Array):
 		if ist_chunks.has(chunk_to_save):
 			save_chunk(chunk_to_save)
 #	print("Saved chunks sucessfully.")
-	
+
 # Accepts an array of chunks noted as Vector3
 func unload_and_save_chunks(chunks_to_unload : Array):
 	save_chunks(chunks_to_unload)
-	
+
 #	var current_unloaded_chunks = get_value("unloaded_chunks", []) # String
 	for chunk_to_unload in chunks_to_unload:
 		unload_chunk(chunk_to_unload)
@@ -742,21 +767,24 @@ func get_chunks_between_rails(start_rail : String, destination_rail : String, in
 	var start_rail_node = $Rails.get_node_or_null(start_rail)
 	var destination_rail_node = $Rails.get_node_or_null(destination_rail)
 	if start_rail_node == null or destination_rail_node == null:
-		print("Some Rails not found. Are the Names correct? Aborting...")
+		Logger.err("Some Rails not found. Are the Names correct? Aborting...", "%s, %s" % [start_rail, destination_rail])
 		return
 	var rail_nodes = get_path_from_to(start_rail_node, true, destination_rail_node)
 	if rail_nodes.empty():
 		rail_nodes = get_path_from_to(start_rail_node, false, destination_rail_node)
 	if rail_nodes.empty():
-		print("Path between these rails could not be found. Are these rails reachable? Check the connections! Aborting...")
-	
+		Logger.err("Path between these rails could not be found. " + \
+				"Are these rails reachable? Check the connections! Aborting...", \
+				"%s, %s" % [start_rail, destination_rail])
+		return
+
 	var chunks = []
 	for rail_node in rail_nodes:
 		chunks.append(chunk2String(pos2Chunk(rail_node.translation)))
 	chunks = jEssentials.remove_duplicates(chunks)
 	if not include_neighbour_chunks:
 		return chunks
-	
+
 	var chunks_with_neighbours = chunks.duplicate()
 	for chunk in chunks:
 		var chunks_neighbours = getChunkeighbours(string2Chunk(chunk))
@@ -764,7 +792,7 @@ func get_chunks_between_rails(start_rail : String, destination_rail : String, in
 			chunks_with_neighbours.append(chunk2String(chunk_neighbour))
 	chunks_with_neighbours = jEssentials.remove_duplicates(chunks_with_neighbours)
 	return chunks_with_neighbours
-	
+
 func update_all_rails_overhead_line_setting(overhead_line : bool): # Not called automaticly. From any instance or button, but very helpful.
 	for rail in $Rails.get_children():
 		rail.overheadLine = overhead_line
@@ -794,7 +822,7 @@ func _exit_tree():
 
 
 func jump_player_to_station(station_table_index : int):
-	print("Jumping player to station " + player.stations["stationName"][station_table_index])
+	Logger.log("Jumping player to station " + player.stations["stationName"][station_table_index])
 	var new_station_node = $Signals.get_node(player.stations["nodeName"][station_table_index])
 
 	time = player.stations["arrivalTime"][station_table_index].duplicate()
@@ -809,7 +837,7 @@ func jump_player_to_station(station_table_index : int):
 			if player_node.baked_route.has(rail):
 				player_node.despawn()
 				continue
-				
+
 	player.jump_to_station(station_table_index)
 
 

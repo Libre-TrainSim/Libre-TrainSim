@@ -20,7 +20,7 @@ func update_visual_instance(instance):
 			hp_anim_fsm.travel("Hp2")  # Langsamfahrt
 		else:
 			hp_anim_fsm.travel("Hp1")  # Fahrt
-	
+
 	if instance.signal_after_node != null:
 		if instance.signal_after_node.status == SignalStatus.RED:
 			vo_anim_fsm.travel("Vr0")  # Halt erwarten

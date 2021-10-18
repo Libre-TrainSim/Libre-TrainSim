@@ -2,10 +2,9 @@ tool
 extends Node
 
 # If you don't need the whole package of jTools, you can easily deactivate some parts.
-# Restart of the plugin / GoDot is needed to apply changes.
+# Restart of the plugin / Godot is needed to apply changes.
 const enable_jSaveManager = true
 const enable_jTable = true
-const enable_jList = true
 const enable_jAudioManager = true
 const enable_jSettings = true
 const enable_jEssentials = true
@@ -13,9 +12,9 @@ const enable_jEssentials = true
 ## jAudioManager ###############################################################
 # Set this to false, if you want to deactivate jAudioManager's bus system.
 # jAudioManager will also work without it's own bus system.
-const enable_jAudioManager_bus = true 
+const enable_jAudioManager_bus = true
 
-# Optional, you could define a the bus ids for the game and music bus, which 
+# Optional, you could define a the bus ids for the game and music bus, which
 # jAudioManager should use
 const game_bus_id = 1
 const music_bus_id = 2

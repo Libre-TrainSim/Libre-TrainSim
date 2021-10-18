@@ -19,6 +19,8 @@ export (int) var on_rail_position
 export (bool) var update setget set_to_rail
 export var forward = true
 
+export (String) var assigned_signal = ""
+
 var waitingPersonCount = 5
 var attachedPersons = []
 

@@ -100,4 +100,15 @@ func distance2String(distance):
 		return String((int(distance/100))*100) + " m"
 	else:
 		return String((int(distance-10)/10)*10) + " m"
-		
+
+func time_to_seconds(time : Array):
+	return time[2] + time[1] * 60 + time[0] * 3600
+	
+func seconds_to_time(seconds : int):
+	var time = [0, 0, 0]
+	time[0] = int(seconds/3600)
+	seconds -= time[0] * 3600
+	time[1] = int(seconds/60)
+	seconds -= time[1] * 60
+	time[2] = seconds
+	return seconds

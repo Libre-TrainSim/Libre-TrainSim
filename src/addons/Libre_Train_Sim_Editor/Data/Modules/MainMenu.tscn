@@ -601,6 +601,7 @@ window_title = "Open File(s)"
 mode = 1
 access = 2
 filters = PoolStringArray( "*.pck ; Content Packs" )
+show_hidden_files = true
 current_dir = "/ssd-data/jean/Nextcloud/PC-Files/Programmieren/GoDot/Libre-TrainSim/src"
 current_path = "/ssd-data/jean/Nextcloud/PC-Files/Programmieren/GoDot/Libre-TrainSim/src/"
 

@@ -814,8 +814,12 @@ func jump_player_to_station(station_table_index : int):
 
 
 func get_rail(rail_name : String):
-	return $Rails.get_node(rail_name)
+	if rail_name == "":
+		return null
+	return $Rails.get_node_or_null(rail_name)
 
 
 func get_signal(signal_name : String):
-	return $Signals.get_node(signal_name)
+	if signal_name == "":
+		return null
+	return $Signals.get_node_or_null(signal_name)

@@ -34,6 +34,10 @@ export (int) var on_rail_position # Internal. Never change this via script.
 
 export (bool) var update setget set_to_rail # Just uesd for the editor. If it will be pressed, then the function set_get rail will be
 
+# If true, Signal status should only be set to green by station logic (which is currently handled in player.gd) 
+# Collides with block signal.. A block signal can't be assigned to station.
+export (bool) var controlled_by_station = false 
+
 
 var timer
 func update_visual_instance():

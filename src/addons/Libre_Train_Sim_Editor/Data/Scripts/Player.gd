@@ -39,8 +39,9 @@ var time = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Seco
 var enforcedBreaking = false 
 var overrunRedSignal = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
-var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []} 
+var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "free_signal_time" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []} 
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
+# free_signal_time: Time in seconds how much seconds before departure the signal should be set to status 0
 
 var reverser = ReverserState.NEUTRAL
 
@@ -1417,20 +1418,44 @@ func get_next_SpeedLimit(): #
 
 
 var nextStationNode = null
+var next_station_index = -1 # Used for handle_station_signal, similar to current_station_index. Will be changed if player left last station.
 var distanceToNextStation = 0
 var updateNextStationTimer = 0
-func updateNextStation(delta):  ## Used for Autopilot
+func updateNextStation(delta):  # Used for Autopilot and 
 	if nextStationNode == null:
 		var upcoming = get_next_station()
 		if upcoming == null:
 			return
-		nextStationNode = world.get_node("Signals").get_node(upcoming)
+		nextStationNode = world.get_signal(upcoming)
 		nextStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
+		next_station_index = stations["nodeName"].find(nextStationNode.name)
+		
 	# Because get_distance_to_signal can regulary only used, if signal is before the train. In this case, signal is after the train,
 	# so get_distance_to_signal thinks, we are at a loop edge, and adds the complete route length to it. So we remove the complete_route_length here.
 	distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
 	if distanceToNextStation > complete_route_length:
 		distanceToNextStation -= complete_route_length
+
+# If signal of the current station was set to green, this is stored in this value.
+var _signal_was_freed_for_station_index = -1
+func handle_station_signal():
+	if next_signal_index == -1:
+		return
+	# Signal of next station already set to green
+	if next_signal_index == _signal_was_freed_for_station_index:
+		return
+	var signal_node = world.get_signal(stations["nodeName"][next_station_index]).assigned_signal
+	if signal_node == null:
+		return
+	var current_time = Math.time_to_seconds(world.time)
+	var departure_time = Math.time_to_seconds(stations["departureTime"][next_station_index])
+	var signal_free_time = departure_time - stations["signal_free_time"][next_station_index]
+	
+	if signal_free_time < current_time:
+		signal_node.set_status(1)
+		_signal_was_freed_for_station_index = next_station_index
+	
+
 
 func get_next_station():
 	var all = get_all_upcoming_signals_of_types(["Station"])

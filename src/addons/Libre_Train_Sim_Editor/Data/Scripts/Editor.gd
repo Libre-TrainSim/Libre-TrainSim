@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var camera = $Camera
+onready var camera := $Camera as EditorCamera
 var editor_directory = ""
 
 var selected_object = null
@@ -86,7 +86,7 @@ var _last_connected_signal = ""
 func handle_drag_mode():
 	var mouse_pos = get_viewport().get_mouse_position()
 	var plane = Plane(Vector3(0,1,0), selected_object.startpos.y)
-	var mouse_pos_3d = plane.intersects_ray($FreeCamera.project_ray_origin(mouse_pos), $FreeCamera.project_ray_normal(mouse_pos))
+	var mouse_pos_3d = plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
 	if mouse_pos_3d != null:
 		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
 		provide_settings_for_selected_object()  # update ui
@@ -315,7 +315,7 @@ func load_world():
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(Root.current_editor_track):
-		camera.transform = last_editor_camera_transforms[Root.current_editor_track]
+		camera.load_from_transform(last_editor_camera_transforms[Root.current_editor_track])
 
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
@@ -666,6 +666,7 @@ func jump_to_station(station_node_name):
 		return
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation_degrees.y -= 90
+	camera.load_from_transform(camera.transform)
 
 
 

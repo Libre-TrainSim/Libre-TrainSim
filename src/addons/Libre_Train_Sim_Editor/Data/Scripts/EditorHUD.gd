@@ -104,12 +104,12 @@ func _on_Pause_Back_pressed():
 func _on_SaveAndExit_pressed():
 	get_parent().save_world()
 	get_tree().paused = false
-	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+	LoadingScreen.load_main_menu()
 
 
 func _on_SaveWithoutExit_pressed():
 	get_tree().paused = false
-	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+	LoadingScreen.load_main_menu()
 
 
 

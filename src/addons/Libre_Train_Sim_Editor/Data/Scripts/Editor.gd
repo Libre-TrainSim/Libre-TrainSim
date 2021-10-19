@@ -445,7 +445,7 @@ func test_track_pck():
 	if ProjectSettings.load_resource_pack(pck_path, true):
 		Logger.log("Loading Content Pack "+ pck_path+" successfully finished")
 	Root.start_menu_in_play_menu = true
-	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+	LoadingScreen.load_main_menu()
 
 
 func export_track_pck(export_path):
@@ -560,7 +560,7 @@ func _on_MessageClose_pressed():
 	$EditorHUD/Message.hide()
 	$EditorHUD._on_dialog_closed()
 	if not has_node("World"):
-		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+		LoadingScreen.load_main_menu()
 
 
 func duplicate_selected_object():

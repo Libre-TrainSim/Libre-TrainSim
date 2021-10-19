@@ -1,4 +1,3 @@
-tool
 extends Node
 
 # Example: "res://Levels/Level1/Level1.save"

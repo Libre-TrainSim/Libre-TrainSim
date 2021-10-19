@@ -1,4 +1,3 @@
-tool
 extends Control
 
 export (Array, String) var headings

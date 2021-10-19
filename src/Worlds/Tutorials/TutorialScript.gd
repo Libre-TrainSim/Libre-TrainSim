@@ -10,7 +10,7 @@ func _ready():
 	if Root.Editor:
 		queue_free()
 		return
-	
+
 	if scenario == "The Basics" or scenario == "The Basics - Mobile Version":
 		Root.EasyMode = true
 	if scenario == "Advanced Train Driving":

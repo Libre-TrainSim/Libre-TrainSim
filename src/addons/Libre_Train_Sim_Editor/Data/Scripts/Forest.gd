@@ -1,4 +1,3 @@
-tool
 extends MultiMeshInstance
 
 export (float) var x = 100

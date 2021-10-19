@@ -1,4 +1,3 @@
-tool
 extends Spatial
 
 var type = "ContactPoint"

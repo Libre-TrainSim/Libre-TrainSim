@@ -1666,7 +1666,7 @@ func change_reverser(change):
 			if change > 0:
 				reverser = ReverserState.NEUTRAL
 				jAudioManager.play_game_sound("res://Resources/Basic/Sounds/click.ogg")
-	
+
 	emit_signal("reverser_changed", reverser)
 
 

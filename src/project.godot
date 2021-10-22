@@ -140,7 +140,6 @@ InputHelper="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/input_
 
 [debug]
 
-settings/fps/force_fps=40
 settings/stdout/verbose_stdout=true
 
 [display]
@@ -148,11 +147,6 @@ settings/stdout/verbose_stdout=true
 window/size/width="800"
 window/size/height="600"
 window/handheld/orientation="sensor_landscape"
-window/size/heigt="720"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/Libre_Train_Sim_Editor/plugin.cfg", "res://addons/jean28518.jTools/plugin.cfg" )
 
 [global]
 

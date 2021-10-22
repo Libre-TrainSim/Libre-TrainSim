@@ -1,4 +1,3 @@
-tool
 extends Node
 
 onready var signal_logic = get_parent()

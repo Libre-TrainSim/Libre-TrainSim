@@ -1,4 +1,3 @@
-tool
 extends Control
 
 signal user_added_entry(entry_name) # string

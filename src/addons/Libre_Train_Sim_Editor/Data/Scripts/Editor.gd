@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var camera = $Camera
+onready var camera := $Camera as EditorCamera
 var editor_directory = ""
 
 var selected_object = null
@@ -51,15 +51,10 @@ func _exit_tree():
 	Root.Editor = false
 
 
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and not $EditorHUD.mouse_over_ui:
+func _unhandled_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb != null and mb.button_index == BUTTON_LEFT and mb.pressed:
 		select_object_under_mouse()
-
-	if event is InputEventMouseButton and not event.pressed and drag_mode:
-		end_drag_mode()
-
-	if event is InputEventMouseMotion and drag_mode:
-		handle_drag_mode()
 
 	if Input.is_action_just_pressed("save"):
 		save_world()
@@ -69,6 +64,14 @@ func _input(event):
 
 	if Input.is_action_just_pressed("ui_accept") and $EditorHUD/Message.visible:
 		_on_MessageClose_pressed()
+
+
+func _input(event):
+	if event is InputEventMouseButton and not event.pressed and drag_mode:
+		end_drag_mode()
+
+	if event is InputEventMouseMotion and drag_mode:
+		handle_drag_mode()
 
 
 var drag_mode = false
@@ -86,7 +89,7 @@ var _last_connected_signal = ""
 func handle_drag_mode():
 	var mouse_pos = get_viewport().get_mouse_position()
 	var plane = Plane(Vector3(0,1,0), selected_object.startpos.y)
-	var mouse_pos_3d = plane.intersects_ray($FreeCamera.project_ray_origin(mouse_pos), $FreeCamera.project_ray_normal(mouse_pos))
+	var mouse_pos_3d = plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
 	if mouse_pos_3d != null:
 		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
 		provide_settings_for_selected_object()  # update ui
@@ -126,22 +129,25 @@ func handle_drag_mode():
 		elif Math.angle_distance_deg(startrot, snap_rot) < 1:
 			if _local_x_distance(startrot, selected_object.startpos, snap_pos) < 20:
 				return
-			$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
-			$EditorHUD/SnapDialog.popup_centered()
-			_last_connected_signal = "_snap_simple_connector"
-			$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_simple_connector"):
+				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
+				$EditorHUD/SnapDialog.popup_centered()
+				_last_connected_signal = "_snap_simple_connector"
+				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 		elif abs(Math.angle_distance_deg(startrot, snap_rot) - 90) < 1:
 			# right angle, can be done with straight rail + 90deg curve
-			$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
-			$EditorHUD/SnapDialog.popup_centered()
-			_last_connected_signal = "_snap_90deg_connector"
-			$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_90deg_connector"):
+				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
+				$EditorHUD/SnapDialog.popup_centered()
+				_last_connected_signal = "_snap_90deg_connector"
+				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 		else:
 			# complicated snapping I don't know how to do yet
-			$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR_TODO")
-			$EditorHUD/SnapDialog.popup_centered()
-			_last_connected_signal = "_snap_complex_connector"
-			$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_complex_connector"):
+				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR_TODO")
+				$EditorHUD/SnapDialog.popup_centered()
+				_last_connected_signal = "_snap_complex_connector"
+				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 	else:
 		if _last_connected_signal != "" and $EditorHUD/SnapDialog.is_connected("confirmed", self, _last_connected_signal):
 			$EditorHUD/SnapDialog.disconnect("confirmed", self, _last_connected_signal)
@@ -301,9 +307,9 @@ func load_world():
 		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
 		return
 	var world = world_resource.instance()
+	add_child(world)
 	world.owner = self
 	world.FileName = Root.current_editor_track
-	add_child(world)
 
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World
@@ -312,7 +318,7 @@ func load_world():
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(Root.current_editor_track):
-		camera.transform = last_editor_camera_transforms[Root.current_editor_track]
+		camera.load_from_transform(last_editor_camera_transforms[Root.current_editor_track])
 
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
@@ -442,7 +448,7 @@ func test_track_pck():
 	if ProjectSettings.load_resource_pack(pck_path, true):
 		Logger.log("Loading Content Pack "+ pck_path+" successfully finished")
 	Root.start_menu_in_play_menu = true
-	get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+	LoadingScreen.load_main_menu()
 
 
 func export_track_pck(export_path):
@@ -555,9 +561,8 @@ func send_message(message):
 
 func _on_MessageClose_pressed():
 	$EditorHUD/Message.hide()
-	$EditorHUD._on_dialog_closed()
 	if not has_node("World"):
-		get_tree().change_scene("res://addons/Libre_Train_Sim_Editor/Data/Modules/MainMenu.tscn")
+		LoadingScreen.load_main_menu()
 
 
 func duplicate_selected_object():
@@ -663,6 +668,7 @@ func jump_to_station(station_node_name):
 		return
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation_degrees.y -= 90
+	camera.load_from_transform(camera.transform)
 
 
 

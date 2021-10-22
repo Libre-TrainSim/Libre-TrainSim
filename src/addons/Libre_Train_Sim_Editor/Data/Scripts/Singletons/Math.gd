@@ -1,4 +1,3 @@
-tool
 extends Node
 
 # Get Next Position from a point on a circle after a specific Distance.

@@ -1,4 +1,3 @@
-tool
 extends MultiMeshInstance
 
 export (String) var description = ""

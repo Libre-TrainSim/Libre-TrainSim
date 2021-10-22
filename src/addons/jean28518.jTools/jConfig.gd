@@ -1,4 +1,3 @@
-tool
 extends Node
 
 # If you don't need the whole package of jTools, you can easily deactivate some parts.

@@ -1,4 +1,3 @@
-tool
 extends Spatial
 const type = "Signal" # Never change this type!!
 onready var world = find_parent("World")
@@ -104,6 +103,8 @@ func _ready():
 
 	if get_node_or_null("VisualInstance") != null:
 		connect_visual_instance()
+	else:
+		create_visual_instance()
 
 	# Set Signal while adding to the Signals node
 	if Engine.is_editor_hint() and not get_parent().name == "Signals":

@@ -1,4 +1,3 @@
-tool
 extends Spatial
 
 export (int) var distance = 0

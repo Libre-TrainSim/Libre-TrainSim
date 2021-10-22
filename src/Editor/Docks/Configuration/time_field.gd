@@ -26,6 +26,3 @@ func _on_Okay_pressed():
 	update_button_text()
 	$Popup.hide()
 	emit_signal("time_set")
-	if Root.Editor:
-		find_parent("EditorHUD")._on_dialog_closed()
-

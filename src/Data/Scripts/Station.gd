@@ -16,6 +16,8 @@ export (String) var attached_rail: String
 export (float) var on_rail_position: float
 export var forward: bool = true
 
+export (String) var assigned_signal = ""
+
 var waitingPersonCount: int = 5
 var attachedPersons: Array = []
 
@@ -26,7 +28,8 @@ func _get_type() -> String:
 
 var rail: Spatial
 func _ready():
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or Root.Editor:
+		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 		if get_parent().name == "Signals":
 			return
 		if get_parent().is_in_group("Rail"):

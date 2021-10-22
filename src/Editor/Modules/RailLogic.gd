@@ -4,6 +4,8 @@ var current_rail_logic = null
 var current_rail_logic_type = ""
 var resource_selector_called = false
 
+func _input(event):
+	visible = is_instance_valid(current_rail_logic) and get_parent().current_tab == 2
 
 func _ready() -> void:
 	set_rail_logic(null)
@@ -40,7 +42,7 @@ func update_general_settings_ui():
 
 
 func _on_Distance_value_changed(value):
-	$GeneralSettings/Distance.value = clamp($GeneralSettings/Distance.value, 0, find_parent("Editor").get_node("World/Rails/" + current_rail_logic.attached_rail).length)
+	$GeneralSettings/Distance.value = clamp($GeneralSettings/Distance.value, 0, find_parent("Editor").get_rail(current_rail_logic.attached_rail).length)
 	current_rail_logic.on_rail_position = $GeneralSettings/Distance.value
 	current_rail_logic.set_to_rail()
 
@@ -116,6 +118,7 @@ func _on_SpeedLimitSignalSettings_value_changed(value):
 func update_station_settings_ui():
 	$StationSettings/Name.text = current_rail_logic.name
 	$StationSettings/Length.value = current_rail_logic.stationLength
+	$StationSettings/AssignedSignal.text = current_rail_logic.assigned_signal
 	$StationSettings/PlatformSide.selected = current_rail_logic.platform_side
 	$StationSettings/EnablePersonSystem.pressed = current_rail_logic.personSystem
 	$StationSettings/PlatformHeight.visible = current_rail_logic.personSystem
@@ -226,3 +229,5 @@ func _on_ContactPointEnableForAllTrains_pressed():
 func _on_ContactPointOnlySpecificTrain_text_entered(new_text):
 	current_rail_logic.bySpecificTrain = $ContactPointSettings/OnlySpecificTrain.text
 
+func _on_ConnectedSignal_text_changed(new_text):
+	current_rail_logic.assigned_signal = $StationSettings/AssignedSignal.text

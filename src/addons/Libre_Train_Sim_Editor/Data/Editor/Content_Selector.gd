@@ -112,7 +112,6 @@ func emit_selected_resource():
 		complete_path += "/Textures" + resource.right(split_position) + ".png"
 
 	hide()
-	get_parent()._on_dialog_closed()
 	emit_signal("resource_selected", complete_path)
 
 
@@ -120,7 +119,6 @@ func emit_selected_resource():
 
 func _on_Select_pressed():
 	emit_selected_resource()
-	get_parent()._on_dialog_closed()
 
 
 
@@ -129,4 +127,3 @@ func _on_Cancel_pressed():
 	hide()
 	clear_text()
 	emit_signal("resource_selected", "")
-	get_parent()._on_dialog_closed()

@@ -23,7 +23,6 @@ func hide_menu():
 	$RailLogicMenu.hide()
 	$RailLogicMenu.unselect_all()
 	$ShowMenu.text = " + "
-	get_parent()._on_dialog_closed()
 
 var current_waiting_index = -1
 func _on_ItemList_item_selected(index):

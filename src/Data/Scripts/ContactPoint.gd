@@ -20,6 +20,7 @@ func _get_type() -> String:
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
+		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 		if get_parent().name == "Signals":
 			return
 		if get_parent().is_in_group("Rail"):
@@ -27,7 +28,7 @@ func _ready() -> void:
 		var signals: Spatial = world.get_node("Signals")
 		get_parent().remove_child(self)
 		signals.add_child(self)
-		set_to_rail()
+		set_to_rail(true)
 
 	if not Engine.is_editor_hint():
 		$Timer.wait_time = affectTime # affectTime MUST be > 0!

@@ -48,7 +48,11 @@ func update_visual_instance() -> void:
 	visible = attached_rail_node.visible
 	if not attached_rail_node.visible:
 		if get_node_or_null("VisualInstance") != null:
+			self.disconnect("signal_changed", $VisualInstance, "update_visual_instance")
 			$VisualInstance.queue_free()
+			if get_node_or_null("SelectCollider") != null:
+				$SelectCollider.queue_free()
+
 		return
 
 	if get_node_or_null("VisualInstance") == null:
@@ -63,6 +67,8 @@ func create_visual_instance() -> void:
 	visual_instance.name = "VisualInstance"
 	visual_instance.owner = self
 	connect_visual_instance()
+	if Root.Editor:
+		add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 
 
 func connect_visual_instance() -> void:

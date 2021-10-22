@@ -159,7 +159,7 @@ rect_min_size = Vector2( 0, 30 )
 [node name="StationSettings" type="GridContainer" parent="."]
 margin_top = 238.0
 margin_right = 800.0
-margin_bottom = 426.0
+margin_bottom = 454.0
 columns = 2
 
 [node name="Label" type="Label" parent="StationSettings"]
@@ -207,41 +207,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="Label" parent="StationSettings"]
+[node name="Label8" type="Label" parent="StationSettings"]
 margin_top = 85.0
 margin_right = 160.0
 margin_bottom = 99.0
-text = "Enable Person System:"
+text = "Assigned Signal:"
 
-[node name="EnablePersonSystem" type="CheckBox" parent="StationSettings"]
+[node name="AssignedSignal" type="LineEdit" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 80.0
 margin_right = 800.0
 margin_bottom = 104.0
 
-[node name="Label4" type="Label" parent="StationSettings"]
+[node name="Label3" type="Label" parent="StationSettings"]
 margin_top = 113.0
 margin_right = 160.0
 margin_bottom = 127.0
-text = "Platform Height:"
+text = "Enable Person System:"
 
-[node name="PlatformHeight" type="SpinBox" parent="StationSettings"]
+[node name="EnablePersonSystem" type="CheckBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 108.0
 margin_right = 800.0
 margin_bottom = 132.0
-step = 0.01
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Label5" type="Label" parent="StationSettings"]
+[node name="Label4" type="Label" parent="StationSettings"]
 margin_top = 141.0
 margin_right = 160.0
 margin_bottom = 155.0
-text = "Platform Start (Left/Right)"
+text = "Platform Height:"
 
-[node name="PlatformStart" type="SpinBox" parent="StationSettings"]
+[node name="PlatformHeight" type="SpinBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 136.0
 margin_right = 800.0
@@ -251,13 +247,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label6" type="Label" parent="StationSettings"]
+[node name="Label5" type="Label" parent="StationSettings"]
 margin_top = 169.0
 margin_right = 160.0
 margin_bottom = 183.0
-text = "Platform End (Left/Right)"
+text = "Platform Start (Left/Right)"
 
-[node name="PlatformEnd" type="SpinBox" parent="StationSettings"]
+[node name="PlatformStart" type="SpinBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 164.0
 margin_right = 800.0
@@ -267,10 +263,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SpeedLimitSettings" type="GridContainer" parent="."]
-margin_top = 430.0
+[node name="Label6" type="Label" parent="StationSettings"]
+margin_top = 197.0
+margin_right = 160.0
+margin_bottom = 211.0
+text = "Platform End (Left/Right)"
+
+[node name="PlatformEnd" type="SpinBox" parent="StationSettings"]
+margin_left = 164.0
+margin_top = 192.0
 margin_right = 800.0
-margin_bottom = 454.0
+margin_bottom = 216.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpeedLimitSettings" type="GridContainer" parent="."]
+margin_top = 458.0
+margin_right = 800.0
+margin_bottom = 482.0
 columns = 2
 
 [node name="Label" type="Label" parent="SpeedLimitSettings"]
@@ -292,9 +304,9 @@ __meta__ = {
 }
 
 [node name="WarnSpeedLimitSettings" type="GridContainer" parent="."]
-margin_top = 458.0
+margin_top = 486.0
 margin_right = 800.0
-margin_bottom = 482.0
+margin_bottom = 510.0
 columns = 2
 
 [node name="Label" type="Label" parent="WarnSpeedLimitSettings"]
@@ -316,9 +328,9 @@ __meta__ = {
 }
 
 [node name="ContactPointSettings" type="GridContainer" parent="."]
-margin_top = 486.0
+margin_top = 514.0
 margin_right = 800.0
-margin_bottom = 678.0
+margin_bottom = 706.0
 columns = 2
 
 [node name="Label" type="Label" parent="ContactPointSettings"]
@@ -434,6 +446,7 @@ margin_bottom = 192.0
 [connection signal="text_entered" from="StationSettings/Name" to="." method="_on_StationName_text_entered"]
 [connection signal="value_changed" from="StationSettings/Length" to="." method="_on_Length_value_changed"]
 [connection signal="item_selected" from="StationSettings/PlatformSide" to="." method="_on_PlatformSide_item_selected"]
+[connection signal="text_changed" from="StationSettings/AssignedSignal" to="." method="_on_ConnectedSignal_text_changed"]
 [connection signal="pressed" from="StationSettings/EnablePersonSystem" to="." method="_on_EnablePersonSystem_pressed"]
 [connection signal="value_changed" from="StationSettings/PlatformHeight" to="." method="_on_PlatformHeight_value_changed"]
 [connection signal="value_changed" from="StationSettings/PlatformStart" to="." method="_on_PlatformStart_value_changed"]

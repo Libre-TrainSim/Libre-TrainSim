@@ -15,6 +15,7 @@ export (float) var platformEnd: float = 4.5
 export (String) var attached_rail: String
 export (float) var on_rail_position: float
 export var forward: bool = true
+export var assigned_signal := ""
 
 var waitingPersonCount: int = 5
 var attachedPersons: Array = []
@@ -26,7 +27,8 @@ func _get_type() -> String:
 
 var rail: Spatial
 func _ready():
-	if Engine.is_editor_hint():
+	if Root.Editor:
+		add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 		if get_parent().name == "Signals":
 			return
 		if get_parent().is_in_group("Rail"):
@@ -35,8 +37,8 @@ func _ready():
 		get_parent().remove_child(self)
 		signals.add_child(self)
 		set_to_rail()
-	if not Engine.is_editor_hint() and not Root.Editor:
-		$MeshInstance.queue_free()
+	else:
+		$Mesh.queue_free()
 		set_to_rail()
 		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
 

@@ -20,6 +20,7 @@ func _get_type() -> String:
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
+		add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 		if get_parent().name == "Signals":
 			return
 		if get_parent().is_in_group("Rail"):

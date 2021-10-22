@@ -38,8 +38,9 @@ var currentRealAcceleration: float = 0
 var time: Array = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Second
 var enforced_braking: bool = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
-var stations: Dictionary = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []}
+var stations: Dictionary = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "free_signal_time" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []}
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
+# free_signal_time: Time in seconds how much seconds before departure the signal should be set to status 0
 
 var reverser: int = ReverserState.NEUTRAL
 
@@ -252,6 +253,7 @@ func processLong(delta: float) -> void: ## All functions in it are called every 
 	get_time()
 	checkFreeLastSignal()
 	checkVisibility(delta)
+	handle_station_signal()
 	if automaticDriving:
 		autopilot()
 	if name == "npc3":
@@ -865,6 +867,8 @@ func check_station(delta: float) -> void:
 
 	# train just now fully in station and doors opened, or first station
 	if (not isInStation and whole_train_in_station and (doorLeft or doorRight or platform_side == PlatformSide.NONE)) or (is_first_station and not isInStation):
+		if is_first_station:
+			nextStationNode = currentStationNode
 		isInStation = true
 		stationTimer = 0
 		realArrivalTime = time
@@ -1411,20 +1415,45 @@ func get_next_SpeedLimit() -> Spatial:
 
 
 var nextStationNode: Spatial = null
+var next_station_index: int = 0 # Used for handle_station_signal, similar to current_station_index. Will be changed once player left the previous station.
 var distanceToNextStation: float = 0
 var updateNextStationTimer: float = 0
-func updateNextStation() -> void:  ## Used for Autopilot
+func updateNextStation() -> void:  # Used for Autopilot and handling station signal
 	if nextStationNode == null:
 		var upcoming: String = get_next_station()
 		if upcoming == "":
 			return
-		nextStationNode = world.get_node("Signals").get_node(upcoming)
+		nextStationNode = world.get_signal(upcoming)
 		nextStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
+		next_station_index = stations["nodeName"].find(nextStationNode.name)
+
 	# Because get_distance_to_signal can regulary only used, if signal is before the train. In this case, signal is after the train,
 	# so get_distance_to_signal thinks, we are at a loop edge, and adds the complete route length to it. So we remove the complete_route_length here.
 	distanceToNextStation = get_distance_to_signal(nextStationNode.name) + nextStationNode.stationLength
 	if distanceToNextStation > complete_route_length:
 		distanceToNextStation -= complete_route_length
+
+
+# If signal of the current station was set to green, this is stored in this value.
+var _signal_was_freed_for_station_index = -1
+func handle_station_signal() -> void:
+	if next_station_index == -1:
+		return
+	# Signal of next station already set to green
+	if next_station_index == _signal_was_freed_for_station_index:
+		return
+	var signal_node = world.get_signal(world.get_signal(stations["nodeName"][next_station_index]).assigned_signal)
+	if signal_node == null:
+		return
+	var current_time = Math.time_to_seconds(world.time)
+	var departure_time = Math.time_to_seconds(stations["departureTime"][next_station_index])
+	var signal_free_time = departure_time - stations["free_signal_time"][next_station_index]
+	Logger.vlog(signal_free_time)
+	Logger.vlog(current_time)
+	if signal_free_time < current_time and stations["stopType"][next_station_index] != 3:
+		signal_node.set_status(1)
+		_signal_was_freed_for_station_index = next_station_index
+
 
 func get_next_station() -> String:
 	var all: Array = get_all_upcoming_signals_of_types(["Station"])
@@ -1776,6 +1805,3 @@ func force_to_be_in_station(station_table_index: int) -> void:
 		open_left_doors()
 	if currentStationNode.platform_side == PlatformSide.RIGHT:
 		open_right_doors()
-
-
-

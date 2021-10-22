@@ -8,8 +8,8 @@ func _ready():
 			mesh = get_parent().get_node("VisualInstance").get_node("MeshInstance").mesh
 			translation = get_parent().get_node("VisualInstance").get_node("MeshInstance").translation
 		else:
-			mesh = get_parent().get_node("MeshInstance").mesh
-			transform = get_parent().get_node("MeshInstance").transform
+			mesh = get_parent().get_node("Mesh").mesh
+			transform = get_parent().get_node("Mesh").transform
 
 	if mesh != null:
 		$CollisionShape.shape = mesh.create_convex_shape()

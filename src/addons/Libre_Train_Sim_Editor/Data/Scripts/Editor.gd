@@ -319,7 +319,7 @@ func load_world():
 		building.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
 	for signal_ins in $World/Signals.get_children():
 #		if signal_ins.type == "Signal":
-		signal_ins.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+		pass
 
 	Root.fix_frame_drop()
 

@@ -17,6 +17,9 @@ func _ready():
 	if get_shadows() == null:
 		set_shadows(true)
 
+	if get_dynamic_lights() == null:
+		set_dynamic_lights(false)
+
 	if get_anti_aliasing() == null:
 		set_anti_aliasing(2)
 
@@ -50,6 +53,7 @@ func apply_saved_settings():
 func update_settings_window():
 	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
 	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
+	$JSettings/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = get_dynamic_lights()
 	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = get_fog()
 	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = get_persons()
 	$JSettings/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
@@ -81,6 +85,13 @@ func set_shadows(val : bool):
 
 func get_shadows():
 	return jSaveManager.get_setting("shadows")
+
+
+func set_dynamic_lights(val: bool):
+	jSaveManager.save_setting("dynamic_lights", val)
+
+func get_dynamic_lights():
+	return jSaveManager.get_setting("dynamic_lights")
 
 
 func set_language(language_code : String):
@@ -213,3 +224,7 @@ func _on_Fog_pressed():
 
 func _on_Persons_pressed():
 	set_persons($JSettings/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed)
+
+
+func _on_DynamicLights_pressed() -> void:
+	set_dynamic_lights($JSettings/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed)

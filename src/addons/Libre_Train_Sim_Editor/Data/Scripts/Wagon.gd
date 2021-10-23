@@ -55,7 +55,14 @@ func _ready():
 	personsNode.owner = self
 
 	initialize_outside_announcement_player()
-	pass # Replace with function body.
+
+	# TODO: this is a performance hotfix, we should do a better implementation in 0.10
+	if not jSettings.get_dynamic_lights():
+		if get_node_or_null("Lights") != null:
+			$Lights.queue_free()
+		if get_node_or_null("InteriorLights") != null:
+			$InteriorLights.queue_free()
+
 
 var initialSwitchCheck = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.

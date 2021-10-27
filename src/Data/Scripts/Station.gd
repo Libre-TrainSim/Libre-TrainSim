@@ -16,7 +16,7 @@ export (String) var attached_rail: String
 export (float) var on_rail_position: float
 export var forward: bool = true
 
-export (String) var assigned_signal = ""
+export var assigned_signal := ""
 
 var waitingPersonCount: int = 5
 var attachedPersons: Array = []

@@ -1469,8 +1469,8 @@ func handle_station_signal():
 	var current_time = Math.time_to_seconds(world.time)
 	var departure_time = Math.time_to_seconds(stations["departureTime"][next_station_index])
 	var signal_free_time = departure_time - stations["free_signal_time"][next_station_index]
-	print(signal_free_time)
-	print(current_time)
+	Logger.vlog(signal_free_time)
+	Logger.vlog(current_time)
 	if signal_free_time < current_time and stations["stopType"][next_station_index] != 3:
 		signal_node.set_status(1)
 		_signal_was_freed_for_station_index = next_station_index

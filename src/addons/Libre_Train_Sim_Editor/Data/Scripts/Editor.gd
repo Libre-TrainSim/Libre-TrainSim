@@ -323,7 +323,6 @@ func load_world():
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
 		building.add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
-		pass
 
 	Root.fix_frame_drop()
 

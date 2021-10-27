@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Enums/reverser_state.gd"
 }, {
+"base": "Reference",
+"class": "RoutePointType",
+"language": "GDScript",
+"path": "res://Data/Scripts/Enums/route_point_type.gd"
+}, {
 "base": "Node",
 "class": "SafetySystem",
 "language": "GDScript",
@@ -138,6 +143,11 @@ _global_script_classes=[ {
 "class": "Signal",
 "language": "GDScript",
 "path": "res://Data/Scripts/Signal.gd"
+}, {
+"base": "Reference",
+"class": "SignalOperationMode",
+"language": "GDScript",
+"path": "res://Data/Scripts/Enums/signal_operation_mode.gd"
 }, {
 "base": "Reference",
 "class": "SignalStatus",
@@ -154,6 +164,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Station.gd"
 }, {
+"base": "Reference",
+"class": "StopType",
+"language": "GDScript",
+"path": "res://Data/Scripts/Enums/stop_type.gd"
+}, {
 "base": "PanelContainer",
 "class": "TextBox",
 "language": "GDScript",
@@ -162,7 +177,7 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "TimeField",
 "language": "GDScript",
-"path": "res://Editor/Docks/Configuration/time_field.gd"
+"path": "res://Editor/Modules/time_field.gd"
 }, {
 "base": "RailLogic",
 "class": "WarnSpeedLimit",
@@ -199,11 +214,14 @@ _global_script_class_icons={
 "RailLogic": "",
 "RailLogicTypes": "",
 "ReverserState": "",
+"RoutePointType": "",
 "SafetySystem": "",
 "Signal": "",
+"SignalOperationMode": "",
 "SignalStatus": "",
 "SpeedLimit": "",
 "Station": "",
+"StopType": "",
 "TextBox": "",
 "TimeField": "",
 "WarnSpeedLimit": "",
@@ -442,12 +460,12 @@ duplicate={
 }
 zoom_in={
 "deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 zoom_out={
 "deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 map_open={
@@ -545,5 +563,6 @@ translation_remaps={
 
 threads/thread_model=2
 quality/directional_shadow/size=8192
+environment/default_clear_color=Color( 0.894118, 0.894118, 0.898039, 1 )
 quality/filters/msaa=2
 environment/default_environment="res://Resources/Environments/BasicWorldEnvironment.tres"

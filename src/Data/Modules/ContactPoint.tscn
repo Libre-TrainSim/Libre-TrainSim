@@ -9,7 +9,7 @@ albedo_color = Color( 1, 0.560784, 0, 1 )
 [node name="ContactPoint" type="Spatial" groups=["Signal"]]
 script = ExtResource( 2 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="Mesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289813, 0 )
 mesh = ExtResource( 1 )
 material/0 = SubResource( 1 )

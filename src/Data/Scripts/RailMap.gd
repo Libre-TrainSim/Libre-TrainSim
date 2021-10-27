@@ -25,8 +25,9 @@ func _ready() -> void:
 
 func init_map() -> void:
 	if train_world == null:
-		Logger.err("RAILMAP: Could not find world! Despawning!", self)
-		queue_free()
+		if not Root.Editor:
+			Logger.err("RAILMAP: Could not find world! Despawning!", self)
+			queue_free()
 		return
 
 # warning-ignore:return_value_discarded
@@ -43,13 +44,16 @@ func init_map() -> void:
 		elif signal_i.type == "Station":
 			create_station(signal_i)
 
-	close_map()
+	if not Root.Editor:
+		close_map()
+
 	camera.current = true
 
 
 func open_full_map() -> void:
 	set_process(true)
 	set_process_unhandled_input(true)
+	Logger.log("open full map")
 
 	self.size = OS.window_size
 	overlay = false
@@ -69,6 +73,7 @@ func open_full_map() -> void:
 func open_overlay_map() -> void:
 	set_process(true)
 	set_process_unhandled_input(false)
+	Logger.log("open overlay map")
 
 	var os_size = OS.window_size
 	self.size = Vector2(os_size.x*0.33,os_size.y)
@@ -98,10 +103,34 @@ func open_overlay_map() -> void:
 	update_active_lines_width(1.435 * zoom)
 	$PlayerPolygon.scale = 4*Vector2(zoom, zoom)
 
+#func _input(event):
+#	if event is InputEventMouseButton:
+#		if event.button_index == BUTTON_WHEEL_DOWN and not event.pressed:
+#			var zoom = $Camera2D.zoom
+#			zoom.x = clamp(zoom.x*1.25, 0.01, 10)
+#			zoom.y = clamp(zoom.y*1.25, 0.01, 10)
+#			$Camera2D.zoom = zoom
+#			print(get_tree().is_input_handled())
+#			get_tree().set_input_as_handled()
+#		if event.button_index == BUTTON_WHEEL_UP and not event.pressed:
+#			var zoom = $Camera2D.zoom
+#			zoom.x = clamp(zoom.x*0.8, 0.05, 10)
+#			zoom.y = clamp(zoom.y*0.8, 0.05, 10)
+#			$Camera2D.zoom = zoom
+#			print(get_tree().is_input_handled())
+#			get_tree().set_input_as_handled()
+#
+#	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
+#		mouse_motion -= event.relative
+#		print(get_tree().is_input_handled())
+#		get_tree().set_input_as_handled()
+#	pass
 
 func close_map() -> void:
 	set_process(false)
 	set_process_unhandled_input(false)
+	Logger.log("close map")
+	pass
 
 
 var mouse_motion: Vector2 = Vector2(0,0)
@@ -135,12 +164,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # warning-ignore:unused_argument
 func _process(delta: float) -> void:
-	var player_pos: Vector3 = train_world.player.translation
-	var player_pos_2d = Vector2(player_pos.x, player_pos.z)
-
-	# subtracting chunk origin is necessary!
-	$PlayerPolygon.position = player_pos_2d - chunk_origin
-	$PlayerPolygon.rotation = -train_world.player.rotation.y
+	if Root.Editor:
+		var movement = mouse_motion * $Camera2D.zoom.x
+		camera.position += movement.rotated(camera.rotation)
+		mouse_motion = Vector2(0,0)
+	else:
+		var player_pos: Vector3 = train_world.player.translation
+		var player_pos_2d = Vector2(player_pos.x, player_pos.z)
+		# subtracting chunk origin is necessary!
+		$PlayerPolygon.position = player_pos_2d - chunk_origin
+		$PlayerPolygon.rotation = -train_world.player.rotation.y
 
 	if follow_player == true:
 		camera.position = $PlayerPolygon.position
@@ -151,6 +184,7 @@ func _process(delta: float) -> void:
 		mouse_motion = Vector2(0,0)
 
 	update_labels()
+
 
 
 func update_labels() -> void:
@@ -168,7 +202,9 @@ func update_active_lines_width(width: float) -> void:
 
 
 func create_station(signal_instance: Spatial) -> void:
-	var index: int = train_world.player.stations["nodeName"].find(signal_instance.name)
+	if Root.Editor:
+		return
+	var index: int = train_world.player.get_station_table_index_of_station_node_name(signal_instance.name)
 	if index < 0:
 		Logger.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
 		return
@@ -186,7 +222,7 @@ func create_station(signal_instance: Spatial) -> void:
 	label.owner = node
 	label.show()
 	label.rect_position.y = -140
-	label.text = train_world.player.stations["stationName"][index]
+	label.text = train_world.player.station_table[index].station_name
 
 
 func create_signal(signal_instance: Spatial) -> void:
@@ -195,6 +231,10 @@ func create_signal(signal_instance: Spatial) -> void:
 	sprite.scale = Vector2(0.1, 0.1)
 	sprite.rotation_degrees = -signal_instance.rotation_degrees.y + 90
 	sprite.name = signal_instance.name
+	if Root.Editor:
+		var collider = preload("res://Editor/Modules/Collider2D.tscn").instance()
+		collider.input_handling_node = find_parent("ScenarioEditor")
+		sprite.add_child(collider)
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
 # warning-ignore:return_value_discarded
@@ -227,15 +267,22 @@ func create_line2d_from_rail(rail: Spatial):
 	line.antialiased = true
 	line.name = rail.name
 
-	if train_world.player.baked_route.has(rail.name):
-		line.default_color = Color("9eea18")
-		$RouteLines.add_child(line)
-		line.owner = $RouteLines
-		find_max_coords(points)
+	if not Root.Editor:
+		if train_world.player.baked_route.has(rail.name):
+			line.default_color = Color("9eea18")
+			$RouteLines.add_child(line)
+			line.owner = $RouteLines
+			find_max_coords(points)
+		else:
+			line.default_color = Color("4b86ff")
+			$RailLines.add_child(line)
+			line.owner = $RailLines
+
 	else:
 		line.default_color = Color("4b86ff")
 		$RailLines.add_child(line)
 		line.owner = $RailLines
+		find_max_coords(points)
 
 
 func find_max_coords(points: Array):

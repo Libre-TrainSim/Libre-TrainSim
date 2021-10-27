@@ -2,9 +2,11 @@ extends Node
 
 signal world_origin_shifted(delta)
 
-var currentTrack: String
-var currentScenario: String
-var currentTrain: String
+var current_track: String # file path
+var current_scenario: String # file path
+var selected_train: String # file path
+var selected_route: String # route name
+var selected_time: int # start time of scenario in seconds
 var EasyMode: bool = true
 var mobile_version: bool = OS.has_feature("mobile")
 
@@ -14,8 +16,13 @@ var ingame_pause: bool = false
 
 var world: Node  ## Reference to world
 
-var Editor: bool = false
 
+# If scenario editor is running, then Editor and scenario_editor are true
+var Editor: bool = false
+var scenario_editor: bool = false
+
+var current_editor_track = ""
+var current_editor_track_path = ""
 
 func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
@@ -38,7 +45,7 @@ func _unhandled_key_input(_event) -> void:
 		jSettings.set_fullscreen(!OS.window_fullscreen)
 
 
-## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor
+## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor, also for train spawn
 func name_node_appropriate(node: Node, wanted_name: String, parent_node: Node) -> String:
 	# Remove last Numbers from wanted name
 	while(wanted_name[-1].is_valid_integer()):
@@ -84,6 +91,7 @@ func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 		TranslationServer.add_translation(trackTranslation)
 
 
+
 # Searches for translation files wich are located in the same folder as the train.tscn.
 # Gets the full path to train.tscn as input
 func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
@@ -106,7 +114,6 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 
 
 # recursion_depth = -1 -> unlimited recursion
-# found_files is return value
 func crawl_directory(found_files: Array, directory_path: String, file_extensions: Array, recursion_depth: int = -1) -> void:
 	var dir := Directory.new()
 	if dir.open(directory_path) != OK:
@@ -170,3 +177,8 @@ func set_low_resolution(value: bool) -> void:
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
 		ProjectSettings.set_setting("display/window/size/width", "800")
 		ProjectSettings.set_setting("display/window/size/height", "600")
+
+
+func set_current_editor_track(path_to_tscn : String):
+	current_editor_track_path = path_to_tscn.get_base_dir()
+	current_editor_track = path_to_tscn.get_file().get_basename()

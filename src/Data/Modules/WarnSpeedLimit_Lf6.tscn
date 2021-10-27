@@ -18,7 +18,7 @@ extra_spacing_top = -30
 extra_spacing_bottom = -30
 font_data = SubResource( 2 )
 
-[node name="WarnSpeed_Lf6" type="Spatial"]
+[node name="WarnSpeed_Lf6" type="Spatial" groups=["Signal"]]
 script = ExtResource( 2 )
 forward = true
 

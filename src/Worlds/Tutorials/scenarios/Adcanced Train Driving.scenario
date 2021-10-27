@@ -1,0 +1,90 @@
+[Main]
+
+empty=true
+rail_logic_settings={
+"City1": {
+"assigned_signal": "Signal",
+"enable_person_system": true,
+"overwrite": false
+},
+"City2": {
+"assigned_signal": "Signal5",
+"enable_person_system": true,
+"overwrite": false
+},
+"Signal": {
+"operation_mode": 1,
+"signal_free_time": -1,
+"speed": 120.0,
+"status": 0
+},
+"Signal2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"Signal3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"Signal4": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": 80.0,
+"status": 0
+},
+"Signal5": {
+"operation_mode": 1,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+}
+}
+routes={
+"Player Route": {
+"general_settings": {
+"activate_only_at_specific_routes": false,
+"description": "TUTORIAL_1_DESCRIPTION",
+"interval": 0,
+"interval_end": 0,
+"interval_start": 43200.0,
+"player_can_drive_this_route": true,
+"specific_routes": [  ],
+"train_name": "JFR1_Red"
+},
+"rail_logic_settings": {
+},
+"route_points": [ {
+"approach_sound_path": "",
+"arrival_sound_path": "",
+"departure_sound_path": "res://Resources/Sounds/platform_departure.ogg",
+"duration_since_station_before": 300.0,
+"leaving_persons": 50.0,
+"minimal_halt_time": 15.0,
+"node_name": "City1",
+"planned_halt_time": 30.0,
+"signal_time": 5.0,
+"station_name": "Tutorialhausen",
+"stop_type": 2,
+"type": 0,
+"waiting_persons": 100.0
+}, {
+"approach_sound_path": "res://Resources/Sounds/next_station_tutorialbach.ogg",
+"arrival_sound_path": "res://Resources/Sounds/platform_endstation.ogg",
+"departure_sound_path": "",
+"duration_since_station_before": 90.0,
+"leaving_persons": 50.0,
+"minimal_halt_time": 15.0,
+"node_name": "City2",
+"planned_halt_time": 20.0,
+"signal_time": 60.0,
+"station_name": "Tutorialbach",
+"stop_type": 3,
+"type": 0,
+"waiting_persons": 100.0
+} ]
+}
+}

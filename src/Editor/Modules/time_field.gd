@@ -3,6 +3,8 @@ class_name TimeField
 
 signal time_set()
 
+func get_data_in_seconds():
+	return Math.time_to_seconds(get_data())
 
 func get_data():
 	return [$Popup/HBoxContainer/H.value, $Popup/HBoxContainer/M.value, $Popup/HBoxContainer/S.value]
@@ -13,6 +15,10 @@ func set_data(time_array : Array):
 	$Popup/HBoxContainer/M.value = time_array[1]
 	$Popup/HBoxContainer/S.value = time_array[2]
 	update_button_text()
+
+func set_data_in_seconds(seconds : int):
+	var time_array = Math.seconds_to_time(seconds)
+	set_data(time_array)
 
 
 

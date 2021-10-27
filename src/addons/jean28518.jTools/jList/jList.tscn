@@ -127,6 +127,7 @@ __meta__ = {
 }
 
 [connection signal="item_activated" from="VBoxContainer/ItemList" to="." method="_on_ItemList_item_activated"]
+[connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="VBoxContainer/ItemList" to="." method="_on_ItemList_multi_selected"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Remove" to="." method="_on_Remove_pressed"]

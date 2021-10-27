@@ -3,7 +3,8 @@ extends Node2D
 func update_voltage(voltage):
 	$Oberspannung.value = voltage
 
-func update_time(time):
+func update_time(time_seconds: int) -> void:
+	var time = Math.seconds_to_time(time_seconds)
 	var hour = String(time[0])
 	var minute = String(time[1])
 	var second = String(time[2])

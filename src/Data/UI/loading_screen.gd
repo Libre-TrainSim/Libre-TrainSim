@@ -39,7 +39,7 @@ func load_main_menu():
 	show()
 
 
-func load_world(world: String, _scenario: String, _train: String, bg_img: Texture) -> void:
+func load_world(world: String, bg_img: Texture) -> void:
 	loader = ResourceLoader.load_interactive(world)
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self

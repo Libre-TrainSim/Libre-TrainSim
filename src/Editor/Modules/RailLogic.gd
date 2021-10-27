@@ -19,7 +19,6 @@ func set_rail_logic(rail_logic):
 	$StationSettings.visible = current_rail_logic_type == RailLogicTypes.STATION
 	$SpeedLimitSettings.visible = current_rail_logic_type == RailLogicTypes.SPEED_LIMIT
 	$WarnSpeedLimitSettings.visible = current_rail_logic_type == RailLogicTypes.SPEED_LIMIT_WARNING
-	$ContactPointSettings.visible = current_rail_logic_type == RailLogicTypes.CONTACT_POINT
 	$GeneralSettings.visible = visible
 	if visible:
 		update_general_settings_ui()
@@ -32,8 +31,8 @@ func set_rail_logic(rail_logic):
 			update_speed_limit_settings_ui()
 		RailLogicTypes.SPEED_LIMIT_WARNING:
 			update_warn_speed_limit_settings_ui()
-		RailLogicTypes.CONTACT_POINT:
-			update_contact_point_settings_ui()
+
+
 
 
 func update_general_settings_ui():
@@ -65,16 +64,7 @@ func _on_Block_Signal_pressed():
 
 
 func update_signal_settings_ui():
-	$SignalSettings/SpeedLimit.value = current_rail_logic.speed
-	$SignalSettings/BlockSignal.pressed = current_rail_logic.is_block_signal
 	$SignalSettings/VisibleInstance/LineEdit.text = current_rail_logic.visual_instance_path
-	$SignalSettings/Status.value = current_rail_logic.status
-	$SignalSettings/Status.visible = not current_rail_logic.is_block_signal
-	$SignalSettings/LabelStatus.visible = not current_rail_logic.is_block_signal
-	$SignalSettings/Label4.visible = not current_rail_logic.is_block_signal
-	$SignalSettings/EnableTimedFree.visible = not current_rail_logic.is_block_signal
-	$SignalSettings/EnableTimedFree.pressed = not current_rail_logic.set_pass_at_h < 0 and not current_rail_logic.set_pass_at_h > 23
-	update_signal_time_free_ui()
 
 
 func _on_Content_Selector_resource_selected(complete_path):
@@ -88,36 +78,11 @@ func _on_Content_Selector_resource_selected(complete_path):
 	current_rail_logic.update_visual_instance()
 
 
-func _on_Status_value_changed(value):
-	current_rail_logic.status = $SignalSettings/Status.value
-
-
-func _on_EnableTimedFree_pressed():
-	if not $SignalSettings/EnableTimedFree.pressed:
-		current_rail_logic.set_pass_at_h = 25 # Disable timed free
-	update_signal_time_free_ui()
-
-
-func update_signal_time_free_ui():
-	$SignalSettings/Label3.visible = $SignalSettings/EnableTimedFree.pressed and not $SignalSettings/BlockSignal.pressed
-	$SignalSettings/TimedFree.visible = $SignalSettings/EnableTimedFree.pressed and not $SignalSettings/BlockSignal.pressed
-	$SignalSettings/TimedFree.set_data([current_rail_logic.set_pass_at_h, current_rail_logic.set_pass_at_m, current_rail_logic.set_pass_at_s])
-
-
-func _on_TimedFree_time_set():
-	var time_data = $SignalSettings/TimedFree.get_data()
-	current_rail_logic.set_pass_at_h = time_data[0]
-	current_rail_logic.set_pass_at_m = time_data[1]
-	current_rail_logic.set_pass_at_s = time_data[2]
-
-
-func _on_SpeedLimitSignalSettings_value_changed(value):
-	current_rail_logic.speed = $SignalSettings/SpeedLimit.value
 
 
 func update_station_settings_ui():
 	$StationSettings/Name.text = current_rail_logic.name
-	$StationSettings/Length.value = current_rail_logic.stationLength
+	$StationSettings/Length.value = current_rail_logic.length
 	$StationSettings/AssignedSignal.text = current_rail_logic.assigned_signal
 	$StationSettings/PlatformSide.selected = current_rail_logic.platform_side
 	$StationSettings/EnablePersonSystem.pressed = current_rail_logic.personSystem
@@ -138,7 +103,7 @@ func _on_StationName_text_entered(new_text):
 
 
 func _on_Length_value_changed(value):
-	current_rail_logic.stationLength = $StationSettings/Length.value
+	current_rail_logic.length = $StationSettings/Length.value
 
 
 func _on_PlatformSide_item_selected(index):
@@ -178,56 +143,6 @@ func _on_WarnSpeedLimit_value_changed(value):
 	current_rail_logic.warn_speed = $WarnSpeedLimitSettings/SpeedLimit.value
 	current_rail_logic.set_to_rail()
 
-
-func update_contact_point_settings_ui():
-	$ContactPointSettings/AffectedSignal.text = current_rail_logic.affectedSignal
-	$ContactPointSettings/Disable.pressed = current_rail_logic.disabled
-	$ContactPointSettings/AffectTime.value = current_rail_logic.affectTime
-	$ContactPointSettings/NewSpeedLimit.value = current_rail_logic.newSpeed
-	$ContactPointSettings/NewStatus.value = current_rail_logic.newStatus
-	$ContactPointSettings/EnableForAllTrains.pressed = current_rail_logic.enable_for_all_trains
-	$ContactPointSettings/OnlySpecificTrain.text = current_rail_logic.bySpecificTrain
-
-	$ContactPointSettings/Label4.visible = not current_rail_logic.disabled
-	$ContactPointSettings/AffectTime.visible = not current_rail_logic.disabled
-	$ContactPointSettings/Label2.visible = not current_rail_logic.disabled
-	$ContactPointSettings/NewSpeedLimit.visible = not current_rail_logic.disabled
-	$ContactPointSettings/Label3.visible = not current_rail_logic.disabled
-	$ContactPointSettings/NewStatus.visible = not current_rail_logic.disabled
-	$ContactPointSettings/Label6.visible = not current_rail_logic.disabled
-	$ContactPointSettings/EnableForAllTrains.visible = not current_rail_logic.disabled
-	$ContactPointSettings/Label7.visible = not current_rail_logic.disabled and not current_rail_logic.enable_for_all_trains
-	$ContactPointSettings/OnlySpecificTrain.visible = not current_rail_logic.disabled and not current_rail_logic.enable_for_all_trains
-
-
-func _on_AffectedSignal_text_entered(new_text):
-	current_rail_logic.affectedSignal = $ContactPointSettings/AffectedSignal.text
-
-
-func _on_ContactPointDisable_pressed():
-	current_rail_logic.disabled = $ContactPointSettings/Disable.pressed
-	update_contact_point_settings_ui()
-
-
-func _on_ContactPointAffectTime_value_changed(value):
-	current_rail_logic.affectTime = $ContactPointSettings/AffectTime.value
-
-
-func _on_ContactPointNewSpeedLimit_value_changed(value):
-	current_rail_logic.newSpeed = $ContactPointSettings/NewSpeedLimit.value
-
-
-func _on_ContactPointNewStatus_value_changed(value):
-	current_rail_logic.newStatus = $ContactPointSettings/NewStatus.value
-
-
-func _on_ContactPointEnableForAllTrains_pressed():
-	current_rail_logic.enable_for_all_trains = $ContactPointSettings/EnableForAllTrains.pressed
-	update_contact_point_settings_ui()
-
-
-func _on_ContactPointOnlySpecificTrain_text_entered(new_text):
-	current_rail_logic.bySpecificTrain = $ContactPointSettings/OnlySpecificTrain.text
 
 func _on_ConnectedSignal_text_changed(new_text):
 	current_rail_logic.assigned_signal = $StationSettings/AssignedSignal.text

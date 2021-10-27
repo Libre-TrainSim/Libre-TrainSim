@@ -1,19 +1,23 @@
 extends Node
 
-var scenario: String = Root.currentScenario
+var scenario: String = Root.current_scenario
 var world: Node = find_parent("World")
 var step: int = 0
 var player: LTSPlayer
 var message_sent: bool = false
+
+const THE_BASICS: String = "res://Worlds/Tutorials/scenarios/The Basics.scenario"
+const THE_BASICS_MOBILE: String = "res://Worlds/Tutorials/scenarios/The Basics - Mobile Version.scenario"
+const ADVANCED_TUTORIAL: String = "res://Worlds/Tutorials/scenarios/Adcanced Train Driving.scenario"
 
 func _ready() -> void:
 	if Root.Editor:
 		queue_free()
 		return
 
-	if scenario == "The Basics" or scenario == "The Basics - Mobile Version":
+	if scenario == THE_BASICS or scenario == THE_BASICS_MOBILE:
 		Root.EasyMode = true
-	if scenario == "Advanced Train Driving":
+	if scenario == ADVANCED_TUTORIAL:
 		Root.EasyMode = false
 
 
@@ -23,13 +27,13 @@ func _process(delta: float) -> void:
 	if player == null:
 		player = world.get_node("Players/Player")
 	send_message(delta)
-	if scenario == "The Basics":
+	if scenario == THE_BASICS:
 		basics()
 		return
-	if scenario == "Advanced Train Driving":
+	if scenario == ADVANCED_TUTORIAL:
 		advanced()
 		return
-	if scenario == "The Basics - Mobile Version":
+	if scenario == THE_BASICS_MOBILE:
 		basics_mobile_version()
 		return
 	message_sent = true
@@ -55,7 +59,7 @@ func basics() -> void:
 		3:
 #			message = "Now we are able to drive.\nOur departure is at 12:00. Let's wait for the depart message in the bottom left corner."
 			message = TranslationServer.translate("TUTORIAL_0_2")
-			if player.currentStationName == "":
+			if not player.is_in_station:
 				next_step()
 		4:
 #			message = "Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."
@@ -65,7 +69,7 @@ func basics() -> void:
 		5:
 #			message = "Ahead you see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
 			message = TranslationServer.translate("TUTORIAL_0_4")
-			if Math.speedToKmH(player.speed) == 0 and not player.overrunRedSignal:
+			if Math.speedToKmH(player.speed) == 0:
 				world.get_node("Signals/Signal2").set_status(SignalStatus.GREEN)
 				next_step()
 		6:
@@ -86,12 +90,12 @@ func basics() -> void:
 		9:
 			# message: Hint: If you don't know further on at any time or you just want to enjoy the ride, press 'ctr' + 'a' to activate the autopilot.
 			message = TranslationServer.translate("TUTORIAL_0_11")
-			if player.speed == 0 and player.currentStationName == "Tutorialbach" and not player.wholeTrainNotInStation:
+			if player.speed == 0 and player.current_station_table_entry.station_name == "Tutorialbach" and not player.whole_train_in_station:
 				next_step()
 		10:
 #			message = "Great, you arrived securly!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
 			message = TranslationServer.translate("TUTORIAL_0_8")
-			if player.isInStation:
+			if player.is_in_station:
 				next_step()
 		11:
 #			message = "Thank you for playing! You can now exit the game with 'Esc'"
@@ -102,17 +106,21 @@ func advanced() -> void:
 	match step:
 		0:
 			Root.EasyMode = false
+			if player.get_node_or_null("SafetySystems/SifaModule") != null:
+				player.get_node_or_null("SafetySystems/SifaModule")._force_enabled(true)
 			message = TranslationServer.translate("TUTORIAL_1_0")
 			if player.engine:
 				next_step()
 		1:
 			message = TranslationServer.translate("TUTORIAL_1_6")
-			if player.currentStationName == "" and not (player.doorRight or player.doorLeft):
+			if player.current_station_node == null and not (player.doorRight or player.doorLeft):
 				next_step()
 		2:
 			message = TranslationServer.translate("TUTORIAL_1_1")
-			if player.sifa:
+			if player.get_node_or_null("SafetySystems/SifaModule") != null and player.get_node_or_null("SafetySystems/SifaModule").is_sifa_requesting_user_input():
 				next_step()
+			elif player.get_node_or_null("SafetySystems/SifaModule") == null:
+				step = 4
 		3:
 			message = TranslationServer.translate("TUTORIAL_1_2")
 			if player.distance_on_rail > 800:
@@ -123,7 +131,7 @@ func advanced() -> void:
 				next_step()
 		5:
 			message = TranslationServer.translate("TUTORIAL_1_3")
-			if player.isInStation:
+			if player.is_in_station:
 				next_step()
 		6:
 			message = TranslationServer.translate("TUTORIAL_1_4")
@@ -149,14 +157,14 @@ func basics_mobile_version() -> void:
 			message = TranslationServer.translate("TUTORIAL_4_2")
 			player.get_node("HUD/MobileHUD/Engine").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/Camera").modulate = Color(1, 0.5, 0, 1)
-			if player.currentStationName == "":
+			if player.current_station_node == null:
 				next_step()
 		3:
 #			message = "Great! To close the Doors, press 'o'.\n\nWhith 'i' you can open the left one,\nwith 'p' you open the right door."
 			message = TranslationServer.translate("TUTORIAL_4_3")
 			player.get_node("HUD/MobileHUD/Camera").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/DoorClose").modulate = Color(1, 0.5, 0, 1)
-			if  not (player.doorRight or player.doorLeft):
+			if not (player.doorRight or player.doorLeft):
 				next_step()
 		4:
 #			message = "Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."
@@ -171,7 +179,7 @@ func basics_mobile_version() -> void:
 			message = TranslationServer.translate("TUTORIAL_4_5")
 			player.get_node("HUD/MobileHUD/Up").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/Down").modulate = Color(1, 0.5, 0, 1)
-			if Math.speedToKmH(player.speed) == 0 and not player.overrunRedSignal:
+			if Math.speedToKmH(player.speed) == 0:
 				world.get_node("Signals/Signal2").set_status(SignalStatus.GREEN)
 				next_step()
 		6:
@@ -196,14 +204,14 @@ func basics_mobile_version() -> void:
 			# message: Hint: If you don't know further on at any time or you just want to enjoy the ride, press 'ctr' + 'a' to activate the autopilot.
 			message = TranslationServer.translate("TUTORIAL_4_9")
 			player.get_node("HUD/MobileHUD/Autopilot").modulate = Color(1, 0.5, 0, 1)
-			if player.speed == 0 and player.currentStationName == "Tutorialbach" and not player.wholeTrainNotInStation:
+			if player.speed == 0 and player.current_station_table_entry.station_name == "Tutorialbach" and not player.whole_train_in_station:
 				next_step()
 		10:
 #			message = "Great, you arrived securly!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
 			message = TranslationServer.translate("TUTORIAL_4_10")
 			player.get_node("HUD/MobileHUD/Autopilot").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/DoorLeft").modulate = Color(1, 0.5, 0, 1)
-			if player.isInStation:
+			if player.is_in_station:
 				next_step()
 		11:
 #			message = "Thank you for playing! You can now exit the game with 'Esc'"

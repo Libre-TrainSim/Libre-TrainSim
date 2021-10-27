@@ -19,20 +19,13 @@ func _get_type() -> String:
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
-		if get_parent().name == "Signals":
-			return
-		if get_parent().is_in_group("Rail"):
-			attached_rail = get_parent().name
-		var signals: Spatial = world.get_node("Signals")
-		get_parent().remove_child(self)
-		signals.add_child(self)
-		set_to_rail(true)
+	if Root.Editor:
+		add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
+		set_to_rail()
 
-	if not Engine.is_editor_hint():
+	if not Root.Editor or Root.scenario_editor:
 		$Timer.wait_time = affectTime # affectTime MUST be > 0!
-		$MeshInstance.queue_free()
+		$Mesh.queue_free()
 		set_to_rail()
 
 
@@ -49,24 +42,14 @@ func set_to_rail() -> void:
 			self.rotation_degrees.y += 180
 
 
-func set_scenario_data(d: Dictionary) -> void:
-	var a = self
-	var b = d
-	a.affectedSignal = b.affectedSignal
-	a.bySpecificTrain = b.bySpecificTrain
-	a.newStatus = b.newStatus
-	a.affectTime = b.affectTime
-	a.newSpeed = b.get("newSpeed", -1)
-
-func get_scenario_data() -> Dictionary:
-	var a = {}
-	var b = self
-	a.affectedSignal = b.affectedSignal
-	a.bySpecificTrain = b.bySpecificTrain
-	a.newStatus = b.newStatus
-	a.affectTime = b.affectTime
-	a.newSpeed = b.newSpeed
-	return a
+func set_data(d: Dictionary) -> void:
+	affectTime = d.affect_time
+	affectedSignal = d.affected_signal
+	enable_for_all_trains = d.enable_for_all_trains
+	disabled = not d.enabled
+	newSpeed = d.new_speed_limit
+	newStatus = d.new_status
+	bySpecificTrain = d.specific_train
 
 func reset() -> void:
 	affectedSignal = ""

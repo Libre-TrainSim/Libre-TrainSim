@@ -96,25 +96,16 @@ func update_nextTable() -> void:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = "-"
 
 	## Update Next Station
-	var stations: Dictionary = player.stations
-	if stations.passed.size() == 0 or (player.is_last_station and player.isInStation):
+	if player.station_table.size() == 0 or (player.current_station_table_entry.stop_type == StopType.END and player.is_in_station):
 		$IngameInformation/Next/GridContainer/Arrival.text = "-"
 		$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 	else:
-		if player.isInStation:
-			for i in range(0, stations.passed.size()):
-				if stations.passed[i]: continue
-				$IngameInformation/Next/GridContainer/Arrival.text = Math.time2String(player.stations["departureTime"][i])
-				$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
-
-				break
+		if player.is_in_station:
+			$IngameInformation/Next/GridContainer/Arrival.text = Math.time_seconds2String(player.current_station_table_entry.departure_time)
+			$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 		else:
-			for i in range (0, stations.passed.size()):
-				if stations.passed[i] or stations.nodeName[i] != player.nextStation: continue
-				$IngameInformation/Next/GridContainer/Arrival.text = Math.time2String(player.stations["arrivalTime"][i])
-				$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance2String(player.distanceToNextStation)
-
-				break
+			$IngameInformation/Next/GridContainer/Arrival.text = Math.time_seconds2String(player.current_station_table_entry.arrival_time)
+			$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance2String(player.distanceToNextStation)
 
 
 func _on_TextBox_closed() -> void:

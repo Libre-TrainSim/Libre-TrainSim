@@ -66,4 +66,18 @@ func _on_Later_pressed():
 
 
 func _on_FrontCreate_pressed():
-	$EditorConfiguration.show()
+	$Buttons.hide()
+	$CreateMenu.show()
+
+
+func _on_TrackEditor_pressed():
+	$TrackEditorSelection.show()
+
+
+func _on_CreateMenu_Back_pressed():
+	$CreateMenu.hide()
+	$Buttons.show()
+
+
+func _on_ScenarioEditor_pressed():
+	$ScenarioEditorSelection.show()

@@ -4,10 +4,19 @@ extends Control
 enum MapStatus {
 	CLOSED = 0,
 	OVERLAY = 1,
-	FULL = 2
+	FULL = 2,
 }
 var map_status: int = MapStatus.CLOSED
 
+func init_for_scenario_editor(world_node : Node):
+	set_process_unhandled_key_input(false)
+	$ViewportContainer/RailMap.train_world = world_node
+	$ViewportContainer.anchor_right = $FullMap.anchor_right
+	$ViewportContainer/RailMap.open_full_map()
+	show()
+	$FullMap.show()
+	$OverlayMap.hide()
+	map_status = MapStatus.FULL
 
 func _unhandled_key_input(_event):
 	if Input.is_action_just_pressed("map_open"):
@@ -28,4 +37,3 @@ func _unhandled_key_input(_event):
 				show()
 				$FullMap.show()
 				$OverlayMap.hide()
-

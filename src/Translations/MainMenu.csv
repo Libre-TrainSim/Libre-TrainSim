@@ -76,3 +76,12 @@ MENU_OPEN_ADDONS,Show Addon Folder,Addonordner anzeigen,,,,,Mostrar la carpeta d
 ,,,,,,,
 SAVE_AND_EXIT,Save and exit,Speichern und beenden,,,,,Guardar y salir
 EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,,,,,Salir sin guardar
+SAVE,Save,Speichern,,,,,
+,,,,,,,
+TRACK_EDITOR,Track Editor,Strecken-Editor,,,,,
+SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,,,,,
+SELECT,Select,Auswählen,,,,,
+PLAY,Play,Spielen,,,,,
+CREATE,Create,Erstellen,,,,,
+DUPLICATE,Duplicate,Duplizieren,,,,,
+EDIT,Edit,Bearbeiten,,,,,

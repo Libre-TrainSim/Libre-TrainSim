@@ -231,13 +231,17 @@ func _finish_chunk_loading():
 
 # called deferred from Thread
 func _add_node_to_scene_tree(parent: String, instance: Spatial):
-	assert(world.get_node(parent).get_node_or_null(instance.name) == null)
+#	assert(world.get_node(parent).get_node_or_null(instance.name) == null)
+	if world.get_node(parent).get_node_or_null(instance.name) != null:
+		return
 
 	world.get_node(parent).add_child(instance)
 	instance.owner = world
 	instance.translation += world_origin
 	if instance.has_method("update"):
 		instance.update()
+	if parent == "Buildings":
+		instance.add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 
 
 func append_deduplicated(A: Array, B: Array):

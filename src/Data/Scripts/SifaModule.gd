@@ -74,3 +74,8 @@ func _on_SifaTimer_timeout() -> void:
 
 	stage = 3
 	enable_emergency_brakes()
+
+
+# Used for tutorial script
+func is_sifa_requesting_user_input() -> bool:
+	return stage > 0

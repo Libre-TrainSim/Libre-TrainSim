@@ -92,6 +92,10 @@ func time2String(time: Array) -> String:
 		second = "0" + second
 	return (hour + ":" + minute +":" + second)
 
+func time_seconds2String(time_seconds: int) -> String:
+	var time = seconds_to_time(time_seconds)
+	return time2String(time)
+
 
 func distance2String(distance: float) -> String:
 	if distance > 10000:
@@ -103,7 +107,7 @@ func distance2String(distance: float) -> String:
 	else:
 		return String(int(int(distance-10)/10.0)*10) + " m"
 
-func time_to_seconds(time : Array):
+func time_to_seconds(time: Array):
 	return time[2] + time[1] * 60 + time[0] * 3600
 
 func seconds_to_time(seconds : int):
@@ -113,4 +117,4 @@ func seconds_to_time(seconds : int):
 	time[1] = int(seconds/60)
 	seconds -= time[1] * 60
 	time[2] = seconds
-	return seconds
+	return time

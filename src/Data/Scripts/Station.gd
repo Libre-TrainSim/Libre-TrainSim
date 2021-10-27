@@ -3,7 +3,7 @@ extends RailLogic
 
 var personsNode: Node
 
-export (int) var stationLength: int
+export (int) var length: int # Length of platform
 
 
 export (PlatformSide.TypeHint) var platform_side: int = PlatformSide.NONE
@@ -16,7 +16,7 @@ export (String) var attached_rail: String
 export (float) var on_rail_position: float
 export var forward: bool = true
 
-export (String) var assigned_signal = ""
+export var assigned_signal: String = ""
 
 var waitingPersonCount: int = 5
 var attachedPersons: Array = []
@@ -28,19 +28,14 @@ func _get_type() -> String:
 
 var rail: Spatial
 func _ready():
-	if Engine.is_editor_hint() or Root.Editor:
-		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
-		if get_parent().name == "Signals":
-			return
-		if get_parent().is_in_group("Rail"):
-			attached_rail = get_parent().name
-		var signals = world.get_node("Signals")
-		get_parent().remove_child(self)
-		signals.add_child(self)
+	if Root.Editor:
+		add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 		set_to_rail()
-	if not Engine.is_editor_hint() and not Root.Editor:
-		$MeshInstance.queue_free()
+		update_operation_mode_of_assigned_signal()
+	if not Root.Editor:
+		$Mesh.queue_free()
 		set_to_rail()
+		update_operation_mode_of_assigned_signal()
 		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
 
 
@@ -63,8 +58,8 @@ func set_to_rail() -> void:
 		self.transform = rail.get_global_transform_at_rail_distance(on_rail_position)
 		if not forward:
 			rotation_degrees.y += 180
-	else:
-		queue_free()
+#	else:
+#		queue_free()
 
 func spawnPersonsAtBeginning() -> void:
 	if not personSystem:
@@ -105,13 +100,13 @@ func spawnRandomPerson() -> void:
 
 func getRandomTransformAtPlatform() -> Transform:
 	if forward:
-		var randRailDistance = int(rand_range(on_rail_position, on_rail_position+stationLength))
+		var randRailDistance = int(rand_range(on_rail_position, on_rail_position+length))
 		if platform_side == PlatformSide.LEFT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)),  rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 	else:
-		var randRailDistance = int(rand_range(on_rail_position, on_rail_position-stationLength))
+		var randRailDistance = int(rand_range(on_rail_position, on_rail_position-length))
 		if platform_side == PlatformSide.LEFT:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
@@ -146,3 +141,24 @@ func registerPerson(personNode: Spatial) -> void:
 	personsNode.add_child(personNode)
 	personNode.owner = world
 	personNode.destinationPos.append(getRandomTransformAtPlatform().origin)
+
+
+func update_operation_mode_of_assigned_signal():
+	var signal_node = world.get_signal(assigned_signal)
+	if signal_node == null:
+		return
+	signal_node.operation_mode = SignalOperationMode.STATION
+
+
+func get_perfect_halt_distance_on_rail(train_length: int):
+	if forward:
+		return on_rail_position + (length - (length-train_length)/2.0)
+	else:
+		return on_rail_position - (length - (length-train_length)/2.0)
+
+
+func set_data(d: Dictionary) -> void:
+	if not d.overwrite:
+		return
+	assigned_signal = d.assigned_signal
+	personSystem = d.enable_person_system

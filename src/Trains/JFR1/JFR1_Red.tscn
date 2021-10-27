@@ -703,7 +703,6 @@ friction = 0.005
 length = 80.0
 speedLimit = 160.0
 control_type = 1
-doorsClosingTime = 4
 description = "JFR1_DESCRIPTION_RED"
 author = "Jean"
 releaseDate = "11 2020"

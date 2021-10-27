@@ -175,3 +175,42 @@ func append_content_to_global_repo(content: ModContentDefinition) -> void:
 	repo.texture_folders.append_array(content.texture_folders)
 
 	loaded_mods.append(content)
+
+
+func get_editor_tracks():
+	var tracks := {}
+	var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
+	var track_names := []
+	var files := []
+	Root.crawl_directory(files, editor_directory, ["tres"], 2)
+	for file in files:
+		if file.get_file() != "content.tres":
+			continue
+		var content = load(file) as ModContentDefinition
+		if !content:
+			continue
+		for world in content.worlds:
+			var mod_path: String = file.get_base_dir()
+			track_names.push_back(world.replace("res://Mods", \
+					mod_path.get_base_dir()).get_basename())
+			tracks[track_names.back()] = [content, mod_path]
+	return tracks
+
+
+
+
+func get_scenarios_for_track(track: String) -> Array:
+	var scenario_dir: String = track.get_base_dir().plus_file("scenarios")
+	var result = []
+	Root.crawl_directory(result, scenario_dir, ["scenario"], 2)
+	return result
+
+
+
+# If train_name is part of the path, this function returns the whole path
+func find_train_path(train_name: String) -> String:
+	var train_path: String = ""
+	for available_train_path in ContentLoader.repo.trains:
+		if available_train_path.find(train_name) != -1:
+			return available_train_path
+	return ""

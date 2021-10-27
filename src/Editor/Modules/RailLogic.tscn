@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Editor/Modules/RailLogic.gd" type="Script" id=1]
-[ext_resource path="res://Editor/Docks/Configuration/TimeField.tscn" type="PackedScene" id=2]
 
 [node name="RailLogic" type="VBoxContainer"]
 anchor_right = 1.0
@@ -56,110 +55,40 @@ margin_bottom = 60.0
 [node name="SignalSettings" type="GridContainer" parent="."]
 margin_top = 64.0
 margin_right = 800.0
-margin_bottom = 234.0
+margin_bottom = 88.0
 columns = 2
 
-[node name="Label5" type="Label" parent="SignalSettings"]
-margin_top = 5.0
-margin_right = 174.0
-margin_bottom = 19.0
-text = "Speed Limit"
-
-[node name="SpeedLimit" type="SpinBox" parent="SignalSettings"]
-margin_left = 178.0
-margin_right = 800.0
-margin_bottom = 24.0
-min_value = -1.0
-max_value = 1000.0
-value = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Label2" type="Label" parent="SignalSettings"]
-margin_top = 33.0
-margin_right = 174.0
-margin_bottom = 47.0
+margin_top = 5.0
+margin_right = 106.0
+margin_bottom = 19.0
 text = "Visible Instance:"
 
 [node name="VisibleInstance" type="HBoxContainer" parent="SignalSettings"]
-margin_left = 178.0
-margin_top = 28.0
+margin_left = 110.0
 margin_right = 800.0
-margin_bottom = 52.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="LineEdit" type="LineEdit" parent="SignalSettings/VisibleInstance"]
-margin_right = 580.0
+margin_right = 648.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="PickVisibleInstance" type="Button" parent="SignalSettings/VisibleInstance"]
-margin_left = 584.0
-margin_right = 622.0
+margin_left = 652.0
+margin_right = 690.0
 margin_bottom = 24.0
 text = "Pick"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="SignalSettings"]
-margin_top = 61.0
-margin_right = 174.0
-margin_bottom = 75.0
-text = "Block Signal:"
-
-[node name="BlockSignal" type="CheckBox" parent="SignalSettings"]
-margin_left = 178.0
-margin_top = 56.0
-margin_right = 800.0
-margin_bottom = 80.0
-
-[node name="LabelStatus" type="Label" parent="SignalSettings"]
-margin_top = 89.0
-margin_right = 174.0
-margin_bottom = 103.0
-text = "Status:"
-
-[node name="Status" type="SpinBox" parent="SignalSettings"]
-margin_left = 178.0
-margin_top = 84.0
-margin_right = 800.0
-margin_bottom = 108.0
-max_value = 1.0
-
-[node name="Label4" type="Label" parent="SignalSettings"]
-margin_top = 117.0
-margin_right = 174.0
-margin_bottom = 131.0
-text = "Enable timed free of signal:"
-
-[node name="EnableTimedFree" type="CheckBox" parent="SignalSettings"]
-margin_left = 178.0
-margin_top = 112.0
-margin_right = 800.0
-margin_bottom = 136.0
-
-[node name="Label3" type="Label" parent="SignalSettings"]
-margin_top = 148.0
-margin_right = 174.0
-margin_bottom = 162.0
-text = "Set Status = 1 at:"
-
-[node name="TimedFree" parent="SignalSettings" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 178.0
-margin_top = 140.0
-margin_right = 800.0
-margin_bottom = 170.0
-rect_min_size = Vector2( 0, 30 )
-
 [node name="StationSettings" type="GridContainer" parent="."]
-margin_top = 238.0
+margin_top = 92.0
 margin_right = 800.0
-margin_bottom = 454.0
+margin_bottom = 308.0
 columns = 2
 
 [node name="Label" type="Label" parent="StationSettings"]
@@ -185,6 +114,9 @@ margin_left = 164.0
 margin_top = 28.0
 margin_right = 800.0
 margin_bottom = 52.0
+max_value = 1000.0
+step = 0.1
+value = 100.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -280,9 +212,9 @@ __meta__ = {
 }
 
 [node name="SpeedLimitSettings" type="GridContainer" parent="."]
-margin_top = 458.0
+margin_top = 312.0
 margin_right = 800.0
-margin_bottom = 482.0
+margin_bottom = 336.0
 columns = 2
 
 [node name="Label" type="Label" parent="SpeedLimitSettings"]
@@ -304,9 +236,9 @@ __meta__ = {
 }
 
 [node name="WarnSpeedLimitSettings" type="GridContainer" parent="."]
-margin_top = 486.0
+margin_top = 340.0
 margin_right = 800.0
-margin_bottom = 510.0
+margin_bottom = 364.0
 columns = 2
 
 [node name="Label" type="Label" parent="WarnSpeedLimitSettings"]
@@ -327,122 +259,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ContactPointSettings" type="GridContainer" parent="."]
-margin_top = 514.0
-margin_right = 800.0
-margin_bottom = 706.0
-columns = 2
-
-[node name="Label" type="Label" parent="ContactPointSettings"]
-margin_top = 5.0
-margin_right = 181.0
-margin_bottom = 19.0
-text = "Affected Signal:"
-
-[node name="AffectedSignal" type="LineEdit" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_right = 800.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label5" type="Label" parent="ContactPointSettings"]
-margin_top = 33.0
-margin_right = 181.0
-margin_bottom = 47.0
-text = "Disable"
-
-[node name="Disable" type="CheckBox" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_top = 28.0
-margin_right = 800.0
-margin_bottom = 52.0
-
-[node name="Label4" type="Label" parent="ContactPointSettings"]
-margin_top = 61.0
-margin_right = 181.0
-margin_bottom = 75.0
-text = "Affect Time:"
-
-[node name="AffectTime" type="SpinBox" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_top = 56.0
-margin_right = 800.0
-margin_bottom = 80.0
-max_value = 1000.0
-step = 0.1
-allow_greater = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="ContactPointSettings"]
-margin_top = 89.0
-margin_right = 181.0
-margin_bottom = 103.0
-text = "New Speed Limit:"
-
-[node name="NewSpeedLimit" type="SpinBox" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_top = 84.0
-margin_right = 800.0
-margin_bottom = 108.0
-size_flags_horizontal = 3
-min_value = -1.0
-max_value = 1000.0
-value = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label3" type="Label" parent="ContactPointSettings"]
-margin_top = 117.0
-margin_right = 181.0
-margin_bottom = 131.0
-text = "New Status:"
-
-[node name="NewStatus" type="SpinBox" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_top = 112.0
-margin_right = 800.0
-margin_bottom = 136.0
-max_value = 1.0
-
-[node name="Label6" type="Label" parent="ContactPointSettings"]
-margin_top = 145.0
-margin_right = 181.0
-margin_bottom = 159.0
-text = "Enable for all trains:"
-
-[node name="EnableForAllTrains" type="CheckBox" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_top = 140.0
-margin_right = 800.0
-margin_bottom = 164.0
-
-[node name="Label7" type="Label" parent="ContactPointSettings"]
-margin_top = 173.0
-margin_right = 181.0
-margin_bottom = 187.0
-text = "Enable just for specific train:"
-
-[node name="OnlySpecificTrain" type="LineEdit" parent="ContactPointSettings"]
-margin_left = 185.0
-margin_top = 168.0
-margin_right = 800.0
-margin_bottom = 192.0
-
 [connection signal="value_changed" from="GeneralSettings/Distance" to="." method="_on_Distance_value_changed"]
 [connection signal="pressed" from="GeneralSettings/Forwad" to="." method="_on_Forwad_pressed"]
-[connection signal="value_changed" from="SignalSettings/SpeedLimit" to="." method="_on_SpeedLimit_value_changed"]
-[connection signal="value_changed" from="SignalSettings/SpeedLimit" to="." method="_on_SpeedLimitSignalSettings_value_changed"]
 [connection signal="pressed" from="SignalSettings/VisibleInstance/PickVisibleInstance" to="." method="_on_PickVisibleInstance_pressed"]
-[connection signal="pressed" from="SignalSettings/BlockSignal" to="." method="_on_Block_Signal_pressed"]
-[connection signal="value_changed" from="SignalSettings/Status" to="." method="_on_Status_value_changed"]
-[connection signal="pressed" from="SignalSettings/EnableTimedFree" to="." method="_on_EnableTimedFree_pressed"]
-[connection signal="time_set" from="SignalSettings/TimedFree" to="." method="_on_TimedFree_time_set"]
 [connection signal="text_entered" from="StationSettings/Name" to="." method="_on_StationName_text_entered"]
 [connection signal="value_changed" from="StationSettings/Length" to="." method="_on_Length_value_changed"]
 [connection signal="item_selected" from="StationSettings/PlatformSide" to="." method="_on_PlatformSide_item_selected"]
@@ -453,10 +272,3 @@ margin_bottom = 192.0
 [connection signal="value_changed" from="StationSettings/PlatformEnd" to="." method="_on_PlatformEnd_value_changed"]
 [connection signal="value_changed" from="SpeedLimitSettings/SpeedLimit" to="." method="_on_SpeedLimit_SpeedLimit_value_changed"]
 [connection signal="value_changed" from="WarnSpeedLimitSettings/SpeedLimit" to="." method="_on_WarnSpeedLimit_value_changed"]
-[connection signal="text_entered" from="ContactPointSettings/AffectedSignal" to="." method="_on_AffectedSignal_text_entered"]
-[connection signal="pressed" from="ContactPointSettings/Disable" to="." method="_on_ContactPointDisable_pressed"]
-[connection signal="value_changed" from="ContactPointSettings/AffectTime" to="." method="_on_ContactPointAffectTime_value_changed"]
-[connection signal="value_changed" from="ContactPointSettings/NewSpeedLimit" to="." method="_on_ContactPointNewSpeedLimit_value_changed"]
-[connection signal="value_changed" from="ContactPointSettings/NewStatus" to="." method="_on_ContactPointNewStatus_value_changed"]
-[connection signal="pressed" from="ContactPointSettings/EnableForAllTrains" to="." method="_on_ContactPointEnableForAllTrains_pressed"]
-[connection signal="text_entered" from="ContactPointSettings/OnlySpecificTrain" to="." method="_on_ContactPointOnlySpecificTrain_text_entered"]

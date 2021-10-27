@@ -5,6 +5,7 @@ export (String) var save_path = ""
 
 
 func set_save_path(save_path : String):
+	print("Save Path set.")
 	self.save_path = save_path
 	reload()
 
@@ -15,7 +16,9 @@ func save_value(key : String, value):
 
 
 func get_value(key,  default_value = null):
+
 	if _cache_main.has(key):
+
 		return _cache_main[key]
 	if _config == null:
 		print_debug("Save path not configured correctly. Returning default_value.")

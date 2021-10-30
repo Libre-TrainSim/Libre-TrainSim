@@ -87,9 +87,10 @@ func _process(delta) -> void:
 	### Pitching:
 	$Acceleration2.pitch_scale = 1.0 + (Math.speedToKmH(player.speed)-10.0)/300.0
 
-	$Idle.stream_paused = not wagon.visible
-	$Acceleration1.stream_paused = not wagon.visible
-	$Acceleration2.stream_paused = not wagon.visible
+	$Idle.stream_paused = not wagon.visible or get_tree().paused
+	$Acceleration1.stream_paused = not wagon.visible or get_tree().paused
+	$Acceleration2.stream_paused = not wagon.visible or get_tree().paused
+	$AccelerationTransition.stream_paused = not wagon.visible or get_tree().paused
 
 #
 #

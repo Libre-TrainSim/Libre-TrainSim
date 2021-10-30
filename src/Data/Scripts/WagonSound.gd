@@ -43,11 +43,11 @@ func _process(delta: float) -> void:
 			sollBreakSound = 10
 	$BrakeSound.unit_db = Root.clampViaTime(sollBreakSound, $BrakeSound.unit_db, delta)
 
-	$DriveSound.stream_paused = not wagon.visible
-	$CurveSound.stream_paused = not wagon.visible
-	$SwitchSound.stream_paused = not wagon.visible
-	$SwitchSound2.stream_paused = not wagon.visible
-	$BrakeSound.stream_paused = not wagon.visible
+	$DriveSound.stream_paused = not wagon.visible or get_tree().paused
+	$CurveSound.stream_paused = not wagon.visible or get_tree().paused
+	$SwitchSound.stream_paused = not wagon.visible or get_tree().paused
+	$SwitchSound2.stream_paused = not wagon.visible or get_tree().paused
+	$BrakeSound.stream_paused = not wagon.visible or get_tree().paused
 
 	checkAndPlaySwitchSound()
 

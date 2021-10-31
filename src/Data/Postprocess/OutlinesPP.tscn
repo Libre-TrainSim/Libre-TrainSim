@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Data/Postprocess/MaximumShader.gdshader" type="Shader" id=1]
+[ext_resource path="res://Data/Postprocess/LaplaceEdgeDetect.gdshader" type="Shader" id=2]
+[ext_resource path="res://Data/Postprocess/ShaderPP.gd" type="Script" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/highlight_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+
+[node name="OutlinesPP" type="Node"]
+script = ExtResource( 3 )
+
+[node name="EdgeDetectionPP" type="ViewportContainer" parent="."]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="EdgeDetectionPP"]
+size = Vector2( 800, 600 )
+transparent_bg = true
+handle_input_locally = false
+keep_3d_linear = true
+debug_draw = 1
+render_target_update_mode = 3
+
+[node name="MaximumFilterPP" type="ViewportContainer" parent="EdgeDetectionPP/Viewport"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="EdgeDetectionPP/Viewport/MaximumFilterPP"]
+size = Vector2( 800, 600 )
+transparent_bg = true
+handle_input_locally = false
+keep_3d_linear = true
+debug_draw = 1
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="EdgeDetectionPP/Viewport/MaximumFilterPP/Viewport"]
+cull_mask = 2
+far = 1000.0

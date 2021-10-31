@@ -15,26 +15,10 @@ func _ready() -> void:
 	save_world(false)  # yes, really, gras sometimes breaks if we don't *sigh*
 
 
+
 var bouncing_timer: float = 0
 var one_second_timer: float = 0
-func _process(delta: float) -> void:
-	## Bouncing Effect at selected object
-	if is_instance_valid(selected_object):
-		bouncing_timer += delta
-		if selected_object_type == "Building":
-			var bounce_factor: float = 1 + 0.02 * sin(bouncing_timer*5.0) + 0.02
-			selected_object.scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
-		if selected_object_type == "Rail":
-			var bounce_factor: float = 1 + 0.2 * sin(bouncing_timer*5.0) + 0.2
-			selected_object.get_node("Ending").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
-			selected_object.get_node("Mid").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
-			selected_object.get_node("Beginning").scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
-		if selected_object_type == "Signal":
-			var bounce_factor: float = 1 + 0.1 * sin(bouncing_timer*5.0)
-			selected_object.scale = Vector3(bounce_factor, bounce_factor, bounce_factor)
-	else:
-		clear_selected_object()
-
+func _process(delta):
 	one_second_timer += delta
 	if one_second_timer > 1:
 		one_second_timer = 0
@@ -251,6 +235,10 @@ func select_object_under_mouse() -> void:
 func clear_selected_object() -> void:
 	# Reset scale of current object because of editor "bouncing"
 	if is_instance_valid(selected_object):
+		var vis = get_children_of_type_recursive(selected_object, VisualInstance)
+		for vi in vis:
+			vi.set_layer_mask_bit(1, false)
+
 		if selected_object_type == "Building":
 			selected_object.scale = Vector3(1,1,1)
 			selected_object.get_node("SelectCollider").show()
@@ -380,6 +368,10 @@ func get_rail(name: String) -> Node:
 
 func set_selected_object(object: Node) -> void:
 	clear_selected_object()
+
+	var vis = get_children_of_type_recursive(object, VisualInstance)
+	for vi in vis:
+		vi.set_layer_mask_bit(1, true)
 
 	selected_object = object
 	$EditorHUD.set_current_object_name(selected_object.name)
@@ -694,3 +686,19 @@ func get_imported_cache_file_path_of_import_file(file_path: String) -> Array:
 		return_values.append(value)
 	return return_values
 
+
+func get_children_of_type_recursive(node: Node, type) -> Array:
+	var children = []
+	var stack = [node]
+
+	if node is type:
+		children.append(node)
+
+	while not stack.empty():
+		var parent = stack.pop_front()
+		for child in parent.get_children():
+			if child is type:
+				children.append(child)
+			stack.append(child)
+
+	return children

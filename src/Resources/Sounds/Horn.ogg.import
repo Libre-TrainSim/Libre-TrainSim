@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Horn.ogg-f665c28c3e5467f6882df66804055389.oggstr"
+
+[deps]
+
+source_file="res://Resources/Sounds/Horn.ogg"
+dest_files=[ "res://.import/Horn.ogg-f665c28c3e5467f6882df66804055389.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

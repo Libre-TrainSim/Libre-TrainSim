@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/TunnelRound1.obj-430b7393a1d8ea8340854fa8c9b43621.mesh"
+
+[deps]
+
+files=[ "res://.import/TunnelRound1.obj-430b7393a1d8ea8340854fa8c9b43621.mesh" ]
+
+source_file="res://Resources/Objects/TunnelRound1.obj"
+dest_files=[ "res://.import/TunnelRound1.obj-430b7393a1d8ea8340854fa8c9b43621.mesh", "res://.import/TunnelRound1.obj-430b7393a1d8ea8340854fa8c9b43621.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

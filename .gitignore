@@ -1,11 +1,7 @@
 src/Worlds/*
-!src/Worlds/Tutorial/
 !src/Worlds/Tutorials/
+!src/Worlds/Signal-Tutorial/
 !src/Worlds/German-Safety-Tutorials/
-
-src/Resources/*
-!src/Resources/Tutorials
-!src/Resources/Basic
 
 src/Trains/*
 !src/Trains/JFR1/
@@ -13,6 +9,8 @@ src/Trains/*
 src/.import/
 *.csv.import
 *.translation
+
+src/Mods/
 
 src/android/*
 

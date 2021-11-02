@@ -1,0 +1,36 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path.s3tc="res://.import/FormHpSignal_metallic.png-a1b9449d180c9601daf8c6b0dd6a9611.s3tc.stex"
+path.etc2="res://.import/FormHpSignal_metallic.png-a1b9449d180c9601daf8c6b0dd6a9611.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://Resources/SignalTypes/Hp/Form/FormHpSignal_metallic.png"
+dest_files=[ "res://.import/FormHpSignal_metallic.png-a1b9449d180c9601daf8c6b0dd6a9611.s3tc.stex", "res://.import/FormHpSignal_metallic.png-a1b9449d180c9601daf8c6b0dd6a9611.etc2.stex" ]
+
+[params]
+
+compress/mode=2
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=true
+flags/filter=true
+flags/mipmaps=true
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

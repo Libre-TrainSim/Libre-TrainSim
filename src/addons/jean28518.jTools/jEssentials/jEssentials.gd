@@ -84,13 +84,14 @@ func does_path_exist(path : String):
 	return dir.dir_exists(path) or dir.file_exists(path)
 
 
-func crawl_directory_for(directory_path : String,file_extension : String) -> Array:
-	var dir = Directory.new()
-	var found_files = {"Array" : []}
+func crawl_directory_for(directory_path: String, file_extension: String) -> Array:
+	var dir := Directory.new()
+	var found_files := []
 	_crawl_directory_for_helper(directory_path, found_files, file_extension)
-	return found_files["Array"]
+	return found_files
 
-func get_subfolders_of(directory_path : String):
+
+func get_subfolders_of(directory_path: String):
 	var dir = Directory.new()
 	if dir.open(directory_path) != OK: return
 	dir.list_dir_begin()
@@ -134,14 +135,18 @@ func _handle_delayed_calls(delta):
 		i += 1
 
 
-func _find_files_recursively_helper(directory_path,found_files,file_extension):
-	var dir = Directory.new()
-	if dir.open(directory_path) != OK: return
+func _find_files_recursively_helper(directory_path, found_files, file_extension):
+	var dir := Directory.new()
+	if dir.open(directory_path) != OK:
+		return
 	dir.list_dir_begin()
+
 	while(true):
 		var file = dir.get_next()
-		if file == "": break
-		if file.begins_with("."): continue
+		if file == "":
+			break
+		if file.begins_with("."):
+			continue
 		if dir.current_is_dir():
 			if directory_path.ends_with("/"):
 				_find_files_recursively_helper(directory_path+file, found_files, file_extension)
@@ -178,7 +183,7 @@ func _copy_folder_recursively_helper(from, to):
 	dir.list_dir_end()
 
 
-func _crawl_directory_for_helper(directory_path : String, found_files : Dictionary, file_extension : String):
+func _crawl_directory_for_helper(directory_path: String, found_files: Array, file_extension: String):
 	var dir = Directory.new()
 	if dir.open(directory_path) != OK:
 		return
@@ -199,7 +204,7 @@ func _crawl_directory_for_helper(directory_path : String, found_files : Dictiona
 					export_string = directory_path + file
 				else:
 					export_string = directory_path + "/" + file
-				found_files["Array"].append(export_string)
+				found_files.append(export_string)
 	dir.list_dir_end()
 
 

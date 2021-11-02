@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/EngineIdle.ogg-c52a79b45ea1cb5705be3cbd5703a395.oggstr"
+
+[deps]
+
+source_file="res://Resources/Sounds/EngineIdle.ogg"
+dest_files=[ "res://.import/EngineIdle.ogg-c52a79b45ea1cb5705be3cbd5703a395.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Curve.ogg-16040919189e815f54bdf094583c73dd.oggstr"
+
+[deps]
+
+source_file="res://Resources/Sounds/Curve.ogg"
+dest_files=[ "res://.import/Curve.ogg-16040919189e815f54bdf094583c73dd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,100 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Data/Fonts/FontMenu.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" type="Texture" id=2]
+[ext_resource path="res://Data/Screens/ScreenTimeTable/screen_time_table.gd" type="Script" id=3]
+
+[node name="ScreenRight" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="CurrentStation" type="ColorRect" parent="."]
+visible = false
+modulate = Color( 0, 0.356863, 0.482353, 1 )
+margin_left = -56.6533
+margin_top = 100.173
+margin_right = 1245.35
+margin_bottom = 194.173
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Table" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1005.0
+margin_bottom = 800.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arrival" type="VBoxContainer" parent="Table"]
+margin_right = 203.0
+margin_bottom = 800.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Table/Arrival"]
+margin_right = 203.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 1 )
+text = "ARRIVAL:"
+align = 1
+
+[node name="Label2" type="Label" parent="Table/Arrival"]
+margin_top = 94.0
+margin_right = 203.0
+margin_bottom = 184.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
+
+[node name="Departure" type="VBoxContainer" parent="Table"]
+margin_left = 207.0
+margin_right = 478.0
+margin_bottom = 800.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Table/Departure"]
+margin_right = 271.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 1 )
+text = "DEPARTURE:"
+align = 1
+
+[node name="Label2" type="Label" parent="Table/Departure"]
+margin_top = 94.0
+margin_right = 271.0
+margin_bottom = 184.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
+
+[node name="Station" type="VBoxContainer" parent="Table"]
+margin_left = 482.0
+margin_right = 1005.0
+margin_bottom = 800.0
+rect_clip_content = true
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Table/Station"]
+margin_right = 523.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 1 )
+text = "STATION:"
+align = 1
+
+[node name="Label2" type="Label" parent="Table/Station"]
+margin_top = 94.0
+margin_right = 523.0
+margin_bottom = 184.0
+custom_fonts/font = ExtResource( 1 )
+align = 1

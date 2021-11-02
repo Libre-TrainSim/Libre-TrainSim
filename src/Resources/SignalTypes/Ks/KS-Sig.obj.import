@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh"
+
+[deps]
+
+files=[ "res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh" ]
+
+source_file="res://Resources/SignalTypes/Ks/KS-Sig.obj"
+dest_files=[ "res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh", "res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

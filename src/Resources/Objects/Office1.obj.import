@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Office1.obj-b6f6d3d48fce88de676c6b128ba361ee.mesh"
+
+[deps]
+
+files=[ "res://.import/Office1.obj-b6f6d3d48fce88de676c6b128ba361ee.mesh" ]
+
+source_file="res://Resources/Objects/Office1.obj"
+dest_files=[ "res://.import/Office1.obj-b6f6d3d48fce88de676c6b128ba361ee.mesh", "res://.import/Office1.obj-b6f6d3d48fce88de676c6b128ba361ee.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

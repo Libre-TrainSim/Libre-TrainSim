@@ -1,0 +1,15 @@
+[gd_resource type="DynamicFont" load_steps=4 format=2]
+
+[ext_resource path="res://Data/Fonts/NotoSansJP-Regular.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Data/Fonts/Oswald-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Data/Fonts/AutoDynamicFont.gd" type="Script" id=3]
+
+[resource]
+size = 30
+use_filter = true
+font_data = ExtResource( 2 )
+fallback/0 = ExtResource( 1 )
+script = ExtResource( 3 )
+desktop_size = 30
+mobile_size = 60
+debug_test_size = false

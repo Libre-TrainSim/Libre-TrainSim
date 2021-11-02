@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Platform-1_double.obj-12df6b61992bd3736c8b7797d221e314.mesh"
+
+[deps]
+
+files=[ "res://.import/Platform-1_double.obj-12df6b61992bd3736c8b7797d221e314.mesh" ]
+
+source_file="res://Resources/Objects/Platform-1_double.obj"
+dest_files=[ "res://.import/Platform-1_double.obj-12df6b61992bd3736c8b7797d221e314.mesh", "res://.import/Platform-1_double.obj-12df6b61992bd3736c8b7797d221e314.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

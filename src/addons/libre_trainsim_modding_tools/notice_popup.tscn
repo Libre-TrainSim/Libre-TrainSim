@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/libre_trainsim_modding_tools/notice_popup.gd" type="Script" id=1]
+
+[node name="Control" type="AcceptDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -54.5
+margin_right = 200.0
+margin_bottom = 54.5
+popup_exclusive = true
+window_title = "Information"
+dialog_text = "Godot needs to reload the project in order to import your newly created mod.
+When you click OK, Godot will close, just open it again."
+dialog_autowrap = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="confirmed" from="." to="." method="_on_Control_confirmed"]

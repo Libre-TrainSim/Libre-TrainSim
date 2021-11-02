@@ -1,17 +1,14 @@
 extends Node
 
+onready var player: LTSPlayer = get_parent()
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-onready var player = get_parent()
+var is_ready: bool = false
 
-var is_ready = false
-# Called when the node enters the scene tree for the first time.
-func ready():
+
+func ready() -> void:
 	if player.ai: return
 	get_node("../Cabin/DisplayMiddle").set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	var texture = get_node("../Cabin/DisplayMiddle").get_texture()
+	var texture: Texture = get_node("../Cabin/DisplayMiddle").get_texture()
 	get_node("../Cabin/ScreenMiddle").material_override.emission_texture = texture
 	get_node("../Cabin/DisplayMiddle/Display").blinkingTimer = player.get_node("HUD").get_node("IngameInformation/TrainInfo/Screen1").blinkingTimer
 
@@ -28,8 +25,7 @@ func ready():
 	get_node("../Cabin/ScreenReverser").material_override.emission_texture = texture
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta: float) -> void:
 	if player.ai or player.failed_scenario: return
 	if not is_ready:
 		is_ready = true
@@ -40,7 +36,7 @@ func _process(delta):
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_voltage(player.voltage)
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_command(player.command)
 
-	var stations = player.stations
+	var stations: Dictionary = player.stations
 	get_node("../Cabin/DisplayRight/ScreenRight").update_display(stations["arrivalTime"], stations["departureTime"], stations["stationName"], stations["stopType"], stations["passed"], player.isInStation)
 
 	if player.control_type == player.ControlType.COMBINED:
@@ -53,7 +49,7 @@ func _process(delta):
 	update_reverser(player.reverser, get_node("../Cabin/Reverser"))
 
 
-func update_reverser(command, node):
+func update_reverser(command: int, node: Node) -> void:
 	match command:
 		ReverserState.FORWARD:
 			node.rotation_degrees.y = -120
@@ -63,19 +59,21 @@ func update_reverser(command, node):
 			node.rotation_degrees.y = -60
 
 
-func update_Combi_Roll(command, node):
+func update_Combi_Roll(command: float, node: Node) -> void:
 	node.rotation_degrees.z = 45*command+1
 
-func update_Brake_Roll(command, node):
-	var rotation
+
+func update_Brake_Roll(command: float, node: Node) -> void:
+	var rotation: float
 	if command > 0:
 		rotation = 45
 	else:
 		rotation = 45 + command*90
 	node.rotation_degrees.z = rotation
 
-func update_Acc_Roll(command, node):
-	var rotation
+
+func update_Acc_Roll(command: float, node: Node) -> void:
+	var rotation: float
 	if command < 0:
 		rotation = 45
 	else:

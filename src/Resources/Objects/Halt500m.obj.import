@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Halt500m.obj-df6d3a19b31318caf943b531eb0b22f9.mesh"
+
+[deps]
+
+files=[ "res://.import/Halt500m.obj-df6d3a19b31318caf943b531eb0b22f9.mesh" ]
+
+source_file="res://Resources/Objects/Halt500m.obj"
+dest_files=[ "res://.import/Halt500m.obj-df6d3a19b31318caf943b531eb0b22f9.mesh", "res://.import/Halt500m.obj-df6d3a19b31318caf943b531eb0b22f9.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

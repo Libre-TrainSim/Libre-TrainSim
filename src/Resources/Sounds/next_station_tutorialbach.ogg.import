@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/next_station_tutorialbach.ogg-489d7a102f4564d774d5a1f63dec88a1.oggstr"
+
+[deps]
+
+source_file="res://Resources/Sounds/next_station_tutorialbach.ogg"
+dest_files=[ "res://.import/next_station_tutorialbach.ogg-489d7a102f4564d774d5a1f63dec88a1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

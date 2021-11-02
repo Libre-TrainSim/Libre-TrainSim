@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ICE4.obj-6c2c2715a021ba17452898b2d97dcadf.mesh"
+
+[deps]
+
+files=[ "res://.import/ICE4.obj-6c2c2715a021ba17452898b2d97dcadf.mesh" ]
+
+source_file="res://Resources/Objects/ICE4.obj"
+dest_files=[ "res://.import/ICE4.obj-6c2c2715a021ba17452898b2d97dcadf.mesh", "res://.import/ICE4.obj-6c2c2715a021ba17452898b2d97dcadf.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -14,129 +14,199 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://authors.gd"
 }, {
-"base": "DynamicFont",
+"base": "Reference",
 "class": "AutoDynamicFont",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Misc/AutoDynamicFont.gd"
+"path": "res://Data/Fonts/AutoDynamicFont.gd"
 }, {
 "base": "Camera",
 "class": "CameraBase",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/camera_base.gd"
+"path": "res://Data/Scripts/camera_base.gd"
 }, {
 "base": "ItemList",
 "class": "ColoredItemList",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/colored_item_list.gd"
+"path": "res://Data/UI/colored_item_list.gd"
+}, {
+"base": "RailLogic",
+"class": "ContactPoint",
+"language": "GDScript",
+"path": "res://Data/Scripts/ContactPoint.gd"
 }, {
 "base": "Reference",
 "class": "ControlType",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/ControlType.gd"
+"path": "res://Data/Scripts/Enums/control_type.gd"
 }, {
 "base": "Node",
 "class": "DistanceMonitor",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/DistanceMonitor.gd"
+"path": "res://Data/Scripts/DistanceMonitor.gd"
 }, {
-"base": "CameraBase",
+"base": "Reference",
 "class": "EditorCamera",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/editor_camera.gd"
+"path": "res://Editor/Scripts/editor_camera.gd"
 }, {
 "base": "Label",
 "class": "InputLabel",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/InputLabel.gd"
+"path": "res://Data/Scripts/InputLabel.gd"
+}, {
+"base": "Spatial",
+"class": "LTSPlayer",
+"language": "GDScript",
+"path": "res://Data/Scripts/Player.gd"
+}, {
+"base": "Spatial",
+"class": "LTSWorld",
+"language": "GDScript",
+"path": "res://Data/Scripts/World.gd"
 }, {
 "base": "Object",
 "class": "Logger",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/logger.gd"
+"path": "res://Data/Scripts/logger.gd"
 }, {
 "base": "Control",
 "class": "Map",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/map.gd"
+"path": "res://Data/UI/map.gd"
+}, {
+"base": "Resource",
+"class": "ModContentDefinition",
+"language": "GDScript",
+"path": "res://Data/Scripts/Resources/mod_content.gd"
+}, {
+"base": "RailLogic",
+"class": "PZBMagnet",
+"language": "GDScript",
+"path": "res://Data/Scripts/PZBMagnet.gd"
 }, {
 "base": "Control",
 "class": "Pause",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/pause.gd"
+"path": "res://Data/UI/pause.gd"
 }, {
 "base": "Reference",
 "class": "PlatformSide",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/PlatformSide.gd"
+"path": "res://Data/Scripts/Enums/platform_side.gd"
+}, {
+"base": "Spatial",
+"class": "RailLogic",
+"language": "GDScript",
+"path": "res://Data/Scripts/rail_logic_base.gd"
+}, {
+"base": "Reference",
+"class": "RailLogicTypes",
+"language": "GDScript",
+"path": "res://Data/Scripts/Enums/rail_logic_types.gd"
 }, {
 "base": "Reference",
 "class": "ReverserState",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/reverser_state.gd"
+"path": "res://Data/Scripts/Enums/reverser_state.gd"
 }, {
 "base": "Node",
 "class": "SafetySystem",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/SafetySystem.gd"
+"path": "res://Data/Scripts/SafetySystem.gd"
+}, {
+"base": "RailLogic",
+"class": "Signal",
+"language": "GDScript",
+"path": "res://Data/Scripts/Signal.gd"
 }, {
 "base": "Reference",
 "class": "SignalStatus",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Scripts/Enums/SignalStatus.gd"
+"path": "res://Data/Scripts/Enums/signal_status.gd"
+}, {
+"base": "RailLogic",
+"class": "SpeedLimit",
+"language": "GDScript",
+"path": "res://Data/Scripts/SpeedLimitSignal.gd"
+}, {
+"base": "RailLogic",
+"class": "Station",
+"language": "GDScript",
+"path": "res://Data/Scripts/Station.gd"
 }, {
 "base": "PanelContainer",
 "class": "TextBox",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/text_box.gd"
+"path": "res://Data/UI/text_box.gd"
 }, {
 "base": "Control",
 "class": "TimeField",
 "language": "GDScript",
-"path": "res://addons/Libre_Train_Sim_Editor/Docks/Configuration/time_field.gd"
+"path": "res://Editor/Docks/Configuration/time_field.gd"
+}, {
+"base": "RailLogic",
+"class": "WarnSpeedLimit",
+"language": "GDScript",
+"path": "res://Data/Scripts/SpeedLimitWarnSignal.gd"
 } ]
 _global_script_class_icons={
 "Authors": "",
 "AutoDynamicFont": "",
 "CameraBase": "",
 "ColoredItemList": "",
+"ContactPoint": "",
 "ControlType": "",
 "DistanceMonitor": "",
 "EditorCamera": "",
 "InputLabel": "",
+"LTSPlayer": "",
+"LTSWorld": "",
 "Logger": "",
 "Map": "",
+"ModContentDefinition": "",
+"PZBMagnet": "",
 "Pause": "",
 "PlatformSide": "",
+"RailLogic": "",
+"RailLogicTypes": "",
 "ReverserState": "",
 "SafetySystem": "",
+"Signal": "",
 "SignalStatus": "",
+"SpeedLimit": "",
+"Station": "",
 "TextBox": "",
-"TimeField": ""
+"TimeField": "",
+"WarnSpeedLimit": ""
 }
 
 [application]
 
 config/name="Libre TrainSim"
 config/description="Train Simulator"
-run/main_scene="res://addons/Libre_Train_Sim_Editor/Data/Modules/main_menu.tscn"
+run/main_scene="res://Data/UI/main_menu.tscn"
 boot_splash/image="res://LibreTrainSimLogo_Quad_128.png"
 boot_splash/fullsize=false
 config/icon="res://LibreTrainSimLogo_Quad_128.png"
 config/quit_on_go_back=false
 
+[audio]
+
+default_bus_layout="res://Data/default_bus_layout.tres"
+
 [autoload]
 
-Math="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/Math.gd"
-Root="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/Root.gd"
+Math="*res://Data/Scripts/Singletons/Math.gd"
+Root="*res://Data/Scripts/Singletons/Root.gd"
 jConfig="*res://addons/jean28518.jTools/jConfig.gd"
 jTools="*res://addons/jean28518.jTools/jTools.gd"
 jEssentials="*res://addons/jean28518.jTools/jEssentials/jEssentials.gd"
 jAudioManager="*res://addons/jean28518.jTools/jAudioManager/JAudioManager.gd"
 jSaveManager="*res://addons/jean28518.jTools/jSaveManager/jSaveManager.gd"
 jSettings="*res://addons/jean28518.jTools/jSettings/JSettings.tscn"
-ContentLoader="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/content_loader.gd"
-LoadingScreen="*res://addons/Libre_Train_Sim_Editor/Data/Modules/UI/loading_screen.tscn"
-InputHelper="*res://addons/Libre_Train_Sim_Editor/Data/Scripts/Singletons/input_helper.gd"
+ContentLoader="*res://Data/Scripts/Singletons/content_loader.gd"
+LoadingScreen="*res://Data/UI/loading_screen.tscn"
+InputHelper="*res://Data/Scripts/Singletons/input_helper.gd"
 
 [debug]
 
@@ -147,6 +217,10 @@ settings/stdout/verbose_stdout=true
 window/size/width="800"
 window/size/height="600"
 window/handheld/orientation="sensor_landscape"
+
+[editor_plugins]
+
+enabled=PoolStringArray(  )
 
 [global]
 
@@ -441,4 +515,4 @@ translation_remaps={
 
 threads/thread_model=2
 quality/filters/msaa=2
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://Resources/Enviroments/BasicWorldEnviroment.tres"

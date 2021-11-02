@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=5 format=2]
+
+[ext_resource path="res://Data/UI/styles/line_edit_read_only.tres" type="StyleBox" id=1]
+[ext_resource path="res://Data/UI/styles/line_edit_normal.tres" type="StyleBox" id=2]
+[ext_resource path="res://Data/UI/styles/line_edit_focus.tres" type="StyleBox" id=3]
+[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=4]
+
+[resource]
+LineEdit/colors/clear_button_color = Color( 0, 0, 0, 1 )
+LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
+LineEdit/colors/cursor_color = Color( 0, 0, 0, 1 )
+LineEdit/colors/font_color = Color( 0, 0, 0, 1 )
+LineEdit/colors/font_color_selected = Color( 0.27451, 0.286275, 0.360784, 1 )
+LineEdit/colors/font_color_uneditable = Color( 0.219608, 0.219608, 0.219608, 1 )
+LineEdit/colors/selection_color = Color( 0.45098, 0.843137, 0.819608, 1 )
+LineEdit/constants/minimum_spaces = 12
+LineEdit/fonts/font = ExtResource( 4 )
+LineEdit/icons/clear = null
+LineEdit/styles/focus = ExtResource( 3 )
+LineEdit/styles/normal = ExtResource( 2 )
+LineEdit/styles/read_only = ExtResource( 1 )

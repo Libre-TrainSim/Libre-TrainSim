@@ -2,16 +2,16 @@ extends Spatial
 
 #onready var drivePitchShift = AudioServer.get_bus_effect(2, 0)
 
-export (float) var AccelerationTransitionTime
-export (float) var AccelerationTransitionSpeed
+export (float) var AccelerationTransitionTime: float
+export (float) var AccelerationTransitionSpeed: float
 
 
-var sollAccelerationVolume1 = -50
-var sollAccelerationVolume2 = -50
+var sollAccelerationVolume1: float = -50
+var sollAccelerationVolume2: float = -50
 
-var inSideReduction = -15
+var inSideReduction: float = -15
 
-onready var player = get_parent()
+onready var player: LTSPlayer = get_parent()
 
 
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/next_station.ogg-3e71e4b298b801fc7d74898b2ed3f9db.oggstr"
+
+[deps]
+
+source_file="res://Resources/Sounds/next_station.ogg"
+dest_files=[ "res://.import/next_station.ogg-3e71e4b298b801fc7d74898b2ed3f9db.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

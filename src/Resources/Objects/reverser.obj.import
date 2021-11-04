@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/reverser.obj-cb68f06f46939c4c87368ddf7a374899.mesh"
+
+[deps]
+
+files=[ "res://.import/reverser.obj-cb68f06f46939c4c87368ddf7a374899.mesh" ]
+
+source_file="res://Resources/Objects/reverser.obj"
+dest_files=[ "res://.import/reverser.obj-cb68f06f46939c4c87368ddf7a374899.mesh", "res://.import/reverser.obj-cb68f06f46939c4c87368ddf7a374899.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

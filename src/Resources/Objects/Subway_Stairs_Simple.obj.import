@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Subway_Stairs_Simple.obj-f321e44c6d6fb519ded8276fcff6b94b.mesh"
+
+[deps]
+
+files=[ "res://.import/Subway_Stairs_Simple.obj-f321e44c6d6fb519ded8276fcff6b94b.mesh" ]
+
+source_file="res://Resources/Objects/Subway_Stairs_Simple.obj"
+dest_files=[ "res://.import/Subway_Stairs_Simple.obj-f321e44c6d6fb519ded8276fcff6b94b.mesh", "res://.import/Subway_Stairs_Simple.obj-f321e44c6d6fb519ded8276fcff6b94b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

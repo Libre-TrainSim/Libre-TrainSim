@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=1]
+
+[node name="Language" type="Label"]
+margin_right = 658.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Jean28518"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

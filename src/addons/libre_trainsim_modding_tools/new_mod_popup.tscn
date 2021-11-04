@@ -1,0 +1,107 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/libre_trainsim_modding_tools/new_mod_popup.gd" type="Script" id=1]
+
+[node name="Popup" type="WindowDialog"]
+margin_left = 200.0
+margin_top = 220.0
+margin_right = 600.0
+margin_bottom = 380.0
+rect_min_size = Vector2( 400, 160 )
+input_pass_on_modal_close_click = false
+popup_exclusive = true
+window_title = "Create a new mod..."
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 392.0
+margin_bottom = 152.0
+custom_constants/separation = 16
+alignment = 1
+
+[node name="Grid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 8.0
+margin_right = 384.0
+margin_bottom = 96.0
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label_Unique" type="Label" parent="MarginContainer/VBoxContainer/Grid"]
+margin_right = 121.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+text = "Unique Mod Name"
+valign = 1
+
+[node name="Input_Unique" type="LineEdit" parent="MarginContainer/VBoxContainer/Grid"]
+margin_left = 129.0
+margin_right = 384.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_horizontal = 3
+expand_to_text_length = true
+placeholder_text = "your_name_your_mod"
+
+[node name="Label_Name" type="Label" parent="MarginContainer/VBoxContainer/Grid"]
+margin_top = 32.0
+margin_right = 121.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 24 )
+text = "Mod Display Name"
+valign = 1
+
+[node name="Input_Name" type="LineEdit" parent="MarginContainer/VBoxContainer/Grid"]
+margin_left = 129.0
+margin_top = 32.0
+margin_right = 384.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_horizontal = 3
+expand_to_text_length = true
+placeholder_text = "Your Mod"
+
+[node name="Label_Author" type="Label" parent="MarginContainer/VBoxContainer/Grid"]
+margin_top = 64.0
+margin_right = 121.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 24 )
+text = "Author"
+valign = 1
+
+[node name="Input_Author" type="LineEdit" parent="MarginContainer/VBoxContainer/Grid"]
+margin_left = 129.0
+margin_top = 64.0
+margin_right = 384.0
+margin_bottom = 88.0
+size_flags_horizontal = 3
+expand_to_text_length = true
+placeholder_text = "Your Name"
+
+[node name="OK" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 112.0
+margin_right = 384.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 0, 24 )
+text = "OK"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/OK" to="." method="validate"]

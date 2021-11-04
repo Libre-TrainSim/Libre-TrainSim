@@ -1,0 +1,18 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Materials/Metal-Rail.tres" type="Material" id=2]
+[ext_resource path="res://Resources/RailTypes/Rail_Beton_1.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Data/Scripts/RailType.gd" type="Script" id=4]
+[ext_resource path="res://Resources/Materials/Gravel.tres" type="Material" id=5]
+[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=6]
+
+[node name="RailType" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 3 )
+material/0 = ExtResource( 6 )
+material/1 = ExtResource( 2 )
+material/2 = ExtResource( 1 )
+material/3 = ExtResource( 5 )

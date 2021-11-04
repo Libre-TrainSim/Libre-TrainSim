@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Editor/Modules/BuildingSettings.gd" type="Script" id=1]
+[ext_resource path="res://Editor/Modules/BuildingSettings_Button.gd" type="Script" id=2]
+
+[node name="BuildingSettings" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Material-1" type="HBoxContainer" parent="."]
+visible = false
+margin_right = 800.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="Material-1"]
+margin_top = 5.0
+margin_right = 56.0
+margin_bottom = 19.0
+text = "Material "
+
+[node name="LineEdit" type="LineEdit" parent="Material-1"]
+margin_left = 60.0
+margin_right = 758.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Material-1"]
+margin_left = 762.0
+margin_right = 800.0
+margin_bottom = 24.0
+text = "Pick"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Material-1/Button" to="Material-1/Button" method="_on_Button_pressed"]

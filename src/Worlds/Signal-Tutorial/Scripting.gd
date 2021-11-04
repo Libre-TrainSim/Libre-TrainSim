@@ -1,13 +1,13 @@
 extends Node
 
-var scenario = Root.currentScenario
-var world = find_parent("World")
-var step = 0
-var player
-var message_sent = false
+var scenario: String = Root.currentScenario
+var world: Node = find_parent("World")
+var step: int = 0
+var player: LTSPlayer
+var message_sent: bool = false
 
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if world == null:
 		world = find_parent("World")
 	if player == null:
@@ -15,11 +15,9 @@ func _process(delta):
 		player.force_close_doors()
 		player.force_pantograph_up()
 		player.startEngine()
-		player.overrunRedSignal = false
 		player.enforced_braking = false
 		player.command = 0
 		player.soll_command = 0
-
 
 	send_message(delta)
 	if scenario == "H/V Form Signals":
@@ -34,10 +32,9 @@ func _process(delta):
 	elif scenario == "HL Signals":
 		hl_signals()
 		return
-
 	message_sent = true
 
-func hv_form_signals():
+func hv_form_signals() -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_HV_FORM_0")
@@ -77,9 +74,9 @@ func hv_form_signals():
 				next_step()
 		9:
 			message = tr("TUTORIAL_SIGNAL_BYE")
-			pass
 
-func hv_light_signals():
+
+func hv_light_signals() -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_HV_LIGHT_0")
@@ -119,10 +116,9 @@ func hv_light_signals():
 				next_step()
 		9:
 			message = tr("TUTORIAL_SIGNAL_BYE")
-			pass
 
 
-func ks_signals():
+func ks_signals() -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_KS_0")
@@ -154,10 +150,9 @@ func ks_signals():
 				next_step()
 		7:
 			message = tr("TUTORIAL_SIGNAL_BYE")
-			pass
 
 
-func hl_signals():
+func hl_signals() -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_HL_0")
@@ -197,19 +192,18 @@ func hl_signals():
 				next_step()
 		9:
 			message = tr("TUTORIAL_SIGNAL_BYE")
-			pass
 
 
-var send_message_timer = 0
-var message = ""
-func send_message(delta):
+var send_message_timer: float = 0
+var message: String = ""
+func send_message(delta: float) -> void:
 	send_message_timer += delta
 	if not message_sent and send_message_timer > 1:
 		message_sent = true
 		player.show_textbox_message(message)
 
 
-func next_step():
+func next_step() -> void:
 	step += 1
 	message_sent = false
 	send_message_timer = 0

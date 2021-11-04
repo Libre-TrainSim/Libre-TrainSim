@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=1]
+[ext_resource path="res://Data/UI/pause.gd" type="Script" id=2]
+[ext_resource path="res://Data/UI/station_jumper.tscn" type="PackedScene" id=3]
+
+[node name="Pause" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="."]
+modulate = Color( 1, 1, 1, 0.564706 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.564706 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 253.0
+margin_top = 118.0
+margin_right = 547.0
+margin_bottom = 481.0
+theme = ExtResource( 1 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CenterContainer/HBox"]
+margin_right = 294.0
+margin_bottom = 45.0
+text = "PAUSE"
+align = 1
+
+[node name="Back" type="Button" parent="CenterContainer/HBox"]
+margin_top = 49.0
+margin_right = 294.0
+margin_bottom = 98.0
+text = "BACK"
+
+[node name="RestartScenario" type="Button" parent="CenterContainer/HBox"]
+margin_top = 102.0
+margin_right = 294.0
+margin_bottom = 151.0
+text = "RESTART_SCENARIO"
+
+[node name="JumpToStation" type="Button" parent="CenterContainer/HBox"]
+margin_top = 155.0
+margin_right = 294.0
+margin_bottom = 204.0
+text = "JUMP_TO_STATION"
+
+[node name="Settings" type="Button" parent="CenterContainer/HBox"]
+margin_top = 208.0
+margin_right = 294.0
+margin_bottom = 257.0
+text = "MENU_SETTINGS"
+
+[node name="QuitMenu" type="Button" parent="CenterContainer/HBox"]
+margin_top = 261.0
+margin_right = 294.0
+margin_bottom = 310.0
+text = "QUIT_TO_MENU"
+
+[node name="QuitOS" type="Button" parent="CenterContainer/HBox"]
+margin_top = 314.0
+margin_right = 294.0
+margin_bottom = 363.0
+text = "QUIT_TO_OS"
+
+[node name="StationJumper" parent="." instance=ExtResource( 3 )]
+visible = false
+margin_left = 12.0
+margin_top = 12.0
+margin_right = -12.0
+margin_bottom = -12.0
+
+[connection signal="pressed" from="CenterContainer/HBox/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/RestartScenario" to="." method="_on_RestartScenario_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/JumpToStation" to="." method="_on_JumpToStation_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/QuitMenu" to="." method="_on_QuitMenu_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/QuitOS" to="." method="_on_Quit_pressed"]
+[connection signal="station_index_selected" from="StationJumper" to="." method="_on_StationJumper_station_index_selected"]

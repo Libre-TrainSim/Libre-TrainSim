@@ -1,12 +1,12 @@
 extends Node
 
-var scenario = Root.currentScenario
-var world = find_parent("World")
-var step = 0
-var player
-var message_sent = false
+var scenario: String = Root.currentScenario
+var world: Node = find_parent("World")
+var step: int = 0
+var player: LTSPlayer
+var message_sent: bool = false
 
-func _ready():
+func _ready() -> void:
 	if Root.Editor:
 		queue_free()
 		return
@@ -17,7 +17,7 @@ func _ready():
 		Root.EasyMode = false
 
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if world == null:
 		world = find_parent("World")
 	if player == null:
@@ -32,11 +32,10 @@ func _process(delta):
 	if scenario == "The Basics - Mobile Version":
 		basics_mobile_version()
 		return
-
 	message_sent = true
 
 
-func basics():
+func basics() -> void:
 	match step:
 		0:
 #			message = "Welcome to Libre TrainSim!\nPlease have in mind that this is an early alpha version, in which many features are missing, and some bugs are possible.\nThe mode is now set to Easy.\n\nLet's start the engines!\nPress 'b' to set up the pantograph and wait a bit.\nAfter 5 sconds you can press 'e' to start the engines!"
@@ -51,7 +50,7 @@ func basics():
 		2:
 #			message = "Great! To close the Doors, press 'o'.\n\nWhith 'i' you can open the left one,\nwith 'p' you open the right door."
 			message = TranslationServer.translate("TUTORIAL_0_1")
-			if  not (player.doorRight or player.doorLeft):
+			if not (player.doorRight or player.doorLeft):
 				next_step()
 		3:
 #			message = "Now we are able to drive.\nOur departure is at 12:00. Let's wait for the depart message in the bottom left corner."
@@ -63,7 +62,6 @@ func basics():
 			message = TranslationServer.translate("TUTORIAL_0_3")
 			if Math.speedToKmH(player.speed) > 20:
 				next_step()
-
 		5:
 #			message = "Ahead you see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
 			message = TranslationServer.translate("TUTORIAL_0_4")
@@ -85,13 +83,11 @@ func basics():
 			message = TranslationServer.translate("TUTORIAL_0_7")
 			if player.distance_on_rail > 250 and player.currentRail.name == "Rail2":
 				next_step()
-
 		9:
 			# message: Hint: If you don't know further on at any time or you just want to enjoy the ride, press 'ctr' + 'a' to activate the autopilot.
 			message = TranslationServer.translate("TUTORIAL_0_11")
 			if player.speed == 0 and player.currentStationName == "Tutorialbach" and not player.wholeTrainNotInStation:
 				next_step()
-
 		10:
 #			message = "Great, you arrived securly!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
 			message = TranslationServer.translate("TUTORIAL_0_8")
@@ -101,7 +97,8 @@ func basics():
 #			message = "Thank you for playing! You can now exit the game with 'Esc'"
 			message = TranslationServer.translate("TUTORIAL_0_9")
 
-func advanced():
+
+func advanced() -> void:
 	match step:
 		0:
 			Root.EasyMode = false
@@ -124,7 +121,6 @@ func advanced():
 			message = TranslationServer.translate("TUTORIAL_1_5")
 			if player.currentRail.name == "Rail2":
 				next_step()
-
 		5:
 			message = TranslationServer.translate("TUTORIAL_1_3")
 			if player.isInStation:
@@ -132,7 +128,8 @@ func advanced():
 		6:
 			message = TranslationServer.translate("TUTORIAL_1_4")
 
-func basics_mobile_version():
+
+func basics_mobile_version() -> void:
 	match step:
 		0:
 #			message = "Welcome to Libre TrainSim!\nPlease have in mind that this is an early alpha version, in which many features are missing, and some bugs are possible.\nThe mode is now set to Easy.\n\nLet's start the engines!\nPress 'b' to set up the pantograph and wait a bit.\nAfter 5 sconds you can press 'e' to start the engines!"
@@ -169,7 +166,6 @@ func basics_mobile_version():
 			player.get_node("HUD/MobileHUD/Down").modulate = Color(1, 0.5, 0, 1)
 			if Math.speedToKmH(player.speed) > 20:
 				next_step()
-
 		5:
 #			message = "Ahead you see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
 			message = TranslationServer.translate("TUTORIAL_4_5")
@@ -196,14 +192,12 @@ func basics_mobile_version():
 			message = TranslationServer.translate("TUTORIAL_4_8")
 			if player.distance_on_rail > 250 and player.currentRail.name == "Rail2":
 				next_step()
-
 		9:
 			# message: Hint: If you don't know further on at any time or you just want to enjoy the ride, press 'ctr' + 'a' to activate the autopilot.
 			message = TranslationServer.translate("TUTORIAL_4_9")
 			player.get_node("HUD/MobileHUD/Autopilot").modulate = Color(1, 0.5, 0, 1)
 			if player.speed == 0 and player.currentStationName == "Tutorialbach" and not player.wholeTrainNotInStation:
 				next_step()
-
 		10:
 #			message = "Great, you arrived securly!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
 			message = TranslationServer.translate("TUTORIAL_4_10")
@@ -217,16 +211,17 @@ func basics_mobile_version():
 			player.get_node("HUD/MobileHUD/DoorLeft").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/PauseButton").modulate = Color(1, 0.5, 0, 1)
 
-var send_message_timer = 0
-var message = ""
-func send_message(delta):
+
+var send_message_timer: float = 0
+var message: String = ""
+func send_message(delta: float) -> void:
 	send_message_timer += delta
 	if not message_sent and send_message_timer > 1:
 		message_sent = true
 		player.show_textbox_message(message)
 
 
-func next_step():
+func next_step() -> void:
 	step += 1
 	message_sent = false
 	send_message_timer = 0

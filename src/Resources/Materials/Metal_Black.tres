@@ -1,0 +1,9 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Textures/Plastic.png" type="Texture" id=1]
+
+[resource]
+albedo_color = Color( 0.231373, 0.207843, 0.207843, 1 )
+albedo_texture = ExtResource( 1 )
+metallic = 0.78
+roughness = 0.71

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Acceleration4.ogg-8007f42c139e5961be8e5dc30fa4d415.oggstr"
+
+[deps]
+
+source_file="res://Resources/Sounds/Acceleration4.ogg"
+dest_files=[ "res://.import/Acceleration4.ogg-8007f42c139e5961be8e5dc30fa4d415.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

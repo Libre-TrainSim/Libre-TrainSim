@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Pole1.obj-b9e3a657244d87e797f65a0dfdd67fe3.mesh"
+
+[deps]
+
+files=[ "res://.import/Pole1.obj-b9e3a657244d87e797f65a0dfdd67fe3.mesh" ]
+
+source_file="res://Resources/Objects/Pole1.obj"
+dest_files=[ "res://.import/Pole1.obj-b9e3a657244d87e797f65a0dfdd67fe3.mesh", "res://.import/Pole1.obj-b9e3a657244d87e797f65a0dfdd67fe3.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -4,7 +4,7 @@ extends Node
 # 0: Game
 # 1: Music
 # 2: Other
-func play(soundPath : String, loop : bool = false, pausable : bool = true, volume_db : float = 0.0 , bus : String = "Game"):
+func play(soundPath: String, loop: bool = false, pausable: bool = true, volume_db: float = 0.0 , bus: String = "Game"):
 	var audioStreamPlayer = AudioStreamPlayer.new()
 
 	if not resourceTable.has(soundPath) or resourceTable[soundPath] == null:
@@ -60,10 +60,10 @@ func set_music_volume_db(volume : float):
 ## Internal Code ###############################################################
 
 var jAudioManagerBus
-var resourceTable = {}
+var resourceTable := {}
 
-var gameBusIdx = 1
-var musicBusIdx = 2
+var gameBusIdx: int = 1
+var musicBusIdx: int = 2
 
 func _ready():
 	jAudioManagerBus = jConfig.enable_jAudioManager_bus

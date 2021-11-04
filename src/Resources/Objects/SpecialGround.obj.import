@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh"
+
+[deps]
+
+files=[ "res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh" ]
+
+source_file="res://Resources/Objects/SpecialGround.obj"
+dest_files=[ "res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh", "res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

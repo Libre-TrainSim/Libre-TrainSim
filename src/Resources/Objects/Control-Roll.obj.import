@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Control-Roll.obj-2edd3312f38b46b9df1ae17b788dc3c6.mesh"
+
+[deps]
+
+files=[ "res://.import/Control-Roll.obj-2edd3312f38b46b9df1ae17b788dc3c6.mesh" ]
+
+source_file="res://Resources/Objects/Control-Roll.obj"
+dest_files=[ "res://.import/Control-Roll.obj-2edd3312f38b46b9df1ae17b788dc3c6.mesh", "res://.import/Control-Roll.obj-2edd3312f38b46b9df1ae17b788dc3c6.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

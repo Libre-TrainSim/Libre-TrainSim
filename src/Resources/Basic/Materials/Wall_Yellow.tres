@@ -1,8 +1,0 @@
-[gd_resource type="SpatialMaterial" load_steps=2 format=2]
-
-[ext_resource path="res://Resources/Basic/Textures/Wall.png" type="Texture" id=1]
-
-[resource]
-albedo_color = Color( 0.572549, 0.505882, 0.121569, 1 )
-albedo_texture = ExtResource( 1 )
-roughness = 0.89

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh"
+
+[deps]
+
+files=[ "res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh" ]
+
+source_file="res://Resources/Objects/Pfost_long.obj"
+dest_files=[ "res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh", "res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,47 +1,47 @@
 [gd_scene load_steps=65 format=2]
 
-[ext_resource path="res://Resources/Basic/Materials/Cabin.tres" type="Material" id=1]
-[ext_resource path="res://Resources/Basic/Materials/Black_Plastic.tres" type="Material" id=2]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://Resources/Materials/Cabin.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Materials/Black_Plastic.tres" type="Material" id=2]
+[ext_resource path="res://Data/Scripts/Player.gd" type="Script" id=3]
 [ext_resource path="res://Trains/JFR1/Sound.gd" type="Script" id=4]
 [ext_resource path="res://Trains/JFR1/SpecificScripting.gd" type="Script" id=5]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/SifaModule.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Resources/Basic/Materials/Metal.tres" type="Material" id=7]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PZBModule.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Resources/Basic/Screens/ScreenReverser/reverser.tscn" type="PackedScene" id=9]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerDoor.tscn" type="PackedScene" id=10]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerPathNode.tscn" type="PackedScene" id=11]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/PassengerSeat.tscn" type="PackedScene" id=12]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/AdvancedEngineSound.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Resources/Basic/reverser.obj" type="ArrayMesh" id=14]
-[ext_resource path="res://Resources/Basic/Objects/ICE4.obj" type="ArrayMesh" id=15]
-[ext_resource path="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.png" type="Texture" id=16]
-[ext_resource path="res://Resources/Basic/Sounds/DoorsClosing2.ogg" type="AudioStream" id=17]
-[ext_resource path="res://Resources/Basic/Sounds/DoorsOpening.ogg" type="AudioStream" id=18]
-[ext_resource path="res://Resources/Basic/Screens/Screen1/Screen1.tscn" type="PackedScene" id=19]
-[ext_resource path="res://Resources/Basic/Screens/ScreenLeft/ScreenLeft.tscn" type="PackedScene" id=20]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/HUD.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Resources/Basic/Screens/ScreenRight/ScreenRight.tscn" type="PackedScene" id=22]
-[ext_resource path="res://Resources/Basic/Sounds/Horn.ogg" type="AudioStream" id=23]
-[ext_resource path="res://Resources/Basic/Sounds/SiFa.ogg" type="AudioStream" id=24]
-[ext_resource path="res://Resources/Basic/Sounds/EnforcedBreake.ogg" type="AudioStream" id=25]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Wagon.gd" type="Script" id=26]
-[ext_resource path="res://Resources/Basic/Materials/GlassInvisible.tres" type="Material" id=27]
+[ext_resource path="res://Data/Modules/SifaModule.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=7]
+[ext_resource path="res://Data/Modules/PZBModule.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Data/Screens/ScreenReverser/screen_reverser.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Data/Modules/PassengerDoor.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Data/Modules/PassengerPathNode.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Data/Modules/PassengerSeat.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Data/Modules/AdvancedEngineSound.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Resources/Objects/reverser.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://Resources/Objects/ICE4.obj" type="ArrayMesh" id=15]
+[ext_resource path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" type="Texture" id=16]
+[ext_resource path="res://Resources/Sounds/DoorsClosing2.ogg" type="AudioStream" id=17]
+[ext_resource path="res://Resources/Sounds/DoorsOpening.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Data/UI/HUD.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Data/Screens/ScreenTimeTable/screen_time_table.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Resources/Sounds/Horn.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Resources/Sounds/SiFa.ogg" type="AudioStream" id=24]
+[ext_resource path="res://Resources/Sounds/EnforcedBreake.ogg" type="AudioStream" id=25]
+[ext_resource path="res://Data/Scripts/Wagon.gd" type="Script" id=26]
+[ext_resource path="res://Resources/Materials/GlassInvisible.tres" type="Material" id=27]
 [ext_resource path="res://Trains/JFR1/Door.obj" type="ArrayMesh" id=28]
 [ext_resource path="res://Trains/JFR1/Wagon_Red.tres" type="Material" id=29]
 [ext_resource path="res://Trains/JFR1/Wagon_WithDriverStand_Red.tres" type="Material" id=30]
-[ext_resource path="res://Resources/Basic/Materials/Metal_White.tres" type="Material" id=31]
-[ext_resource path="res://Resources/Basic/Materials/Metal_Black.tres" type="Material" id=33]
+[ext_resource path="res://Resources/Materials/Metal_White.tres" type="Material" id=31]
+[ext_resource path="res://Resources/Materials/Metal_Black.tres" type="Material" id=33]
 [ext_resource path="res://Trains/JFR1/Wagon_1.obj" type="ArrayMesh" id=37]
 [ext_resource path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" type="ArrayMesh" id=38]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Scripts/Camera.gd" type="Script" id=39]
-[ext_resource path="res://addons/Libre_Train_Sim_Editor/Data/Modules/WagonSound.tscn" type="PackedScene" id=41]
+[ext_resource path="res://Data/Scripts/Camera.gd" type="Script" id=39]
+[ext_resource path="res://Data/Modules/WagonSound.tscn" type="PackedScene" id=41]
 [ext_resource path="res://Trains/JFR1/Pantograph_1_T.obj" type="ArrayMesh" id=42]
 [ext_resource path="res://Trains/JFR1/Pantograph_1_T2.obj" type="ArrayMesh" id=43]
 [ext_resource path="res://Trains/JFR1/Pantograph_1_B.obj" type="ArrayMesh" id=44]
-[ext_resource path="res://Resources/Basic/Materials/ScreenBook.tres" type="Material" id=45]
-[ext_resource path="res://Resources/Basic/Objects/Control-Roll.obj" type="ArrayMesh" id=46]
-[ext_resource path="res://Resources/Basic/Materials/LEDLamp_Bright.tres" type="Material" id=47]
+[ext_resource path="res://Resources/Materials/ScreenBook.tres" type="Material" id=45]
+[ext_resource path="res://Resources/Objects/Control-Roll.obj" type="ArrayMesh" id=46]
+[ext_resource path="res://Resources/Materials/LEDLamp_Bright.tres" type="Material" id=47]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0, 0, 0, 1 )
@@ -1942,29 +1942,24 @@ AccelerationTransitionSpeed = 10.0
 [node name="DoorsOpen" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 18 )
 unit_size = 10.0
-bus = "Train"
 
 [node name="DoorsClose" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 17 )
 unit_size = 10.0
-bus = "Train"
 
 [node name="Horn" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.596, 3.60857, 0 )
 stream = ExtResource( 23 )
 unit_size = 20.0
-bus = "Train"
 
 [node name="SiFa" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69591, 2.77763, 0 )
 stream = ExtResource( 24 )
 stream_paused = true
-bus = "Train-Messages"
 
 [node name="EnforcedBrake" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.80865, 2.77868, 0 )
 stream = ExtResource( 25 )
-bus = "Train-Messages"
 
 [node name="FrontLight" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21955, 0, 0 )

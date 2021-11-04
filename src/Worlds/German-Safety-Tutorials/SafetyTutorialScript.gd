@@ -1,20 +1,20 @@
 extends Node
 
-var scenario = null
-var world = null
-var player = null
+var scenario: String = ""
+var world: Node = null
+var player: LTSPlayer = null
 
-var message_sent = false
-var send_message_timer = 0
-var message = ""
+var message_sent: bool = false
+var send_message_timer: float = 0
+var message: String = ""
 
-var step = 0
+var step: int = 0
 
-var sifa_module
-var pzb_module
+var sifa_module: Node
+var pzb_module: Node
 
-var init_done = false
-func init():
+var init_done: bool = false
+func init() -> void:
 	scenario = Root.currentScenario
 	world = find_parent("World")
 	player = world.get_node("Players/Player")
@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 	message_sent = true
 
 
-func sifa(delta):
+func sifa(delta: float) -> void:
 	match step:
 		0:
 			message = tr("SIFA_TUTORIAL_1")
@@ -96,13 +96,13 @@ func sifa(delta):
 				LoadingScreen.load_main_menu()
 
 
-var _sig_green_timer = 0
-var _restrictive_timer = 0
-func pzb(delta):
+var _sig_green_timer: float = 0
+var _restrictive_timer: float = 0
+func pzb(delta: float) -> void:
 	match step:
 		0:
 			message = tr("PZB_TUTORIAL_1")
-			var signal1 = world.get_node("Signals/Signal")
+			var signal1: Node = world.get_node("Signals/Signal")
 			if player.global_transform.origin.distance_to(signal1.global_transform.origin) < 100:
 				next_step()
 		1:
@@ -132,7 +132,7 @@ func pzb(delta):
 		4:
 			message = tr("PZB_TUTORIAL_5") % InputHelper.make_strings_from_actions(["pzb_free"])
 			#\n\nIn diesem Fall zeigt das nächste Signal Rot, das bedeutet, dass Sie Ihre Geschwindigkeit auf 65 km/h reduzieren müssen, bevor Sie den 500Hz Magneten erreichen. Bremsen Sie weiter ab."
-			var pzbmagnet2 = world.get_node("Signals/PZBMagnet2")
+			var pzbmagnet2: PZBMagnet = world.get_node("Signals/PZBMagnet2")
 			if player.global_transform.origin.distance_to(pzbmagnet2.global_transform.origin) < 75:
 				world.get_node("Signals/Signal2").set_status(SignalStatus.GREEN)
 				next_step()
@@ -142,7 +142,7 @@ func pzb(delta):
 				next_step()
 		6:
 			message = tr("PZB_TUTORIAL_7")
-			var pzbmagnet5 = world.get_node("Signals/PZBMagnet5")
+			var pzbmagnet5: PZBMagnet = world.get_node("Signals/PZBMagnet5")
 			if player.global_transform.origin.distance_to(pzbmagnet5.global_transform.origin) < 200:
 				next_step()
 		7:
@@ -177,14 +177,14 @@ func pzb(delta):
 				LoadingScreen.load_main_menu()
 
 
-func send_message(delta):
+func send_message(delta: float) -> void:
 	send_message_timer += delta
 	if not message_sent and send_message_timer > 1:
 		message_sent = true
 		player.show_textbox_message(message)
 
 
-func next_step():
+func next_step() -> void:
 	step += 1
 	message_sent = false
 	send_message_timer = 0

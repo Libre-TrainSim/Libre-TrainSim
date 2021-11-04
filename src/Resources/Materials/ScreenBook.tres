@@ -1,0 +1,7 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Textures/ScreenBook.png" type="Texture" id=1]
+
+[resource]
+albedo_color = Color( 0.870588, 0.862745, 0.862745, 1 )
+albedo_texture = ExtResource( 1 )

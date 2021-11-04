@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource( 1 )
 developers = [ "Jean3219 - Jean28518" ]
-contributors = [ "Johannes Witt - HaSa1002", "Das Capschen - DasCapschen", "librebob", "Bohdan Matviiv - bodamat", "Michele Comignano - comick", "Matthew - skyace65", "Yann Dirson - ydirson", "IntinteDAO", "Uli Horn - ulihorn", "ghost", "simfann", "SeaMac", "JupiterRider", "rogerm4242" ]
+contributors = [ "Johannes Witt - HaSa1002", "Dominik Waurenschk - DasCapschen", "librebob", "Bohdan Matviiv - bodamat", "Michele Comignano - comick", "Matthew - skyace65", "Yann Dirson - ydirson", "IntinteDAO", "Uli Horn - ulihorn", "ghost", "simfann", "SeaMac", "JupiterRider", "rogerm4242" ]
 translators = [ [ "Ukrainian", "Bohdan Matviiv" ], [ "Polish", "toxicnet" ], [ "Japanese", "paontv" ] ]

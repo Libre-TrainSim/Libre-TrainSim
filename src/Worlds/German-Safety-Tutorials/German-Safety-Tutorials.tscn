@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/Scripts/World.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Enviroments/BasicSun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Environments/BasicSun.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Worlds/German-Safety-Tutorials/SafetyTutorialScript.gd" type="Script" id=5]
 [ext_resource path="res://Data/Modules/Rail.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Resources/Enviroments/BasicWorldEnviroment.tres" type="Environment" id=7]
+[ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=7]
 [ext_resource path="res://Data/Modules/Signal.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Data/Scripts/BuildingsNode.gd" type="Script" id=9]
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=10]

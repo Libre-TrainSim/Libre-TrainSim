@@ -28,15 +28,16 @@ func _on_Back_pressed() -> void:
 
 
 func _on_Play_pressed() -> void:
-	if currentScenario == "" or currentTrack == "" or currentTrain == "": return
+	if currentScenario == "" or currentTrack == "" or currentTrain == "":
+		return
 	var index: int = $Play/Selection/Tracks/Tracks.get_selected_items()[0]
+	Root.currentTrack = ContentLoader.repo.worlds[index]
 	Root.currentScenario = currentScenario
 	Root.currentTrain = currentTrain
 	Root.EasyMode = $Play/Info/Info/EasyMode.pressed
 	hide()
 
-	var loadScenePath: String = ContentLoader.repo.worlds[index]
-	LoadingScreen.load_world(loadScenePath, currentScenario, currentTrain, screenshot_texture)
+	LoadingScreen.load_world(Root.currentTrack, currentScenario, currentTrain, screenshot_texture)
 
 
 func _on_Tracks_item_selected(index: int) -> void:

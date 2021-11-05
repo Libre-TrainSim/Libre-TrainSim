@@ -1,5 +1,6 @@
 extends Node
 
+var currentTrack: String
 var currentScenario: String
 var currentTrain: String
 var EasyMode: bool = true

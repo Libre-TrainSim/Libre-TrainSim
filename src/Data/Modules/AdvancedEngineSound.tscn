@@ -7,6 +7,7 @@
 [ext_resource path="res://Resources/Sounds/AccelerationTransition2.ogg" type="AudioStream" id=5]
 
 [node name="AdvancedEngineSound" type="Spatial"]
+pause_mode = 2
 script = ExtResource( 3 )
 acceleration_transition_length_in_ms = 200.0
 acceleration_transition_1_delta_length_in_ms = 200.0

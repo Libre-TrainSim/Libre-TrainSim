@@ -1,15 +1,9 @@
 extends VBoxContainer
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 func _input(event):
 	visible = is_instance_valid(current_rail_logic) and get_parent().current_tab == 2
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 var current_rail_logic = null
 var current_rail_logic_type = ""

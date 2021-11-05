@@ -288,6 +288,9 @@ func provide_settings_for_selected_object() -> void:
 		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
 		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
 		$EditorHUD.ensure_rail_settings()
+	else:
+		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(null)
+		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(null)
 	if selected_object_type == "Building":
 		$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(selected_object)
 		$EditorHUD.show_building_settings()

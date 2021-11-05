@@ -403,7 +403,35 @@ func _spawn_rail() -> Node:
 	$World/Rails.add_child(rail_instance)
 	rail_instance.set_owner($World)
 	#rail_instance._update()
+
+	if rail_instance.overheadLine:
+		_spawn_poles_for_rail(rail_instance)
+
 	return rail_instance
+
+
+func _spawn_poles_for_rail(rail: Node) -> void:
+	var track_object = preload("res://Data/Modules/TrackObjects.tscn").instance()
+	track_object.sides = 2
+	track_object.rows = 1
+	track_object.wholeRail = true
+	track_object.placeLast = true
+	track_object.objectPath = "res://Resources/Objects/Pole1.obj"
+	track_object.materialPaths = [ "res://Resources/Materials/Beton.tres", "res://Resources/Materials/Metal_Green.tres", "res://Resources/Materials/Metal.tres", "res://Resources/Materials/Metal_Brown.tres" ]
+	track_object.attached_rail = rail.name
+	track_object.length = rail.length
+	track_object.distanceLength = 50
+	track_object.rotationObjects = -90.0
+	track_object.name = rail.name + " Poles"
+	track_object.description = "Poles"
+
+	rail.trackObjects.append(track_object)
+
+	$World/TrackObjects.add_child(track_object)
+	track_object.set_owner($World/TrackObjects)
+
+	track_object.update(rail)
+	rail.update()
 
 
 func add_rail() -> void:

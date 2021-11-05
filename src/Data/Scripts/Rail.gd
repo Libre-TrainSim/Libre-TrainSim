@@ -52,7 +52,7 @@ export (bool) var automaticTendency: bool = false
 export (String) var parallelRail: String = ""
 export (float) var distanceToParallelRail: float = 0
 
-export (bool) var overheadLine: bool = false
+export (bool) var overheadLine: bool = true
 var overheadLineHeight1: float = 5.3
 var overheadLineHeight2: float = 6.85
 var overheadLineThinkness: float = 0.02

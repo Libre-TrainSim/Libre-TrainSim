@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 
 
 func update_selected_rail(node: Node) -> void:
-	if node.is_in_group("Rail"):
+	if is_instance_valid(node) and node.is_in_group("Rail"):
 		currentRail = node
 		$CurrentRail/Name.text = node.name
 		$Tab.visible = true

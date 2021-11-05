@@ -39,7 +39,7 @@ func crawl_directory_for_resources():
 
 	if current_type == OBJECTS:
 		for folder in ContentLoader.repo.object_folders:
-			Root.crawlDirectory(folder, current_resources, ["gltf", "glb", "obj", "tscn"])
+			Root.crawlDirectory(folder, current_resources, ["obj"])
 
 	if current_type == RAIL_TYPES:
 		for folder in ContentLoader.repo.rail_type_folders:

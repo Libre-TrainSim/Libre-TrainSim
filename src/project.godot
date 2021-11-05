@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://authors.gd"
 }, {
-"base": "Reference",
+"base": "DynamicFont",
 "class": "AutoDynamicFont",
 "language": "GDScript",
 "path": "res://Data/Fonts/AutoDynamicFont.gd"
@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/DistanceMonitor.gd"
 }, {
-"base": "Reference",
+"base": "CameraBase",
 "class": "EditorCamera",
 "language": "GDScript",
 "path": "res://Editor/Scripts/editor_camera.gd"
@@ -515,4 +515,4 @@ translation_remaps={
 
 threads/thread_model=2
 quality/filters/msaa=2
-environment/default_environment="res://Resources/Enviroments/BasicWorldEnviroment.tres"
+environment/default_environment="res://Resources/Environments/BasicWorldEnvironment.tres"

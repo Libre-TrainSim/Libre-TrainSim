@@ -69,7 +69,8 @@ func _ready() -> void:
 	if Root.Editor:
 		$jSaveModule.set_save_path(String(find_parent("Editor").editor_directory + "/Worlds/" + trackName + "/" + trackName + ".save"))
 	else:
-		$jSaveModule.set_save_path(String("res://Worlds/" + trackName + "/" + trackName + ".save"))
+		var save_path = Root.currentTrack.get_base_dir() + "/" + Root.currentTrack.get_file().get_basename() + ".save"
+		$jSaveModule.set_save_path(save_path)
 
 	if Root.Editor:
 		$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
@@ -562,7 +563,7 @@ func get_signal_scenario_data() -> Dictionary:
 
 
 func set_scenario_to_world() -> void:
-	var Ssave_path: String = "res://Worlds/" + trackName + "/" + trackName + "-scenarios.cfg"
+	var Ssave_path: String = Root.currentTrack.get_base_dir() + "/" + Root.currentTrack.get_file().get_basename() + "-scenarios.cfg"
 	$jSaveModuleScenarios.set_save_path(Ssave_path)
 	var sData: Dictionary = $jSaveModuleScenarios.get_value("scenario_data")
 	var scenario: Dictionary = sData[currentScenario]

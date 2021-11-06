@@ -359,15 +359,19 @@ func handleEngine() -> void:
 		else:
 			stopEngine()
 
+
 func startEngine() -> void:
 	if pantograph:
 		engine = true
 
+
 func stopEngine() -> void:
 	engine = false
 
+
 func get_time() -> void:
 	time = world.time
+
 
 func _unhandled_input(event) -> void:
 	if ai:
@@ -400,6 +404,7 @@ func _unhandled_input(event) -> void:
 
 		camera_fov_soll = clamp(camera_fov_soll, CAMERA_FOV_MIN, CAMERA_FOV_MAX)
 		camera_distance = clamp(camera_distance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
+
 
 func getCommand(delta: float) -> void:
 	if control_type == ControlType.COMBINED and not automaticDriving:
@@ -452,7 +457,6 @@ func getCommand(delta: float) -> void:
 	if enforced_braking and not debug:
 		technicalSoll = -1
 
-
 	var missing_value = (technicalSoll-command)
 	if missing_value == 0: return
 	if command > 0:
@@ -468,7 +472,6 @@ func getCommand(delta: float) -> void:
 	command = command + missing_value*delta
 	if ((technicalSoll-command) > 0 and missing_value < 0) or ((technicalSoll-command) < 0 and missing_value > 0):
 		command = technicalSoll
-
 
 
 func getSpeed(delta: float) -> void:
@@ -582,7 +585,6 @@ func change_to_next_rail() -> void:
 	if forward and (reverser == ReverserState.REVERSE):
 		distance_on_rail += currentRail.length
 
-
 	# Get radius difference:
 	if old_radius == 0: # prevent diviging through Zero, and take a very very big curve radius instead.
 		old_radius = 1000000000
@@ -597,10 +599,7 @@ func change_to_next_rail() -> void:
 	curve_shaking_factor = radius_difference_factor * Math.speedToKmH(speed) / 100.0 * camera_shaking_factor
 
 
-
-
 var mouseMotion: Vector2 = Vector2()
-
 func remove_free_camera() -> void:
 	if world.has_node("FreeCamera"):
 		world.get_node("FreeCamera").queue_free()
@@ -617,6 +616,7 @@ func switch_to_cabin_view() -> void:
 	$Cabin.show()
 	remove_free_camera()
 	$Camera.current = true
+
 
 func switch_to_outer_view() -> void:
 	wagonsVisible = true
@@ -808,8 +808,6 @@ func handle_signal(signal_name: String) -> void:
 	emit_signal("passed_signal", signal_passed)
 
 
-
-
 ## For Station:
 var GOODWILL_DISTANCE: float = 10 # distance the player can overdrive a station, or it's train end isn't in the station.
 var is_last_station: bool = false # if this is the last station on the route
@@ -999,11 +997,13 @@ func open_left_doors() -> void:
 			$Sound/DoorsOpen.play()
 		doorLeft = true
 
+
 func open_right_doors() -> void:
 	if not doorRight and speed == 0 and not doorsClosing:
 		if not $Sound/DoorsOpen.playing:
 			$Sound/DoorsOpen.play()
 		doorRight = true
+
 
 func close_doors() -> void:
 	if not doorsClosing and (doorLeft or doorRight):

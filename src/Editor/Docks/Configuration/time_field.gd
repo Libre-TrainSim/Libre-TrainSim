@@ -3,12 +3,10 @@ class_name TimeField
 
 signal time_set()
 
-func _ready():
-	pass # Replace with function body.
-
 
 func get_data():
 	return [$Popup/HBoxContainer/H.value, $Popup/HBoxContainer/M.value, $Popup/HBoxContainer/S.value]
+
 
 func set_data(time_array : Array):
 	$Popup/HBoxContainer/H.value = time_array[0]

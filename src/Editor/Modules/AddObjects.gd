@@ -1,21 +1,17 @@
 extends Control
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-
 func _on_ShowMenu_pressed():
 	if $ShowMenu.text == " + ":
 		show_menu()
 	else:
 		hide_menu()
 
+
 func show_menu():
 	$Menu1.show()
 	$ShowMenu.text = " - "
+
 
 func hide_menu():
 	$Menu1.hide()
@@ -23,6 +19,7 @@ func hide_menu():
 	$RailLogicMenu.hide()
 	$RailLogicMenu.unselect_all()
 	$ShowMenu.text = " + "
+
 
 var current_waiting_index = -1
 func _on_ItemList_item_selected(index):
@@ -64,14 +61,6 @@ func _on_RailLogicMenu_item_selected(index):
 			editor.add_contact_point_to_selected_rail()
 
 
-	pass
-
-
-
-
-
-
-
 func _on_Content_Selector_resource_selected(complete_path):
 	if complete_path == "": ## User canceled action
 		return
@@ -80,7 +69,4 @@ func _on_Content_Selector_resource_selected(complete_path):
 	if current_waiting_index == 1: ## Object
 		find_parent("Editor").add_object(complete_path)
 		current_waiting_index = -1
-	pass # Replace with function body.
-
-
 

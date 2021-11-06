@@ -13,6 +13,7 @@ func _ready():
 	## Play Music: (The music also plays while level loading ;)
 	jAudioManager.play_music("res://addons/jean28518.jTools/example/SampleMusic.ogg")
 
+
 ## Attention! Every jTable needs at least one connection to the save_pressed signal!
 func _on_jTable_saved_pressed(tableData):
 	# dataTable is a dictionary with single arras.
@@ -55,9 +56,11 @@ func _on_ClearExampleValue_pressed():
 func _on_Quit_pressed():
 	get_tree().quit()
 
+
 ## Play Ingame Sound ###########################################################
 func _on_PlaySound_pressed():
 	jAudioManager.play_game_sound("res://addons/jean28518.jTools/example/SampleSound.ogg")
+
 
 func _on_PlayDelayedSound_pressed():
 	jEssentials.call_delayed($PlayDelayedSound/seconds.value, jAudioManager, "play_game_sound", ["res://addons/jean28518.jTools/example/SampleSound.ogg"])
@@ -67,14 +70,17 @@ func _on_PlayDelayedSound_pressed():
 #func _ready():
 #	$Page2/jListExample2/jList.set_data(jSaveManager.get_value("jListExample2", []))
 
+
 # If the Save Button is enabled, jTable needs at least one connection to the save_pressed signal!
 # You have to care about yourself for saving. But you can do this very easy with jSaveManager:
 func _on_jListExample2_user_pressed_save(data):
 	jSaveManager.save_value("jListExample2", data)
 	print("Saved jList Data successfully. \nHint: For saving you have to care yourself. See example.gd for required code.")
 
+
 func _on_jListExample1_user_selected_entry(entry_name):
 	print("User selected " + entry_name)
+
 
 ## (Pages) #####################################################################
 func _on_Page1_pressed():
@@ -82,6 +88,7 @@ func _on_Page1_pressed():
 	$SaveLoadExample.show()
 	$PlayDelayedSound.show()
 	$Page2.hide()
+
 
 func _on_Page2_pressed():
 	$Table.hide()

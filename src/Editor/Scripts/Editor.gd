@@ -15,7 +15,6 @@ func _ready() -> void:
 	save_world(false)  # yes, really, gras sometimes breaks if we don't *sigh*
 
 
-
 var bouncing_timer: float = 0
 var one_second_timer: float = 0
 func _process(delta):
@@ -291,14 +290,17 @@ func provide_settings_for_selected_object() -> void:
 ## Should be used, if world is loaded into scene.
 func load_world() -> void:
 	editor_directory = jSaveManager.get_setting("editor_directory_path")
-	var world_resource: PackedScene = load(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn")
+	var path = editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn"
+	var world_resource: PackedScene = load(path)
 	if world_resource == null:
 		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
 		return
+
 	var world: Node = world_resource.instance()
-	add_child(world)
 	world.owner = self
 	world.FileName = Root.current_editor_track
+	world.get_node("jSaveModule").save_path = path.get_basename() + ".save"
+	add_child(world)
 
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World

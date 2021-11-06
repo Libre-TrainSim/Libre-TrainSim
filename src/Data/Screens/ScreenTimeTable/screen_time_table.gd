@@ -6,6 +6,7 @@ func _ready():
 	$Table/Departure/Label.text = " " + TranslationServer.translate("DEPARTURE:") + " "
 	$Table/Station/Label.text = " " + TranslationServer.translate("STATION:") + " "
 
+
 func update_display(arrivals, departures, stationNames, stopTypes, passed, isInStation):
 	$CurrentStation.visible = isInStation
 	var arrString = ""

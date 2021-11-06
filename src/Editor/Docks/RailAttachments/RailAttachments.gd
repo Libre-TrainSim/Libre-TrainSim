@@ -12,6 +12,7 @@ var pluginRoot
 
 var track_object_resource: PackedScene = preload("res://Data/Modules/TrackObjects.tscn")
 
+
 func _process(delta: float) -> void:
 	$Tab/TrackObjects/Settings.visible = is_instance_valid(currentTO)
 

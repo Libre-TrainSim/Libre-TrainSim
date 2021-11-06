@@ -1,18 +1,27 @@
 extends Spatial
 
-onready var camera := $Camera as EditorCamera
 var editor_directory: String = ""
+var content: ModContentDefinition
+var authors: Authors
+## Track path without file extension
+var current_track_path := "" setget set_current_track_path
+## Track name is the string after the last /
+var current_track_name := ""
+## Base path of the mod that contains the world
+var mod_path := ""
 
 var selected_object: Node = null
 var selected_object_type: String = ""
 
 var rail_res: PackedScene = preload("res://Data/Modules/Rail.tscn")
 
-# Called when the node enters the scene tree for the first time.
+
+onready var camera := $Camera as EditorCamera
+
+
 func _ready() -> void:
-	load_world()
-	yield(get_tree(), "idle_frame")
-	save_world(false)  # yes, really, gras sometimes breaks if we don't *sigh*
+	if !load_world():
+		return
 
 
 var bouncing_timer: float = 0
@@ -288,18 +297,19 @@ func provide_settings_for_selected_object() -> void:
 
 
 ## Should be used, if world is loaded into scene.
-func load_world() -> void:
-	editor_directory = jSaveManager.get_setting("editor_directory_path")
-	var path = editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn"
+func load_world() -> bool:
+	editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
+	var path := current_track_path + ".tscn"
 	var world_resource: PackedScene = load(path)
 	if world_resource == null:
 		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
-		return
+		return false
 
 	var world: Node = world_resource.instance()
 	world.owner = self
-	world.FileName = Root.current_editor_track
-	world.get_node("jSaveModule").save_path = path.get_basename() + ".save"
+	world.FileName = current_track_name
+	world.get_node("jSaveModule").save_path = current_track_path + ".save"
+	world.get_node("jSaveModuleScenarios").save_path = current_track_path + "-scenarios.cfg"
 	add_child(world)
 
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
@@ -308,8 +318,8 @@ func load_world() -> void:
 
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
-	if last_editor_camera_transforms.has(Root.current_editor_track):
-		camera.load_from_transform(last_editor_camera_transforms[Root.current_editor_track])
+	if last_editor_camera_transforms.has(current_track_name):
+		camera.load_from_transform(last_editor_camera_transforms[current_track_name])
 
 	## Add Colliding Boxes to Buildings:
 	for building in $World/Buildings.get_children():
@@ -318,13 +328,13 @@ func load_world() -> void:
 #		if signal_ins.type == "Signal":
 		signal_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 
-	Root.fix_frame_drop()
+	return true
 
 
 func save_world(send_message: bool = true) -> void:
 	## Save Camera Position
 	var last_editor_camera_transforms: Dictionary = jSaveManager.get_value("last_editor_camera_transforms", {})
-	last_editor_camera_transforms[Root.current_editor_track] = camera.transform
+	last_editor_camera_transforms[current_track_name] = camera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
 	$World.unload_and_save_all_chunks()
@@ -336,7 +346,7 @@ func save_world_step_2(send_message: bool = true) -> void:
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
-		var error = ResourceSaver.save(editor_directory + "Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + ".tscn", packed_scene)
+		var error = ResourceSaver.save(current_track_path + ".tscn", packed_scene)
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
@@ -458,132 +468,69 @@ func add_object(complete_path: String) -> void:
 
 
 func test_track_pck() -> void:
-	save_world()
-	var dir := Directory.new()
-	dir.make_dir_recursive(editor_directory + "/.cache/")
-	var pck_path: String = editor_directory + "/.cache/" + Root.current_editor_track + ".pck"
-	var packer := PCKPacker.new()
-	packer.pck_start(pck_path)
+	if OS.has_feature("editor"):
+		send_message("Can't export and test tracks in Editor. " \
+				+ "Requires subsequent PR to allow direct loading of editable " \
+				+ "maps. Ping HaSa")
+		return
+	export_track_pck()
 
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg")
-	packer.flush()
-
-	if ProjectSettings.load_resource_pack(pck_path, true):
-		Logger.log("Loading Content Pack "+ pck_path+" successfully finished")
+	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
+		Logger.warn("Can't load content pack!", self)
+		send_message("Can't load content pack!")
+		return
 	Root.start_menu_in_play_menu = true
 	LoadingScreen.load_main_menu()
 
 
-func export_track_pck(export_path: String) -> void:
-	var track_name: String = Root.current_editor_track
-	export_path += "/" + track_name + ".pck"
+func export_track_pck() -> void:
+	save_world()
+	var dir := Directory.new()
+	if dir.open("user://") != OK:
+		Logger.err("Can't open user directory.", self)
+		return
+	if dir.make_dir_recursive("user://addons/%s/" % content.unique_name) != OK:
+		Logger.warn("Can't create mod folder.", self)
 	var packer := PCKPacker.new()
-	packer.pck_start(export_path)
+	if ResourceSaver.save("user://addons/%s/content.tres" % content.unique_name, content) != OK:
+		Logger.err("Can't save content.tres. Aborting export.", self)
+		send_message("Can't save content.tres. Aborting export.")
+		return
 
-	## Handle dependencies
-	var dependencies_raw: Array = ResourceLoader.get_dependencies(editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
+	packer.pck_start("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name])
+	$World/jSaveModuleScenarios.set_save_path(current_track_path + "-scenarios.cfg")
 
-	$World/jSaveModuleScenarios.set_save_path(editor_directory + "/Worlds/" + track_name + "/" + track_name + "-scenarios.cfg")
-	var scenario_data : Dictionary = $World/jSaveModuleScenarios.get_value("scenario_data")
-	for scenario in scenario_data.keys():
-		for train in scenario_data[scenario]["Trains"].keys():
-			if not scenario_data[scenario]["Trains"][train]["Stations"].has("approachAnnouncePath"):
-				continue
-			for path in scenario_data[scenario]["Trains"][train]["Stations"]["approachAnnouncePath"]:
-				dependencies_raw.append(path)
-			for path in scenario_data[scenario]["Trains"][train]["Stations"]["arrivalAnnouncePath"]:
-				dependencies_raw.append(path)
-			for path in scenario_data[scenario]["Trains"][train]["Stations"]["departureAnnouncePath"]:
-				dependencies_raw.append(path)
-	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+	var exported_track_path = current_track_path.replace( \
+			mod_path.get_base_dir(), "res://Mods/")
 
-	# Get all dependencies of track objects, buildings, etc..
-	for chunk in $World.get_all_chunks():
-		var chunk_data = $World/jSaveModule.get_value($World.chunk2String(chunk))
-		for building_key in chunk_data["Buildings"].keys():
-			dependencies_raw.append(chunk_data["Buildings"][building_key]["mesh_path"])
-			dependencies_raw.append_array(chunk_data["Buildings"][building_key]["surfaceArr"])
-		for track_object_key in chunk_data["TrackObjects"].keys():
-			dependencies_raw.append(chunk_data["TrackObjects"][track_object_key]["data"]["objectPath"])
-			dependencies_raw.append_array(chunk_data["TrackObjects"][track_object_key]["data"]["materialPaths"])
-	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-	for rail_node in $World/Rails.get_children():
-		dependencies_raw.append(rail_node.railTypePath)
-	for signal_node in $World/Signals.get_children():
-		if signal_node.type == "Signal":
-			dependencies_raw.append(signal_node.visualInstancePath)
-	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
+	packer.add_file(exported_track_path + ".tscn", current_track_path + ".tscn")
+	packer.add_file(exported_track_path+".save", current_track_path + ".save")
+	packer.add_file(exported_track_path+"-scenarios.cfg", current_track_path + "-scenarios.cfg")
+	packer.add_file(exported_track_path.get_base_dir()+"/screenshot.png", \
+			current_track_path.get_base_dir() + "/screenshot.png")
 
-	## Convert some resources to resource pathes
-	for dependence in dependencies_raw:
-		if not dependence is String:
-			dependencies_raw.append(dependence.resource_path)
-			dependencies_raw.erase(dependence)
-
-	## Get dependencies of dependencies:
-	for dependence in dependencies_raw:
-		if not dependence is String:
-			dependencies_raw.append_array(ResourceLoader.get_dependencies(dependence.resource_path))
-			continue
-		dependencies_raw.append_array(ResourceLoader.get_dependencies(dependence))
-	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-
-	## Get import files with resource pathes:
-	for dependence in dependencies_raw:
-		if not dependence is String:
-			continue
-		if dependence.ends_with("obj") or dependence.ends_with("png") or dependence.ends_with("ogg"):
-			var dependence_import_file = dependence + ".import"
-			dependencies_raw.append_array(get_imported_cache_file_path_of_import_file(dependence_import_file))
-			dependencies_raw.append(dependence_import_file)
-#			dependencies_raw.erase(dependence)
-	dependencies_raw = jEssentials.remove_duplicates(dependencies_raw)
-
-	var dependencies_export := []
-	for dependence in dependencies_raw:
-		if dependence == null:
-			continue
-		if not dependence is String:
-			dependencies_export.append(dependence.resource_path)
-#			print(dependence.resource_path)
-			continue
-		if not dependence.begins_with("res://addons/") and jEssentials.does_path_exist(dependence):
-			dependencies_export.append(dependence)
-	for dependence in dependencies_export:
-		Logger.vlog(dependence)
-		packer.add_file(dependence, dependence)
-
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".tscn")
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+".save")
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg", editor_directory + "/Worlds/"+Root.current_editor_track+"/"+Root.current_editor_track+"-scenarios.cfg")
-	packer.add_file("res://Worlds/"+Root.current_editor_track+"/screenshot.png", editor_directory + "/Worlds/"+Root.current_editor_track+"/screenshot.png")
-
-	packer.flush()
-	send_message("Track successfully exported to: " + export_path)
-	$EditorHUD/ExportDialog.hide()
+	packer.flush(true)
+	send_message("Track successfully exported.")
 
 
 func _on_ExportTrack_pressed() -> void:
-	$EditorHUD/ExportDialog.show_up(editor_directory)
+	export_track_pck()
 
 
 func _on_TestTrack_pressed() -> void:
 	test_track_pck()
 
 
-func _on_ExportDialog_export_confirmed(path: String) -> void:
-	export_track_pck(path)
-
-
 func send_message(message: String) -> void:
+	if !$EditorHUD/Message/RichTextLabel.text.empty():
+		return
 	Logger.log("Editor sends message: " + message)
 	$EditorHUD/Message/RichTextLabel.text = message
 	$EditorHUD/Message.show()
 
 
 func _on_MessageClose_pressed() -> void:
+	$EditorHUD/Message/RichTextLabel.text = ""
 	$EditorHUD/Message.hide()
 	if not has_node("World"):
 		LoadingScreen.load_main_menu()
@@ -708,15 +655,17 @@ func load_chunks_near_camera() -> void:
 
 func get_imported_cache_file_path_of_import_file(file_path: String) -> Array:
 	var config := ConfigFile.new()
-	config.load(file_path)
+	if config.load(file_path) != OK:
+		Logger.warn("No cached import file found (%s)" % file_path, self)
+		return []
 	var return_values := []
-	var value: String = config.get_value("remap", "path")
+	var value = config.get_value("remap", "path")
 	if value == "" || value == null:
 		return_values.append(config.get_value("remap", "path.s3tc"))
 		return_values.append(config.get_value("remap", "path.etc2"))
-		Logger.warn("No cached import file found of " + file_path, self)
-	else:
-		return_values.append(value)
+		Logger.warn("No cached import file found (%s)" % file_path, self)
+		return []
+	return_values.append(value)
 	return return_values
 
 
@@ -735,3 +684,8 @@ func get_children_of_type_recursive(node: Node, type) -> Array:
 			stack.append(child)
 
 	return children
+
+
+func set_current_track_path(path: String) -> void:
+	current_track_path = path
+	current_track_name = path.get_file()

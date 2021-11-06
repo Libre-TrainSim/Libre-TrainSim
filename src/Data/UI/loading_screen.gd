@@ -14,7 +14,9 @@ var instance_thread := Thread.new()
 var thread_done := false
 var thread_done_mutex := Mutex.new()
 var is_instancing := false
-
+var editor_content : ModContentDefinition = null
+var editor_world_path := ""
+var editor_mod_path := ""
 
 func _ready() -> void:
 	assert(descriptions.size() > 0)
@@ -49,15 +51,27 @@ func load_world(world: String, _scenario: String, _train: String, bg_img: Textur
 	show()
 
 
+func load_editor(world_path: String, content: ModContentDefinition, mod_path: String, bg_img: Texture) -> void:
+	loader = ResourceLoader.load_interactive("res://Editor/Editor.tscn")
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = self
+	set_process(true)
+	$ProgressBar/Bar.max_value = loader.get_stage_count() - 1
+	$ProgressBar/Bar.value = 0
+	$ProgressBar/Description.text = descriptions[0]
+	$Screenshot.texture = bg_img
+	editor_content = content
+	editor_world_path = world_path
+	editor_mod_path = mod_path
+	show()
+
+
 func _process(_delta: float) -> void:
 	if is_instancing:
 		thread_done_mutex.lock()
 		if thread_done:
 			instance_thread.wait_to_finish()
-			_add_to_tree()
-			set_process(false)
-			_clear()
-			hide()
+			_clean_up_and_switch()
 		thread_done_mutex.unlock()
 		return
 
@@ -72,10 +86,7 @@ func _process(_delta: float) -> void:
 			if instance_thread.start(self, "_instanciate_scenes") != OK:
 				Logger.warn("Can't create instanciation thread. Loading in main thread", self)
 				_instanciate_scenes()
-				_add_to_tree()
-				set_process(false)
-				_clear()
-				hide()
+				_clean_up_and_switch()
 				return
 			is_instancing = true
 			return
@@ -87,6 +98,14 @@ func _process(_delta: float) -> void:
 			var _unused = OS.shell_open(ProjectSettings.globalize_path("user://logs/"))
 			_unused = get_tree().change_scene("res://Data/UI/main_menu.tscn")
 			break
+
+
+func _clean_up_and_switch() -> void:
+	_add_to_tree()
+	set_process(false)
+	_clear()
+	hide()
+	editor_content = null
 
 
 func _instanciate_scenes(_args = null) -> void:
@@ -101,6 +120,10 @@ func _instanciate_scenes(_args = null) -> void:
 func _add_to_tree() -> void:
 	for i in range(1, scenes.size()):
 		scenes[0].add_child(scenes[i])
+	if editor_content:
+		scenes[0].content = editor_content
+		scenes[0].current_track_path = editor_world_path
+		scenes[0].mod_path = editor_mod_path
 	get_tree().root.add_child(scenes[0])
 	get_tree().current_scene = scenes[0]
 

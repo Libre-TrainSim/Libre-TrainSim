@@ -13,7 +13,6 @@ var ingame_pause: bool = false
 var world: Node  ## Reference to world
 
 var Editor: bool = false
-var current_editor_track: String = ""  # Name of track
 
 
 func _ready() -> void:

@@ -83,23 +83,13 @@ func get_size():
 	return item_list.get_item_count()#
 
 
-func revoke_last_user_action(message : String = ""):
-	if undo_buffer == null:
-		print_debug("jList " + name + ": Can't revoke last user action. Nothing stored in buffer.")
-		return
-	set_data(undo_buffer)
-	undo_buffer = null
-
-	if message != "":
-		$PopupDialog/Label.text = message
-	else:
-		$PopupDialog/Label.text = "This action is not allowed!"
+func show_error(message := "This action is not allowed!"):
+	$PopupDialog/Label.text = message
 	$PopupDialog.popup_centered_minsize()
 
 
 ## Internal Code ###############################################################
 var item_list
-var undo_buffer = null
 
 
 func _ready():
@@ -215,7 +205,6 @@ func _enter_tree():
 func _on_Add_pressed():
 	if $VBoxContainer/HBoxContainer/LineEdit.text == "":
 		return
-	undo_buffer = get_data()
 	var entry_name = add_entry($VBoxContainer/HBoxContainer/LineEdit.text)
 	$VBoxContainer/HBoxContainer/LineEdit.text = ""
 	emit_signal("user_added_entry", entry_name)
@@ -224,7 +213,6 @@ func _on_Add_pressed():
 func _on_Remove_pressed():
 	if item_list.get_selected_items().size() == 0:
 		return
-	undo_buffer = get_data()
 	var removed_entries = []
 	while item_list.get_selected_items().size() != 0:
 		removed_entries.append(item_list.get_item_text(item_list.get_selected_items()[0]))
@@ -242,7 +230,6 @@ func _on_Rename_pressed():
 		return
 	if new_text == old_text:
 		return
-	undo_buffer = get_data()
 	rename_entry_id(entry_id, new_text)
 	emit_signal("user_renamed_entry", old_text, new_text)
 	$VBoxContainer/HBoxContainer/LineEdit.text = ""
@@ -251,7 +238,6 @@ func _on_Rename_pressed():
 func _on_Duplicate_pressed():
 	if  item_list.get_selected_items().size() == 0:
 		return
-	undo_buffer = get_data()
 	var source_entry_ids = item_list.get_selected_items()
 	var source_entry_names = []
 	var duplicated_entry_names = []
@@ -264,7 +250,6 @@ func _on_Duplicate_pressed():
 func _on_Copy_pressed(): # stores the current entry_names into the global buffer
 	if  item_list.get_selected_items().size() == 0:
 		return
-	undo_buffer = get_data()
 	var source_entry_names = []
 	var source_entry_ids = item_list.get_selected_items()
 	for entry_id in source_entry_ids:
@@ -277,7 +262,6 @@ func _on_Paste_pressed(): # Adds entry_names from global buffer into jList.
 	var source_entry_names = OS.clipboard
 	if source_entry_names == null:
 		return
-	undo_buffer = get_data()
 	var pasted_entry_names = []
 	for source_entry in source_entry_names:
 		pasted_entry_names.append(add_entry(source_entry))
@@ -310,4 +294,3 @@ func _on_ItemList_multi_selected(index, selected):
 	var selected_items = item_list.get_selected_items()
 	if selected_items.size() == 1:
 		emit_signal("user_selected_entry", item_list.get_item_text(selected_items[0]))
-

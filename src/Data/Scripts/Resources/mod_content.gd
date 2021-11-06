@@ -26,6 +26,21 @@ export (Array, String, FILE, "*.tscn,*.scn") var trains: Array = []
 export (Array, String, FILE, "*.tscn,*.scn") var worlds: Array = []
 
 
+func _init() -> void:
+	depends_on = []
+	environment_folders = []
+	material_folders = []
+	music_folders = []
+	object_folders = []
+	persons_folders = []
+	rail_type_folders = []
+	signal_type_folders = []
+	sound_folders = []
+	texture_folders = []
+	trains = []
+	worlds = []
+
+
 # get version as array
 func _semver() -> Array:
 	return [version_major, version_minor, version_patch]

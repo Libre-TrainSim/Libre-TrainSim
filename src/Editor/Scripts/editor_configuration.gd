@@ -1,110 +1,100 @@
 extends Control
 
-var editor_directory
+onready var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 
-func show():
-	initialize_UI()
-	initialize_editor_directory()
-	load_additional_resources()
-	.show()
+var dir := Directory.new()
+var tracks := {}
 
 
-func initialize_UI():
-	editor_directory = jSaveManager.get_setting("editor_directory_path", OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)+"Libre-TrainSim-Editor/")
-	jSaveManager.save_setting("editor_directory_path", editor_directory)
+func _ready() -> void:
+	_initialize_editor_directory()
 	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
-
-	var track_paths = jEssentials.find_files_recursively(editor_directory + "Worlds/", "tscn")
-	var tracks = []
-	for track_path in track_paths:
-		tracks.append(track_path.get_file().get_basename())
-
-	$PanelContainer/VBoxContainer/TracksList.set_data(tracks)
+	_find_content()
 
 
-func initialize_editor_directory():
-	var dir = Directory.new()
-	if dir.open("user://") != OK:
-		Logger.err("Can't open directory '%s'" % editor_directory, self)
-		return
-	dir.make_dir_recursive(editor_directory)
-	dir.make_dir_recursive(editor_directory + "Resources/")
-	dir.make_dir_recursive(editor_directory + "Worlds/")
-
-
-func _on_UpdateEditorPathButton_pressed():
-	editor_directory = $PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text
-	initialize_editor_directory()
-	jSaveManager.save_setting("editor_directory_path", editor_directory)
-
-
-func initialize_track_directory(entry_name):
-	var dir = Directory.new()
-	if dir.open(editor_directory) != OK:
-		Logger.err("Can't open directory '%s'" % editor_directory, self)
-		return
-	if dir.dir_exists(editor_directory + "Worlds/" + entry_name):
-		$PanelContainer/VBoxContainer/TracksList.revoke_last_user_action("Given Directory " + editor_directory + "Worlds/" + entry_name + " already exists.\nPlease delete this direcotry to create a new track with this name!")
-		return
-	dir.make_dir_recursive(editor_directory + "Worlds/" + entry_name)
-
-	dir.copy("res://Data/Modules/World-Pattern.tscn", editor_directory + "Worlds/" + entry_name + "/" + entry_name + ".tscn")
-	dir.copy("res://Data/Modules/World-Pattern.save", editor_directory + "Worlds/" + entry_name + "/" + entry_name + ".save")
-
-
-func _on_TracksList_user_added_entry(entry_name):
-	$PanelContainer/VBoxContainer/TracksList.remove_entry(entry_name)
-	entry_name = remove_inappropriate_signs_from_track_name(entry_name)
-	$PanelContainer/VBoxContainer/TracksList.add_entry(entry_name)
-	initialize_track_directory(entry_name)
-
-
-func remove_inappropriate_signs_from_track_name(track_name):
+func to_file_name(track_name: String) -> String:
 	track_name = track_name.replace("/", "")
 	track_name = track_name.replace('\\' , "")
 	track_name = track_name.replace(" ", "")
 	return track_name
 
 
-func _on_TracksList_user_renamed_entry(old_name, new_name):
-	rename_track(old_name, new_name)
-
-
-func rename_track(old_name, new_name):
-	new_name = remove_inappropriate_signs_from_track_name(new_name)
-	jEssentials.copy_folder_recursively(editor_directory + "Worlds/" + old_name, \
-			editor_directory + "Worlds/" + new_name)
-	var dir = Directory.new()
-	if dir.open(editor_directory + "Worlds/" + new_name) != OK:
+func _initialize_editor_directory():
+	if dir.open("user://") != OK:
 		Logger.err("Can't open directory '%s'" % editor_directory, self)
 		return
+	dir.make_dir_recursive(editor_directory)
 
-	dir.list_dir_begin()
-	while(true):
-		var file = dir.get_next()
-		if file == "":
-			break
-		if file == ".":
-			continue
-		if file == "..":
-			continue
-		var dir2 = Directory.new()
-		dir2.rename(editor_directory + "Worlds/" + new_name + "/" + file, editor_directory + "Worlds/" + new_name + "/" + file.replace(old_name, new_name))
 
-	dir.list_dir_end()
-	jEssentials.remove_folder_recursively(editor_directory + "Worlds/" + old_name)
+func _find_content():
+	var track_names := []
+	for file in jEssentials.find_files_recursively(editor_directory, "tres"):
+		if file.get_file() != "content.tres":
+			continue
+		var content = load(file) as ModContentDefinition
+		if !content:
+			continue
+		for world in content.worlds:
+			var mod_path: String = file.get_base_dir()
+			track_names.push_back(world.replace("res://Mods", \
+					mod_path.get_base_dir()).get_basename())
+			tracks[track_names.back()] = [content, mod_path]
+	$PanelContainer/VBoxContainer/TracksList.set_data(track_names)
+
+
+func _initialize_mod_directory(entry_name: String) -> bool:
+	var mod_path := editor_directory + entry_name
+	if dir.dir_exists(mod_path):
+		return false
+	var worlds_path := "/Worlds/%s/" % entry_name
+	dir.make_dir_recursive(mod_path + worlds_path)
+	dir.copy("res://Data/Modules/World-Pattern.tscn", \
+			"%s%s/%s.tscn" % [mod_path, worlds_path, entry_name])
+	dir.copy("res://Data/Modules/World-Pattern.save", \
+			"%s%s/%s.save" % [mod_path, worlds_path, entry_name])
+
+	var authors := Authors.new()
+	if ResourceSaver.save(mod_path.plus_file("authors.tres"), authors) != OK:
+		Logger.warn("Can't save authors at path %s" % mod_path + "authors.tres", self)
+	var content := ModContentDefinition.new()
+	content.display_name = entry_name
+	content.unique_name = "%s" % entry_name
+	content.worlds.push_back("res://Mods/%s%s%s.tscn" % [entry_name, worlds_path, entry_name])
+	if ResourceSaver.save(mod_path.plus_file("content.tres"), content) != OK:
+		Logger.err("Can't save content at path %s" % mod_path + "content.tres", self)
+		return false
+	return true
+
+
+func _on_UpdateEditorPathButton_pressed():
+	editor_directory = $PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text
+	if !editor_directory.ends_with("/"):
+		editor_directory += "/"
+	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
+	jSaveManager.save_setting("editor_directory_path", editor_directory)
+
+
+func _on_TracksList_user_added_entry(entry_name):
+	$PanelContainer/VBoxContainer/TracksList.remove_entry(entry_name)
+	entry_name = to_file_name(entry_name)
+	if !_initialize_mod_directory(entry_name):
+		var msg: String = "Directory " + editor_directory + entry_name + " already exists.\nPlease choose a different name!"
+		$PanelContainer/VBoxContainer/TracksList.show_error(msg)
+		Logger.warn(msg, self)
+		return
+	$PanelContainer/VBoxContainer/TracksList.clear()
+	_find_content()
 
 
 func _on_TracksList_user_pressed_action(entry_names):
-	var entry_name = entry_names[0]
-	Root.current_editor_track = entry_name
-	var _unused = get_tree().change_scene_to(load("res://Editor/Editor.tscn"))
-
-
-func load_additional_resources():
-	var pck_file = editor_directory + "/.cache/additional_resources.pck"
-	if jEssentials.does_path_exist(pck_file):
-		var _unused = ProjectSettings.load_resource_pack(pck_file)
+	var screenshot := Image.new()
+	var texture := ImageTexture.new()
+	if screenshot.load(entry_names[0].get_base_dir().plus_file("screenshot.png")) == OK:
+		texture.create_from_image(screenshot)
+	else:
+		texture = null
+	LoadingScreen.load_editor(entry_names[0], tracks[entry_names[0]][0], \
+			tracks[entry_names[0]][1], texture)
 
 
 func _on_Back_pressed() -> void:

@@ -1,10 +1,15 @@
 extends Control
 
 var world: Node
-var save_path: String
+var save_path := ""
 
 var currentScenario: String = ""
 var loadedCurrentScenario: String = ""
+
+
+func _ready() -> void:
+	save_path = find_parent("Editor").current_track_path + "-scenarios.cfg"
+	$jSaveModule.set_save_path(save_path)
 
 
 func get_all_scenarios() -> Array:
@@ -14,11 +19,7 @@ func get_all_scenarios() -> Array:
 func update_save_path() -> void:
 	if world == null or world.name != "World" or world.trackName == "":
 		return
-	var FileName: String = world.trackName + "/" + world.trackName
-	if Root.Editor:
-		save_path = find_parent("Editor").editor_directory + "/Worlds/" + Root.current_editor_track + "/" + Root.current_editor_track + "-scenarios.cfg"
-	else:
-		save_path = "res://Worlds/" + FileName + "-scenarios.cfg"
+	save_path = find_parent("Editor").current_track_path + "-scenarios.cfg"
 	$jSaveModule.set_save_path(save_path)
 
 

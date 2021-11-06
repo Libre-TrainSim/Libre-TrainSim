@@ -1,12 +1,12 @@
 extends Control
 
+onready var editor: Node = find_parent("Editor")
 var world: Node
 var currentRail: Node
 var eds # Editor Selection
 
 
 func _process(delta: float) -> void:
-	var editor: Node = find_parent("Editor")
 	if editor:
 		visible = is_instance_valid(currentRail) and get_parent().current_tab == 1
 
@@ -103,9 +103,8 @@ func _on_AddRail_pressed() -> void:
 		update_selected_rail(self)
 	if $AddRail/Mode.selected == 0: ## After Rail
 		var RailParent: Node = world.get_node("Rails")
-		var RailNode: PackedScene = preload("res://Data/Modules/Rail.tscn")
-		var newRail: Node = RailNode.instance()
-		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
+		var newRail: Node = editor._spawn_rail()
+		Logger.vlog(newRail.name)
 		newRail.translation = currentRail.endpos
 		newRail.rotation_degrees.y = currentRail.endrot
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -123,8 +122,7 @@ func _on_AddRail_pressed() -> void:
 			eds.add_node(newRail)
 	if $AddRail/Mode.selected == 1: ## Parallel Rail
 		var RailParent: Node = currentRail.get_parent()
-		var RailNode: PackedScene = preload("res://Data/Modules/Rail.tscn")
-		var newRail: Node = RailNode.instance()
+		var newRail: Node = editor._spawn_rail()
 		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name + "P", RailParent))
 		newRail.parallelRail = currentRail.name
 		newRail.distanceToParallelRail = float($AddRail/ParallelDistance/LineEdit.text)
@@ -144,8 +142,7 @@ func _on_AddRail_pressed() -> void:
 			eds.add_node(newRail)
 	if $AddRail/Mode.selected == 2: ## Before Rail
 		var RailParent: Node = currentRail.get_parent()
-		var RailNode: PackedScene = preload("res://Data/Modules/Rail.tscn")
-		var newRail: Node = RailNode.instance()
+		var newRail: Node = editor._spawn_rail()
 		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name, RailParent))
 		newRail.translation = currentRail.translation
 		newRail.rotation_degrees.y = currentRail.rotation_degrees.y + 180
@@ -163,9 +160,7 @@ func _on_AddRail_pressed() -> void:
 			eds.clear()
 			eds.add_node(newRail)
 
-	var editor: Node = find_parent("Editor")
-	if editor != null:
-		editor.set_selected_object(currentRail)
+	editor.set_selected_object(currentRail)
 	Logger.log("Rail added.")
 
 
@@ -175,9 +170,7 @@ func _on_Rename_pressed() -> void:
 	$CurrentRail/Name.text = $CurrentRail/Name.text.replace(" ", "_")
 	currentRail.rename($CurrentRail/Name.text)
 	update_selected_rail(currentRail)
-	var editor: Node = find_parent("Editor")
-	if editor:
-		editor.set_selected_object(currentRail)
+	editor.set_selected_object(currentRail)
 	Logger.log("Rail renamed.")
 
 
@@ -275,10 +268,8 @@ func _on_Connect_pressed() -> void:
 	Logger.vlog(vector)
 	vector = vector.rotated(Vector3(0,1,0), -deg2rad(rot1))
 
-	var RailNode: PackedScene = preload("res://Data/Modules/Rail.tscn")
-
 	## Rail 1:
-	var newRail: Node = RailNode.instance()
+	var newRail: Node = editor._spawn_rail()
 	newRail.name = firstRail.name + "Connector"
 	newRail.translation = pos1
 	newRail.rotation_degrees.y = rot1
@@ -291,7 +282,7 @@ func _on_Connect_pressed() -> void:
 	rot2 = newRail.endrot
 
 	## Rail 2:
-	newRail = RailNode.instance()
+	newRail = editor._spawn_rail()
 	newRail.name = secondRail.name + "Connector"
 	newRail.translation = pos2
 	newRail.rotation_degrees.y = rot2
@@ -372,6 +363,7 @@ func set_tendSlopeData(data: Dictionary) -> void:
 	$S/Settings/Tendency/S2/Tend2Pos.editable = !s.automaticTendency
 	$S/Settings/Tendency/S2/Tend2.editable = !s.automaticTendency
 
+
 func update_RotationHeightData() -> void:
 	$RotationHeight/StartRotation.text = String(currentRail.startrot)
 	$RotationHeight/EndRotation.text =String( currentRail.endrot)
@@ -404,6 +396,12 @@ func _on_OverheadLine_pressed() -> void:
 	currentRail.overheadLine = $S/General/OverheadLine.pressed
 	if not $S/General/OverheadLine.pressed:
 		currentRail.update_overheadline(null)
+		if world.get_node("TrackObjects").has_node(currentRail.name + " Poles"):
+			world.get_node("TrackObjects") \
+				.get_node(currentRail.name + " Poles") \
+				.queue_free()
+	else:
+		editor._spawn_poles_for_rail(currentRail)
 	currentRail.update()
 
 

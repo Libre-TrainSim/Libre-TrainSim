@@ -211,6 +211,7 @@ func update_current_rail_attachment() -> void: ## UPDATE
 	if currentTO.description.begins_with("Pole"):
 		currentRail.update()
 
+
 func _on_jListTrackObjects_user_copied_entries(entry_names: Array) -> void:
 	if entry_names.size() == 0:
 		$"Tab/TrackObjects/Settings".visible = false
@@ -231,6 +232,7 @@ func _on_jListTrackObjects_user_pasted_entries(source_entry_names: Array, source
 func _on_Randomize_pressed() -> void:
 	currentTO.newSeed()
 	update_current_rail_attachment() # update
+
 
 ## Object Tab ##################################################################
 var requested_content_selector_id: int = -2

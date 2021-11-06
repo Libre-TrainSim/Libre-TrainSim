@@ -15,11 +15,30 @@ margin_right = 800.0
 margin_bottom = 20.0
 text = "Create a new mod"
 
-[node name="help_modding" type="Button" parent="."]
+[node name="export_mod" type="Button" parent="."]
 margin_top = 24.0
 margin_right = 800.0
 margin_bottom = 44.0
+text = "Export a mod"
+
+[node name="open_addons_dir" type="Button" parent="."]
+margin_top = 48.0
+margin_right = 800.0
+margin_bottom = 68.0
+text = "Open Addons Directory"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 72.0
+margin_right = 800.0
+margin_bottom = 76.0
+
+[node name="help_modding" type="Button" parent="."]
+margin_top = 80.0
+margin_right = 800.0
+margin_bottom = 100.0
 text = "Libre TrainSim Modding Help"
 
 [connection signal="pressed" from="new_mod" to="." method="_on_new_mod_pressed"]
+[connection signal="pressed" from="export_mod" to="." method="_on_export_mod_pressed"]
+[connection signal="pressed" from="open_addons_dir" to="." method="_on_open_addons_dir_pressed"]
 [connection signal="pressed" from="help_modding" to="." method="_on_LinkButton_pressed"]

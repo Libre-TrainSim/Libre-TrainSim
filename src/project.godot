@@ -220,7 +220,7 @@ window/handheld/orientation="sensor_landscape"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
 
 [global]
 

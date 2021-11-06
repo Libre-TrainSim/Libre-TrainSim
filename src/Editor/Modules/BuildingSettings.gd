@@ -11,15 +11,19 @@ var requested_content_selector = false
 onready var editor = find_parent("Editor")
 onready var content_selector = editor.get_node("EditorHUD/Content_Selector")
 
+
 func _ready():
 	configure_mouse_signals($"Material-1")
+
 
 func _input(event):
 	if not is_instance_valid(current_mesh):
 		hide()
 
+
 func emit_signal_updated():
 	emit_signal("updated")
+
 
 func set_mesh(mesh : MeshInstance):
 	current_mesh = mesh
@@ -50,6 +54,7 @@ func set_mesh(mesh : MeshInstance):
 
 	show()
 
+
 func set_current_config_to_mesh():
 	if not is_instance_valid(current_mesh):
 		return
@@ -63,12 +68,11 @@ func set_current_config_to_mesh():
 		counter += 1
 
 
-
-
 func clear_materials_list():
 	for child in get_children():
 		if child.name != "Material-1":
 			child.queue_free()
+
 
 func pick_pressed(material_index):
 	current_material_index = material_index
@@ -89,6 +93,7 @@ func _on_Content_Selector_resource_selected(complete_path):
 	set_current_config_to_mesh()
 	emit_signal_updated()
 
+
 func get_material_array():
 	if not is_instance_valid(current_mesh):
 		return []
@@ -103,8 +108,10 @@ func get_material_array():
 			array.append("")
 	return array
 
+
 func configure_mouse_signals(node):
 	node.get_node("LineEdit").connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
 	node.get_node("LineEdit").connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")
 	node.get_node("Button").connect("mouse_entered", find_parent("EditorHUD"), "_on_Mouse_entered_UI")
 	node.get_node("Button").connect("mouse_exited", find_parent("EditorHUD"), "_on_Mouse_exited_UI")
+

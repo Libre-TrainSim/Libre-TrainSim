@@ -19,16 +19,18 @@ var destinationPos: Array = []
 
 var stopping: bool = false # Used, if for example doors where closed to early
 
+
 func _ready() -> void:
 	walkingSpeed = rand_range(walkingSpeed, walkingSpeed+0.3)
+
 
 func _process(delta: float) -> void:
 	if not get_tree().paused:
 		handleWalk(delta)
 
+
 var leave_wagon_timer: float = 0
 func handleWalk(delta: float) -> void:
-
 	# If Doors where closed to early, and the person is at the station..
 	if transitionToWagon == true and not (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
 		if attachedWagon.player.currentStationNode != attachedStation:
@@ -40,7 +42,6 @@ func handleWalk(delta: float) -> void:
 				$VisualInstance/AnimationPlayer.play("Standing")
 	else:
 		stopping = false
-
 
 	if destinationPos.size() == 0:
 		if transitionToWagon:
@@ -99,7 +100,6 @@ func deSpawn() -> void:
 		attachedStation.deregisterPerson(self)
 	if attachedWagon:
 		attachedWagon.deregisterPerson(self)
-
 	queue_free()
 
 

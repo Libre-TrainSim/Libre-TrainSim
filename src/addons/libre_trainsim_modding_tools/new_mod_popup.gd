@@ -1,9 +1,8 @@
 tool
 extends WindowDialog
 
-const mod_created_setting = "libre_train_sim/modding_tools/mod_created"
-
 var base_control
+
 
 func validate():
 	var unique_name = $MarginContainer/VBoxContainer/Grid/Input_Unique.text
@@ -17,12 +16,11 @@ func validate():
 	var display_name = $MarginContainer/VBoxContainer/Grid/Input_Name.text
 
 	create_mod(author_name, unique_name, display_name)
-	ProjectSettings.set_setting(mod_created_setting, true)
-	ProjectSettings.save()
 	hide()
 	var notice = preload("notice_popup.tscn").instance()
 	base_control.add_child(notice)
 	notice.popup_centered()
+	queue_free()
 
 
 func create_mod(author_name: String,

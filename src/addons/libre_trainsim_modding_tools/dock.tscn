@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/libre_trainsim_modding_tools/dock.gd" type="Script" id=1]
+
+[node name="LTS Modding" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="new_mod" type="Button" parent="."]
+margin_right = 800.0
+margin_bottom = 20.0
+text = "Create a new mod"
+
+[node name="help_modding" type="Button" parent="."]
+margin_top = 24.0
+margin_right = 800.0
+margin_bottom = 44.0
+text = "Libre TrainSim Modding Help"
+
+[connection signal="pressed" from="new_mod" to="." method="_on_new_mod_pressed"]
+[connection signal="pressed" from="help_modding" to="." method="_on_LinkButton_pressed"]

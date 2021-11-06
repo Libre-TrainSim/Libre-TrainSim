@@ -1,15 +1,18 @@
 tool
 extends EditorPlugin
 
-const mod_created_setting = "libre_train_sim/modding_tools/mod_created"
+var dock: Control
+var base: Control
 
 func _enter_tree():
-	if ProjectSettings.has_setting(mod_created_setting) \
-	and ProjectSettings.get_setting(mod_created_setting) == true:
-		return
+	base = get_editor_interface().get_base_control()
 
-	var base_control = get_editor_interface().get_base_control()
-	var popup = preload("new_mod_popup.tscn").instance()
-	popup.base_control = base_control
-	base_control.add_child(popup)
-	popup.popup_centered()
+	dock = preload("dock.tscn").instance()
+	dock.base = base
+	add_control_to_dock(DOCK_SLOT_LEFT_BR, dock)
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(dock):
+		remove_control_from_docks(dock)
+		dock.queue_free()

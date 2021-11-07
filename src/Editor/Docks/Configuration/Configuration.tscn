@@ -6,8 +6,10 @@
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=4]
 
 [node name="Configuration" type="TabContainer"]
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -357.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,14 +24,14 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="World Configuration" type="Label" parent="World Configuration"]
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 14.0
 text = "World Configuration:"
 align = 1
 
 [node name="GridContainer" type="GridContainer" parent="World Configuration"]
 margin_top = 18.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 174.0
 columns = 2
 
@@ -58,11 +60,11 @@ text = "Release Date:"
 
 [node name="ReleaseDate" type="HBoxContainer" parent="World Configuration/GridContainer"]
 margin_left = 119.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 24.0
 
 [node name="Day" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
-margin_right = 221.0
+margin_right = 74.0
 margin_bottom = 24.0
 hint_tooltip = "Day"
 size_flags_horizontal = 3
@@ -72,8 +74,8 @@ value = 1.0
 suffix = "D"
 
 [node name="Month" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
-margin_left = 225.0
-margin_right = 447.0
+margin_left = 78.0
+margin_right = 152.0
 margin_bottom = 24.0
 hint_tooltip = "Month
 "
@@ -84,8 +86,8 @@ value = 1.0
 suffix = "M"
 
 [node name="Year" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
-margin_left = 451.0
-margin_right = 673.0
+margin_left = 156.0
+margin_right = 230.0
 margin_bottom = 24.0
 hint_tooltip = "Month
 "
@@ -105,7 +107,7 @@ text = "Author Name(s):"
 [node name="Author" type="LineEdit" parent="World Configuration/GridContainer"]
 margin_left = 119.0
 margin_top = 28.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 caret_blink = true
@@ -120,15 +122,15 @@ text = "Track Description:"
 [node name="TrackDescription" type="TextEdit" parent="World Configuration/GridContainer"]
 margin_left = 119.0
 margin_top = 56.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 156.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 
 [node name="SaveWorldConfig" type="Button" parent="World Configuration"]
-margin_left = 333.0
+margin_left = 111.0
 margin_top = 178.0
-margin_right = 459.0
+margin_right = 237.0
 margin_bottom = 198.0
 size_flags_horizontal = 4
 text = "Save World Config"
@@ -220,7 +222,7 @@ text = "Load Chunks"
 
 [node name="HSeparator2" type="HSeparator" parent="World Configuration"]
 margin_top = 202.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 206.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -228,7 +230,7 @@ __meta__ = {
 
 [node name="Notes" type="VBoxContainer" parent="World Configuration"]
 margin_top = 210.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 564.0
 size_flags_vertical = 3
 __meta__ = {
@@ -236,22 +238,22 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="World Configuration/Notes"]
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 14.0
 text = "Notes for Authors:"
 align = 1
 
 [node name="RichTextLabel" type="TextEdit" parent="World Configuration/Notes"]
 margin_top = 18.0
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 330.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 3
 
 [node name="Save" type="Button" parent="World Configuration/Notes"]
-margin_left = 354.0
+margin_left = 133.0
 margin_top = 334.0
-margin_right = 437.0
+margin_right = 216.0
 margin_bottom = 354.0
 size_flags_horizontal = 4
 text = "Save Notes"
@@ -266,7 +268,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Scenarios"]
-margin_right = 792.0
+margin_right = 349.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -1,13 +1,12 @@
 extends VBoxContainer
 
-
-func _input(event):
-	visible = is_instance_valid(current_rail_logic) and get_parent().current_tab == 2
-
-
 var current_rail_logic = null
 var current_rail_logic_type = ""
+var resource_selector_called = false
+
+
 func set_rail_logic(rail_logic):
+	visible = rail_logic != null
 	current_rail_logic = rail_logic
 	current_rail_logic_type = rail_logic.type
 	update_general_settings_ui()
@@ -45,7 +44,6 @@ func _on_Forwad_pressed():
 	current_rail_logic.set_to_rail()
 
 
-var resource_selector_called = false
 func _on_PickVisibleInstance_pressed():
 	resource_selector_called = true
 	var content_selector = find_parent("Editor").get_node("EditorHUD/Content_Selector")

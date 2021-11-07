@@ -422,10 +422,8 @@ margin_top = 168.0
 margin_right = 800.0
 margin_bottom = 192.0
 
-[connection signal="changed" from="GeneralSettings/Distance" to="." method="_on_general_setting_changed"]
 [connection signal="value_changed" from="GeneralSettings/Distance" to="." method="_on_Distance_value_changed"]
 [connection signal="pressed" from="GeneralSettings/Forwad" to="." method="_on_Forwad_pressed"]
-[connection signal="pressed" from="GeneralSettings/Forwad" to="." method="_on_general_setting_changed"]
 [connection signal="value_changed" from="SignalSettings/SpeedLimit" to="." method="_on_SpeedLimit_value_changed"]
 [connection signal="value_changed" from="SignalSettings/SpeedLimit" to="." method="_on_SpeedLimitSignalSettings_value_changed"]
 [connection signal="pressed" from="SignalSettings/VisibleInstance/PickVisibleInstance" to="." method="_on_PickVisibleInstance_pressed"]

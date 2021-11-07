@@ -14,21 +14,26 @@ script = ExtResource( 2 )
 stream = ExtResource( 3 )
 unit_size = 7.0
 autoplay = true
+bus = "Game"
 
 [node name="CurveSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 1 )
 unit_size = 7.0
 autoplay = true
+bus = "Game"
 
 [node name="SwitchSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 4 )
 unit_size = 7.0
+bus = "Game"
 
 [node name="SwitchSound2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 4 )
 unit_size = 7.0
+bus = "Game"
 
 [node name="BrakeSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
 unit_size = 7.0
 autoplay = true
+bus = "Game"

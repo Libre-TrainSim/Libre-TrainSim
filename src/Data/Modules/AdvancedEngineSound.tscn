@@ -17,22 +17,22 @@ acceleration_transition_2_delta_length_in_ms = 200.0
 stream = ExtResource( 2 )
 unit_size = 3.0
 autoplay = true
-bus = "Train"
+bus = "Game"
 
 [node name="Acceleration1" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 4 )
 unit_size = 3.0
 autoplay = true
-bus = "Train"
+bus = "Game"
 
 [node name="Acceleration2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 1 )
 unit_size = 3.0
 autoplay = true
-bus = "Train"
+bus = "Game"
 
 [node name="AccelerationTransition" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
 unit_db = -10.0
 unit_size = 3.0
-bus = "Train"
+bus = "Game"

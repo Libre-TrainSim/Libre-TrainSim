@@ -214,6 +214,7 @@ align = 2
 stream = ExtResource( 11 )
 volume_db = -25.384
 autoplay = true
+bus = "Music"
 
 [connection signal="pressed" from="Buttons/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Buttons/Content" to="." method="_on_Content_pressed"]

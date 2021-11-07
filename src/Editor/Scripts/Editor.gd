@@ -473,48 +473,73 @@ func test_track_pck() -> void:
 				+ "Requires subsequent PR to allow direct loading of editable " \
 				+ "maps. Ping HaSa")
 		return
-	export_track_pck()
+	export_mod()
 
 	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
 		Logger.warn("Can't load content pack!", self)
 		send_message("Can't load content pack!")
 		return
+	ContentLoader.append_content_to_global_repo(content)
 	Root.start_menu_in_play_menu = true
 	LoadingScreen.load_main_menu()
 
 
-func export_track_pck() -> void:
+func export_mod() -> void:
 	save_world()
+	var mod_name = content.unique_name
+	var export_path = "user://addons/".plus_file(mod_name)
+
 	var dir := Directory.new()
 	if dir.open("user://") != OK:
 		Logger.err("Can't open user directory.", self)
 		return
-	if dir.make_dir_recursive("user://addons/%s/" % content.unique_name) != OK:
+	if dir.make_dir_recursive(export_path) != OK:
 		Logger.warn("Can't create mod folder.", self)
-	var packer := PCKPacker.new()
 	if ResourceSaver.save("user://addons/%s/content.tres" % content.unique_name, content) != OK:
 		Logger.err("Can't save content.tres. Aborting export.", self)
 		send_message("Can't save content.tres. Aborting export.")
 		return
 
-	packer.pck_start("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name])
-	$World/jSaveModuleScenarios.set_save_path(current_track_path + "-scenarios.cfg")
+	dir.change_dir(export_path)
 
-	var exported_track_path = current_track_path.replace( \
-			mod_path.get_base_dir(), "res://Mods/")
+	var packer = PCKPacker.new()
+	var ok = packer.pck_start(export_path.plus_file(mod_name) + ".pck")
+	if ok != OK:
+		Logger.err("Error creating %s!" % export_path.plus_file(mod_name) + ".pck", self)
+		send_message("Error creating %s!" % export_path.plus_file(mod_name) + ".pck")
+		return
 
-	packer.add_file(exported_track_path + ".tscn", current_track_path + ".tscn")
-	packer.add_file(exported_track_path+".save", current_track_path + ".save")
-	packer.add_file(exported_track_path+"-scenarios.cfg", current_track_path + "-scenarios.cfg")
-	packer.add_file(exported_track_path.get_base_dir()+"/screenshot.png", \
-			current_track_path.get_base_dir() + "/screenshot.png")
+	var files = get_files_in_directory(mod_path)
+	for file in files:
+		ok = packer.add_file(file.replace(editor_directory, "res://Mods/"), file)
+		if ok != OK:
+			Logger.err("Could not add file %s to pck!" % file, self)
 
-	packer.flush(true)
+	ok = packer.flush(true)
+	if ok != OK:
+		send_message("Could not flush pck!")
+		Logger.err("Could not flush pck!", self)
 	send_message("Track successfully exported.")
 
 
+func get_files_in_directory(path: String) -> Array:
+	var files = []
+	var dir = Directory.new()
+	dir.open(path)
+	dir.list_dir_begin(true, true)
+	var file_name = dir.get_next()
+	while file_name != "":
+		if dir.current_is_dir():
+			files.append_array(get_files_in_directory(path.plus_file(file_name)))
+		else:
+			files.append(path.plus_file(file_name))
+		file_name = dir.get_next()
+	return files
+
+
+
 func _on_ExportTrack_pressed() -> void:
-	export_track_pck()
+	export_mod()
 
 
 func _on_TestTrack_pressed() -> void:

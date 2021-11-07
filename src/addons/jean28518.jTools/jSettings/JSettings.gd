@@ -202,6 +202,11 @@ func _id_to_language_code(id : int):
 
 ## Other Signals ###############################################################
 
+func _unhandled_key_input(event: InputEventKey) -> void:
+	if event.is_action("Escape"):
+		$JSettings.hide()
+
+
 func _on_Back_pressed():
 	$JSettings.hide()
 

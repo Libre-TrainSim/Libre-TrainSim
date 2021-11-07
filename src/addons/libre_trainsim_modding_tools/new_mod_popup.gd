@@ -29,7 +29,6 @@ func create_mod(author_name: String,
 
 	var mod_path = "res://Mods/" + mod_unique_name
 
-	# don't use make_dir_recursive() ... the created dir becomes undeletable!
 	var d = Directory.new()
 	d.open("res://")
 	d.make_dir("Mods")

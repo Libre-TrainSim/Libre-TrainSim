@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/camera_base.gd"
 }, {
+"base": "Spatial",
+"class": "Chunk",
+"language": "GDScript",
+"path": "res://Data/Scripts/chunk.gd"
+}, {
 "base": "Node",
 "class": "ChunkManager",
 "language": "GDScript",
@@ -164,10 +169,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Editor/Docks/Configuration/time_field.gd"
 }, {
+"base": "Resource",
+"class": "TrackScenario",
+"language": "GDScript",
+"path": "res://Data/Scripts/Resources/track_scenario.gd"
+}, {
 "base": "RailLogic",
 "class": "WarnSpeedLimit",
 "language": "GDScript",
 "path": "res://Data/Scripts/SpeedLimitWarnSignal.gd"
+}, {
+"base": "Resource",
+"class": "WorldConfig",
+"language": "GDScript",
+"path": "res://Data/Scripts/Resources/world_config.gd"
 }, {
 "base": "Spatial",
 "class": "WorldObject",
@@ -179,6 +194,7 @@ _global_script_class_icons={
 "Authors": "",
 "AutoDynamicFont": "",
 "CameraBase": "",
+"Chunk": "",
 "ChunkManager": "",
 "ColoredItemList": "",
 "ContactPoint": "",
@@ -206,7 +222,9 @@ _global_script_class_icons={
 "Station": "",
 "TextBox": "",
 "TimeField": "",
+"TrackScenario": "",
 "WarnSpeedLimit": "",
+"WorldConfig": "",
 "WorldObject": ""
 }
 

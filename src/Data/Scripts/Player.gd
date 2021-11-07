@@ -832,7 +832,7 @@ var doorOpenMessageSent: bool = false
 var currentStationNode: Spatial
 var current_station_index: int = 0
 func check_station(delta: float) -> void:
-	if currentStationName == "":
+	if currentStationName.empty():
 		return
 
 	var distance_in_station: float = distance_on_route - distanceOnStationBeginning
@@ -1247,7 +1247,7 @@ func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1
 		return
 	else:
 		check_for_next_stationTimer = 0
-		if nextStation == "":
+		if nextStation.empty():
 			var nextStations: Array = get_all_upcoming_signals_of_types(["Station"])
 #			print(name + ": "+String(nextStations))
 			if nextStations.size() == 0:
@@ -1395,7 +1395,7 @@ var updateNextSignalTimer: float = 0
 func updateNextSignal(delta):
 	if nextSignal == null:
 		var upcoming = get_next_signal()
-		if upcoming == "":
+		if upcoming.empty():
 			return
 		nextSignal = world.get_node("Signals/"+upcoming)
 		updateNextSignalTimer = 1 ## Force Update Signal
@@ -1439,7 +1439,7 @@ var updateNextStationTimer: float = 0
 func updateNextStation() -> void:  ## Used for Autopilot
 	if nextStationNode == null:
 		var upcoming: String = get_next_station()
-		if upcoming == "":
+		if upcoming.empty():
 			return
 		nextStationNode = world.get_node("Signals").get_node(upcoming)
 		nextStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
@@ -1496,7 +1496,7 @@ func autopilot() -> void:
 			nextStationNode = null
 
 	## Open Doors:
-	if (currentStationName != "" and speed == 0 and not isInStation and distance_on_route - distanceOnStationBeginning >= length):
+	if (not currentStationName.empty() and speed == 0 and not isInStation and distance_on_route - distanceOnStationBeginning >= length):
 		if nextStationNode.platform_side == PlatformSide.LEFT:
 			doorLeft = true
 			$Sound/DoorsOpen.play()
@@ -1643,20 +1643,20 @@ func get_camera_shaking(delta: float) -> Vector3:
 
 var switch_on_next_change: bool = false
 func updateSwitchOnNextChange():
-	if forward and currentRail.isSwitchPart[1] != "":
+	if forward and not currentRail.isSwitchPart[1].empty():
 		switch_on_next_change = true
 		return
-	elif not forward and currentRail.isSwitchPart[0] != "":
+	elif not forward and not currentRail.isSwitchPart[0].empty():
 		switch_on_next_change = true
 		return
 
 	if baked_route.size() > route_index+1:
 		var nextRail: Spatial = world.get_node("Rails").get_node(baked_route[route_index+1])
 		var nextForward: bool = baked_route_direction[route_index+1]
-		if nextForward and nextRail.isSwitchPart[0] != "":
+		if nextForward and not nextRail.isSwitchPart[0].empty():
 			switch_on_next_change = true
 			return
-		elif not nextForward and nextRail.isSwitchPart[1] != "":
+		elif not nextForward and not nextRail.isSwitchPart[1].empty():
 			switch_on_next_change = true
 			return
 

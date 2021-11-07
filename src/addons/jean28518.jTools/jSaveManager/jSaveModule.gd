@@ -36,7 +36,7 @@ func write_to_disk():
 	if _config == null:
 		Logger.err("Save path not configured correctly. Don't saving anything...", self)
 		return
-	for key in _cache_main.keys():
+	for key in _cache_main:
 		_config.set_value("Main", key, _cache_main[key])
 	_config.save(save_path)
 
@@ -62,7 +62,7 @@ func _ready():
 
 
 func _load_current_config():
-	if save_path == "":
+	if save_path.empty():
 		Logger.err("Save path not configured correctly. Not initializing jSaveModlue "+ name + ".", self)
 		return
 	_config = ConfigFile.new()

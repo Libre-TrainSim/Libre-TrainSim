@@ -8,6 +8,10 @@ var message_sent: bool = false
 
 
 func _process(delta: float) -> void:
+	if Root.Editor:
+		set_process(false)
+		return
+	
 	if world == null:
 		world = find_parent("World")
 	if player == null:

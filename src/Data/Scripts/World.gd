@@ -12,7 +12,7 @@ var default_persons_at_station: int = 20
 var globalDict: Dictionary = {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
 
 ################################################################################
-var currentScenario: String = ""
+var current_scenario: TrackScenario = null
 
 export (String) var FileName: String = "Name Me!"
 onready var trackName: String = FileName.rsplit("/")[0]
@@ -44,16 +44,10 @@ func _ready() -> void:
 	if has_node("Grass"):
 		$Grass.queue_free()
 
-	if trackName == "":
+	if trackName.empty():
 		trackName = FileName
 
 	Logger.log("trackName: " +trackName + " " + FileName)
-
-	if Root.Editor:
-		$jSaveModule.set_save_path(find_parent("Editor").current_track_path + ".save")
-	else:
-		var save_path = Root.currentTrack.get_base_dir() + "/" + Root.currentTrack.get_file().get_basename() + ".save"
-		$jSaveModule.set_save_path(save_path)
 
 	if Root.Editor:
 		$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
@@ -62,10 +56,7 @@ func _ready() -> void:
 
 	Root.world = self
 	Root.checkAndLoadTranslationsForTrack(trackName)
-	currentScenario = Root.currentScenario
 	set_scenario_to_world()
-
-	jEssentials.call_delayed(1.0, self, "load_configs_to_cache")
 
 	## Create Persons-Node:
 	var personsNode := Spatial.new()
@@ -80,14 +71,6 @@ func _ready() -> void:
 
 	player = $Players/Player
 	apply_user_settings()
-
-
-func save_value(key: String, value):
-	return $jSaveModule.save_value(key, value)
-
-
-func get_value(key: String,  default_value = null):
-	return $jSaveModule.get_value(key,  default_value)
 
 
 func apply_user_settings() -> void:
@@ -142,42 +125,45 @@ func get_signal_scenario_data() -> Dictionary:
 
 
 func set_scenario_to_world() -> void:
-	var Ssave_path: String = Root.currentTrack.get_base_dir() + "/" + Root.currentTrack.get_file().get_basename() + "-scenarios.cfg"
-	$jSaveModuleScenarios.set_save_path(Ssave_path)
-	var sData: Dictionary = $jSaveModuleScenarios.get_value("scenario_data")
-	var scenario: Dictionary = sData[currentScenario]
+	var path: String = Root.currentTrack.get_base_dir().plus_file("scenarios").plus_file(Root.currentScenario) + ".tres"
+
+	current_scenario = load(path) as TrackScenario
+	if current_scenario == null:
+		Logger.err("Error loading scenario %s!" % Root.currentScenario, self)
+		return
+
 	# set world Time:
-	timeHour = scenario["TimeH"]
-	timeMinute = scenario["TimeM"]
-	timeSecond = scenario["TimeS"]
+	timeHour = current_scenario.time["hour"]
+	timeMinute = current_scenario.time["minute"]
+	timeSecond = current_scenario.time["second"]
 	time = [timeHour,timeMinute,timeSecond]
 
-	apply_scenario_to_signals(scenario["Signals"])
+	apply_scenario_to_signals(current_scenario.signals)
 
 	## SPAWN TRAINS:
-	for train in scenario["Trains"].keys():
+	for train in current_scenario.trains:
 		spawnTrain(train)
 
-	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [TranslationServer.translate(scenario["Description"])])
-#	$Players/Player.show_textbox_message(TranslationServer.translate(scenario["Description"]))
+	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [tr(current_scenario.description)])
 
 
 func spawnTrain(trainName: String) -> void:
 	if $Players.has_node(trainName):
 		Logger.err("Train is already loaded! - Aborted loading...", trainName)
 		return
-	var sData: Dictionary = $jSaveModuleScenarios.get_value("scenario_data")
-	var scenario: Dictionary = sData[currentScenario]
-	var spawnTime: Array = scenario["Trains"][trainName]["SpawnTime"]
-	if scenario["Trains"][trainName]["SpawnTime"][0] != -1 and not (spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]):
-		Logger.log("Spawn Time of "+trainName + " not reached, spawning later...")
+
+	var train: Dictionary = current_scenario.trains[trainName]
+
+	var spawnTime: Array = train["SpawnTime"]
+	if spawnTime[0] != -1 and not (spawnTime[0] == time[0] and spawnTime[1] == time[1] and spawnTime[2] == time[2]):
+		Logger.log("Spawn Time of " + trainName + " not reached, spawning later...")
 		pendingTrains["TrainName"].append(trainName)
-		pendingTrains["SpawnTime"].append(scenario["Trains"][trainName]["SpawnTime"].duplicate())
+		pendingTrains["SpawnTime"].append(train["SpawnTime"].duplicate())
 		return
 	# Find preferred train:
 	var new_player: Node
-	var preferredTrain: String = scenario["Trains"][trainName].get("PreferredTrain", "")
-	if (preferredTrain == "" and not trainName == "Player") or trainName == "Player":
+	var preferredTrain: String = train.get("PreferredTrain", "")
+	if (preferredTrain.empty() and not trainName == "Player") or trainName == "Player":
 		if not trainName == "Player":
 			Logger.warn("no preferred train specified. Loading player train...", self)
 		new_player = load(Root.currentTrain).instance()
@@ -195,23 +181,22 @@ func spawnTrain(trainName: String) -> void:
 	$Players.add_child(new_player)
 	new_player.add_to_group("Player")
 	new_player.owner = self
-	if new_player.length  +25 > scenario["TrainLength"]:
-		new_player.length = scenario["TrainLength"] -25
-	new_player.route = scenario["Trains"][trainName]["Route"]
-	new_player.startRail = scenario["Trains"][trainName]["StartRail"]
-	new_player.forward = bool(scenario["Trains"][trainName]["Direction"])
-	new_player.startPosition = scenario["Trains"][trainName]["StartRailPosition"]
-	new_player.stations = scenario["Trains"][trainName]["Stations"]
+	if new_player.length + 25 > current_scenario.train_length:
+		new_player.length = current_scenario.train_length - 25
+	new_player.route = train["Route"]
+	new_player.startRail = train["StartRail"]
+	new_player.forward = bool(train["Direction"])
+	new_player.startPosition = train["StartRailPosition"]
+	new_player.stations = train["Stations"]
 	new_player.stations["passed"] = []
 	for _i in range(new_player.stations["nodeName"].size()):
 		new_player.stations["passed"].append(false)
-	new_player.despawnRail = scenario["Trains"][trainName]["DespawnRail"]
+	new_player.despawnRail = train["DespawnRail"]
 	new_player.ai = trainName != "Player"
-	new_player.initialSpeed = Math.kmHToSpeed(scenario["Trains"][trainName].get("InitialSpeed", 0))
-	if scenario["Trains"][trainName].get("InitialSpeedLimit", -1) != -1:
-		new_player.currentSpeedLimit = scenario["Trains"][trainName].get("InitialSpeedLimit", -1)
+	new_player.initialSpeed = Math.kmHToSpeed(train.get("InitialSpeed", 0))
+	new_player.currentSpeedLimit = train.get("InitialSpeedLimit", new_player.currentSpeedLimit)
 
-	var doorStatus: int = scenario["Trains"][trainName]["DoorConfiguration"]
+	var doorStatus: int = train["DoorConfiguration"]
 	match doorStatus:
 		0:
 			pass
@@ -293,11 +278,6 @@ func update_all_rails_overhead_line_setting(overhead_line: bool) -> void:
 ## Should be later used if we have a real heightmap
 func get_terrain_height_at(_position: Vector2) -> float:
 	return 0.0
-
-
-func load_configs_to_cache() -> void:
-	$jSaveModule.load_everything_into_cache()
-	$jSaveModuleScenarios.load_everything_into_cache()
 
 
 func jump_player_to_station(station_table_index: int) -> void:

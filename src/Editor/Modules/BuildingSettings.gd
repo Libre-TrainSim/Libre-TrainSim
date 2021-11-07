@@ -85,7 +85,7 @@ func _on_Content_Selector_resource_selected(complete_path):
 	if not requested_content_selector:
 		return
 	requested_content_selector = false
-	if complete_path == "":
+	if complete_path.empty():
 		return
 	if not is_instance_valid(current_mesh):
 		return

@@ -62,7 +62,7 @@ func _on_RailLogicMenu_item_selected(index):
 
 
 func _on_Content_Selector_resource_selected(complete_path):
-	if complete_path == "": ## User canceled action
+	if complete_path.empty(): ## User canceled action
 		return
 	if current_waiting_index == -1: ## Not waiting for any input
 		return

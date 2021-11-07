@@ -21,7 +21,7 @@ func update_selected_rail(node: Node) -> void:
 		$RotationHeight.visible = true
 		update_RotationHeightData()
 		update_generalInformation()
-		if currentRail.parallelRail != "":
+		if not currentRail.parallelRail.empty():
 			$S/Settings.hide()
 			$S/General/ParallelRail.show()
 			return

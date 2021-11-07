@@ -65,7 +65,7 @@ func crawl_directory_for_resources():
 
 func update_ItemList():
 	$ItemList.clear()
-	if $HBoxContainer/LineEdit.text == "":
+	if $HBoxContainer/LineEdit.text.empty():
 		for resource in current_resources:
 			$ItemList.add_item(resource.get_file())
 	else:

@@ -10,7 +10,7 @@ src/.import/
 *.csv.import
 *.translation
 
-src/Mods/
+src/Mods/*
 
 src/android/*
 

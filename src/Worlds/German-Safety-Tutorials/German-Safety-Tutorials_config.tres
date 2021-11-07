@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/world_config.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+release_date = {
+"day": 16.0,
+"month": 9.0,
+"year": 2021.0
+}
+title = "German-Safety-Tutorials"
+author = "DasCapschen"
+track_description = "Learn how to use the German Security Systems."
+thumbnail_path = ""
+scenarios = [ "res://Worlds/German-Safety-Tutorials/scenarios/PZB.tres", "res://Worlds/German-Safety-Tutorials/scenarios/Sifa.tres" ]
+notes = ""

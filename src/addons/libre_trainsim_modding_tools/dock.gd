@@ -71,7 +71,7 @@ func get_files_in_directory(path: String) -> Array:
 	dir.open(path)
 	dir.list_dir_begin(true, true)
 	var file_name = dir.get_next()
-	while file_name != "":
+	while not file_name.empty():
 		if dir.current_is_dir():
 			files.append_array(get_files_in_directory(path.plus_file(file_name)))
 		else:

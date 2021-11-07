@@ -15,13 +15,169 @@ var selected_object_type: String = ""
 
 var rail_res: PackedScene = preload("res://Data/Modules/Rail.tscn")
 
-
 onready var camera := $Camera as EditorCamera
 
 
 func _ready() -> void:
 	if !load_world():
 		return
+
+	_port_to_new_scenario_resource()
+	_port_to_new_chunk_system()
+
+
+func _port_to_new_chunk_system() -> void:
+	var save_file = current_track_path + ".save"
+	var dir = Directory.new()
+	if not dir.file_exists(save_file):
+		return
+
+	dir.make_dir_recursive(current_track_path.get_base_dir().plus_file("chunks"))
+
+	var jsavemodule = Node.new()
+	jsavemodule.set_script(load("res://addons/jean28518.jTools/jSaveManager/jSaveModule.gd"))
+	jsavemodule.set_save_path(save_file)
+	var keys = jsavemodule._config.get_section_keys("Main")
+
+	for key in keys:
+		if not "," in key:
+			continue
+		var old_chunk = jsavemodule.get_value(key, {})
+		if old_chunk.empty():
+			continue
+
+		var new_chunk = preload("res://Data/Modules/chunk_prefab.tscn").instance()
+		new_chunk.name = ChunkManager.chunk_to_string(old_chunk.position)
+		new_chunk.chunk_position = old_chunk.position
+		new_chunk.rails = old_chunk.Rails
+
+		var buildings_data: Dictionary = old_chunk.Buildings
+		for building_data in buildings_data:
+			var mesh_instance := MeshInstance.new()
+			mesh_instance.name = buildings_data[building_data].name
+			mesh_instance.set_mesh(load(buildings_data[building_data].mesh_path))
+			mesh_instance.transform = buildings_data[building_data].transform
+			var surfaceArr: Array = buildings_data[building_data].surfaceArr
+			if surfaceArr == null:
+				surfaceArr = []
+			for i in range (surfaceArr.size()):
+				mesh_instance.set_surface_material(i, surfaceArr[i])
+
+			new_chunk.get_node("Buildings").add_child(mesh_instance)
+			mesh_instance.owner = new_chunk
+
+		var track_objects: Dictionary = old_chunk.TrackObjects
+		var to_prefab = preload("res://Data/Modules/TrackObjects.tscn")
+		for to_key in track_objects:
+			var track_obj = track_objects[to_key]
+
+			var to_instance = to_prefab.instance()
+			to_instance.name = track_obj.name
+			to_instance.multimesh = MultiMesh.new()
+			to_instance.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+			to_instance.multimesh.mesh = load(track_obj.data.objectPath)
+			to_instance.materials = []
+			to_instance.mesh = load(track_obj.data.objectPath)
+
+			if to_instance.multimesh.mesh != null:
+				var i = 0
+				for material_path in track_obj.data.materialPaths:
+					to_instance.materials.append(load(material_path))
+					to_instance.multimesh.mesh.surface_set_material(i, load(material_path))
+					i += 1
+			else:
+				Logger.err("Could not load object '%s'." % track_obj.data.objectPath, self)
+
+			to_instance.set_data(track_obj.data)
+
+			to_instance.transform = track_obj.transform
+
+			new_chunk.get_node("TrackObjects").add_child(to_instance)
+			to_instance.owner = new_chunk
+
+		if len(new_chunk.rails) > 0 \
+				or new_chunk.get_node("Buildings").get_child_count() > 0 \
+				or new_chunk.get_node("TrackObjects").get_child_count() > 0:
+			new_chunk.is_empty = false
+			var packed_chunk := PackedScene.new()
+			packed_chunk.pack(new_chunk)
+			var path: String = current_track_path.get_base_dir().plus_file("chunks").plus_file(ChunkManager.chunk_to_string(old_chunk.position)) + ".tscn"
+			ResourceSaver.save(path, packed_chunk)
+
+		dir.remove(save_file)
+		new_chunk.queue_free()
+
+	send_message("Chunks were ported to v0.9, please close and reload the track.")
+
+
+func _port_to_new_scenario_resource() -> void:
+	var scenario_file := current_track_path + "-scenarios.cfg"
+	var dir = Directory.new()
+	if not dir.file_exists(scenario_file):
+		return
+
+	var scenario_dir = current_track_path.get_base_dir().plus_file("scenarios")
+	if not dir.dir_exists(scenario_dir):
+		dir.make_dir_recursive(scenario_dir)
+
+	var jsavemodule = Node.new()
+	jsavemodule.set_script(load("res://addons/jean28518.jTools/jSaveManager/jSaveModule.gd"))
+	jsavemodule.set_save_path(scenario_file)
+
+	var world_config_path: String = current_track_path + "_config.tres"
+	var world_config := WorldConfig.new()
+
+	var old_world_config: Dictionary = jsavemodule.get_value("world_config")
+	var old_release_date: Array = old_world_config.get("ReleaseDate", [1,1,2021])
+	world_config.release_date["day"] = old_release_date[0]
+	world_config.release_date["month"] = old_release_date[1]
+	world_config.release_date["year"] = old_release_date[2]
+	world_config.thumbnail_path = old_world_config.get("ThumbnailPath", "")
+	world_config.author = old_world_config.get("Author", "")
+	world_config.track_description = old_world_config.get("TrackDesciption", "")
+	world_config.title = current_track_path.get_file()
+	world_config.scenarios = []
+
+	var scenario_list: Array = jsavemodule.get_value("scenario_list")
+	var scenarios: Dictionary = jsavemodule.get_value("scenario_data")
+	for key in scenarios:
+		if key.empty():  # there is always an empty scenario, pls ignore it...
+			continue
+		var old_scenario: Dictionary = scenarios[key]
+		var new_scenario := TrackScenario.new()
+		new_scenario.title = key
+		new_scenario.is_hidden = not (key in scenario_list)
+		new_scenario.duration = old_scenario.get("Duration", 0)
+		new_scenario.description = old_scenario.get("Description", "")
+		new_scenario.time["hour"] = old_scenario.get("TimeH", 12)
+		new_scenario.time["minute"] = old_scenario.get("TimeM", 0)
+		new_scenario.time["second"] = old_scenario.get("TimeS", 0)
+		new_scenario.signals = old_scenario.get("Signals", {})
+		new_scenario.trains = old_scenario.get("Trains", {})
+		new_scenario.train_length = old_scenario.get("TrainLength", 0)
+
+		key = key.replace("/", "_").replace("\\", "_").replace(":", "_")\
+				 .replace("?", "_").replace("*", "_").replace("\"", "_")\
+				 .replace("|", "_").replace("%", "_").replace("<", "_")\
+				 .replace(">", "_")
+		var scenario_path: String = scenario_dir.plus_file("%s.tres" % key)
+		if ResourceSaver.save(scenario_path, new_scenario) != OK:
+			Logger.err("Could not save scenario at %s!" % scenario_path, self)
+			continue
+
+		world_config.scenarios.append(scenario_path)
+
+	var save_file: String = current_track_path + ".save"
+	if dir.file_exists(save_file):
+		jsavemodule.set_save_path(save_file)
+		world_config.notes = jsavemodule.get_value("notes", "")
+
+	if ResourceSaver.save(world_config_path, world_config) != OK:
+		Logger.err("Could not save world config at %s!" % world_config_path, self)
+		return
+
+	dir.remove(scenario_file)
+	send_message("Scenarios.cfg was ported to new Scenario TRES. Please reload the editor.")
 
 
 func _enter_tree() -> void:
@@ -130,7 +286,7 @@ func handle_drag_mode() -> void:
 				_last_connected_signal = "_snap_complex_connector"
 				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
 	else:
-		if _last_connected_signal != "" and $EditorHUD/SnapDialog.is_connected("confirmed", self, _last_connected_signal):
+		if not _last_connected_signal.empty() and $EditorHUD/SnapDialog.is_connected("confirmed", self, _last_connected_signal):
 			$EditorHUD/SnapDialog.disconnect("confirmed", self, _last_connected_signal)
 		$EditorHUD/SnapDialog.hide()
 
@@ -304,8 +460,6 @@ func load_world() -> bool:
 
 	var world: Node = world_resource.instance()
 	world.FileName = current_track_name
-	world.get_node("jSaveModule").save_path = current_track_path + ".save"
-	world.get_node("jSaveModuleScenarios").save_path = current_track_path + "-scenarios.cfg"
 	add_child(world)
 	world.owner = self
 
@@ -338,8 +492,6 @@ func save_world(send_message: bool = true) -> void:
 			return
 
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
-	$World/jSaveModule.write_to_disk()
-	$World/jSaveModuleScenarios.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
 
@@ -407,7 +559,7 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	track_object.rows = 1
 	track_object.wholeRail = true
 	track_object.placeLast = true
-	track_object.objectPath = "res://Resources/Objects/Pole1.obj"
+	track_object.mesh = load("res://Resources/Objects/Pole1.obj")
 	track_object.materialPaths = [ "res://Resources/Materials/Beton.tres", "res://Resources/Materials/Metal_Green.tres", "res://Resources/Materials/Metal.tres", "res://Resources/Materials/Metal_Brown.tres" ]
 	track_object.attached_rail = rail.name
 	track_object.length = rail.length
@@ -511,7 +663,7 @@ func get_files_in_directory(path: String) -> Array:
 	dir.open(path)
 	dir.list_dir_begin(true, true)
 	var file_name = dir.get_next()
-	while file_name != "":
+	while not file_name.empty():
 		if dir.current_is_dir():
 			files.append_array(get_files_in_directory(path.plus_file(file_name)))
 		else:
@@ -652,7 +804,7 @@ func get_imported_cache_file_path_of_import_file(file_path: String) -> Array:
 		return []
 	var return_values := []
 	var value = config.get_value("remap", "path")
-	if value == "" || value == null:
+	if value == null or value.empty():
 		return_values.append(config.get_value("remap", "path.s3tc"))
 		return_values.append(config.get_value("remap", "path.etc2"))
 		Logger.warn("No cached import file found (%s)" % file_path, self)

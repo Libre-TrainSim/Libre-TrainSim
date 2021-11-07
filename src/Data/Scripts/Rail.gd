@@ -62,7 +62,6 @@ var overheadLineBuilded: bool = false
 var parRail: Spatial
 
 onready var world: Node = find_parent("World")
-onready var buildings: Spatial = world.get_node("Buildings")
 
 var attachedSignals: Array = []
 
@@ -76,33 +75,6 @@ func _ready() -> void:
 		$Ending.queue_free()
 		$Mid.queue_free()
 
-#var EditorUpdateTimer = 0
-#func _process(delta):
-#	checkVisualInstance()
-#	if visible and not overheadLineBuilded:
-#		updateOverheadLine()
-#		overheadLineBuilded = true
-#	if Engine.is_editor_hint() or Root.Editor:
-#		EditorUpdateTimer += delta
-#		if EditorUpdateTimer < 0.25:
-#			return
-#		EditorUpdateTimer = 0
-#		## Disable moving in editor, if manual Moving is false:
-##		print("checking transofrmation....")
-#		if fixedTransform == null:
-#			fixedTransform = transform
-#		if not manualMoving:
-#			transform = fixedTransform
-#		else:
-#			fixedTransform = transform
-#		if name.match(" "):
-#			name = name.replace(" ", "_")
-#		## Move Buildings to the Buildings Node
-#		for child in get_children():
-#			if not child.owner == self and not child.is_in_group("Gizmo"):
-#				remove_child(child)
-#				buildings.add_child(child)
-#				child.owner = world
 
 func _exit_tree() -> void:
 	for track_object in trackObjects:
@@ -117,7 +89,7 @@ func rename(new_name: String) -> void:
 
 
 func update_parallel_rail_settings() -> void:
-	if parallelRail == "":
+	if parallelRail.empty():
 		return
 	parRail = get_parent().get_node(parallelRail)
 	if parRail == null:
@@ -146,9 +118,9 @@ func calculate_update() -> Dictionary:
 	overheadLineThinkness = rail_type_node.overheadLineThinkness
 	line2HeightChangingFactor = rail_type_node.line2HeightChangingFactor
 
-	if parallelRail == "":
+	if parallelRail.empty():
 		updateAutomaticTendency()
-	if parallelRail != "":
+	else:
 		update_parallel_rail_settings()
 
 	if length > MAX_LENGTH:
@@ -254,7 +226,7 @@ func get_global_transform_at_rail_distance(distance: float) -> Transform:
 
 # local to this rail
 func get_local_transform_at_rail_distance(distance: float) -> Transform:
-	if parallelRail == "":
+	if parallelRail.empty():
 		return Transform(Basis().rotated(Vector3(1,0,0),deg2rad(get_tend_at_rail_distance(distance))).rotated(Vector3(0,0,1), deg2rad(get_heightRot(distance))).rotated(Vector3(0,1,0), deg2rad(circle_get_deg(radius, distance))), get_local_pos_at_RailDistance(distance) )
 	else:
 		if parRail == null:

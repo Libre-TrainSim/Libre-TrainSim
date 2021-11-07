@@ -1,96 +1,158 @@
 extends Control
 
+onready var editor: Node = find_parent("Editor")
 var world: Node
-var save_path := ""
 
-var currentScenario: String = ""
-var loadedCurrentScenario: String = ""
+var current_scenario: String = ""
+
+var world_config_path: String
+var world_config: WorldConfig
+var scenarios: Dictionary
 
 
 func _ready() -> void:
-	save_path = find_parent("Editor").current_track_path + "-scenarios.cfg"
-	$jSaveModule.set_save_path(save_path)
+	var dir = Directory.new()
+	if not dir.dir_exists(editor.current_track_path.get_base_dir().plus_file("scenarios")):
+		dir.make_dir_recursive(editor.current_track_path.get_base_dir().plus_file("scenarios"))
+
+	update_save_path()
 
 
-func get_all_scenarios() -> Array:
-	return $jSaveModule.get_value("scenario_list", [])
+func get_scenario_path(scenario_name: String) -> String:
+	return editor.current_track_path.get_base_dir().plus_file("scenarios").plus_file("%s.tres" % scenario_name)
+
+
+func save_scenario(path: String, config: TrackScenario) -> bool:
+	if ResourceSaver.save(path, config) != OK:
+		Logger.err("Error saving scenario at '%s'" % path, self)
+		return false
+	return true
+
+
+func save_current_scenario() -> bool:
+	var scenario_path: String = get_scenario_path(current_scenario)
+	return save_scenario(scenario_path, scenarios[current_scenario])
+
+
+func save_world_config() -> bool:
+	if ResourceSaver.save(world_config_path, world_config) != OK:
+		Logger.err("Error saving world config at '%s'" % world_config_path, self)
+		return false
+	return true
 
 
 func update_save_path() -> void:
-	if world == null or world.name != "World" or world.trackName == "":
-		return
-	save_path = find_parent("Editor").current_track_path + "-scenarios.cfg"
-	$jSaveModule.set_save_path(save_path)
+	world_config_path = editor.current_track_path + "_config.tres"
+	scenarios.clear()
+	current_scenario = ""
+
+	var dir = Directory.new()
+	if dir.file_exists(world_config_path):
+		world_config = load(world_config_path) as WorldConfig
+		for scenario in world_config.scenarios:
+			var s = load(scenario) as TrackScenario
+			scenarios[s.title] = s
+	else:
+		world_config = WorldConfig.new()
 
 
-func check_duplicate_scenario(sName: String) -> bool: # gives true, if duplicate was found
-	for otherSName in get_all_scenarios():
-		if otherSName == sName:
-			Logger.err("There already exists a scenario with this name!", self)
-			return true
+# returns true, if duplicate was found
+func check_duplicate_scenario(sName: String) -> bool:
+	if scenarios.has(sName):
+		Logger.err("There already exists a scenario with this name!", self)
+		return true
 	return false
 
+
 func _on_NewScenario_pressed() -> void:
-	var sName: String = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text
-	if sName == "" or check_duplicate_scenario(sName):
+	var sName: String = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text.strip_edges()
+	if sName.empty() or check_duplicate_scenario(sName):
 		return
-	var scenarioList: Array = get_all_scenarios()
-	scenarioList.append(sName)
-	$jSaveModule.save_value("scenario_list", scenarioList)
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	$jSaveModule.save_value("scenario_list", scenarioList)
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.write_to_disk()
-	currentScenario = sName
+
+	var scenario_config = TrackScenario.new()
+	scenario_config.title = sName
+	scenarios[sName] = scenario_config
+
+	var scenario_path: String = get_scenario_path(sName)
+	if not save_scenario(scenario_path, scenario_config):
+		return
+
+	world_config.scenarios.append(scenario_path)
+	save_world_config()
+
+	current_scenario = sName
 	update_scenario_list()
 	Logger.log("Scenario added.")
 
 
 func _on_RenameScenario_pressed() -> void:
 	var sName: String = $Scenarios/VBoxContainer/HBoxContainer/LineEdit.text
-	if currentScenario == "" or sName == "" or check_duplicate_scenario(sName) or sName == currentScenario:
+	if current_scenario.empty() or sName.empty() or check_duplicate_scenario(sName) or sName == current_scenario:
+		Logger.err("Scenario '%s' cannot be renamed to '%s'!" % [current_scenario, sName], self)
 		return
-	var scenarioList: Array = get_all_scenarios()
-	scenarioList.erase(currentScenario)
-	scenarioList.append(sName)
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	sData[sName] = sData[currentScenario]
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.save_value("scenario_list", scenarioList)
-	$jSaveModule.write_to_disk()
-	currentScenario = sName
+
+	var scenario_config = scenarios[current_scenario]
+
+	var dir := Directory.new()
+	var old_scenario_path: String = get_scenario_path(current_scenario)
+	var new_scenario_path: String = get_scenario_path(sName)
+
+	if not save_scenario(new_scenario_path, scenario_config):
+		Logger.err("Cancelling rename!", self)
+		return
+
+	scenarios[sName] = scenario_config
+	scenarios.erase(current_scenario)
+
+	if dir.file_exists(old_scenario_path):
+		dir.remove(old_scenario_path)
+
+	world_config.scenarios.erase(old_scenario_path)
+	world_config.scenarios.append(new_scenario_path)
+	save_world_config()
+
+	Logger.log("Scenario '%s' successfully renamed to '%s'." % [current_scenario, sName])
+	current_scenario = sName
 	update_scenario_list()
-	Logger.log("Scenario renamed.")
 
 
 func _on_DuplicateScenario_pressed() -> void:
-	var sName: String = currentScenario + " (Duplicate)"
-	if currentScenario == "" or sName == "" or check_duplicate_scenario(sName) or sName == currentScenario:
+	var sName: String = current_scenario + " (Duplicate)"
+	if current_scenario.empty() or sName.empty() or check_duplicate_scenario(sName) or sName == current_scenario:
+		Logger.err("Cannot duplicate '%s'!" % current_scenario, self)
 		return
-	var scenarioList: Array = get_all_scenarios()
-	scenarioList.append(sName)
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	sData[sName] = sData[currentScenario].duplicate()
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.save_value("scenario_list", scenarioList)
-	$jSaveModule.write_to_disk()
-	$jSaveModule.reload()
-	currentScenario = sName
-	Logger.log("Scenario dulicated.")
+
+	var scenario_config = scenarios[current_scenario]
+	scenarios[sName] = scenario_config.duplicate()
+
+	var new_scenario_path: String = get_scenario_path(sName)
+	if ResourceSaver.save(new_scenario_path, scenario_config) != OK:
+		Logger.err("Cannot save scenario at '%s'! Cancelling duplicate!" % new_scenario_path, self)
+		return
+
+	world_config.scenarios.append(new_scenario_path)
+	save_world_config()
+
+	Logger.log("Scenario '%s' duplicated." % current_scenario)
+	current_scenario = sName
 	update_scenario_list()
 
 
 func _on_DeleteScenario_pressed() -> void:
-	if currentScenario == "":
+	if current_scenario.empty():
 		return
-	var scenarioList: Array = get_all_scenarios()
-	scenarioList.erase(currentScenario)
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	sData.erase(currentScenario)
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.save_value("scenario_list", scenarioList)
-	$jSaveModule.write_to_disk()
-	currentScenario = ""
+
+	scenarios.erase(current_scenario)
+
+	var scenario_path: String = get_scenario_path(current_scenario)
+	world_config.scenarios.erase(scenario_path)
+	save_world_config()
+
+	var dir = Directory.new()
+	if dir.file_exists(scenario_path):
+		dir.remove(scenario_path)
+
+	current_scenario = ""
 	update_scenario_list()
 	Logger.log("Scenario deleted.")
 
@@ -98,14 +160,13 @@ func _on_DeleteScenario_pressed() -> void:
 var oldworld: Node
 func _process(delta: float) -> void:
 	if world == null:
-		currentScenario = ""
+		current_scenario = ""
 		return
 	if oldworld != world:
 		update_save_path()
-		$jSaveModule.reload()
-		update_save_pathuration()
+		update_ui_from_world_config()
 		update_scenario_list()
-		currentScenario = ""
+		current_scenario = ""
 	oldworld = world
 	var activeWorld: bool = world.name == "World"
 	for child in $"World Configuration".get_children():
@@ -114,51 +175,52 @@ func _process(delta: float) -> void:
 		child.visible = activeWorld
 	if not activeWorld:
 		return
-	$Scenarios/VBoxContainer/CurrentScenario/LineEdit.text = currentScenario
+	$Scenarios/VBoxContainer/CurrentScenario/LineEdit.text = current_scenario
 
 	if $Scenarios/VBoxContainer/ItemList.get_selected_items().size() > 0:
-		currentScenario = $Scenarios/VBoxContainer/ItemList.get_item_text($Scenarios/VBoxContainer/ItemList.get_selected_items()[0])
+		current_scenario = $Scenarios/VBoxContainer/ItemList.get_item_text($Scenarios/VBoxContainer/ItemList.get_selected_items()[0])
 
-	$Scenarios/VBoxContainer/Settings.visible = currentScenario != ""
-	$Scenarios/VBoxContainer/Label2.visible = currentScenario != ""
-	$Scenarios/VBoxContainer/SaveSignalData.visible = currentScenario != ""
-	$Scenarios/VBoxContainer/CopySignalDataFrom.visible = currentScenario != ""
-	$Scenarios/VBoxContainer/ResetSignals.visible = currentScenario != ""
+	$Scenarios/VBoxContainer/Settings.visible = not current_scenario.empty()
+	$Scenarios/VBoxContainer/Label2.visible = not current_scenario.empty()
+	$Scenarios/VBoxContainer/SaveSignalData.visible = not current_scenario.empty()
+	$Scenarios/VBoxContainer/CopySignalDataFrom.visible = not current_scenario.empty()
+	$Scenarios/VBoxContainer/ResetSignals.visible = not current_scenario.empty()
 
 
-func get_scenario_settings() -> void: # fills the settings field with saved values
+func update_ui_from_scenario_config() -> void: # fills the settings field with saved values
 	clear_general_scenario_settings_fields()
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
-		return
-	var s: Dictionary = sData[currentScenario]
 
-	if s.size() == 0:
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
 		return
 
-	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value = s["TimeH"]
-	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value = s["TimeM"]
-	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value = s["TimeS"]
-	$Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value = s["TrainLength"]
-	$Scenarios/VBoxContainer/Settings/Tab/General/Description.text = s["Description"]
-	$Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value = s["Duration"]
+	var s = scenarios[current_scenario]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value = s.time["hour"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value = s.time["minute"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value = s.time["second"]
+	$Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value = s.train_length
+	$Scenarios/VBoxContainer/Settings/Tab/General/Description.text = s.description
+	$Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value = s.duration
 	Logger.log("Scenario Settings loaded")
 
 
 func save_general_scenario_settings() -> void:
-	if currentScenario == "":
+	if current_scenario.empty():
 		return
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
-		sData[currentScenario] = {}
-	sData[currentScenario]["TimeH"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value
-	sData[currentScenario]["TimeM"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value
-	sData[currentScenario]["TimeS"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value
-	sData[currentScenario]["TrainLength"] = $Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value
-	sData[currentScenario]["Description"] = $Scenarios/VBoxContainer/Settings/Tab/General/Description.text
-	sData[currentScenario]["Duration"] = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.write_to_disk()
+
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
+		return
+
+	var s = scenarios[current_scenario]
+	s.time["hour"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeHour.value
+	s.time["minute"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeMinute.value
+	s.time["second"] = $Scenarios/VBoxContainer/Settings/Tab/General/Time/TimeSecond.value
+	s.train_length = $Scenarios/VBoxContainer/Settings/Tab/General/TrainLength/SpinBox.value
+	s.description = $Scenarios/VBoxContainer/Settings/Tab/General/Description.text
+	s.duration = $Scenarios/VBoxContainer/Settings/Tab/General/Duration/SpinBox.value
+
+	save_current_scenario()
 	Logger.log("Scenario General Settings saved")
 
 
@@ -173,7 +235,6 @@ func clear_general_scenario_settings_fields() -> void:
 
 func update_scenario_list() -> void:
 	$Scenarios/VBoxContainer/ItemList.clear()
-	var scenarios: Array = $jSaveModule.get_value("scenario_list", [])
 	for scenario in scenarios:
 		$Scenarios/VBoxContainer/ItemList.add_item(scenario)
 	Logger.log("Scenario List updated.")
@@ -181,13 +242,12 @@ func update_scenario_list() -> void:
 
 func update_train_list() -> void:
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.clear()
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
+
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
 		return
-	if not sData[currentScenario].has("Trains"):
-		return
-	var trains: Array = sData[currentScenario]["Trains"].keys()
-	for train in trains:
+
+	for train in scenarios[current_scenario].trains:
 		$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(train)
 	Logger.log("Train List updated.")
 
@@ -197,20 +257,20 @@ func _on_SaveGeneral_pressed() -> void:
 
 
 func save_everything() -> void:
-	if currentScenario != "":
+	if not current_scenario.empty():
 		_on_SaveGeneral_pressed()
-	if currentTrain != "":
+	if not current_train.empty():
 		_on_SaveTrain_pressed()
 	_on_Notes_Save_pressed()
 	_on_SaveWorldConfig_pressed()
 
 
 func _on_ItemList_item_selected(index: int) -> void:
-	currentScenario = $Scenarios/VBoxContainer/ItemList.get_item_text(index)
-	world.currentScenario = currentScenario
+	current_scenario = $Scenarios/VBoxContainer/ItemList.get_item_text(index)
+	world.current_scenario = current_scenario
 	update_train_list()
-	get_train_settings()
-	get_scenario_settings()
+	load_current_train()
+	update_ui_from_scenario_config()
 
 
 func _on_SaveChunks_pressed() -> void:
@@ -219,55 +279,44 @@ func _on_SaveChunks_pressed() -> void:
 
 
 func _on_SaveWorldConfig_pressed() -> void:
-	var d := {}
-	#d["FileName"] = $Configuration/GridContainer/FileName.text
-	d["ReleaseDate"] = [$"World Configuration/GridContainer/ReleaseDate/Day".value, $"World Configuration/GridContainer/ReleaseDate/Month".value, $"World Configuration/GridContainer/ReleaseDate/Year".value]
-	d["Author"] = $"World Configuration/GridContainer/Author".text
-	d["TrackDesciption"] = $"World Configuration/GridContainer/TrackDescription".text
+	world_config.release_date["day"] = $"World Configuration/GridContainer/ReleaseDate/Day".value
+	world_config.release_date["month"] = $"World Configuration/GridContainer/ReleaseDate/Month".value
+	world_config.release_date["year"] = $"World Configuration/GridContainer/ReleaseDate/Year".value
 
-	$jSaveModule.save_value("world_config", d)
-	$jSaveModule.write_to_disk()
+	world_config.author = $"World Configuration/GridContainer/Author".text
+	world_config.track_description = $"World Configuration/GridContainer/TrackDescription".text
+
+	save_world_config()
 	Logger.log("World Config saved.")
 
 
-func update_save_pathuration() -> void:
-	var d: Dictionary = $jSaveModule.get_value("world_config", {})
-	if d == {}:
-		return
-	if d.has("ReleaseDate"):
-		$"World Configuration/GridContainer/ReleaseDate/Day".value = d["ReleaseDate"][0]
-		$"World Configuration/GridContainer/ReleaseDate/Month".value = d["ReleaseDate"][1]
-		$"World Configuration/GridContainer/ReleaseDate/Year".value = d["ReleaseDate"][2]
-	if d.has("Author"):
-		$"World Configuration/GridContainer/Author".text = d["Author"]
-	if d.has("TrackDescription"):
-		$"World Configuration/GridContainer/TrackDescription".text = d["TrackDesciption"]
-
-	$"World Configuration/Notes/RichTextLabel".text = world.get_value("notes", "")
+func update_ui_from_world_config() -> void:
+	$"World Configuration/GridContainer/ReleaseDate/Day".value = world_config.release_date["day"]
+	$"World Configuration/GridContainer/ReleaseDate/Month".value = world_config.release_date["month"]
+	$"World Configuration/GridContainer/ReleaseDate/Year".value = world_config.release_date["year"]
+	$"World Configuration/GridContainer/Author".text = world_config.author
+	$"World Configuration/GridContainer/TrackDescription".text = world_config.track_description
+	$"World Configuration/Notes/RichTextLabel".text = world_config.notes
 
 
 ## Trains:
 ### Station Editing: #################################
 func _on_SaveTrain_pressed() -> void:
-	set_train_settings()
+	save_current_train()
 
-var currentTrain: String = "Player"
 
-func get_train_settings() -> void:
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
+var current_train: String = "Player"
+func load_current_train() -> void:
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
 		return
-	if not sData[currentScenario].has("Trains"):
-		return
-	if not sData[currentScenario]["Trains"].has(currentTrain):
-		Logger.err("No Train Data for "+ currentTrain + " found. - No data loaded.", self)
+
+	if not scenarios[current_scenario].trains.has(current_train):
+		Logger.err("No Train Data for "+ current_train + " found. - No data loaded.", self)
 		clear_train_settings_view()
 		return
-	var trains: Dictionary = sData[currentScenario]["Trains"]
-	if not trains.has(currentTrain):
-		return
-	var train: Dictionary = trains[currentTrain]
 
+	var train: Dictionary = scenarios[current_scenario].trains[current_train]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text = train.get("PreferredTrain", "")
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text = train["Route"]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRail.text = train ["StartRail"]
@@ -282,10 +331,13 @@ func get_train_settings() -> void:
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text = train["DespawnRail"]
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeed.value = train.get("InitialSpeed", 0)
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value = train.get("InitialSpeedLimit", -1)
-	Logger.log("Train "+ currentTrain + " loaded.")
+	Logger.log("Train "+ current_train + " loaded.")
 
 
-func set_train_settings() -> void:
+func save_current_train() -> void:
+	if current_scenario.empty():
+		return
+
 	var train := {}
 	train["PreferredTrain"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text
 	train["Route"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text
@@ -297,192 +349,79 @@ func set_train_settings() -> void:
 	train["DespawnRail"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text
 	train["InitialSpeed"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeed.value
 	train["InitialSpeedLimit"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/InitialSpeedLimit.value
-
 	train["Stations"] = $Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.get_data()
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
-		sData[currentScenario] = {}
-	if not sData[currentScenario].has("Trains"):
-		sData[currentScenario]["Trains"] = {}
-	sData[currentScenario]["Trains"][currentTrain] = train
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.write_to_disk()
-	Logger.log("Train "+ currentTrain + " saved.")
 
-#var entriesCount = 0
-#const stationTableColumns = 8
-
-#func _on_RemoveStationEntry_pressed():
-#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-#	var children = grid.get_children()
-#	if entriesCount == 0:
-#		return
-#	children.invert()
-#	for i in range (0,stationTableColumns):
-#		children[i].queue_free()
-#	entriesCount -= 1
-
-
-#func _on_AddStationEntry_pressed():
-#	entriesCount += 1
-#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-#	for child in grid.get_children():
-#		print(child.name)
-#	print("###############")
-#
-#	var a
-#
-#	a = grid.get_node("nodeName0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("stationName0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("arrivalTime0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("departureTime0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("haltTime0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("stopType0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("waitingPersons0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#
-#	a = grid.get_node("leavingPersons0").duplicate()
-#	grid.add_child(a)
-#	a.show()
-#	pass # Replace with function body.
-
-
-#func get_station_array():
-#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-#	var children = grid.get_children()
-#	var stations = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons": [], "leavingPersons" : [], "passed" : []}
-#	for i in range(2, entriesCount+2):
-#		stations["nodeName"].append(children[stationTableColumns*i+0].text)
-#		stations["stationName"].append(children[stationTableColumns*i+1].text)
-#		stations["arrivalTime"].append([children[stationTableColumns*i+2].get_node("H").value, children[6*i+2].get_node("M").value, children[6*i+2].get_node("S").value])
-#		stations["departureTime"].append([children[stationTableColumns*i+3].get_node("H").value, children[6*i+3].get_node("M").value, children[6*i+3].get_node("S").value])
-#		stations["haltTime"].append(children[stationTableColumns*i+4].value)
-#		stations["stopType"].append(children[stationTableColumns*i+5].selected)
-#		stations["waitingPersons"].append(children[stationTableColumns*i+6].value)
-#		stations["leavingPersons"].append(children[stationTableColumns*i+7].value)
-#		stations["passed"].append(false)
-#	return stations
-
-#func prepare_station_table(stations):
-#
-##	print(stations)
-#	var grid = $Scenarios/Settings/Tab/Trains/Stations/Stations
-#	while (grid.get_children().size() > 2*stationTableColumns):
-#		grid.get_children()[grid.get_children().size()-1].free()
-#	entriesCount = 0
-#	if stations == null:
-#		return
-#	for i in range (0,stations["nodeName"].size()):
-#		_on_AddStationEntry_pressed()
-#	var children = grid.get_children()
-#	for i in range(2, entriesCount+2):
-#		children[stationTableColumns*i+0].text = stations["nodeName"][i-2]
-#		children[stationTableColumns*i+1].text = stations["stationName"][i-2]
-#		children[stationTableColumns*i+2].get_node("H").value = stations["arrivalTime"][i-2][0]
-#		children[stationTableColumns*i+2].get_node("M").value = stations["arrivalTime"][i-2][1]
-#		children[stationTableColumns*i+2].get_node("S").value = stations["arrivalTime"][i-2][2]
-#		children[stationTableColumns*i+3].get_node("H").value = stations["departureTime"][i-2][0]
-#		children[stationTableColumns*i+3].get_node("M").value = stations["departureTime"][i-2][1]
-#		children[stationTableColumns*i+3].get_node("S").value = stations["departureTime"][i-2][2]
-#		children[stationTableColumns*i+4].value = stations["haltTime"][i-2]
-#		children[stationTableColumns*i+5].selected = stations["stopType"][i-2]
-#		if stations.has("waitingPersons"):
-#			children[stationTableColumns*i+6].value = stations["waitingPersons"][i-2]
-#		if stations.has("leavingPersons"):
-#			children[stationTableColumns*i+7].value = stations["leavingPersons"][i-2]
-
-
-
+	scenarios[current_scenario].trains[current_train] = train
+	save_current_scenario()
+	Logger.log("Train "+ current_train + " saved.")
 
 
 func _on_ItemList2_Train_selected(index: int) -> void:
-	currentTrain = $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_text(index)
-	get_train_settings()
-	$Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text = currentTrain
+	current_train = $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_text(index)
+	load_current_train()
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text = current_train
 
 
 func _on_NewTrain_pressed() -> void:
 	var trainName: String = $Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
-	if trainName == "":
+	if trainName.empty():
 		return
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(trainName)
 
 
 func _on_RenameTrain_pressed() -> void:
-	if currentTrain == "Player":
+	if current_train == "Player":
 		Logger.err("You can't rename the player train!", self)
 		return
-	var oldTrain: String = currentTrain
+	var oldTrain: String = current_train
 	var trainName: String = $Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/LineEdit.text
-	if trainName == "":
+	if trainName.empty():
 		return
-	for  i in range(0, $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_count()):
-		if $Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.get_item_text(i) == trainName:
-			Logger.err("There already exists a train whith this train name, aborting...", self)
-			return
-	get_train_settings()
-	currentTrain = trainName
-	set_train_settings()
-	## Delete "Old Train"
+
+	if scenarios[current_scenario].trains.has(trainName):
+		Logger.err("Cannot rename train '%s' to '%s', already exists." % [oldTrain, trainName], self)
+		return
+
+	load_current_train()
+	current_train = trainName
+	save_current_train()
 	delete_train(oldTrain)
 	update_train_list()
 
 
 func _on_DuplicateTrain_pressed() -> void:
-	if currentTrain == "":
+	if current_train.empty():
 		return
-	get_train_settings()
-	currentTrain = currentTrain + " (Duplicate)"
-	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(currentTrain)
-	set_train_settings()
+	load_current_train()
+	current_train = current_train + " (Duplicate)"
+	$Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2.add_item(current_train)
+	save_current_train()
 
 
 func delete_train(train: String) -> void:
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
 		return
-	if not sData[currentScenario].has("Trains"):
+	if not scenarios[current_scenario].trains.has(train):
+		Logger.warn("Cannot delete non existant Train '%s'." % train, self)
 		return
-	if not sData[currentScenario]["Trains"].has(train):
-		return
-	var trains: Array = sData[currentScenario]["Trains"]
-	trains.erase(train)
-	sData[currentScenario]["Trains"] = trains
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.write_to_disk()
+	scenarios[current_scenario].trains.erase(train)
+	save_current_scenario()
 
 
 func _on_DeleteTrain_pressed() -> void:
-	if currentTrain == "Player":
+	if current_train == "Player":
 		Logger.err("You cant delete the player train!", self)
 		return
-	delete_train(currentTrain)
+	delete_train(current_train)
 	Logger.log("Train deleted.")
-	currentTrain = ""
+	current_train = ""
 	update_train_list()
 	clear_train_settings_view()
 
 
-func clear_train_settings_view() -> void: # Resets the Train settings when adding a new npc for example.
+# Resets the Train settings when adding a new npc for example.
+func clear_train_settings_view() -> void:
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain/TrainName.text = ""
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/Route/Route.text = ""
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/StartRail.text = ""
@@ -493,7 +432,6 @@ func clear_train_settings_view() -> void: # Resets the Train settings when addin
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/M.value = 0
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime/S.value = 0
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/DespawnRail.text = ""
-
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.clear_data()
 
 
@@ -522,8 +460,8 @@ func _on_Chunks_Save_pressed() -> void:
 
 # NOTE: this will also save chunks... great
 func _on_Notes_Save_pressed() -> void:
-	world.save_value("notes", $"World Configuration/Notes/RichTextLabel".text)
-	world.get_node("jSaveModule").write_to_disk()
+	world_config.notes = $"World Configuration/Notes/RichTextLabel".text
+	save_world_config()
 
 
 ## Signals: ####################################################################
@@ -533,49 +471,44 @@ func _on_SaveSignalData_pressed() -> void:
 
 func save_signal_data_to_current_scenario() -> void:
 	var signal_data: Dictionary = world.get_signal_scenario_data()
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not sData.has(currentScenario):
-		sData[currentScenario] = {}
-	sData[currentScenario]["Signals"] = signal_data
-	$jSaveModule.save_value("scenario_data", sData)
-	$jSaveModule.write_to_disk()
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
+		return
+	scenarios[current_scenario].signals = signal_data
+	save_current_scenario()
 
 
 func _on_CopyAndOverwriteSignalDataFrom_pressed() -> void:
-	var scenario_list: Array = $jSaveModule.get_value("scenario_list", [])
-	if scenario_list.size() < 2:
+	if scenarios.size() < 2:
+		Logger.warn("Will not copy from scenario. You only have 1 scenario.", self)
 		return
 	$Scenarios/VBoxContainer/CopySignalDataFrom/PopupMenu.clear()
-	for scenario in scenario_list:
+	for scenario in scenarios:
 		$Scenarios/VBoxContainer/CopySignalDataFrom/PopupMenu.add_item(scenario)
 	$Scenarios/VBoxContainer/CopySignalDataFrom/PopupMenu.show()
 
 
 func load_signal_data_from_current_scenario_to_world() -> void:
-	if currentScenario == "":
+	if current_scenario.empty():
 		return
-	var scenario_data: Dictionary = $jSaveModule.get_value("scenario_data", {})
-	if not scenario_data.has(currentScenario):
+	if not scenarios.has(current_scenario):
+		Logger.err("Scenario '%s' is not in scenario list!" % current_scenario, self)
 		return
-	var current_scenario_data: Dictionary = scenario_data[currentScenario]
-	if not current_scenario_data.has("Signals"):
-		return
-	var signal_data: Dictionary = current_scenario_data["Signals"]
-	world.apply_scenario_to_signals(signal_data)
+	world.apply_scenario_to_signals(scenarios[current_scenario].signals)
 
 
 func _on_PopupMenu_Copy_SignalDataFrom_index_pressed(index: int) -> void:
 	var scenario_source: String = $Scenarios/VBoxContainer/CopySignalDataFrom/PopupMenu.get_item_text(index)
-	if scenario_source == currentScenario:
+	if scenario_source == current_scenario:
+		Logger.warn("Nothing done. Can't copy and overwrite from current scenario to current scenario.", self)
 		jEssentials.show_message("Nothing done. Can't copy and overwrite from current scenario to current scenario.")
 		return
-	var scenario_data: Dictionary = $jSaveModule.get_value("scenario_data")
-	scenario_data[currentScenario] = scenario_data[scenario_source].duplicate()
-	$jSaveModule.save_value("scenario_data", scenario_data)
-	$jSaveModule.write_to_disk()
-	$jSaveModule.reload()
+
+	scenarios[current_scenario] = scenarios[scenario_source].duplicate()
+	save_current_scenario()
 	load_signal_data_from_current_scenario_to_world()
-	jEssentials.show_message("Scenario Data successfully imported from scenario: " + scenario_source)
+	Logger.log("Scenario Data successfully imported from scenario '%s'." % scenario_source)
+	jEssentials.show_message("Scenario Data successfully imported from scenario '%s'." % scenario_source)
 
 
 func _on_ResetSignals_pressed() -> void:

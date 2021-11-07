@@ -39,6 +39,9 @@ func _get_type() -> String:
 var timer
 func update_visual_instance() -> void:
 	update()
+
+	assert(world != null)
+
 	if not is_instance_valid(attached_rail_node):
 		attached_rail_node = world.get_node("Rails/" + attached_rail)
 		if attached_rail_node == null:
@@ -56,8 +59,9 @@ func update_visual_instance() -> void:
 
 
 func create_visual_instance() -> void:
-	if visual_instance_path == "":
+	if visual_instance_path.empty():
 		visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
+
 	var visual_instance = load(visual_instance_path).instance()
 	add_child(visual_instance)
 	visual_instance.name = "VisualInstance"
@@ -74,9 +78,9 @@ func update() -> void:
 	if Engine.is_editor_hint() and is_block_signal:
 		set_status(SignalStatus.GREEN)
 
-	assert(not not world)
+	assert(world != null)
 
-	if signal_after_node == null and signal_after != "":
+	if signal_after_node == null and not signal_after.empty():
 		signal_after_node = world.get_node("Signals/"+String(signal_after))
 
 	if not did_set_pass and not Engine.is_editor_hint() and not Root.Editor and world.time != null:
@@ -146,9 +150,9 @@ func set_warn_speed(new_speed: float) -> void:
 
 func set_to_rail() -> void:
 	assert(is_inside_tree())
-	assert(not not world)
+	assert(world != null)
 
-	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
+	if world.has_node("Rails/"+attached_rail) and not attached_rail.empty():
 		var rail = get_parent().get_parent().get_node("Rails/"+attached_rail)
 		rail.register_signal(self.name, on_rail_position)
 		self.translation = rail.get_pos_at_RailDistance(on_rail_position)

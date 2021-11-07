@@ -43,15 +43,22 @@ func _find_content():
 
 
 func _initialize_mod_directory(entry_name: String) -> bool:
-	var mod_path := editor_directory + entry_name
+	var mod_path := editor_directory.plus_file(entry_name)
 	if dir.dir_exists(mod_path):
 		return false
-	var worlds_path := "/Worlds/%s/" % entry_name
-	dir.make_dir_recursive(mod_path + worlds_path)
+	var worlds_path := "Worlds".plus_file(entry_name)
+	dir.make_dir_recursive(mod_path.plus_file(worlds_path))
+	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("chunks"))
+	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("scenarios"))
 	dir.copy("res://Data/Modules/World-Pattern.tscn", \
-			"%s%s/%s.tscn" % [mod_path, worlds_path, entry_name])
-	dir.copy("res://Data/Modules/World-Pattern.save", \
-			"%s%s/%s.save" % [mod_path, worlds_path, entry_name])
+			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name))
+
+	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instance() as Chunk
+	chunk_0_0.rails = ["Rail"]
+	var packed_chunk := PackedScene.new()
+	packed_chunk.pack(chunk_0_0)
+	ResourceSaver.save("%s%s/chunks/chunk_0_0.tscn" % [mod_path, worlds_path], packed_chunk)
+	chunk_0_0.free()
 
 	var authors := Authors.new()
 	if ResourceSaver.save(mod_path.plus_file("authors.tres"), authors) != OK:

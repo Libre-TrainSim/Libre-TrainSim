@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/world_config.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+release_date = {
+"day": 27.0,
+"month": 11.0,
+"year": 2020.0
+}
+title = "Tutorials"
+author = "Jean"
+track_description = "TUTORIAL_TRACK_DESCRIPTION"
+thumbnail_path = "res://Worlds/Tutorials/screenshot.png"
+scenarios = [ "res://Worlds/Tutorials/scenarios/Advanced Train Driving.tres", "res://Worlds/Tutorials/scenarios/Free Driving.tres", "res://Worlds/Tutorials/scenarios/The Basics.tres" ]
+notes = ""

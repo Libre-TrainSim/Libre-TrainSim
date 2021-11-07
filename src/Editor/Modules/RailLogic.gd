@@ -79,7 +79,7 @@ func _on_Content_Selector_resource_selected(complete_path):
 	if not resource_selector_called:
 		return
 	resource_selector_called = false
-	if complete_path == "":
+	if complete_path.empty():
 		return
 	$SignalSettings/VisibleInstance/LineEdit.text = complete_path
 	current_rail_logic.visual_instance_path = complete_path

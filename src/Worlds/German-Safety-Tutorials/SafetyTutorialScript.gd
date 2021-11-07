@@ -15,6 +15,9 @@ var pzb_module: Node
 
 var init_done: bool = false
 func init() -> void:
+	if Root.Editor:
+		return
+	
 	scenario = Root.currentScenario
 	world = find_parent("World")
 	player = world.get_node("Players/Player")
@@ -47,6 +50,9 @@ func init() -> void:
 func _process(delta: float) -> void:
 	if not init_done:
 		init()
+		return
+	if Root.Editor:
+		set_process(false)
 		return
 
 	send_message(delta)

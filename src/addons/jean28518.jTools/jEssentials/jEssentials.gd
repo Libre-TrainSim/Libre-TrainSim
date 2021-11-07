@@ -40,12 +40,11 @@ func remove_folder_recursively(path: String):
 	if not path.ends_with("/"):
 		path += "/"
 	if dir.open(path) != OK: return
-	dir.list_dir_begin()
+	dir.list_dir_begin(true, true)
 	while(true):
 		var file = dir.get_next()
-		if file == "": break
-		if file == ".": continue
-		if file == "..": continue
+		if file.empty():
+			break
 		if dir.current_is_dir():
 			remove_folder_recursively(path + file + "/")
 		else:
@@ -93,13 +92,14 @@ func crawl_directory_for(directory_path: String, file_extension: String) -> Arra
 
 func get_subfolders_of(directory_path: String):
 	var dir = Directory.new()
-	if dir.open(directory_path) != OK: return
-	dir.list_dir_begin()
+	if dir.open(directory_path) != OK:
+		return
+	dir.list_dir_begin(true, true)
 	var folder_names = []
 	while(true):
 		var file = dir.get_next()
-		if file == "": break
-		if file.begins_with("."): continue
+		if file.empty():
+			break
 		if dir.current_is_dir():
 			folder_names.append(file)
 	dir.list_dir_end()
@@ -139,14 +139,12 @@ func _find_files_recursively_helper(directory_path, found_files, file_extension)
 	var dir := Directory.new()
 	if dir.open(directory_path) != OK:
 		return
-	dir.list_dir_begin()
+	dir.list_dir_begin(true, true)
 
 	while(true):
 		var file = dir.get_next()
-		if file == "":
+		if file.empty():
 			break
-		if file.begins_with("."):
-			continue
 		if dir.current_is_dir():
 			if directory_path.ends_with("/"):
 				_find_files_recursively_helper(directory_path+file, found_files, file_extension)
@@ -166,13 +164,13 @@ func _find_files_recursively_helper(directory_path, found_files, file_extension)
 func _copy_folder_recursively_helper(from, to):
 	var dir = Directory.new()
 	dir.make_dir_recursive(to)
-	if dir.open(from) != OK: return
-	dir.list_dir_begin()
+	if dir.open(from) != OK:
+		return
+	dir.list_dir_begin(true, true)
 	while(true):
 		var file = dir.get_next()
-		if file == "": break
-		if file == ".": continue
-		if file == "..": continue
+		if file.empty():
+			break
 		if dir.current_is_dir():
 			print(from + file + "/" + "     " + to + file + "/")
 			_copy_folder_recursively_helper(from + file + "/", to + file + "/")
@@ -187,11 +185,11 @@ func _crawl_directory_for_helper(directory_path: String, found_files: Array, fil
 	var dir = Directory.new()
 	if dir.open(directory_path) != OK:
 		return
-	dir.list_dir_begin()
+	dir.list_dir_begin(true, true)
 	while(true):
 		var file = dir.get_next()
-		if file == "": break
-		if file.begins_with("."): continue
+		if file.empty():
+			break
 		if dir.current_is_dir():
 			if directory_path.ends_with("/"):
 				_crawl_directory_for_helper(directory_path+file, found_files, file_extension)

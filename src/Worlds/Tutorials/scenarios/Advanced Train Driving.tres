@@ -1,0 +1,94 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+time = {
+"hour": 11.0,
+"minute": 59.0,
+"second": 30.0
+}
+title = "Advanced Train Driving"
+description = "TUTORIAL_1_DESCRIPTION"
+duration = 3
+is_hidden = false
+train_length = 100.0
+trains = {
+"Player": {
+"DespawnRail": "",
+"Direction": 1,
+"DoorConfiguration": 2,
+"InitialSpeed": 0.0,
+"InitialSpeedLimit": -1.0,
+"PreferredTrain": "JFR1_Red",
+"Route": "",
+"SpawnTime": [ -1.0, 0.0, 0.0 ],
+"StartRail": "Rail",
+"StartRailPosition": 100.0,
+"Stations": {
+"approachAnnouncePath": [ "", "res://Resources/Sounds/next_station_tutorialbach.ogg" ],
+"arrivalAnnouncePath": [ "", "res://Resources/Sounds/platform_endstation.ogg" ],
+"arrivalTime": [ [ 0.0, 0.0, 0.0 ], [ 12.0, 2.0, 0.0 ] ],
+"departureAnnouncePath": [ "res://Resources/Sounds/platform_departure.ogg", "" ],
+"departureTime": [ [ 12.0, 0.0, 0.0 ], [ 0.0, 0.0, 0.0 ] ],
+"haltTime": [ 20.0, 5.0 ],
+"leavingPersons": [ 0.0, 100.0 ],
+"nodeName": [ "City1", "City2" ],
+"stationName": [ "Tutorialhausen", "Tutorialbach" ],
+"stopType": [ 2, 3 ],
+"waitingPersons": [ 100.0, 30.0 ]
+}
+}
+}
+signals = {
+"City1": {
+},
+"City2": {
+},
+"Signal": {
+"set_pass_at_h": 12,
+"set_pass_at_m": 0,
+"set_pass_at_s": 0,
+"signal_after": "Signal2",
+"speed": 120,
+"status": 0,
+"warnSpeed": -1
+},
+"Signal2": {
+"set_pass_at_h": 12,
+"set_pass_at_m": 0,
+"set_pass_at_s": 5,
+"signal_after": "Signal3",
+"speed": -1,
+"status": 0,
+"warnSpeed": -1
+},
+"Signal3": {
+"set_pass_at_h": 12,
+"set_pass_at_m": 0,
+"set_pass_at_s": 10,
+"signal_after": "Signal4",
+"speed": -1,
+"status": 0,
+"warnSpeed": 80
+},
+"Signal4": {
+"set_pass_at_h": 12,
+"set_pass_at_m": 1,
+"set_pass_at_s": 15,
+"signal_after": "Signal5",
+"speed": -1,
+"status": 0,
+"warnSpeed": -1
+},
+"Signal5": {
+"set_pass_at_h": 25,
+"set_pass_at_m": 0,
+"set_pass_at_s": 0,
+"signal_after": "",
+"speed": -1,
+"status": 0,
+"warnSpeed": -1
+}
+}

@@ -177,7 +177,7 @@ func update_and_prepare_language_handling():
 	# Prepare language
 	for index in range(_language_table.size()):
 		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
-	for language in _language_table.keys():
+	for language in _language_table:
 		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
 
 	# If Language is not found, select one language, which is available

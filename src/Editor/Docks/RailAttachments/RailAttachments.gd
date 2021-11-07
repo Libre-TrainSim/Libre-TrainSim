@@ -71,7 +71,7 @@ func _on_jListTrackObjects_user_added_entry(entry_name: String) -> void:
 	track_object.description = entry_name
 	track_object.name = currentRail.name + " " + entry_name
 	track_object.attached_rail = currentRail.name
-	track_object.materialPaths = []
+	track_object.materials = []
 	world.get_node("TrackObjects").add_child(track_object)
 	track_object.set_owner(world)
 	track_object.attach_to_rail(currentRail)
@@ -258,7 +258,7 @@ func _on_Content_Selector_resource_selected(complete_path: String) -> void:
 		return
 	if requested_content_selector_id == -1: # Obj File
 		requested_content_selector_id = -2
-		if complete_path == "":
+		if complete_path.empty():
 			return
 		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = complete_path
 		apply_object_tab()
@@ -288,10 +288,10 @@ func update_material_list() -> void:
 	if not is_instance_valid(mesh_instance) or mesh_instance.mesh.resource_path != currentTO.objectPath:
 		mesh_instance = MeshInstance.new()
 		mesh_instance.mesh = load(currentTO.objectPath)
-	var material_array: Array = currentTO.materialPaths
+	var material_array: Array = currentTO.materials
 	for i in range(mesh_instance.get_surface_material_count()):
-		if i < material_array.size() and ResourceLoader.exists(material_array[i]):
-			mesh_instance.set_surface_material(i, load(material_array[i]))
+		if i < material_array.size():
+			mesh_instance.set_surface_material(i, material_array[i])
 	$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(mesh_instance)
 
 
@@ -299,7 +299,9 @@ func apply_object_tab() -> void:
 	currentTO.objectPath = $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text
 	update_material_list()
 	var material_array: Array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
-	currentTO.materialPaths = material_array
+	currentTO.materials = []
+	for mat in material_array:
+		currentTO.materials.append(load(mat))
 	currentTO.update()
 
 

@@ -157,21 +157,21 @@ func update_visible_buttons(newvar):
 	$VBoxContainer/HBoxContainer/Save.visible = enable_save_button
 	$VBoxContainer/HBoxContainer/Action.visible = enable_action_button
 
-	$VBoxContainer/HBoxContainer/Add.text = TranslationServer.translate(add_button_text)
-	$VBoxContainer/HBoxContainer/Remove.text = TranslationServer.translate(remove_button_text)
-	$VBoxContainer/HBoxContainer/Rename.text = TranslationServer.translate(rename_button_text)
-	$VBoxContainer/HBoxContainer/Duplicate.text = TranslationServer.translate(duplicate_button_text)
-	$VBoxContainer/HBoxContainer/Copy.text = TranslationServer.translate(copy_button_text)
-	$VBoxContainer/HBoxContainer/Paste.text = TranslationServer.translate(paste_button_text)
-	$VBoxContainer/HBoxContainer/Save.text = TranslationServer.translate(save_button_text)
-	$VBoxContainer/HBoxContainer/Action.text = TranslationServer.translate(action_button_text)
+	$VBoxContainer/HBoxContainer/Add.text = tr(add_button_text)
+	$VBoxContainer/HBoxContainer/Remove.text = tr(remove_button_text)
+	$VBoxContainer/HBoxContainer/Rename.text = tr(rename_button_text)
+	$VBoxContainer/HBoxContainer/Duplicate.text = tr(duplicate_button_text)
+	$VBoxContainer/HBoxContainer/Copy.text = tr(copy_button_text)
+	$VBoxContainer/HBoxContainer/Paste.text = tr(paste_button_text)
+	$VBoxContainer/HBoxContainer/Save.text = tr(save_button_text)
+	$VBoxContainer/HBoxContainer/Action.text = tr(action_button_text)
 
 	_update_fonts()
 	update = false
 
 
 func _update_fonts():
-	if custom_font_path == "":
+	if custom_font_path.empty():
 		return
 	if not jEssentials.does_path_exist(custom_font_path):
 		return
@@ -203,7 +203,7 @@ func _enter_tree():
 
 
 func _on_Add_pressed():
-	if $VBoxContainer/HBoxContainer/LineEdit.text == "":
+	if $VBoxContainer/HBoxContainer/LineEdit.text.empty():
 		return
 	var entry_name = add_entry($VBoxContainer/HBoxContainer/LineEdit.text)
 	$VBoxContainer/HBoxContainer/LineEdit.text = ""
@@ -226,7 +226,7 @@ func _on_Rename_pressed():
 		return
 	var entry_id = item_list.get_selected_items()[0]
 	var old_text = item_list.get_item_text(entry_id)
-	if new_text == "":
+	if new_text.empty():
 		return
 	if new_text == old_text:
 		return

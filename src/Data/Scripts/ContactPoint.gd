@@ -39,7 +39,7 @@ func set_to_rail() -> void:
 	assert(is_inside_tree())
 	assert(not not world)
 
-	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
+	if world.has_node("Rails/"+attached_rail) and not attached_rail.empty():
 		var rail = world.get_node("Rails/"+attached_rail)
 		rail.register_signal(self.name, on_rail_position)
 		self.translation = rail.get_pos_at_RailDistance(on_rail_position)
@@ -76,7 +76,7 @@ func reset() -> void:
 func activateContactPoint(trainName: String) -> void:
 	if disabled:
 		 return
-	if affectedSignal == "":
+	if affectedSignal.empty():
 		return
 	if enable_for_all_trains or trainName == bySpecificTrain:
 		$Timer.start()

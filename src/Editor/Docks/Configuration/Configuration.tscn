@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
 [ext_resource path="res://addons/jean28518.jTools/jTable/jTable.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Editor/Docks/Configuration/TimeField.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=4]
 
 [node name="Configuration" type="TabContainer"]
 anchor_left = 1.0
@@ -934,8 +933,6 @@ window_title = "Open a File"
 mode = 0
 filters = PoolStringArray( "*.obj" )
 show_hidden_files = true
-
-[node name="jSaveModule" parent="." instance=ExtResource( 4 )]
 
 [connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
 [connection signal="pressed" from="World Configuration/WorldLoading/AllChunks" to="." method="_on_WorldLoading_AllChunks_pressed"]

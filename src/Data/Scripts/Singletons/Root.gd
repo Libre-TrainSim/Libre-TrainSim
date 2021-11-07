@@ -69,10 +69,10 @@ func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 	var trackTranslations := []
 	var dir := Directory.new()
 	var _unused = dir.open("res://Translations")
-	_unused = dir.list_dir_begin()
+	_unused = dir.list_dir_begin(true, true)
 	while(true):
 		var file: String = dir.get_next()
-		if file == "":
+		if file.empty():
 				break
 		if file.get_extension() == "translation":
 			if file.get_file().begins_with(trackName):
@@ -91,10 +91,10 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 	var trainTranslations := []
 	var dir := Directory.new()
 	var _unused = dir.open(trainDirPath)
-	_unused = dir.list_dir_begin()
+	_unused = dir.list_dir_begin(true, true)
 	while(true):
 		var file: String = dir.get_next()
-		if file == "":
+		if file.empty():
 				break
 		if file.get_extension() == "translation":
 			trainTranslations.append(trainDirPath+"/"+file)
@@ -109,14 +109,12 @@ func crawlDirectory(directoryPath: String, foundFiles: Array, fileExtensions: Ar
 	var dir := Directory.new()
 	if dir.open(directoryPath) != OK:
 		return
-	var _unused = dir.list_dir_begin()
+	var _unused = dir.list_dir_begin(true, true)
 
 	while true:
 		var file: String = dir.get_next()
 		if file.empty():
 			break
-		if file.begins_with("."):
-			continue
 		if dir.current_is_dir():
 			crawlDirectory(directoryPath.plus_file(file), foundFiles, fileExtensions)
 			continue
@@ -134,14 +132,12 @@ func get_subfolders_of(directoryPath: String) -> Array:
 	var dir := Directory.new()
 	if dir.open(directoryPath) != OK:
 		return []
-	var _unused = dir.list_dir_begin()
+	var _unused = dir.list_dir_begin(true, true)
 	var folder_names: Array = []
 	while(true):
 		var file: String = dir.get_next()
-		if file == "":
+		if file.empty():
 			break
-		if file.begins_with("."):
-			continue
 		if dir.current_is_dir():
 			folder_names.append(file)
 	dir.list_dir_end()

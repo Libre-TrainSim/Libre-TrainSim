@@ -9,7 +9,7 @@ onready var vo_anim_fsm: AnimationNodeStateMachinePlayback = $Vo/AnimationTree.g
 func _ready() -> void:
 	# force the signal to be a combined signal
 	signal_logic.signal_type = signal_logic.SignalType.COMBINED
-	if signal_logic.signal_after == "":
+	if signal_logic.signal_after.empty():
 		$Vo.queue_free()
 	update_visual_instance(signal_logic)
 

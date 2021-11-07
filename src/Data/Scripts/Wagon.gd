@@ -355,35 +355,32 @@ func initialize_outside_announcement_player() -> void:
 
 
 func play_outside_announcement(sound_path : String) -> void:
-	if sound_path == "":
-		return
-	if cabinMode:
+	if sound_path.empty() or cabinMode:
 		return
 	var stream: AudioStream = load(sound_path)
 	if stream == null:
 		return
 	stream.loop = false
-	if stream != null:
-		outside_announcement_player.stream = stream
-		outside_announcement_player.play()
+	outside_announcement_player.stream = stream
+	outside_announcement_player.play()
 
 
 var switch_on_next_change: bool = false
 func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these are needed: When the player drives over many small rails that could be inaccurate..
-	if forward and currentRail.isSwitchPart[1] != "":
+	if forward and not currentRail.isSwitchPart[1].empty():
 		switch_on_next_change = true
 		return
-	elif not forward and currentRail.isSwitchPart[0] != "":
+	elif not forward and not currentRail.isSwitchPart[0].empty():
 		switch_on_next_change = true
 		return
 
 	if baked_route.size() > route_index+1:
 		var nextRail: Spatial = world.get_node("Rails").get_node(baked_route[route_index+1])
 		var nextForward: bool = baked_route_direction[route_index+1]
-		if nextForward and nextRail.isSwitchPart[0] != "":
+		if nextForward and not nextRail.isSwitchPart[0].empty():
 			switch_on_next_change = true
 			return
-		elif not nextForward and nextRail.isSwitchPart[1] != "":
+		elif not nextForward and not nextRail.isSwitchPart[1].empty():
 			switch_on_next_change = true
 			return
 

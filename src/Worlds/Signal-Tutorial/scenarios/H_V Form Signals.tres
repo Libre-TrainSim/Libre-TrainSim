@@ -1,0 +1,45 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+time = {
+"hour": 12.0,
+"minute": 0.0,
+"second": 0.0
+}
+title = "H/V Form Signals"
+description = "Learn how to use the old German H/V Signalling System, with Form Signals (Semaphores)."
+duration = 5
+is_hidden = false
+train_length = 100.0
+trains = {
+"Player": {
+"DespawnRail": "",
+"Direction": 1,
+"DoorConfiguration": 0,
+"InitialSpeed": 0.0,
+"InitialSpeedLimit": -1.0,
+"PreferredTrain": "JFR1_Red",
+"Route": "",
+"SpawnTime": [ -1.0, 0.0, 0.0 ],
+"StartRail": "HV_Form_Rail",
+"StartRailPosition": 50.0,
+"Stations": {
+"approachAnnouncePath": [  ],
+"arrivalAnnouncePath": [  ],
+"arrivalTime": [  ],
+"departureAnnouncePath": [  ],
+"departureTime": [  ],
+"haltTime": [  ],
+"leavingPersons": [  ],
+"nodeName": [  ],
+"stationName": [  ],
+"stopType": [  ],
+"waitingPersons": [  ]
+}
+}
+}
+signals = {
+}

@@ -2,9 +2,9 @@ extends Node2D
 
 
 func _ready():
-	$Table/Arrival/Label.text = " " + TranslationServer.translate("ARRIVAL:") + " "
-	$Table/Departure/Label.text = " " + TranslationServer.translate("DEPARTURE:") + " "
-	$Table/Station/Label.text = " " + TranslationServer.translate("STATION:") + " "
+	$Table/Arrival/Label.text = " " + tr("ARRIVAL:") + " "
+	$Table/Departure/Label.text = " " + tr("DEPARTURE:") + " "
+	$Table/Station/Label.text = " " + tr("STATION:") + " "
 
 
 func update_display(arrivals, departures, stationNames, stopTypes, passed, isInStation):

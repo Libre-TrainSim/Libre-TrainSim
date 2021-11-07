@@ -5,7 +5,7 @@ var currentTrack: String = ""
 var currentTrain: String = ""
 var currentScenario: String = ""
 var screenshot_texture: Texture
-
+var world_config: WorldConfig # config of selected world
 
 func show() -> void:
 	update_track_list()
@@ -28,7 +28,7 @@ func _on_Back_pressed() -> void:
 
 
 func _on_Play_pressed() -> void:
-	if currentScenario == "" or currentTrack == "" or currentTrain == "":
+	if currentScenario.empty() or currentTrack.empty() or currentTrain.empty():
 		return
 	var index: int = $Play/Selection/Tracks/Tracks.get_selected_items()[0]
 	Root.currentTrack = ContentLoader.repo.worlds[index]
@@ -44,50 +44,50 @@ func _on_Tracks_item_selected(index: int) -> void:
 	currentTrack = ContentLoader.repo.worlds[index]
 	Root.checkAndLoadTranslationsForTrack(currentTrack.get_file().get_basename())
 	currentScenario = ""
-	var save_path: String = ContentLoader.repo.worlds[index].get_basename() + "-scenarios.cfg"
-	$jSaveModule.set_save_path(save_path)
+	var save_path: String = ContentLoader.repo.worlds[index].get_basename() + "_config.tres"
+	world_config = load(save_path) as WorldConfig
 
-	var wData: Dictionary = $jSaveModule.get_value("world_config", {})
-	if wData.empty():
+	if world_config.scenarios.empty():
 		Logger.err("No scenarios found.", save_path)
 		$Play/Info/Description.text = tr("MENU_NO_SCENARIO_FOUND")
 		$Play/Selection/Scenarios.hide()
 		return
-	$Play/Info/Description.text = tr(wData["TrackDesciption"])
-	$Play/Info/Info/Author.text = " "+ tr("MENU_AUTHOR") + ": " + wData["Author"] + " "
-	$Play/Info/Info/ReleaseDate.text = " "+ tr("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
-	var track_name: String = currentTrack.get_basename().get_file()
-	Logger.vlog(track_name)
-	$Play/Info/Screenshot.texture = _make_image(currentTrack.get_base_dir() + "/screenshot.png")
-
+	$Play/Info/Description.text = tr(world_config.track_description)
+	$Play/Info/Info/Author.text = " "+ tr("MENU_AUTHOR") + ": " + world_config.author + " "
+	$Play/Info/Info/ReleaseDate.text = " "+ tr("MENU_RELEASE") + ": " + String(world_config.release_date["month"]) + " " + String(world_config.release_date["year"]) + " "
+	var track_dir: String = currentTrack.get_base_dir()
+	Logger.vlog(track_dir)
+	$Play/Info/Screenshot.texture = _make_image(track_dir.plus_file("screenshot.png"))
 
 	$Play/Selection/Scenarios.show()
 	$Play/Selection/Scenarios/Scenarios.clear()
 	$Play/Selection/Trains.hide()
 	$Play/Info/Info/EasyMode.hide()
-	var scenarios: Array = $jSaveModule.get_value("scenario_list", [])
-	for scenario in scenarios:
+
+	for scenario in world_config.scenarios:
 		# FIXME: remove mobile version hack and replace with resource based loading
 		if Root.mobile_version and (scenario == "The Basics" or scenario == "Advanced Train Driving"):
 			continue
 		if not Root.mobile_version and scenario == "The Basics - Mobile Version":
 			continue
-		$Play/Selection/Scenarios/Scenarios.add_item(scenario)
+		$Play/Selection/Scenarios/Scenarios.add_item(scenario.get_file().get_basename())
 
 
 func _on_Scenarios_item_selected(index: int) -> void:
 	currentScenario = $Play/Selection/Scenarios/Scenarios.get_item_text(index)
-	var sData: Dictionary = $jSaveModule.get_value("scenario_data")
-	$Play/Info/Description.text = tr(sData[currentScenario]["Description"])
-	$Play/Info/Info/Duration.text = "%s: %s min" % [tr("MENU_DURATION"), sData[currentScenario]["Duration"]]
+
+	var scenario = load(world_config.scenarios[index])
+
+	$Play/Info/Description.text = tr(scenario.description)
+	$Play/Info/Info/Duration.text = "%s: %d min" % [tr("MENU_DURATION"), scenario.duration]
 	$Play/Selection/Trains.show()
 	$Play/Info/Info/EasyMode.hide()
 	update_train_list()
 
 	# Search and preselect train from scenario:
 	$Play/Selection/Trains/Trains.unselect_all()
-	var preferredTrain: String = sData[currentScenario]["Trains"].get("Player", {}).get("PreferredTrain", "")
-	if preferredTrain != "":
+	var preferredTrain: String = scenario.trains.get("Player", {}).get("PreferredTrain", "")
+	if not preferredTrain.empty():
 		for i in range(ContentLoader.repo.trains.size()):
 			if ContentLoader.repo.trains[i].find(preferredTrain) != -1:
 				$Play/Selection/Trains/Trains.select(i)

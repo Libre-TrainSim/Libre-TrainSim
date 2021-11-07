@@ -68,9 +68,9 @@ func _load_current_config():
 	_config = ConfigFile.new()
 
 	var dir = Directory.new()
+	dir.open(save_path.get_base_dir())
 
-	# no runtime script should just be creating directories!!!
-	if not dir.dir_exists(save_path.get_base_dir()):
+	if not dir.file_exists(save_path):
 		dir.make_dir_recursive(save_path.get_base_dir())
 
 	_config.load(save_path)

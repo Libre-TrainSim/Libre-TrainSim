@@ -48,7 +48,7 @@ func _on_Tracks_item_selected(index: int) -> void:
 	$jSaveModule.set_save_path(save_path)
 
 	var wData: Dictionary = $jSaveModule.get_value("world_config", {})
-	if wData == {}:
+	if wData.empty():
 		Logger.err("No scenarios found.", save_path)
 		$Play/Info/Description.text = tr("MENU_NO_SCENARIO_FOUND")
 		$Play/Selection/Scenarios.hide()

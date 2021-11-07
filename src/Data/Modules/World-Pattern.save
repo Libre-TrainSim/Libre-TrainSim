@@ -7,6 +7,35 @@
 },
 "Rails": [ "Rail" ],
 "TrackObjects": {
+"Rail Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "Rail",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 100.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "res://Resources/Materials/Metal_Green.tres", "res://Resources/Materials/Metal.tres", "res://Resources/Materials/Metal_Brown.tres" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": true,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "Rail Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+}
 },
 "position": Vector3( 0, 0, 0 )
 }

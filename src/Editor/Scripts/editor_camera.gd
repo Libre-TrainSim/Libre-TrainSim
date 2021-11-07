@@ -11,6 +11,7 @@ export var pan_move_sensitivity: float = 0.25
 var velocity := Vector3.ZERO
 var is_moving_first_person := false
 var is_panning := false
+var in_movement_time: float = 0
 
 
 func load_from_transform(new_transform: Transform) -> void:
@@ -60,16 +61,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		_zoom(-10 * max(mb.factor, 1))
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if !is_moving_first_person:
+		in_movement_time = 0
 		return
 	var direction = Vector3(\
 		Input.get_action_strength("right") - Input.get_action_strength("left"), \
 		Input.get_action_strength("up") - Input.get_action_strength("down"), \
 		Input.get_action_strength("backward") - Input.get_action_strength("forward")\
 		).normalized()
-
+	in_movement_time += delta
 	direction *= fast_speed if Input.is_action_pressed("shift") else normal_speed
+	direction *= max(1, in_movement_time / 3)
 	direction = lerp(velocity, direction, 0.3)
 	velocity = direction
 	translate_object_local(direction)

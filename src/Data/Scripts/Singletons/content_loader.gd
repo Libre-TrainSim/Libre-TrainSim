@@ -13,7 +13,6 @@ var dependency_tree_root: Node
 
 
 func _ready() -> void:
-	init_repo()
 	append_content_to_global_repo(preload("res://content.tres"))
 	find_content_packs()
 	load_content_packs()  # TODO: let user select which mods to load??
@@ -178,20 +177,3 @@ func append_content_to_global_repo(content: ModContentDefinition) -> void:
 	repo.texture_folders.append_array(content.texture_folders)
 
 	loaded_mods.append(content)
-
-
-# this fixes a godot bug, where all these arrays are actually the same array
-# i have no clue why that would happen, but it does
-func init_repo() -> void:
-	repo.trains = []
-	repo.worlds = []
-	repo.environment_folders = []
-	repo.material_folders = []
-	repo.music_folders = []
-	repo.object_folders = []
-	repo.persons_folders = []
-	repo.rail_type_folders = []
-	repo.signal_type_folders = []
-	repo.sound_folders = []
-	repo.texture_folders = []
-

@@ -92,7 +92,6 @@ size_flags_vertical = 3
 multi_selection_allowed = false
 custom_font_path = "res://Data/Fonts/FontMedium.tres"
 enable_remove_button = false
-enable_rename_button = true
 enable_action_button = true
 add_button_text = "NEW"
 remove_button_text = "REMOVE"
@@ -183,7 +182,6 @@ custom_fonts/font = ExtResource( 3 )
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/UpdateEditorPathButton" to="." method="_on_UpdateEditorPathButton_pressed"]
 [connection signal="user_added_entry" from="PanelContainer/VBoxContainer/TracksList" to="." method="_on_TracksList_user_added_entry"]
 [connection signal="user_pressed_action" from="PanelContainer/VBoxContainer/TracksList" to="." method="_on_TracksList_user_pressed_action"]
-[connection signal="user_renamed_entry" from="PanelContainer/VBoxContainer/TracksList" to="." method="_on_TracksList_user_renamed_entry"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer/Back" to="." method="_on_Back_pressed"]
 
 [editable path="PanelContainer/VBoxContainer/TracksList"]

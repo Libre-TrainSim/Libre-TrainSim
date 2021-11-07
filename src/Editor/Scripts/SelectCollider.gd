@@ -10,7 +10,6 @@ func _ready():
 		else:
 			mesh = get_parent().get_node("MeshInstance").mesh
 			transform = get_parent().get_node("MeshInstance").transform
-	else:
-		mesh = get_parent().mesh
+
 	if mesh != null:
 		$CollisionShape.shape = mesh.create_convex_shape()

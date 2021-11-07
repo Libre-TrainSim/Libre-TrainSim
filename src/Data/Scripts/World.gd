@@ -67,7 +67,7 @@ func _ready() -> void:
 	Logger.log("trackName: " +trackName + " " + FileName)
 
 	if Root.Editor:
-		$jSaveModule.set_save_path(String(find_parent("Editor").editor_directory + "/Worlds/" + trackName + "/" + trackName + ".save"))
+		$jSaveModule.set_save_path(find_parent("Editor").current_track_path + ".save")
 	else:
 		var save_path = Root.currentTrack.get_base_dir() + "/" + Root.currentTrack.get_file().get_basename() + ".save"
 		$jSaveModule.set_save_path(save_path)
@@ -81,7 +81,6 @@ func _ready() -> void:
 		return
 
 	Root.world = self
-	Root.fix_frame_drop()
 	Root.checkAndLoadTranslationsForTrack(trackName)
 	currentScenario = Root.currentScenario
 	set_scenario_to_world()
@@ -102,7 +101,6 @@ func _ready() -> void:
 	configure_soll_chunks(activeChunk)
 
 	apply_soll_chunks()
-
 	player = $Players/Player
 	lastchunk = pos2Chunk(getOriginalPos_bchunk(player.translation))
 
@@ -132,18 +130,11 @@ func apply_user_settings() -> void:
 
 
 func _process(delta: float) -> void:
-	if not (Engine.editor_hint or Root.Editor):
+	if not Root.Editor:
 		advance_time(delta)
 		checkTrainSpawn(delta)
 		checkBigChunk()
 		handle_chunk()
-	else:
-		var buildings: Spatial = get_node("Buildings")
-		for child in get_children():
-			if child.is_class("MeshInstance"):
-				remove_child(child)
-				buildings.add_child(child)
-				child.owner = self
 
 
 func advance_time(delta: float) -> void:
@@ -233,7 +224,7 @@ func save_chunk(position: Vector3) -> void:
 func unload_chunk(position: Vector3) -> void:
 	var chunk: Dictionary = $jSaveModule.get_value(chunk2String(position), {})
 
-	if chunk == {}:
+	if chunk.empty():
 		return
 	var Rails: Array = get_node("Rails").get_children()
 	for rail in Rails:
@@ -257,9 +248,10 @@ func unload_chunk(position: Vector3) -> void:
 			else:
 				Logger.err("Object not saved! I wont unload this for you...", forest)
 
-	for mesh in $Landscape.get_children():
-		if compareChunks(pos2Chunk(mesh.translation), position):
-			mesh.free()
+	if has_node("Landscape"):
+		for mesh in $Landscape.get_children():
+			if compareChunks(pos2Chunk(mesh.translation), position):
+				mesh.free()
 
 	var TrackObjects: Array = get_node("TrackObjects").get_children()
 	for node in TrackObjects:

@@ -4,20 +4,20 @@
 [ext_resource path="res://Resources/Objects/lf7.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://Data/Scripts/SpeedLimitSignal.gd" type="Script" id=3]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=1]
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=2]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.98
 
-[sub_resource type="DynamicFontData" id=2]
+[sub_resource type="DynamicFontData" id=3]
 font_path = "res://Data/Fonts/Oswald-Bold.ttf"
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=4]
 size = 190
 extra_spacing_top = -30
 extra_spacing_bottom = -30
-font_data = SubResource( 2 )
+font_data = SubResource( 3 )
 
 [node name="SpeedLimit_Lf7" type="Spatial"]
 script = ExtResource( 3 )
@@ -26,8 +26,8 @@ script = ExtResource( 3 )
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 1.667 )
 mesh = ExtResource( 2 )
 material/0 = ExtResource( 1 )
-material/1 = SubResource( 3 )
-material/2 = SubResource( 4 )
+material/1 = SubResource( 1 )
+material/2 = SubResource( 2 )
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 176, 319 )
@@ -48,7 +48,7 @@ __meta__ = {
 margin_top = 48.0
 margin_right = 176.0
 margin_bottom = 270.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "16"
 __meta__ = {

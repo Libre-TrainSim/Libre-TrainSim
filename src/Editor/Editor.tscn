@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Editor/Scripts/editor_camera.gd" type="Script" id=1]
 [ext_resource path="res://Editor/Scripts/Editor.gd" type="Script" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Editor/Modules/AddObjects.gd" type="Script" id=10]
 [ext_resource path="res://Editor/Modules/Content_Selector.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Editor/Modules/BuildingSettings.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Editor/Modules/ExportDialog.gd" type="Script" id=13]
 
 [node name="Editor" type="Spatial"]
 script = ExtResource( 2 )
@@ -366,68 +365,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ExportDialog" type="Panel" parent="EditorHUD"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -173.5
-margin_top = -51.0
-margin_right = 173.5
-margin_bottom = 51.0
-script = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Question" type="Label" parent="EditorHUD/ExportDialog"]
-margin_left = 9.0
-margin_top = 18.0113
-margin_right = 341.0
-margin_bottom = 37.0113
-text = "To which folder should be the track exported?"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LineEdit" type="LineEdit" parent="EditorHUD/ExportDialog"]
-margin_left = 9.33258
-margin_top = 38.672
-margin_right = 334.333
-margin_bottom = 62.672
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cancel" type="Button" parent="EditorHUD/ExportDialog"]
-margin_left = 9.0
-margin_top = 72.0
-margin_right = 63.0
-margin_bottom = 92.0
-text = "Cancel"
-
-[node name="Export" type="Button" parent="EditorHUD/ExportDialog"]
-margin_left = 280.5
-margin_top = 72.0
-margin_right = 334.5
-margin_bottom = 92.0
-text = "Export"
-
-[node name="Label" type="Label" parent="EditorHUD/ExportDialog"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -102.5
-margin_top = -15.5
-margin_right = 102.5
-margin_bottom = 15.5
-text = "Exporting track...
-This could take some minutes..."
-align = 1
-
 [node name="Content_Selector" parent="EditorHUD" instance=ExtResource( 11 )]
 visible = false
 anchor_left = 0.5
@@ -582,9 +519,6 @@ highlight_color = Color( 1, 1, 0, 1 )
 [connection signal="pressed" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD/AddObjects" method="_on_ShowMenu_pressed"]
 [connection signal="item_selected" from="EditorHUD/AddObjects/Menu1" to="EditorHUD/AddObjects" method="_on_ItemList_item_selected"]
 [connection signal="item_selected" from="EditorHUD/AddObjects/RailLogicMenu" to="EditorHUD/AddObjects" method="_on_RailLogicMenu_item_selected"]
-[connection signal="export_confirmed" from="EditorHUD/ExportDialog" to="." method="_on_ExportDialog_export_confirmed"]
-[connection signal="pressed" from="EditorHUD/ExportDialog/Cancel" to="EditorHUD/ExportDialog" method="_on_Cancel_pressed"]
-[connection signal="pressed" from="EditorHUD/ExportDialog/Export" to="EditorHUD/ExportDialog" method="_on_Export_pressed"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailLogic" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]

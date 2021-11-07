@@ -145,7 +145,6 @@ func calculate_update() -> Dictionary:
 	overheadLineHeight2 = rail_type_node.overheadLineHeight2
 	overheadLineThinkness = rail_type_node.overheadLineThinkness
 	line2HeightChangingFactor = rail_type_node.line2HeightChangingFactor
-	calculated_data["rail_type_node"] = rail_type_node
 
 	if parallelRail == "":
 		updateAutomaticTendency()
@@ -176,6 +175,7 @@ func calculate_update() -> Dictionary:
 	if overheadLine:
 		calculated_data["overheadline_mesh"] = calculate_overhadline_mesh()
 
+	rail_type_node.queue_free()
 	return calculated_data
 
 

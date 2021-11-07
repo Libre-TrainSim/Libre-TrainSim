@@ -22,7 +22,6 @@ func initialize_UI():
 	$PanelContainer/VBoxContainer/TracksList.set_data(tracks)
 
 
-
 func initialize_editor_directory():
 	var dir = Directory.new()
 	if dir.open("user://") != OK:

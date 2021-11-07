@@ -104,6 +104,7 @@ __meta__ = {
 }
 
 [node name="Configuration" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 8 )]
+anchor_left = 0.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0

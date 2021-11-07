@@ -5,7 +5,6 @@ extends Spatial
 export (float) var AccelerationTransitionTime: float
 export (float) var AccelerationTransitionSpeed: float
 
-
 var sollAccelerationVolume1: float = -50
 var sollAccelerationVolume2: float = -50
 

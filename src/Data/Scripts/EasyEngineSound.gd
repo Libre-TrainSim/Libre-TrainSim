@@ -6,6 +6,7 @@ onready var wagon: Spatial = get_parent()
 export (AudioStream) var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
 export (AudioStream) var acceleration: AudioStream = preload("res://Resources/Sounds/Acceleration3.ogg")
 
+
 func _ready() -> void:
 	$Idle.stream = engine_idle
 	$Acceleration.stream = acceleration
@@ -17,7 +18,6 @@ func _process(delta: float) -> void:
 	if player == null:
 		player = get_parent().player
 		return
-
 
 	if player.engine:
 		$Idle.unit_db = Root.clampViaTime(0, $Idle.unit_db, delta)

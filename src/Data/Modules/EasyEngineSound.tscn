@@ -6,16 +6,15 @@
 
 [node name="EasyEngineSound" type="Spatial"]
 script = ExtResource( 3 )
-accelerationPath = "res://Resources/Sounds/Acceleration4.ogg"
 
 [node name="Idle" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 2 )
 unit_size = 3.0
 autoplay = true
-bus = "Train"
+bus = "Game"
 
 [node name="Acceleration" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 1 )
 unit_size = 3.0
 autoplay = true
-bus = "Train"
+bus = "Game"

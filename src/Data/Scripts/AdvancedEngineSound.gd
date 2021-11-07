@@ -27,6 +27,7 @@ func _ready() -> void:
 
 	$AccelerationTransition.stream.loop = false
 
+
 var acceleration_timer: float = 0.0
 func _process(delta) -> void:
 	if player == null:

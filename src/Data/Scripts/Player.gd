@@ -156,18 +156,33 @@ var startRail: String # Rail, on which the train is starting. Set by the scenari
 # Reference delta at 60fps
 const refDelta: float = 0.0167 # 1.0 / 60
 
-
-
 onready var cameraNode: Camera = $Camera
 var cameraZeroTransform: Transform # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 
+### SCORE SYSTEM ###
+var score: int = 0
+# scoring points
+const SCORE_ARRIVE_AT_STATION: int = 100  # when you arrive at a station
+# losing points
+const SCORE_MULTIPLIER_TOO_FAST: float = 1.0  # score -= (speed - speedLimit) * multiplier
+const SCORE_PENALTY_RED_LIGHT: int = 1000  # when you drive over a red light
+const SCORE_PENALTY_ARRIVE_LATE: int = 10  # when you arrive at a station late
+const SCORE_PENALTY_ARRIVE_VERY_LATE: int = 50  # when you arrive at a station more than a minute late
+const SCORE_PENALTY_DEPART_EARLY: int = 50  # when you leave a station too early
+const SCORE_PENALTY_EMERGENCY_BRAKE: int = 100  # when you get an emergency braking
 
+### SIGNALS ###
 signal passed_signal(signal_instance)
 signal reverser_changed(reverser_state)
+signal _textbox_closed
 
-func ready() -> void: ## Called by World!
+
+# Called by World!
+func ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
+
+	$HUD.connect("textbox_closed", self, "emit_signal", ["_textbox_closed"])
 
 	if not ai:
 		cameraZeroTransform = cameraNode.transform
@@ -570,6 +585,7 @@ func change_to_next_rail() -> void:
 				despawn()
 			else:
 				fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_LAST_RAIL"))
+				connect("_textbox_closed", LoadingScreen, "load_main_menu", [], CONNECT_ONESHOT)
 				return
 
 
@@ -749,6 +765,7 @@ func handle_signal(signal_name: String) -> void:
 			if signal_passed.status == SignalStatus.RED:
 				if not ai and not debug: # If player train
 					fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_RED_SIGNAL"))
+					score -= SCORE_PENALTY_RED_LIGHT
 			else:
 				free_signal_after_driven_train_length(last_driven_signal)
 			signal_passed.set_status(SignalStatus.RED)
@@ -830,6 +847,7 @@ func check_station(delta: float) -> void:
 	if distance_in_station > stationLength+length+GOODWILL_DISTANCE and not is_first_station:
 		# if train was already stopped at station, it departed early
 		if isInStation:
+			score -= SCORE_PENALTY_DEPART_EARLY
 			send_message("YOU_DEPARTED_EARLIER")
 		# if it hadn't stopped yet, it missed the station
 		else:
@@ -838,10 +856,13 @@ func check_station(delta: float) -> void:
 		leave_current_station()
 		return
 
+	# TODO: does this code EVER matter?
+	# isn't it already done by the `if` above?
 	# handle cases when speed > 0:
 	if speed != 0:
 		whole_train_in_station = true
 		if isInStation and not (doorLeft or doorRight):
+			score -= SCORE_PENALTY_DEPART_EARLY
 			send_message("YOU_DEPARTED_EARLIER")
 			leave_current_station()
 		return
@@ -868,6 +889,7 @@ func check_station(delta: float) -> void:
 		isInStation = true
 		stationTimer = 0
 		realArrivalTime = time
+		score += SCORE_ARRIVE_AT_STATION
 
 		# send a "you are x minutes late" message if player is late
 		var lateMessage: String = ". "
@@ -876,8 +898,10 @@ func check_station(delta: float) -> void:
 			if secondsLater < 60:
 				lateMessage = ""
 			elif secondsLater < 120:
+				score -= SCORE_PENALTY_ARRIVE_LATE
 				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2_ONE_MINUTE")]
 			else:
+				score -= SCORE_PENALTY_ARRIVE_VERY_LATE
 				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2")]
 
 		# send "welcome to station" message
@@ -903,7 +927,8 @@ func check_station(delta: float) -> void:
 	elif isInStation and stationTimer > stationHaltTime:
 		# scenario finished if last station
 		if is_last_station:
-			send_message("SCENARIO_FINISHED")
+			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)
+			connect("_textbox_closed", LoadingScreen, "load_main_menu", [], CONNECT_ONESHOT)
 			stations["passed"][stations["stationName"].find(currentStationName)] = true
 			currentStationName = ""
 			nextStation = ""
@@ -979,6 +1004,7 @@ var checkSpeedLimitTimer: float = 0
 func checkSpeedLimit(delta: float) -> void:
 	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
+		score -= int(round((Math.speedToKmH(speed) - currentSpeedLimit) * SCORE_MULTIPLIER_TOO_FAST))
 		send_message(tr("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
 	checkSpeedLimitTimer += delta
 
@@ -1256,6 +1282,7 @@ func check_security() -> void:
 		enforced_braking = enforced_braking or sys.requires_emergency_braking
 
 	if not oldEnforcedBrake and enforced_braking and speed > 0 and not ai:
+		score -= SCORE_PENALTY_EMERGENCY_BRAKE
 		$Sound/EnforcedBrake.play()
 
 
@@ -1610,7 +1637,6 @@ func get_camera_shaking(delta: float) -> Vector3:
 	var camera_shaking: Vector3 = Vector3(sin(camera_shaking_time*10.0), cos(camera_shaking_time*7.0), sin(camera_shaking_time*13.0)) / 10000.0
 
 	var shaking_factor: float = Math.speedToKmH(speed) / 100.0 * abs(sin(camera_shaking_time/5)) * camera_shaking_factor
-
 
 #	print(curve_shaking_factor)
 	shaking_factor = max(shaking_factor, curve_shaking_factor)

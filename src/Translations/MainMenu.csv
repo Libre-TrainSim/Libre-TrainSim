@@ -66,3 +66,7 @@ DOWNLOAD_RESOURCE_IMPORTER,Download Resource Importer,Ressourcen-Importierer her
 ,,,,,,
 MENU_IMPORT,Import…,Importieren…,,,,
 MENU_OPEN_ADDONS,Show Addon Folder,Addonordner anzeigen,,,,
+,,,,,,
+SAVE_AND_EXIT,Save and exit,Speichern und beenden,,,,
+EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,,,,
+,,,,,,

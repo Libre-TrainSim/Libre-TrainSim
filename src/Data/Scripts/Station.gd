@@ -115,6 +115,7 @@ func getRandomTransformAtPlatform() -> Transform:
 			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 	return Transform()
 
+
 func setDoorPositions(doors: Array, doorsWagon: Array) -> void: ## Called by the train
 	if doors.size() == 0:
 		return
@@ -122,9 +123,9 @@ func setDoorPositions(doors: Array, doorsWagon: Array) -> void: ## Called by the
 		person.clear_destinations()
 		var nearestDoorIndex = 0
 		for i in range(doors.size()):
-			if doors[i].worldPos.distance_to(person.translation) <  doors[nearestDoorIndex].worldPos.distance_to(person.translation):
+			if doors[i].global_transform.origin.distance_to(person.translation) <  doors[nearestDoorIndex].global_transform.origin.distance_to(person.translation):
 				nearestDoorIndex = i
-		person.destinationPos.append(doors[nearestDoorIndex].worldPos)
+		person.destinationPos.append(doors[nearestDoorIndex].global_transform.origin)
 		person.transitionToWagon = true
 		person.assignedDoor = doors[nearestDoorIndex]
 		person.attachedWagon = doorsWagon[nearestDoorIndex]

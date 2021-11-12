@@ -1600,12 +1600,10 @@ func sendDoorPositionsToCurrentStation() -> void:
 			wagonTransform = backward_transform
 		if (currentStationNode.platform_side == PlatformSide.LEFT):
 			for door in wagon.leftDoors:
-				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doorsArray.append(door)
 				doorsWagon.append(wagon)
 		if (currentStationNode.platform_side == PlatformSide.RIGHT):
 			for door in wagon.rightDoors:
-				door.worldPos = (wagonTransform.translated(door.translation).origin)
 				doorsArray.append(door)
 				doorsWagon.append(wagon)
 	currentStationNode.setDoorPositions(doorsArray, doorsWagon)

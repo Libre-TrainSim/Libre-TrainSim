@@ -1,6 +1,4 @@
-extends Spatial
+extends PassengerPathNode
 
-var worldPos: Vector3 ## Only updated by the player in function sendDoorPositionsToCurrentStation()
-
-func _ready():
-	$MeshInstance.queue_free()
+func _init():
+	type = Type.DOOR

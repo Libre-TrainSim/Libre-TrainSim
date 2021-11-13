@@ -16,12 +16,10 @@ func _ready() -> void:
 
 func _on_settings_changed() -> void:
 	# TODO:
-	#   check settings, if sifa disabled in difficulty settings, stop.
 	#   connect "settings changed" signal, then re-check if sifa is on
 	#   in case the player toggles it in the pause-menu options menu
-	# is_sifa_enabled = Options.Difficulty.Sifa  # something like that
 
-	is_sifa_enabled = not Root.EasyMode
+	is_sifa_enabled = (not Root.EasyMode) and jSaveManager.get_setting("sifa_enabled")
 	set_process(is_sifa_enabled)
 	set_process_unhandled_key_input(is_sifa_enabled)
 

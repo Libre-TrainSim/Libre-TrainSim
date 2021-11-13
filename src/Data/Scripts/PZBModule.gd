@@ -48,11 +48,10 @@ func _ready() -> void:
 
 func _on_settings_changed() -> void:
 	# TODO:
-	#   check settings, if pzb disabled in difficulty settings, stop.
 	#   connect "settings changed" signal, then re-check if pzb is on
 	#   in case the player toggles it in the pause-menu options menu
 
-	var is_pzb_enabled: bool = not Root.EasyMode
+	var is_pzb_enabled: bool = (not Root.EasyMode) and jSaveManager.get_setting("pzb_enabled")
 
 	if is_pzb_enabled:
 		pzb_reset()

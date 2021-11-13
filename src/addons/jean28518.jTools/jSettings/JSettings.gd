@@ -10,156 +10,138 @@ func popup():
 func _ready():
 	if get_parent().name == "root":
 		$JSettings.hide()
-
-	if get_fullscreen() == null:
-		set_fullscreen(true)
-
-	if get_shadows() == null:
-		set_shadows(true)
-
-	if get_dynamic_lights() == null:
-		set_dynamic_lights(false)
-
-	if get_anti_aliasing() == null:
-		set_anti_aliasing(2)
-
-	if get_main_volume() == null:
-		set_main_volume(1)
-
-	if get_music_volume() == null:
-		set_music_volume(1)
-
-	if get_game_volume() == null:
-		set_game_volume(1)
-
-	if get_persons() == null:
-		set_persons(true)
-
 	apply_saved_settings()
-
 
 
 func apply_saved_settings():
 	OS.window_fullscreen = get_fullscreen()
 	ProjectSettings.set_setting("rendering/quality/filters/msaa", get_anti_aliasing())
-
-	## This can only be used, if JAudioManager is in project.
-	if jConfig.enable_jAudioManager:
-		jAudioManager.set_main_volume_db(get_main_volume())
-		jAudioManager.set_game_volume_db(get_game_volume())
-		jAudioManager.set_music_volume_db(get_music_volume())
+	jAudioManager.set_main_volume_db(get_main_volume())
+	jAudioManager.set_game_volume_db(get_game_volume())
+	jAudioManager.set_music_volume_db(get_music_volume())
 
 
 func update_settings_window():
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = get_dynamic_lights()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = get_fog()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = get_persons()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/AntiAliasing.selected = get_anti_aliasing()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
-	$JSettings/VBoxContainer/ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
-
-	if not jConfig.enable_jAudioManager:
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Label4.hide()
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/GameVolume.hide()
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Label5.hide()
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.hide()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = get_dynamic_lights()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = get_fog()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = get_persons()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AntiAliasing.selected = get_anti_aliasing()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = get_sifa()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = get_pzb()
+	
 
 ## Setter/Getter ###############################################################
 
-func get_fullscreen():
-	return jSaveManager.get_setting("fullscreen")
+func get_fullscreen() -> bool:
+	return jSaveManager.get_setting("fullscreen", true)
 
-func set_fullscreen(val : bool):
+func set_fullscreen(val: bool):
 	jSaveManager.save_setting("fullscreen", val)
 	OS.window_fullscreen = val
 
 
-func set_shadows(val : bool):
+func set_shadows(val: bool):
 	jSaveManager.save_setting("shadows", val)
 
-func get_shadows():
-	return jSaveManager.get_setting("shadows")
+func get_shadows() -> bool:
+	return jSaveManager.get_setting("shadows", true)
 
 
 func set_dynamic_lights(val: bool):
 	jSaveManager.save_setting("dynamic_lights", val)
 
-func get_dynamic_lights():
-	return jSaveManager.get_setting("dynamic_lights")
+func get_dynamic_lights() -> bool:
+	return jSaveManager.get_setting("dynamic_lights", false)
 
 
-func set_language(language_code : String):
+func set_language(language_code: String):
 	jSaveManager.save_setting("language", language_code)
 	TranslationServer.set_locale(language_code)
 
-func get_language():
+func get_language() -> String:
 	return jSaveManager.get_setting("language", TranslationServer.get_locale().rsplit("_")[0])
 
 
-func set_anti_aliasing(val : int):
+func set_anti_aliasing(val: int):
 	jSaveManager.save_setting("antiAliasing", val)
 	ProjectSettings.set_setting("rendering/quality/filters/msaa", val)
 
-func get_anti_aliasing():
-	return jSaveManager.get_setting("antiAliasing")
+func get_anti_aliasing() -> int:
+	return jSaveManager.get_setting("antiAliasing", 2)
 
 
-func set_main_volume(val : float):
+func set_main_volume(val: float):
 	jSaveManager.save_setting("mainVolume", val)
 	jAudioManager.set_main_volume_db(val)
 
+func get_main_volume() -> float:
+	return jSaveManager.get_setting("mainVolume", 1)
 
-func get_main_volume():
-	return jSaveManager.get_setting("mainVolume")
 
-
-func set_music_volume(val : float):
+func set_music_volume(val: float):
 	jSaveManager.save_setting("musicVolume", val)
 	jAudioManager.set_music_volume_db(val)
 
-func get_music_volume():
-	return jSaveManager.get_setting("musicVolume")
+func get_music_volume() -> float:
+	return jSaveManager.get_setting("musicVolume", 1)
 
 
-func set_game_volume(val : float):
+func set_game_volume(val: float):
 	jSaveManager.save_setting("gameVolume", val)
 	jAudioManager.set_game_volume_db(val)
 
-func get_game_volume():
-	return jSaveManager.get_setting("gameVolume")
+func get_game_volume() -> float:
+	return jSaveManager.get_setting("gameVolume", 1)
 
 
-func set_fog(value : bool):
+func set_fog(value: bool):
 	jSaveManager.save_setting("fog", value)
 
-func get_fog():
+func get_fog() -> bool:
 	return jSaveManager.get_setting("fog", true)
 
-func set_persons(value : bool):
+
+func set_persons(value: bool):
 	jSaveManager.save_setting("persons", value)
 
-func get_persons():
+func get_persons() -> bool:
 	return jSaveManager.get_setting("persons", true)
 
 
-func set_view_distance(value : int):
+func set_view_distance(value: int):
 	jSaveManager.save_setting("view_distance", value)
 
-func get_view_distance():
+func get_view_distance() -> int:
 	return jSaveManager.get_setting("view_distance", 1000)
 
 
-func set_framedrop_fix(value : bool):
+func set_framedrop_fix(value: bool):
 	jSaveManager.save_setting("framedrop_fix", value)
 
-func get_framedrop_fix():
-	return jSaveManager.get_setting("framedrop_fix", true)
+func get_framedrop_fix() -> bool:
+	return jSaveManager.get_setting("framedrop_fix", false)
+
+
+func set_sifa(value: bool):
+	jSaveManager.save_setting("sifa_enabled", value)
+
+func get_sifa() -> bool:
+	return jSaveManager.get_setting("sifa_enabled", false)
+
+
+func set_pzb(value: bool):
+	jSaveManager.save_setting("pzb_enabled", value)
+
+func get_pzb() -> bool:
+	return jSaveManager.get_setting("pzb_enabled", false)
 
 
 ## Other Functionality #########################################################
@@ -169,10 +151,9 @@ func update_and_prepare_language_handling():
 	var language_codes = TranslationServer.get_loaded_locales()
 	language_codes = jEssentials.remove_duplicates(language_codes)
 	if language_codes.size() == 0:
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Label7.hide()
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.hide()
+		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Label7.hide()
+		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.hide()
 		return
-
 
 	# Prepare _language_table
 	language_codes.sort()
@@ -182,9 +163,9 @@ func update_and_prepare_language_handling():
 
 	# Prepare language
 	for index in range(_language_table.size()):
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
+		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
 	for language in _language_table.keys():
-		$JSettings/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
+		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
 
 	# If Language is not found, select one language, which is available
 	var language_code = get_language()
@@ -194,6 +175,7 @@ func update_and_prepare_language_handling():
 		else:
 			language_code = "en"
 	set_language(language_code)
+
 
 func _id_to_language_code(id : int):
 	for key in _language_table:
@@ -212,11 +194,11 @@ func _on_Back_pressed():
 
 
 func _on_Fullscreen_pressed():
-	set_fullscreen($JSettings/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed)
+	set_fullscreen($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed)
 
 
 func _on_Shadows_pressed():
-	set_shadows($JSettings/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed)
+	set_shadows($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed)
 
 
 func _on_Language_item_selected(index):
@@ -224,12 +206,21 @@ func _on_Language_item_selected(index):
 
 
 func _on_Fog_pressed():
-	set_fog($JSettings/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed)
+	set_fog($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed)
 
 
 func _on_Persons_pressed():
-	set_persons($JSettings/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed)
+	set_persons($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed)
 
 
-func _on_DynamicLights_pressed() -> void:
-	set_dynamic_lights($JSettings/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed)
+func _on_DynamicLights_pressed():
+	set_dynamic_lights($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed)
+
+
+func _on_SIFA_pressed():
+	set_sifa($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed)
+
+
+func _on_PZB_pressed():
+	set_pzb($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed)
+

@@ -544,7 +544,7 @@ func apply_scenario_to_signals(signals: Dictionary) -> void:
 	## Apply Scenario Data
 	for signalN in $Signals.get_children():
 		if signals.has(signalN.name):
-			signalN.set_scenario_data(signals[signalN.name])
+			signalN.set_scenario_data(signals[signalN.name] if signals[signalN.name] != null else {})
 
 
 func get_signal_scenario_data() -> Dictionary:

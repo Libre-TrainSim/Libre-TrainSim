@@ -1,5 +1,4 @@
-extends Spatial
+extends PassengerPathNode
 
-func _ready():
-	$MeshInstance.queue_free()
-	$MeshInstance2.queue_free()
+func _init():
+	type = Type.SEAT

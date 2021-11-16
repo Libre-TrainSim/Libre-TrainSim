@@ -36,7 +36,12 @@ MENU_FOG,Fog,Nebel,Nebbia,霧 ,Mgła,Мова,Niebla
 MENU_LANGUAGE,Language,Sprache,Lingua,言語,Język,,Idioma
 MENU_AUTOMATIC_FRAMEDROP_FIX,Automatic Framedrop Fix,Automatischer Framedrop Fix,,,,,Corrección automática de caída de fotogramas
 MENU_PERSONS,Enable Passengers,Passagiere,,,,,Activar pasajeros
-MENU_DYNAMIC_LIGHTS,Dynamic Lights,dynamische Lichter,,,,,Luces dinámicas
+"MENU_DYNAMIC_LIGHTS","Dynamic Lights","dynamische Lichter",,,,,Luces dinámicas
+MENU_VISUAL_SETTINGS,Visuals,Grafik,,,,
+MENU_AUDIO_SETTINGS,Audio,Audio,,,,
+MENU_DIFFICULTY_SETTINGS,Difficulty,Schwierigkeit,,,,
+MENU_DIFFICULTY_PZB,Enable PZB,PZB einschalten,,,,
+MENU_DIFFICULTY_SIFA,Enable SIFA,SiFa einschalten,,,,
 ,,,,,,,
 MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...,Завантаження...,Cargando…
 ,,,,,,,
@@ -66,3 +71,7 @@ DOWNLOAD_RESOURCE_IMPORTER,Download Resource Importer,Ressourcen-Importierer her
 ,,,,,,,
 MENU_IMPORT,Import…,Importieren…,,,,,Importar…
 MENU_OPEN_ADDONS,Show Addon Folder,Addonordner anzeigen,,,,,Mostrar la carpeta de los Complementos
+,,,,,,
+SAVE_AND_EXIT,Save and exit,Speichern und beenden,,,,
+EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,,,,
+,,,,,,

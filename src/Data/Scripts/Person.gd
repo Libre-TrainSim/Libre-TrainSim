@@ -56,7 +56,7 @@ func handleWalk(delta: float) -> void:
 				leave_wagon_timer = 0
 				transitionToStation = false
 				leave_current_wagon()
-		if destinationIsSeat and translation.distance_to(attachedSeat.translation) < 0.1:
+		if destinationIsSeat and attachedSeat != null and translation.distance_to(attachedSeat.translation) < 0.1:
 			destinationIsSeat = false
 			rotation_degrees.y = attachedSeat.rotation_degrees.y + 90
 

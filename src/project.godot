@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/PZBMagnet.gd"
 }, {
+"base": "Spatial",
+"class": "PassengerPathNode",
+"language": "GDScript",
+"path": "res://Data/Scripts/PassengerPathNode.gd"
+}, {
 "base": "Control",
 "class": "Pause",
 "language": "GDScript",
@@ -165,6 +170,7 @@ _global_script_class_icons={
 "Map": "",
 "ModContentDefinition": "",
 "PZBMagnet": "",
+"PassengerPathNode": "",
 "Pause": "",
 "PlatformSide": "",
 "RailLogic": "",

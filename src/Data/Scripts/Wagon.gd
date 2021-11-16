@@ -229,11 +229,10 @@ func registerPerson(person: Spatial, door: Spatial):
 	person.owner = self
 	person.translation = door.translation
 
-	var passengerRoutePath: Array = getPathFromTo(door, seats[seatIndex])
+	var passengerRoutePath: Array = get_path_from_to(door, seats[seatIndex])
 	if passengerRoutePath == []:
 		Logger.err("Some seats of "+ name + " are not reachable from every door!!", self)
 		return
-#	print(passengerRoutePath)
 	person.destinationPos = passengerRoutePath
 	person.destinationIsSeat = true
 	person.attachedSeat = seats[seatIndex]
@@ -250,51 +249,29 @@ func getRandomFreeSeatIndex() -> int:
 	return -1
 
 
-func getPathFromTo(start: Spatial, destination: Spatial) -> Array:
-	var passengerRoutePath := [] ## Array of Vector3
-	var realStartNode: Node = start
-#	print(start.get_groups())
-	if start.is_in_group("PassengerDoor") or start.is_in_group("PassengerSeat"):
-		 # find the connected passengerNode
-		for passengerPathNode in passengerPathNodes:
-			for connection in passengerPathNode.connections:
-#				print(connection + "  " + start.name)
-				if connection == start.name:
-					passengerRoutePath.append(passengerPathNode.translation)
-#					print("Equals!")
-					realStartNode = passengerPathNode
-#					print(realStartNode.name)
-
-	if not realStartNode.is_in_group("PassengerPathNode"):
-#		printerr("At " + name + " " + start.name + " is not connected to a passengerPathNode!")
+func get_path_from_to(from: Spatial, to: Spatial) -> Array:
+	if from == to:
 		return []
 
-	var restOfpassengerRoutePath: Array = getPathFromToHelper(realStartNode, destination, [])
-	if restOfpassengerRoutePath == []:
-		return []
-	for routePathPosition in restOfpassengerRoutePath:
-		passengerRoutePath.append(routePathPosition)
-	return passengerRoutePath
+	var previous := {}
+	var visited := []
+	var stack := [from]
+	while not stack.empty():
+		var node = stack.pop_front()
+		visited.append(node)
+		if node == to:
+			break
+		for conn in node.connection_nodes:
+			if not visited.has(conn):
+				stack.append(conn)
+				previous[conn] = node
 
-
-## Recursion, Simple Pathfinding, Start  has to be a PassengerPathNode.
-func getPathFromToHelper(start: Spatial, destination: Spatial, visitedNodes: Array) -> Array:
-#	print("Recursion: " + start.name + " " + destination.name + " " + String(visitedNodes))
-	for connection in start.connections:
-		var connectionN: Node = get_node(connection)
-		if connectionN == null:
-			continue
-		if connectionN == destination:
-			return [connectionN.translation]
-		if connectionN.is_in_group("PassengerPathNode"):
-			if visitedNodes.has(connectionN):
-				continue
-			visitedNodes.append(connectionN)
-			var passengerRoutePath: Array = getPathFromToHelper(connectionN, destination, visitedNodes)
-			if  passengerRoutePath != null:
-				passengerRoutePath.push_front(connectionN.translation)
-				return passengerRoutePath
-	return []
+	var path := [to.translation]
+	var node := to
+	while previous.has(node):
+		node = previous[node]
+		path.push_front(node.translation)
+	return path
 
 
 func registerPassengerPathNodes() -> void:
@@ -319,11 +296,9 @@ func sendPersonsToDoor(doorDirection: int, proportion: float = 0.5) -> void:
 	 #0: No platform, 1: at left side, 2: at right side, 3: at both sides
 	var possibleDoors := []
 	if doorDirection == 1 or doorDirection == 3: # Left
-		for door in leftDoors:
-			possibleDoors.append(door)
+		possibleDoors.append_array(leftDoors)
 	if doorDirection == 2 or doorDirection == 3: # Right
-		for door in rightDoors:
-			possibleDoors.append(door)
+		possibleDoors.append_array(rightDoors)
 
 	if possibleDoors.empty():
 		Logger.err(name + ": No Doors found for doorDirection: " + String(doorDirection), self)
@@ -344,7 +319,7 @@ func sendPersonsToDoor(doorDirection: int, proportion: float = 0.5) -> void:
 				Logger.err(name + ": Error: Seat from person" + personNode.name+  " not found!", self)
 				return
 
-			var passengerRoutePath: Array = getPathFromTo(seats[seatIndex], randomDoor)
+			var passengerRoutePath: Array = get_path_from_to(seats[seatIndex], randomDoor)
 			if passengerRoutePath == []:
 				Logger.err("Some doors are not reachable from every door! Check your Path configuration", self)
 				return
@@ -378,6 +353,7 @@ func initialize_outside_announcement_player() -> void:
 
 	add_child(audioStreamPlayer)
 
+
 func play_outside_announcement(sound_path : String) -> void:
 	if sound_path == "":
 		return
@@ -390,6 +366,7 @@ func play_outside_announcement(sound_path : String) -> void:
 	if stream != null:
 		outside_announcement_player.stream = stream
 		outside_announcement_player.play()
+
 
 var switch_on_next_change: bool = false
 func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these are needed: When the player drives over many small rails that could be inaccurate..

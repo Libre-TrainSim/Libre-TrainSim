@@ -34,8 +34,8 @@ __meta__ = {
 [node name="LabelAbout" type="Label" parent="Control"]
 margin_right = 756.0
 margin_bottom = 90.0
-custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "MENU_ABOUT"
 align = 1
 valign = 1
@@ -70,8 +70,8 @@ alignment = 1
 [node name="DevelopersLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Developers"]
 margin_right = 756.0
 margin_bottom = 45.0
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "ABOUT_DEVELOPERS"
 align = 1
 valign = 1
@@ -97,8 +97,8 @@ alignment = 1
 [node name="ContributorsLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Contributors"]
 margin_right = 756.0
 margin_bottom = 45.0
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "ABOUT_CONTRIBUTORS"
 align = 1
 valign = 1
@@ -124,8 +124,8 @@ alignment = 1
 [node name="TranslatorsLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Translators"]
 margin_right = 756.0
 margin_bottom = 45.0
-custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
 text = "ABOUT_TRANSLATORS"
 align = 1
 valign = 1

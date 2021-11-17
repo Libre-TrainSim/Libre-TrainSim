@@ -2,9 +2,7 @@
 
 [ext_resource path="res://Editor/Docks/Configuration/time_field.gd" type="Script" id=1]
 
-[node name="TimeField" type="Control" groups=[
-"TimeField",
-]]
+[node name="TimeField" type="Control" groups=["TimeField"]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -68,5 +66,6 @@ text = "Ok"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="TimeButton" to="." method="_on_TimeButton_pressed"]
 [connection signal="pressed" from="Popup/Okay" to="." method="_on_Okay_pressed"]

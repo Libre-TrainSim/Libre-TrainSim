@@ -38,14 +38,11 @@ surfaces/0 = {
 "vertex_count": 168
 }
 
-[node name="Rail" type="Spatial" groups=[
-"Rail",
-]]
+[node name="Rail" type="Spatial" groups=["Rail"]]
 script = ExtResource( 1 )
 length = 100.0
 buildDistance = 0.9
 endpos = Vector3( 100, 0, 0 )
-overheadLine = true
 isSwitchPart = [ "Rail2", "" ]
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]

@@ -6,9 +6,7 @@
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 1, 0.560784, 0, 1 )
 
-[node name="ContactPoint" type="Spatial" groups=[
-"Signal",
-]]
+[node name="ContactPoint" type="Spatial" groups=["Signal"]]
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

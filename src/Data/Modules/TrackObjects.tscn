@@ -5,9 +5,7 @@
 [sub_resource type="MultiMesh" id=1]
 transform_format = 1
 
-[node name="TO" type="MultiMeshInstance" groups=[
-"TrackObject",
-]]
+[node name="TO" type="MultiMeshInstance" groups=["TrackObject"]]
 use_in_baked_light = true
 lod_max_distance = 100.0
 multimesh = SubResource( 1 )

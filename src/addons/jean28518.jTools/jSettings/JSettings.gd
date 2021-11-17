@@ -36,7 +36,7 @@ func update_settings_window():
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = get_sifa()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = get_pzb()
-	
+
 
 ## Setter/Getter ###############################################################
 

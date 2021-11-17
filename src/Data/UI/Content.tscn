@@ -35,8 +35,8 @@ margin_bottom = 572.0
 [node name="Label2" type="Label" parent="VBoxContainer"]
 margin_right = 764.0
 margin_bottom = 30.0
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "MENU_CURRENT_LOADED_PACKS"
 align = 1
 
@@ -51,9 +51,9 @@ margin_bottom = 475.0
 margin_top = 479.0
 margin_right = 764.0
 margin_bottom = 509.0
-custom_styles/normal = SubResource( 1 )
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/normal = SubResource( 1 )
 text = "MENU_HINT_UPDATED_CONTENT_PACK"
 align = 1
 

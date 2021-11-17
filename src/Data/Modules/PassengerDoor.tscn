@@ -8,9 +8,7 @@ size = Vector3( 1, 1.8, 0.2 )
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.482353, 0.0196078, 0.670588, 1 )
 
-[node name="PassengerDoor" type="Spatial" groups=[
-"PassengerDoor",
-]]
+[node name="PassengerDoor" type="Spatial" groups=["PassengerDoor"]]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

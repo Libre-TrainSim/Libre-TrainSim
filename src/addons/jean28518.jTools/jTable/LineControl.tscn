@@ -30,30 +30,31 @@ align = 1
 
 [node name="Up" type="Button" parent="HBoxContainer"]
 margin_left = 29.0
-margin_right = 355.0
+margin_right = 280.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 text = "Up"
 
 [node name="Down" type="Button" parent="HBoxContainer"]
-margin_left = 359.0
-margin_right = 685.0
+margin_left = 284.0
+margin_right = 535.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 text = "Down"
 
 [node name="Delete" type="Button" parent="HBoxContainer"]
-margin_left = 689.0
-margin_right = 1015.0
+margin_left = 539.0
+margin_right = 790.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 text = "Delete"
 
 [node name="Control" type="Control" parent="HBoxContainer"]
-margin_left = 1019.0
-margin_right = 1024.0
+margin_left = 794.0
+margin_right = 799.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 5, 0 )
+
 [connection signal="pressed" from="HBoxContainer/Up" to="." method="_on_Up_pressed"]
 [connection signal="pressed" from="HBoxContainer/Down" to="." method="_on_Down_pressed"]
 [connection signal="pressed" from="HBoxContainer/Delete" to="." method="_on_Delete_pressed"]

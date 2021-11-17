@@ -822,9 +822,7 @@ visible = false
 script = ExtResource( 26 )
 length = 14.0
 
-[node name="PassengerCamera1" type="Camera" parent="Wagon1" groups=[
-"PlayerCameras",
-]]
+[node name="PassengerCamera1" type="Camera" parent="Wagon1" groups=["PlayerCameras"]]
 transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.09673, 2.40611, 1.18214 )
 script = ExtResource( 39 )
 accel = true
@@ -1180,9 +1178,7 @@ transform = Transform( 0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.4
 mesh = ExtResource( 42 )
 material/0 = ExtResource( 33 )
 
-[node name="PassengerCamera2" type="Camera" parent="DriverCabinF" groups=[
-"PlayerCameras",
-]]
+[node name="PassengerCamera2" type="Camera" parent="DriverCabinF" groups=["PlayerCameras"]]
 transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182 )
 script = ExtResource( 39 )
 accel = true
@@ -1581,9 +1577,7 @@ transform = Transform( 0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.4
 mesh = ExtResource( 42 )
 material/0 = ExtResource( 33 )
 
-[node name="PassengerCamera3" type="Camera" parent="DriverCabinB" groups=[
-"PlayerCameras",
-]]
+[node name="PassengerCamera3" type="Camera" parent="DriverCabinB" groups=["PlayerCameras"]]
 transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182 )
 script = ExtResource( 39 )
 accel = true

@@ -156,10 +156,10 @@ margin_left = -227.5
 margin_top = -80.5
 margin_right = 227.5
 margin_bottom = 80.5
-custom_styles/panel = ExtResource( 13 )
-custom_fonts/title_font = ExtResource( 3 )
 custom_constants/close_h_ofs = 28
 custom_constants/scaleborder_size = 41
+custom_fonts/title_font = ExtResource( 3 )
+custom_styles/panel = ExtResource( 13 )
 window_title = "Feedback"
 resizable = true
 __meta__ = {
@@ -181,8 +181,8 @@ __meta__ = {
 margin_right = 443.0
 margin_bottom = 111.0
 size_flags_vertical = 3
-custom_fonts/normal_font = ExtResource( 2 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 2 )
 text = "MENU_FEEDBACK_QUESTION"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Feedback/VBoxContainer"]

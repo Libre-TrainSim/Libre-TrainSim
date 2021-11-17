@@ -45,8 +45,8 @@ margin_left = 54.0
 margin_top = 39.0
 margin_right = 202.0
 margin_bottom = 217.0
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "16"
 __meta__ = {
 "_edit_use_anchors_": false

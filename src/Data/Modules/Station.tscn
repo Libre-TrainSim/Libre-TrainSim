@@ -6,9 +6,7 @@
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0, 0.180392, 1, 1 )
 
-[node name="TrainStation" type="Spatial" groups=[
-"Signal",
-]]
+[node name="TrainStation" type="Spatial" groups=["Signal"]]
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

@@ -64,9 +64,7 @@ emission_on_uv2 = false
 radius = 7.0
 height = 1.0
 
-[node name="Gizmo" type="Spatial" groups=[
-"Gizmo",
-]]
+[node name="Gizmo" type="Spatial" groups=["Gizmo"]]
 script = ExtResource( 1 )
 
 [node name="x-axis" type="StaticBody" parent="."]

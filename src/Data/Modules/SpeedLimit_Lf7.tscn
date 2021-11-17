@@ -48,8 +48,8 @@ __meta__ = {
 margin_top = 48.0
 margin_right = 176.0
 margin_bottom = 270.0
-custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 4 )
 text = "16"
 __meta__ = {
 "_edit_use_anchors_": false

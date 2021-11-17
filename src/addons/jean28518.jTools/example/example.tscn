@@ -263,14 +263,14 @@ __meta__ = {
 }
 
 [node name="Page1" type="Button" parent="Pages"]
-margin_left = 126.0
-margin_right = 180.0
+margin_left = 14.0
+margin_right = 68.0
 margin_bottom = 20.0
 text = "Page 1"
 
 [node name="Page2" type="Button" parent="Pages"]
-margin_left = 190.0
-margin_right = 244.0
+margin_left = 78.0
+margin_right = 132.0
 margin_bottom = 20.0
 text = "Page 2"
 
@@ -309,6 +309,7 @@ text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="user_selected_entry" from="Page2/jListExample1/jList" to="." method="_on_jListExample1_user_selected_entry"]
 [connection signal="saved_pressed" from="Table/jTable" to="." method="_on_jTable_saved_pressed"]
 [connection signal="pressed" from="SaveLoadExample/Save" to="." method="_on_SaveSingleValue_pressed"]

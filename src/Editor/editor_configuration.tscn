@@ -46,8 +46,8 @@ size_flags_horizontal = 3
 margin_top = 2.0
 margin_right = 283.0
 margin_bottom = 47.0
-custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
 text = "ABSOLUTE_EDITOR_PATH: "
 
 [node name="EditorPath" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer"]

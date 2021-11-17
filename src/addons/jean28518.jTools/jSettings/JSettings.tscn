@@ -44,15 +44,13 @@ margin_right = 748.0
 margin_bottom = 493.0
 size_flags_vertical = 3
 theme = ExtResource( 2 )
-scroll_vertical = 353
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="GridContainer" type="GridContainer" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_top = -353.0
 margin_right = 738.0
-margin_bottom = 578.0
+margin_bottom = 931.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -64,8 +62,8 @@ __meta__ = {
 margin_right = 392.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
+custom_fonts/font = ExtResource( 3 )
 text = "MENU_VISUAL_SETTINGS"
 valign = 1
 
@@ -244,8 +242,8 @@ margin_top = 568.0
 margin_right = 392.0
 margin_bottom = 613.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
+custom_fonts/font = ExtResource( 3 )
 text = "MENU_AUDIO_SETTINGS"
 valign = 1
 
@@ -343,8 +341,8 @@ margin_top = 772.0
 margin_right = 392.0
 margin_bottom = 817.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
+custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_SETTINGS"
 valign = 1
 

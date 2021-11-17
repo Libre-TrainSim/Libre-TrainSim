@@ -12,9 +12,7 @@ rings = 1
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.0117647, 0.584314, 0.643137, 1 )
 
-[node name="PassengerPathNode" type="Spatial" groups=[
-"PassengerPathNode",
-]]
+[node name="PassengerPathNode" type="Spatial" groups=["PassengerPathNode"]]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

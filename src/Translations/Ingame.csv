@@ -1,79 +1,79 @@
-keys,en,de,it,ja,pl,uk
-PAUSE,Pause,Pause,Pausa,一時停止,Pauza,Пауза
-BACK,Back,Zurück,Indietro,戻る,Wróć,Назад
-QUIT_TO_MENU,Quit to Menu,Beenden und zum Hauptmenü,Torna al menu,終了してメニューに戻る,Wyjdź do Menu,Вийти в меню
-QUIT_TO_OS,Quit to OS,Beenden und zum Betriebssystem,Esci dal gioco,終了してOSに戻る,Wyjdź do Systemu,Вийти з гри
-RESTART_SCENARIO,Restart scenario,Starte Szenario neu,,,,
-OK,OK,Okay,OK,了解,OK,Добре
-STARTING_SIMULATION,Starting Simulation…,Starte Simulation…,,,,
-,,,,,,
-DISTANCE,Distance,Distanz,Distanza,距離,Dystans,Відстань
-TYPE,Type,Typ,Tipo,タイプ,Typ,Тип
-INFORMATION,Information,Information,Informazioni,情報,Informacja,Інформація
-,,,,,,
-AUTOMATIC_DRIVING,Automatic Driving,Automatische Führung,Guida automatica,自動運転,Autopilot,Автоматичне керування
-SIFA,SiFa,SiFa,VACMA,SiFa,SiFa,SiFa
-ENFORCED_BREAKING,Enforced Breaking,Zwangsbremsung,Arresto forzato,強制ブレーキ,Wymuszone Hamowanie,Аварійне гальмування
-ENGINE_OFF,Engines off,Motoren aus,,,Silnik Wyłączony,
-,,,,,,
-ARRIVAL:,Arrival:,Ankunft:,Arrivo:,到着:,Przyjazd:,Прибуття:
-DEPARTURE:,Departure:,Abfahrt,Partenza:,出発:,Odjazd:,Відправлення:
-STATION:,Station:,Station:,Stazione:,駅:,Stacja:,Станція:
-,,,,,,
-END_OF_YOUR_TRAIN_NOT_IN_STATION,"The end of your train hasn't reached the station yet. Please drive a bit forward, and try again.","Das Zugende hat noch nicht die hintere Bahnsteigkante erreicht. Bitte fahren Sie etwas vorwärts, und halten Sie nochmal an.",La coda del treno non ha raggiungo la banchina. Prova ad avanzare ancora.,列車の後ろがまだ駅に入っていません。もう少し前進してください。,Koniec twojego Pociągu nie jest na Stacji Podjedź Trochę Bliżej i Spróbuj ponownie,"Кінець поїзда не дістався станції. Будь ласка, під’їдьте трішки вперед, і спробуй знову."
-FRONT_OF_YOUR_TRAIN_NOT_IN_STATION,"The front of your train is not in the station, please reverse a bit (change reverser with '%s' and '%s').","Sie sind über das Stationsende hinaus gefahren, bitte setzen Sie zurück und halten Sie nochmal an (Richtung mit '%s' und '%s' wählen).",,,,
-YOU_OVERRUN_RED_SIGNAL_DEPRECATED,You overrun a red signal. The game is over!,Sie haben ein rotes Signal überfahren! Das Spiel ist vorbei!,sei passato col rosso. Il gioco è finito!,赤信号を通り過ぎてしまいました。ゲームオーバーです。,Przegapiłeś Czerwone Światło Koniec Gry,Ви проїхали на червоне світло. Гра закінчена!
-FAILED_SCENARIO_DROVE_OVER_LAST_RAIL,"You drove beyond the end of the track!\n\nThe game is over, you failed the scenario.","Sie sind über das Ende des Gleis hinausgefahren!\n\nDas Spiel ist vorbei, Sie haben das Szenario nicht bestanden.",,,,
-FAILED_SCENARIO_DROVE_OVER_RED_SIGNAL,"You overran a red signal!\n\nThe game is over, you failed the scenario.","Sie haben ein rotes Signal überfahren!\n\nDas Spiel ist vorbei, Sie haben das Szenario nicht bestanden.",,,,
-HINT_OPEN_DOORS,"Hint: You have to open the doors with '%s' or '%s', when arriving at the station.",Tipp: Sie müssen noch die Türen mit ‚%s‘ oder ‚%s‘ öffnen.,"Suggerimento: arrivato in stazione, aprire le porte con ‘%s’ oppure ‘%s’.",ヒント:駅に到着したら ‘%s’ か ‘%s’ でドアを開けてください。,"Porada: Kiedy zatrzymasz Się Na Stacji Naciśnij Przycisk ""%s"" Lub ""%s"" Aby Otworzyć Dzwi","Підказка: Ви можете відкрити двері за допомогою '%s' чи '%s', коли прибудете на станцію."
-YOU_ARE_LATE_1,You are,Sie haben,Viaggi con,あなたは,Masz,Ви прибули на
-YOU_ARE_LATE_2,minutes late!,Minuten Verspätung!,minuti di ritardo!,分後です!,Minut Spóźnienia,хвилин(и) пізніше!
-YOU_ARE_LATE_2_ONE_MINUTE,minute late.,Minute Verspätung.,minuto di ritardo.,分後です,Minute Spóźnienia,хвилину пізніше.
-,,,,,,
-WELCOME_TO,Welcome to,Willkommen bei,Benvenuto a,Welcome to,Witamy W,Ласкаво просимо до
-SCENARIO_FINISHED,Scenario successfully finished.,Szenario erfolgreich beendet.,Scenario completato con successo.,シナリオを無事完走しました,Scenariusz Ukończony,Сценарій успішно закінчено.
-YOU_CAN_DEPART,You can now depart.,Sie können jetzt abfahren.,Ora è possibile partire,出発できます,ODJAZD!,Ви готові до відправлення.
-YOU_DEPARTED_EARLIER,You departed earlier than allowed! Please wait for the depart message next time!,Sie sind zu früh abgefahren! Bitte warten sie das nächste Mal auf die Abfahrts-Nachricht,Sei partito prima del previsto! Attendi il permesso di partenza la prossima volta!,許可された時間よりも早く出発しました。次の出発許可が出るまで待ってください。,Odjechałeś za wcześnie! Następnym razem poczekaj na Komunikat o możliwości Odjazdu!,"Ви відправилися занадто швидко! Будь ласка, почекайте наступного разу сповіщення про відправлення!"
-YOU_MISSED_A_STATION,You missed a station! Please drive further on to the next station.,Sie haben eine Station verpasst! Bitte fahren Sie weiter zur nächsten Station.,Hai mancato una stazione! Puoi solo procedere alla prossima.,停車駅を通り過ぎました! 次の駅まで運転してください。,Przegapiłeś stacje,"Ви пропустили станцію! Будь ласка, їдьте далі до наступної."
-YOU_ARE_DRIVING_TO_FAST,You are driving too fast! The current Limit is:,Sie fahren zu schnell! Das momentan geltende Limit ist:,Stai andando troppo veloce! Il limite è:,速度が出すぎています! 現在の制限速度:,Jedziesz za szybko tutaj Wolno:,Ви їдете занадто швидко! Ваша швидкість:
-HINT_F2,Hint: Problems with the train? Press '%s' to see what is wrong.,Tipp: Probleme bei der Bedienung des Zuges? Mit '%s' kann man den Status des Zuges einsehen.,Suggerimento: problemi con il treno? Usa ‘%s’ per capire cosa non va.,ヒント:問題がありますか? ’%s’で何が問題か見ることができます。,Porada: Problem Z Pociągiem?Naciśnij %s Aby Zobaczyć Diagnostyke,"Підказка: Щось трапилося з поїздом? Натиснувши '%s', ви зможете побачити в чому проблема."
-HINT_ADVANCED_DRIVING,"Hint: Try to set the acceleration to zero with '%s', and and accelerate again with '%s'.","Tipp: Versuchen Sie, die Beschleunigung auf Null mit '%s' zu setzen. Dann beschleunigen Sie wieder mit '%s'.",Suggerimento: prova ad azzerare l’accelaratore con ‘%s’ e ridare velocità con ’%s’.,ヒント:’%s’キーで力行をゼロにして、再度’%s’キーで力行を上げてみてください,"Porada: Spróbuj ustawić przyspieszenie na 0 za pomocą przycisku ""%s"" a potem rozpędź ponownie pociąg do prędkości (=acceleration) używając ""%s""","Підказка: Спробуйте знизити швидкість до нуля за допомогою ‘%s’, і знову додати швидкості (=прискорення) за допомогою ‘%s’"
-HINT_REVERSER_NEUTRAL,Hint: The reverser is neutral. Select a direction with '%s' and '%s' first.,Tipp: Die Richtungswahl steht auf Neutral. Wählen Sie mit '%s' und '%s' eine Richtung.,,,,
-,,,,,,
-THE_NEXT_STATION_IS_1,The next station is,Die nächste Station ist,La prossima stazione è,次の駅は,Następna Stacja:,Наступна станція
-THE_NEXT_STATION_IS_2,It is,Sie ist,Si trova a,あと,jest,Відстань:
-THE_NEXT_STATION_IS_3,away.,entfernt.,.,です,Z tąd,.
-,,,,,,
-TRAIN_INFORMATION,Train Information:,Zug-Informationen:,Informazione treno:,列車情報,Informacje o pociągu,Інформація про поїзд:
-PRESS_F2_TO_CLOSE,(Press '%s' to close this window),"(Drücken Sie '%s', um das Fenster zu schließen.)",(Premi ‘%s’ per chiudere questa finestra),(‘%s’でウィンドウを閉じます),"(Naciśnij ""%s"" aby Zamknąć to okno)","(Натисни ‘%s’, щоб закрити вікно)"
-TRAIN_INFO_PANTOGRAPH,Pantograph (press '%s' and wait a few seconds),"Pantograf ('%s' drücken, und ein paar Sekunden warten)",Pantografo (premi ‘%s’ e attendi qualche secondo),パンタグラフ: (‘%s’を押して数秒待つ),"Pantograf(naciśnij ""%s"" i poczekaj pare sekund)",Пантограф (натисни ‘%s’ і зачекай декілька секунд)
-TRAIN_INFO_SIFA,SiFa (every 30 seconds you have to press '%s'),SiFa (alle 30 Sekunden müssen Sie '%s' drücken),VACMA (ogni 30 secondi devi premere ‘%s’),SiFa: (30秒ごとにスペースキーを押す '%s'),SiFa (Co 30 sekund musisz nacisnąć '%s'),SiFa (кожні 30 секунд ти мусиш натискати '%s')
-TRAIN_INFO_ENFORCED_BREAKING,"Enforced Breaking (check engine, red signal, speed limit, SiFa","Zwangsbremsung (Überprüfen Pantograf, überfahrenes rotes Signal, Geschwindigkeitslimit, SiFa)","Arresto forzato (controlla pantografo, segnaletica, limite velocità o VACMA)",強制ブレーキ (パンタグラフや赤信号、制限速度、SiFaを確認),"Hamowanie Awaryjne (Check Engine,  czerwone światło, Limit Prędkości, SiFa) ","Аварійне гальмування (перевірте пантограф, червоний сигнал, перевищення швидкості, SiFa)"
-TRAIN_INFO_BRAKES_1,"Brakes (release with '%s', apply with '%s', check Enforced Breaking)","Bremsen (Lösen: '%s', Betätigen: '%s', Checken: Zwangsbremsung.)","Freni (rilascia con '%s', applica con '%s', controlla arresto forzato)",ブレーキ (‘%s’で解除、’%s’でかける。強制ブレーキを確認),Hamulec (opuść hamulec używając '%s' a hamuj przyciskiem '%s' sprawdź wymuszone hamowanie),"Гальмування (відпустити на ‘%s’, додати на ‘%s’; перевірте аварійне гальмування)"
-TRAIN_INFO_BRAKES_2,"Brakes (release with '%s', apply with '%s', check Enforced Breaking)","Bremsen (Lösen: '%s', Betätigen: '%s', Checken: Zwangsbremsung.)","Freni (rilascia con '%s', applica con '%s', controlla arresto forzato)",ブレーキ (‘%s’で解除、’%s’でかける。強制ブレーキを確認),Hamulec (opuść hamulec używając '%s' a hamuj przyciskiem '%s' sprawdź wymuszone hamowanie),"Гальмування (відпустити на ‘%s’, додати на ‘%s’; перевірте аварійне гальмування)"
-TRAIN_INFO_DOORS,"Doors (close with '%s', open right with '%s', open left with '%s')","Türen (Schließen: '%s', Rechte Seite öffnen: '%s', Linke Seite öffnen: '%s')","Porte (chiusura con '%s', apertura a destra con '%s', apertura a sinistra con '%s",ドア  (‘%s’で閉める。’%s’で右のドア、’%s’で左のドアを開ける),"Dzwi (Zamknij przyciskiem ""%s"" otwórz ""%s"" Lub ""%s""","Двері (закрити на ‘%s’, відкрити справа на ‘%s’, відкрити зліва на ‘%s’)"
-TRAIN_INFO_ACCELERATION_1,"Acceleration (Apply: '%s', Release: l'%s', check doors)","Beschleunigung (Erhöhen: '%s', Verringern: '%s'; Überprüfen: Türen)",,力行 (‘%s’上矢印キー、‘%s’右矢印キー),"Gaz (przyspiesz: '%s', zwolnij: '%s', sprawdż drzwi)",Прискорення (додати: ‘%s’; відпустити: ‘%s’; перевірте двері)
-TRAIN_INFO_ACCELERATION_2,"Acceleration (Apply: '%s', Release: '%s'; Check: brakes, doors) (try with releasing full acceleration first/setting acceleration to zero)","Beschleunigung (Erhöhen: '%s', Verringern: '%s'; Checken: Bremsen, Türen) (Versuchen Sie die Beschleunigung auf Null zu setzen)","Accelerazione: (applica con ‘%s’, rilascia con ‘%s’; controlla freni e porte) (prova a rilasciare completamente)",力行: (‘%s’で力行、’%s’で解除。ドアとブレーキを確認。) (力行をやめてみてください),"Gaz (Przyspiesz '%s' zwolnij: '%s'; sprawdź drzwi i hamulce) (try with releasing full acceleration first/setting acceleration to zero)""","Прискорення (додати: ‘%s’; відпустити: ‘%s’; перевірте: гальма, двері) (спробуйте відпустити  гальма/знизити швидкість до нуля)"
-TRAIN_INFO_HORN,Horn ('%s'),Hupe ('%s'),Tromba (‘%s’),警笛 (‘%s’),"Klakson (""%s"")",Гудок (‘%s’)
-TRAIN_INFO_FRONT_LIGHT,Front Light ('%s'),Spitzenlicht ('%s'),Luci frontali (‘%s’),前方ライト (‘%s’),"Przednie światłła (""%s"")",Переднє світло (‘%s’)
-TRAIN_INFO_CABIN_LIGHT,Cabin Light ('%s'),Kabinenlicht ('%s'),Luci cabina (‘%s’),室内電気 ('C%s'),"Światła Kabiny (""%s"")",Світло в кабіні ('%s')
-TRAIN_INFO_AUTOPILOT,Autopilot ('%s'),Autopilot ('%s'),Guida automatica (‘%s’),自動運転 ('%s'),"Autopilot (""%s"")",Автопілот ('%s')
-TRAIN_INFO_ENGINE,Engines ('%s'; Check: Pantograpph),Motoren ('%s'; Überprüfen: Pantograf),,,"Silniki (""%s""; Sprawdź: Pantograf)",
-TRAIN_INFO_REVERSER,"Reverser ('%s': reverse, '%s': forward)","Richtungswahl ('%s': rückwärts, '%s': vorwärts)",,,,
-,,,,,,
-FORWARD,Forward,Vorwärts,,,,
-NEUTRAL,Neutral,Neutral,,,,
-REVERSE,Reverse,Rückwärts,,,,
-,,,,,,
-JUMP_TO_STATION,Jump to station,Springe zu Station,,,,
-SELECT_STATION_TO_JUMP,Select station to jump to,"Wählen sie die Station aus, zu der Sie springen wollen",,,,
-JUMP,Jump,Springen,,,,
-CANCEL,Cancel,Abbrechen,,,,
-WARNING_JUMPING_SCENARIO,"Warning: The scenario experience could differ from the normal one, bugs could appear.","Warnung: Die Szenario-Erfahrung könnte von der normalen abweichen, es könnten Fehler auftreten.",,,,
-,,,,,,
-"PZB_OVER_SPEED_LIMIT","You went over the PZB speed limit!","Sie haben die PZB Geschwindigkeitsbeschränkung überschritten!",,,,
-"PZB_ILLEGAL_FREE","You illegally freed yourself from PZB monitoring!","Sie haben sich ungültig aus der PZB Überwachung befreit!",,,,
-"PZB_PASSED_2000HZ","You passed an active 2000 Hz magnet!","Sie haben einen aktiven 2000 Hz Magnet überfahren!",,,,
-,,,,,,
-"EDITOR_SNAP_CONNECTOR","The angle between the rails is too steep to drive across.\nDo you want to automatically connect the rails to be drivable?",,,,,
-"EDITOR_SNAP_CONNECTOR_TODO","The angle between the rails is too steep to drive across.\nSnapping for complex cases is not implemented yet, please correct this yourself.",,,,,
+keys,en,de,it,ja,pl,uk,es
+PAUSE,Pause,Pause,Pausa,一時停止,Pauza,Пауза,Pausa
+BACK,Back,Zurück,Indietro,戻る,Wróć,Назад,Volver
+QUIT_TO_MENU,Quit to Menu,Beenden und zum Hauptmenü,Torna al menu,終了してメニューに戻る,Wyjdź do Menu,Вийти в меню,Salir al Menú
+QUIT_TO_OS,Quit to OS,Beenden und zum Betriebssystem,Esci dal gioco,終了してOSに戻る,Wyjdź do Systemu,Вийти з гри,Salir al SO
+RESTART_SCENARIO,Restart scenario,Starte Szenario neu,,,,,Reiniciar escenario
+OK,OK,Okay,OK,了解,OK,Добре,OK
+STARTING_SIMULATION,Starting Simulation…,Starte Simulation…,,,,,Comenzando Simulación
+,,,,,,,
+DISTANCE,Distance,Distanz,Distanza,距離,Dystans,Відстань,Distancia
+TYPE,Type,Typ,Tipo,タイプ,Typ,Тип,Tipo
+INFORMATION,Information,Information,Informazioni,情報,Informacja,Інформація,Información
+,,,,,,,
+AUTOMATIC_DRIVING,Automatic Driving,Automatische Führung,Guida automatica,自動運転,Autopilot,Автоматичне керування,Conducción Automática
+SIFA,SiFa,SiFa,VACMA,SiFa,SiFa,SiFa,Dispositivo HM
+ENFORCED_BREAKING,Enforced Breaking,Zwangsbremsung,Arresto forzato,強制ブレーキ,Wymuszone Hamowanie,Аварійне гальмування,Interrupción forzada
+ENGINE_OFF,Engines off,Motoren aus,,,Silnik Wyłączony,,Motores apagados
+,,,,,,,
+ARRIVAL:,Arrival:,Ankunft:,Arrivo:,到着:,Przyjazd:,Прибуття:,Llegada:
+DEPARTURE:,Departure:,Abfahrt,Partenza:,出発:,Odjazd:,Відправлення:,Salida:
+STATION:,Station:,Station:,Stazione:,駅:,Stacja:,Станція:,Estación:
+,,,,,,,
+END_OF_YOUR_TRAIN_NOT_IN_STATION,"The end of your train hasn't reached the station yet. Please drive a bit forward, and try again.","Das Zugende hat noch nicht die hintere Bahnsteigkante erreicht. Bitte fahren Sie etwas vorwärts, und halten Sie nochmal an.",La coda del treno non ha raggiungo la banchina. Prova ad avanzare ancora.,列車の後ろがまだ駅に入っていません。もう少し前進してください。,Koniec twojego Pociągu nie jest na Stacji Podjedź Trochę Bliżej i Spróbuj ponownie,"Кінець поїзда не дістався станції. Будь ласка, під’їдьте трішки вперед, і спробуй знову.","El final del tren no ha llegado a la estación todavía. Por favor, conduce un poco hacia delante y vuelva a intentarlo."
+FRONT_OF_YOUR_TRAIN_NOT_IN_STATION,"The front of your train is not in the station, please reverse a bit (change reverser with '%s' and '%s').","Sie sind über das Stationsende hinaus gefahren, bitte setzen Sie zurück und halten Sie nochmal an (Richtung mit '%s' und '%s' wählen).",,,,,"La parte delantera de su tren no está en la estación, por favor da un poco de marcha atrás (cambia de marcha con '%s' y '%s')."
+YOU_OVERRUN_RED_SIGNAL_DEPRECATED,You overrun a red signal. The game is over!,Sie haben ein rotes Signal überfahren! Das Spiel ist vorbei!,sei passato col rosso. Il gioco è finito!,赤信号を通り過ぎてしまいました。ゲームオーバーです。,Przegapiłeś Czerwone Światło Koniec Gry,Ви проїхали на червоне світло. Гра закінчена!,¡Sobrepasaste una señal roja. Fin del juego!
+FAILED_SCENARIO_DROVE_OVER_LAST_RAIL,"You drove beyond the end of the track!\n\nThe game is over, you failed the scenario.","Sie sind über das Ende des Gleis hinausgefahren!\n\nDas Spiel ist vorbei, Sie haben das Szenario nicht bestanden.",,,,,"¡Conduciste más allá del final de la pista!\n\nFin del juego, has fallado el escenario."
+FAILED_SCENARIO_DROVE_OVER_RED_SIGNAL,"You overran a red signal!\n\nThe game is over, you failed the scenario.","Sie haben ein rotes Signal überfahren!\n\nDas Spiel ist vorbei, Sie haben das Szenario nicht bestanden.",,,,,"¡Has sobrepasado una señal roja!\n\nEl juego ha terminado, has fallado el escenario."
+HINT_OPEN_DOORS,"Hint: You have to open the doors with '%s' or '%s', when arriving at the station.",Tipp: Sie müssen noch die Türen mit ‚%s‘ oder ‚%s‘ öffnen.,"Suggerimento: arrivato in stazione, aprire le porte con ‘%s’ oppure ‘%s’.",ヒント:駅に到着したら ‘%s’ か ‘%s’ でドアを開けてください。,"Porada: Kiedy zatrzymasz Się Na Stacji Naciśnij Przycisk ""%s"" Lub ""%s"" Aby Otworzyć Dzwi","Підказка: Ви можете відкрити двері за допомогою '%s' чи '%s', коли прибудете на станцію.","Pista: Tienes que abrir las puertas con '%s' o '%s', al llegar a la estación."
+YOU_ARE_LATE_1,You are,Sie haben,Viaggi con,あなたは,Masz,Ви прибули на,Has llegado
+YOU_ARE_LATE_2,minutes late!,Minuten Verspätung!,minuti di ritardo!,分後です!,Minut Spóźnienia,хвилин(и) пізніше!,minutos tarde!
+YOU_ARE_LATE_2_ONE_MINUTE,minute late.,Minute Verspätung.,minuto di ritardo.,分後です,Minute Spóźnienia,хвилину пізніше.,minuto tarde.
+,,,,,,,
+WELCOME_TO,Welcome to,Willkommen bei,Benvenuto a,Welcome to,Witamy W,Ласкаво просимо до,Bienvenido a
+SCENARIO_FINISHED,Scenario successfully finished.,Szenario erfolgreich beendet.,Scenario completato con successo.,シナリオを無事完走しました,Scenariusz Ukończony,Сценарій успішно закінчено.,Escenario finalizado exitosamente.
+YOU_CAN_DEPART,You can now depart.,Sie können jetzt abfahren.,Ora è possibile partire,出発できます,ODJAZD!,Ви готові до відправлення.,Ya puedes partir.
+YOU_DEPARTED_EARLIER,You departed earlier than allowed! Please wait for the depart message next time!,Sie sind zu früh abgefahren! Bitte warten sie das nächste Mal auf die Abfahrts-Nachricht,Sei partito prima del previsto! Attendi il permesso di partenza la prossima volta!,許可された時間よりも早く出発しました。次の出発許可が出るまで待ってください。,Odjechałeś za wcześnie! Następnym razem poczekaj na Komunikat o możliwości Odjazdu!,"Ви відправилися занадто швидко! Будь ласка, почекайте наступного разу сповіщення про відправлення!","¡Te has marchado antes de lo permitido! Por favor, espera el mensaje de salida la próxima vez."
+YOU_MISSED_A_STATION,You missed a station! Please drive further on to the next station.,Sie haben eine Station verpasst! Bitte fahren Sie weiter zur nächsten Station.,Hai mancato una stazione! Puoi solo procedere alla prossima.,停車駅を通り過ぎました! 次の駅まで運転してください。,Przegapiłeś stacje,"Ви пропустили станцію! Будь ласка, їдьте далі до наступної.","¡Te ha saltado una estación! Por favor, sigue conduciendo hasta la siguiente estación."
+YOU_ARE_DRIVING_TO_FAST,You are driving too fast! The current Limit is:,Sie fahren zu schnell! Das momentan geltende Limit ist:,Stai andando troppo veloce! Il limite è:,速度が出すぎています! 現在の制限速度:,Jedziesz za szybko tutaj Wolno:,Ви їдете занадто швидко! Ваша швидкість:,¡Estas conduciendo muy rápido! El limite actual es:
+HINT_F2,Hint: Problems with the train? Press '%s' to see what is wrong.,Tipp: Probleme bei der Bedienung des Zuges? Mit '%s' kann man den Status des Zuges einsehen.,Suggerimento: problemi con il treno? Usa ‘%s’ per capire cosa non va.,ヒント:問題がありますか? ’%s’で何が問題か見ることができます。,Porada: Problem Z Pociągiem?Naciśnij %s Aby Zobaczyć Diagnostyke,"Підказка: Щось трапилося з поїздом? Натиснувши '%s', ви зможете побачити в чому проблема.",Pista: ¿Problemas con el tren? Pulsa '%s' para ver qué ocurre.
+HINT_ADVANCED_DRIVING,"Hint: Try to set the acceleration to zero with '%s', and and accelerate again with '%s'.","Tipp: Versuchen Sie, die Beschleunigung auf Null mit '%s' zu setzen. Dann beschleunigen Sie wieder mit '%s'.",Suggerimento: prova ad azzerare l’accelaratore con ‘%s’ e ridare velocità con ’%s’.,ヒント:’%s’キーで力行をゼロにして、再度’%s’キーで力行を上げてみてください,"Porada: Spróbuj ustawić przyspieszenie na 0 za pomocą przycisku ""%s"" a potem rozpędź ponownie pociąg do prędkości (=acceleration) używając ""%s""","Підказка: Спробуйте знизити швидкість до нуля за допомогою ‘%s’, і знову додати швидкості (=прискорення) за допомогою ‘%s’","Pista: Intenta poner la aceleración a cero con '%s', y vuelve a acelerar con '%s'."
+HINT_REVERSER_NEUTRAL,Hint: The reverser is neutral. Select a direction with '%s' and '%s' first.,Tipp: Die Richtungswahl steht auf Neutral. Wählen Sie mit '%s' und '%s' eine Richtung.,,,,,Pista: La marcha esta en posición neutral. Selecciona primero una dirección con '%s' y '%s'.
+,,,,,,,
+THE_NEXT_STATION_IS_1,The next station is,Die nächste Station ist,La prossima stazione è,次の駅は,Następna Stacja:,Наступна станція,La siguiente estación es
+THE_NEXT_STATION_IS_2,It is,Sie ist,Si trova a,あと,jest,Відстань:,esta a
+THE_NEXT_STATION_IS_3,away.,entfernt.,.,です,Z tąd,.,de lejos.
+,,,,,,,
+TRAIN_INFORMATION,Train Information:,Zug-Informationen:,Informazione treno:,列車情報,Informacje o pociągu,Інформація про поїзд:,Información del Tren:
+PRESS_F2_TO_CLOSE,(Press '%s' to close this window),"(Drücken Sie '%s', um das Fenster zu schließen.)",(Premi ‘%s’ per chiudere questa finestra),(‘%s’でウィンドウを閉じます),"(Naciśnij ""%s"" aby Zamknąć to okno)","(Натисни ‘%s’, щоб закрити вікно)",(Pulsa '%s' para cerrar esta ventana)
+TRAIN_INFO_PANTOGRAPH,Pantograph (press '%s' and wait a few seconds),"Pantograf ('%s' drücken, und ein paar Sekunden warten)",Pantografo (premi ‘%s’ e attendi qualche secondo),パンタグラフ: (‘%s’を押して数秒待つ),"Pantograf(naciśnij ""%s"" i poczekaj pare sekund)",Пантограф (натисни ‘%s’ і зачекай декілька секунд),Pantógrafo (pulsa '%s' y espera unos segundos)
+TRAIN_INFO_SIFA,SiFa (every 30 seconds you have to press '%s'),SiFa (alle 30 Sekunden müssen Sie '%s' drücken),VACMA (ogni 30 secondi devi premere ‘%s’),SiFa: (30秒ごとにスペースキーを押す '%s'),SiFa (Co 30 sekund musisz nacisnąć '%s'),SiFa (кожні 30 секунд ти мусиш натискати '%s'),Dispositivo HM (cada 30 segundos tienes que pulsar '%s')
+TRAIN_INFO_ENFORCED_BREAKING,"Enforced Breaking (check engine, red signal, speed limit, SiFa","Zwangsbremsung (Überprüfen Pantograf, überfahrenes rotes Signal, Geschwindigkeitslimit, SiFa)","Arresto forzato (controlla pantografo, segnaletica, limite velocità o VACMA)",強制ブレーキ (パンタグラフや赤信号、制限速度、SiFaを確認),"Hamowanie Awaryjne (Check Engine,  czerwone światło, Limit Prędkości, SiFa) ","Аварійне гальмування (перевірте пантограф, червоний сигнал, перевищення швидкості, SiFa)","Interrupción forzada (chequear el motor, señal roja, límite de velocidad, dispositivo HM"
+TRAIN_INFO_BRAKES_1,"Brakes (release with '%s', apply with '%s', check Enforced Breaking)","Bremsen (Lösen: '%s', Betätigen: '%s', Checken: Zwangsbremsung.)","Freni (rilascia con '%s', applica con '%s', controlla arresto forzato)",ブレーキ (‘%s’で解除、’%s’でかける。強制ブレーキを確認),Hamulec (opuść hamulec używając '%s' a hamuj przyciskiem '%s' sprawdź wymuszone hamowanie),"Гальмування (відпустити на ‘%s’, додати на ‘%s’; перевірте аварійне гальмування)","Frenos (liberarlo con '%s', aplicarlos con '%s', comprobar la interrupción forzada)"
+TRAIN_INFO_BRAKES_2,"Brakes (release with '%s', apply with '%s', check Enforced Breaking)","Bremsen (Lösen: '%s', Betätigen: '%s', Checken: Zwangsbremsung.)","Freni (rilascia con '%s', applica con '%s', controlla arresto forzato)",ブレーキ (‘%s’で解除、’%s’でかける。強制ブレーキを確認),Hamulec (opuść hamulec używając '%s' a hamuj przyciskiem '%s' sprawdź wymuszone hamowanie),"Гальмування (відпустити на ‘%s’, додати на ‘%s’; перевірте аварійне гальмування)","Frenos (liberarlo con '%s', aplicarlos con '%s', comprobar la interrupción forzada)"
+TRAIN_INFO_DOORS,"Doors (close with '%s', open right with '%s', open left with '%s')","Türen (Schließen: '%s', Rechte Seite öffnen: '%s', Linke Seite öffnen: '%s')","Porte (chiusura con '%s', apertura a destra con '%s', apertura a sinistra con '%s",ドア  (‘%s’で閉める。’%s’で右のドア、’%s’で左のドアを開ける),"Dzwi (Zamknij przyciskiem ""%s"" otwórz ""%s"" Lub ""%s""","Двері (закрити на ‘%s’, відкрити справа на ‘%s’, відкрити зліва на ‘%s’)","Puertas (cerrarlas con '%s', abrir las derechas con '%s', abrirar las izquierdas con '%s')"
+TRAIN_INFO_ACCELERATION_1,"Acceleration (Apply: '%s', Release: l'%s', check doors)","Beschleunigung (Erhöhen: '%s', Verringern: '%s'; Überprüfen: Türen)",,力行 (‘%s’上矢印キー、‘%s’右矢印キー),"Gaz (przyspiesz: '%s', zwolnij: '%s', sprawdż drzwi)",Прискорення (додати: ‘%s’; відпустити: ‘%s’; перевірте двері),"Aceleración (Aplicar: '%s', Liberar: l'%s', comprobar las puertas)"
+TRAIN_INFO_ACCELERATION_2,"Acceleration (Apply: '%s', Release: '%s'; Check: brakes, doors) (try with releasing full acceleration first/setting acceleration to zero)","Beschleunigung (Erhöhen: '%s', Verringern: '%s'; Checken: Bremsen, Türen) (Versuchen Sie die Beschleunigung auf Null zu setzen)","Accelerazione: (applica con ‘%s’, rilascia con ‘%s’; controlla freni e porte) (prova a rilasciare completamente)",力行: (‘%s’で力行、’%s’で解除。ドアとブレーキを確認。) (力行をやめてみてください),"Gaz (Przyspiesz '%s' zwolnij: '%s'; sprawdź drzwi i hamulce) (try with releasing full acceleration first/setting acceleration to zero)""","Прискорення (додати: ‘%s’; відпустити: ‘%s’; перевірте: гальма, двері) (спробуйте відпустити  гальма/знизити швидкість до нуля)","Aceleración (Aplicar: '%s', Liberar: '%s'; Comprobar: frenos, puertas) (prueba con la liberación de la aceleración total primero/poniendo la aceleración a cero)"
+TRAIN_INFO_HORN,Horn ('%s'),Hupe ('%s'),Tromba (‘%s’),警笛 (‘%s’),"Klakson (""%s"")",Гудок (‘%s’),Claxon ('%s')
+TRAIN_INFO_FRONT_LIGHT,Front Light ('%s'),Spitzenlicht ('%s'),Luci frontali (‘%s’),前方ライト (‘%s’),"Przednie światłła (""%s"")",Переднє світло (‘%s’),Luces frontales ('%s')
+TRAIN_INFO_CABIN_LIGHT,Cabin Light ('%s'),Kabinenlicht ('%s'),Luci cabina (‘%s’),室内電気 ('C%s'),"Światła Kabiny (""%s"")",Світло в кабіні ('%s'),Luces de cabina ('%s')
+TRAIN_INFO_AUTOPILOT,Autopilot ('%s'),Autopilot ('%s'),Guida automatica (‘%s’),自動運転 ('%s'),"Autopilot (""%s"")",Автопілот ('%s'),Piloto automático ('%s')
+TRAIN_INFO_ENGINE,Engines ('%s'; Check: Pantograpph),Motoren ('%s'; Überprüfen: Pantograf),,,"Silniki (""%s""; Sprawdź: Pantograf)",,Motores ('%s'; Chequea: Pantógrafo)
+TRAIN_INFO_REVERSER,"Reverser ('%s': reverse, '%s': forward)","Richtungswahl ('%s': rückwärts, '%s': vorwärts)",,,,,"Marcha atrás ('%s': marcha atrás, '%s': adelante)"
+,,,,,,,
+FORWARD,Forward,Vorwärts,,,,,Adelante
+NEUTRAL,Neutral,Neutral,,,,,Neutro
+REVERSE,Reverse,Rückwärts,,,,,Adelante
+,,,,,,,
+JUMP_TO_STATION,Jump to station,Springe zu Station,,,,,Saltar estación
+SELECT_STATION_TO_JUMP,Select station to jump to,"Wählen sie die Station aus, zu der Sie springen wollen",,,,,Elegir estación para saltar
+JUMP,Jump,Springen,,,,,Saltar
+CANCEL,Cancel,Abbrechen,,,,,Cancelar
+WARNING_JUMPING_SCENARIO,"Warning: The scenario experience could differ from the normal one, bugs could appear.","Warnung: Die Szenario-Erfahrung könnte von der normalen abweichen, es könnten Fehler auftreten.",,,,,"Advertencia: La experiencia del escenario podría ser distinta a la normal, podrían aparecer bugs."
+,,,,,,,
+PZB_OVER_SPEED_LIMIT,You went over the PZB speed limit!,Sie haben die PZB Geschwindigkeitsbeschränkung überschritten!,,,,,¡Has superado el límite de velocidad del PZB!
+PZB_ILLEGAL_FREE,You illegally freed yourself from PZB monitoring!,Sie haben sich ungültig aus der PZB Überwachung befreit!,,,,,¡Te liberaste ilegalmente de la vigilancia de PZB!
+PZB_PASSED_2000HZ,You passed an active 2000 Hz magnet!,Sie haben einen aktiven 2000 Hz Magnet überfahren!,,,,,¡Has pasado un imán activo de 2000 Hz!
+,,,,,,,
+EDITOR_SNAP_CONNECTOR,The angle between the rails is too steep to drive across.\nDo you want to automatically connect the rails to be drivable?,,,,,,El ángulo entre los raíles es demasiado pronunciado para cruzar. \ N¿Quieres conectar automáticamente los railes para que se puedan conducir?
+EDITOR_SNAP_CONNECTOR_TODO,"The angle between the rails is too steep to drive across.\nSnapping for complex cases is not implemented yet, please correct this yourself.",,,,,,"El ángulo entre los raíles es demasiado pronunciado para cruzar. \ NTodavía no se implementó el ajuste para casos complejos, corríjelo tu mismo."

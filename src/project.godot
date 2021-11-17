@@ -512,7 +512,7 @@ pzb_command={
 
 [locale]
 
-translations=PoolStringArray( "res://Translations/Ingame.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.it.translation", "res://Translations/MainMenu.de.translation", "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.it.translation", "res://Translations/MainMenu.pl.translation", "res://Translations/Ingame.pl.translation", "res://Translations/Ingame.uk.translation", "res://Translations/MainMenu.uk.translation" )
+translations=PoolStringArray( "res://Translations/Ingame.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.it.translation", "res://Translations/MainMenu.de.translation", "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.it.translation", "res://Translations/MainMenu.pl.translation", "res://Translations/Ingame.pl.translation", "res://Translations/Ingame.uk.translation", "res://Translations/MainMenu.uk.translation", "res://Translations/Ingame.es.translation", "res://Translations/MainMenu.es.translation" )
 locale_filter=[ 0, [ "de", "en", "ja" ] ]
 translation_remaps={
 }

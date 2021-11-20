@@ -1,4 +1,4 @@
-extends Spatial
+extends WorldObject
 
 ## Documentation Notes:
 # Please be aware of the parallel Mode:
@@ -197,7 +197,7 @@ func update_with_calculated_data(calculated_data: Dictionary) -> void:
 		$Ending.transform = get_local_transform_at_rail_distance(length)
 		$Mid.transform = get_local_transform_at_rail_distance(length/2.0)
 		for track_object in trackObjects:
-			track_object.update(self)
+			track_object.update()
 
 
 func unload_visible_instance() -> void:

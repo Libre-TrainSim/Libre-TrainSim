@@ -9,6 +9,14 @@ var zoom_level: float = 80
 var orbit_rotation_helper: Spatial = Spatial.new()
 
 
+func _ready() -> void:
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+
+
+func _on_world_origin_shifted(delta: Vector3):
+	translation += delta
+
+
 func _prepare_orbit() -> void:
 	assert(get_parent() != orbit_rotation_helper)
 	get_parent().add_child(orbit_rotation_helper)

@@ -1,5 +1,5 @@
 class_name LTSPlayer
-extends Spatial
+extends WorldObject
 
 ################################################################################
 ## To Content-Creators: DO NOT EDIT THIS SCRIPT!! This Script will be overwritten by the game.
@@ -229,10 +229,6 @@ func ready() -> void:
 	if debug and not ai:
 		command = 0
 		soll_command = 0
-
-	## get chunks handled:
-	if not ai:
-		world.activeChunk = world.pos2Chunk(self.translation)
 
 	spawnWagons()
 
@@ -1555,8 +1551,7 @@ func checkVisibility(delta: float) -> void:
 	checkVisibilityTimer += delta
 	if checkVisibilityTimer < 1: return
 	if ai:
-		var currentChunk: Vector3 = world.pos2Chunk(world.getOriginalPos_bchunk(translation))
-		rendering = world.ist_chunks.has(currentChunk)
+		rendering = world.chunk_manager.is_position_in_loaded_chunk(self.global_transform.origin)
 		self.visible = rendering
 		wagonsVisible = rendering
 

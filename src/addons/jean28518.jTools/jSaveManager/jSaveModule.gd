@@ -74,8 +74,3 @@ func _load_current_config():
 		dir.make_dir_recursive(save_path.get_base_dir())
 
 	_config.load(save_path)
-
-
-func _exit_tree():
-	if _value_changed:
-		write_to_disk()

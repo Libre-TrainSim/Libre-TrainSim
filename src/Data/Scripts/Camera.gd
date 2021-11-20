@@ -30,16 +30,21 @@ const refDelta: float = 0.0167 # 1.0 / 60
 var world: Node
 var player: LTSPlayer
 
+var mouseMotion: Vector2 = Vector2(0,0)
+var saved_mouse_position: Vector2 = Vector2(0,0)
+var mouse_not_moved: bool = false
+
 
 func _ready() -> void:
 	self.set_process_input(true)
 	self.set_process(true)
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
 
 
-var mouseMotion: Vector2 = Vector2(0,0)
-var saved_mouse_position: Vector2 = Vector2(0,0)
+func _on_world_origin_shifted(delta: Vector3):
+	translation += delta
 
-var mouse_not_moved: bool = false
+
 func _input(event) -> void:
 	if Root.Editor and get_parent().get_node("EditorHUD").mouse_over_ui:
 		return

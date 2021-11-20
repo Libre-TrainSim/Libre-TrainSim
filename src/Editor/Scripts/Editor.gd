@@ -24,15 +24,6 @@ func _ready() -> void:
 		return
 
 
-var bouncing_timer: float = 0
-var one_second_timer: float = 0
-func _process(delta):
-	one_second_timer += delta
-	if one_second_timer > 1:
-		one_second_timer = 0
-		load_chunks_near_camera()
-
-
 func _enter_tree() -> void:
 	Root.Editor = true
 
@@ -306,11 +297,11 @@ func load_world() -> bool:
 		return false
 
 	var world: Node = world_resource.instance()
-	world.owner = self
 	world.FileName = current_track_name
 	world.get_node("jSaveModule").save_path = current_track_path + ".save"
 	world.get_node("jSaveModuleScenarios").save_path = current_track_path + "-scenarios.cfg"
 	add_child(world)
+	world.owner = self
 
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World
@@ -337,12 +328,8 @@ func save_world(send_message: bool = true) -> void:
 	last_editor_camera_transforms[current_track_name] = camera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
-	$World.unload_and_save_all_chunks()
+	$World.chunk_manager.save_and_unload_all_chunks()
 
-	jEssentials.call_delayed(0.1, self, "save_world_step_2", [send_message])
-
-
-func save_world_step_2(send_message: bool = true) -> void:
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
@@ -355,9 +342,8 @@ func save_world_step_2(send_message: bool = true) -> void:
 	$World/jSaveModule.write_to_disk()
 	$World/jSaveModuleScenarios.write_to_disk()
 
-	ist_chunks.clear()
+	$World.chunk_manager.resume_chunking()
 
-#	$World.force_load_all_chunks()
 	if send_message:
 		send_message("World successfully saved!")
 
@@ -437,7 +423,7 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	$World/TrackObjects.add_child(track_object)
 	track_object.set_owner($World/TrackObjects)
 
-	track_object.update(rail)
+	track_object.update()
 	rail.update()
 
 
@@ -665,17 +651,6 @@ func jump_to_station(station_node_name: String) -> void:
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation_degrees.y -= 90
 	camera.load_from_transform(camera.transform)
-
-
-
-var ist_chunks := []
-func load_chunks_near_camera() -> void:
-	var wanted_chunks: Array = $World.get_chunks_around_position(camera.translation)
-	for wanted_chunk in wanted_chunks.duplicate():
-		if ist_chunks.has(wanted_chunk):
-			wanted_chunks.erase(wanted_chunk)
-	$World.load_chunks(wanted_chunks)
-	ist_chunks.append_array(wanted_chunks)
 
 
 func get_imported_cache_file_path_of_import_file(file_path: String) -> Array:

@@ -14,6 +14,11 @@ func _ready() -> void:
 		$MeshInstance.visible = false
 	$MeshInstance.translation = Vector3(x/2,0,z/2)
 	$MeshInstance.scale = Vector3(x,rand_range(0,10),z)
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+
+
+func _on_world_origin_shifted(delta: Vector3):
+	translation += delta
 
 
 func _update() -> void:

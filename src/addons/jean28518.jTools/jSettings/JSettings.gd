@@ -36,10 +36,11 @@ func update_settings_window():
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = get_sifa()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = get_pzb()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkUnloadDistance.value = get_chunk_unload_distance()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkLoadAll.pressed = get_chunk_load_all()
 
 
 ## Setter/Getter ###############################################################
-
 func get_fullscreen() -> bool:
 	return jSaveManager.get_setting("fullscreen", true)
 
@@ -143,6 +144,18 @@ func set_pzb(value: bool):
 func get_pzb() -> bool:
 	return jSaveManager.get_setting("pzb_enabled", false)
 
+
+func get_chunk_unload_distance() -> int:
+	return int(jSaveManager.get_setting("chunk_unload_distance", 2))
+
+func set_chunk_unload_distance(value: float):
+	jSaveManager.save_setting("chunk_unload_distance", int(value))
+
+func get_chunk_load_all() -> bool:
+	return jSaveManager.get_setting("chunk_load_all", false)
+
+func set_chunk_load_all(value: bool):
+	jSaveManager.save_setting("chunk_load_all", value)
 
 ## Other Functionality #########################################################
 

@@ -98,16 +98,31 @@ func attach_to_rail(_rail_node: Spatial) -> void:
 	if not rail_node.trackObjects.has(self):
 		rail_node.trackObjects.append(self)
 
+
 func unattach_from_rail() -> void:
 	if rail_node == null:
 		return
 	rail_node.trackObjects.erase(self)
 
+
 func _exit_tree() -> void:
 	unattach_from_rail()
 
-func update(_rail_node: Spatial, res_cache := {}) -> void:
-#	print("Loading Rail Attachment..")
+
+func _ready() -> void:
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+
+
+func _on_world_origin_shifted(delta: Vector3):
+	translation += delta
+	update()
+
+
+func update() -> void:
+	var _rail_node = world.get_node("Rails").get_node_or_null(attached_rail)
+	if _rail_node == null:
+		return
+
 	attach_to_rail(_rail_node)
 	self.set_multimesh(self.multimesh.duplicate(false))
 	if wholeRail:
@@ -115,12 +130,6 @@ func update(_rail_node: Spatial, res_cache := {}) -> void:
 		length = rail_node.length
 
 	translation = rail_node.get_pos_at_RailDistance(on_rail_position)
-	if not res_cache.has(objectPath):
-		if not ResourceLoader.exists(objectPath):
-			Logger.err("Resource "+ objectPath + " not found! Skipping loading track bject "+ name + " ...", self)
-			return
-		res_cache[objectPath] = load(objectPath)
-
 	multimesh.mesh = load(objectPath).duplicate()
 
 	# This was sometimes out of bounds!!
@@ -131,11 +140,7 @@ func update(_rail_node: Spatial, res_cache := {}) -> void:
 	for x in range(count):
 		if materialPaths[x] != "":
 			var material_path: String = materialPaths[x]
-			if not res_cache.has(material_path):
-				if not ResourceLoader.exists(material_path):
-					continue
-				res_cache[material_path] = load(material_path)
-			multimesh.mesh.surface_set_material(x, res_cache[material_path])
+			multimesh.mesh.surface_set_material(x, load(material_path))
 
 	var straightCount: int = int(length / distanceLength)
 	if placeLast:

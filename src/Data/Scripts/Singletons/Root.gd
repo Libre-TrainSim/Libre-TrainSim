@@ -1,5 +1,7 @@
 extends Node
 
+signal world_origin_shifted(delta)
+
 var currentTrack: String
 var currentScenario: String
 var currentTrain: String

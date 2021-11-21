@@ -526,5 +526,6 @@ translation_remaps={
 [rendering]
 
 threads/thread_model=2
+quality/directional_shadow/size=8192
 quality/filters/msaa=2
 environment/default_environment="res://Resources/Environments/BasicWorldEnvironment.tres"

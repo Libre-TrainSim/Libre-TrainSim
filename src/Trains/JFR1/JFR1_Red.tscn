@@ -773,6 +773,7 @@ render_target_v_flip = true
 
 [node name="Cabin" type="MeshInstance" parent="Cabin"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.27351, 0, 0 )
+cast_shadow = 2
 mesh = ExtResource( 15 )
 material/0 = ExtResource( 45 )
 material/1 = ExtResource( 2 )
@@ -828,6 +829,7 @@ script = ExtResource( 39 )
 accel = true
 
 [node name="MeshInstance" type="MeshInstance" parent="Wagon1"]
+cast_shadow = 2
 mesh = ExtResource( 37 )
 material/0 = ExtResource( 27 )
 material/1 = ExtResource( 47 )
@@ -1152,6 +1154,7 @@ length = 14.0
 
 [node name="MeshInstance" type="MeshInstance" parent="DriverCabinF"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+cast_shadow = 2
 mesh = ExtResource( 38 )
 material/0 = ExtResource( 27 )
 material/1 = ExtResource( 47 )
@@ -1551,6 +1554,7 @@ length = 15.0
 pantographEnabled = true
 
 [node name="MeshInstance" type="MeshInstance" parent="DriverCabinB"]
+cast_shadow = 2
 mesh = ExtResource( 38 )
 material/0 = ExtResource( 27 )
 material/1 = ExtResource( 47 )

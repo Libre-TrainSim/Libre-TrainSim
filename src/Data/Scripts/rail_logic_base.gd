@@ -1,5 +1,5 @@
 class_name RailLogic
-extends Spatial
+extends WorldObject
 
 onready var world: Node = find_parent("World")
 

@@ -6,7 +6,12 @@ var blink_active = true
 var blink_restrictive = false
 
 func _ready():
-	var pzb_module = find_parent("Player").get_node("SafetySystems/PZBModule")
+	var player = find_parent("Player")
+	if player == null:
+		return
+	var pzb_module = player.get_node("SafetySystems/PZBModule")
+	if pzb_module == null:
+		return
 	pzb_module.connect("pzb_changed", self, "_on_pzb_changed")
 
 	blink_timer = Timer.new()

@@ -497,24 +497,6 @@ func clear_train_settings_view() -> void: # Resets the Train settings when addin
 	$Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable.clear_data()
 
 
-
-#func _on_ToggleAllSavedObjects_pressed():
-#	if world.editorAllObjectsUnloaded:
-#		world.editorLoadAllChunks()
-#	else:
-#		world.editorUnloadAllChunks()
-#	updateToggleAllSavedObjectsButton()
-#
-#
-#func updateToggleAllSavedObjectsButton():
-#	if world == null or world.name != "World":
-#		return
-#	if not world.editorAllObjectsUnloaded:
-#		$"World Configuration/ToggleAllSavedObjects".text = "Unload all Objects from configuration"
-#	else:
-#		$"World Configuration/ToggleAllSavedObjects".text = "Load all Objects from configuration"
-
-
 func _on_WorldLoading_AllChunks_pressed() -> void:
 	if $"World Configuration/WorldLoading/AllChunks".pressed:
 		$"World Configuration/WorldLoading/RailConfiguration".hide()
@@ -525,48 +507,20 @@ func _on_WorldLoading_AllChunks_pressed() -> void:
 
 
 func _on_WorldLoading_Unload_pressed() -> void:
-	if $"World Configuration/WorldLoading/AllChunks".pressed:
-		world.unload_and_save_all_chunks()
-		Logger.log("Unloaded all chunks.")
-		return
-	var chunks = world.get_chunks_between_rails(
-		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
-		$"World Configuration/WorldLoading/RailConfiguration/ToRail".text,
-		$"World Configuration/WorldLoading/IncludeNeighbours".pressed)
-	if chunks == []:
-		return
-	world.unload_and_save_chunks(chunks)
+	world.chunk_manager.save_and_unload_all_chunks()
+	world.chunk_manager.resume_chunking()
+	Logger.log("Unloaded all chunks.")
 
 
 func _on_WorldLoading_Load_pressed() -> void:
-	if $"World Configuration/WorldLoading/AllChunks".pressed:
-		world.force_load_all_chunks()
-		Logger.log("Loaded all chunks.")
-		return
-	var chunks: Array = world.get_chunks_between_rails(
-		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
-		$"World Configuration/WorldLoading/RailConfiguration/ToRail".text,
-		$"World Configuration/WorldLoading/IncludeNeighbours".pressed)
-	if chunks == []:
-		return
-	world.load_chunks(chunks)
-	Logger.log("Loaded Chunks " + String(chunks))
+	return
 
 
 func _on_Chunks_Save_pressed() -> void:
-	if $"World Configuration/WorldLoading/AllChunks".pressed:
-		world.save_all_chunks()
-		Logger.log("Saved all chunks.")
-		return
-	var chunks = world.get_chunks_between_rails(
-		$"World Configuration/WorldLoading/RailConfiguration/FromRail".text,
-		$"World Configuration/WorldLoading/RailConfiguration/ToRail".text,
-		$"World Configuration/WorldLoading/IncludeNeighbours".pressed)
-	if chunks == []:
-		return
-	world.save_chunks(chunks)
+	world.chunk_manager._save_chunks(world.chunk_manager._get_all_chunks())
 
 
+# NOTE: this will also save chunks... great
 func _on_Notes_Save_pressed() -> void:
 	world.save_value("notes", $"World Configuration/Notes/RichTextLabel".text)
 	world.get_node("jSaveModule").write_to_disk()

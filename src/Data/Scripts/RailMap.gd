@@ -30,7 +30,7 @@ func init_map() -> void:
 		return
 
 # warning-ignore:return_value_discarded
-	train_world.connect("bchunk_updated_world_transform", self, "_on_chunk_world_transform_update")
+	Root.connect("world_origin_shifted", self, "_on_world_origin_update")
 
 	var rails: Array = train_world.get_node("Rails").get_children()
 	for rail in rails:
@@ -210,9 +210,9 @@ func _on_signal_changed(signal_instance: Spatial) -> void:
 		SignalStatus.GREEN: sprite.texture = signal_green
 
 
-func _on_chunk_world_transform_update(deltaTranslation: Vector3):
-	Logger.log("RAIL MAP: UPDATING WORLD ORIGIN")
-	chunk_origin += Vector2(deltaTranslation.x, deltaTranslation.z)
+func _on_world_origin_update(delta: Vector3):
+	Logger.log("Rail Map: Updating world origin")
+	chunk_origin += Vector2(delta.x, delta.z)
 
 
 func create_line2d_from_rail(rail: Spatial):

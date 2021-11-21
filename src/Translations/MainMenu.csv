@@ -30,6 +30,8 @@ MENU_GAME_VOLUME,Game Volume,Spiellautstärke,Volume di gioco,ゲームの音量
 MENU_MUSIC_VOLUME,Music Volume,Musiklautstärke,Volume di musica,音楽の音量,Głośność muzyki,Гучність музики,Volumen de la Música
 MENU_SHADOWS,Shadows,Schatten,Ombre,影,cienie,Тіні,Sombras
 MENU_VIEW_DISTANCE,View Distance,Sichtweite,Visibilità,描画距離,Dystans rysowania,Дальність огляду,Distancia de visión
+MENU_CHUNK_LOAD_ALL,Load all map chunks,Strecke komplett laden,,,,,
+MENU_CHUNK_UNLOAD_DISTANCE,Chunk unloading distance,Streckenabschnittsentladedistanz,,,,,
 MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Antialiasing,アンチエイリアス,Anti-aliasing,Екранне згладжування,Anti-Aliasing
 MENU_DISABLED,Disabled,Deaktiviert,Disabilitato,無効,Dezaktywowane,Туман,Desactivado
 MENU_FOG,Fog,Nebel,Nebbia,霧 ,Mgła,Мова,Niebla

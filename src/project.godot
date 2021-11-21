@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/camera_base.gd"
 }, {
+"base": "Node",
+"class": "ChunkManager",
+"language": "GDScript",
+"path": "res://Data/Scripts/chunk_manager.gd"
+}, {
 "base": "ItemList",
 "class": "ColoredItemList",
 "language": "GDScript",
@@ -54,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/InputLabel.gd"
 }, {
-"base": "Spatial",
+"base": "WorldObject",
 "class": "LTSPlayer",
 "language": "GDScript",
 "path": "res://Data/Scripts/Player.gd"
@@ -72,7 +77,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "Logger",
 "language": "GDScript",
-"path": "res://Data/Scripts/logger.gd"
+"path": "res://Data/Scripts/Singletons/logger.gd"
 }, {
 "base": "Control",
 "class": "Map",
@@ -104,7 +109,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Enums/platform_side.gd"
 }, {
-"base": "Spatial",
+"base": "WorldObject",
 "class": "RailLogic",
 "language": "GDScript",
 "path": "res://Data/Scripts/rail_logic_base.gd"
@@ -158,11 +163,17 @@ _global_script_classes=[ {
 "class": "WarnSpeedLimit",
 "language": "GDScript",
 "path": "res://Data/Scripts/SpeedLimitWarnSignal.gd"
+}, {
+"base": "Spatial",
+"class": "WorldObject",
+"language": "GDScript",
+"path": "res://Data/Scripts/world_object.gd"
 } ]
 _global_script_class_icons={
 "Authors": "",
 "AutoDynamicFont": "",
 "CameraBase": "",
+"ChunkManager": "",
 "ColoredItemList": "",
 "ContactPoint": "",
 "ControlType": "",
@@ -189,7 +200,8 @@ _global_script_class_icons={
 "Station": "",
 "TextBox": "",
 "TimeField": "",
-"WarnSpeedLimit": ""
+"WarnSpeedLimit": "",
+"WorldObject": ""
 }
 
 [application]

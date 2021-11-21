@@ -1,4 +1,4 @@
-extends Spatial
+extends WorldObject
 
 export (float) var walkingSpeed: float = 1.5
 

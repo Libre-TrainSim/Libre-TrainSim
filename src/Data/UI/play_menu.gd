@@ -58,7 +58,7 @@ func _on_Tracks_item_selected(index: int) -> void:
 	$Play/Info/Info/ReleaseDate.text = " "+ tr("MENU_RELEASE") + ": " + String(wData["ReleaseDate"][1]) + " " + String(wData["ReleaseDate"][2]) + " "
 	var track_name: String = currentTrack.get_basename().get_file()
 	Logger.vlog(track_name)
-	$Play/Info/Screenshot.texture = _make_image("res://Worlds/" + track_name + "/screenshot.png")
+	$Play/Info/Screenshot.texture = _make_image(currentTrack.get_base_dir() + "/screenshot.png")
 
 
 	$Play/Selection/Scenarios.show()
@@ -118,13 +118,10 @@ func _on_Trains_item_selected(index: int) -> void:
 
 func _make_image(path: String) -> Texture:
 	var dir := Directory.new()
-	var _unused = dir.open("res://")
-	if dir.file_exists(path):
+	if dir.open("res://") == OK and dir.file_exists(path + ".import"):
 		screenshot_texture = load(path)
-		# FIXME: Fails, because image is not imported as resource. That needs to change
-		# but I don't want to bloat this PR even more, so it will be done in a subsequent
-		# PR. Ping HaSa1002, if this message made its way into 0.9
 	else:
+		Logger.warn("Cannot find image path", path)
 		var img := Image.new()
 		img.create(1, 1, false, Image.FORMAT_RGB8)
 		img.fill(Color.black)

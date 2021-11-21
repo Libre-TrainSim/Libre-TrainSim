@@ -9,20 +9,21 @@ ground_horizon_color = Color( 0.807843, 0.858824, 0.929412, 1 )
 sun_latitude = 33.38
 sun_angle_max = 10.0
 sun_curve = 0.193187
-sun_energy = 43.39
+sun_energy = 3.61
 
 [resource]
 background_mode = 2
 background_sky = SubResource( 1 )
-ambient_light_color = Color( 0.517647, 0.517647, 0.517647, 1 )
-ambient_light_energy = 3.0
-ambient_light_sky_contribution = 0.3
 fog_enabled = true
 fog_sun_color = Color( 1, 1, 1, 1 )
 fog_depth_begin = 156.3
 fog_depth_end = 766.7
-tonemap_mode = 2
+tonemap_mode = 4
 tonemap_white = 16.0
+glow_enabled = true
+glow_levels/4 = true
+glow_levels/5 = false
+glow_intensity = 2.13
 glow_bicubic_upscale = true
 adjustment_enabled = true
-adjustment_contrast = 1.2
+adjustment_saturation = 1.2

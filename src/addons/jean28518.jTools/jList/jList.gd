@@ -254,12 +254,12 @@ func _on_Copy_pressed(): # stores the current entry_names into the global buffer
 	var source_entry_ids = item_list.get_selected_items()
 	for entry_id in source_entry_ids:
 		source_entry_names.append(item_list.get_item_text(entry_id))
-	OS.clipboard = source_entry_names
+	OS.clipboard = var2str(source_entry_names)
 	emit_signal("user_copied_entries", source_entry_names)
 
 
 func _on_Paste_pressed(): # Adds entry_names from global buffer into jList.
-	var source_entry_names = OS.clipboard
+	var source_entry_names = str2var(OS.clipboard)
 	if source_entry_names == null:
 		return
 	var pasted_entry_names = []

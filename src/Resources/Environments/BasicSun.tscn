@@ -2,11 +2,13 @@
 
 [node name="DirectionalLight" type="DirectionalLight"]
 transform = Transform( 1, 0, 0, 0, -0.766044, 0.642787, 0, -0.642787, -0.766044, 0, 80.3552, 0 )
-light_energy = 2.0
+light_color = Color( 1, 0.958731, 0.917809, 1 )
 light_bake_mode = 2
 shadow_enabled = true
-shadow_color = Color( 0.603922, 0.603922, 0.603922, 1 )
-directional_shadow_blend_splits = true
-directional_shadow_normal_bias = 0.0
-directional_shadow_bias_split_scale = 0.0
-directional_shadow_max_distance = 200.0
+directional_shadow_depth_range = 1
+directional_shadow_max_distance = 120.0
+__meta__ = {
+"color_filter": Color( 1, 1, 1, 0 ),
+"color_temperature": 5900,
+"use_color_temperature": true
+}

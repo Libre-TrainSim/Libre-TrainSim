@@ -3645,7 +3645,6 @@ size = Vector3( 1, 1, 1 )
 
 [node name="Forest" type="MultiMeshInstance"]
 material_override = ExtResource( 1 )
-use_in_baked_light = true
 lod_max_distance = 100.0
 multimesh = SubResource( 2 )
 script = ExtResource( 3 )

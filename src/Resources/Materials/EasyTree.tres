@@ -9,4 +9,5 @@ params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.02
 albedo_color = Color( 0.839216, 0.839216, 0.839216, 1 )
 albedo_texture = ExtResource( 1 )
-metallic_specular = 0.0
+transmission_enabled = true
+transmission = Color( 0, 0.435294, 0.0980392, 1 )

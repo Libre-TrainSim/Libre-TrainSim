@@ -5,6 +5,7 @@ extends CanvasLayer
 ## This Script will be overwritten by the game.
 ################################################################################
 
+signal textbox_closed
 
 onready var player: LTSPlayer = get_parent()
 
@@ -16,6 +17,7 @@ func _ready() -> void:
 		$IngameInformation/Next.rect_position.y += 100
 	$Pause.player = player
 	$Black.show()
+	$TextBox.connect("closed", self, "emit_signal", ["textbox_closed"])
 
 
 func _process(_delta: float) -> void:

@@ -111,25 +111,22 @@ func crawlDirectory(directoryPath: String, foundFiles: Array, fileExtensions: Ar
 		return
 	var _unused = dir.list_dir_begin()
 
-	while(true):
+	while true:
 		var file: String = dir.get_next()
-		if file == "":
+		if file.empty():
 			break
 		if file.begins_with("."):
 			continue
 		if dir.current_is_dir():
-			if directoryPath.ends_with("/"):
-				crawlDirectory(directoryPath+file, foundFiles, fileExtensions)
-			else:
-				crawlDirectory(directoryPath+"/"+file, foundFiles, fileExtensions)
-		else:
-			if file.get_extension() in fileExtensions:
-				var exportString: String
-				if directoryPath.ends_with("/"):
-					exportString = directoryPath +file
-				else:
-					exportString = directoryPath +"/"+file
-				foundFiles.append(exportString)
+			crawlDirectory(directoryPath.plus_file(file), foundFiles, fileExtensions)
+			continue
+
+		var ext := file.get_extension()
+		if OS.has_feature("standalone") and ext == "import":
+			file = file.get_basename()
+			ext = file.get_extension()
+		if ext in fileExtensions:
+			foundFiles.push_back(directoryPath.plus_file(file))
 	dir.list_dir_end()
 
 

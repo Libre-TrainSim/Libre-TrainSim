@@ -232,27 +232,19 @@ func select_object_under_mouse() -> void:
 
 
 func clear_selected_object() -> void:
-	# Reset scale of current object because of editor "bouncing"
 	if is_instance_valid(selected_object):
 		var vis = get_children_of_type_recursive(selected_object, VisualInstance)
 		for vi in vis:
 			vi.set_layer_mask_bit(1, false)
 
 		if selected_object_type == "Building":
-			selected_object.scale = Vector3(1,1,1)
-			selected_object.get_node("SelectCollider").show()
 			selected_object.get_child(1).queue_free()
 			$EditorHUD.hide_current_object_transform()
 		if selected_object_type == "Rail":
-			selected_object.get_node("Ending").scale = Vector3(1,1,1)
-			selected_object.get_node("Mid").scale = Vector3(1,1,1)
-			selected_object.get_node("Beginning").scale = Vector3(1,1,1)
 			$EditorHUD.hide_current_object_transform()
 			for child in selected_object.get_children():
 				if child.is_in_group("Gizmo"):
 					child.queue_free()
-		if selected_object_type == "Signal":
-			selected_object.scale = Vector3(1,1,1)
 
 	selected_object = null
 	selected_object_type = ""
@@ -311,13 +303,6 @@ func load_world() -> bool:
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
 	if last_editor_camera_transforms.has(current_track_name):
 		camera.load_from_transform(last_editor_camera_transforms[current_track_name])
-
-	## Add Colliding Boxes to Buildings:
-	for building in $World/Buildings.get_children():
-		building.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
-	for signal_ins in $World/Signals.get_children():
-#		if signal_ins.type == "Signal":
-		signal_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 
 	return true
 
@@ -379,7 +364,6 @@ func set_selected_object(object: Node) -> void:
 	selected_object_type = get_type_of_object(selected_object)
 
 	if selected_object_type == "Building":
-		selected_object.get_node("SelectCollider").hide()
 		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
 		$EditorHUD.show_current_object_transform()
 	if selected_object_type == "Rail":
@@ -449,7 +433,6 @@ func add_object(complete_path: String) -> void:
 	mesh_instance.translation = position
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
-	mesh_instance.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 	set_selected_object(mesh_instance)
 
 
@@ -568,7 +551,6 @@ func add_signal_to_selected_rail() -> void:
 	var signal_ins: Node = signal_res.instance()
 	Root.name_node_appropriate(signal_ins, "Signal", $World/Signals)
 	$World/Signals.add_child(signal_ins)
-	signal_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 	signal_ins.set_owner($World)
 	signal_ins.attached_rail = selected_object.name
 	signal_ins.set_to_rail()
@@ -583,7 +565,6 @@ func add_station_to_selected_rail() -> void:
 	var station_ins: Node = station_res.instance()
 	Root.name_node_appropriate(station_ins, "Station", $World/Signals)
 	$World/Signals.add_child(station_ins)
-	station_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 	station_ins.set_owner($World)
 	station_ins.attached_rail = selected_object.name
 	station_ins.set_to_rail()
@@ -598,7 +579,6 @@ func add_speed_limit_to_selected_rail() -> void:
 	var speed_limit_ins: Node = speed_limit_res.instance()
 	Root.name_node_appropriate(speed_limit_ins, "SpeedLimit", $World/Signals)
 	$World/Signals.add_child(speed_limit_ins)
-	speed_limit_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 	speed_limit_ins.set_owner($World)
 	speed_limit_ins.attached_rail = selected_object.name
 	speed_limit_ins.set_to_rail()
@@ -613,7 +593,6 @@ func add_warn_speed_limit_to_selected_rail() -> void:
 	var warn_speed_limit_ins: Node = war_speed_limit_res.instance()
 	Root.name_node_appropriate(warn_speed_limit_ins, "SpeedLimit", $World/Signals)
 	$World/Signals.add_child(warn_speed_limit_ins)
-	warn_speed_limit_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 	warn_speed_limit_ins.set_owner($World)
 	warn_speed_limit_ins.attached_rail = selected_object.name
 	warn_speed_limit_ins.set_to_rail()
@@ -628,7 +607,6 @@ func add_contact_point_to_selected_rail() -> void:
 	var contact_point_ins: Node = contact_point_res.instance()
 	Root.name_node_appropriate(contact_point_ins, "ContactPoint", $World/Signals)
 	$World/Signals.add_child(contact_point_ins)
-	contact_point_ins.add_child(preload("res://Editor/Modules/SelectCollider.tscn").instance())
 	contact_point_ins.set_owner($World)
 	contact_point_ins.attached_rail = selected_object.name
 	contact_point_ins.set_to_rail()

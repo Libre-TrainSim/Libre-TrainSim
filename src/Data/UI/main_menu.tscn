@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Data/UI/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://Data/UI/styles/panel_popup.tres" type="StyleBox" id=13]
 [ext_resource path="res://Editor/Modules/scenario_editor_selection.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=15]
+[ext_resource path="res://misc/banner/lts_banner_version.png" type="Texture" id=16]
+[ext_resource path="res://Data/UI/blur_less.tres" type="Material" id=17]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -31,6 +33,14 @@ anchor_bottom = 1.0
 texture = ExtResource( 12 )
 expand = true
 stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource( 17 )
+anchor_bottom = 1.0
+margin_right = 363.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -77,45 +87,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Play" type="Button" parent="Buttons"]
-margin_top = 116.0
+[node name="TextureRect" type="TextureRect" parent="Buttons"]
+margin_top = 34.0
 margin_right = 328.0
-margin_bottom = 165.0
+margin_bottom = 194.0
+rect_min_size = Vector2( 0, 160 )
+texture = ExtResource( 16 )
+expand = true
+stretch_mode = 6
+
+[node name="Play" type="Button" parent="Buttons"]
+margin_top = 198.0
+margin_right = 328.0
+margin_bottom = 247.0
 size_flags_horizontal = 3
 text = "MENU_PLAY"
 
 [node name="Content" type="Button" parent="Buttons"]
-margin_top = 169.0
+margin_top = 251.0
 margin_right = 328.0
-margin_bottom = 218.0
+margin_bottom = 300.0
 size_flags_horizontal = 3
 text = "MENU_CONTENT"
 
 [node name="Create" type="Button" parent="Buttons"]
-margin_top = 222.0
+margin_top = 304.0
 margin_right = 328.0
-margin_bottom = 271.0
+margin_bottom = 353.0
 size_flags_horizontal = 3
 text = "MENU_CREATE"
 
 [node name="Settings" type="Button" parent="Buttons"]
-margin_top = 275.0
+margin_top = 357.0
 margin_right = 328.0
-margin_bottom = 324.0
+margin_bottom = 406.0
 size_flags_horizontal = 3
 text = "MENU_SETTINGS"
 
 [node name="About" type="Button" parent="Buttons"]
-margin_top = 328.0
+margin_top = 410.0
 margin_right = 328.0
-margin_bottom = 377.0
+margin_bottom = 459.0
 size_flags_horizontal = 3
 text = "MENU_ABOUT"
 
 [node name="Feedback" type="Button" parent="Buttons"]
-margin_top = 381.0
+margin_top = 463.0
 margin_right = 328.0
-margin_bottom = 430.0
+margin_bottom = 512.0
 grow_horizontal = 0
 text = "MENU_FEEDBACK_WANTED"
 __meta__ = {
@@ -123,9 +142,9 @@ __meta__ = {
 }
 
 [node name="Quit" type="Button" parent="Buttons"]
-margin_top = 434.0
+margin_top = 516.0
 margin_right = 328.0
-margin_bottom = 483.0
+margin_bottom = 565.0
 size_flags_horizontal = 3
 text = "MENU_QUIT"
 

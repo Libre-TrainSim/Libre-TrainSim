@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/LibreTrainSimLogo_Quad.png-b92a58f7ea9dcee2126342ff832c98e6.stex"
+path="res://.import/lts_logo_16.png-6268036dbafe21f7c4e3a8088bb8fc4b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://LibreTrainSimLogo_Quad.png"
-dest_files=[ "res://.import/LibreTrainSimLogo_Quad.png-b92a58f7ea9dcee2126342ff832c98e6.stex" ]
+source_file="res://misc/logos/lts_logo_16.png"
+dest_files=[ "res://.import/lts_logo_16.png-6268036dbafe21f7c4e3a8088bb8fc4b.stex" ]
 
 [params]
 

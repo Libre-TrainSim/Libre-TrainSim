@@ -220,18 +220,31 @@ func select_object_under_mouse() -> void:
 	var space_state = get_world().get_direct_space_state()
 	# use global coordinates, not local to node
 	var result = space_state.intersect_ray(from, to, [  ], 0x7FFFFFFF, true, true)
+	var obj_to_select: Spatial = null
 	if result.has("collider"):
-		var obj_to_select = result["collider"].get_parent()
+		obj_to_select = result["collider"].get_parent_spatial()
+	else:
+		clear_selected_object()
+		return
 
-		if get_type_of_object(obj_to_select) == "Rail" and result.collider.name == "Ending":
-			begin_drag_mode()
+	while !(obj_to_select is WorldObject or obj_to_select is MeshInstance):
+		Logger.vlog("Trying to find object", obj_to_select)
+		obj_to_select = obj_to_select.get_parent_spatial()
+		if obj_to_select == self or obj_to_select == null:
+			Logger.vlog("No object found", result["collider"])
+			clear_selected_object()
+			return
 
-		set_selected_object(obj_to_select)
-		provide_settings_for_selected_object()
-		Logger.vlog("selected!")
+	if get_type_of_object(obj_to_select) == "Rail" and result.collider.name == "Ending":
+		begin_drag_mode()
+
+	set_selected_object(obj_to_select)
+	provide_settings_for_selected_object()
+	Logger.vlog("selected!", obj_to_select)
 
 
 func clear_selected_object() -> void:
+	Logger.vlog("Deselect object", selected_object)
 	if is_instance_valid(selected_object):
 		var vis = get_children_of_type_recursive(selected_object, VisualInstance)
 		for vi in vis:
@@ -259,6 +272,7 @@ func get_type_of_object(object: Node) -> String:
 	if object.is_in_group("Signal"):
 		return "Signal"
 	else:
+		Logger.warn("Unknown object type encountered!", object)
 		return "Unknown"
 
 

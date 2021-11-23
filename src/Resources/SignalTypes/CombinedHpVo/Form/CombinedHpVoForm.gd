@@ -3,8 +3,8 @@ extends Spatial
 # cannot use type Signal, because cyclic dependency... >_>
 onready var signal_logic: Node = get_parent()
 onready var world: Node = find_parent("World")
-onready var hp_anim_fsm := $Hp/AnimationTree.get("parameters/playback")
-onready var vo_anim_fsm := $Vo/AnimationTree.get("parameters/playback")
+onready var hp_anim_fsm: AnimationNodeStateMachinePlayback = $Hp/AnimationTree.get("parameters/playback")
+onready var vo_anim_fsm: AnimationNodeStateMachinePlayback = $Vo/AnimationTree.get("parameters/playback")
 
 func _ready() -> void:
 	# force the signal to be a combined signal

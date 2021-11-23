@@ -2,7 +2,7 @@ extends Spatial
 
 onready var signal_logic: Node = get_parent()
 onready var world: Node = find_parent("World")
-onready var anim_fsm := $AnimationTree.get("parameters/playback")
+onready var anim_fsm: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
 
 func _ready() -> void:
 	# force the signal to be a main signal

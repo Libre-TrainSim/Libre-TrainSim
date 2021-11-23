@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Resources/SignalTypes/hp_tafel.tres" type="Material" id=1]
 [ext_resource path="res://Resources/SignalTypes/Hp/Light/Hp-Sig.obj" type="ArrayMesh" id=2]
@@ -73,6 +73,9 @@ distance_fade_mode = 1
 distance_fade_min_distance = 70.0
 distance_fade_max_distance = 200.0
 
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.550892, 2.87686, 0.324287 )
+
 [node name="VisualInstance" type="Spatial"]
 script = ExtResource( 5 )
 
@@ -139,3 +142,10 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 1.74491 )
 mesh = ExtResource( 4 )
 material/0 = ExtResource( 1 )
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37803, -1.33251, 1.65292 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.550892, 2.87686, 0.324287 )
+shape = SubResource( 9 )

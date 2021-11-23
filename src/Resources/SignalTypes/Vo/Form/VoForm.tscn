@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Resources/SignalTypes/Vo/Form/formsignal_vo.glb" type="PackedScene" id=1]
 [ext_resource path="res://Resources/SignalTypes/Vo/Form/ScriptingVoForm.gd" type="Script" id=6]
@@ -93,6 +93,9 @@ graph_offset = Vector2( 4, -30 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
+[sub_resource type="BoxShape" id=18]
+extents = Vector3( 0.318245, 2.31898, 0.395843 )
+
 [node name="VisualInstance" type="Spatial"]
 script = ExtResource( 6 )
 
@@ -173,5 +176,12 @@ parameters/playback = SubResource( 17 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.380224, 1.667 )
 mesh = ExtResource( 7 )
 material/0 = ExtResource( 8 )
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209529, -1.3301, 1.59002 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.318245, 2.31898, 0.395843 )
+shape = SubResource( 18 )
 
 [editable path="formsignal_vo"]

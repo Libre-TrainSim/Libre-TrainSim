@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Resources/SignalTypes/LightSignalMaterial.tres" type="Material" id=1]
 [ext_resource path="res://Resources/SignalTypes/Hl/Hl-Sig.obj" type="ArrayMesh" id=2]
@@ -80,6 +80,9 @@ radius = 0.3
 height = 0.6
 radial_segments = 6
 rings = 3
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.550892, 2.87686, 0.324287 )
 
 [node name="VisualInstance" type="Spatial"]
 script = ExtResource( 3 )
@@ -276,3 +279,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
 material/0 = null
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37803, -1.33251, 1.65292 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.550892, 2.87686, 0.324287 )
+shape = SubResource( 11 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Resources/SignalTypes/LightSignalMaterial.tres" type="Material" id=1]
 [ext_resource path="res://Resources/SignalTypes/Vo/Light/Vo-Sig.obj" type="ArrayMesh" id=2]
@@ -53,6 +53,9 @@ emission_on_uv2 = false
 distance_fade_mode = 1
 distance_fade_min_distance = 70.0
 distance_fade_max_distance = 200.0
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.412814, 2.34241, 0.359881 )
 
 [node name="VisualInstance" type="Spatial"]
 script = ExtResource( 3 )
@@ -119,3 +122,10 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.677 )
 mesh = ExtResource( 4 )
 material/0 = ExtResource( 5 )
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37803, -1.33251, 1.6287 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.412814, 2.34241, 0.359881 )
+shape = SubResource( 7 )

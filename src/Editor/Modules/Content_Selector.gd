@@ -32,6 +32,7 @@ func set_type(type):
 var current_resources = []
 func crawl_directory_for_resources():
 	current_resources.clear()
+	Logger.vlog("Searching for resources", current_type)
 
 	if current_type == MATERIALS:
 		for folder in ContentLoader.repo.material_folders:

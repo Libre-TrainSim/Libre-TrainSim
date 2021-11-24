@@ -5,17 +5,23 @@ var current_rail_logic_type = ""
 var resource_selector_called = false
 
 
+func _ready() -> void:
+	set_rail_logic(null)
+
+
 func set_rail_logic(rail_logic):
 	visible = rail_logic != null
 	current_rail_logic = rail_logic
-	current_rail_logic_type = rail_logic.type
-	update_general_settings_ui()
+	current_rail_logic_type = rail_logic.type if rail_logic else ""
 	$SignalSettings.visible = current_rail_logic_type == RailLogicTypes.SIGNAL
 	$StationSettings.visible = current_rail_logic_type == RailLogicTypes.STATION
 	$SpeedLimitSettings.visible = current_rail_logic_type == RailLogicTypes.SPEED_LIMIT
 	$WarnSpeedLimitSettings.visible = current_rail_logic_type == RailLogicTypes.SPEED_LIMIT_WARNING
 	$ContactPointSettings.visible = current_rail_logic_type == RailLogicTypes.CONTACT_POINT
-	match current_rail_logic.type:
+	$GeneralSettings.visible = visible
+	if visible:
+		update_general_settings_ui()
+	match current_rail_logic_type:
 		RailLogicTypes.SIGNAL:
 			update_signal_settings_ui()
 		RailLogicTypes.STATION:

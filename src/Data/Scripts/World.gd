@@ -320,8 +320,8 @@ func jump_player_to_station(station_table_index: int) -> void:
 
 
 func get_rail(rail_name: String) -> Node:
-	return $Rails.get_node(rail_name)
+	return $Rails.get_node_or_null(rail_name)
 
 
 func get_signal(signal_name: String) -> Node:
-	return $Signals.get_node(signal_name)
+	return $Signals.get_node_or_null(signal_name)

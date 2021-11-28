@@ -235,6 +235,8 @@ func _add_node_to_scene_tree(parent: String, instance: Spatial):
 	instance.translation += world_origin
 	if instance.has_method("update"):
 		instance.update()
+	if parent == "Buildings":
+		instance.add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 
 
 func append_deduplicated(A: Array, B: Array):

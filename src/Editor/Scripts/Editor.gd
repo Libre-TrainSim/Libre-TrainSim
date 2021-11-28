@@ -305,7 +305,6 @@ func load_world() -> bool:
 	var world: Node = world_resource.instance()
 	world.FileName = current_track_name
 	world.get_node("jSaveModule").save_path = current_track_path + ".save"
-	world.get_node("jSaveModuleScenarios").save_path = current_track_path + "-scenarios.cfg"
 	add_child(world)
 	world.owner = self
 
@@ -339,7 +338,6 @@ func save_world(send_message: bool = true) -> void:
 
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
 	$World/jSaveModule.write_to_disk()
-	$World/jSaveModuleScenarios.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
 
@@ -447,14 +445,14 @@ func add_object(complete_path: String) -> void:
 	mesh_instance.translation = position
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
+	mesh_instance.add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 	set_selected_object(mesh_instance)
 
 
 func test_track_pck() -> void:
 	if OS.has_feature("editor"):
-		send_message("Can't export and test tracks in Editor. " \
-				+ "Requires subsequent PR to allow direct loading of editable " \
-				+ "maps. Ping HaSa")
+		send_message("Can't export and test tracks while running Libre TrainSim in Godot Editor. " \
+				+ "Please use a build of Libre TrainSim for exporting tracks. ")
 		return
 	export_mod()
 

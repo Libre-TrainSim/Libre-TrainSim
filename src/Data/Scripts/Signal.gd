@@ -67,8 +67,7 @@ func create_visual_instance() -> void:
 	visual_instance.name = "VisualInstance"
 	visual_instance.owner = self
 	connect_visual_instance()
-	if Root.Editor:
-		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
+
 
 
 func connect_visual_instance() -> void:

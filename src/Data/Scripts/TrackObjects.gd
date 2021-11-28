@@ -100,7 +100,7 @@ func attach_to_rail(_rail_node: Spatial) -> void:
 
 
 func unattach_from_rail() -> void:
-	if rail_node == null:
+	if not is_instance_valid(rail_node):
 		return
 	rail_node.trackObjects.erase(self)
 

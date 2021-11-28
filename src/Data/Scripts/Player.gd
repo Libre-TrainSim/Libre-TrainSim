@@ -38,7 +38,7 @@ var currentRealAcceleration: float = 0
 var time: Array = [23,59,59] ## actual time. Indexes: [0]: Hour, [1]: Minute, [2]: Second
 var enforced_braking: bool = false
 ## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
-var stations: Dictionary = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []}
+var stations: Dictionary = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "free_signal_time": [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []}
 ## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
 # free_signal_time: Time in seconds how much seconds before departure the signal should be set to status 0
 
@@ -908,6 +908,7 @@ func check_station(delta: float) -> void:
 		if is_first_station:
 			currentStationNode.set_waiting_persons(stations["waitingPersons"][0]/100.0 * world.default_persons_at_station)
 			jEssentials.call_delayed(1.2, self, "send_message", [tr("WELCOME_TO") + " " + currentStationName])
+			next_station_index = 0
 		else:
 			send_message(tr("WELCOME_TO") + " " + currentStationName + lateMessage)
 
@@ -1438,6 +1439,7 @@ func get_next_SpeedLimit() -> Spatial:
 
 
 var nextStationNode: Spatial = null
+var next_station_index = -1
 var distanceToNextStation: float = 0
 var updateNextStationTimer: float = 0
 func updateNextStation() -> void:  ## Used for Autopilot
@@ -1458,6 +1460,9 @@ func updateNextStation() -> void:  ## Used for Autopilot
 # If signal of the current station was set to green, this is stored in this value.
 var _signal_was_freed_for_station_index = -1
 func handle_station_signal():
+	Logger.vlog("#####")
+	Logger.vlog(next_station_index)
+	Logger.vlog(_signal_was_freed_for_station_index)
 	if next_station_index == -1:
 		return
 	# Signal of next station already set to green

@@ -19,7 +19,7 @@ extra_spacing_top = -30
 extra_spacing_bottom = -30
 font_data = SubResource( 3 )
 
-[node name="SpeedLimit_Lf7" type="Spatial"]
+[node name="SpeedLimit_Lf7" type="Spatial" groups=["Signal"]]
 script = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="."]

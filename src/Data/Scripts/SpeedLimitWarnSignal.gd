@@ -13,20 +13,11 @@ func _get_type() -> String:
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		if get_parent().name == "Signals":
-			return
-		if get_parent().is_in_group("Rail"):
-			attached_rail = get_parent().name
-		var signals = world.get_node("Signals")
-		get_parent().remove_child(self)
-		signals.add_child(self)
-		set_to_rail()
-		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
-	if not Engine.is_editor_hint():
-		$Mesh.set_surface_material(2, $Mesh.get_surface_material(2).duplicate(true))
-		$Mesh.get_surface_material(2).albedo_texture = $Viewport.get_texture()
-		set_to_rail()
+	if Root.Editor:
+		add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
+	$Mesh.set_surface_material(2, $Mesh.get_surface_material(2).duplicate(true))
+	$Mesh.get_surface_material(2).albedo_texture = $Viewport.get_texture()
+	set_to_rail()
 
 
 func set_to_rail() -> void:

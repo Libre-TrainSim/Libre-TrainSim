@@ -16,7 +16,7 @@ extra_spacing_top = -30
 extra_spacing_bottom = -30
 font_data = ExtResource( 2 )
 
-[node name="WarnSpeed_Zs3v_small" type="Spatial"]
+[node name="WarnSpeed_Zs3v_small" type="Spatial" groups=["Signal"]]
 script = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="."]

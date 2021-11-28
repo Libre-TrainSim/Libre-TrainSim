@@ -28,18 +28,11 @@ func _get_type() -> String:
 
 var rail: Spatial
 func _ready():
-	if Engine.is_editor_hint() or Root.Editor:
-		add_child(preload("res://addons/Libre_Train_Sim_Editor/Data/Modules/SelectCollider.tscn").instance())
-		if get_parent().name == "Signals":
-			return
-		if get_parent().is_in_group("Rail"):
-			attached_rail = get_parent().name
-		var signals = world.get_node("Signals")
-		get_parent().remove_child(self)
-		signals.add_child(self)
+	if Root.Editor:
+		add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 		set_to_rail()
-	if not Engine.is_editor_hint() and not Root.Editor:
-		$MeshInstance.queue_free()
+	if not Root.Editor:
+		$Mesh.queue_free()
 		set_to_rail()
 		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
 

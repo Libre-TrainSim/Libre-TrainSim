@@ -16,4 +16,5 @@ dest_files=[ "res://.import/empty.obj-8e85ed5731b4f2e26a767725a111b0a8.mesh", "r
 generate_tangents=true
 scale_mesh=Vector3( 1, 1, 1 )
 offset_mesh=Vector3( 0, 0, 0 )
-optimize_mesh=true
+octahedral_compression=true
+optimize_mesh_flags=4286

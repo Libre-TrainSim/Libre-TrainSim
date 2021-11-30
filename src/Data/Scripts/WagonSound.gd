@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		sollCurveSound = -25.0 + (Math.speedToKmH(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
 
 #	print(sollCurveSound)
-	$CurveSound.unit_db = Root.clampViaTime(sollCurveSound, $CurveSound.unit_db, delta)
+	$CurveSound.unit_db = lerp(sollCurveSound, $CurveSound.unit_db, delta)
 #	$CurveSound.unit_db = 10
 
 	## Drive Sound:
@@ -34,14 +34,14 @@ func _process(delta: float) -> void:
 		driveSoundDb = 10
 	if player.speed == 0:
 		driveSoundDb = -50.0
-	$DriveSound.unit_db = Root.clampViaTime(driveSoundDb, $DriveSound.unit_db, delta)
+	$DriveSound.unit_db = lerp(driveSoundDb, $DriveSound.unit_db, delta)
 
 	var sollBreakSound: float = -50.0
 	if not (player.speed >= 5 or player.command >= 0 or player.speed == 0):
 		sollBreakSound = -20.0 -player.command * 5.0/player.speed
 		if sollBreakSound > 10:
 			sollBreakSound = 10
-	$BrakeSound.unit_db = Root.clampViaTime(sollBreakSound, $BrakeSound.unit_db, delta)
+	$BrakeSound.unit_db = lerp(sollBreakSound, $BrakeSound.unit_db, delta)
 
 	$DriveSound.stream_paused = not wagon.visible or get_tree().paused
 	$CurveSound.stream_paused = not wagon.visible or get_tree().paused

@@ -39,9 +39,9 @@ func _process(delta) -> void:
 
 	## Idle Engine:
 	if player.engine:
-		$Idle.unit_db = Root.clampViaTime(0, $Idle.unit_db, delta*2)
+		$Idle.unit_db = lerp(0, $Idle.unit_db, delta*2)
 	else:
-		$Idle.unit_db = Root.clampViaTime(-50, $Idle.unit_db, delta*2)
+		$Idle.unit_db = lerp(-50, $Idle.unit_db, delta*2)
 
 	## Accleration
 	### Main Volume of accleration
@@ -64,24 +64,24 @@ func _process(delta) -> void:
 
 	### Acceleration Mixing:
 	if acceleration_sound_index == 1:
-		$Acceleration1.unit_db = Root.clampViaTime(0, $Acceleration1.unit_db, delta*2)
-		$Acceleration2.unit_db = Root.clampViaTime(-50, $Acceleration2.unit_db, delta*2)
+		$Acceleration1.unit_db = lerp(0, $Acceleration1.unit_db, delta*2)
+		$Acceleration2.unit_db = lerp(-50, $Acceleration2.unit_db, delta*2)
 	if acceleration_sound_index == 2:
-		$Acceleration1.unit_db = Root.clampViaTime(-50, $Acceleration1.unit_db, delta*2)
-		$Acceleration2.unit_db = Root.clampViaTime(0, $Acceleration2.unit_db, delta*2)
+		$Acceleration1.unit_db = lerp(-50, $Acceleration1.unit_db, delta*2)
+		$Acceleration2.unit_db = lerp(0, $Acceleration2.unit_db, delta*2)
 	if acceleration_sound_index == 0: # Transistion from 1 to 2:
 		if acceleration_timer == 0.0:
 			$AccelerationTransition.play(0)
 		if acceleration_timer > acceleration_transition_1_delta_length_in_ms/1000.0: # Set acceleration 1 down
-			$Acceleration1.unit_db = Root.clampViaTime(-50, $Acceleration1.unit_db, delta*4)
-			$Acceleration2.unit_db = Root.clampViaTime(-50, $Acceleration2.unit_db, delta*4) # just to be safe, that this is off. (normally that should be the case)
+			$Acceleration1.unit_db = lerp(-50, $Acceleration1.unit_db, delta*4)
+			$Acceleration2.unit_db = lerp(-50, $Acceleration2.unit_db, delta*4) # just to be safe, that this is off. (normally that should be the case)
 		if acceleration_timer > acceleration_transition_length_in_ms/1000.0 - acceleration_transition_2_delta_length_in_ms/1000.0: # Set acceleration 2 uo
-			$Acceleration2.unit_db = Root.clampViaTime(0, $Acceleration2.unit_db, delta*4)
+			$Acceleration2.unit_db = lerp(0, $Acceleration2.unit_db, delta*4)
 		if acceleration_timer > acceleration_transition_length_in_ms/1000.0 + acceleration_transition_2_delta_length_in_ms/1000.0:
 			acceleration_sound_index = 2
 		acceleration_timer += delta
 
-	$Acceleration1.unit_db = min(Root.clampViaTime(sollAcceleration, $Acceleration1.unit_db, delta*4), $Acceleration1.unit_db)
+	$Acceleration1.unit_db = min(lerp(sollAcceleration, $Acceleration1.unit_db, delta*4), $Acceleration1.unit_db)
 	$Acceleration2.unit_db = min(sollAcceleration, $Acceleration2.unit_db)
 	$AccelerationTransition.unit_db = sollAcceleration
 
@@ -102,7 +102,7 @@ func _process(delta) -> void:
 #		sollCurveSound = -25.0 + (Math.speedToKmH(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
 #
 ##	print(sollCurveSound)
-#	$CurveSound.unit_db = Root.clampViaTime(sollCurveSound, $CurveSound.unit_db, delta)
+#	$CurveSound.unit_db = lerp(sollCurveSound, $CurveSound.unit_db, delta)
 ##	$CurveSound.unit_db = 10
 #
 #	## Drive Sound:
@@ -112,11 +112,11 @@ func _process(delta) -> void:
 #		driveSoundDb = 10
 #	if player.speed == 0:
 #		driveSoundDb = -50.0
-#	$DriveSound.unit_db = Root.clampViaTime(driveSoundDb, $DriveSound.unit_db, delta)
+#	$DriveSound.unit_db = lerp(driveSoundDb, $DriveSound.unit_db, delta)
 #
 #	var sollBreakSound = -50.0
 #	if not (player.speed >= 5 or player.command >= 0 or player.speed == 0):
 #		sollBreakSound = -20.0 -player.command * 5.0/player.speed
 #		if sollBreakSound > 10:
 #			sollBreakSound = 10
-#	$BrakeSound.unit_db = Root.clampViaTime(sollBreakSound, $BrakeSound.unit_db, delta)
+#	$BrakeSound.unit_db = lerp(sollBreakSound, $BrakeSound.unit_db, delta)

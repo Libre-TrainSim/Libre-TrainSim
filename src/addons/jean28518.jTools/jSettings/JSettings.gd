@@ -33,7 +33,6 @@ func update_settings_window():
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/FramedropFix.pressed = get_framedrop_fix()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = get_sifa()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = get_pzb()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkUnloadDistance.value = get_chunk_unload_distance()
@@ -122,13 +121,6 @@ func set_view_distance(value: int):
 
 func get_view_distance() -> int:
 	return jSaveManager.get_setting("view_distance", 1000)
-
-
-func set_framedrop_fix(value: bool):
-	jSaveManager.save_setting("framedrop_fix", value)
-
-func get_framedrop_fix() -> bool:
-	return jSaveManager.get_setting("framedrop_fix", false)
 
 
 func set_sifa(value: bool):

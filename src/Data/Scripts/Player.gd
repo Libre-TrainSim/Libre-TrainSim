@@ -1627,7 +1627,7 @@ var curve_shaking_factor: float = 0.0
 var camera_shaking_time: float = 0.0
 func get_camera_shaking(delta: float) -> Vector3:
 	camera_shaking_time += delta
-	curve_shaking_factor = Root.clampViaTime(0.0, curve_shaking_factor, delta)
+	curve_shaking_factor = lerp(0.0, curve_shaking_factor, delta)
 
 	var camera_shaking: Vector3 = Vector3(sin(camera_shaking_time*10.0), cos(camera_shaking_time*7.0), sin(camera_shaking_time*13.0)) / 10000.0
 

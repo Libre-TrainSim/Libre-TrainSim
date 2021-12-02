@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	# var window_size_y = OS.window_size.y ## If we will change the resolution, than this line could be better
 
 	var progress_bar_soll_position: float = ((soll_command-1)*(-0.5)) * window_size_y
-	$ProgressBar.rect_position.y = Root.clampViaTime(progress_bar_soll_position, $ProgressBar.rect_position.y, delta*5.0)
+	$ProgressBar.rect_position.y = lerp(progress_bar_soll_position, $ProgressBar.rect_position.y, delta*5.0)
 
 	if player.automaticDriving:
 		soll_command = 0

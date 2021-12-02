@@ -105,60 +105,52 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 		TranslationServer.add_translation(tainTranslation)
 
 
-func crawlDirectory(directoryPath: String, foundFiles: Array, fileExtensions: Array) -> void:
+# recursion_depth = -1 -> unlimited recursion
+# found_files is return value
+func crawl_directory(found_files: Array, directory_path: String, file_extensions: Array, recursion_depth: int = -1) -> void:
 	var dir := Directory.new()
-	if dir.open(directoryPath) != OK:
+	if dir.open(directory_path) != OK:
 		return
-	var _unused = dir.list_dir_begin()
+	dir.list_dir_begin(true, true)
 
 	while true:
 		var file: String = dir.get_next()
 		if file.empty():
 			break
-		if file.begins_with("."):
-			continue
-		if dir.current_is_dir():
-			crawlDirectory(directoryPath.plus_file(file), foundFiles, fileExtensions)
-			continue
-
-		var ext := file.get_extension()
-		if OS.has_feature("standalone") and ext == "import":
-			file = file.get_basename()
-			ext = file.get_extension()
-		if ext in fileExtensions:
-			foundFiles.push_back(directoryPath.plus_file(file))
+		elif dir.current_is_dir() and recursion_depth != 0:
+			crawl_directory(found_files, directory_path.plus_file(file), file_extensions, recursion_depth - 1)
+		else:
+			var ext := file.get_extension()
+			if OS.has_feature("standalone") and ext == "import":
+				file = file.get_basename()
+				ext = file.get_extension()
+			if ext in file_extensions:
+				found_files.push_back(directory_path.plus_file(file))
 	dir.list_dir_end()
 
 
-func get_subfolders_of(directoryPath: String) -> Array:
+func get_subfolders_of(directory_path: String) -> Array:
 	var dir := Directory.new()
-	if dir.open(directoryPath) != OK:
+	if dir.open(directory_path) != OK:
 		return []
-	var _unused = dir.list_dir_begin()
+	dir.list_dir_begin(true, true)
 	var folder_names: Array = []
 	while(true):
 		var file: String = dir.get_next()
 		if file == "":
 			break
-		if file.begins_with("."):
-			continue
 		if dir.current_is_dir():
 			folder_names.append(file)
 	dir.list_dir_end()
 	return folder_names
 
 
-# approaches 'ist' value to 'soll' value in one second  (=smooth transitions from current 'ist' value to 'soll' value)
-func clampViaTime(soll: float, ist: float, delta: float) -> float:
-	ist += (soll-ist)*delta
-	return ist
-
-
-func fix_frame_drop() -> void:
-	if not jSettings.get_framedrop_fix():
-		return
-	jEssentials.call_delayed(0.7, self,  "set_fullscreen", [!jSettings.get_fullscreen()])
-	jEssentials.call_delayed(0.9, self,  "set_fullscreen", [jSettings.get_fullscreen()])
+func to_valid_filename(filename: String) -> String:
+	return filename.to_lower().strip_edges().strip_escapes() \
+			.replace("/", "_").replace("\\", "_").replace(":", "_") \
+			.replace("?", "_").replace("*", "_").replace("\"", "_") \
+			.replace("|", "_").replace("%", "_").replace("<", "_") \
+			.replace(">", "_")
 
 
 func set_fullscreen(value: bool) -> void:

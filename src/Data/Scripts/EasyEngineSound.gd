@@ -20,9 +20,9 @@ func _process(delta: float) -> void:
 		return
 
 	if player.engine:
-		$Idle.unit_db = Root.clampViaTime(0, $Idle.unit_db, delta)
+		$Idle.unit_db = lerp(0, $Idle.unit_db, delta)
 	else:
-		$Idle.unit_db = Root.clampViaTime(-50, $Idle.unit_db, delta)
+		$Idle.unit_db = lerp(-50, $Idle.unit_db, delta)
 
 	var sollAcceleration: float = -50
 	if player.command > 0 and player.engine and player.speed != 0:
@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 		else:
 			sollAcceleration = -30 + abs(player.command*30) - (Math.speedToKmH(player.speed)-60)*3.0
 
-	$Acceleration.unit_db = Root.clampViaTime(sollAcceleration, $Acceleration.unit_db, delta)
+	$Acceleration.unit_db = lerp(sollAcceleration, $Acceleration.unit_db, delta)
 
 	$Idle.stream_paused = not wagon.visible
 	$Acceleration.stream_paused = not wagon.visible
@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 #		sollCurveSound = -25.0 + (Math.speedToKmH(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
 #
 ##	print(sollCurveSound)
-#	$CurveSound.unit_db = Root.clampViaTime(sollCurveSound, $CurveSound.unit_db, delta)
+#	$CurveSound.unit_db = lerp(sollCurveSound, $CurveSound.unit_db, delta)
 ##	$CurveSound.unit_db = 10
 #
 #	## Drive Sound:
@@ -54,11 +54,11 @@ func _process(delta: float) -> void:
 #		driveSoundDb = 10
 #	if player.speed == 0:
 #		driveSoundDb = -50.0
-#	$DriveSound.unit_db = Root.clampViaTime(driveSoundDb, $DriveSound.unit_db, delta)
+#	$DriveSound.unit_db = lerp(driveSoundDb, $DriveSound.unit_db, delta)
 #
 #	var sollBreakSound = -50.0
 #	if not (player.speed >= 5 or player.command >= 0 or player.speed == 0):
 #		sollBreakSound = -20.0 -player.command * 5.0/player.speed
 #		if sollBreakSound > 10:
 #			sollBreakSound = 10
-#	$BrakeSound.unit_db = Root.clampViaTime(sollBreakSound, $BrakeSound.unit_db, delta)
+#	$BrakeSound.unit_db = lerp(sollBreakSound, $BrakeSound.unit_db, delta)

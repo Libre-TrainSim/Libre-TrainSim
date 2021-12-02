@@ -61,13 +61,11 @@ func load_content_packs() -> void:
 
 func find_content_packs() -> void:
 	var found_content_packs := []
-	# NOTE: I moved this if check, so we can debug the mod loading logic
-	#       if we skip it here, we never run the code!
-	#if OS.has_feature("standalone"):
-	found_content_packs.append_array(jEssentials.crawl_directory_for(OS.get_executable_path().get_base_dir(), "pck"))
-	found_content_packs.append_array(jEssentials.crawl_directory_for("user://addons/", "pck"))
-	#else:
-	#	Logger.warn("Skipping pack loading in editor build, because of https://github.com/godotengine/godot/issues/16798", self)
+
+	# limit recursion to 2 levels
+	Root.crawl_directory(found_content_packs, OS.get_executable_path().get_base_dir(), ["pck"], 2)
+	Root.crawl_directory(found_content_packs, "user://addons/", ["pck"], 2)
+
 	Logger.vlog("Found Content Packs: %s" % [found_content_packs])
 
 	for content_pack in found_content_packs:

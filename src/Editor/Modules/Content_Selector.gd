@@ -36,27 +36,27 @@ func crawl_directory_for_resources():
 
 	if current_type == MATERIALS:
 		for folder in ContentLoader.repo.material_folders:
-			Root.crawlDirectory(folder, current_resources, ["tres", "res"])
+			Root.crawl_directory(current_resources, folder, ["tres", "res"])
 
 	if current_type == OBJECTS:
 		for folder in ContentLoader.repo.object_folders:
-			Root.crawlDirectory(folder, current_resources, ["obj"])
+			Root.crawl_directory(current_resources, folder, ["obj"])
 
 	if current_type == RAIL_TYPES:
 		for folder in ContentLoader.repo.rail_type_folders:
-			Root.crawlDirectory(folder, current_resources, ["tscn", "scn"])
+			Root.crawl_directory(current_resources, folder, ["tscn", "scn"])
 
 	if current_type == SIGNAL_TYPES:
 		for folder in ContentLoader.repo.signal_type_folders:
-			Root.crawlDirectory(folder, current_resources, ["tscn", "scn"])
+			Root.crawl_directory(current_resources, folder, ["tscn", "scn"])
 
 	if current_type == SOUNDS:
 		for folder in ContentLoader.repo.sound_folders:
-			Root.crawlDirectory(folder, current_resources, ["ogg", "wav", "mp3"])
+			Root.crawl_directory(current_resources, folder, ["ogg", "wav", "mp3"])
 
 	if current_type == TEXTURES:
 		for folder in ContentLoader.repo.texture_folders:
-			Root.crawlDirectory(folder, current_resources, ["png", "jpg", "jpeg", "bmp"])
+			Root.crawl_directory(current_resources, folder, ["png", "jpg", "jpeg", "bmp"])
 
 	current_resources = jEssentials.remove_duplicates(current_resources)
 

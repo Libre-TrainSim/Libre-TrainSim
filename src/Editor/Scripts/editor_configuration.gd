@@ -28,7 +28,11 @@ func _initialize_editor_directory():
 
 func _find_content():
 	var track_names := []
-	for file in jEssentials.find_files_recursively(editor_directory, "tres"):
+
+	var files := []
+	Root.crawl_directory(files, editor_directory, ["tres"], 2)  # limit recursion to depth 2
+
+	for file in files:
 		if file.get_file() != "content.tres":
 			continue
 		var content = load(file) as ModContentDefinition
@@ -36,8 +40,7 @@ func _find_content():
 			continue
 		for world in content.worlds:
 			var mod_path: String = file.get_base_dir()
-			track_names.push_back(world.replace("res://Mods", \
-					mod_path.get_base_dir()).get_basename())
+			track_names.push_back(world.replace("res://Mods", mod_path.get_base_dir()).get_basename())
 			tracks[track_names.back()] = [content, mod_path]
 	$PanelContainer/VBoxContainer/TracksList.set_data(track_names)
 

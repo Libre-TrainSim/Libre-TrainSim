@@ -6,11 +6,7 @@ var base_control
 
 func validate():
 	var unique_name = $MarginContainer/VBoxContainer/Grid/Input_Unique.text
-	unique_name = unique_name.to_lower() \
-							.strip_edges() \
-							.strip_escapes() \
-							.replace(" ", "_") \
-							.replace("-", "_")
+	unique_name = Root.to_valid_filename(unique_name)
 
 	var author_name = $MarginContainer/VBoxContainer/Grid/Input_Author.text
 	var display_name = $MarginContainer/VBoxContainer/Grid/Input_Name.text
@@ -23,19 +19,13 @@ func validate():
 	queue_free()
 
 
-func create_mod(author_name: String,
-				mod_unique_name: String,
-				mod_display_name: String):
+func create_mod(author_name: String, mod_unique_name: String, mod_display_name: String):
+	var mod_path = "res://Mods".plus_file(mod_unique_name)
 
-	var mod_path = "res://Mods/" + mod_unique_name
-
-	# don't use make_dir_recursive() ... the created dir becomes undeletable!
 	var d = Directory.new()
 	d.open("res://")
-	d.make_dir("Mods")
-	d.change_dir("Mods")
-	d.make_dir(mod_unique_name)
-	d.change_dir(mod_unique_name)
+	d.make_dir_recursive(mod_path)
+	d.change_dir(mod_path)
 	d.make_dir("Environments")
 	d.make_dir("Materials")
 	d.make_dir("Music")
@@ -50,20 +40,20 @@ func create_mod(author_name: String,
 	authors.developers = [author_name]
 	authors.contributors = []
 	authors.translators = []
-	ResourceSaver.save(mod_path + "/authors.tres", authors, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+	ResourceSaver.save(mod_path.plus_file("authors.tres"), authors, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
 
 	var content = ModContentDefinition.new()
 	content.unique_name = mod_unique_name
 	content.display_name = mod_display_name
 
-	content.environment_folders = [mod_path + "/Environments"]
-	content.material_folders = [mod_path + "/Materials"]
-	content.music_folders = [mod_path + "/Music"]
-	content.object_folders = [mod_path + "/Objects"]
-	content.persons_folders = [mod_path + "/Persons"]
-	content.rail_type_folders = [mod_path + "/RailTypes"]
-	content.signal_type_folders = [mod_path + "/SignalTypes"]
-	content.sound_folders = [mod_path + "/Sounds"]
-	content.texture_folders = [mod_path + "/Textures"]
+	content.environment_folders = [mod_path.plus_file("Environments")]
+	content.material_folders = [mod_path.plus_file("Materials")]
+	content.music_folders = [mod_path.plus_file("Music")]
+	content.object_folders = [mod_path.plus_file("Objects")]
+	content.persons_folders = [mod_path.plus_file("Persons")]
+	content.rail_type_folders = [mod_path.plus_file("RailTypes")]
+	content.signal_type_folders = [mod_path.plus_file("SignalTypes")]
+	content.sound_folders = [mod_path.plus_file("Sounds")]
+	content.texture_folders = [mod_path.plus_file("Textures")]
 
-	ResourceSaver.save(mod_path + "/content.tres", content, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+	ResourceSaver.save(mod_path.plus_file("content.tres"), content, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)

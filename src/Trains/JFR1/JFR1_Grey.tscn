@@ -736,6 +736,7 @@ material/0 = null
 
 [node name="DisplayMiddle" type="Viewport" parent="Cabin"]
 size = Vector2( 1300, 900 )
+msaa = 2
 usage = 0
 render_target_v_flip = true
 
@@ -750,6 +751,7 @@ material/0 = null
 
 [node name="DisplayLeft" type="Viewport" parent="Cabin"]
 size = Vector2( 1200, 800 )
+msaa = 2
 usage = 0
 render_target_v_flip = true
 
@@ -764,6 +766,7 @@ material/0 = null
 
 [node name="DisplayRight" type="Viewport" parent="Cabin"]
 size = Vector2( 1000, 750 )
+msaa = 2
 render_target_v_flip = true
 
 [node name="ScreenRight" parent="Cabin/DisplayRight" instance=ExtResource( 20 )]
@@ -790,6 +793,7 @@ material/0 = null
 
 [node name="DisplayReverser" type="Viewport" parent="Cabin"]
 size = Vector2( 1200, 800 )
+msaa = 2
 usage = 0
 render_target_v_flip = true
 

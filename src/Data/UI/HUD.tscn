@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Data/UI/Pause.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Data/UI/MobileHUD.tscn" type="PackedScene" id=2]
@@ -17,11 +17,12 @@
 [ext_resource path="res://Data/Misc/NextTable.png" type="Texture" id=15]
 [ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=16]
 [ext_resource path="res://Data/Scripts/InputLabel.gd" type="Script" id=17]
+[ext_resource path="res://Data/UI/blur.tres" type="Material" id=18]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade"
 tracks/0/type = "value"
-tracks/0/path = NodePath("MessageLabel:modulate")
+tracks/0/path = NodePath("PanelContainer:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -33,7 +34,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("MessageLabel:anchor_top")
+tracks/1/path = NodePath("PanelContainer:anchor_top")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -45,11 +46,11 @@ tracks/1/keys = {
 "values": [ 1.0, 0.967 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("MessageLabel:anchor_bottom")
+tracks/2/path = NodePath("PanelContainer:anchor_bottom")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -272,12 +273,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MessageLabel" type="Label" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 modulate = Color( 1, 1, 1, 0 )
+material = ExtResource( 18 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -45.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MessageLabel" type="Label" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 793.0
+margin_bottom = 52.0
 custom_fonts/font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
 align = 1

@@ -39,7 +39,7 @@ func _unhandled_input(_event) -> void:
 
 var messages: int = 0
 func send_message(text: String, actions := []) -> void:
-	var Message: InputLabel = $MessageLabel as InputLabel
+	var Message: InputLabel = $PanelContainer/MessageLabel as InputLabel
 	Message.backing_text = text
 	Message.actions = actions
 	Message.make_string()
@@ -123,8 +123,8 @@ func _on_TextBox_closed() -> void:
 
 
 func _on_paused() -> void:
-	$MessageLabel.hide()
+	$PanelContainer.hide()
 
 
 func _on_unpaused() -> void:
-	$MessageLabel.show()
+	$PanelContainer.show()

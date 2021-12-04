@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Data/UI/blur.gdshader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/blur_amount = 3.36
+shader_param/tint_color = Color( 0.85098, 0.85098, 0.85098, 1 )

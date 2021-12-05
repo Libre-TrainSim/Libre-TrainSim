@@ -76,33 +76,6 @@ func _ready() -> void:
 		$Ending.queue_free()
 		$Mid.queue_free()
 
-#var EditorUpdateTimer = 0
-#func _process(delta):
-#	checkVisualInstance()
-#	if visible and not overheadLineBuilded:
-#		updateOverheadLine()
-#		overheadLineBuilded = true
-#	if Engine.is_editor_hint() or Root.Editor:
-#		EditorUpdateTimer += delta
-#		if EditorUpdateTimer < 0.25:
-#			return
-#		EditorUpdateTimer = 0
-#		## Disable moving in editor, if manual Moving is false:
-##		print("checking transofrmation....")
-#		if fixedTransform == null:
-#			fixedTransform = transform
-#		if not manualMoving:
-#			transform = fixedTransform
-#		else:
-#			fixedTransform = transform
-#		if name.match(" "):
-#			name = name.replace(" ", "_")
-#		## Move Buildings to the Buildings Node
-#		for child in get_children():
-#			if not child.owner == self and not child.is_in_group("Gizmo"):
-#				remove_child(child)
-#				buildings.add_child(child)
-#				child.owner = world
 
 func _exit_tree() -> void:
 	for track_object in trackObjects:
@@ -134,10 +107,8 @@ func update_parallel_rail_settings() -> void:
 	rotation_degrees.y = parRail.rotation_degrees.y
 	fixedTransform = transform
 
-# Thread safe
-func calculate_update() -> Dictionary:
-	var calculated_data: Dictionary = {}
 
+func _update() -> void:
 	var rail_type_node: Spatial = load(rail_type_path).instance()
 
 	buildDistance = rail_type_node.buildDistance
@@ -146,58 +117,52 @@ func calculate_update() -> Dictionary:
 	overheadLineThinkness = rail_type_node.overheadLineThinkness
 	line2HeightChangingFactor = rail_type_node.line2HeightChangingFactor
 
-	if parallelRail == "":
+	if parallelRail.empty():
 		updateAutomaticTendency()
-	if parallelRail != "":
+	else:
 		update_parallel_rail_settings()
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
-		Logger.log(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.")
+		Logger.warn(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
 
-	update_positions_and_rotations()
 	visibleSegments = int(length / buildDistance) + 1
 
-	# Build rail multimesh:
-	var multimesh: MultiMesh = MultiMesh.new()
-	multimesh.transform_format = MultiMesh.TRANSFORM_3D
-	multimesh.mesh = rail_type_node.get_child(0).mesh
-	for i in range(rail_type_node.get_child(0).get_surface_material_count()):
-		multimesh.mesh.surface_set_material(i, rail_type_node.get_child(0).get_surface_material(i))
-	multimesh.instance_count = int(length / buildDistance) + 1
-	multimesh.visible_instance_count = visibleSegments
-	var distance: float = 0
-	for i in range(0, multimesh.visible_instance_count):
-		multimesh.set_instance_transform(i, get_local_transform_at_rail_distance(distance))
-		distance += buildDistance
-	calculated_data["multimesh"] = multimesh
-
-	if overheadLine:
-		calculated_data["overheadline_mesh"] = calculate_overhadline_mesh()
-
-	rail_type_node.queue_free()
-	return calculated_data
-
-
-func update_with_calculated_data(calculated_data: Dictionary) -> void:
 	# Ensure visible Instance:
 	visible = true
-	var multimeshI: Node = get_node_or_null("MultiMeshInstance")
+	var multimeshI: MultiMeshInstance = get_node_or_null("MultiMeshInstance")
 	if multimeshI == null:
 		multimeshI = MultiMeshInstance.new()
 		multimeshI.name = "MultiMeshInstance"
 		add_child(multimeshI)
 		multimeshI.set_owner(self)
-	multimeshI.multimesh = calculated_data["multimesh"]
+
+	if multimeshI.multimesh == null or not multimeshI.multimesh.has_meta("is_unique"):
+		multimeshI.multimesh = MultiMesh.new()
+		multimeshI.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+		multimeshI.multimesh.set_meta("is_unique", true)
+
+	multimeshI.multimesh.instance_count = visibleSegments
+
+	# this is called, but mesh remains null
+	if multimeshI.multimesh.mesh == null:
+		multimeshI.multimesh.mesh = rail_type_node.get_child(0).mesh
+		for i in range(rail_type_node.get_child(0).get_surface_material_count()):
+			multimeshI.multimesh.mesh.surface_set_material(i, rail_type_node.get_child(0).get_surface_material(i))
+
+	for i in range(visibleSegments):
+		multimeshI.multimesh.set_instance_transform(i, get_local_transform_at_rail_distance(i*buildDistance))
 
 	if overheadLine:
-		update_overheadline(calculated_data["overheadline_mesh"])
+		update_overheadline(calculate_overhadline_mesh())
 
-	if Engine.is_editor_hint() or Root.Editor:
+	if Root.Editor:
 		$Ending.transform = get_local_transform_at_rail_distance(length)
 		$Mid.transform = get_local_transform_at_rail_distance(length/2.0)
 		for track_object in trackObjects:
 			track_object.update()
+
+	rail_type_node.queue_free()
 
 
 func unload_visible_instance() -> void:
@@ -213,21 +178,12 @@ func unload_visible_instance() -> void:
 
 
 func update() -> void:
+	update_positions_and_rotations()
 	if not visible:
 		unload_visible_instance()
-		update_positions_and_rotations()
 	else:
-		var calculated_data = calculate_update()
-		update_with_calculated_data(calculated_data)
+		_update()
 
-
-#func checkVisualInstance():
-#	if visible:
-#		if get_node_or_null("MultiMeshInstance") == null:
-#			load_visible_Instance()
-#	else:
-#		if get_node_or_null("MultiMeshInstance") != null:
-#			unload_visible_Instance()
 
 func get_track_object(track_object_name : String) -> Spatial: # (Searches for the description of track objects
 	for track_object in trackObjects:

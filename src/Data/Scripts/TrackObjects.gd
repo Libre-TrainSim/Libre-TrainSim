@@ -124,23 +124,20 @@ func update() -> void:
 		return
 
 	attach_to_rail(_rail_node)
-	self.set_multimesh(self.multimesh.duplicate(false))
 	if wholeRail:
 		on_rail_position = 0
 		length = rail_node.length
 
 	translation = rail_node.get_pos_at_RailDistance(on_rail_position)
-	multimesh.mesh = load(objectPath).duplicate()
+	if multimesh.mesh == null and objectPath != null:
+		multimesh.mesh = load(objectPath).duplicate()
 
-	# This was sometimes out of bounds!!
-	#for x in range(materialPaths.size()):
-	# FIX:
-
-	var count: int = int(min(multimesh.mesh.get_surface_count(), materialPaths.size()))
-	for x in range(count):
-		if materialPaths[x] != "":
-			var material_path: String = materialPaths[x]
-			multimesh.mesh.surface_set_material(x, load(material_path))
+	if is_instance_valid(multimesh.mesh):
+		var count: int = int(min(multimesh.mesh.get_surface_count(), materialPaths.size()))
+		for x in range(count):
+			if materialPaths[x] != "":
+				var material_path: String = materialPaths[x]
+				multimesh.mesh.surface_set_material(x, load(material_path))
 
 	var straightCount: int = int(length / distanceLength)
 	if placeLast:

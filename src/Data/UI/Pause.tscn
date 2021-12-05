@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=1]
 [ext_resource path="res://Data/UI/pause.gd" type="Script" id=2]
 [ext_resource path="res://Data/UI/station_jumper.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Data/UI/blur.gdshader" type="Shader" id=4]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 4 )
+shader_param/blur_amount = 1.747
+shader_param/tint_color = Color( 0.42, 0.42, 0.42, 1 )
 
 [node name="Pause" type="Control"]
 anchor_right = 1.0
@@ -14,6 +20,7 @@ __meta__ = {
 
 [node name="Background" type="ColorRect" parent="."]
 modulate = Color( 1, 1, 1, 0.564706 )
+material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.564706 )

@@ -22,10 +22,11 @@ var active_chunk = null  # chunk the player is currently in (Vector3)
 # whatever node tells us *which* chunk to load. Usually player. Maybe editor camera.
 var position_provider: Spatial = null
 
-var _thread
-var _thread_semaphore
-var _chunk_mutex
-var _kill_thread = false
+var _thread: Thread
+var _thread_semaphore: Semaphore
+var _chunk_mutex: Mutex
+var _saving_mutex: Mutex
+var _kill_thread := false
 var _jsavemodule
 
 func position_to_chunk(position: Vector3) -> Vector3:
@@ -79,6 +80,7 @@ func _ready():
 
 	_thread_semaphore = Semaphore.new()
 	_chunk_mutex = Mutex.new()
+	_saving_mutex = Mutex.new()
 	connect("_thread_finished_loading", self, "_finish_chunk_loading")
 
 	# backwards compat.
@@ -198,15 +200,16 @@ func _get_all_chunks() -> Array:
 func save_and_unload_all_chunks():
 	assert(Root.Editor)
 
-	_save_chunks(_get_all_chunks())
-	_chunk_mutex.lock()
+	_saving_mutex.lock()
 	chunks_to_load = []
-	_unload_old_chunks()
+	_unload_old_chunks(true)
 
 
 # this is the missing unlock from `save_and_unload_all_chunks()` - needed for Editor purposes
 func resume_chunking():
-	_chunk_mutex.unlock()
+	chunks_to_load = get_3x3_chunks(active_chunk)
+	_thread_semaphore.post()
+	_saving_mutex.unlock()
 
 
 # do finishing touches sync. on main thread (tree is not thread safe!)
@@ -216,7 +219,7 @@ func _finish_chunk_loading():
 	for rail in world.get_node("Rails").get_children():
 		var rail_pos = position_to_chunk(rail.global_transform.origin)
 		if rail_pos in new_chunks:
-			rail.update_with_calculated_data(rail.calculate_update())
+			rail._update()
 	_chunk_mutex.unlock()
 
 	# append, but remove duplicates
@@ -251,14 +254,15 @@ func without(A: Array, B: Array) -> Array:
 
 
 # delete old nodes from main thread (tree is not thread safe!)
-func _unload_old_chunks():
+func _unload_old_chunks(all: bool = false):
 	_chunk_mutex.lock()
 
 	# chunks_to_unload = all chunks further away than treshold
 	var chunks_to_unload = loaded_chunks.duplicate()
-	for chunk in loaded_chunks:
-		if active_chunk.distance_to(chunk) <= jSettings.get_chunk_unload_distance():
-			chunks_to_unload.erase(chunk)
+	if not all:
+		for chunk in loaded_chunks:
+			if active_chunk.distance_to(chunk) <= jSettings.get_chunk_unload_distance():
+				chunks_to_unload.erase(chunk)
 
 	if Root.Editor:
 		_save_chunks(chunks_to_unload)
@@ -286,6 +290,7 @@ func _chunk_loader_thread(_void):
 		_thread_semaphore.wait()
 		#yield(get_tree(), "idle_frame")  # uncomment this for debugging
 
+		_saving_mutex.lock()
 		_chunk_mutex.lock()
 		if _kill_thread:
 			_chunk_mutex.unlock()
@@ -335,6 +340,7 @@ func _chunk_loader_thread(_void):
 					call_deferred("_add_node_to_scene_tree", "TrackObjects", instance)
 
 		_chunk_mutex.unlock()
+		_saving_mutex.unlock()
 		call_deferred("emit_signal", "_thread_finished_loading")
 
 

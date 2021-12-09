@@ -240,7 +240,7 @@ func _add_node_to_scene_tree(parent: String, instance: Spatial):
 	instance.translation += world_origin
 	if instance.has_method("update"):
 		instance.update()
-	if parent == "Buildings":
+	if parent == "Buildings" and Root.Editor:
 		instance.add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 
 

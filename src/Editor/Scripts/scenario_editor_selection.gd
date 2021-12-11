@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Panel
 
 var selected_track: String = ""
 

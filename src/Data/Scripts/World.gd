@@ -310,10 +310,10 @@ func load_configs_to_cache() -> void:
 
 
 func jump_player_to_station(station_table_index: int) -> void:
-	Logger.log("Jumping player to station " + player.stations["stationName"][station_table_index])
-	var new_station_node: Spatial = $Signals.get_node(player.stations["nodeName"][station_table_index])
+	Logger.log("Jumping player to station " + player.station_table[station_table_index].station_name)
+	var new_station_node: Spatial = get_signal(player.station_table[station_table_index].node_name)
 
-	time = player.stations["arrivalTime"][station_table_index].duplicate()
+	time = player.station_table[station_table_index].arrival_time
 
 	# Delete npcs with are crossing rails with player route to station
 	update_rail_connections()

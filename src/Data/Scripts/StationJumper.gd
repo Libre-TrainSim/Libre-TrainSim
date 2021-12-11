@@ -10,14 +10,14 @@ signal station_index_selected(station_index)
 func update_list(player: Spatial) -> void:
 	$StationJumper/ItemList.clear()
 	current_station_indices.clear()
-	var stations = player.stations
-	for station_index in range(stations["stationName"].size()):
-		if stations["passed"][station_index] == false:
-			current_station_indices.append(station_index)
-	if player.isInStation:
+	var stations = player.station_table
+	for station_index in range(player.current_station_table_index, player.station_table.size()):
+		current_station_indices.append(station_index)
+	if player.is_in_station:
 		current_station_indices.pop_front()
+	current_station_indices.pop_back() # Remove endstation out of list.
 	for station_index in current_station_indices:
-		$StationJumper/ItemList.add_item(stations["stationName"][station_index])
+		$StationJumper/ItemList.add_item(player.station_table[station_index].station_name)
 
 	$StationJumper/Label2.text = tr("WARNING_JUMPING_SCENARIO")
 

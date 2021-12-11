@@ -266,4 +266,3 @@ func get_minimal_platform_length(world: Node) -> int:
 				if minimal_platform_length > station_node.length:
 					minimal_platform_length = station_node.length
 	return minimal_platform_length
-

@@ -48,7 +48,7 @@ var reverser: int = ReverserState.NEUTRAL
 ## For Station Control:
 var current_station_table_index = 0 # Displays the index of the next or current station of station_table
 var current_station_table_entry: Dictionary
-var current_station_node: Node # If we are in a station, this variable stores the current station  node
+var current_station_node: Node # If we are in a station, this variable stores the current station node, otherwise its null.
 var whole_train_in_station: bool = false # true if speed = 0, and the train is fully in the station
 var is_in_station: bool = false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
 var real_arrival_time: int # Time is set if train successfully arrived
@@ -804,12 +804,18 @@ func handle_signal(signal_name: String) -> void:
 				last_driven_signal.set_status(SignalStatus.RED)
 
 	elif signal_passed.type == "Station": ## Station
+		if current_station_node != null: # Then the player didn't depart from the last station properly. That happens normally when player jumps between stations
+			return
 		var station_table_index: int = get_station_table_index_of_station_node_name(signal_passed.name)
 		if station_table_index == -1:
 			Logger.warn(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...", self)
 			return
-		if current_station_table_index < station_table_index:
-			Logger.warn("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index]).name], self)
+		if current_station_table_index < station_table_index: # Train is standing, and a signal get's activated that only happens at beginning or after jumping
+			if speed == 0:
+				return
+			else:
+				Logger.warn("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].node_name).name], self)
+
 		current_station_table_index = station_table_index
 		current_station_table_entry = station_table[current_station_table_index]
 		if StopType.DO_NOT_HALT == current_station_table_entry.stop_type:
@@ -1470,17 +1476,20 @@ func updateNextStation() -> void:  ## Used for Autopilot
 # If signal of the current station was set to green, this is stored in this value.
 var _signal_was_freed_for_station_index = -1
 func handle_station_signal():
-	# Signal of next station already set to green
-	if current_station_table_index == _signal_was_freed_for_station_index or station_table.size() == 0:
+	# Signal of next station already set to green or we reached endstation
+	if current_station_table_index == _signal_was_freed_for_station_index or station_table.size() == 0\
+	or _signal_was_freed_for_station_index+1 > station_table.size():
 		return
-	var signal_node = world.get_signal(world.get_signal(current_station_table_entry.node_name).assigned_signal)
+	var station_table_entry = station_table[_signal_was_freed_for_station_index+1]
+	var signal_node = world.get_signal(world.get_signal(station_table_entry.node_name).assigned_signal)
 	if signal_node == null:
+		_signal_was_freed_for_station_index += 1
 		return
-	var departure_time = current_station_table_entry.departure_time
-	var signal_free_time = departure_time - current_station_table_entry.signal_time
-	if signal_free_time < world.time and current_station_table_entry.stop_type != StopType.END:
+	var departure_time = station_table_entry.departure_time
+	var signal_free_time = departure_time - station_table_entry.signal_time
+	if signal_free_time <= world.time and station_table_entry.stop_type != StopType.END:
 		signal_node.set_status(1)
-		_signal_was_freed_for_station_index = current_station_table_index
+		_signal_was_freed_for_station_index += 1
 
 
 
@@ -1807,16 +1816,17 @@ func jump_to_station(station_table_index : int) -> void:
 	var local_forward: bool = station_node.forward
 	var local_distance_on_rail: float = station_node.get_perfect_halt_distance_on_rail(length)
 	jump_to_rail(rail_name, local_distance_on_rail, local_forward)
-
 	force_to_be_in_station(station_table_index)
-
-	current_station_table_index = station_table_index
+	sendDoorPositionsToCurrentStation()
 
 
 func force_to_be_in_station(station_table_index: int) -> void:
 	current_station_node = world.get_signal(station_table[station_table_index].node_name)
-#	distanceOnStationBeginning = baked_route_signal_positions[stations["nodeName"][station_table_index]]
+	current_station_table_index = station_table_index
+	current_station_table_entry = station_table[current_station_table_index]
 	route_distance_at_station_begin = distance_on_route - length - 1.0
+	is_in_station = true
+	real_arrival_time = world.time
 	_door_open_message_timer = 0
 	_door_open_message_sent = false
 	whole_train_in_station = true

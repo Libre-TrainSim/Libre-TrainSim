@@ -178,10 +178,10 @@ func append_content_to_global_repo(content: ModContentDefinition) -> void:
 
 
 func get_editor_tracks():
-	var tracks := {}
+	var tracks: Dictionary = {}
 	var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
-	var track_names := []
-	var files := []
+	var track_names: Array = []
+	var files: Array = []
 	Root.crawl_directory(files, editor_directory, ["tres"], 2)
 	for file in files:
 		if file.get_file() != "content.tres":
@@ -201,7 +201,7 @@ func get_editor_tracks():
 
 func get_scenarios_for_track(track: String) -> Array:
 	var scenario_dir: String = track.get_base_dir().plus_file("scenarios")
-	var result = []
+	var result: Array = []
 	Root.crawl_directory(result, scenario_dir, ["scenario"], 2)
 	return result
 

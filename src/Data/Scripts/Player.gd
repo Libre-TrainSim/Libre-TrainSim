@@ -37,12 +37,6 @@ var currentAcceleration: float = 0 # Current Acceleration in m/(s*s) (Can also b
 var currentRealAcceleration: float = 0
 var enforced_braking: bool = false
 
-
-## set by the world scneario manager. Holds the timetable. PLEASE DO NOT EDIT THIS TIMETABLE! The passed variable displays, if the train was already there. (true/false)
-#var stations: Dictionary = {"nodeName" : [], "stationName" : [], "arrivalTime" : [], "departureTime" : [], "free_signal_time": [], "haltTime" : [], "stopType" : [], "waitingPersons" : [], "leavingPersons" : [], "passed" : [], "arrivalAnnouncePath" : [], "departureAnnouncePath" : [], "approachAnnouncePath" : []}
-## StopType: 0: Dont halt at this station, 1: Halt at this station, 2: Beginning Station, 3: End Station
-# free_signal_time: Time in seconds how much seconds before departure the signal should be set to status 0
-
 var reverser: int = ReverserState.NEUTRAL
 
 ## For Station Control:
@@ -177,14 +171,6 @@ signal passed_signal(signal_instance)
 signal reverser_changed(reverser_state)
 signal _textbox_closed
 
-
-
-#	if new_train.length + 25 > train_spawn_information.minimal_platform_length:
-#		new_train.length = train_spawn_information.minimal_platform_length - 25
-#	new_train.route = train_spawn_information.route
-#	new_train.spawn_information = train_spawn_information.spawn_information
-#	new_train.despawn_information = train_spawn_information.despawn_information
-#	new_train.station_table = train_spawn_information.station_table
 
 # Called by World!
 func ready() -> void:
@@ -1451,21 +1437,12 @@ func get_next_SpeedLimit() -> Spatial:
 	return null
 
 
-#var nextStationNodeOnTrack: Spatial = null
 var distanceToNextStation: float = 0
-#var next_station_index = -1
 var updateNextStationTimer: float = 0
 func updateNextStation() -> void:  ## Used for Autopilot
 	if current_station_table_index >= station_table.size():
 		distanceToNextStation = 0
 		return
-#	if nextStationNodeOnTrack == null:
-#		return
-#		var upcoming: String = get_next_station_name_on_track()
-#		if upcoming == "":
-#			return
-#		nextStationNodeOnTrack = world.get_signal(upcoming)
-
 	# Because get_distance_to_signal can regulary only used, if signal is before the train. In this case, signal is after the train,
 	# so get_distance_to_signal thinks, we are at a loop edge, and adds the complete route length to it. So we remove the complete_route_length here.
 	if not is_in_station:
@@ -1474,19 +1451,19 @@ func updateNextStation() -> void:  ## Used for Autopilot
 			distanceToNextStation -= complete_route_length
 
 # If signal of the current station was set to green, this is stored in this value.
-var _signal_was_freed_for_station_index = -1
+var _signal_was_freed_for_station_index: int = -1
 func handle_station_signal():
 	# Signal of next station already set to green or we reached endstation
 	if current_station_table_index == _signal_was_freed_for_station_index or station_table.size() == 0\
 	or _signal_was_freed_for_station_index+1 > station_table.size():
 		return
-	var station_table_entry = station_table[_signal_was_freed_for_station_index+1]
-	var signal_node = world.get_signal(world.get_signal(station_table_entry.node_name).assigned_signal)
+	var station_table_entry: Dictionary = station_table[_signal_was_freed_for_station_index+1]
+	var signal_node: Node = world.get_signal(world.get_signal(station_table_entry.node_name).assigned_signal)
 	if signal_node == null:
 		_signal_was_freed_for_station_index += 1
 		return
-	var departure_time = station_table_entry.departure_time
-	var signal_free_time = departure_time - station_table_entry.signal_time
+	var departure_time: int = station_table_entry.departure_time
+	var signal_free_time: int = departure_time - station_table_entry.signal_time
 	if signal_free_time <= world.time and station_table_entry.stop_type != StopType.END:
 		signal_node.set_status(1)
 		_signal_was_freed_for_station_index += 1
@@ -1494,7 +1471,7 @@ func handle_station_signal():
 
 
 func get_next_station_name_on_track() -> String:
-	var all = get_all_upcoming_signals_of_types(["Station"])
+	var all: Array = get_all_upcoming_signals_of_types(["Station"])
 	if all.size() > 0:
 		return all[0]
 	return ""

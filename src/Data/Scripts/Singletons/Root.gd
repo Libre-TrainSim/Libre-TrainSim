@@ -21,8 +21,8 @@ var world: Node  ## Reference to world
 var Editor: bool = false
 var scenario_editor: bool = false
 
-var current_editor_track = ""
-var current_editor_track_path = ""
+var current_editor_track: String = ""
+var current_editor_track_path: String = ""
 
 func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
@@ -89,7 +89,6 @@ func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 		var trackTranslation: Translation = load(trackTranslationPath)
 		Logger.vlog(trackTranslation.locale)
 		TranslationServer.add_translation(trackTranslation)
-
 
 
 # Searches for translation files wich are located in the same folder as the train.tscn.

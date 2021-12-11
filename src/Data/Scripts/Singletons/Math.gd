@@ -93,7 +93,7 @@ func time2String(time: Array) -> String:
 	return (hour + ":" + minute +":" + second)
 
 func time_seconds2String(time_seconds: int) -> String:
-	var time = seconds_to_time(time_seconds)
+	var time: Array = seconds_to_time(time_seconds)
 	return time2String(time)
 
 
@@ -111,7 +111,7 @@ func time_to_seconds(time: Array):
 	return time[2] + time[1] * 60 + time[0] * 3600
 
 func seconds_to_time(seconds : int):
-	var time = [0, 0, 0]
+	var time: Array = [0, 0, 0]
 	time[0] = int(seconds/3600)
 	seconds -= time[0] * 3600
 	time[1] = int(seconds/60)

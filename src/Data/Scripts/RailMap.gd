@@ -103,29 +103,6 @@ func open_overlay_map() -> void:
 	update_active_lines_width(1.435 * zoom)
 	$PlayerPolygon.scale = 4*Vector2(zoom, zoom)
 
-#func _input(event):
-#	if event is InputEventMouseButton:
-#		if event.button_index == BUTTON_WHEEL_DOWN and not event.pressed:
-#			var zoom = $Camera2D.zoom
-#			zoom.x = clamp(zoom.x*1.25, 0.01, 10)
-#			zoom.y = clamp(zoom.y*1.25, 0.01, 10)
-#			$Camera2D.zoom = zoom
-#			print(get_tree().is_input_handled())
-#			get_tree().set_input_as_handled()
-#		if event.button_index == BUTTON_WHEEL_UP and not event.pressed:
-#			var zoom = $Camera2D.zoom
-#			zoom.x = clamp(zoom.x*0.8, 0.05, 10)
-#			zoom.y = clamp(zoom.y*0.8, 0.05, 10)
-#			$Camera2D.zoom = zoom
-#			print(get_tree().is_input_handled())
-#			get_tree().set_input_as_handled()
-#
-#	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
-#		mouse_motion -= event.relative
-#		print(get_tree().is_input_handled())
-#		get_tree().set_input_as_handled()
-#	pass
-
 func close_map() -> void:
 	set_process(false)
 	set_process_unhandled_input(false)
@@ -231,10 +208,6 @@ func create_signal(signal_instance: Spatial) -> void:
 	sprite.scale = Vector2(0.1, 0.1)
 	sprite.rotation_degrees = -signal_instance.rotation_degrees.y + 90
 	sprite.name = signal_instance.name
-	if Root.Editor:
-		var collider = preload("res://Editor/Modules/Collider2D.tscn").instance()
-		collider.input_handling_node = find_parent("ScenarioEditor")
-		sprite.add_child(collider)
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
 # warning-ignore:return_value_discarded

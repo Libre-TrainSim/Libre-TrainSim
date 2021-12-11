@@ -18,7 +18,7 @@ var author: String = ""
 var picturePath: String = "res://screenshot.png"
 var description: String = ""
 
-var pending_train_spawns = []
+var pending_train_spawns: Array = []
 
 var player: LTSPlayer
 
@@ -67,7 +67,7 @@ func _ready() -> void:
 	if Root.Editor:
 		$jSaveModule.set_save_path(find_parent("Editor").current_track_path + ".save")
 	else:
-		var save_path = Root.current_track.get_base_dir() + "/" + Root.current_track.get_file().get_basename() + ".save"
+		var save_path: String = Root.current_track.get_base_dir() + "/" + Root.current_track.get_file().get_basename() + ".save"
 		$jSaveModule.set_save_path(save_path)
 
 	if Root.Editor:
@@ -168,7 +168,7 @@ func set_scenario_to_world() -> void:
 	# Apply all other routes
 	var routes: Dictionary = $ScenarioManager.get_route_data()
 	for i in range (routes.size()):
-		var route_name = routes.keys()[i]
+		var route_name: String = routes.keys()[i]
 		var route: Dictionary = routes[route_name]
 		# If this is a npc route, and this route should not be loaded for the current selected route, skip
 		if not route.general_settings.player_can_drive_this_route and \
@@ -188,7 +188,7 @@ func set_scenario_to_world() -> void:
 			# If the spawn time was before our start time, or the start time is above 2.5 hours
 			if available_time < time or available_time - time > (3600*2.5):
 				continue
-			var pending_train_spawn = train_spawn_information.duplicate(true)
+			var pending_train_spawn: Dictionary = train_spawn_information.duplicate(true)
 			pending_train_spawn.time = available_time
 			pending_train_spawn.train_path = train_path
 			# Player Train:
@@ -253,9 +253,7 @@ func update_rail_connections() -> void:
 # Ensure you called update_rail_connections() before.
 # pathfinding from a start rail to an end rail. returns an array of dicts with rail nodes and direction
 func get_path_from_to(start_rail: Node, forward: bool, destination_rail: Node) -> Array:
-#	Logger.warn("Be sure you called update_rail_connections once before..", self)
 	var route = _get_path_from_to_helper(start_rail, forward, [], destination_rail)
-#	Logger.vlog(str(route))
 	return route
 
 
@@ -265,7 +263,6 @@ func _get_path_from_to_helper(start_rail: Node, forward: bool, already_visited_r
 		rail = start_rail,
 		forward = forward
 		})
-#	Logger.vlog(already_visited_rails)
 	if start_rail == destination_rail:
 		return already_visited_rails
 	else:
@@ -275,7 +272,6 @@ func _get_path_from_to_helper(start_rail: Node, forward: bool, already_visited_r
 		else:
 			possbile_rails = start_rail.get_connected_rails_at_beginning()
 		for rail_node in possbile_rails:
-#			Logger.vlog("Possible Rails" + String(possbile_rails))
 			if rail_node.get_connected_rails_at_ending().has(start_rail):
 				forward = false
 			if rail_node.get_connected_rails_at_beginning().has(start_rail):
@@ -289,7 +285,6 @@ func _get_path_from_to_helper(start_rail: Node, forward: bool, already_visited_r
 				var outcome: Array = _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
 				if outcome != []:
 					return outcome
-#				return _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
 	return []
 
 
@@ -322,8 +317,8 @@ func jump_player_to_station(station_table_index: int) -> void:
 		if player_node == player or not player_node.is_in_group("Player"):
 			continue
 		for entry in route_player_to_station:
-			var rail = entry.rail
-			if player_node.baked_route.has(rail):
+			var rail: Node = entry.rail
+			if player_node.baked_route.has(rail.name):
 				player_node.despawn()
 				continue
 	player.jump_to_station(station_table_index)
@@ -346,7 +341,7 @@ func get_assigned_station_of_signal(signal_name : String) -> Node:
 # Used from scenario editor, does update assigned signals from stations
 func write_station_data(rail_logic_settings) -> void:
 	for rail_logic_name in rail_logic_settings.keys():
-		var rail_logic_node = get_signal(rail_logic_name)
+		var rail_logic_node: Node = get_signal(rail_logic_name)
 		if rail_logic_node == null:
 			continue
 		if rail_logic_node.type == "Station":

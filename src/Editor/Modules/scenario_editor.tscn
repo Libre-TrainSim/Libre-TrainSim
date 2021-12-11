@@ -14,6 +14,19 @@
 [node name="ScenarioEditor" type="Node"]
 script = ExtResource( 2 )
 
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+light_mask = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.894118, 0.894118, 0.898039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ScenarioConfiguration" type="Panel" parent="CanvasLayer"]

@@ -58,8 +58,7 @@ func set_to_rail() -> void:
 		self.transform = rail.get_global_transform_at_rail_distance(on_rail_position)
 		if not forward:
 			rotation_degrees.y += 180
-#	else:
-#		queue_free()
+
 
 func spawnPersonsAtBeginning() -> void:
 	if not personSystem:
@@ -144,7 +143,7 @@ func registerPerson(personNode: Spatial) -> void:
 
 
 func update_operation_mode_of_assigned_signal():
-	var signal_node = world.get_signal(assigned_signal)
+	var signal_node: Node = world.get_signal(assigned_signal)
 	if signal_node == null:
 		return
 	signal_node.operation_mode = SignalOperationMode.STATION

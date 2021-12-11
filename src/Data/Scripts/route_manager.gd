@@ -2,7 +2,7 @@ extends Node
 
 var route_data: Array = []
 
-var station_point_pattern = {
+var station_point_pattern: Dictionary = {
 	type = RoutePointType.STATION,
 	node_name = "",
 	station_name = "",
@@ -22,13 +22,13 @@ var station_point_pattern = {
 
 
 
-var way_point_pattern = {
+var way_point_pattern: Dictionary = {
 	type = RoutePointType.WAY_POINT,
 	rail_name = "",
 }
 
 
-var spawn_point_pattern = {
+var spawn_point_pattern: Dictionary = {
 	type = RoutePointType.SPAWN_POINT,
 	rail_name = "",
 	distance = 0,
@@ -36,7 +36,7 @@ var spawn_point_pattern = {
 	initial_speed_limit = -1,
 }
 
-var despawn_point_pattern = {
+var despawn_point_pattern: Dictionary = {
 	type = RoutePointType.DESPAWN_POINT,
 	rail_name = "",
 	distance = 0,
@@ -52,7 +52,7 @@ func get_route_data():
 
 
 func add_station_point() -> Dictionary:
-	var station_point = station_point_pattern.duplicate(true)
+	var station_point: Dictionary = station_point_pattern.duplicate(true)
 	if route_data.empty():
 		station_point.stop_type = StopType.BEGINNING
 	route_data.append(station_point)
@@ -60,25 +60,25 @@ func add_station_point() -> Dictionary:
 
 
 func add_way_point() -> Dictionary:
-	var way_point = way_point_pattern.duplicate(true)
+	var way_point: Dictionary = way_point_pattern.duplicate(true)
 	route_data.append(way_point)
 	return way_point
 
 
 func add_spawm_point() -> Dictionary:
-	var point = spawn_point_pattern.duplicate(true)
+	var point: Dictionary = spawn_point_pattern.duplicate(true)
 	route_data.append(point)
 	return point
 
 
 func add_despawn_point() -> Dictionary:
-	var point = despawn_point_pattern.duplicate(true)
+	var point: Dictionary = despawn_point_pattern.duplicate(true)
 	route_data.append(point)
 	return point
 
 
 func get_description_of_point(index : int) -> String:
-	var point = route_data[index]
+	var point: Dictionary = route_data[index]
 	if point.type == RoutePointType.STATION:
 		match point.stop_type:
 			StopType.BEGINNING:
@@ -120,7 +120,7 @@ func set_data_of_point(index: int, key: String, value) -> void:
 func move_point_up(index: int) -> void:
 	if index == 0:
 		return
-	var tmp = route_data[index -1]
+	var tmp: Dictionary = route_data[index -1]
 	route_data[index-1] = route_data[index]
 	route_data[index] = tmp
 
@@ -128,7 +128,7 @@ func move_point_up(index: int) -> void:
 func move_point_down(index: int) -> void:
 	if index >= route_data.size():
 		return
-	var tmp = route_data[index +1]
+	var tmp: Dictionary = route_data[index +1]
 	route_data[index+1] = route_data[index]
 	route_data[index] = tmp
 
@@ -171,15 +171,15 @@ func get_station_index_from_route_point_index(index: int):
 
 
 func get_calculated_station_point_from_route_point_index(index: int, start_time: int):
-	var station_index = get_station_index_from_route_point_index(index)
-	var station_table = get_calculated_station_points(start_time)
+	var station_index: int = get_station_index_from_route_point_index(index)
+	var station_table: Array = get_calculated_station_points(start_time)
 	return station_table[station_index]
 
 # If the route can't be generated then in these variables both enclosing routpoints of the error are saved
 var error_route_point_start_index: int
 var error_route_point_end_index: int
 
-var calculated_rail_route = []
+var calculated_rail_route: Array = []
 # Entry:
 #{
 #	rail: Node,
@@ -187,16 +187,16 @@ var calculated_rail_route = []
 #}
 func get_calculated_rail_route(world: Node) -> Array:
 	world.update_rail_connections()
-	var rail_route = []
+	var rail_route: Array = []
 	for i in range (get_route_size()-1):
 		# get start and end rails for calculation
-		var start_end_rails = []
-		var start_direction_set = false
-		var forward = true
+		var start_end_rails: Array = []
+		var start_direction_set: bool = false
+		var forward: bool = true
 		for j in range(2):
-			var route_point = route_data[i+j]
+			var route_point: Dictionary = route_data[i+j]
 			if route_point.type == RoutePointType.STATION:
-				var station = world.get_signal(route_point.node_name)
+				var station: Node = world.get_signal(route_point.node_name)
 				if station == null:
 					return []
 				start_end_rails.append(world.get_rail(station.attached_rail))
@@ -210,10 +210,10 @@ func get_calculated_rail_route(world: Node) -> Array:
 			forward = rail_route.back().forward
 
 		# calculate route
-		var calculated_route = []
+		var calculated_route: Array = []
 		if not start_direction_set:
-			var possible_route_1 = world.get_path_from_to(start_end_rails[0], true, start_end_rails[1])
-			var possible_route_2 = world.get_path_from_to(start_end_rails[0], false, start_end_rails[1])
+			var possible_route_1: Array = world.get_path_from_to(start_end_rails[0], true, start_end_rails[1])
+			var possible_route_2: Array = world.get_path_from_to(start_end_rails[0], false, start_end_rails[1])
 			if possible_route_1.size() > possible_route_2.size():
 				calculated_route = possible_route_1
 			else:
@@ -237,13 +237,13 @@ func get_calculated_rail_route(world: Node) -> Array:
 
 # Once before get_calculated_rail_route() should be called
 func get_spawn_position(train_length, world: Node) -> Dictionary:
-	var start_point = route_data[0]
+	var start_point: Dictionary = route_data[0]
 	var return_value: Dictionary = spawn_point_pattern.duplicate(true)
 	if start_point.type == RoutePointType.SPAWN_POINT:
 		return_value = start_point
 		return_value.forward = calculated_rail_route[0].forward
 	elif start_point.type == RoutePointType.STATION:
-		var station_node = world.get_signal(start_point.node_name)
+		var station_node: Node = world.get_signal(start_point.node_name)
 		return_value.distance = station_node.get_perfect_halt_distance_on_rail(train_length)
 		return_value.rail_name = station_node.attached_rail
 		return_value.forward = station_node.forward
@@ -259,7 +259,7 @@ func get_despawn_information() -> Dictionary:
 
 
 func get_minimal_platform_length(world: Node) -> int:
-	var minimal_platform_length = 1000000000000000
+	var minimal_platform_length: int = 1000000000000000
 	for route_point in route_data:
 		if route_point.type == RoutePointType.STATION and route_point.stop_type != StopType.DO_NOT_HALT:
 				var station_node: Node = world.get_signal(route_point.node_name)

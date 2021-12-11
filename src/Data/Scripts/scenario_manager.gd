@@ -26,8 +26,8 @@ func get_rail_logic_settings():
 func get_available_start_times_of_route(route_name: String) -> Array:
 	if not routes.has(route_name):
 		return []
-	var times = []
-	var time = routes[route_name].general_settings.interval_start
+	var times: Array = []
+	var time: int = routes[route_name].general_settings.interval_start
 	times.append(time)
 	if routes[route_name].general_settings.interval == 0:
 		return times

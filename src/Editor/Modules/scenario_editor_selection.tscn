@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=7]
 [ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=8]
 [ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=9]
+[ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=10]
 [ext_resource path="res://Editor/Scripts/scenario_editor_selection.gd" type="Script" id=11]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Data/UI/styles/complete_menu.theme" type="Theme" id=13]
@@ -106,6 +107,46 @@ rename_button_text = "RENAME"
 duplicate_button_text = "DUPLICATE"
 action_button_text = "EDIT"
 
+[node name="ItemList" parent="ScenarioList/scenarioList/VBoxContainer" index="0"]
+margin_right = 788.0
+margin_bottom = 431.0
+
+[node name="HBoxContainer" parent="ScenarioList/scenarioList/VBoxContainer" index="1"]
+margin_top = 435.0
+margin_right = 788.0
+margin_bottom = 484.0
+
+[node name="LineEdit" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="0"]
+margin_right = 652.0
+margin_bottom = 49.0
+
+[node name="Add" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="1"]
+margin_left = 656.0
+margin_right = 697.0
+margin_bottom = 49.0
+theme = ExtResource( 10 )
+
+[node name="Remove" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="2"]
+margin_left = 701.0
+margin_right = 788.0
+margin_bottom = 49.0
+theme = ExtResource( 10 )
+
+[node name="Rename" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="3"]
+theme = ExtResource( 10 )
+
+[node name="Duplicate" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="4"]
+theme = ExtResource( 10 )
+
+[node name="Copy" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="5"]
+theme = ExtResource( 10 )
+
+[node name="Paste" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="6"]
+theme = ExtResource( 10 )
+
+[node name="Save" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="7"]
+theme = ExtResource( 10 )
+
 [node name="HBoxContainer" type="HBoxContainer" parent="ScenarioList"]
 margin_top = 537.0
 margin_right = 788.0
@@ -128,3 +169,5 @@ text = "BACK"
 [connection signal="user_pressed_action" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_pressed_action"]
 [connection signal="user_renamed_entry" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_renamed_entry"]
 [connection signal="pressed" from="ScenarioList/HBoxContainer/Back" to="." method="_on_Back_ScenarioList_pressed"]
+
+[editable path="ScenarioList/scenarioList"]

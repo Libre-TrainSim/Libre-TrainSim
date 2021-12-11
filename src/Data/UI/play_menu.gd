@@ -108,6 +108,9 @@ func _on_Scenarios_Back_pressed():
 	$V/Scenarios.hide()
 	$V/Tracks.show()
 
+	if $V/Tracks/H/ItemList.get_item_count() == 1:
+		_on_Tracks_Back_pressed()
+
 
 func _on_Scenarios_Select_pressed():
 	if $V/Scenarios/ItemList.get_selected_items().size() != 1:
@@ -146,6 +149,9 @@ func _on_Routes_Back_pressed():
 	update_breadcrumb()
 	$V/Routes.hide()
 	$V/Scenarios.show()
+
+	if $V/Scenarios/ItemList.get_item_count() == 1:
+		_on_Scenarios_Back_pressed()
 
 
 func _on_Routes_Select_pressed():
@@ -199,6 +205,9 @@ func _on_Times_Back_pressed():
 	$V/Times.hide()
 	$V/Routes.show()
 
+	if $V/Routes/ItemList.get_item_count() == 1:
+		_on_Routes_Back_pressed()
+
 
 func update_trains():
 	update_breadcrumb()
@@ -251,6 +260,9 @@ func _on_Trains_Back_pressed():
 	update_breadcrumb()
 	$V/Trains.hide()
 	$V/Times.show()
+
+	if $V/Times/ItemList.get_item_count() == 1:
+		_on_Times_Back_pressed()
 
 
 func _on_Trains_Play_pressed():

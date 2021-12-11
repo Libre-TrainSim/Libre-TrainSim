@@ -19,14 +19,11 @@ func _get_type() -> String:
 
 
 func _ready() -> void:
-	if Root.Editor:
-		add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
-		set_to_rail()
-
 	if not Root.Editor or Root.scenario_editor:
 		$Timer.wait_time = affectTime # affectTime MUST be > 0!
 		$Mesh.queue_free()
-		set_to_rail()
+
+	set_to_rail()
 
 
 func set_to_rail() -> void:

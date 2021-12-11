@@ -107,10 +107,10 @@ func distance2String(distance: float) -> String:
 	else:
 		return String(int(int(distance-10)/10.0)*10) + " m"
 
-func time_to_seconds(time: Array):
+func time_to_seconds(time: Array) -> int:
 	return time[2] + time[1] * 60 + time[0] * 3600
 
-func seconds_to_time(seconds : int):
+func seconds_to_time(seconds: int) -> Array:
 	var time: Array = [0, 0, 0]
 	time[0] = int(seconds/3600)
 	seconds -= time[0] * 3600

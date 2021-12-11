@@ -1253,7 +1253,6 @@ func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1
 	_check_for_next_stationTimer = 0
 	if nextStation == "":
 		var nextStations: Array = get_all_upcoming_signals_of_types(["Station"])
-#			print(name + ": "+String(nextStations))
 		if nextStations.size() == 0:
 			stationMessageSent = true
 			return
@@ -1269,9 +1268,7 @@ func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1
 			distanceS+= "m"
 		send_message(tr("THE_NEXT_STATION_IS_1") + " " + current_station_table_entry.station_name + ". " + tr("THE_NEXT_STATION_IS_2")+ " " + distanceS + " " + tr("THE_NEXT_STATION_IS_3"))
 		if camera_state != CameraState.OUTER_VIEW and camera_state != CameraState.FREE_VIEW and not ai:
-#				print(name + ": Playing Sound.......................................................")
 			jTools.call_delayed(10, jAudioManager, "play_game_sound", [current_station_table_entry.approach_sound_path])
-#				jAudioManager.play_game_sound(stations["approachAnnouncePath"][current_station_index+1])
 
 
 func check_security() -> void:
@@ -1324,8 +1321,6 @@ func set_signalWarnLimits() -> void: # Called in the beginning of the route
 	for signalS in signalT["name"]:
 		signalT["position"].append(get_distance_to_signal(signalS))
 	var sortedSignals: Array = Math.sort_signals(signalT, true)
-#	print(signalT)
-#	print(sortedSignals)
 	var limit: float = speedLimit
 	for i in range(0,sortedSignals.size()):
 		var signalN: Spatial = world.get_node("Signals").get_node(sortedSignals[i])
@@ -1523,10 +1518,6 @@ func autopilot() -> void:
 
 	sollSpeedArr[3] = currentSpeedLimit
 
-#	print("0: "+ String(sollSpeedArr[0]))
-#	print("1: "+ String(sollSpeedArr[1]))
-#	print("2: "+ String(sollSpeedArr[2]))
-#	print("3: "+ String(sollSpeedArr[3]))
 	sollSpeed = sollSpeedArr.values().min()
 	sollSpeedEnabled = true
 
@@ -1659,7 +1650,6 @@ func get_camera_shaking(delta: float) -> Vector3:
 
 	var shaking_factor: float = Math.speedToKmH(speed) / 100.0 * abs(sin(camera_shaking_time/5)) * camera_shaking_factor
 
-#	print(curve_shaking_factor)
 	shaking_factor = max(shaking_factor, curve_shaking_factor)
 
 	var current_camera_shaking: Vector3 = camera_shaking * shaking_factor

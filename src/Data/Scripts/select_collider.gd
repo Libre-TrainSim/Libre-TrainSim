@@ -1,7 +1,7 @@
 tool
 extends StaticBody
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	var mesh
 	if get_parent().is_in_group("Signal"):

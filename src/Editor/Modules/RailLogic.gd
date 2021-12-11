@@ -4,6 +4,7 @@ var current_rail_logic = null
 var current_rail_logic_type = ""
 var resource_selector_called = false
 
+# We need this code for the case if you delete a signal
 func _input(event):
 	visible = is_instance_valid(current_rail_logic) and get_parent().current_tab == 2
 

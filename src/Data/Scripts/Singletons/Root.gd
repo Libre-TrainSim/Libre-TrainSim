@@ -2,11 +2,11 @@ extends Node
 
 signal world_origin_shifted(delta)
 
-var current_track: String # file path
-var current_scenario: String # file path
-var selected_train: String # file path
-var selected_route: String # route name
-var selected_time: int # start time of scenario in seconds
+var current_track: String = "" # file path
+var current_scenario: String = "" # file path
+var selected_train: String = "" # file path
+var selected_route: String = "" # route name
+var selected_time: int = "" # start time of scenario in seconds
 var EasyMode: bool = true
 var mobile_version: bool = OS.has_feature("mobile")
 
@@ -176,8 +176,3 @@ func set_low_resolution(value: bool) -> void:
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
 		ProjectSettings.set_setting("display/window/size/width", "800")
 		ProjectSettings.set_setting("display/window/size/height", "600")
-
-
-func set_current_editor_track(path_to_tscn : String):
-	current_editor_track_path = path_to_tscn.get_base_dir()
-	current_editor_track = path_to_tscn.get_file().get_basename()

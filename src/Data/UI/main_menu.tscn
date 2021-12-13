@@ -70,7 +70,7 @@ margin_left = 21.0
 margin_top = -1.05945
 margin_right = 323.0
 margin_bottom = -1.05945
-rect_min_size = Vector2( 330, 0 )
+rect_min_size = Vector2( 328, 0 )
 theme = ExtResource( 5 )
 alignment = 1
 __meta__ = {
@@ -79,42 +79,42 @@ __meta__ = {
 
 [node name="Play" type="Button" parent="Buttons"]
 margin_top = 116.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 165.0
 size_flags_horizontal = 3
 text = "MENU_PLAY"
 
 [node name="Content" type="Button" parent="Buttons"]
 margin_top = 169.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 218.0
 size_flags_horizontal = 3
 text = "MENU_CONTENT"
 
 [node name="Create" type="Button" parent="Buttons"]
 margin_top = 222.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 271.0
 size_flags_horizontal = 3
 text = "MENU_CREATE"
 
 [node name="Settings" type="Button" parent="Buttons"]
 margin_top = 275.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 324.0
 size_flags_horizontal = 3
 text = "MENU_SETTINGS"
 
 [node name="About" type="Button" parent="Buttons"]
 margin_top = 328.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 377.0
 size_flags_horizontal = 3
 text = "MENU_ABOUT"
 
 [node name="Feedback" type="Button" parent="Buttons"]
 margin_top = 381.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 430.0
 grow_horizontal = 0
 text = "MENU_FEEDBACK_WANTED"
@@ -124,7 +124,7 @@ __meta__ = {
 
 [node name="Quit" type="Button" parent="Buttons"]
 margin_top = 434.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 483.0
 size_flags_horizontal = 3
 text = "MENU_QUIT"
@@ -136,7 +136,7 @@ margin_left = 21.0
 margin_top = -1.05945
 margin_right = 323.0
 margin_bottom = -1.05945
-rect_min_size = Vector2( 330, 0 )
+rect_min_size = Vector2( 328, 0 )
 theme = ExtResource( 5 )
 alignment = 1
 __meta__ = {

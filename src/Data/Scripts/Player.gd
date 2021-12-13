@@ -40,9 +40,9 @@ var enforced_braking: bool = false
 var reverser: int = ReverserState.NEUTRAL
 
 ## For Station Control:
-var current_station_table_index = 0 # Displays the index of the next or current station of station_table
-var current_station_table_entry: Dictionary
-var current_station_node: Node # If we are in a station, this variable stores the current station node, otherwise its null.
+var current_station_table_index: int = 0 # Displays the index of the next or current station of station_table
+var current_station_table_entry: Dictionary = null
+var current_station_node: Node = null # If we are in a station, this variable stores the current station node, otherwise its null.
 var whole_train_in_station: bool = false # true if speed = 0, and the train is fully in the station
 var is_in_station: bool = false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
 var real_arrival_time: int # Time is set if train successfully arrived

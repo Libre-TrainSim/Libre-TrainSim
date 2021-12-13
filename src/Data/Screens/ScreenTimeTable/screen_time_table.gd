@@ -7,7 +7,7 @@ func _ready():
 	$Table/Station/Label.text = " " + TranslationServer.translate("STATION:") + " "
 
 
-func update_display(station_table: Dictionary, current_station_table_index: int, is_in_station: bool):
+func update_display(station_table: Array, current_station_table_index: int, is_in_station: bool):
 	$CurrentStation.visible = is_in_station
 	var arrString = ""
 	var depString = ""

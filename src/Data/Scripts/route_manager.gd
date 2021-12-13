@@ -260,7 +260,8 @@ func get_despawn_information() -> Dictionary:
 
 
 func get_minimal_platform_length(world: Node) -> int:
-	var minimal_platform_length: int = INF
+	# Cant use INF here, because then 'if minimal_platform_length > station_node.length:' won't trigger
+	var minimal_platform_length: int = 1000000000000
 	for route_point in route_data:
 		if route_point.type == RoutePointType.STATION and route_point.stop_type != StopType.DO_NOT_STOP:
 				var station_node: Node = world.get_signal(route_point.node_name)

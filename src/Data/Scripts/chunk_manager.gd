@@ -76,7 +76,7 @@ func _ready():
 
 	assert(world != null)
 
-	_jsavemodule = world.get_node("jSaveModule")
+	_jsavemodule = world.j_save_module
 
 	_thread_semaphore = Semaphore.new()
 	_chunk_mutex = Mutex.new()

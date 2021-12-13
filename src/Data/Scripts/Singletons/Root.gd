@@ -6,7 +6,7 @@ var current_track: String = "" # file path
 var current_scenario: String = "" # file path
 var selected_train: String = "" # file path
 var selected_route: String = "" # route name
-var selected_time: int = "" # start time of scenario in seconds
+var selected_time: int = -1 # start time of scenario in seconds
 var EasyMode: bool = true
 var mobile_version: bool = OS.has_feature("mobile")
 

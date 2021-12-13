@@ -41,13 +41,13 @@ var reverser: int = ReverserState.NEUTRAL
 
 ## For Station Control:
 var current_station_table_index: int = 0 # Displays the index of the next or current station of station_table
-var current_station_table_entry: Dictionary = null
+var current_station_table_entry: Dictionary = {}
 var current_station_node: Node = null # If we are in a station, this variable stores the current station node, otherwise its null.
 var whole_train_in_station: bool = false # true if speed = 0, and the train is fully in the station
 var is_in_station := false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
 var real_arrival_time: int # Time is set if train successfully arrived
 var route_distance_at_station_begin: float = 0 # distance of the station begin on route
-const GOODWILL_DISTANCE: float = 10 # distance the player can overdrive a station, or it's train end isn't in the station.
+const GOODWILL_DISTANCE: float = 10.0 # distance the player can overdrive a station, or it's train end isn't in the station.
 
 export var doors := true # Defines, if this train has doors.
 export var doorsClosingTime: float = 7
@@ -231,10 +231,9 @@ func ready() -> void:
 	## Set the Train at the beginning of the rail, and after that set the distance on the Rail forward, which is standing in var startPosition
 	distance_on_rail = spawn_information.distance
 	forward = spawn_information.forward
-	currentRail = world.get_node("Rails/"+spawn_information.rail_name)
-	if currentRail == null:
-		Logger.err("Can't find Rail. Check the route of the Train "+ self.name, self)
-		return
+	currentRail = world.get_rail(spawn_information.rail_name)
+	assert(currentRail != null)
+
 	if forward:
 		distance_on_route = spawn_information.distance
 	else:
@@ -1345,8 +1344,8 @@ func spawnWagons() -> void:
 		var wagonNode: Spatial = get_node(wagon)
 		var newWagon: Spatial = wagonNode.duplicate()
 		newWagon.show()
-		newWagon.baked_route = baked_route
-		newWagon.baked_route_direction = baked_route_direction
+		newWagon.baked_route = baked_route.duplicate()
+		newWagon.baked_route_direction = baked_route_direction.duplicate()
 		newWagon.baked_route_is_loop = baked_route_is_loop
 		newWagon.complete_route_length = complete_route_length
 		newWagon.forward = forward

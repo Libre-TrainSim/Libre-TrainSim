@@ -1,4 +1,5 @@
-extends Node
+class_name jSaveModule
+extends Reference
 
 # Example: "res://Levels/Level1/Level1.save"
 export (String) var save_path = ""
@@ -66,7 +67,7 @@ func _ready():
 
 func _load_current_config():
 	if save_path == "":
-		Logger.err("Save path not configured correctly. Not initializing jSaveModlue "+ name + ".", self)
+		Logger.err("Save path not configured correctly. Not initializing jSaveModlue ", self)
 		return
 	_config = ConfigFile.new()
 

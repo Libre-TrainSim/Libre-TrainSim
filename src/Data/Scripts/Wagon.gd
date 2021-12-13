@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 			visible = player.wagonsVisible
 		return
 
-	if player == null or player.despawning:
+	if (player == null or player.despawning) and not cabinMode:
 		queue_free()
 		return
 

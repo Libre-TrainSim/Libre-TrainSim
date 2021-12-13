@@ -34,8 +34,8 @@ func _on_Select_TrackList_pressed():
 	else:
 		selected_track = ContentLoader.get_editor_tracks().keys()[index- ContentLoader.repo.worlds.size()]
 
-	current_editor_track_path = selected_track.get_base_dir()
-	current_editor_track = selected_track.get_file().get_basename()
+	Root.current_editor_track_path = selected_track.get_base_dir()
+	Root.current_editor_track = selected_track.get_file().get_basename()
 
 	$TrackList.hide()
 	update_scenario_list()

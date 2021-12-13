@@ -1,15 +1,18 @@
-extends Node
+class_name ScenarioManager
+extends Reference
 
 var save_path: String
 var routes: Dictionary
 var rail_logic_settings: Dictionary
 
+var j_save_module = jSaveModule.new()
+
 
 func set_save_path(_save_path) -> void:
 	save_path = _save_path
-	$jSaveModule.set_save_path(_save_path)
-	routes = $jSaveModule.get_value("routes", {})
-	rail_logic_settings = $jSaveModule.get_value("rail_logic_settings", {})
+	j_save_module.set_save_path(_save_path)
+	routes = j_save_module.get_value("routes", {})
+	rail_logic_settings = j_save_module.get_value("rail_logic_settings", {})
 
 func get_route_data() -> Dictionary:
 	return routes.duplicate(true)

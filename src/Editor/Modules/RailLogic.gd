@@ -4,10 +4,6 @@ var current_rail_logic = null
 var current_rail_logic_type = ""
 var resource_selector_called = false
 
-# We need this code for the case if you delete a signal
-func _input(event):
-	visible = is_instance_valid(current_rail_logic) and get_parent().current_tab == 2
-
 func _ready() -> void:
 	set_rail_logic(null)
 
@@ -81,6 +77,9 @@ func _on_Content_Selector_resource_selected(complete_path):
 
 
 
+
+
+
 func update_station_settings_ui():
 	$StationSettings/Name.text = current_rail_logic.name
 	$StationSettings/Length.value = current_rail_logic.length
@@ -147,3 +146,7 @@ func _on_WarnSpeedLimit_value_changed(value):
 
 func _on_ConnectedSignal_text_changed(new_text):
 	current_rail_logic.assigned_signal = $StationSettings/AssignedSignal.text
+
+
+func _on_selected_rail_logic_deleted():
+	hide()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/UI/styles/complete_menu.theme" type="Theme" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
@@ -8,10 +8,7 @@
 [ext_resource path="res://Data/UI/styles/button_left_hover.tres" type="StyleBox" id=6]
 [ext_resource path="res://Data/UI/styles/button_left_normal.tres" type="StyleBox" id=7]
 [ext_resource path="res://Data/UI/styles/panel_section.tres" type="StyleBox" id=8]
-[ext_resource path="res://Data/Modules/ScenarioManager.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Data/UI/play_menu.gd" type="Script" id=10]
-[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Data/Modules/RouteManager.tscn" type="PackedScene" id=12]
 
 [node name="PlayMenu" type="Panel"]
 anchor_right = 1.0
@@ -344,12 +341,6 @@ margin_right = 760.0
 margin_bottom = 49.0
 size_flags_horizontal = 3
 text = "PLAY"
-
-[node name="jSaveModule" parent="." instance=ExtResource( 11 )]
-
-[node name="RouteManager" parent="." instance=ExtResource( 12 )]
-
-[node name="ScenarioManager" parent="." instance=ExtResource( 9 )]
 
 [connection signal="item_activated" from="V/Tracks/H/ItemList" to="." method="_on_Tracks_item_activated"]
 [connection signal="item_selected" from="V/Tracks/H/ItemList" to="." method="_on_Trackst_item_selected"]

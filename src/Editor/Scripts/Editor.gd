@@ -258,6 +258,8 @@ func clear_selected_object() -> void:
 			for child in selected_object.get_children():
 				if child.is_in_group("Gizmo"):
 					child.queue_free()
+		if selected_object_type == "Signal":
+			$EditorHUD/Settings/TabContainer/RailLogic._on_selected_rail_logic_deleted()
 
 	selected_object = null
 	selected_object_type = ""
@@ -304,7 +306,7 @@ func load_world() -> bool:
 
 	var world: Node = world_resource.instance()
 	world.FileName = current_track_name
-	world.get_node("jSaveModule").save_path = current_track_path + ".save"
+	world.j_save_module.set_save_path(current_track_path + ".save")
 	add_child(world)
 	world.owner = self
 
@@ -336,7 +338,7 @@ func save_world(send_message: bool = true) -> void:
 			return
 
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
-	$World/jSaveModule.write_to_disk()
+	$World.j_save_module.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
 

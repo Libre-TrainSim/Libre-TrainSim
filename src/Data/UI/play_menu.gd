@@ -6,6 +6,10 @@ var selected_route: String = ""
 var selected_time: int = -1
 var selected_train: String = ""
 
+onready var scenario_manager = ScenarioManager.new()
+onready var j_save_module = jSaveModule.new()
+
+
 
 func show() -> void:
 	update_tracks()
@@ -45,12 +49,12 @@ func _on_Trackst_item_selected(index) -> void:
 	selected_track = ContentLoader.repo.worlds[index]
 	Root.checkAndLoadTranslationsForTrack(selected_track.get_file().get_basename())
 	var save_path: String = ContentLoader.repo.worlds[index].get_basename() + ".trackinfo"
-	$jSaveModule.set_save_path(save_path)
+	j_save_module.set_save_path(save_path)
 
 	$V/Tracks/H/Information.show()
-	var author_text = tr("MENU_AUTHOR") + ": " + $jSaveModule.get_value("author", "-")
-	var release_text = tr("MENU_RELEASE") + ": " + String($jSaveModule.get_value("release_date", ["", "-"])[1]) + " " + String($jSaveModule.get_value("release_date", ["", "", ""])[2])
-	$V/Tracks/H/Information/V/RichTextLabel.text = "%s\n%s\n\n%s" % [ author_text, release_text, tr($jSaveModule.get_value("description", ""))]
+	var author_text = tr("MENU_AUTHOR") + ": " + j_save_module.get_value("author", "-")
+	var release_text = tr("MENU_RELEASE") + ": " + String(j_save_module.get_value("release_date", ["", "-"])[1]) + " " + String(j_save_module.get_value("release_date", ["", "", ""])[2])
+	$V/Tracks/H/Information/V/RichTextLabel.text = "%s\n%s\n\n%s" % [ author_text, release_text, tr(j_save_module.get_value("description", ""))]
 	$V/Tracks/H/Information/V/Image.texture = _make_image(selected_track.get_base_dir() + "/screenshot.png")
 
 
@@ -130,12 +134,12 @@ func update_routes():
 	update_breadcrumb()
 	$V/Routes/ItemList.clear()
 	print(selected_scenario)
-	$ScenarioManager.set_save_path(selected_scenario)
-	var routes = $ScenarioManager.get_available_route_names()
+	scenario_manager.set_save_path(selected_scenario)
+	var routes = scenario_manager.get_available_route_names()
 
 
 	for route_name in routes:
-		if $ScenarioManager.is_route_playable(route_name):
+		if scenario_manager.is_route_playable(route_name):
 			$V/Routes/ItemList.add_item(route_name)
 
 	if $V/Routes/ItemList.get_item_count() == 1:
@@ -157,7 +161,7 @@ func _on_Routes_Back_pressed():
 func _on_Routes_Select_pressed():
 	if $V/Routes/ItemList.get_selected_items().size() != 1:
 		return
-	var routes = $ScenarioManager.get_available_route_names()
+	var routes = scenario_manager.get_available_route_names()
 	selected_route = routes[$V/Routes/ItemList.get_selected_items()[0]]
 	$V/Routes.hide()
 	$V/Times.show()
@@ -174,7 +178,7 @@ func update_times():
 	update_breadcrumb()
 	$V/Times/ItemList.clear()
 
-	var times = $ScenarioManager.get_available_start_times_of_route(selected_route)
+	var times = scenario_manager.get_available_start_times_of_route(selected_route)
 
 	if times.size() == 1:
 		selected_time = times[0]
@@ -189,7 +193,7 @@ func update_times():
 func _on_Times_Select_pressed():
 	if $V/Times/ItemList.get_selected_items().size() != 1:
 		return
-	var times = $ScenarioManager.get_available_start_times_of_route(selected_route)
+	var times = scenario_manager.get_available_start_times_of_route(selected_route)
 	selected_time = times[$V/Times/ItemList.get_selected_items()[0]]
 	$V/Times.hide()
 	$V/Trains.show()
@@ -221,7 +225,7 @@ func update_trains():
 	for train in ContentLoader.repo.trains:
 		$V/Trains/H/ItemList.add_item(train.get_file().get_basename())
 
-	var result: String =  ContentLoader.find_train_path($ScenarioManager.get_route_data()[selected_route].general_settings.train_name)
+	var result: String =  ContentLoader.find_train_path(scenario_manager.get_route_data()[selected_route].general_settings.train_name)
 	if result != "":
 		var index = ContentLoader.repo.trains.find(result)
 		$V/Trains/H/ItemList.select(index)

@@ -1,13 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Data/Scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Environments/BasicSun.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Data/Modules/Rail.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Data/Modules/RouteManager.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Data/Modules/ScenarioManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=7]
 [ext_resource path="res://Data/Scripts/BuildingsNode.gd" type="Script" id=9]
-[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=10]
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
@@ -34,10 +31,3 @@ script = ExtResource( 9 )
 [node name="Flora" type="Spatial" parent="."]
 
 [node name="TrackObjects" type="Spatial" parent="."]
-
-[node name="jSaveModule" parent="." instance=ExtResource( 10 )]
-save_path = "res://Worlds/Name Me!/Name Me!.save"
-
-[node name="RouteManager" parent="." instance=ExtResource( 4 )]
-
-[node name="ScenarioManager" parent="." instance=ExtResource( 5 )]

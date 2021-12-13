@@ -8,7 +8,6 @@ var default_persons_at_station: int = 20
 
 var globalDict: Dictionary = {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
 
-################################################################################
 var currentScenario: String = ""
 
 export (String) var FileName: String = "Name Me!"
@@ -32,19 +31,17 @@ var personVisualInstances: Array = [
 
 var chunk_manager: ChunkManager = null
 
+var route_manager = RouteManager.new()
+var j_save_module = jSaveModule.new()
+var scenario_manager = ScenarioManager.new()
+
+
+
 # If the World is just use as data source (e.g. for scenario editor)
 var passive: bool = false
 
 func _ready() -> void:
 	passive = Root.scenario_editor
-
-	# Add all needed scripts:
-	if get_node_or_null("jSaveModule") == null:
-		add_child(preload("res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn").instance())
-	if get_node_or_null("RouteManager") == null:
-		add_child(preload("res://Data/Modules/RouteManager.tscn").instance())
-	if get_node_or_null("ScenarioManager") == null:
-		add_child(preload("res://Data/Modules/ScenarioManager.tscn").instance())
 
 	if passive:
 		return
@@ -64,10 +61,10 @@ func _ready() -> void:
 	Logger.log("trackName: " +trackName + " " + FileName)
 
 	if Root.Editor:
-		$jSaveModule.set_save_path(find_parent("Editor").current_track_path + ".save")
+		j_save_module.set_save_path(find_parent("Editor").current_track_path + ".save")
 	else:
 		var save_path: String = Root.current_track.get_base_dir() + "/" + Root.current_track.get_file().get_basename() + ".save"
-		$jSaveModule.set_save_path(save_path)
+		j_save_module.set_save_path(save_path)
 
 	if Root.Editor:
 		$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
@@ -97,11 +94,11 @@ func _ready() -> void:
 
 
 func save_value(key: String, value):
-	return $jSaveModule.save_value(key, value)
+	return j_save_module.save_value(key, value)
 
 
 func get_value(key: String,  default_value = null):
-	return $jSaveModule.get_value(key,  default_value)
+	return j_save_module.get_value(key,  default_value)
 
 
 func apply_user_settings() -> void:
@@ -153,19 +150,19 @@ var train_spawn_information: Dictionary = {
 
 
 func set_scenario_to_world() -> void:
-	$ScenarioManager.set_save_path(Root.current_scenario)
+	scenario_manager.set_save_path(Root.current_scenario)
 
 	# Apply General Settins
 	time = Root.selected_time
 
 	# Apply Signal Data
-	var rail_logic_data: Dictionary = $ScenarioManager.get_rail_logic_settings()
+	var rail_logic_data: Dictionary = scenario_manager.get_rail_logic_settings()
 	for signal_node in $Signals.get_children():
 		if rail_logic_data.has(signal_node.name):
 			signal_node.set_data(rail_logic_data[signal_node.name])
 
 	# Apply all other routes
-	var routes: Dictionary = $ScenarioManager.get_route_data()
+	var routes: Dictionary = scenario_manager.get_route_data()
 	for i in range (routes.size()):
 		var route_name: String = routes.keys()[i]
 		var route: Dictionary = routes[route_name]
@@ -174,15 +171,15 @@ func set_scenario_to_world() -> void:
 		route.general_settings.activate_only_at_specific_routes and \
 		not route.general_settings.specific_routes.has(Root.selected_route):
 			continue
-		$RouteManager.set_route_data(route.route_points)
+		route_manager.set_route_data(route.route_points)
 		var train_path: String = ContentLoader.find_train_path(route.general_settings.train_name)
 		if train_path == "":
 			train_path = Root.selected_train
-		var minimal_platform_length: int = $RouteManager.get_minimal_platform_length(self)
-		var train_rail_route: Array  = $RouteManager.get_calculated_rail_route(self)
-		var train_station_table: Array = $RouteManager.get_calculated_station_points(Root.selected_time)
-		var despawn_information: Dictionary = $RouteManager.get_despawn_information()
-		var available_times: Array = $ScenarioManager.get_available_start_times_of_route(route_name)
+		var minimal_platform_length: int = route_manager.get_minimal_platform_length(self)
+		var train_rail_route: Array  = route_manager.get_calculated_rail_route(self)
+		var train_station_table: Array = route_manager.get_calculated_station_points(Root.selected_time)
+		var despawn_information: Dictionary = route_manager.get_despawn_information()
+		var available_times: Array = scenario_manager.get_available_start_times_of_route(route_name)
 		for available_time in available_times:
 			# If the spawn time was before our start time, or the start time is above 2.5 hours
 			if available_time < time or available_time - time > (3600*2.5):
@@ -221,9 +218,9 @@ func spawn_train(train_spawn_information: Dictionary) -> void:
 	if new_train.length + 25 > train_spawn_information.minimal_platform_length:
 		new_train.length = train_spawn_information.minimal_platform_length - 25
 	new_train.route_information = train_spawn_information.route
-	$RouteManager.set_route_data($ScenarioManager.get_route_data()[train_spawn_information.route_name].route_points)
-	$RouteManager.calculated_rail_route = train_spawn_information.route
-	new_train.spawn_information = $RouteManager.get_spawn_position(new_train.length, self)
+	route_manager.set_route_data(scenario_manager.get_route_data()[train_spawn_information.route_name].route_points)
+	route_manager.calculated_rail_route = train_spawn_information.route
+	new_train.spawn_information = route_manager.get_spawn_position(new_train.length, self)
 	new_train.despawn_information = train_spawn_information.despawn_information
 	new_train.station_table = train_spawn_information.station_table
 
@@ -300,7 +297,7 @@ func get_terrain_height_at(_position: Vector2) -> float:
 
 
 func load_configs_to_cache() -> void:
-	$jSaveModule.load_everything_into_cache()
+	j_save_module.load_everything_into_cache()
 
 
 func jump_player_to_station(station_table_index: int) -> void:

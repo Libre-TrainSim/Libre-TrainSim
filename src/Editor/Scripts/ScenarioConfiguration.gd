@@ -1,6 +1,6 @@
 extends Panel
 
-onready var jSaveModule = find_parent("ScenarioEditor").get_node("jSaveModule")
+onready var j_save_module = find_parent("ScenarioEditor").j_save_module
 
 var routes: Dictionary = {}
 
@@ -12,9 +12,11 @@ onready var world: Node = find_parent("ScenarioEditor").get_node("World")
 
 onready var content_selector = get_parent().get_node("Content_Selector")
 
+var route_manager = RouteManager.new()
+
 func init():
-	routes = jSaveModule.get_value("routes", {})
-	rail_logic_settings = jSaveModule.get_value("rail_logic_settings", {})
+	routes = j_save_module.get_value("routes", {})
+	rail_logic_settings = j_save_module.get_value("rail_logic_settings", {})
 
 	for signal_instance in world.get_node("Signals").get_children():
 		if not rail_logic_settings.has(signal_instance.name) and signal_instance.type == "Signal":
@@ -51,12 +53,12 @@ func _input(event):
 
 
 func save():
-	jSaveModule.save_value("rail_logic_settings", rail_logic_settings)
-	jSaveModule.write_to_disk()
+	j_save_module.save_value("rail_logic_settings", rail_logic_settings)
+	j_save_module.write_to_disk()
 	if current_route != "":
-		routes[current_route].route_points = $RouteManager.get_route_data()
-		jSaveModule.save_value("routes", routes)
-		jSaveModule.write_to_disk()
+		routes[current_route].route_points = route_manager.get_route_data()
+		j_save_module.save_value("routes", routes)
+		j_save_module.write_to_disk()
 		Logger.log("User manually saved.")
 	find_parent("ScenarioEditor").show_message("Successfully saved!")
 
@@ -93,19 +95,19 @@ func _on_Routes_user_added_entry(entry_name):
 			"description" : ""
 		},
 	}
-	jSaveModule.save_value("routes", routes)
+	j_save_module.save_value("routes", routes)
 
 func _on_Routes_user_removed_entries(entry_names):
 	var entry_name = entry_names[0]
 	routes.erase(entry_name)
-	jSaveModule.save_value("routes", routes)
+	j_save_module.save_value("routes", routes)
 	set_current_route("")
 
 
 func _on_Routes_user_renamed_entry(old_name, new_name):
 	routes[new_name] = routes[old_name]
 	routes.erase(old_name)
-	jSaveModule.save_value("routes", routes)
+	j_save_module.save_value("routes", routes)
 	set_current_route(new_name)
 
 
@@ -113,9 +115,9 @@ func _on_Routes_user_duplicated_entries(source_entry_names, duplicated_entry_nam
 	var source_entry_name = source_entry_names[0]
 	var duplicated_entry_name = duplicated_entry_names[0]
 	routes[duplicated_entry_name] = routes[source_entry_name].duplicate(true)
-	jSaveModule.save_value("routes", routes)
-	jSaveModule.reload()
-	routes = jSaveModule.get_value("routes", {})
+	j_save_module.save_value("routes", routes)
+	j_save_module.reload()
+	routes = j_save_module.get_value("routes", {})
 	update_route_list()
 	set_current_route(duplicated_entry_name)
 
@@ -125,12 +127,12 @@ func _on_Routes_user_selected_entry(entry_name):
 
 func set_current_route(route_name : String) -> void:
 	if current_route != "":
-		routes[current_route].route_points = $RouteManager.get_route_data()
+		routes[current_route].route_points = route_manager.get_route_data()
 	current_route = route_name
 	if current_route != "":
-		$RouteManager.set_route_data(routes[current_route].route_points)
+		route_manager.set_route_data(routes[current_route].route_points)
 	else:
-		$RouteManager.clear_route_data()
+		route_manager.clear_route_data()
 	update_ui_for_current_route()
 	update_scenario_map()
 
@@ -213,9 +215,9 @@ func update_route_point_list():
 	var item_list = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList
 	var selected_items = item_list.get_selected_items()
 	item_list.clear()
-	var size = $RouteManager.get_route_size()
+	var size = route_manager.get_route_size()
 	for i in range (size):
-		item_list.add_item($RouteManager.get_description_of_point(i))
+		item_list.add_item(route_manager.get_description_of_point(i))
 	if (selected_items.size() > 0):
 		item_list.select(selected_items[0])
 
@@ -231,7 +233,7 @@ func _on_ListButtons_Up_pressed():
 	var selected_route_point_index = selected_items[0]
 	if selected_route_point_index == 0:
 		return
-	$RouteManager.move_point_up(selected_route_point_index)
+	route_manager.move_point_up(selected_route_point_index)
 	update_route_point_list()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(selected_route_point_index-1)
 
@@ -241,9 +243,9 @@ func _on_ListButtons_Down_pressed():
 	if selected_items.size() == 0:
 		return
 	var selected_route_point_index = selected_items[0]
-	if selected_route_point_index == $RouteManager.get_route_size()-1:
+	if selected_route_point_index == route_manager.get_route_size()-1:
 		return
-	$RouteManager.move_point_down(selected_route_point_index)
+	route_manager.move_point_down(selected_route_point_index)
 	update_route_point_list()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(selected_route_point_index+1)
 
@@ -253,7 +255,7 @@ func _on_ListButtons_Remove_pressed():
 	if selected_items.size() == 0:
 		return
 	var selected_route_point_index = selected_items[0]
-	$RouteManager.remove_point(selected_route_point_index)
+	route_manager.remove_point(selected_route_point_index)
 	update_route_point_list()
 	update_route_point_settings()
 
@@ -273,7 +275,7 @@ func update_route_point_settings():
 		return
 	var index = selected_items[0]
 
-	var route_point = $RouteManager.get_point(index)
+	var route_point = route_manager.get_point(index)
 	if route_point.type == RoutePointType.STATION:
 		$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station.show()
 		update_station_point_settings()
@@ -350,9 +352,9 @@ func _on_SelectMessage_Cancel_pressed():
 
 ## Station #########################################################################################
 func _on_Station_pressed():
-	$RouteManager.add_station_point()
+	route_manager.add_station_point()
 	update_route_point_list()
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select($RouteManager.get_route_size()-1)
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(route_manager.get_route_size()-1)
 	update_route_point_settings()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint.hide()
 	_on_StationPoint_Select_pressed()
@@ -365,14 +367,14 @@ func _on_StationPoint_Select_pressed():
 
 func _station_point_selected(node_name: String):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "node_name", node_name)
+	route_manager.set_data_of_point(selected_route_point_index, "node_name", node_name)
 	update_route_point_list()
 	update_station_point_settings()
 
 
 func update_station_point_settings():
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	var p = $RouteManager.get_point(selected_route_point_index)
+	var p = route_manager.get_point(selected_route_point_index)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StationNode/LineEdit.text = p.node_name
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StationName.text = p.station_name
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StopType.selected = p.stop_type
@@ -412,7 +414,7 @@ func update_station_point_settings():
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HApproach.visible = p.stop_type == StopType.END or p.stop_type == StopType.REGULAR
 
 	# Update Planned Arrival and Departure:
-	var calculated_point = $RouteManager.get_calculated_station_point_from_route_point_index(selected_route_point_index, routes[current_route].general_settings.interval_start)
+	var calculated_point = route_manager.get_calculated_station_point_from_route_point_index(selected_route_point_index, routes[current_route].general_settings.interval_start)
 	var arrival_text = "->"
 	if [StopType.REGULAR, StopType.END].has(p.stop_type):
 		arrival_text = "-> (Arrival: %s)" % Math.seconds_to_string(calculated_point.arrival_time)
@@ -425,13 +427,13 @@ func update_station_point_settings():
 
 func _on_StationPoint_StationName_text_changed(new_text):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "station_name", new_text)
+	route_manager.set_data_of_point(selected_route_point_index, "station_name", new_text)
 	update_route_point_list()
 
 
 func _on_StationPoint_StopType_item_selected(index):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "stop_type", index)
+	route_manager.set_data_of_point(selected_route_point_index, "stop_type", index)
 	update_route_point_list()
 	update_station_point_settings()
 	update_scenario_map()
@@ -439,33 +441,33 @@ func _on_StationPoint_StopType_item_selected(index):
 
 func _on_StationPoint_DurationSinceStationBefore_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "duration_since_station_before", value)
+	route_manager.set_data_of_point(selected_route_point_index, "duration_since_station_before", value)
 	update_station_point_settings()
 
 
 func _on_StationPoint_PlannedHalttime_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "planned_halt_time", value)
+	route_manager.set_data_of_point(selected_route_point_index, "planned_halt_time", value)
 	update_station_point_settings()
 
 func _on_StationPoint_MinimalHalttime_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "minimal_halt_time", value)
+	route_manager.set_data_of_point(selected_route_point_index, "minimal_halt_time", value)
 
 
 func _on_StationPoint_signal_time_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "signal_time", value)
+	route_manager.set_data_of_point(selected_route_point_index, "signal_time", value)
 
 
 func _on_StationPoint_WaitingPersons_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "waiting_persons", value)
+	route_manager.set_data_of_point(selected_route_point_index, "waiting_persons", value)
 
 
 func _on_StationPoint_LeavingPersons_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "leaving_persons", value)
+	route_manager.set_data_of_point(selected_route_point_index, "leaving_persons", value)
 
 
 func _on_SelectArrivalSoundPath_pressed():
@@ -485,9 +487,9 @@ func _on_SelectApporachSoundPath_pressed():
 
 ## Waypoint ########################################################################################
 func _on_AddRoutePoint_Waypoint_pressed():
-	$RouteManager.add_way_point()
+	route_manager.add_way_point()
 	update_route_point_list()
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select($RouteManager.get_route_size()-1)
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(route_manager.get_route_size()-1)
 	update_route_point_settings()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint.hide()
 	_on_WayPoint_Rail_Select_pressed()
@@ -495,7 +497,7 @@ func _on_AddRoutePoint_Waypoint_pressed():
 
 func update_way_point_settings() -> void:
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	var p = $RouteManager.get_point(selected_route_point_index)
+	var p = route_manager.get_point(selected_route_point_index)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint/Grid/Rail/LineEdit.text = p.rail_name
 	update_scenario_map()
 
@@ -506,16 +508,16 @@ func _on_WayPoint_Rail_Select_pressed():
 
 func _rail_way_point_selected(rail_name: String):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "rail_name", rail_name)
+	route_manager.set_data_of_point(selected_route_point_index, "rail_name", rail_name)
 	update_route_point_list()
 	update_way_point_settings()
 
 
 ## Spawnpoint ######################################################################################
 func _on_AddRoutePoint_Spawnpoint_pressed():
-	$RouteManager.add_spawm_point()
+	route_manager.add_spawm_point()
 	update_route_point_list()
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select($RouteManager.get_route_size()-1)
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(route_manager.get_route_size()-1)
 	update_route_point_settings()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint.hide()
 	_on_SawnPoint_Rail_Select_pressed()
@@ -523,7 +525,7 @@ func _on_AddRoutePoint_Spawnpoint_pressed():
 
 func update_spawn_point_settings() -> void:
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	var p = $RouteManager.get_point(selected_route_point_index)
+	var p = route_manager.get_point(selected_route_point_index)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Rail/LineEdit.text = p.rail_name
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Distance.value = p.distance
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/InitialSpeed.value = p.initial_speed
@@ -536,26 +538,26 @@ func _on_SawnPoint_Rail_Select_pressed():
 
 func _rail_spawn_point_selected(rail_name: String):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "rail_name", rail_name)
+	route_manager.set_data_of_point(selected_route_point_index, "rail_name", rail_name)
 	update_route_point_list()
 	update_spawn_point_settings()
 
 
 func _on_SpawnPoint_Distance_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "distance", value)
+	route_manager.set_data_of_point(selected_route_point_index, "distance", value)
 
 
 func _on_SpawnPoint_InitialSpeed_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "initial_speed", value)
+	route_manager.set_data_of_point(selected_route_point_index, "initial_speed", value)
 
 
 ## Despawnpoint ####################################################################################
 func _on_AddRoutePoint_Despawnpoint_pressed():
-	$RouteManager.add_despawn_point()
+	route_manager.add_despawn_point()
 	update_route_point_list()
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select($RouteManager.get_route_size()-1)
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(route_manager.get_route_size()-1)
 	update_route_point_settings()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint.hide()
 	_on_DespawnPoint_Rail_Select_pressed()
@@ -563,7 +565,7 @@ func _on_AddRoutePoint_Despawnpoint_pressed():
 
 func update_despawn_point_settings():
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	var p = $RouteManager.get_point(selected_route_point_index)
+	var p = route_manager.get_point(selected_route_point_index)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Rail/LineEdit.text = p.rail_name
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Distance.value = p.distance
 	update_scenario_map()
@@ -575,14 +577,14 @@ func _on_DespawnPoint_Rail_Select_pressed():
 
 func _rail_despawn_point_selected(rail_name: String):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "rail_name", rail_name)
+	route_manager.set_data_of_point(selected_route_point_index, "rail_name", rail_name)
 	update_route_point_list()
 	update_despawn_point_settings()
 
 
 func _on_DespawnPoint_Distance_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	$RouteManager.set_data_of_point(selected_route_point_index, "distance", value)
+	route_manager.set_data_of_point(selected_route_point_index, "distance", value)
 
 
 ## Rail Logic ######################################################################################
@@ -802,18 +804,18 @@ func _on_CheckIfRouteIsValid_pressed():
 
 func check_route_for_errors() -> void:
 	var error_message = "\n"
-	var route_points = $RouteManager.get_route_data()
-	if $RouteManager.get_route_data().size() == 0:
+	var route_points = route_manager.get_route_data()
+	if route_manager.get_route_data().size() == 0:
 		error_message += "Your route seems to be empty. Add some route points!\n\n"
 		$TabContainer/Routes/RouteConfiguration/IsRouteValid/Messages.text = error_message
 		return
 
-	if $RouteManager.get_route_data().size() < 2:
+	if route_manager.get_route_data().size() < 2:
 		error_message += "Your route has to have at least two route points!\n\n"
 		$TabContainer/Routes/RouteConfiguration/IsRouteValid/Messages.text = error_message
 		return
 
-	var station_points = $RouteManager.get_calculated_station_points(0)
+	var station_points = route_manager.get_calculated_station_points(0)
 	for station_point in station_points:
 		if world.get_signal(station_point.node_name).length <= 0:
 			error_message += "The station length of station '%s' is not valid! You have to fix this in the track editor.\n\n" % station_point.node_name
@@ -831,10 +833,10 @@ func check_route_for_errors() -> void:
 	(route_points.back().type == RoutePointType.DESPAWN_POINT):
 		error_message += "The last point has to be an end station or a despawn point. Otherwise npc trains can't despawn.\n\n"
 
-	var baked_route: Array = $RouteManager.get_calculated_rail_route(world)
+	var baked_route: Array = route_manager.get_calculated_rail_route(world)
 	if baked_route.size() == 0:
-		var first_error_route_point: String = $RouteManager.get_description_of_point($RouteManager.error_route_point_start_index)
-		var second_error_route_point: String = $RouteManager.get_description_of_point($RouteManager.error_route_point_end_index)
+		var first_error_route_point: String = route_manager.get_description_of_point(route_manager.error_route_point_start_index)
+		var second_error_route_point: String = route_manager.get_description_of_point(route_manager.error_route_point_end_index)
 		error_message += "The train route can't be generated. Between '%s' and '%s' seems to be an error. Check, if a train could drive between these two points. Maybe some rails are not connected. Try adding a waypoint between these two route points to locate the error.\n\n" % [first_error_route_point, second_error_route_point]
 
 	if routes[current_route].general_settings.player_can_drive_this_route:
@@ -850,21 +852,21 @@ func check_route_for_errors() -> void:
 	if signals_with_manual_mode.size() != 0:
 		error_message += "Just for notice: The following signals are set to manual mode. They don't turn automatically back to green if not explicit called by a script, a contact point or by the time field in the signal settings. If you don't want this change them to block mode: \n%s\n\n" % String(signals_with_manual_mode)
 
-	for i in range($RouteManager.get_route_size()):
+	for i in range(route_manager.get_route_size()):
 		if i != 0 and ((route_points[i].type == RoutePointType.STATION and route_points[i].stop_type == StopType.BEGINNING) or route_points[i].type == RoutePointType.SPAWN_POINT):
-			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very start of the route.\n\n" % $RouteManager.get_description_of_point(i)
-		if i != $RouteManager.get_route_size()-1 and ((route_points[i].type == RoutePointType.STATION and route_points[i].stop_type == StopType.END) or route_points[i].type == RoutePointType.DESPAWN_POINT):
-			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very end of the route.\n\n" % $RouteManager.get_description_of_point(i)
+			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very start of the route.\n\n" % route_manager.get_description_of_point(i)
+		if i != route_manager.get_route_size()-1 and ((route_points[i].type == RoutePointType.STATION and route_points[i].stop_type == StopType.END) or route_points[i].type == RoutePointType.DESPAWN_POINT):
+			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very end of the route.\n\n" % route_manager.get_description_of_point(i)
 
-	for i in range($RouteManager.get_route_size()):
+	for i in range(route_manager.get_route_size()):
 		var route_point = route_points[i]
 		match route_point.type:
 			RoutePointType.STATION:
 				if world.get_signal(route_point.node_name) == null:
-					error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % $RouteManager.get_description_of_point(i)
+					error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % route_manager.get_description_of_point(i)
 			_:
 				if world.get_rail(route_point.rail_name) == null:
-					error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % $RouteManager.get_description_of_point(i)
+					error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % route_manager.get_description_of_point(i)
 
 
 
@@ -888,19 +890,19 @@ func _on_Content_Selector_resource_selected(complete_path):
 		0:
 			content_selector_index = -1
 			var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-			$RouteManager.set_data_of_point(selected_route_point_index, "approach_sound_path", complete_path)
+			route_manager.set_data_of_point(selected_route_point_index, "approach_sound_path", complete_path)
 			update_station_point_settings()
 		# Station: Arrival Sound Path
 		1:
 			content_selector_index = -1
 			var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-			$RouteManager.set_data_of_point(selected_route_point_index, "arrival_sound_path", complete_path)
+			route_manager.set_data_of_point(selected_route_point_index, "arrival_sound_path", complete_path)
 			update_station_point_settings()
 		# Station: Departure Sound Path
 		2:
 			content_selector_index = -1
 			var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-			$RouteManager.set_data_of_point(selected_route_point_index, "departure_sound_path", complete_path)
+			route_manager.set_data_of_point(selected_route_point_index, "departure_sound_path", complete_path)
 			update_station_point_settings()
 		_:
 			content_selector_index = -1

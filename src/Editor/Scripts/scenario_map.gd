@@ -163,7 +163,7 @@ func init(world : Node):
 
 func update_map():
 	var scenario_config_instance = find_parent("ScenarioEditor").get_node("CanvasLayer/ScenarioConfiguration")
-	var route_manager = scenario_config_instance.get_node("RouteManager")
+	var route_manager = scenario_config_instance.route_manager
 	$Rails.visible = label_mask.rails
 
 	for signal_instance in $Signals.get_children():

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
-[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=4]
 
 [node name="Configuration" type="VBoxContainer"]
 anchor_left = 1.0
@@ -9,6 +8,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -357.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label2" type="Label" parent="."]
 margin_right = 357.0
@@ -117,7 +119,5 @@ margin_right = 200.0
 margin_bottom = 600.0
 size_flags_horizontal = 4
 text = "SAVE"
-
-[node name="jSaveModule" parent="." instance=ExtResource( 4 )]
 
 [connection signal="pressed" from="SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]

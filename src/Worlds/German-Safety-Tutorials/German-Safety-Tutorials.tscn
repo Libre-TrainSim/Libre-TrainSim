@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Data/Scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Environments/BasicSun.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=7]
 [ext_resource path="res://Data/Modules/Signal.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Data/Scripts/BuildingsNode.gd" type="Script" id=9]
-[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Data/Modules/PZBMagnet.tscn" type="PackedScene" id=11]
 
 [node name="World" type="Spatial"]
@@ -28,7 +27,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2883, 0, -11.4469 )
 visible = false
 signal_type = 2
 status = 1
-is_block_signal = true
 attached_rail = "Rail"
 on_rail_position = 2
 
@@ -64,7 +62,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1716.29, 0, -11.4469 )
 visible = false
 signal_type = 2
 status = 1
-is_block_signal = true
 attached_rail = "Rail3"
 on_rail_position = 500
 
@@ -152,12 +149,6 @@ script = ExtResource( 9 )
 [node name="Flora" type="Spatial" parent="."]
 
 [node name="TrackObjects" type="Spatial" parent="."]
-
-[node name="jSaveModule" parent="." instance=ExtResource( 10 )]
-save_path = "/home/dascapschen/Projects/Games/Godot/Libre-TrainSim/src//Worlds/German-Safety-Tutorials/German-Safety-Tutorials.save"
-
-[node name="jSaveModuleScenarios" parent="." instance=ExtResource( 10 )]
-save_path = "/home/dascapschen/Projects/Games/Libre-TrainSim-Editor//Worlds/German-Safety-Tutorials/German-Safety-Tutorials-scenarios.cfg"
 
 [node name="Scripting" type="Node" parent="."]
 script = ExtResource( 5 )

@@ -2,11 +2,13 @@ extends Node
 
 var world
 
+var j_save_module = jSaveModule.new()
+
 func _ready():
 	world = load(Root.current_editor_track_path.plus_file(Root.current_editor_track + ".tscn")).instance()
 	world.passive = true
 	add_child(world)
-	$jSaveModule.set_save_path(Root.current_scenario)
+	j_save_module.set_save_path(Root.current_scenario)
 	$ScenarioMap.init(world)
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")

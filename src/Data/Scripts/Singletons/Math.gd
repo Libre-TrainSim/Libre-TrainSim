@@ -92,9 +92,8 @@ func time2String(time: Array) -> String:
 		second = "0" + second
 	return (hour + ":" + minute +":" + second)
 
-func time_seconds2String(time_seconds: int) -> String:
-	var time: Array = seconds_to_time(time_seconds)
-	return time2String(time)
+func seconds_to_string(time_seconds: int) -> String:
+	return "%02d:%02d:%02d" % [time_seconds/3600, (time_seconds/60)%60, time_seconds%60]
 
 
 func distance2String(distance: float) -> String:

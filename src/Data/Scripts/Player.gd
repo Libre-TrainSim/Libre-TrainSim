@@ -44,12 +44,12 @@ var current_station_table_index: int = 0 # Displays the index of the next or cur
 var current_station_table_entry: Dictionary = null
 var current_station_node: Node = null # If we are in a station, this variable stores the current station node, otherwise its null.
 var whole_train_in_station: bool = false # true if speed = 0, and the train is fully in the station
-var is_in_station: bool = false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
+var is_in_station := false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
 var real_arrival_time: int # Time is set if train successfully arrived
 var route_distance_at_station_begin: float = 0 # distance of the station begin on route
-var GOODWILL_DISTANCE: float = 10 # distance the player can overdrive a station, or it's train end isn't in the station.
+const GOODWILL_DISTANCE: float = 10 # distance the player can overdrive a station, or it's train end isn't in the station.
 
-export var doors: bool = true # Defines, if this train has doors.
+export var doors := true # Defines, if this train has doors.
 export var doorsClosingTime: float = 7
 var doorRight: bool = false # If Door is Open, then its true
 var doorLeft: bool = false

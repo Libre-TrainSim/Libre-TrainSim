@@ -928,7 +928,7 @@ func check_station(delta: float) -> void:
 
 	# train waited long enough in station
 	elif is_in_station and world.time >= current_station_table_entry.departure_time and \
-	world.time >= real_arrival_time + current_station_table_entry.minimal_halt_time:
+			world.time >= real_arrival_time + current_station_table_entry.minimal_halt_time:
 		# scenario finished if last station
 		if current_station_table_entry.stop_type == StopType.END:
 			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)

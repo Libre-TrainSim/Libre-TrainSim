@@ -17,12 +17,12 @@ func update_display(station_table: Dictionary, current_station_table_index: int,
 		if [StopType.BEGINNING, StopType.DO_NOT_STOP].has(station_table[i].stop_type):
 			arrString += "\n"
 		else:
-			arrString += Math.time_seconds2String(station_table[i].arrival_time) + "\n"
+			arrString += Math.seconds_to_string(station_table[i].arrival_time) + "\n"
 
 		if station_table[i].stop_type == StopType.END:
 			depString += "\n"
 		else:
-			depString += Math.time_seconds2String(station_table[i].departure_time) + "\n"
+			depString += Math.seconds_to_string(station_table[i].departure_time) + "\n"
 
 		staString += station_table[i].station_name + "\n"
 

@@ -20,7 +20,7 @@ func update_breadcrumb():
 	if selected_route != "":
 		text += " > " + selected_route
 	if selected_time != -1:
-		text += " > " + Math.time_seconds2String(selected_time)
+		text += " > " + Math.seconds_to_string(selected_time)
 
 	$V/Breadcrumb.text = text
 
@@ -183,7 +183,7 @@ func update_times():
 		update_trains()
 
 	for time in times:
-		$V/Times/ItemList.add_item(Math.time_seconds2String(time))
+		$V/Times/ItemList.add_item(Math.seconds_to_string(time))
 	pass
 
 func _on_Times_Select_pressed():

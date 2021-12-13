@@ -415,12 +415,12 @@ func update_station_point_settings():
 	var calculated_point = $RouteManager.get_calculated_station_point_from_route_point_index(selected_route_point_index, routes[current_route].general_settings.interval_start)
 	var arrival_text = "->"
 	if [StopType.REGULAR, StopType.END].has(p.stop_type):
-		arrival_text = "-> (Arrival: %s)" % Math.time_seconds2String(calculated_point.arrival_time)
+		arrival_text = "-> (Arrival: %s)" % Math.seconds_to_string(calculated_point.arrival_time)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/PlannedArrival.text = arrival_text
 
 	var departure_text = ""
 	if p.stop_type != StopType.END:
-		departure_text = "(Departure: %s)" % Math.time_seconds2String(calculated_point.departure_time)
+		departure_text = "(Departure: %s)" % Math.seconds_to_string(calculated_point.departure_time)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/PlannedDeparture.text = departure_text
 
 func _on_StationPoint_StationName_text_changed(new_text):

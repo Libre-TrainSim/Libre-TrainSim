@@ -36,8 +36,7 @@ var chunk_manager: ChunkManager = null
 var passive: bool = false
 
 func _ready() -> void:
-	if Root.scenario_editor:
-		passive = true
+	passive = Root.scenario_editor
 
 	# Add all needed scripts:
 	if get_node_or_null("jSaveModule") == null:

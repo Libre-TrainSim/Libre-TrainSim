@@ -452,8 +452,8 @@ func add_object(complete_path: String) -> void:
 
 func test_track_pck() -> void:
 	if OS.has_feature("editor"):
-		send_message("Can't export and test tracks while running Libre TrainSim in Godot Editor. " \
-				+ "Please use a build of Libre TrainSim for exporting tracks. ")
+		send_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
+				+ "Please use a build of Libre TrainSim to test tracks. ")
 		return
 	export_mod()
 

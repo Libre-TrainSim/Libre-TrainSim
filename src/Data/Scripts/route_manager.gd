@@ -1,4 +1,5 @@
-extends Node
+class_name RouteManager
+extends Reference
 
 var route_data: Array = []
 

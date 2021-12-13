@@ -101,9 +101,7 @@ func get_description_of_point(index : int) -> String:
 
 # (Read Only)
 func get_point(index : int) -> Dictionary:
-	if index >= get_route_size():
-		Logger.err("Point index does not exist for actual list! Aborting...", "Route Manager")
-		return {}
+	assert(index <  get_route_size())
 	return route_data[index].duplicate()
 
 
@@ -112,8 +110,7 @@ func get_route_size() -> int:
 
 
 func set_data_of_point(index: int, key: String, value) -> void:
-	if index >= get_route_size():
-		Logger.err("Point index does not exist for actual list! Aborting...", "Route Manager")
+	assert(index <  get_route_size())
 	if route_data[index].keys().has(key):
 		route_data[index][key] = value
 

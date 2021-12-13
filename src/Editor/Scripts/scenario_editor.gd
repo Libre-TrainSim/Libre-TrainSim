@@ -9,7 +9,6 @@ func _ready():
 	$jSaveModule.set_save_path(Root.current_scenario)
 	$ScenarioMap.init(world)
 	$CanvasLayer/ScenarioConfiguration.init()
-#	$Map.init_for_scenario_editor(world)
 	Logger.log("Successfully loaded track data.")
 
 

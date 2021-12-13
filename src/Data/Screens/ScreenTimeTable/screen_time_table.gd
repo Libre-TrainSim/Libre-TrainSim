@@ -12,7 +12,7 @@ func update_display(station_table: Dictionary, current_station_table_index: int,
 	var arrString = ""
 	var depString = ""
 	var staString = ""
-	for i in range (current_station_table_index, station_table.size()):
+	for i in range(current_station_table_index, station_table.size()):
 
 		if [StopType.BEGINNING, StopType.DO_NOT_STOP].has(station_table[i].stop_type):
 			arrString += "\n"

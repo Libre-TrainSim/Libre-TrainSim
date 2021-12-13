@@ -43,7 +43,7 @@ func set_data(d: Dictionary) -> void:
 	affectTime = d.affect_time
 	affectedSignal = d.affected_signal
 	enable_for_all_trains = d.enable_for_all_trains
-	disabled = not d.enabled
+	disabled = !d.enabled
 	newSpeed = d.new_speed_limit
 	newStatus = d.new_status
 	bySpecificTrain = d.specific_train

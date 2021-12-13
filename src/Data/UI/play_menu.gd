@@ -45,7 +45,7 @@ func update_tracks() -> void:
 
 
 
-func _on_Trackst_item_selected(index) -> void:
+func _on_Tracklist_item_selected(index) -> void:
 	selected_track = ContentLoader.repo.worlds[index]
 	Root.checkAndLoadTranslationsForTrack(selected_track.get_file().get_basename())
 	var save_path: String = ContentLoader.repo.worlds[index].get_basename() + ".trackinfo"
@@ -287,3 +287,6 @@ func load_game():
 	hide()
 
 	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture)
+
+
+

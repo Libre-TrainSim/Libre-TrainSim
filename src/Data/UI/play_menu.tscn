@@ -343,7 +343,7 @@ size_flags_horizontal = 3
 text = "PLAY"
 
 [connection signal="item_activated" from="V/Tracks/H/ItemList" to="." method="_on_Tracks_item_activated"]
-[connection signal="item_selected" from="V/Tracks/H/ItemList" to="." method="_on_Trackst_item_selected"]
+[connection signal="item_selected" from="V/Tracks/H/ItemList" to="." method="_on_Tracklist_item_selected"]
 [connection signal="pressed" from="V/Tracks/HBoxContainer/Back" to="." method="_on_Tracks_Back_pressed"]
 [connection signal="pressed" from="V/Tracks/HBoxContainer/Select" to="." method="_on_Tracks_Select_pressed"]
 [connection signal="item_activated" from="V/Scenarios/ItemList" to="." method="_on_Scenarios_item_activated"]

@@ -386,8 +386,8 @@ func update_station_point_settings():
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HDeparture/DepartureSoundPath.text = p.departure_sound_path
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HApproach/ApproachSoundPath.text = p.approach_sound_path
 
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/Label3.visible = p.stop_type != StopType.BEGINNING and p.stop_type != StopType.DO_NOT_HALT
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/DurationSinceStationBefore.visible = p.stop_type != StopType.BEGINNING and p.stop_type != StopType.DO_NOT_HALT
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/Label3.visible = p.stop_type != StopType.BEGINNING and p.stop_type != StopType.DO_NOT_STOP
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/DurationSinceStationBefore.visible = p.stop_type != StopType.BEGINNING and p.stop_type != StopType.DO_NOT_STOP
 
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/Label4.visible = p.stop_type == StopType.REGULAR or p.stop_type == StopType.BEGINNING
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/PlannedHalttime.visible = p.stop_type == StopType.REGULAR or p.stop_type == StopType.BEGINNING
@@ -904,5 +904,3 @@ func _on_Content_Selector_resource_selected(complete_path):
 			update_station_point_settings()
 		_:
 			content_selector_index = -1
-
-

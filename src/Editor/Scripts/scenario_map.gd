@@ -6,15 +6,15 @@ var mouse_motion = Vector2(0,0)
 
 var world
 
-onready var signal_icon = preload("res://Data/Misc/Signal_Icon.png")
-onready var signal_icon_block = preload("res://Data/Misc/Signal_Icon_block.png")
-onready var signal_icon_station = preload("res://Data/Misc/Signal_Icon_station.png")
-onready var station_image = preload("res://Data/Misc/Station_Icon.png")
-onready var station_image_selected = preload("res://Data/Misc/Station_Icon_selected.png")
-onready var contact_point_image = preload("res://Data/Misc/ContactPoint_Icon.png")
-onready var spawn_point_icon = preload("res://Data/Misc/spawn_point_icon.png")
-onready var despawn_point_icon = preload("res://Data/Misc/despawn_point_icon.png")
-onready var waypoint_icon = preload("res://Data/Misc/waypoint_icon.png")
+var signal_icon = preload("res://Data/Misc/Signal_Icon.png")
+var signal_icon_block = preload("res://Data/Misc/Signal_Icon_block.png")
+var signal_icon_station = preload("res://Data/Misc/Signal_Icon_station.png")
+var station_image = preload("res://Data/Misc/Station_Icon.png")
+var station_image_selected = preload("res://Data/Misc/Station_Icon_selected.png")
+var contact_point_image = preload("res://Data/Misc/ContactPoint_Icon.png")
+var spawn_point_icon = preload("res://Data/Misc/spawn_point_icon.png")
+var despawn_point_icon = preload("res://Data/Misc/despawn_point_icon.png")
+var waypoint_icon = preload("res://Data/Misc/waypoint_icon.png")
 
 
 var label_mask: Dictionary = {

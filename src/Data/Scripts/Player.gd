@@ -804,7 +804,7 @@ func handle_signal(signal_name: String) -> void:
 
 		current_station_table_index = station_table_index
 		current_station_table_entry = station_table[current_station_table_index]
-		if StopType.DO_NOT_HALT == current_station_table_entry.stop_type:
+		if StopType.DO_NOT_STOP == current_station_table_entry.stop_type:
 			current_station_table_index += 1
 			return
 
@@ -1259,7 +1259,7 @@ func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1
 		nextStation = nextStations[0]
 		stationMessageSent = false
 
-	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.node_name == nextStation and current_station_table_entry.stop_type != StopType.DO_NOT_HALT and not is_in_station:
+	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.node_name == nextStation and current_station_table_entry.stop_type != StopType.DO_NOT_STOP and not is_in_station:
 		stationMessageSent = true
 		var distanceS: String = String(int(get_distance_to_signal(nextStation)/100)*100+100)
 		if distanceS == "1000":

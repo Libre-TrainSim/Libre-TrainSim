@@ -6,7 +6,7 @@ var station_point_pattern: Dictionary = {
 	type = RoutePointType.STATION,
 	node_name = "",
 	station_name = "",
-	stop_type = StopType.DO_NOT_HALT,
+	stop_type = StopType.DO_NOT_STOP,
 	duration_since_station_before = 300,
 	planned_halt_time = 20,
 	minimal_halt_time = 15,
@@ -85,7 +85,7 @@ func get_description_of_point(index : int) -> String:
 				return "Beginning Station: " + point.station_name
 			StopType.REGULAR:
 				return "Station: " + point.station_name
-			StopType.DO_NOT_HALT:
+			StopType.DO_NOT_STOP:
 				return "Station (Don't halt): " + point.station_name
 			StopType.END:
 				return "Ending Station: " + point.station_name
@@ -261,7 +261,7 @@ func get_despawn_information() -> Dictionary:
 func get_minimal_platform_length(world: Node) -> int:
 	var minimal_platform_length: int = 1000000000000000
 	for route_point in route_data:
-		if route_point.type == RoutePointType.STATION and route_point.stop_type != StopType.DO_NOT_HALT:
+		if route_point.type == RoutePointType.STATION and route_point.stop_type != StopType.DO_NOT_STOP:
 				var station_node: Node = world.get_signal(route_point.node_name)
 				if minimal_platform_length > station_node.length:
 					minimal_platform_length = station_node.length

@@ -10,10 +10,10 @@ onready var scenario_manager = ScenarioManager.new()
 onready var j_save_module = jSaveModule.new()
 
 
-
 func show() -> void:
 	update_tracks()
 	.show()
+
 
 func update_breadcrumb():
 	var text = ""
@@ -29,6 +29,18 @@ func update_breadcrumb():
 	$V/Breadcrumb.text = text
 
 
+func load_game():
+	Root.current_track = selected_track
+	Root.current_scenario = selected_scenario
+	Root.selected_route = selected_route
+	Root.selected_time = selected_time
+	Root.selected_train = selected_train
+	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.pressed
+	hide()
+
+	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture)
+
+
 func update_tracks() -> void:
 	update_breadcrumb()
 	$V/Tracks/H/Information.hide()
@@ -42,7 +54,73 @@ func update_tracks() -> void:
 		$V/Tracks/H/ItemList.add_item(track.get_file().get_basename())
 
 
+func update_scenarios() -> void:
+	update_breadcrumb()
+	$V/Scenarios/ItemList.clear()
+	var scenarios = ContentLoader.get_scenarios_for_track(selected_track)
+	if scenarios.size() == 1:
+		selected_scenario = scenarios[0]
+		$V/Scenarios.hide()
+		$V/Routes.show()
+		update_routes()
 
+	for scenario in scenarios:
+		$V/Scenarios/ItemList.add_item(scenario.get_file().get_basename())
+
+
+func update_routes():
+	update_breadcrumb()
+	$V/Routes/ItemList.clear()
+	print(selected_scenario)
+	scenario_manager.set_save_path(selected_scenario)
+	var routes = scenario_manager.get_available_route_names()
+
+
+	for route_name in routes:
+		if scenario_manager.is_route_playable(route_name):
+			$V/Routes/ItemList.add_item(route_name)
+
+	if $V/Routes/ItemList.get_item_count() == 1:
+		selected_route = $V/Routes/ItemList.get_item_text(0)
+		$V/Routes.hide()
+		$V/Times.show()
+		update_times()
+
+
+func update_times():
+	update_breadcrumb()
+	$V/Times/ItemList.clear()
+
+	var times = scenario_manager.get_available_start_times_of_route(selected_route)
+
+	if times.size() == 1:
+		selected_time = times[0]
+		$V/Times.hide()
+		$V/Trains.show()
+		update_trains()
+
+	for time in times:
+		$V/Times/ItemList.add_item(Math.seconds_to_string(time))
+	pass
+
+
+func update_trains():
+	update_breadcrumb()
+	$V/Trains/H/ItemList.clear()
+	$V/Trains/H/V/EasyMode.hide()
+	$V/Trains/H/V/Information.hide()
+	if ContentLoader.repo.trains.size() == 1:
+		selected_train = ContentLoader.repo.trains[0]
+		load_game()
+
+	for train in ContentLoader.repo.trains:
+		$V/Trains/H/ItemList.add_item(train.get_file().get_basename())
+
+	var result: String =  ContentLoader.find_train_path(scenario_manager.get_route_data()[selected_route].general_settings.train_name)
+	if result != "":
+		var index = ContentLoader.repo.trains.find(result)
+		$V/Trains/H/ItemList.select(index)
+		_on_Trains_item_selected(index)
 
 
 func _on_Tracklist_item_selected(index) -> void:
@@ -92,20 +170,6 @@ func _on_Tracks_Back_pressed() -> void:
 	hide()
 
 
-func update_scenarios() -> void:
-	update_breadcrumb()
-	$V/Scenarios/ItemList.clear()
-	var scenarios = ContentLoader.get_scenarios_for_track(selected_track)
-	if scenarios.size() == 1:
-		selected_scenario = scenarios[0]
-		$V/Scenarios.hide()
-		$V/Routes.show()
-		update_routes()
-
-	for scenario in scenarios:
-		$V/Scenarios/ItemList.add_item(scenario.get_file().get_basename())
-
-
 func _on_Scenarios_Back_pressed():
 	selected_scenario = ""
 	update_breadcrumb()
@@ -129,24 +193,6 @@ func _on_Scenarios_Select_pressed():
 func _on_Scenarios_item_activated(index):
 	_on_Scenarios_Select_pressed()
 
-
-func update_routes():
-	update_breadcrumb()
-	$V/Routes/ItemList.clear()
-	print(selected_scenario)
-	scenario_manager.set_save_path(selected_scenario)
-	var routes = scenario_manager.get_available_route_names()
-
-
-	for route_name in routes:
-		if scenario_manager.is_route_playable(route_name):
-			$V/Routes/ItemList.add_item(route_name)
-
-	if $V/Routes/ItemList.get_item_count() == 1:
-		selected_route = $V/Routes/ItemList.get_item_text(0)
-		$V/Routes.hide()
-		$V/Times.show()
-		update_times()
 
 func _on_Routes_Back_pressed():
 	selected_route = ""
@@ -172,24 +218,6 @@ func _on_Routes_ItemList_item_activated(index):
 	_on_Routes_Select_pressed()
 
 
-
-
-func update_times():
-	update_breadcrumb()
-	$V/Times/ItemList.clear()
-
-	var times = scenario_manager.get_available_start_times_of_route(selected_route)
-
-	if times.size() == 1:
-		selected_time = times[0]
-		$V/Times.hide()
-		$V/Trains.show()
-		update_trains()
-
-	for time in times:
-		$V/Times/ItemList.add_item(Math.seconds_to_string(time))
-	pass
-
 func _on_Times_Select_pressed():
 	if $V/Times/ItemList.get_selected_items().size() != 1:
 		return
@@ -198,6 +226,7 @@ func _on_Times_Select_pressed():
 	$V/Times.hide()
 	$V/Trains.show()
 	update_trains()
+
 
 func _on_Times_ItemList_item_activated(index):
 	_on_Times_Select_pressed()
@@ -211,25 +240,6 @@ func _on_Times_Back_pressed():
 
 	if $V/Routes/ItemList.get_item_count() == 1:
 		_on_Routes_Back_pressed()
-
-
-func update_trains():
-	update_breadcrumb()
-	$V/Trains/H/ItemList.clear()
-	$V/Trains/H/V/EasyMode.hide()
-	$V/Trains/H/V/Information.hide()
-	if ContentLoader.repo.trains.size() == 1:
-		selected_train = ContentLoader.repo.trains[0]
-		load_game()
-
-	for train in ContentLoader.repo.trains:
-		$V/Trains/H/ItemList.add_item(train.get_file().get_basename())
-
-	var result: String =  ContentLoader.find_train_path(scenario_manager.get_route_data()[selected_route].general_settings.train_name)
-	if result != "":
-		var index = ContentLoader.repo.trains.find(result)
-		$V/Trains/H/ItemList.select(index)
-		_on_Trains_item_selected(index)
 
 
 func _on_Trains_item_selected(index):
@@ -275,18 +285,3 @@ func _on_Trains_Play_pressed():
 
 func _on_Trains_item_activated(index):
 	_on_Trains_Play_pressed()
-
-
-func load_game():
-	Root.current_track = selected_track
-	Root.current_scenario = selected_scenario
-	Root.selected_route = selected_route
-	Root.selected_time = selected_time
-	Root.selected_train = selected_train
-	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.pressed
-	hide()
-
-	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture)
-
-
-

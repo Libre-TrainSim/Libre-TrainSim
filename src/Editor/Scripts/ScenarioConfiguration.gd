@@ -83,7 +83,6 @@ func hide_selection_message() -> void:
 func _on_Routes_user_added_entry(entry_name):
 	routes[entry_name] = {
 		"route_points" : [],
-		"rail_logic_settings": {},
 		"general_settings" : {
 			"player_can_drive_this_route" : true,
 			"interval_start" : 0,

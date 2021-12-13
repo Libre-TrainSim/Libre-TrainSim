@@ -113,6 +113,7 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 
 
 # recursion_depth = -1 -> unlimited recursion
+# the result is saved to the 'found_files' variable
 func crawl_directory(found_files: Array, directory_path: String, file_extensions: Array, recursion_depth: int = -1) -> void:
 	var dir := Directory.new()
 	if dir.open(directory_path) != OK:

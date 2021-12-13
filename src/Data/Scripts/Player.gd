@@ -875,11 +875,11 @@ func check_station(delta: float) -> void:
 
 	# train just now fully in station and doors opened, or first station -> welcome him
 	if (not is_in_station and whole_train_in_station and \
-	((doorLeft and current_station_node.platform_side == PlatformSide.LEFT) \
-	or (doorRight and current_station_node.platform_side == PlatformSide.RIGHT)\
-	or (doorLeft and doorRight and current_station_node.platform_side == PlatformSide.BOTH)\
-	or current_station_node.platform_side == PlatformSide.NONE)\
-	or (current_station_table_entry.stop_type == StopType.BEGINNING and not is_in_station)):
+			((doorLeft and current_station_node.platform_side == PlatformSide.LEFT) \
+			or (doorRight and current_station_node.platform_side == PlatformSide.RIGHT)\
+			or (doorLeft and doorRight and current_station_node.platform_side == PlatformSide.BOTH)\
+			or current_station_node.platform_side == PlatformSide.NONE)\
+			or (current_station_table_entry.stop_type == StopType.BEGINNING and not is_in_station)):
 #		if current_station_table_entry.stop_type == StopType.BEGINNING:
 #			nextStationNodeOnTrack = current_station_node
 		is_in_station = true

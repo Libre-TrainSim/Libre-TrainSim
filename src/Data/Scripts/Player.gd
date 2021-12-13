@@ -800,7 +800,7 @@ func handle_signal(signal_name: String) -> void:
 			if speed == 0:
 				return
 			else:
-				Logger.warn("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].node_name).name], self)
+				Logger.err("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].node_name).name], self)
 
 		current_station_table_index = station_table_index
 		current_station_table_entry = station_table[current_station_table_index]

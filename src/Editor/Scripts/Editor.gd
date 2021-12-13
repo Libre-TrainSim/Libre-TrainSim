@@ -263,8 +263,6 @@ func clear_selected_object() -> void:
 	selected_object_type = ""
 	$EditorHUD.clear_current_object_name()
 
-	$EditorHUD/Dummy.grab_focus()
-
 
 func get_type_of_object(object: Node) -> String:
 	if object is MeshInstance:

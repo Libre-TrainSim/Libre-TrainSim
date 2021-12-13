@@ -469,15 +469,6 @@ margin_bottom = 106.0
 custom_fonts/font = ExtResource( 5 )
 text = "SAVE_AND_EXIT"
 
-[node name="Dummy" type="Button" parent="EditorHUD"]
-margin_left = -56.215
-margin_top = -51.2652
-margin_right = -44.215
-margin_bottom = -31.2652
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="SnapDialog" type="ConfirmationDialog" parent="EditorHUD"]
 anchor_left = 0.5
 anchor_top = 0.5

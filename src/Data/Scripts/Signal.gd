@@ -15,7 +15,7 @@ signal signal_changed(signal_instance)
 var signal_after: String = "" # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 var signal_after_node: Node # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 
-export var signal_free_time = -1 # the signal will be turned to status = 1 at this specified time. Set to -1 to deactivate. Only available in manual mode.
+export var signal_free_time: int = -1 # the signal will be turned to status = 1 at this specified time. Set to -1 to deactivate. Only available in manual mode.
 var did_set_pass: bool = false
 
 export var speed: float = -1 setget set_speed # SpeedLimit, which will be applied to the train. If -1: Speed Limit won't be changed by overdriving.

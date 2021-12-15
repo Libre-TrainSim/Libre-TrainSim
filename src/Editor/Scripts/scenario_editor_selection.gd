@@ -4,6 +4,8 @@ var selected_track: String = ""
 
 var available_scenarios = []
 
+var j_save_module = jSaveModule.new()
+
 func _ready():
 	update_track_list()
 
@@ -63,9 +65,9 @@ func _on_Back_ScenarioList_pressed():
 
 func _on_scenarioList_user_added_entry(entry_name):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	$jSaveModule.set_save_path(scenarios_folder.plus_file(entry_name + ".scenario"))
-	$jSaveModule.save_value("empty", true)
-	$jSaveModule.write_to_disk()
+	j_save_module.set_save_path(scenarios_folder.plus_file(entry_name + ".scenario"))
+	j_save_module.save_value("empty", true)
+	j_save_module.write_to_disk()
 
 
 func _on_scenarioList_user_duplicated_entries(source_entry_names, duplicated_entry_names):

@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/Scripts/Rail.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Objects/editor_arrow.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://Resources/Materials/Black_Plastic.tres" type="Material" id=3]
-[ext_resource path="res://Data/Scripts/aabb_to_collider.gd" type="Script" id=4]
 
 [sub_resource type="MultiMesh" id=1]
 transform_format = 1
@@ -56,7 +55,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 material_override = SubResource( 2 )
 mesh = ExtResource( 2 )
 material/0 = null
-script = ExtResource( 4 )
 
 [node name="AabbShape" type="CollisionShape" parent="Beginning"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.322, 0, 0 )

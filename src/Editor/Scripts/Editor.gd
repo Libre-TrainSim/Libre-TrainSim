@@ -446,7 +446,6 @@ func add_object(complete_path: String) -> void:
 	mesh_instance.translation = position
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
-	mesh_instance.add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 	set_selected_object(mesh_instance)
 
 

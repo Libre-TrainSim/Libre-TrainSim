@@ -241,7 +241,6 @@ func _add_node_to_scene_tree(parent: String, instance: Spatial):
 	if instance.has_method("update"):
 		instance.update()
 
-
 func append_deduplicated(A: Array, B: Array):
 	for b in B:
 		if not b in A:

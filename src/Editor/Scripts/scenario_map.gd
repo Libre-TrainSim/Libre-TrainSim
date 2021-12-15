@@ -138,9 +138,8 @@ func create_line2d_from_rail(rail, special: bool = false):
 	line.antialiased = true
 	line.name = rail.name
 
-	var collider = preload("res://Editor/Modules/Rail2DCollider.tscn").instance()
-	collider.input_handling_node = self
-	line.add_child(collider)
+	line.set_script(Rail2DCollider)
+	line.input_handling_node = self
 
 	if not special:
 		$Rails.add_child(line)

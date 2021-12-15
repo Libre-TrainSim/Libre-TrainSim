@@ -1,10 +1,18 @@
-extends Area2D
+class_name Rail2DCollider
+extends Line2D
 
 var input_handling_node: Node
 
 func _ready():
-	var line_points = get_parent().points
-	var width = get_parent().width
+	var area_2d = Area2D.new()
+	add_child(area_2d)
+	var collision_polygon_2d = CollisionPolygon2D.new()
+	collision_polygon_2d.name = "CollisionPolygon2D"
+	area_2d.add_child(collision_polygon_2d)
+	area_2d.connect("input_event", self, "_on_RailCollider_input_event")
+
+
+	var line_points = points
 	var polygon_points = PoolVector2Array()
 
 	# Create right outer line
@@ -45,9 +53,9 @@ func _ready():
 			direction += PI
 		polygon_points.append(line_points[i] - Vector2(0, width/2).rotated(direction))
 
-	$CollisionPolygon2D.polygon = polygon_points
+	collision_polygon_2d.polygon = polygon_points
 
 
 func _on_RailCollider_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.pressed:
-		input_handling_node._item_selected(get_parent().name, get_parent().get_parent().name)
+		input_handling_node._item_selected(name, get_parent().name)

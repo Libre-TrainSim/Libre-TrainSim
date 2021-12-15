@@ -112,7 +112,8 @@ func _ready() -> void:
 	if operation_mode == SignalOperationMode.BLOCK:
 		set_status(SignalStatus.GREEN)
 
-	if [SignalOperationMode.BLOCK, SignalOperationMode.STATION].has(operation_mode):
+	if operation_mode == SignalOperationMode.BLOCK or\
+			operation_mode == SignalOperationMode.STATION:
 		signal_free_time = -1
 
 

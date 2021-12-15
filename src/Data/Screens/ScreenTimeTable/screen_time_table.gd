@@ -14,7 +14,8 @@ func update_display(station_table: Array, current_station_table_index: int, is_i
 	var staString = ""
 	for i in range(current_station_table_index, station_table.size()):
 
-		if [StopType.BEGINNING, StopType.DO_NOT_STOP].has(station_table[i].stop_type):
+		if station_table[i].stop_type == StopType.BEGINNING or\
+				station_table[i].stop_type == StopType.DO_NOT_STOP:
 			arrString += "\n"
 		else:
 			arrString += Math.seconds_to_string(station_table[i].arrival_time) + "\n"
@@ -29,4 +30,3 @@ func update_display(station_table: Array, current_station_table_index: int, is_i
 	$Table/Arrival/Label2.text = arrString
 	$Table/Departure/Label2.text = depString
 	$Table/Station/Label2.text = staString
-

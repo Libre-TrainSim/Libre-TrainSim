@@ -156,7 +156,8 @@ func init(world : Node):
 
 	var signals = world.get_node("Signals").get_children()
 	for signal_instance in signals:
-		if ["Station", "Signal", "ContactPoint"].has(signal_instance.type):
+		if signal_instance.type == "Station" or signal_instance.type == "Signal"\
+				or  signal_instance.type == "ContactPoint":
 			create_signal(signal_instance)
 
 

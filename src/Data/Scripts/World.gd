@@ -6,22 +6,22 @@ var time: int = 0 # Unit: seconds (from 00:00:00)
 
 var default_persons_at_station: int = 20
 
-var globalDict: Dictionary = {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
+var globalDict := {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
 
-var currentScenario: String = ""
+var currentScenario := ""
 
-export (String) var FileName: String = "Name Me!"
+export (String) var FileName := "Name Me!"
 onready var trackName: String = FileName.rsplit("/")[0]
 
 var author: String = ""
 var picturePath: String = "res://screenshot.png"
 var description: String = ""
 
-var pending_train_spawns: Array = []
+var pending_train_spawns := []
 
 var player: LTSPlayer
 
-var personVisualInstances: Array = [
+var personVisualInstances := [
 	preload("res://Resources/Persons/Man_Young_01.tscn"),
 	preload("res://Resources/Persons/Man_Middleaged_01.tscn"),
 	preload("res://Resources/Persons/Woman_Young_01.tscn"),
@@ -38,7 +38,7 @@ var scenario_manager = ScenarioManager.new()
 
 
 # If the World is just use as data source (e.g. for scenario editor)
-var passive: bool = false
+var passive := false
 
 func _ready() -> void:
 	passive = Root.scenario_editor

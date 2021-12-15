@@ -1,7 +1,7 @@
 extends Area2D
 
 
-var input_handling_node
+var input_handling_node: Node
 
 
 func _on_Collider_input_event(viewport, event, shape_idx) -> void:

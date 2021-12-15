@@ -70,7 +70,6 @@ margin_left = 21.0
 margin_top = -1.05945
 margin_right = 323.0
 margin_bottom = -1.05945
-rect_min_size = Vector2( 328, 0 )
 theme = ExtResource( 5 )
 alignment = 1
 __meta__ = {
@@ -133,10 +132,9 @@ text = "MENU_QUIT"
 visible = false
 anchor_bottom = 1.0
 margin_left = 21.0
-margin_top = -1.05945
-margin_right = 323.0
-margin_bottom = -1.05945
-rect_min_size = Vector2( 328, 0 )
+margin_top = -1.0
+margin_right = 349.0
+margin_bottom = -1.0
 theme = ExtResource( 5 )
 alignment = 1
 __meta__ = {
@@ -145,21 +143,21 @@ __meta__ = {
 
 [node name="Back" type="Button" parent="CreateMenu"]
 margin_top = 222.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 271.0
 size_flags_horizontal = 3
 text = "MENU_BACK"
 
 [node name="TrackEditor" type="Button" parent="CreateMenu"]
 margin_top = 275.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 324.0
 size_flags_horizontal = 3
 text = "TRACK_EDITOR"
 
 [node name="ScenarioEditor" type="Button" parent="CreateMenu"]
 margin_top = 328.0
-margin_right = 330.0
+margin_right = 328.0
 margin_bottom = 377.0
 size_flags_horizontal = 3
 text = "SCENARIO_EDITOR"

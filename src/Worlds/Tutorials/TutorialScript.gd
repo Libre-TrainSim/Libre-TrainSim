@@ -117,7 +117,7 @@ func advanced() -> void:
 				next_step()
 		2:
 			message = TranslationServer.translate("TUTORIAL_1_1")
-			if player.get_node_or_null("SafetySystems/SifaModule") != null and player.get_node_or_null("SafetySystems/SifaModule").is_sifa_requesting_user_input():
+			if player.get_node_or_null("SafetySystems/SifaModule") != null and player.get_node_or_null("SafetySystems/SifaModule").stage > 0:
 				next_step()
 			elif player.get_node_or_null("SafetySystems/SifaModule") == null:
 				step = 4

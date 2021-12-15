@@ -29,11 +29,11 @@ func _get_type() -> String:
 var rail: Spatial
 func _ready():
 	if Root.Editor:
-		add_child(preload("res://Data/Modules/SelectCollider.tscn").instance())
 		set_to_rail()
 		update_operation_mode_of_assigned_signal()
 	if not Root.Editor:
 		$Mesh.queue_free()
+		$SelectCollider.queue_free()
 		set_to_rail()
 		update_operation_mode_of_assigned_signal()
 		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version

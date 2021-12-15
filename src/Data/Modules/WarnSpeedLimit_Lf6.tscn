@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
 [ext_resource path="res://Data/Scripts/SpeedLimitWarnSignal.gd" type="Script" id=2]
@@ -17,6 +17,9 @@ size = 160
 extra_spacing_top = -30
 extra_spacing_bottom = -30
 font_data = SubResource( 2 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.078297, 1.85202, 0.456797 )
 
 [node name="WarnSpeed_Lf6" type="Spatial" groups=["Signal"]]
 script = ExtResource( 2 )
@@ -54,3 +57,10 @@ text = "16"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.096594, -1.2, 1.56524 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.078297, 1.85202, 0.456797 )
+shape = SubResource( 4 )

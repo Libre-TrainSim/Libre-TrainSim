@@ -2,10 +2,12 @@
 
 [ext_resource path="res://Resources/Objects/editor_arrow.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://Data/Scripts/ContactPoint.gd" type="Script" id=2]
-[ext_resource path="res://Data/Scripts/aabb_to_collider.gd" type="Script" id=3]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 1, 0.560784, 0, 1 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 1.25213, 0.500005, 0.963791 )
 
 [node name="ContactPoint" type="Spatial" groups=["Signal"]]
 script = ExtResource( 2 )
@@ -14,9 +16,14 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289813, 0 )
 mesh = ExtResource( 1 )
 material/0 = SubResource( 1 )
-script = ExtResource( 3 )
-target = NodePath(".")
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929181, -0.210187, -0.892973 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25213, 0.500005, 0.963791 )
+shape = SubResource( 2 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

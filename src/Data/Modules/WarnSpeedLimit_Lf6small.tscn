@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
 [ext_resource path="res://Data/Fonts/Oswald-Bold.ttf" type="DynamicFontData" id=2]
@@ -16,7 +16,10 @@ extra_spacing_top = -30
 extra_spacing_bottom = -30
 font_data = ExtResource( 2 )
 
-[node name="WarnSpeed_Lf6_small" type="Spatial"]
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.0652475, 1.05279, 0.380659 )
+
+[node name="WarnSpeed_Lf6_small" type="Spatial" groups=["Signal"]]
 script = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
@@ -51,3 +54,10 @@ text = "16"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.080495, -0.818513, 1.5822 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0652475, 1.05279, 0.380659 )
+shape = SubResource( 3 )

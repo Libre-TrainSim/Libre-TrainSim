@@ -15,21 +15,19 @@ signal signal_changed(signal_instance)
 var signal_after: String = "" # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 var signal_after_node: Node # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 
-export var set_pass_at_h: int = -1 # If these 3 variables represent a real time (24h format), the signal will be turned green at this specified time.
-export var set_pass_at_m: int = 0
-export var set_pass_at_s: int = 0
+export var signal_free_time: int = -1 # the signal will be turned to status = 1 at this specified time. Set to -1 to deactivate. Only available in manual mode.
 var did_set_pass: bool = false
 
 export var speed: float = -1 setget set_speed # SpeedLimit, which will be applied to the train. If -1: Speed Limit won't be changed by overdriving.
 var warn_speed: float = -1 setget set_warn_speed # Displays the speed of the following speedlimit. Just used for the player train. It doesn't affect any train..
-
-export var is_block_signal: bool = false setget on_update_block_signal_setting
 
 export (String, FILE, "*.tscn,*.scn") var visual_instance_path: String = "res://Resources/SignalTypes/Ks/Ks.tscn"
 export (String) var attached_rail: String # Internal. Never change this via script.
 var attached_rail_node: Node
 export var forward: bool = true # Internal. Never change this via script.
 export (int) var on_rail_position: int # Internal. Never change this via script.
+
+export var operation_mode: int = SignalOperationMode.BLOCK
 
 
 func _get_type() -> String:
@@ -48,7 +46,11 @@ func update_visual_instance() -> void:
 	visible = attached_rail_node.visible
 	if not attached_rail_node.visible:
 		if get_node_or_null("VisualInstance") != null:
+			self.disconnect("signal_changed", $VisualInstance, "update_visual_instance")
 			$VisualInstance.queue_free()
+			if get_node_or_null("SelectCollider") != null:
+				$SelectCollider.queue_free()
+
 		return
 
 	if get_node_or_null("VisualInstance") == null:
@@ -71,18 +73,22 @@ func connect_visual_instance() -> void:
 
 
 func update() -> void:
-	if Engine.is_editor_hint() and is_block_signal:
+	if Root.Editor and operation_mode == SignalOperationMode.BLOCK:
 		set_status(SignalStatus.GREEN)
 
 	assert(not not world)
 
+	if operation_mode == SignalOperationMode.STATION:
+		if world.get_assigned_station_of_signal(name) == null:
+			Logger.warn("%s should run in station mode, but can't find it's correspondending station. Switching to block mode..." % name, "Signal")
+			set_operation_mode(SignalOperationMode.BLOCK)
+
 	if signal_after_node == null and signal_after != "":
 		signal_after_node = world.get_node("Signals/"+String(signal_after))
 
-	if not did_set_pass and not Engine.is_editor_hint() and not Root.Editor and world.time != null:
-		if world.time[0] >= set_pass_at_h and world.time[1] >= set_pass_at_m and world.time[2] >= set_pass_at_s:
-			set_status(SignalStatus.GREEN)
-			did_set_pass = true
+	if operation_mode == SignalOperationMode.MANUAL and signal_free_time != -1 and not did_set_pass and not Root.Editor and world.time > signal_free_time:
+		set_status(SignalStatus.GREEN)
+		did_set_pass = true
 
 	# set signal orange if next signal is RED and this signal is not RED, but only for Pre- and Combined Signals
 	if signal_type != SignalType.MAIN and status == SignalStatus.GREEN and signal_after_node != null and signal_after_node.status == SignalStatus.RED:
@@ -100,20 +106,16 @@ func _ready() -> void:
 	else:
 		create_visual_instance()
 
-	# Set Signal while adding to the Signals node
-	if Engine.is_editor_hint() and not get_parent().name == "Signals":
-		if get_parent().is_in_group("Rail"):
-			attached_rail = get_parent().name
-		var signals = world.get_node("Signals")
-		get_parent().remove_child(self)
-		signals.add_child(self)
-		update()
-
-	if is_block_signal:
-		set_status(SignalStatus.GREEN)
-
 	set_to_rail()
 	update()
+
+	if operation_mode == SignalOperationMode.BLOCK:
+		set_status(SignalStatus.GREEN)
+
+	if operation_mode == SignalOperationMode.BLOCK or\
+			operation_mode == SignalOperationMode.STATION:
+		signal_free_time = -1
+
 
 
 # signals necessary for RailMap to work
@@ -149,49 +151,39 @@ func set_to_rail() -> void:
 	assert(not not world)
 
 	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
-		var rail = get_parent().get_parent().get_node("Rails/"+attached_rail)
-		rail.register_signal(self.name, on_rail_position)
-		self.translation = rail.get_pos_at_RailDistance(on_rail_position)
-		self.rotation_degrees.y = rail.get_deg_at_RailDistance(on_rail_position)
-		if not forward:
-			self.rotation_degrees.y += 180
+		var rail: Node = world.get_node("Rails/"+attached_rail)
+		if not Root.scenario_editor:
+			rail.register_signal(self.name, on_rail_position)
+			self.translation = rail.get_pos_at_RailDistance(on_rail_position)
+			self.rotation_degrees.y = rail.get_deg_at_RailDistance(on_rail_position)
+			if not forward:
+				self.rotation_degrees.y += 180
 
 
 func give_signal_free() -> void:
-	if is_block_signal:
+	if operation_mode == SignalOperationMode.BLOCK:
 		set_status(SignalStatus.GREEN)
 
 
-func get_scenario_data() -> Dictionary:
-	var d = {}
-	d.status = status
-	d.set_pass_at_h = set_pass_at_h
-	d.set_pass_at_m = set_pass_at_m
-	d.set_pass_at_s = set_pass_at_s
-	d.speed = speed
-	d.is_block_signal = is_block_signal
-	return d
-
-
-func set_scenario_data(d: Dictionary) -> void:
+func set_data(d: Dictionary) -> void:
 	set_status(d.status)
-	set_pass_at_h = d.set_pass_at_h
-	set_pass_at_m = d.set_pass_at_m
-	set_pass_at_s = d.set_pass_at_s
+	signal_free_time = d.signal_free_time
 	set_speed(d.speed)
-	is_block_signal = d.get("is_block_signal", false)
+	set_operation_mode(d.operation_mode)
 
 
 func reset() -> void:
 	set_status(SignalStatus.RED)
-	set_pass_at_h = 25
-	set_pass_at_m = 0
-	set_pass_at_s = 0
+	signal_free_time = -1
 	set_speed(-1)
-	is_block_signal = false
+	operation_mode = SignalOperationMode.BLOCK
 
 
-func on_update_block_signal_setting(new_value: bool) -> void:
-	if new_value == false:
-		status = SignalStatus.RED
-	is_block_signal = new_value
+func set_operation_mode(mode: int):
+	operation_mode = mode
+	if operation_mode == SignalOperationMode.BLOCK:
+		set_status(SignalStatus.GREEN)
+		signal_free_time = -1
+	elif operation_mode == SignalOperationMode.STATION:
+		set_status(SignalStatus.RED)
+		signal_free_time = -1

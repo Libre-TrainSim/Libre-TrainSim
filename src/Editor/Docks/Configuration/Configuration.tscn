@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
-[ext_resource path="res://addons/jean28518.jTools/jTable/jTable.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Editor/Docks/Configuration/TimeField.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/jean28518.jTools/jSaveManager/jSaveModule.tscn" type="PackedScene" id=4]
 
-[node name="Configuration" type="TabContainer"]
+[node name="Configuration" type="VBoxContainer"]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,56 +12,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="World Configuration" type="VBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="World Configuration" type="Label" parent="World Configuration"]
-margin_right = 349.0
+[node name="Label2" type="Label" parent="."]
+margin_right = 357.0
 margin_bottom = 14.0
 text = "World Configuration:"
 align = 1
 
-[node name="GridContainer" type="GridContainer" parent="World Configuration"]
+[node name="GridContainer" type="GridContainer" parent="."]
 margin_top = 18.0
-margin_right = 349.0
+margin_right = 357.0
 margin_bottom = 174.0
 columns = 2
 
-[node name="Label" type="Label" parent="World Configuration/GridContainer"]
-visible = false
-margin_top = 5.0
-margin_right = 115.0
-margin_bottom = 19.0
-text = "World Filename: "
-
-[node name="FileName" type="LineEdit" parent="World Configuration/GridContainer"]
-visible = false
-margin_right = 905.0
-margin_bottom = 24.0
-hint_tooltip = "This name is very important. That name will be also shown in the Main Menu. 
-Example:  If you world is named 'World.tscn' then in this field there has to stay 'World'."
-size_flags_horizontal = 3
-caret_blink = true
-caret_blink_speed = 0.5
-
-[node name="Label2" type="Label" parent="World Configuration/GridContainer"]
+[node name="Label2" type="Label" parent="GridContainer"]
 margin_top = 5.0
 margin_right = 115.0
 margin_bottom = 19.0
 text = "Release Date:"
 
-[node name="ReleaseDate" type="HBoxContainer" parent="World Configuration/GridContainer"]
+[node name="ReleaseDate" type="HBoxContainer" parent="GridContainer"]
 margin_left = 119.0
-margin_right = 349.0
+margin_right = 357.0
 margin_bottom = 24.0
 
-[node name="Day" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
-margin_right = 74.0
+[node name="Day" type="SpinBox" parent="GridContainer/ReleaseDate"]
+margin_right = 76.0
 margin_bottom = 24.0
 hint_tooltip = "Day"
 size_flags_horizontal = 3
@@ -73,9 +45,9 @@ max_value = 31.0
 value = 1.0
 suffix = "D"
 
-[node name="Month" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
-margin_left = 78.0
-margin_right = 152.0
+[node name="Month" type="SpinBox" parent="GridContainer/ReleaseDate"]
+margin_left = 80.0
+margin_right = 157.0
 margin_bottom = 24.0
 hint_tooltip = "Month
 "
@@ -85,9 +57,9 @@ max_value = 12.0
 value = 1.0
 suffix = "M"
 
-[node name="Year" type="SpinBox" parent="World Configuration/GridContainer/ReleaseDate"]
-margin_left = 156.0
-margin_right = 230.0
+[node name="Year" type="SpinBox" parent="GridContainer/ReleaseDate"]
+margin_left = 161.0
+margin_right = 238.0
 margin_bottom = 24.0
 hint_tooltip = "Month
 "
@@ -98,865 +70,54 @@ value = 2020.0
 allow_greater = true
 suffix = "Y"
 
-[node name="Label3" type="Label" parent="World Configuration/GridContainer"]
+[node name="Label3" type="Label" parent="GridContainer"]
 margin_top = 33.0
 margin_right = 115.0
 margin_bottom = 47.0
 text = "Author Name(s):"
 
-[node name="Author" type="LineEdit" parent="World Configuration/GridContainer"]
+[node name="Author" type="LineEdit" parent="GridContainer"]
 margin_left = 119.0
 margin_top = 28.0
-margin_right = 349.0
+margin_right = 357.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 caret_blink = true
-caret_blink_speed = 0.5
 
-[node name="Label4" type="Label" parent="World Configuration/GridContainer"]
+[node name="Label4" type="Label" parent="GridContainer"]
 margin_top = 99.0
 margin_right = 115.0
 margin_bottom = 113.0
 text = "Track Description:"
 
-[node name="TrackDescription" type="TextEdit" parent="World Configuration/GridContainer"]
+[node name="TrackDescription" type="TextEdit" parent="GridContainer"]
 margin_left = 119.0
 margin_top = 56.0
-margin_right = 349.0
+margin_right = 357.0
 margin_bottom = 156.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 
-[node name="SaveWorldConfig" type="Button" parent="World Configuration"]
-margin_left = 111.0
+[node name="Label" type="Label" parent="."]
 margin_top = 178.0
-margin_right = 237.0
-margin_bottom = 198.0
-size_flags_horizontal = 4
-text = "Save World Config"
-
-[node name="HSeparator" type="HSeparator" parent="World Configuration"]
-visible = false
-margin_top = 202.0
-margin_right = 792.0
-margin_bottom = 206.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WorldLoading" type="VBoxContainer" parent="World Configuration"]
-visible = false
-margin_top = 210.0
-margin_right = 792.0
-margin_bottom = 314.0
-
-[node name="AllChunks" type="CheckBox" parent="World Configuration/WorldLoading"]
-margin_right = 792.0
-margin_bottom = 24.0
-text = "All Chunks"
-
-[node name="RailConfiguration" type="HBoxContainer" parent="World Configuration/WorldLoading"]
-margin_top = 28.0
-margin_right = 792.0
-margin_bottom = 52.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="World Configuration/WorldLoading/RailConfiguration"]
-margin_top = 5.0
-margin_right = 64.0
-margin_bottom = 19.0
-text = "From Rail:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FromRail" type="LineEdit" parent="World Configuration/WorldLoading/RailConfiguration"]
-margin_left = 68.0
-margin_right = 401.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-
-[node name="Label2" type="Label" parent="World Configuration/WorldLoading/RailConfiguration"]
-margin_left = 405.0
-margin_top = 5.0
-margin_right = 455.0
-margin_bottom = 19.0
-text = "To Rail: "
-
-[node name="ToRail" type="LineEdit" parent="World Configuration/WorldLoading/RailConfiguration"]
-margin_left = 459.0
-margin_right = 792.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-
-[node name="IncludeNeighbours" type="CheckBox" parent="World Configuration/WorldLoading"]
-margin_top = 56.0
-margin_right = 792.0
-margin_bottom = 80.0
-text = "Include Chunk Neighbours"
-
-[node name="Buttons" type="HBoxContainer" parent="World Configuration/WorldLoading"]
-margin_top = 84.0
-margin_right = 792.0
-margin_bottom = 104.0
-custom_constants/separation = 20
-alignment = 1
-
-[node name="Save" type="Button" parent="World Configuration/WorldLoading/Buttons"]
-margin_left = 201.0
-margin_right = 292.0
-margin_bottom = 20.0
-text = "Save Chunks"
-
-[node name="Unload" type="Button" parent="World Configuration/WorldLoading/Buttons"]
-margin_left = 312.0
-margin_right = 479.0
-margin_bottom = 20.0
-text = "Unload and Save Chunks"
-
-[node name="Load" type="Button" parent="World Configuration/WorldLoading/Buttons"]
-margin_left = 499.0
-margin_right = 591.0
-margin_bottom = 20.0
-text = "Load Chunks"
-
-[node name="HSeparator2" type="HSeparator" parent="World Configuration"]
-margin_top = 202.0
-margin_right = 349.0
-margin_bottom = 206.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Notes" type="VBoxContainer" parent="World Configuration"]
-margin_top = 210.0
-margin_right = 349.0
-margin_bottom = 564.0
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="World Configuration/Notes"]
-margin_right = 349.0
-margin_bottom = 14.0
+margin_right = 357.0
+margin_bottom = 192.0
 text = "Notes for Authors:"
 align = 1
 
-[node name="RichTextLabel" type="TextEdit" parent="World Configuration/Notes"]
-margin_top = 18.0
-margin_right = 349.0
-margin_bottom = 330.0
-rect_min_size = Vector2( 0, 100 )
-size_flags_vertical = 3
-
-[node name="Save" type="Button" parent="World Configuration/Notes"]
-margin_left = 133.0
-margin_top = 334.0
-margin_right = 216.0
-margin_bottom = 354.0
-size_flags_horizontal = 4
-text = "Save Notes"
-
-[node name="Scenarios" type="ScrollContainer" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Scenarios"]
-margin_right = 349.0
-margin_bottom = 564.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer"]
-margin_right = 792.0
-margin_bottom = 14.0
-text = "Scenarios:"
-align = 1
-
-[node name="ItemList" type="ItemList" parent="Scenarios/VBoxContainer"]
-margin_top = 18.0
-margin_right = 792.0
-margin_bottom = 118.0
-rect_min_size = Vector2( 0, 100 )
-items = [ "Test", null, false, "Test2", null, false, "Element 2", null, false, "Element 3", null, false, "Element 4", null, false, "Element 5", null, false, "Element 6", null, false ]
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Scenarios/VBoxContainer"]
-margin_top = 122.0
-margin_right = 792.0
-margin_bottom = 146.0
-
-[node name="New" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_right = 40.0
-margin_bottom = 24.0
-text = "New"
-
-[node name="LineEdit" type="LineEdit" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 44.0
-margin_right = 588.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-caret_blink = true
-caret_blink_speed = 0.5
-
-[node name="Rename" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 592.0
-margin_right = 656.0
-margin_bottom = 24.0
-text = "Rename"
-
-[node name="Duplicate" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 660.0
-margin_right = 733.0
-margin_bottom = 24.0
-text = "Duplicate"
-
-[node name="Delete" type="Button" parent="Scenarios/VBoxContainer/HBoxContainer"]
-margin_left = 737.0
-margin_right = 792.0
-margin_bottom = 24.0
-text = "Delete"
-
-[node name="CurrentScenario" type="HBoxContainer" parent="Scenarios/VBoxContainer"]
-margin_left = 310.0
-margin_top = 150.0
-margin_right = 481.0
-margin_bottom = 174.0
-size_flags_horizontal = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label3" type="Label" parent="Scenarios/VBoxContainer/CurrentScenario"]
-margin_top = 5.0
-margin_right = 109.0
-margin_bottom = 19.0
-text = "Current Scenario:"
-
-[node name="LineEdit" type="LineEdit" parent="Scenarios/VBoxContainer/CurrentScenario"]
-margin_left = 113.0
-margin_right = 171.0
-margin_bottom = 24.0
-editable = false
-expand_to_text_length = true
-caret_blink = true
-caret_blink_speed = 0.5
-
-[node name="Settings" type="VBoxContainer" parent="Scenarios/VBoxContainer"]
-margin_top = 178.0
-margin_right = 792.0
-margin_bottom = 440.0
-
-[node name="Tab" type="TabContainer" parent="Scenarios/VBoxContainer/Settings"]
-margin_right = 792.0
-margin_bottom = 262.0
-
-[node name="General" type="VBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="Time" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/General"]
-margin_right = 784.0
-margin_bottom = 24.0
-alignment = 1
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General/Time"]
-margin_left = 241.0
-margin_top = 5.0
-margin_right = 277.0
-margin_bottom = 19.0
-text = "Time:"
-
-[node name="TimeHour" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/General/Time"]
-margin_left = 281.0
-margin_right = 355.0
-margin_bottom = 24.0
-max_value = 23.0
-suffix = "h"
-
-[node name="Label2" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General/Time"]
-margin_left = 359.0
-margin_top = 5.0
-margin_right = 371.0
-margin_bottom = 19.0
-text = " : "
-
-[node name="TimeMinute" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/General/Time"]
-margin_left = 375.0
-margin_right = 449.0
-margin_bottom = 24.0
-max_value = 59.0
-suffix = "m"
-
-[node name="Label3" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General/Time"]
-margin_left = 453.0
-margin_top = 5.0
-margin_right = 465.0
-margin_bottom = 19.0
-text = " : "
-
-[node name="TimeSecond" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/General/Time"]
-margin_left = 469.0
-margin_right = 543.0
-margin_bottom = 24.0
-max_value = 59.0
-suffix = "s"
-
-[node name="TrainLength" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/General"]
-margin_top = 28.0
-margin_right = 784.0
-margin_bottom = 52.0
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General/TrainLength"]
-margin_top = 5.0
-margin_right = 181.0
-margin_bottom = 19.0
-text = "Minimal Player Train Length:"
-
-[node name="SpinBox" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/General/TrainLength"]
-margin_left = 185.0
-margin_right = 784.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-max_value = 1000.0
-step = 0.01
-allow_greater = true
-suffix = "m"
-
-[node name="Label3" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General"]
-margin_top = 56.0
-margin_right = 784.0
-margin_bottom = 70.0
-text = "Description:"
-align = 1
-
-[node name="Description" type="TextEdit" parent="Scenarios/VBoxContainer/Settings/Tab/General"]
-margin_top = 74.0
-margin_right = 784.0
-margin_bottom = 174.0
-rect_min_size = Vector2( 0, 100 )
-
-[node name="Duration" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/General"]
-margin_top = 178.0
-margin_right = 784.0
-margin_bottom = 202.0
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General/Duration"]
-margin_top = 5.0
-margin_right = 117.0
-margin_bottom = 19.0
-text = "Scenario Duration:"
-
-[node name="SpinBox" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/General/Duration"]
-margin_left = 121.0
-margin_right = 784.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-max_value = 60.0
-allow_greater = true
-
-[node name="Label2" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/General/Duration"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 952.0
-margin_top = 5.0
-margin_right = 944.0
-margin_bottom = -5.0
-text = " Minutes"
-
-[node name="Save" type="Button" parent="Scenarios/VBoxContainer/Settings/Tab/General"]
-margin_left = 344.0
-margin_top = 206.0
-margin_right = 439.0
-margin_bottom = 226.0
-size_flags_horizontal = 4
-text = "Save General"
-
-[node name="Trains" type="VBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="ItemList2" type="ItemList" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_right = 772.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
-items = [ "Player", null, false ]
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_top = 104.0
-margin_right = 772.0
-margin_bottom = 128.0
-
-[node name="New" type="Button" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2"]
-margin_right = 40.0
-margin_bottom = 24.0
-text = "New"
-
-[node name="LineEdit" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2"]
-margin_left = 44.0
-margin_right = 568.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-caret_blink = true
-caret_blink_speed = 0.5
-
-[node name="Rename" type="Button" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2"]
-margin_left = 572.0
-margin_right = 636.0
-margin_bottom = 24.0
-text = "Rename"
-
-[node name="Duplicate" type="Button" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2"]
-margin_left = 640.0
-margin_right = 713.0
-margin_bottom = 24.0
-text = "Duplicate"
-
-[node name="Delete" type="Button" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2"]
-margin_left = 717.0
-margin_right = 772.0
-margin_bottom = 24.0
-text = "Delete"
-
-[node name="HSeparator3" type="HSeparator" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_top = 132.0
-margin_right = 772.0
-margin_bottom = 136.0
-
-[node name="PreferredTrain" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_top = 140.0
-margin_right = 772.0
-margin_bottom = 164.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain"]
-margin_top = 5.0
-margin_right = 98.0
-margin_bottom = 19.0
-text = "Preferred Train:"
-align = 1
-
-[node name="TrainName" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/PreferredTrain"]
-margin_left = 102.0
-margin_right = 772.0
-margin_bottom = 24.0
-hint_tooltip = "In here you can optionally specify the train. For example \"JFR1_Grey\". If the train name was not found, the current train of the player is loaded. 
-A player can choose a train which he want. But if something is insertet here, the train will be preselected while selecting the scenario in main menu."
-size_flags_horizontal = 3
-
-[node name="Route" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_top = 168.0
-margin_right = 772.0
-margin_bottom = 192.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/Route"]
-margin_top = 5.0
-margin_right = 41.0
-margin_bottom = 19.0
-text = "Route:"
-align = 1
-
-[node name="Route" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/Route"]
-margin_left = 45.0
-margin_right = 772.0
-margin_bottom = 24.0
-hint_tooltip = "Here you define all rail names, over them the train have defintelty to drive. Commonly here are only rails at splitting switches.Seperate the Railnames with a blank."
-size_flags_horizontal = 3
-
-[node name="GridContainer" type="GridContainer" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
+[node name="Notes" type="TextEdit" parent="."]
 margin_top = 196.0
-margin_right = 772.0
-margin_bottom = 300.0
-columns = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_right = 357.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_top = 5.0
-margin_right = 84.0
-margin_bottom = 19.0
-text = "Start Rail:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartRail" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 88.0
-margin_right = 350.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-caret_blink = true
-caret_blink_speed = 0.5
-
-[node name="Label2" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 354.0
-margin_top = 5.0
-margin_right = 518.0
-margin_bottom = 19.0
-text = "Start Rail Position:"
-
-[node name="StartRailPosition" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 522.0
-margin_right = 772.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-max_value = 1000.0
-step = 0.01
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label3" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_top = 31.0
-margin_right = 84.0
-margin_bottom = 45.0
-text = "Direction:"
-
-[node name="Direction" type="OptionButton" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 88.0
-margin_top = 28.0
-margin_right = 350.0
-margin_bottom = 48.0
-size_flags_horizontal = 3
-text = "Forward"
-items = [ "Backwards", null, false, 0, null, "Forward", null, false, 1, null ]
-selected = 1
-
-[node name="Label9" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 354.0
-margin_top = 31.0
-margin_right = 518.0
-margin_bottom = 45.0
-text = "Door Configration at Start:"
-
-[node name="DoorConfiguration" type="OptionButton" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 522.0
-margin_top = 28.0
-margin_right = 772.0
-margin_bottom = 48.0
-size_flags_horizontal = 3
-text = "No Doors opened"
-align = 1
-items = [ "No Doors opened", null, false, 0, null, "Left Doors opened", null, false, 1, null, "Right Doors opened", null, false, 2, null, "Both Doors opened", null, false, 3, null ]
-selected = 0
-
-[node name="Label4" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_top = 57.0
-margin_right = 84.0
-margin_bottom = 71.0
-text = "Spawn Time:"
-
-[node name="SpawnTime" type="HBoxContainer" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 88.0
-margin_top = 52.0
-margin_right = 350.0
-margin_bottom = 76.0
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="H" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_right = 74.0
-margin_bottom = 24.0
-min_value = -1.0
-max_value = 23.0
-value = -1.0
-
-[node name="Label" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 78.0
-margin_top = 5.0
-margin_right = 90.0
-margin_bottom = 19.0
-text = " : "
-
-[node name="M" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 94.0
-margin_right = 168.0
-margin_bottom = 24.0
-max_value = 59.0
-
-[node name="Label2" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 172.0
-margin_top = 5.0
-margin_right = 184.0
-margin_bottom = 19.0
-text = " : "
-
-[node name="S" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer/SpawnTime"]
-margin_left = 188.0
-margin_right = 262.0
-margin_bottom = 24.0
-max_value = 59.0
-
-[node name="Label5" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 354.0
-margin_top = 57.0
-margin_right = 518.0
-margin_bottom = 71.0
-text = "Despawn Rail:"
-
-[node name="DespawnRail" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 522.0
-margin_top = 52.0
-margin_right = 772.0
-margin_bottom = 76.0
-
-[node name="Label6" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_top = 85.0
-margin_right = 84.0
-margin_bottom = 99.0
-text = "Initial Speed:"
-
-[node name="InitialSpeed" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 88.0
-margin_top = 80.0
-margin_right = 350.0
-margin_bottom = 104.0
-max_value = 10000.0
-
-[node name="Label7" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 354.0
-margin_top = 85.0
-margin_right = 518.0
-margin_bottom = 99.0
-text = "Inital SpeedLimit"
-
-[node name="InitialSpeedLimit" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/GridContainer"]
-margin_left = 522.0
-margin_top = 80.0
-margin_right = 772.0
-margin_bottom = 104.0
-min_value = -1.0
-max_value = 10000.0
-value = -1.0
-
-[node name="Label2" type="Label" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_top = 304.0
-margin_right = 772.0
-margin_bottom = 318.0
-text = "Stations:"
-align = 1
-
-[node name="stationTable" parent="Scenarios/VBoxContainer/Settings/Tab/Trains" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 322.0
-margin_right = 772.0
-margin_bottom = 522.0
-rect_min_size = Vector2( 0, 200 )
-headings = [ "Station Node Name", "Station Name", "Arrival", "Departure", "Mininmal Halt Time", "Stop Type", "Waiting Persons", "Leaving Persons", "Arrival Announce Path", "Departure Announce Path", "Approach Announce Path" ]
-keys = [ "nodeName", "stationName", "arrivalTime", "departureTime", "haltTime", "stopType", "waitingPersons", "leavingPersons", "arrivalAnnouncePath", "departureAnnouncePath", "approachAnnouncePath" ]
-show_clear_button = false
-
-[node name="NodeName" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_right = 58.0
-margin_bottom = 24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StationName" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_right = 58.0
-margin_bottom = 24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ArrivalTime" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable" instance=ExtResource( 3 )]
-visible = false
-
-[node name="DepartureTime" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable" instance=ExtResource( 3 )]
-visible = false
-
-[node name="MinimalHaltTime" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_right = 74.0
-margin_bottom = 24.0
-max_value = 10000.0
-value = 30.0
-suffix = "s"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StopType" type="OptionButton" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_top = -86.0
-margin_right = 164.0
-margin_bottom = -66.0
-text = "Do not halt"
-items = [ "Do not halt", null, false, 0, null, "Regular Stop", null, false, 1, null, "Beginning Station", null, false, 2, null, "End Station", null, false, 3, null ]
-selected = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WaitingPersons1" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_top = -86.0
-margin_right = 164.0
-margin_bottom = -62.0
-value = 100.0
-allow_greater = true
-suffix = "%"
-
-[node name="LeavingPersons1" type="SpinBox" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_top = -86.0
-margin_right = 164.0
-margin_bottom = -62.0
-value = 50.0
-suffix = "%"
-
-[node name="ArrivalAnnouncePath" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_right = 58.0
-margin_bottom = 24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DepartureAnnouncePath" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_right = 58.0
-margin_bottom = 24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ApproachAnnouncePath" type="LineEdit" parent="Scenarios/VBoxContainer/Settings/Tab/Trains/stationTable"]
-visible = false
-margin_right = 58.0
-margin_bottom = 24.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SaveTrain" type="Button" parent="Scenarios/VBoxContainer/Settings/Tab/Trains"]
-margin_left = 348.0
-margin_top = 526.0
-margin_right = 424.0
-margin_bottom = 546.0
+[node name="SaveWorldConfig" type="Button" parent="."]
+margin_left = 157.0
+margin_top = 580.0
+margin_right = 200.0
+margin_bottom = 600.0
 size_flags_horizontal = 4
-text = "Save Train"
+text = "SAVE"
 
-[node name="HSeparator" type="HSeparator" parent="Scenarios/VBoxContainer"]
-margin_top = 444.0
-margin_right = 792.0
-margin_bottom = 448.0
-
-[node name="Label2" type="Label" parent="Scenarios/VBoxContainer"]
-margin_top = 452.0
-margin_right = 792.0
-margin_bottom = 466.0
-text = "Signal Data (Signals, Stations, Contact Points):"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SaveSignalData" type="Button" parent="Scenarios/VBoxContainer"]
-margin_top = 470.0
-margin_right = 792.0
-margin_bottom = 490.0
-size_flags_horizontal = 3
-text = "Save Signal Data"
-
-[node name="CopySignalDataFrom" type="HBoxContainer" parent="Scenarios/VBoxContainer"]
-margin_top = 494.0
-margin_right = 792.0
-margin_bottom = 514.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CopyAndOverwriteSignalDataFrom" type="Button" parent="Scenarios/VBoxContainer/CopySignalDataFrom"]
-margin_right = 792.0
-margin_bottom = 20.0
-hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
-size_flags_horizontal = 3
-text = "Get and Overwrite current Signal Data From..."
-
-[node name="PopupMenu" type="PopupMenu" parent="Scenarios/VBoxContainer/CopySignalDataFrom"]
-margin_left = 717.0
-margin_right = 780.0
-margin_bottom = 88.0
-items = [ "Item 0", null, 0, false, false, 0, 0, null, "", false, "Item 1", null, 0, false, false, 1, 0, null, "", false, "Item 2", null, 0, false, false, 2, 0, null, "", false, "Item 3", null, 0, false, false, 3, 0, null, "", false ]
-allow_search = true
-
-[node name="ResetSignals" type="Button" parent="Scenarios/VBoxContainer"]
-margin_top = 518.0
-margin_right = 792.0
-margin_bottom = 538.0
-hint_tooltip = "! All Signals and Stations will be set to the saved scenario configuration !"
-size_flags_horizontal = 3
-text = "Reset Signal Data"
-
-[node name="FileDialog" type="FileDialog" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-popup_exclusive = true
-window_title = "Open a File"
-mode = 0
-filters = PoolStringArray( "*.obj" )
-show_hidden_files = true
-
-[node name="jSaveModule" parent="." instance=ExtResource( 4 )]
-
-[connection signal="pressed" from="World Configuration/SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]
-[connection signal="pressed" from="World Configuration/WorldLoading/AllChunks" to="." method="_on_WorldLoading_AllChunks_pressed"]
-[connection signal="pressed" from="World Configuration/WorldLoading/IncludeNeighbours" to="." method="_on_WorldLoading_AllChunks_pressed"]
-[connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Save" to="." method="_on_Chunks_Save_pressed"]
-[connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Unload" to="." method="_on_WorldLoading_Unload_pressed"]
-[connection signal="pressed" from="World Configuration/WorldLoading/Buttons/Load" to="." method="_on_WorldLoading_Load_pressed"]
-[connection signal="pressed" from="World Configuration/Notes/Save" to="." method="_on_Notes_Save_pressed"]
-[connection signal="item_selected" from="Scenarios/VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/New" to="." method="_on_NewScenario_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/Rename" to="." method="_on_RenameScenario_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/Duplicate" to="." method="_on_DuplicateScenario_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/HBoxContainer/Delete" to="." method="_on_DeleteScenario_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/General/Save" to="." method="_on_SaveGeneral_pressed"]
-[connection signal="item_selected" from="Scenarios/VBoxContainer/Settings/Tab/Trains/ItemList2" to="." method="_on_ItemList2_Train_selected"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/New" to="." method="_on_NewTrain_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/Rename" to="." method="_on_RenameTrain_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/Duplicate" to="." method="_on_DuplicateTrain_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/HBoxContainer2/Delete" to="." method="_on_DeleteTrain_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/Settings/Tab/Trains/SaveTrain" to="." method="_on_SaveTrain_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/SaveSignalData" to="." method="_on_SaveSignalData_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/CopySignalDataFrom/CopyAndOverwriteSignalDataFrom" to="." method="_on_CopyAndOverwriteSignalDataFrom_pressed"]
-[connection signal="index_pressed" from="Scenarios/VBoxContainer/CopySignalDataFrom/PopupMenu" to="." method="_on_PopupMenu_Copy_SignalDataFrom_index_pressed"]
-[connection signal="pressed" from="Scenarios/VBoxContainer/ResetSignals" to="." method="_on_ResetSignals_pressed"]
+[connection signal="pressed" from="SaveWorldConfig" to="." method="_on_SaveWorldConfig_pressed"]

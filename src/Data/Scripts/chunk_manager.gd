@@ -76,7 +76,7 @@ func _ready():
 
 	assert(world != null)
 
-	_jsavemodule = world.get_node("jSaveModule")
+	_jsavemodule = world.j_save_module
 
 	_thread_semaphore = Semaphore.new()
 	_chunk_mutex = Mutex.new()
@@ -231,14 +231,15 @@ func _finish_chunk_loading():
 
 # called deferred from Thread
 func _add_node_to_scene_tree(parent: String, instance: Spatial):
-	assert(world.get_node(parent).get_node_or_null(instance.name) == null)
+	if world.get_node(parent).get_node_or_null(instance.name) != null:
+		Logger.err("Tried to ad an object to world, which is already loaded. Skip loading this object.", instance)
+		return
 
 	world.get_node(parent).add_child(instance)
 	instance.owner = world
 	instance.translation += world_origin
 	if instance.has_method("update"):
 		instance.update()
-
 
 func append_deduplicated(A: Array, B: Array):
 	for b in B:

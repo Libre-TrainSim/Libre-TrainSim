@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
 [ext_resource path="res://Resources/Objects/lf7.obj" type="ArrayMesh" id=2]
@@ -19,7 +19,10 @@ extra_spacing_top = -30
 extra_spacing_bottom = -30
 font_data = SubResource( 3 )
 
-[node name="SpeedLimit_Lf7" type="Spatial"]
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.0749475, 1.35034, 0.140715 )
+
+[node name="SpeedLimit_Lf7" type="Spatial" groups=["Signal"]]
 script = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
@@ -54,3 +57,10 @@ text = "16"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SelectCollider" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111217, -0.747544, 1.96941 )
+
+[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0749475, 1.35034, 0.140715 )
+shape = SubResource( 5 )

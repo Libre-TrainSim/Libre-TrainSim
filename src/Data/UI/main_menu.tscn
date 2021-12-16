@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Data/UI/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Resources/Music/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" type="AudioStream" id=11]
 [ext_resource path="res://screenshot.png" type="Texture" id=12]
 [ext_resource path="res://Data/UI/styles/panel_popup.tres" type="StyleBox" id=13]
+[ext_resource path="res://Editor/Modules/scenario_editor_selection.tscn" type="PackedScene" id=14]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -127,6 +128,47 @@ margin_bottom = 483.0
 size_flags_horizontal = 3
 text = "MENU_QUIT"
 
+[node name="CreateMenu" type="VBoxContainer" parent="."]
+visible = false
+anchor_bottom = 1.0
+margin_left = 21.0
+margin_top = -1.0
+margin_right = 349.0
+margin_bottom = -1.0
+theme = ExtResource( 5 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="CreateMenu"]
+margin_top = 222.0
+margin_right = 328.0
+margin_bottom = 271.0
+size_flags_horizontal = 3
+text = "MENU_BACK"
+
+[node name="TrackEditor" type="Button" parent="CreateMenu"]
+margin_top = 275.0
+margin_right = 328.0
+margin_bottom = 324.0
+size_flags_horizontal = 3
+text = "TRACK_EDITOR"
+
+[node name="ScenarioEditor" type="Button" parent="CreateMenu"]
+margin_top = 328.0
+margin_right = 328.0
+margin_bottom = 377.0
+size_flags_horizontal = 3
+text = "SCENARIO_EDITOR"
+
+[node name="Play" parent="." instance=ExtResource( 6 )]
+visible = false
+margin_left = 12.0
+margin_top = 12.0
+margin_right = -12.0
+margin_bottom = -12.0
+
 [node name="About" parent="." instance=ExtResource( 9 )]
 visible = false
 margin_left = 12.0
@@ -134,13 +176,17 @@ margin_top = 12.0
 margin_right = -12.0
 margin_bottom = -12.0
 
-[node name="Play" parent="." instance=ExtResource( 6 )]
-visible = false
-
 [node name="Content" parent="." instance=ExtResource( 7 )]
 visible = false
 
-[node name="EditorConfiguration" parent="." instance=ExtResource( 8 )]
+[node name="TrackEditorSelection" parent="." instance=ExtResource( 8 )]
+visible = false
+margin_left = 12.0
+margin_top = 12.0
+margin_right = -12.0
+margin_bottom = -12.0
+
+[node name="ScenarioEditorSelection" parent="." instance=ExtResource( 14 )]
 visible = false
 margin_left = 12.0
 margin_top = 12.0
@@ -223,5 +269,8 @@ bus = "Music"
 [connection signal="pressed" from="Buttons/About" to="." method="_on_AboutFront_pressed"]
 [connection signal="pressed" from="Buttons/Feedback" to="." method="_on_ButtonFeedback_pressed"]
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="CreateMenu/Back" to="." method="_on_CreateMenu_Back_pressed"]
+[connection signal="pressed" from="CreateMenu/TrackEditor" to="." method="_on_TrackEditor_pressed"]
+[connection signal="pressed" from="CreateMenu/ScenarioEditor" to="." method="_on_ScenarioEditor_pressed"]
 [connection signal="pressed" from="Feedback/VBoxContainer/HBoxContainer/Later" to="." method="_on_Later_pressed"]
 [connection signal="pressed" from="Feedback/VBoxContainer/HBoxContainer/OpenWebBrowser" to="." method="_on_OpenWebBrowser_pressed"]

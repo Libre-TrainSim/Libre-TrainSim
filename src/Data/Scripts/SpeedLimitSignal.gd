@@ -20,20 +20,12 @@ func _get_type() -> String:
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		if get_parent().name == "Signals":
-			return
-		if get_parent().is_in_group("Rail"):
-			attached_rail = get_parent().name
-		var signals = world.get_node("Signals")
-		get_parent().remove_child(self)
-		signals.add_child(self)
-		set_to_rail()
+	if not Root.Editor:
+		$SelectCollider.queue_free()
+	$Mesh.set_surface_material(2, $Mesh.get_surface_material(2).duplicate(true))
+	$Mesh.get_surface_material(2).albedo_texture = $Viewport.get_texture()
+	set_to_rail()
 
-	if not Engine.is_editor_hint():
-		$Mesh.set_surface_material(2, $Mesh.get_surface_material(2).duplicate(true))
-		$Mesh.get_surface_material(2).albedo_texture = $Viewport.get_texture()
-		set_to_rail()
 
 
 func set_to_rail() -> void:

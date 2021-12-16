@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 			visible = player.wagonsVisible
 		return
 
-	if player == null or player.despawning:
+	if (player == null or player.despawning) and not cabinMode:
 		queue_free()
 		return
 
@@ -331,7 +331,7 @@ func sendPersonsToDoor(doorDirection: int, proportion: float = 0.5) -> void:
 				passengerRoutePath[passengerRoutePath.size()-1].z -= 1.3
 
 			personNode.destinationPos = passengerRoutePath # Here maybe .append could be better
-			personNode.attachedStation = player.currentStationNode
+			personNode.attachedStation = player.current_station_node
 			personNode.transitionToStation = true
 			personNode.assignedDoor = randomDoor
 			personNode.attachedSeat = null

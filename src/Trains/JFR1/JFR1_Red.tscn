@@ -703,7 +703,6 @@ friction = 0.005
 length = 80.0
 speedLimit = 160.0
 control_type = 1
-doorsClosingTime = 4
 description = "JFR1_DESCRIPTION_RED"
 author = "Jean"
 releaseDate = "11 2020"
@@ -1991,4 +1990,3 @@ light_energy = 3.0
 
 [connection signal="passed_signal" from="." to="SafetySystems/PZBModule" method="_on_passed_signal"]
 [connection signal="reverser_changed" from="." to="SafetySystems/PZBModule" method="_on_reverser_changed"]
-[connection signal="sifa_visual_hint" from="SafetySystems/SifaModule" to="Cabin/DisplayMiddle/Display" method="_on_sifa_visual_hint"]

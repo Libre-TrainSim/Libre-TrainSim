@@ -27,6 +27,20 @@ func copy_folder_recursively(from : String, to : String):
 	_copy_folder_recursively_helper(from, to)
 
 
+func create_directory(path : String):
+	var dir = Directory.new()
+	dir.make_dir_recursive(path)
+
+
+func copy_file(from : String, to : String):
+	var dir = Directory.new()
+	dir.copy(from, to)
+
+# Could be also used for moving files
+func rename_file(from: String, to : String):
+	var dir = Directory.new()
+	dir.rename(from, to)
+
 func remove_folder_recursively(path: String):
 	var dir = Directory.new()
 	if not dir.dir_exists(path):

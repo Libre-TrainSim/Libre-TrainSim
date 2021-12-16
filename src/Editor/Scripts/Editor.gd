@@ -258,6 +258,8 @@ func clear_selected_object() -> void:
 			for child in selected_object.get_children():
 				if child.is_in_group("Gizmo"):
 					child.queue_free()
+		if selected_object_type == "Signal":
+			$EditorHUD/Settings/TabContainer/RailLogic._on_selected_rail_logic_deleted()
 
 	selected_object = null
 	selected_object_type = ""
@@ -304,14 +306,12 @@ func load_world() -> bool:
 
 	var world: Node = world_resource.instance()
 	world.FileName = current_track_name
-	world.get_node("jSaveModule").save_path = current_track_path + ".save"
-	world.get_node("jSaveModuleScenarios").save_path = current_track_path + "-scenarios.cfg"
+	world.j_save_module.set_save_path(current_track_path + ".save")
 	add_child(world)
 	world.owner = self
 
 	$EditorHUD/Settings/TabContainer/RailBuilder.world = $World
 	$EditorHUD/Settings/TabContainer/RailAttachments.world = $World
-	$EditorHUD/Settings/TabContainer/Configuration.world = $World
 
 	## Load Camera Position
 	var last_editor_camera_transforms = jSaveManager.get_value("last_editor_camera_transforms", {})
@@ -338,8 +338,7 @@ func save_world(send_message: bool = true) -> void:
 			return
 
 	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
-	$World/jSaveModule.write_to_disk()
-	$World/jSaveModuleScenarios.write_to_disk()
+	$World.j_save_module.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
 
@@ -452,9 +451,8 @@ func add_object(complete_path: String) -> void:
 
 func test_track_pck() -> void:
 	if OS.has_feature("editor"):
-		send_message("Can't export and test tracks in Editor. " \
-				+ "Requires subsequent PR to allow direct loading of editable " \
-				+ "maps. Ping HaSa")
+		send_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
+				+ "Please use a build of Libre TrainSim to test tracks. ")
 		return
 	export_mod()
 

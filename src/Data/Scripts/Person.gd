@@ -33,7 +33,7 @@ var leave_wagon_timer: float = 0
 func handleWalk(delta: float) -> void:
 	# If Doors where closed to early, and the person is at the station..
 	if transitionToWagon == true and not (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
-		if attachedWagon.player.currentStationNode != attachedStation:
+		if attachedWagon.player.current_station_node != attachedStation:
 			transitionToWagon = false
 			destinationPos.clear()
 		else:

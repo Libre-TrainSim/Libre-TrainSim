@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Editor/Docks/Configuration/time_field.gd" type="Script" id=1]
+[ext_resource path="res://Editor/Modules/time_field.gd" type="Script" id=1]
 
 [node name="TimeField" type="Control" groups=["TimeField"]]
 anchor_right = 1.0

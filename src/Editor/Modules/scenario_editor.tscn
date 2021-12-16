@@ -1,0 +1,262 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Editor/Modules/scenario_configuration.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Editor/Scripts/scenario_editor.gd" type="Script" id=2]
+[ext_resource path="res://Editor/Modules/scenario_map.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Data/UI/styles/complete_menu.theme" type="Theme" id=8]
+[ext_resource path="res://Editor/Modules/Content_Selector.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=10]
+
+[node name="ScenarioEditor" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+light_mask = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.894118, 0.894118, 0.898039, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScenarioConfiguration" parent="CanvasLayer" instance=ExtResource( 1 )]
+
+[node name="SelectMessage" type="Panel" parent="CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -150.0
+margin_right = 150.0
+margin_bottom = 30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SelectMessage"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 3.0
+margin_right = -5.0
+margin_bottom = -3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/SelectMessage/HBoxContainer"]
+margin_right = 232.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="CanvasLayer/SelectMessage/HBoxContainer"]
+margin_left = 236.0
+margin_top = 2.0
+margin_right = 290.0
+margin_bottom = 22.0
+size_flags_vertical = 4
+text = "Cancel"
+
+[node name="Message" type="Panel" parent="CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -100.0
+margin_right = 200.0
+margin_bottom = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Message"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Message/VBoxContainer"]
+margin_right = 380.0
+margin_bottom = 156.0
+size_flags_vertical = 7
+align = 1
+valign = 1
+
+[node name="Ok" type="Button" parent="CanvasLayer/Message/VBoxContainer"]
+margin_left = 166.0
+margin_top = 160.0
+margin_right = 214.0
+margin_bottom = 180.0
+size_flags_horizontal = 4
+text = "Okay!"
+
+[node name="LabelSettings" type="Panel" parent="CanvasLayer"]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = -172.0
+margin_right = 134.0
+margin_bottom = -29.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="V" type="VBoxContainer" parent="CanvasLayer/LabelSettings"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rails" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
+margin_right = 122.0
+margin_bottom = 24.0
+pressed = true
+text = "Rails"
+
+[node name="Signals" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
+margin_top = 28.0
+margin_right = 122.0
+margin_bottom = 52.0
+pressed = true
+text = "Signals"
+
+[node name="Stations" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
+margin_top = 56.0
+margin_right = 122.0
+margin_bottom = 80.0
+pressed = true
+text = "Stations"
+
+[node name="ContactPoints" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
+margin_top = 84.0
+margin_right = 122.0
+margin_bottom = 108.0
+pressed = true
+text = "Contact Points"
+
+[node name="Other" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
+margin_top = 112.0
+margin_right = 122.0
+margin_bottom = 136.0
+pressed = true
+text = "Other"
+
+[node name="Labels" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = -23.0
+margin_right = 59.0
+margin_bottom = -3.0
+text = "Labels"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -163.0
+margin_top = -104.0
+margin_right = 163.0
+margin_bottom = 104.0
+theme = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
+margin_right = 326.0
+margin_bottom = 49.0
+theme = ExtResource( 10 )
+text = "BACK"
+
+[node name="Save" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
+margin_top = 53.0
+margin_right = 326.0
+margin_bottom = 102.0
+theme = ExtResource( 10 )
+text = "SAVE"
+
+[node name="QuitWithoutSaving" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
+margin_top = 106.0
+margin_right = 326.0
+margin_bottom = 155.0
+theme = ExtResource( 10 )
+text = "EXIT_WITHOUT_SAVING"
+
+[node name="SaveAndQuit" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
+margin_top = 159.0
+margin_right = 326.0
+margin_bottom = 208.0
+theme = ExtResource( 10 )
+text = "SAVE_AND_EXIT"
+
+[node name="Content_Selector" parent="CanvasLayer" instance=ExtResource( 9 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -238.5
+margin_top = -151.5
+margin_right = 238.5
+margin_bottom = 151.5
+
+[node name="ScenarioMap" parent="." instance=ExtResource( 3 )]
+
+[connection signal="pressed" from="CanvasLayer/Message/VBoxContainer/Ok" to="." method="_on_Message_Ok_pressed"]
+[connection signal="pressed" from="CanvasLayer/LabelSettings/V/Rails" to="." method="_on_LayoutSetting_pressed"]
+[connection signal="pressed" from="CanvasLayer/LabelSettings/V/Signals" to="." method="_on_LayoutSetting_pressed"]
+[connection signal="pressed" from="CanvasLayer/LabelSettings/V/Stations" to="." method="_on_LayoutSetting_pressed"]
+[connection signal="pressed" from="CanvasLayer/LabelSettings/V/ContactPoints" to="." method="_on_LayoutSetting_pressed"]
+[connection signal="pressed" from="CanvasLayer/LabelSettings/V/Other" to="." method="_on_LayoutSetting_pressed"]
+[connection signal="pressed" from="CanvasLayer/Labels" to="." method="_on_Labels_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/Back" to="." method="_on_Pause_Back_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitWithoutSaving" to="." method="_on_Pause_QuitWithoutSaving_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/SaveAndQuit" to="." method="_on_Pause_SaveAndQuit_pressed"]

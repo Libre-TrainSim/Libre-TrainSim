@@ -4,7 +4,7 @@ extends Control
 enum MapStatus {
 	CLOSED = 0,
 	OVERLAY = 1,
-	FULL = 2
+	FULL = 2,
 }
 var map_status: int = MapStatus.CLOSED
 
@@ -28,4 +28,3 @@ func _unhandled_key_input(_event):
 				show()
 				$FullMap.show()
 				$OverlayMap.hide()
-

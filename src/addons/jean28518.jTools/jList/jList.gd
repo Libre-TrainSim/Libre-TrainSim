@@ -283,7 +283,7 @@ func _on_Action_pressed():
 
 
 func _on_ItemList_item_activated(index):
-	$VBoxContainer/HBoxContainer/LineEdit.text = item_list.get_item_text(index)
+	_on_Action_pressed()
 
 
 func _on_PopupDiaglog_Okay_pressed():
@@ -294,3 +294,7 @@ func _on_ItemList_multi_selected(index, selected):
 	var selected_items = item_list.get_selected_items()
 	if selected_items.size() == 1:
 		emit_signal("user_selected_entry", item_list.get_item_text(selected_items[0]))
+
+
+func _on_ItemList_item_selected(index):
+	$VBoxContainer/HBoxContainer/LineEdit.text = item_list.get_item_text(index)

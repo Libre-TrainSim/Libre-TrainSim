@@ -61,7 +61,7 @@ func update_display(speed: float, command: float, doorLeft: bool, doorRight: boo
 	SollSpeedLimitPointer = SollSpeedPointerZero+SollSpeedPerKmH*speedLimit
 
 	$Speed.text = String(int(speed))
-	$Time.text = Math.time2String(world.time)
+	$Time.text = Math.seconds_to_string(world.time)
 
 	## Engine:
 	$Info/Engine.visible = !engine

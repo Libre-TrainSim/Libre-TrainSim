@@ -168,7 +168,10 @@ func update_active_lines_width(width: float) -> void:
 
 
 func create_station(signal_instance: Spatial) -> void:
-	var index: int = train_world.player.stations["nodeName"].find(signal_instance.name)
+	var index: int = -1
+	for i in range(train_world.player.station_table.size()):
+		if train_world.player.station_table[i].node_name == signal_instance.name:
+			index = i
 	if index < 0:
 		Logger.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
 		return
@@ -186,7 +189,7 @@ func create_station(signal_instance: Spatial) -> void:
 	label.owner = node
 	label.show()
 	label.rect_position.y = -140
-	label.text = train_world.player.stations["stationName"][index]
+	label.text = train_world.player.station_table[index].station_name
 
 
 func create_signal(signal_instance: Spatial) -> void:

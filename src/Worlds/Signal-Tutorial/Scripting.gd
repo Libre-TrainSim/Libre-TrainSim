@@ -8,6 +8,8 @@ var message_sent: bool = false
 
 
 func _process(delta: float) -> void:
+	if Root.scenario_editor:
+		return
 	if world == null:
 		world = find_parent("World")
 	if player == null:

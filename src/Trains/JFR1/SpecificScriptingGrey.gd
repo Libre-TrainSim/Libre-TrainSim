@@ -33,12 +33,11 @@ func _process(_delta: float) -> void:
 		ready()
 	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforced_braking, player.automaticDriving, player.currentSpeedLimit, player.engine, player.reverser)
 
-	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_time(player.time)
+	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_time(player.world.time)
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_voltage(player.voltage)
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_command(player.command)
 
-	var stations: Dictionary = player.stations
-	get_node("../Cabin/DisplayRight/ScreenRight").update_display(stations["arrivalTime"], stations["departureTime"], stations["stationName"], stations["stopType"], stations["passed"], player.isInStation)
+	get_node("../Cabin/DisplayRight/ScreenRight").update_display(player.station_table, player.current_station_table_index, player.is_in_station)
 
 	update_Combi_Roll(player.soll_command, get_node("../Cabin/BrakeRoll"))
 	update_reverser(player.reverser, get_node("../Cabin/Reverser"))

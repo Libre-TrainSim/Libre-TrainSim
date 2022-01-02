@@ -1,7 +1,6 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Trains/JFR1/Door.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Resources/Materials/Cabin.tres" type="Material" id=2]
 [ext_resource path="res://Resources/Materials/Black_Plastic.tres" type="Material" id=3]
 [ext_resource path="res://Trains/JFR1/Wagon_Grey.tres" type="Material" id=4]
 [ext_resource path="res://Resources/Materials/LEDLamp_Bright.tres" type="Material" id=5]
@@ -10,8 +9,6 @@
 [ext_resource path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" type="ArrayMesh" id=8]
 [ext_resource path="res://Data/Screens/ScreenReverser/screen_reverser.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Resources/Sounds/DoorsOpening.ogg" type="AudioStream" id=10]
-[ext_resource path="res://Resources/Objects/ICE4.obj" type="ArrayMesh" id=11]
-[ext_resource path="res://Resources/Materials/ScreenBook.tres" type="Material" id=12]
 [ext_resource path="res://Resources/Objects/Control-Roll.obj" type="ArrayMesh" id=13]
 [ext_resource path="res://Data/UI/HUD.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Trains/JFR1/Wagon_WithDriverStand_Grey.tres" type="Material" id=15]
@@ -20,14 +17,20 @@
 [ext_resource path="res://Data/Modules/PZBModule.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Resources/Sounds/Horn.ogg" type="AudioStream" id=19]
 [ext_resource path="res://Data/Screens/ScreenTimeTable/screen_time_table.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Trains/JFR1/DriverCabin.obj" type="ArrayMesh" id=21]
+[ext_resource path="res://Resources/Materials/Carpet_Blue.tres" type="Material" id=22]
+[ext_resource path="res://Resources/Materials/LightBlue_Plastic.tres" type="Material" id=23]
 [ext_resource path="res://Resources/Materials/GlassInvisible.tres" type="Material" id=24]
 [ext_resource path="res://Trains/JFR1/Sound.gd" type="Script" id=25]
 [ext_resource path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" type="Texture" id=26]
 [ext_resource path="res://Trains/JFR1/Wagon_1.obj" type="ArrayMesh" id=27]
+[ext_resource path="res://Resources/Materials/Blue_Plastic.tres" type="Material" id=28]
 [ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=29]
 [ext_resource path="res://Resources/Materials/Metal_Black.tres" type="Material" id=30]
 [ext_resource path="res://Trains/JFR1/Pantograph_1_T.obj" type="ArrayMesh" id=31]
+[ext_resource path="res://Resources/Materials/Glass.tres" type="Material" id=32]
 [ext_resource path="res://Data/Scripts/Wagon.gd" type="Script" id=33]
+[ext_resource path="res://Resources/Materials/White_Plastic.tres" type="Material" id=34]
 [ext_resource path="res://Resources/Sounds/DoorsClosing2.ogg" type="AudioStream" id=35]
 [ext_resource path="res://Resources/Sounds/EnforcedBreake.ogg" type="AudioStream" id=36]
 [ext_resource path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" type="PackedScene" id=37]
@@ -53,7 +56,11 @@ emission_operator = 1
 emission_on_uv2 = false
 
 [sub_resource type="QuadMesh" id=2]
-size = Vector2( 1.3, 0.9 )
+size = Vector2( 0.2, 0.15 )
+
+[sub_resource type="CubeMesh" id=24]
+material = ExtResource( 3 )
+size = Vector3( 0.01, 0.19, 0.24 )
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0, 0, 0, 1 )
@@ -67,7 +74,7 @@ emission_on_uv2 = false
 emission_texture = ExtResource( 26 )
 
 [sub_resource type="QuadMesh" id=4]
-size = Vector2( 1.2, 0.8 )
+size = Vector2( 0.2, 0.15 )
 
 [sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0, 0, 0, 1 )
@@ -81,7 +88,7 @@ emission_on_uv2 = false
 emission_texture = ExtResource( 26 )
 
 [sub_resource type="QuadMesh" id=6]
-size = Vector2( 1, 0.75 )
+size = Vector2( 0.2, 0.15 )
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0, 0, 0, 1 )
@@ -93,7 +100,7 @@ emission_energy = 1.0
 emission_operator = 1
 emission_on_uv2 = false
 
-[sub_resource type="QuadMesh" id=8]
+[sub_resource type="QuadMesh" id=23]
 size = Vector2( 1, 0.75 )
 
 [sub_resource type="Animation" id=9]
@@ -710,8 +717,8 @@ wagons = [ NodePath("DriverCabinF"), NodePath("Wagon1"), NodePath("Wagon1"), Nod
 [node name="HUD" parent="." instance=ExtResource( 14 )]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1.62921e-07, 0.0770497, -0.997027, 0, 0.997027, 0.0770497, 1, 1.2553e-08, -1.62437e-07, 5.80251, 3.044, 0 )
-fov = 42.7
+transform = Transform( -4.37114e-08, 0.0769974, -0.997031, 0, 0.997031, 0.0769974, 1, 3.36566e-09, -4.35816e-08, 7.927, 2.54, 0 )
+fov = 55.0
 far = 1000.0
 
 [node name="SpecificScripting" type="Node" parent="."]
@@ -728,10 +735,16 @@ script = ExtResource( 33 )
 cabinMode = true
 
 [node name="ScreenMiddle" type="MeshInstance" parent="Cabin"]
-transform = Transform( -3.82021e-08, 0.177615, -0.797131, 2.89372e-08, 0.234483, 0.603806, 0.294159, 0, -1.62921e-07, 7.31889, 2.65065, 0 )
+transform = Transform( -1.04651e-07, 0.513183, -0.85828, 8.59631e-08, 0.85828, 0.513183, 1, -2.00753e-08, -1.33934e-07, 8.61526, 2.26071, 0 )
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
+material/0 = null
+
+[node name="ScreenObj" type="MeshInstance" parent="Cabin/ScreenMiddle"]
+transform = Transform( -4.37114e-08, 3.55271e-15, 1, -1.81126e-15, 1, -3.55271e-15, -1, 2.68878e-15, -4.37114e-08, 0, -4.76837e-07, -0.00600052 )
+mesh = SubResource( 24 )
+skeleton = NodePath("../..")
 material/0 = null
 
 [node name="DisplayMiddle" type="Viewport" parent="Cabin"]
@@ -743,10 +756,16 @@ render_target_v_flip = true
 [node name="Display" parent="Cabin/DisplayMiddle" instance=ExtResource( 37 )]
 
 [node name="ScreenLeft" type="MeshInstance" parent="Cabin"]
-transform = Transform( 0.108196, 0.165164, -0.741251, 2.89372e-08, 0.234483, 0.603806, 0.273538, -0.0653296, 0.293198, 7.25364, 2.65065, -0.559107 )
+transform = Transform( 0.155608, 0.549783, -0.820685, 0.00892879, 0.829989, 0.557709, 0.987779, -0.0941115, 0.124244, 8.5953, 2.26071, -0.282594 )
 material_override = SubResource( 3 )
 cast_shadow = 0
 mesh = SubResource( 4 )
+material/0 = null
+
+[node name="ScreenObj" type="MeshInstance" parent="Cabin/ScreenLeft"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -0.006 )
+mesh = SubResource( 24 )
+skeleton = NodePath("../..")
 material/0 = null
 
 [node name="DisplayLeft" type="Viewport" parent="Cabin"]
@@ -758,10 +777,16 @@ render_target_v_flip = true
 [node name="ScreenLeft2" parent="Cabin/DisplayLeft" instance=ExtResource( 39 )]
 
 [node name="ScreenRight" type="MeshInstance" parent="Cabin"]
-transform = Transform( -0.116278, 0.162935, -0.732761, 2.88991e-08, 0.23466, 0.603013, 0.270202, 0.070117, -0.315335, 7.24948, 2.64241, 0.573368 )
+transform = Transform( -0.160148, 0.52316, -0.837052, -0.0142111, 0.846687, 0.531901, 0.986991, 0.0970782, -0.12816, 8.59579, 2.261, 0.278394 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 6 )
+material/0 = null
+
+[node name="ScreenObj" type="MeshInstance" parent="Cabin/ScreenRight"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -0.006 )
+mesh = SubResource( 24 )
+skeleton = NodePath("../..")
 material/0 = null
 
 [node name="DisplayRight" type="Viewport" parent="Cabin"]
@@ -772,23 +797,41 @@ render_target_v_flip = true
 [node name="ScreenRight" parent="Cabin/DisplayRight" instance=ExtResource( 20 )]
 
 [node name="Cabin" type="MeshInstance" parent="Cabin"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.27351, 0, 0 )
+transform = Transform( -1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0 )
 cast_shadow = 2
-mesh = ExtResource( 11 )
-material/0 = ExtResource( 12 )
+mesh = ExtResource( 21 )
+material/0 = ExtResource( 24 )
+material/1 = ExtResource( 30 )
+material/2 = ExtResource( 30 )
+material/3 = ExtResource( 30 )
+material/4 = ExtResource( 3 )
+material/5 = ExtResource( 3 )
+material/6 = ExtResource( 34 )
+material/7 = ExtResource( 34 )
+material/8 = ExtResource( 22 )
+material/9 = ExtResource( 30 )
+material/10 = ExtResource( 34 )
+material/11 = ExtResource( 23 )
+material/12 = ExtResource( 28 )
+material/13 = ExtResource( 32 )
+material/14 = null
+
+[node name="BrakeRoll" type="MeshInstance" parent="Cabin"]
+transform = Transform( 0.64805, -0.469075, 0, 0.469075, 0.64805, 0, 0, 0, 0.8, 8.4507, 2.10677, 0.2 )
+mesh = ExtResource( 13 )
+material/0 = ExtResource( 29 )
 material/1 = ExtResource( 3 )
-material/2 = ExtResource( 2 )
 
 [node name="Reverser" type="MeshInstance" parent="Cabin"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.046, 2.5135, 0.0444686 )
+transform = Transform( -4.33956e-08, -0.119981, -0.992776, -5.24453e-09, 0.992776, -0.119981, 1, 0, -4.37114e-08, 8.45067, 2.14461, 0.0417276 )
 mesh = ExtResource( 7 )
 material/0 = ExtResource( 3 )
 
 [node name="ScreenReverser" type="MeshInstance" parent="Cabin"]
-transform = Transform( -6.11959e-09, 0.14, 4.37114e-08, 0, -6.11959e-09, 1, 0.14, 6.11959e-09, 1.91069e-15, 7.046, 2.51304, 0 )
+transform = Transform( -6.07538e-09, 0.138989, -0.119981, -7.34234e-10, 0.0167973, 0.992776, 0.14, 6.11959e-09, 1.91069e-15, 8.45073, 2.14416, 0 )
 material_override = SubResource( 7 )
 cast_shadow = 0
-mesh = SubResource( 8 )
+mesh = SubResource( 23 )
 material/0 = null
 
 [node name="DisplayReverser" type="Viewport" parent="Cabin"]
@@ -799,18 +842,17 @@ render_target_v_flip = true
 
 [node name="Reverser" parent="Cabin/DisplayReverser" instance=ExtResource( 9 )]
 
-[node name="BrakeRoll" type="MeshInstance" parent="Cabin"]
-transform = Transform( 0.810062, -0.586344, 0, 0.586344, 0.810062, 0, 0, 0, 1, 7.0459, 2.47729, 0.191648 )
-mesh = ExtResource( 13 )
-material/0 = ExtResource( 29 )
-material/1 = ExtResource( 3 )
-
 [node name="WagonSound" parent="Cabin" instance=ExtResource( 45 )]
 
 [node name="EasyEngineSound" parent="Cabin" instance=ExtResource( 41 )]
 
 [node name="SpotLight" type="SpotLight" parent="Cabin"]
 transform = Transform( -4.37114e-08, 0.5, -0.866025, 0, 0.866025, 0.5, 1, 2.18557e-08, -3.78552e-08, 5.34039, 3.64751, 0 )
+__meta__ = {
+"color_filter": Color( 1, 1, 1, 0 ),
+"color_temperature": 6500,
+"use_color_temperature": true
+}
 
 [node name="Wagon1" type="Spatial" parent="."]
 visible = false
@@ -2014,4 +2056,3 @@ light_energy = 3.0
 
 [connection signal="passed_signal" from="." to="SafetySystems/PZBModule" method="_on_passed_signal"]
 [connection signal="reverser_changed" from="." to="SafetySystems/PZBModule" method="_on_reverser_changed"]
-[connection signal="sifa_visual_hint" from="SafetySystems/SifaModule" to="Cabin/DisplayMiddle/Display" method="_on_sifa_visual_hint"]

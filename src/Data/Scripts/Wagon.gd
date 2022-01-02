@@ -61,7 +61,6 @@ func _ready() -> void:
 
 
 var initialSwitchCheck: bool = false
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if get_tree().paused:
 		if player != null and not cabinMode:

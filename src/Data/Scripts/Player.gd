@@ -84,11 +84,11 @@ var has_camera_distance_changed: bool = false
 const CAMERA_DISTANCE_MIN: float = 5.0
 const CAMERA_DISTANCE_MAX: float = 200.0
 
-var ref_fov: float = 42.7 # reference FOV for camera movement multiplier
-var camera_fov: float = 42.7 # current FOV
-var camera_fov_soll: float = 42.7 # FOV user wants
+onready var ref_fov: float = $Camera.fov # reference FOV for camera movement multiplier
+onready var camera_fov: float =$Camera.fov # current FOV
+onready var camera_fov_soll: float = $Camera.fov # FOV user wants
 const CAMERA_FOV_MIN: float = 20.0
-const CAMERA_FOV_MAX: float = 60.0
+const CAMERA_FOV_MAX: float = 90.0
 
 var soundMode: int = 0 # 0: Interior, 1: Outer   ## Not currently used
 
@@ -409,7 +409,7 @@ func _unhandled_input(event) -> void:
 
 	if event.is_pressed():
 		# zoom in
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
 			if camera_state == CameraState.CABIN_VIEW:
 				camera_fov_soll = camera_fov + 5
 			elif camera_state == CameraState.OUTER_VIEW:
@@ -417,7 +417,7 @@ func _unhandled_input(event) -> void:
 				has_camera_distance_changed = true
 			# call the zoom function
 		# zoom out
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
+		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
 			if camera_state == CameraState.CABIN_VIEW:
 				camera_fov_soll = camera_fov - 5
 			elif camera_state == CameraState.OUTER_VIEW:
@@ -691,14 +691,15 @@ func handleCamera(delta: float) -> void:
 		cameraNode.translation = soll_camera_translation
 
 		# FIXME: in the first frame, delta == 0, why?
-		if mouseMotion.length() > 0 and delta > 0:
+		if mouseMotion.length() > 0 and delta > 0 and (Input.is_mouse_button_pressed(BUTTON_RIGHT) or Root.mobile_version):
 			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * (camera_fov / ref_fov)
 			cameraY += -mouseMotion.x * motionFactor
 			cameraX += +mouseMotion.y * motionFactor
 			cameraX = clamp(cameraX, -85, 85)
 			cameraNode.rotation_degrees.y = cameraY
 			cameraNode.rotation_degrees.x = -cameraX
-			mouseMotion = Vector2(0,0)
+		mouseMotion = Vector2(0,0)
+
 
 		if abs(camera_fov - camera_fov_soll) > 1:
 			camera_fov += sign(camera_fov_soll-camera_fov)

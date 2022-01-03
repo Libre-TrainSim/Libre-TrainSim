@@ -2,7 +2,7 @@
 
 Train Simulator written in Godot Engine - Free for everyone. Licensed under GPL 3.0
 
-## [Play](https://www.libre-trainsim.de/download)
+## [Play](https://www.libretrainsim.org/download)
 
 ## [Contribute](https://github.com/Libre-TrainSim/Libre-TrainSim/wiki/Contribute-to-Libre-TrainSim)
 
@@ -12,7 +12,7 @@ This project is created by Jean28518 from germany in his free time, who is study
 ## Your Feedback wanted:
 Did you already play? -> It would be great, if you could answer a survey, which does take about 3 Minutes.
 
-[Click Here](https://www.libre-trainsim.de/feedback)
+[Click Here](https://www.libretrainsim.org/feedback)
 
 **Thank you!**
 
@@ -20,7 +20,7 @@ Did you already play? -> It would be great, if you could answer a survey, which 
 [Follow the development here](https://github.com/Libre-TrainSim/Libre-TrainSim/projects)
 
 ## Links:
-- Website: https://www.libre-trainsim.de
+- Website: https://www.libretrainsim.org
 - Github: https://www.github.com/Libre-TrainSim/Libre-TrainSim
 - YouTube: https://www.youtube.com/channel/UCsPsL_AkVUZMmKOKJgm7xsQ
 - Itch: https://jean28518.itch.io/libre-train-sim

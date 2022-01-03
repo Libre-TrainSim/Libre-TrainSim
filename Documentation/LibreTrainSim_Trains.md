@@ -78,7 +78,7 @@ The Train has two main parts:
 - To loop a Sound it should be in .ogg format.
 - The sound is not good implemented in 0.7. In 0.8 that will gonna be better..
 - Feel free to read the code of player.gd or the specific script in the example. They could help a lot
-- If you have questions, feel free to ask here: https://libre-trainsim.de/community
+- If you have questions, feel free to ask here: https://libretrainsim.org/community
 
 ## Helpful articles:
 - Animation: https://www.youtube.com/watch?v=18Em80Bfjp4

@@ -260,3 +260,5 @@ margin_bottom = 151.5
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitWithoutSaving" to="." method="_on_Pause_QuitWithoutSaving_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/SaveAndQuit" to="." method="_on_Pause_SaveAndQuit_pressed"]
+[connection signal="resource_selected" from="CanvasLayer/Content_Selector" to="CanvasLayer/ScenarioConfiguration" method="_on_Content_Selector_resource_selected"]
+[connection signal="item_selected" from="ScenarioMap" to="CanvasLayer/ScenarioConfiguration" method="_on_ScenarioMap_item_selected"]

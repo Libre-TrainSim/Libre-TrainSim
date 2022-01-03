@@ -8,7 +8,7 @@ var rail_logic_settings: Dictionary = {}
 
 var current_route: String = ""
 
-onready var world: Node = find_parent("ScenarioEditor").get_node("World")
+var world
 
 onready var content_selector = get_parent().get_node("Content_Selector")
 
@@ -17,6 +17,7 @@ var route_manager = RouteManager.new()
 func init():
 	routes = j_save_module.get_value("routes", {})
 	rail_logic_settings = j_save_module.get_value("rail_logic_settings", {})
+	world = find_parent("ScenarioEditor").get_node("World")
 
 	for signal_instance in world.get_node("Signals").get_children():
 		if not rail_logic_settings.has(signal_instance.name) and signal_instance.type == "Signal":
@@ -45,9 +46,6 @@ func init():
 
 
 func _input(event):
-	if Input.is_action_just_pressed("Horn"):
-		print("#################################")
-		update_scenario_map()
 	if Input.is_action_just_pressed("save"):
 		save()
 

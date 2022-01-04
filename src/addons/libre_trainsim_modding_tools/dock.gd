@@ -12,7 +12,7 @@ func _on_new_mod_pressed() -> void:
 
 
 func _on_LinkButton_pressed() -> void:
-	OS.shell_open("https://www.libre-trainsim.de/contribute")
+	OS.shell_open("https://www.libretrainsim.org/contribute")
 
 
 func _on_open_addons_dir_pressed() -> void:

@@ -53,7 +53,7 @@ func _on_AboutFront_pressed():
 
 func _on_ButtonFeedback_pressed():
 	jSaveManager.save_value("feedback_pressed", true)
-	var _unused = OS.shell_open("https://www.libre-trainsim.de/feedback")
+	var _unused = OS.shell_open("https://www.libretrainsim.org/feedback")
 
 
 func _on_OpenWebBrowser_pressed():

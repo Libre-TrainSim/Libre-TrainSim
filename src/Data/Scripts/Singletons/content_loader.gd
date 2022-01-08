@@ -177,7 +177,7 @@ func append_content_to_global_repo(content: ModContentDefinition) -> void:
 	loaded_mods.append(content)
 
 
-func get_editor_tracks():
+func get_editor_tracks() -> Dictionary:
 	var tracks: Dictionary = {}
 	var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 	var track_names: Array = []

@@ -47,11 +47,15 @@ func _on_Save_pressed():
 
 
 func _on_Pause_QuitWithoutSaving_pressed():
+	Root.Editor = false
+	Root.scenario_editor = false
 	LoadingScreen.load_main_menu()
 
 
 func _on_Pause_SaveAndQuit_pressed():
 	$CanvasLayer/ScenarioConfiguration.save()
+	Root.Editor = false
+	Root.scenario_editor = false
 	LoadingScreen.load_main_menu()
 
 

@@ -1568,6 +1568,12 @@ func checkVisibility(delta: float) -> void:
 		return
 	checkVisibilityTimer = 0
 	if ai:
+		# We need to update the position when the train is invisible because the accurate drive() function
+		# doesn't update the 3D postition in this state. We don't need the accurate 3D Postition if you can't
+		# see the train.
+		if not rendering:
+			self.translation = currentRail.get_pos_at_RailDistance(distance_on_rail)
+
 		rendering = world.chunk_manager.is_position_in_loaded_chunk(self.global_transform.origin)
 		self.visible = rendering
 		wagonsVisible = rendering

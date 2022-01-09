@@ -19,6 +19,7 @@ export (bool) var multi_selection_allowed = true
 export (String) var custom_font_path = ""
 export (bool) var enable_add_button = true
 export (bool) var enable_remove_button = true
+export (bool) var display_remove_confirmation = true
 export (bool) var enable_rename_button = false
 export (bool) var enable_duplicate_button = false
 export (bool) var enable_copy_button = false
@@ -28,6 +29,8 @@ export (bool) var enable_action_button = false
 
 export (String) var add_button_text = "Add"
 export (String) var remove_button_text = "Remove"
+export (String) var remove_confirmation_text = "Do you really want to remove these entries?"
+export (String) var cancel_text = "Cancel"
 export (String) var rename_button_text = "Rename"
 export (String) var duplicate_button_text = "Duplicate"
 export (String) var copy_button_text = "Copy"
@@ -89,7 +92,7 @@ func show_error(message := "This action is not allowed!"):
 
 
 ## Internal Code ###############################################################
-var item_list
+var item_list : ItemList
 
 
 func _ready():
@@ -159,6 +162,9 @@ func update_visible_buttons(newvar):
 
 	$VBoxContainer/HBoxContainer/Add.text = TranslationServer.translate(add_button_text)
 	$VBoxContainer/HBoxContainer/Remove.text = TranslationServer.translate(remove_button_text)
+	$ConfirmationDialog/Remove.text = TranslationServer.translate(remove_button_text)
+	$ConfirmationDialog/Label.text = tr(remove_confirmation_text)
+	$ConfirmationDialog/Cancel.text = tr(cancel_text)
 	$VBoxContainer/HBoxContainer/Rename.text = TranslationServer.translate(rename_button_text)
 	$VBoxContainer/HBoxContainer/Duplicate.text = TranslationServer.translate(duplicate_button_text)
 	$VBoxContainer/HBoxContainer/Copy.text = TranslationServer.translate(copy_button_text)
@@ -190,6 +196,10 @@ func _update_fonts():
 	$PopupDialog/Label.add_font_override("font", font)
 	$PopupDialog/Okay.add_font_override("font", font)
 
+	$ConfirmationDialog/Label.add_font_override("font", font)
+	$ConfirmationDialog/Remove.add_font_override("font", font)
+	$ConfirmationDialog/Cancel.add_font_override("font", font)
+
 
 ## Button Signals ##############################################################
 func _enter_tree():
@@ -213,11 +223,28 @@ func _on_Add_pressed():
 func _on_Remove_pressed():
 	if item_list.get_selected_items().size() == 0:
 		return
+	if display_remove_confirmation:
+		$ConfirmationDialog/Label.text = remove_confirmation_text
+		for index in item_list.get_selected_items():
+			$ConfirmationDialog/Label.text += "\n\t" + item_list.get_item_text(index)
+		$ConfirmationDialog.popup_centered_minsize()
+	else:
+		_on_RemoveConfirmation_Remove_pressed()
+
+
+func _on_RemoveConfirmation_Remove_pressed():
+	print("HUHU")
+	$ConfirmationDialog.hide()
 	var removed_entries = []
 	while item_list.get_selected_items().size() != 0:
 		removed_entries.append(item_list.get_item_text(item_list.get_selected_items()[0]))
 		remove_entry_id(item_list.get_selected_items()[0])
 	emit_signal("user_removed_entries", removed_entries)
+
+
+func _on_RemoveConfirmation_Cancel_pressed():
+	print("HUHU")
+	$ConfirmationDialog.hide()
 
 
 func _on_Rename_pressed():
@@ -298,3 +325,6 @@ func _on_ItemList_multi_selected(index, selected):
 
 func _on_ItemList_item_selected(index):
 	$VBoxContainer/HBoxContainer/LineEdit.text = item_list.get_item_text(index)
+
+
+

@@ -630,7 +630,6 @@ func remove_free_camera() -> void:
 
 
 func switch_to_cabin_view() -> void:
-	#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	camera_state = CameraState.CABIN_VIEW
 	wagonsVisible = false
 	cameraNode.transform = cameraZeroTransform

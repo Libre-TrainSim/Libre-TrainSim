@@ -59,7 +59,7 @@ func _input(event) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		mouse_not_moved = true
 
-	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false:
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and Root.Editor:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		get_viewport().warp_mouse(saved_mouse_position)
 

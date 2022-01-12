@@ -324,10 +324,11 @@ func _chunk_loader_thread(_void):
 					for i in range (surface_arr.size()):
 						instance.set_surface_material(i, surface_arr[i])
 					instance.set_meta("chunk_pos", chunk_pos)
+					var old_script = instance.get_script()
 					instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
 					instance.target = NodePath(".")
 					instance.generate_collider()
-					instance.set_script(null)
+					instance.set_script(old_script)
 					call_deferred("_add_node_to_scene_tree", "Buildings", instance)
 
 			## TrackObjects:

@@ -224,7 +224,7 @@ func _on_Remove_pressed():
 	if item_list.get_selected_items().size() == 0:
 		return
 	if display_remove_confirmation:
-		$ConfirmationDialog/Label.text = remove_confirmation_text
+		$ConfirmationDialog/Label.text = tr(remove_confirmation_text)
 		for index in item_list.get_selected_items():
 			$ConfirmationDialog/Label.text += "\n\t" + item_list.get_item_text(index)
 		$ConfirmationDialog.popup_centered_minsize()
@@ -233,7 +233,6 @@ func _on_Remove_pressed():
 
 
 func _on_RemoveConfirmation_Remove_pressed():
-	print("HUHU")
 	$ConfirmationDialog.hide()
 	var removed_entries = []
 	while item_list.get_selected_items().size() != 0:
@@ -243,7 +242,6 @@ func _on_RemoveConfirmation_Remove_pressed():
 
 
 func _on_RemoveConfirmation_Cancel_pressed():
-	print("HUHU")
 	$ConfirmationDialog.hide()
 
 
@@ -325,6 +323,3 @@ func _on_ItemList_multi_selected(index, selected):
 
 func _on_ItemList_item_selected(index):
 	$VBoxContainer/HBoxContainer/LineEdit.text = item_list.get_item_text(index)
-
-
-

@@ -61,7 +61,7 @@ MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile,イージーモード,
 YES,Yes,Ja,Si,はい,TAK,Так,Sí,Да
 NO,No,Nein,No,いいえ,NIE,Ні,No,Не
 ,,,,,,,,
-ABSOLUTE_EDITOR_PATH: ,Absolute editor path: ,Absoluter Editor-Pfad: ,,,,,Ruta absoluta del editor:,Абсолютно местоположение на редактора: 
+ABSOLUTE_EDITOR_PATH: ,Absolute editor path: ,Absoluter Editor-Pfad: ,,,,,Ruta absoluta del editor:,Абсолютно местоположение на редактора:
 UPDATE,Update,Aktualisieren,,,,,Actualizar,Обновяване
 NEW,New,Neu,,,,,Nuevo,Създаване
 RENAME,Rename,Umbenennen,,,,,Renombrar,Преименуване

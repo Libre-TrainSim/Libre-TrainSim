@@ -251,8 +251,10 @@ func clear_selected_object() -> void:
 			vi.set_layer_mask_bit(1, false)
 
 		if selected_object_type == "Building":
-			selected_object.get_child(1).queue_free()
 			$EditorHUD.hide_current_object_transform()
+			for child in selected_object.get_children():
+				if child.is_in_group("Gizmo"):
+					child.queue_free()
 		if selected_object_type == "Rail":
 			$EditorHUD.hide_current_object_transform()
 			for child in selected_object.get_children():
@@ -459,6 +461,11 @@ func test_track_pck() -> void:
 		send_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
 				+ "Please use a build of Libre TrainSim to test tracks. ")
 		return
+
+	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
+		send_message("Cannot test the track! Please create a scenario using the scenario editor.")
+		return
+
 	export_mod()
 
 	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
@@ -470,58 +477,15 @@ func test_track_pck() -> void:
 	LoadingScreen.load_main_menu()
 
 
-func export_mod() -> void:
-	save_world()
-	var mod_name = content.unique_name
-	var export_path = "user://addons/".plus_file(mod_name)
-
-	var dir := Directory.new()
-	if dir.open("user://") != OK:
-		Logger.err("Can't open user directory.", self)
-		return
-	if dir.make_dir_recursive(export_path) != OK:
-		Logger.warn("Can't create mod folder.", self)
-	if ResourceSaver.save("user://addons/%s/content.tres" % content.unique_name, content) != OK:
-		Logger.err("Can't save content.tres. Aborting export.", self)
-		send_message("Can't save content.tres. Aborting export.")
+func export_mod() -> String:
+	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
+		send_message("No scenario found! Please create a scenario in the scenario editor to enable track exporting.")
 		return
 
-	dir.change_dir(export_path)
-
-	var packer = PCKPacker.new()
-	var ok = packer.pck_start(export_path.plus_file(mod_name) + ".pck")
-	if ok != OK:
-		Logger.err("Error creating %s!" % export_path.plus_file(mod_name) + ".pck", self)
-		send_message("Error creating %s!" % export_path.plus_file(mod_name) + ".pck")
-		return
-
-	var files = get_files_in_directory(mod_path)
-	for file in files:
-		ok = packer.add_file(file.replace(editor_directory, "res://Mods/"), file)
-		if ok != OK:
-			Logger.err("Could not add file %s to pck!" % file, self)
-
-	ok = packer.flush(true)
-	if ok != OK:
-		send_message("Could not flush pck!")
-		Logger.err("Could not flush pck!", self)
-	send_message("Track successfully exported.")
-
-
-func get_files_in_directory(path: String) -> Array:
-	var files = []
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
-	var file_name = dir.get_next()
-	while file_name != "":
-		if dir.current_is_dir():
-			files.append_array(get_files_in_directory(path.plus_file(file_name)))
-		else:
-			files.append(path.plus_file(file_name))
-		file_name = dir.get_next()
-	return files
-
+	save_world(false)
+	var mod_name = current_track_path.get_file().get_basename()
+	var export_path = "user://addons/"
+	return ExportTrack.export_editor_track(mod_name, export_path)
 
 
 func _on_ExportTrack_pressed() -> void:

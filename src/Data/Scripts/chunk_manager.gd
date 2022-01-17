@@ -241,6 +241,7 @@ func _add_node_to_scene_tree(parent: String, instance: Spatial):
 	if instance.has_method("update"):
 		instance.update()
 
+
 func append_deduplicated(A: Array, B: Array):
 	for b in B:
 		if not b in A:
@@ -276,7 +277,7 @@ func _unload_old_chunks(all: bool = false):
 	for group in ["TrackObjects", "Buildings", "Landscape"]:
 		var parent = world.get_node(group)
 		for child in parent.get_children():
-			if child.get_meta("chunk_pos") in chunks_to_unload:
+			if all or (child.get_meta("chunk_pos") in chunks_to_unload):
 				child.free()
 
 	# remove unloaded chunks
@@ -323,6 +324,11 @@ func _chunk_loader_thread(_void):
 					for i in range (surface_arr.size()):
 						instance.set_surface_material(i, surface_arr[i])
 					instance.set_meta("chunk_pos", chunk_pos)
+					var old_script = instance.get_script()
+					instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
+					instance.target = NodePath(".")
+					instance.generate_collider()
+					instance.set_script(old_script)
 					call_deferred("_add_node_to_scene_tree", "Buildings", instance)
 
 			## TrackObjects:

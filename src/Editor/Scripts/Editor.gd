@@ -446,6 +446,11 @@ func add_object(complete_path: String) -> void:
 	mesh_instance.translation = position
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
+	var old_script = instance.get_script()
+	mesh_instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
+	mesh_instance.target = NodePath(".")
+	mesh_instance.generate_collider()
+	mesh_instance.set_script(old_script)
 	set_selected_object(mesh_instance)
 
 

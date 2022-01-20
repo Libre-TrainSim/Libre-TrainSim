@@ -11,7 +11,7 @@
 [ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=9]
 [ext_resource path="res://Editor/Scripts/scenario_editor_selection.gd" type="Script" id=11]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Data/UI/styles/complete_menu.theme" type="Theme" id=13]
+[ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=13]
 
 [node name="Control" type="Panel"]
 anchor_right = 1.0

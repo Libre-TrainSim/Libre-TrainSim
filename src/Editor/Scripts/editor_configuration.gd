@@ -86,5 +86,11 @@ func _on_TracksList_user_pressed_action(entry_names):
 			tracks[entry_names[0]][1], texture)
 
 
+func _on_TracksList_user_removed_entries(entry_names):
+	# jList is only in single selection mode. entry_names.size() == 1
+	assert(entry_names.size()==1)
+	jEssentials.remove_folder_recursively(editor_directory.plus_file(tracks[entry_names[0]][0].unique_name))
+
+
 func _on_Back_pressed() -> void:
 	hide()

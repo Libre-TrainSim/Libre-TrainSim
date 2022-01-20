@@ -7,12 +7,12 @@ MENU_SETTINGS,Settings,Einstellungen,Impostazioni,設定,Ustawienia,Налашт
 MENU_ABOUT,About,,,,,,Acerca de,Относно
 MENU_QUIT,Quit,Beenden,Esci,終了,Wyjdź,Вийти,Salir,Изход
 MENU_FEEDBACK_WANTED,Your Feedback wanted!,Dein Feedback ist gefragt!,Dicci la tua opinione!,あなたのフェードバックが必要です,,Ваш відгук важливий!,¡Se busca tu opinión!,Обратна връзка
-MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież,Перезавантажити,Recargar,Презареждане,,,,,,,
-,,,,,,,,,,,,,,,
+MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież,Перезавантажити,Recargar,Презареждане
+,,,,,,,,
 MENU_TRACKS:,Tracks:,Strecken:,Tracciati:,路線:,Tory,Траси:,Vías:,Линии:
 MENU_SCENARIOS:,Szenarios:,Szenarien:,Scenari:,シナリオ:,Scenariusze,Сценарії:,Escenarios,Направления:
 MENU_TRAIN:,Train:,Zug:,Treno:,列車:,Pociąg,Поїзди:,Tren:,Влакове:
-,,,,,,,,,,,,,,,
+,,,,,,,,
 ABOUT_DEVELOPERS,Developers,,,,,,Desarrolladores,Разработчици
 ABOUT_CONTRIBUTORS,Contributors,,,,,,Contribuidores,Сътрудници
 ABOUT_TRANSLATORS,Translators,,,,,,Traductores,Преводачи
@@ -20,9 +20,9 @@ ABOUT_BIGTHANKYOU,Big thank you,,,,,,Muchas gracias a ti,Благодарим в
 MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella",コンテンツを追加する場合は次の場所に.pckファイルを置いてください  ,Aby dodać zawartość musisz  umieścić pliki .Pck w,"Щоб додати вміст, вам потрібно вставити .pck файл сюди:",Para añadir contenido tienes que poner los ficheros .pck en,"За добавяне на модул, трябва да поставите файла с разширение .pck в:"
 MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:,現在ロードされているコンテンツパック:,Załadowane paczki zawartości,Зараз завантажені такі файли:,Paquetes de contenido cargados actualmente:,Текущи модули:
 MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre,"Порада: Якщо ви оновили вміст пакунків, вам потрібно перезапустити гру","Sugerencia: Si actualizaste un Paquete de Contenido, debes reiniciar el simulador.","Съвет: При промяна в модулите, трябва да рестартирате симулатора."
-,,,,,,,,,,,,,,,
+,,,,,,,,
 MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula,Musica: “Follow That Dream” di Luca Fraula,音楽:Luca FraulaによるFollow That Dream,Muzyka: Follow That Dream by Luca Fraula,Музика:  Follow That Dream von Luca Fraula,Música: Sigue ese Sueño por Luca Fraula,Музика: „Следвай тази мечта“ от Лука Фраула
-,,,,,,,,,,,,,,,
+,,,,,,,,
 MENU_SETTINGS:,Settings:,Einstellungen:,Impostazioni:,設定:,Ustawienia,Налаштування:,Configuración:,Настройки:
 MENU_FULLSCREEN,Fullscreen,Vollbild,Schermo intero,フルスクリーン,Pełny ekran,Повноекранний режим,Pantalla completa,На цял екран
 MENU_MAIN_VOLUME,Main Volume,Lautstärke,Volume,音量,Głośność,Гучність ,Volumen Principal,Основен звук
@@ -44,23 +44,23 @@ MENU_AUDIO_SETTINGS,Audio,Audio,,,,,Audio,Звук
 MENU_DIFFICULTY_SETTINGS,Difficulty,Schwierigkeit,,,,,Dificultad,Трудност
 MENU_DIFFICULTY_PZB,Enable PZB,PZB einschalten,,,,,Activar PZB,Включване на PZB
 MENU_DIFFICULTY_SIFA,Enable SIFA,SiFa einschalten,,,,,Activar Dispositivo HM,Включване на SIFA
-,,,,,,,,,,,,,,,
+,,,,,,,,
 MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...,Завантаження...,Cargando…,Зареждане…
-,,,,,,,,,,,,,,,
+,,,,,,,,
 MENU_LATER,Later,Später,Più tardi,あとで,Później,Пізніше,Después,По-късно
 MENU_OPEN_IN_BROWSER,Open in Webbrowser,Öffne in Webbrowser,Apri nel browser web,ウェブブラウザを開く,Otwórz W Przeglądarce,Відкрити в браузері,Abrirlo en el navegador web,Отваряне в Интернет търсачката
 MENU_FEEDBACK_QUESTION,\tDo you have 2 minutes left for answering a quick survey?\n\tYou would help the project a lot!,\tHaben Sie kurz Zeit eine kleine Umfrage auszufüllen?\n\tEs würde dem Projekt sehr helfen!,\tAvresti 2 minuti per rispondere a brevi domande?\n\tPotresti aiutare molto il progetto!,\tもしあなたに2分ぐらいのお時間があるのなら、簡単な調査アンケートにご協力していただけますか？\n\tプロジェクトにとって大きな手助けになるでしょう。,\t Czy masz czas aby wziąść udział w 2 minutowej ankiecie?\n\t To Bardzo pomoże w rozwoju projektu,"\tЧи маєш 2 хвилинки, щоб відповісти на коротке опитування?\n\tТи дуже допоможеш проекту!",\ t¿Tienes 2 minutos para responder una encuesta rápida? \ n \ t¡Ayudarías mucho al proyecto!,\tИмате ли 2 минути на разположение за нашата анкета?\n\tВашето мнение е важно за нас!
-,,,,,,,,,,,,,,,
+,,,,,,,,
 MENU_NO_SCENARIO_FOUND,No Scenario data could be found. This Track is obsolete. Sadly you can't play it.,Es wurden keine Szenarien-Daten gefunden. Sie können die Strecke leider nicht spielen.,Non è stato trovato nessuno scenario. Questo tracciato è obsoleto. Purtroppo non è possibile giocare.,シナリオデータが見つかりませんでした。残念ながらこの路線は廃止されました。,Scenariusz nie został wczytany.Ta trasa jest nie kompatybilna. Niestety nie możesz w nią zagrać.,"Не знайдено жодного сценарію. Ці шляхи є застарілими. Шкода, ти не зможеш зіграти.",No se han encontrado datos del escenario. Esta vía está obsoleta. Lamentablemente no se puede jugar.,"Данните не са намерени. За съжаление, тази линия е остаряла и не може да се използва."
 MENU_AUTHOR,Author,Autor,Autore,作者 ,Autor,Автор,Autor,Автор
 MENU_RELEASE,Release,Veröffentlichung,Rilasciato,リリース,Opublikuj,Випуск,Lanzando,Създадена
 MENU_DURATION,Duration,Dauer,Durata,時間,Czas trwania,Тривалість,Duración,Продължителност
 MENU_ELECTRIC,Electric,Elektrisch,Elettrico,電力,elektryczny,Електричний,Electrico,Електрически
 MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile,イージーモード,Tryb Łatwy,Спрощений режим,Modo fácil,Лесен режим
-,,,,,,,,,,,,,,,
+,,,,,,,,
 YES,Yes,Ja,Si,はい,TAK,Так,Sí,Да
 NO,No,Nein,No,いいえ,NIE,Ні,No,Не
-,,,,,,,,,,,,,,,
+,,,,,,,,
 ABSOLUTE_EDITOR_PATH: ,Absolute editor path: ,Absoluter Editor-Pfad: ,,,,,Ruta absoluta del editor:,Абсолютно местоположение на редактора: 
 UPDATE,Update,Aktualisieren,,,,,Actualizar,Обновяване
 NEW,New,Neu,,,,,Nuevo,Създаване
@@ -70,14 +70,14 @@ OKAY,Okay,Okay,,,,,Vale,Добре
 IMPORT_RESOURCES,Import resources,Ressourcen importieren,,,,,Importar recursos,Внасяне на ресурси
 IMPORT_DESCRIPTION,"To import resources you have to place your files to the suited folder at your editor folder location.\n\n.tres, .tscn, .obj, .ogg and .png files are allowed.\n\nDownload the resource importer for Libre TrainSim, extract it, and start it.\n\nFollow the instructions of the resource importer, and restart this Libre TraiSim instance in the end.\n\nThe imported resources are automaticly loaded while start up of the editor.\n\nIf you updated a file you have to import the resources again. It's no problem to keep resource importer running at background.","Um Ressourcen zu importieren müssen Sie Ihre Dateien zu den passenden Ordnern an ihrem Editor-Datei-Verzeichnis platzieren.\n\n.tres, .tscn, .obj, .ogg and .png Dateien sind erlaubt.\n\nLaden Sie den Libre TrainSim Resource Importer heruunter, entpacken Sie das Archiv, und starten Sie ihn.\n\nBefolgen Sie die Anweisungen des Importers und starten Sie diese Libre TrainSim Instanz neu.\n\nDie neuen Dateien werden automatisch während des Startvorgangs des Editors geladen.\n\nWenn Sie eine Datei aktualisiert haben, müssen Sie die gesamten Ressourcen erneut importieren. Es entsteht kein Problem, den Ressourcen Importer im Hintergrund geöffnet zu lassen.",,,,,"Para importar recursos tienes que poner tus archivos en la carpeta adecuada en la ubicación de su carpeta del editor.\NEstán permiten los archivos .tres, .tscn, .obj, .ogg y .png.\NDescarga el importador de recursos para Libre TrainSim, descomprimelo y ejecutalo. \Sigue las instrucciones del importador de recursos, y reinicia este Libre TraiSim al final. Los recursos importados se cargan automáticamente al iniciar el editor. No hay problema en mantener el importador de recursos en segundo plano.","За внасяне на ресурси, трябва да поставите файловете в папката на редактора.\n\nПозволени са следните файлови формати: .tres, .tscn, .obj, .ogg и .png.\n\nИзтеглете и стартирайте програмата за внасяне на ресурси за „Libre TrainSim“.\n\nСледвайте инструкциите и рестартирайте „Libre TrainSim“, след като приключите.\n\nВнесените ресурси ще бъдат автоматично заредени от редактора.\n\nПри промяна във файловете, трябва да внесете ресурсите отново. Не е проблем, ако оставите включена програмата за внасяне на ресурси."
 DOWNLOAD_RESOURCE_IMPORTER,Download Resource Importer,Ressourcen-Importierer herunterladen,,,,,Descargar el importador de recursos,Изтегляне на програмата за внасяне на ресурси
-,,,,,,,,,,,,,,,
+,,,,,,,,
 MENU_IMPORT,Import…,Importieren…,,,,,Importar…,Внасяне…
 MENU_OPEN_ADDONS,Show Addon Folder,Addonordner anzeigen,,,,,Mostrar la carpeta de los Complementos,Показване на папката с добавки
-,,,,,,,,,,,,,,,
+,,,,,,,,
 SAVE_AND_EXIT,Save and exit,Speichern und beenden,,,,,Guardar y salir,Записване и излизане
 EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,,,,,Salir sin guardar,Излизане без записване
 SAVE,Save,Speichern,,,,,,Записване
-,,,,,,,,,,,,,,,
+,,,,,,,,
 TRACK_EDITOR,Track Editor,Strecken-Editor,,,,,,Редактор на линиите
 SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,,,,,,Редактор на направленията
 SELECT,Select,Auswählen,,,,,,Избиране
@@ -85,5 +85,10 @@ PLAY,Play,Spielen,,,,,,Начало
 CREATE,Create,Erstellen,,,,,,Създаване
 DUPLICATE,Duplicate,Duplizieren,,,,,,Дублиране
 EDIT,Edit,Bearbeiten,,,,,,Редактиране
-,,,,,,,,,,,,,,,
+DELETE,Delete,Löschen,,,,,,
+,,,,,,,,
 SCENARIOS:,Scenarios:,Szenarien:,,,,,,Направления:
+,,,,,,,,
+DELETE_CONFIRMATION_TRACK,Do you really want to remove these files? The track itself with all associated scenarios will be deleted!,Möchten Sie wirklich die Strecke mit allen ihren Szenarion löschen?,,,,,,
+CANCEL,Cancel,Abbrechen,,,,,,
+DELETE_CONFIRMATION_SCENARIO,Do you really want to delete these scenarios?,Möchten Sie wirklich folgende Szenarien löschen?,,,,,,

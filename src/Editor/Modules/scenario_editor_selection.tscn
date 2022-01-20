@@ -1,5 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
+[ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=1]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=2]
 [ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=3]
 [ext_resource path="res://Data/UI/styles/button_right_disabled.tres" type="StyleBox" id=4]
@@ -8,10 +9,9 @@
 [ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=7]
 [ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=8]
 [ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=9]
-[ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=10]
 [ext_resource path="res://Editor/Scripts/scenario_editor_selection.gd" type="Script" id=11]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Data/UI/styles/complete_menu.theme" type="Theme" id=13]
+[ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=13]
 
 [node name="Control" type="Panel"]
 anchor_right = 1.0
@@ -19,6 +19,9 @@ anchor_bottom = 1.0
 theme = ExtResource( 13 )
 custom_styles/panel = ExtResource( 3 )
 script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TrackList" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -98,11 +101,12 @@ margin_right = 780.0
 margin_bottom = 527.0
 size_flags_vertical = 3
 multi_selection_allowed = false
-enable_remove_button = false
 enable_rename_button = true
 enable_duplicate_button = true
 enable_action_button = true
 add_button_text = "CREATE"
+remove_button_text = "DELETE"
+remove_confirmation_text = "DELETE_CONFIRMATION_SCENARIO"
 rename_button_text = "RENAME"
 duplicate_button_text = "DUPLICATE"
 action_button_text = "EDIT"
@@ -117,36 +121,77 @@ margin_right = 780.0
 margin_bottom = 478.0
 
 [node name="LineEdit" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="0"]
-margin_right = 644.0
+margin_right = 246.0
 margin_bottom = 49.0
-caret_blink = true
 
 [node name="Add" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="1"]
-margin_left = 648.0
-margin_right = 689.0
+margin_left = 250.0
+margin_right = 291.0
 margin_bottom = 49.0
-theme = ExtResource( 10 )
+theme = ExtResource( 1 )
 
 [node name="Remove" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="2"]
-margin_left = 693.0
-margin_right = 780.0
+margin_left = 295.0
+margin_right = 382.0
 margin_bottom = 49.0
-theme = ExtResource( 10 )
+theme = ExtResource( 1 )
 
 [node name="Rename" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="3"]
-theme = ExtResource( 10 )
+visible = true
+margin_left = 386.0
+margin_right = 474.0
+margin_bottom = 49.0
+theme = ExtResource( 1 )
 
 [node name="Duplicate" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="4"]
-theme = ExtResource( 10 )
+visible = true
+margin_left = 478.0
+margin_right = 581.0
+margin_bottom = 49.0
+theme = ExtResource( 1 )
 
 [node name="Copy" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="5"]
-theme = ExtResource( 10 )
+margin_left = 689.0
+margin_right = 780.0
+margin_bottom = 49.0
 
 [node name="Paste" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="6"]
-theme = ExtResource( 10 )
+margin_left = 682.0
+margin_right = 780.0
+margin_bottom = 49.0
 
 [node name="Save" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="7"]
-theme = ExtResource( 10 )
+margin_left = 772.0
+margin_right = 862.0
+margin_bottom = 49.0
+
+[node name="Action" parent="ScenarioList/scenarioList/VBoxContainer/HBoxContainer" index="8"]
+visible = true
+margin_left = 585.0
+margin_right = 780.0
+margin_bottom = 49.0
+
+[node name="ConfirmationDialog" parent="ScenarioList/scenarioList" index="2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -295.0
+margin_top = -159.0
+margin_right = 296.0
+margin_bottom = 160.0
+
+[node name="Label" parent="ScenarioList/scenarioList/ConfirmationDialog" index="0"]
+margin_bottom = -68.0
+
+[node name="Remove" parent="ScenarioList/scenarioList/ConfirmationDialog" index="1"]
+margin_top = -59.0
+margin_bottom = -10.0
+
+[node name="Cancel" parent="ScenarioList/scenarioList/ConfirmationDialog" index="2"]
+margin_top = -59.0
+margin_bottom = -10.0
+theme = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScenarioList"]
 margin_top = 531.0
@@ -160,12 +205,14 @@ size_flags_horizontal = 3
 theme = ExtResource( 2 )
 text = "BACK"
 
+[connection signal="visibility_changed" from="." to="." method="_on_Control_visibility_changed"]
 [connection signal="item_activated" from="TrackList/ItemList" to="." method="_on_ItemList_item_activated"]
 [connection signal="pressed" from="TrackList/HBoxContainer/Back" to="." method="_on_Back_TrackList_pressed"]
 [connection signal="pressed" from="TrackList/HBoxContainer/Select" to="." method="_on_Select_TrackList_pressed"]
 [connection signal="user_added_entry" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_added_entry"]
 [connection signal="user_duplicated_entries" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_duplicated_entries"]
 [connection signal="user_pressed_action" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_pressed_action"]
+[connection signal="user_removed_entries" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_removed_entries"]
 [connection signal="user_renamed_entry" from="ScenarioList/scenarioList" to="." method="_on_scenarioList_user_renamed_entry"]
 [connection signal="pressed" from="ScenarioList/HBoxContainer/Back" to="." method="_on_Back_ScenarioList_pressed"]
 

@@ -6,10 +6,6 @@ var available_scenarios = []
 
 var j_save_module = jSaveModule.new()
 
-func _ready():
-	update_track_list()
-
-
 func update_track_list():
 	$TrackList/ItemList.clear()
 	for track in ContentLoader.repo.worlds:
@@ -92,3 +88,15 @@ func _on_scenarioList_user_pressed_action(entry_names):
 # TrackList:
 func _on_ItemList_item_activated(index):
 	_on_Select_TrackList_pressed()
+
+
+func _on_scenarioList_user_removed_entries(entry_names):
+	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
+	var dir = Directory.new()
+	dir.remove(scenarios_folder.plus_file(entry_names[0] + ".scenario"))
+
+
+
+func _on_Control_visibility_changed():
+	if visible:
+		update_track_list()

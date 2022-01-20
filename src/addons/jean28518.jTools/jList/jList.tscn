@@ -126,6 +126,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ConfirmationDialog" type="PopupDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 263.0
+margin_top = 239.0
+margin_right = -99.0
+margin_bottom = -230.0
+popup_exclusive = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="ConfirmationDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 13.0
+margin_top = 22.0
+margin_right = -11.0
+margin_bottom = -44.0
+text = "Lorem ipsum..."
+
+[node name="Remove" type="Button" parent="ConfirmationDialog"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 299.0
+margin_top = -42.0
+margin_right = -81.0
+margin_bottom = -22.0
+text = "Remove"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="ConfirmationDialog"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 83.0
+margin_top = -42.0
+margin_right = -297.0
+margin_bottom = -22.0
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="item_activated" from="VBoxContainer/ItemList" to="." method="_on_ItemList_item_activated"]
 [connection signal="item_selected" from="VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="VBoxContainer/ItemList" to="." method="_on_ItemList_multi_selected"]
@@ -138,3 +185,5 @@ __meta__ = {
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Action" to="." method="_on_Action_pressed"]
 [connection signal="pressed" from="PopupDialog/Okay" to="." method="_on_PopupDiaglog_Okay_pressed"]
+[connection signal="pressed" from="ConfirmationDialog/Remove" to="." method="_on_RemoveConfirmation_Remove_pressed"]
+[connection signal="pressed" from="ConfirmationDialog/Cancel" to="." method="_on_RemoveConfirmation_Cancel_pressed"]

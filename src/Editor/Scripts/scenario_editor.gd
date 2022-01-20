@@ -109,7 +109,7 @@ func test_track_pck() -> void:
 		return
 
 	if ContentLoader.get_scenarios_for_track(Root.current_editor_track_path).size() == 0:
-		send_message("Cannot test the track! Please create a scenario.")
+		show_message("Cannot test the track! Please create a scenario.")
 		return
 
 	save_scenario()
@@ -126,10 +126,10 @@ func test_track_pck() -> void:
 
 func export_mod() -> void:
 	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
-		send_message("No scenario found! Please create a scenario.")
+		show_message("No scenario found! Please create a scenario.")
 		return
 	save_scenario()
 	var track_name = current_track_path.get_file().get_basename()
 	var export_path = "user://addons/"
-	send_message(ExportTrack.export_editor_track(track_name, export_path))
+	show_message(ExportTrack.export_editor_track(track_name, export_path))
 	return

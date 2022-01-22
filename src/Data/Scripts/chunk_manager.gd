@@ -183,6 +183,9 @@ func _save_chunk(chunk_pos: Vector3):
 
 	_jsavemodule.save_value(chunk_to_string(chunk_pos), null)
 	_jsavemodule.save_value(chunk_to_string(chunk_pos), chunk)
+
+	world.world_origin_on_last_save = world_origin
+
 	Logger.log("Saved Chunk " + chunk_to_string(chunk_pos))
 
 

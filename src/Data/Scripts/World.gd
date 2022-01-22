@@ -13,6 +13,8 @@ var currentScenario := ""
 export (String) var FileName := "Name Me!"
 onready var trackName: String = FileName.rsplit("/")[0]
 
+export var world_origin_on_last_save = Vector3(0,0,0) # Used for chunk manager.
+
 var author: String = ""
 var picturePath: String = "res://screenshot.png"
 var description: String = ""
@@ -49,6 +51,7 @@ func _ready() -> void:
 	chunk_manager = ChunkManager.new()
 	chunk_manager.world = self
 	chunk_manager.name = "ChunkManager"
+	chunk_manager.world_origin = world_origin_on_last_save
 	add_child(chunk_manager)
 
 	# backward compat

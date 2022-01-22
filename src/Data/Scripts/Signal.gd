@@ -131,8 +131,9 @@ func set_status(new_val: int) -> void:
 	if signal_type != SignalType.MAIN and new_val == SignalStatus.GREEN and signal_after_node != null and signal_after_node.status == SignalStatus.RED:
 		new_val = SignalStatus.ORANGE
 
-	status = new_val
-	emit_signal("signal_changed", self)
+	if status != new_val:
+		status = new_val
+		emit_signal("signal_changed", self)
 
 
 func set_speed(new_speed: float) -> void:

@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Data/UI/custom_item_list.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Data/UI/Content.gd" type="Script" id=3]
 [ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=4]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
-[ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=6]
 [ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -63,7 +62,7 @@ margin_right = 764.0
 margin_bottom = 562.0
 
 [node name="Back" type="Button" parent="VBoxContainer/Buttons"]
-margin_right = 252.0
+margin_right = 380.0
 margin_bottom = 49.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
@@ -72,39 +71,13 @@ text = "MENU_BACK"
 align = 0
 
 [node name="Open" type="Button" parent="VBoxContainer/Buttons"]
-margin_left = 256.0
-margin_right = 508.0
-margin_bottom = 49.0
-rect_min_size = Vector2( 200, 0 )
-size_flags_horizontal = 3
-theme = ExtResource( 6 )
-text = "MENU_OPEN_ADDONS"
-
-[node name="Import" type="Button" parent="VBoxContainer/Buttons"]
-margin_left = 512.0
+margin_left = 384.0
 margin_right = 764.0
 margin_bottom = 49.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 theme = ExtResource( 4 )
-text = "MENU_IMPORT"
-align = 2
-
-[node name="FileDialog" type="FileDialog" parent="."]
-margin_left = 6.0
-margin_top = 8.0
-margin_right = 770.0
-margin_bottom = 572.0
-window_title = "Open File(s)"
-resizable = true
-mode = 1
-access = 2
-filters = PoolStringArray( "*.pck ; Content Packs" )
-current_dir = "/Godot Projekte/Libre-TrainSim/src"
-current_path = "/Godot Projekte/Libre-TrainSim/src/"
+text = "MENU_OPEN_ADDONS"
 
 [connection signal="pressed" from="VBoxContainer/Buttons/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/Open" to="." method="_on_Open_pressed"]
-[connection signal="pressed" from="VBoxContainer/Buttons/Import" to="." method="_on_Import_pressed"]
-[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-[connection signal="files_selected" from="FileDialog" to="." method="_on_FileDialog_files_selected"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Data/UI/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://screenshot.png" type="Texture" id=12]
 [ext_resource path="res://Data/UI/styles/panel_popup.tres" type="StyleBox" id=13]
 [ext_resource path="res://Editor/Modules/scenario_editor_selection.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=15]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -230,6 +231,7 @@ size_flags_vertical = 3
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 2 )
 text = "MENU_FEEDBACK_QUESTION"
+script = ExtResource( 15 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Feedback/VBoxContainer"]
 margin_top = 115.0

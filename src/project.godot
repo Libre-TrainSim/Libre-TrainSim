@@ -199,6 +199,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Editor/Modules/time_field.gd"
 }, {
+"base": "RichTextLabel",
+"class": "TranslatedRichTextLabel",
+"language": "GDScript",
+"path": "res://Data/UI/translated_rich_rext_label.gd"
+}, {
 "base": "RailLogic",
 "class": "WarnSpeedLimit",
 "language": "GDScript",
@@ -253,6 +258,7 @@ _global_script_class_icons={
 "StopType": "",
 "TextBox": "",
 "TimeField": "",
+"TranslatedRichTextLabel": "",
 "WarnSpeedLimit": "",
 "WorldObject": "",
 "jSaveModule": ""
@@ -585,7 +591,7 @@ pzb_command={
 [locale]
 
 translations=PoolStringArray( "res://Translations/Ingame.bg.translation", "res://Translations/Ingame.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.it.translation", "res://Translations/MainMenu.bg.translation", "res://Translations/MainMenu.de.translation", "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.it.translation", "res://Translations/MainMenu.pl.translation", "res://Translations/Ingame.pl.translation", "res://Translations/Ingame.uk.translation", "res://Translations/MainMenu.uk.translation", "res://Translations/Ingame.es.translation", "res://Translations/MainMenu.es.translation" )
-locale_filter=[ 0, [ "bg", "de", "en", "ja" ] ]
+locale_filter=[ 0, [ "bg", "de", "en", "es", "it", "ja", "uk" ] ]
 translation_remaps={
 }
 

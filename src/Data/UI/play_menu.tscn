@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Data/UI/styles/button_left_hover.tres" type="StyleBox" id=6]
 [ext_resource path="res://Data/UI/styles/button_left_normal.tres" type="StyleBox" id=7]
 [ext_resource path="res://Data/UI/styles/panel_section.tres" type="StyleBox" id=8]
+[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=9]
 [ext_resource path="res://Data/UI/play_menu.gd" type="Script" id=10]
 
 [node name="PlayMenu" type="Panel"]
@@ -89,6 +90,7 @@ margin_right = 280.0
 margin_bottom = 453.0
 size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 2 )
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -291,6 +293,7 @@ margin_right = 280.0
 margin_bottom = 349.0
 size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 2 )
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

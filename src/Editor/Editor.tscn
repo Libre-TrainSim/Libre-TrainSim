@@ -493,6 +493,7 @@ __meta__ = {
 current = true
 far = 1000.0
 script = ExtResource( 1 )
+control_path = NodePath("../EditorHUD/Settings")
 
 [node name="OutlinesPP" parent="." instance=ExtResource( 4 )]
 highlight_color = Color( 1, 1, 0, 1 )

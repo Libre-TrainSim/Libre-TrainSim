@@ -6,12 +6,15 @@ export var mouse_sensitivity: float = 0.003
 export var normal_speed: float = 1
 export var fast_speed: float = 3
 export var pan_move_sensitivity: float = 0.25
+export var control_path: NodePath
 
 
 var velocity := Vector3.ZERO
 var is_moving_first_person := false
 var is_panning := false
 var in_movement_time: float = 0
+
+onready var control: Control = get_node(control_path)
 
 
 func load_from_transform(new_transform: Transform) -> void:
@@ -77,3 +80,15 @@ func _physics_process(delta: float) -> void:
 	velocity = direction
 	translate_object_local(direction)
 
+
+func _capture_mouse() -> void:
+	._capture_mouse()
+	var focus_owner := control.get_focus_owner()
+	if focus_owner:
+		focus_owner.release_focus()
+		control = focus_owner
+
+
+func _free_mouse() -> void:
+	._free_mouse()
+	control.grab_focus()

@@ -31,6 +31,7 @@ func _on_Back_pressed() -> void:
 	visible = false
 	Input.set_mouse_mode(_saved_mouse_mode)
 	Root.ingame_pause = _saved_ingame_pause
+	emit_signal("unpaused")
 
 
 func _on_Quit_pressed() -> void:

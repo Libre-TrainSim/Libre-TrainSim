@@ -4,7 +4,7 @@ MENU_BACK,Back,Zurück,Indietro,戻る,Wroć,Назад,Atrás,Назад
 MENU_CONTENT,Content,Inhalt,Contenuti,コンテンツ,zawartość,Вміст,Contenido,Модули
 MENU_CREATE,Create,Erstellen,Crea,作成,Utworz,Створити,Crear,Създаване
 MENU_SETTINGS,Settings,Einstellungen,Impostazioni,設定,Ustawienia,Налаштування,Configuración,Настройки
-MENU_ABOUT,About,,,,,,Acerca de,Относно
+MENU_ABOUT,About Libre TrainSim,Über Libre TrainSim,,,,,Acerca de,Относно
 MENU_QUIT,Quit,Beenden,Esci,終了,Wyjdź,Вийти,Salir,Изход
 MENU_FEEDBACK_WANTED,We want your feedback!,Dein Feedback ist gefragt!,Dicci la tua opinione!,あなたのフェードバックが必要です,,Ваш відгук важливий!,¡Se busca tu opinión!,Обратна връзка
 MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież,Перезавантажити,Recargar,Презареждане
@@ -13,13 +13,13 @@ MENU_TRACKS:,Tracks:,Strecken:,Tracciati:,路線:,Tory,Траси:,Vías:,Лин
 MENU_SCENARIOS:,Scenarios:,Szenarien:,Scenari:,シナリオ:,Scenariusze,Сценарії:,Escenarios,Направления:
 MENU_TRAIN:,Train:,Zug:,Treno:,列車:,Pociąg,Поїзди:,Tren:,Влакове:
 ,,,,,,,,
-ABOUT_DEVELOPERS,Developers,,,,,,Desarrolladores,Разработчици
-ABOUT_CONTRIBUTORS,Contributors,,,,,,Contribuidores,Сътрудници
-ABOUT_TRANSLATORS,Translators,,,,,,Traductores,Преводачи
-ABOUT_BIGTHANKYOU,Big thank you,,,,,,Muchas gracias a ti,Благодарим ви
+ABOUT_DEVELOPERS,Developers,Programmierer,,,,,Desarrolladores,Разработчици
+ABOUT_CONTRIBUTORS,Contributors,Unterstützer,,,,,Contribuidores,Сътрудници
+ABOUT_TRANSLATORS,Translators,Übersetzer,,,,,Traductores,Преводачи
+ABOUT_BIGTHANKYOU,Big thank you,Einen Großen Dank an,,,,,Muchas gracias a ti,Благодарим ви
 MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella",コンテンツを追加する場合は次の場所に.pckファイルを置いてください  ,Aby dodać zawartość musisz  umieścić pliki .Pck w,"Щоб додати вміст, вам потрібно вставити .pck файл сюди:",Para añadir contenido tienes que poner los ficheros .pck en,"За добавяне на модул, трябва да поставите файла с разширение .pck в:"
 MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:,現在ロードされているコンテンツパック:,Załadowane paczki zawartości,Зараз завантажені такі файли:,Paquetes de contenido cargados actualmente:,Текущи модули:
-MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Packet aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre,"Порада: Якщо ви оновили вміст пакунків, вам потрібно перезапустити гру","Sugerencia: Si actualizaste un Paquete de Contenido, debes reiniciar el simulador.","Съвет: При промяна в модулите, трябва да рестартирате симулатора."
+MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Paket aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre,"Порада: Якщо ви оновили вміст пакунків, вам потрібно перезапустити гру","Sugerencia: Si actualizaste un Paquete de Contenido, debes reiniciar el simulador.","Съвет: При промяна в модулите, трябва да рестартирате симулатора."
 ,,,,,,,,
 MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von Luca Fraula,Musica: “Follow That Dream” di Luca Fraula,音楽:Luca FraulaによるFollow That Dream,Muzyka: Follow That Dream by Luca Fraula,Музика:  Follow That Dream von Luca Fraula,Música: Sigue ese Sueño por Luca Fraula,Музика: „Следвай тази мечта“ от Лука Фраула
 ,,,,,,,,
@@ -61,7 +61,7 @@ MENU_EASY_MODE,Easy Mode,Einfacher Modus,Modalità facile,イージーモード,
 YES,Yes,Ja,Si,はい,TAK,Так,Sí,Да
 NO,No,Nein,No,いいえ,NIE,Ні,No,Не
 ,,,,,,,,
-ABSOLUTE_EDITOR_PATH: ,Absolute editor path: ,Absoluter Editor-Pfad: ,,,,,Ruta absoluta del editor:,Абсолютно местоположение на редактора: 
+ABSOLUTE_EDITOR_PATH: ,Absolute editor path: ,Absoluter Editor-Pfad: ,,,,,Ruta absoluta del editor:,Абсолютно местоположение на редактора:
 UPDATE,Update,Aktualisieren,,,,,Actualizar,Обновяване
 NEW,New,Neu,,,,,Nuevo,Създаване
 RENAME,Rename,Umbenennen,,,,,Renombrar,Преименуване

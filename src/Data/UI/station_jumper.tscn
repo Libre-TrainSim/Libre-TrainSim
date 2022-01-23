@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/Scripts/StationJumper.gd" type="Script" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=6]
 [ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=7]
 [ext_resource path="res://Data/UI/colored_item_list.gd" type="Script" id=8]
+[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=9]
 
 [node name="StationJumper" type="PanelContainer"]
 anchor_right = 1.0
@@ -56,6 +57,7 @@ margin_bottom = 548.0
 rect_min_size = Vector2( 0, 100 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 3 )
+script = ExtResource( 9 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="StationJumper"]
 margin_top = 552.0

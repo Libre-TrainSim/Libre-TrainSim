@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=1]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=7]
 [ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=8]
 [ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=9]
+[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=10]
 [ext_resource path="res://Editor/Scripts/scenario_editor_selection.gd" type="Script" id=11]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=13]
@@ -183,6 +184,7 @@ margin_bottom = 160.0
 
 [node name="Label" parent="ScenarioList/scenarioList/ConfirmationDialog" index="0"]
 margin_bottom = -68.0
+script = ExtResource( 10 )
 
 [node name="Remove" parent="ScenarioList/scenarioList/ConfirmationDialog" index="1"]
 margin_top = -59.0

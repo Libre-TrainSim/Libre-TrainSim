@@ -389,7 +389,7 @@ func _on_automaticTendency_pressed() -> void:
 	currentRail.automaticTendency = $S/Settings/Tendency/automaticTendency.pressed
 	currentRail.updateAutomaticTendency()
 	set_tendSlopeData(currentRail.get_tendSlopeData())
-	currentRail._update(true)
+	currentRail.update()
 
 
 func _on_OverheadLine_pressed() -> void:

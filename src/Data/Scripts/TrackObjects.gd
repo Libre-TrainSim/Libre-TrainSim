@@ -129,7 +129,7 @@ func update() -> void:
 		length = rail_node.length
 
 	translation = rail_node.get_pos_at_RailDistance(on_rail_position)
-	if multimesh.mesh == null and objectPath != null:
+	if multimesh.mesh == null and objectPath != "":
 		multimesh.mesh = load(objectPath).duplicate()
 
 	if is_instance_valid(multimesh.mesh):

@@ -355,7 +355,7 @@ func circle_get_deg(r: float, distance: float) -> float:
 
 #### Height Functions:
 func get_height(distance: float) -> float:
-	if parRail != null:
+	if is_instance_valid(parRail):
 		var newRadius: float = radius - distanceToParallelRail
 		if radius == 0:
 			newRadius = 0
@@ -374,7 +374,7 @@ func get_height(distance: float) -> float:
 
 
 func get_heightRot(distance: float) -> float: ## Get Slope
-	if parRail != null:
+	if is_instance_valid(parRail):
 		var newRadius = radius - distanceToParallelRail
 		if radius == 0:
 			newRadius = 0
@@ -393,7 +393,7 @@ func get_heightRot(distance: float) -> float: ## Get Slope
 
 
 func get_tend_at_rail_distance(distance: float) -> float:
-	if parRail != null:
+	if is_instance_valid(parRail):
 		var newRadius: float = radius - distanceToParallelRail
 		if radius == 0:
 			newRadius = 0

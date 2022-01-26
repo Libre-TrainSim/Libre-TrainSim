@@ -96,6 +96,8 @@ func _on_jListTrackObjects_user_duplicated_entries(source_entry_names: Array, du
 
 
 func copy_track_object_to_current_rail(source_track_object: Node, new_description: String, mirror: bool = false) -> void:
+	if source_track_object == null:
+		return
 	var new_track_object: Node = track_object_resource.instance()
 	var data: Dictionary = source_track_object.get_data()
 	new_track_object.set_data(data)
@@ -110,7 +112,7 @@ func copy_track_object_to_current_rail(source_track_object: Node, new_descriptio
 		elif source_track_object.sides == 2:
 			new_track_object.sides = 1
 	new_track_object.set_owner(world)
-	new_track_object.update(currentRail)
+	new_track_object.update()
 
 
 
@@ -219,7 +221,7 @@ func _on_jListTrackObjects_user_copied_entries(entry_names: Array) -> void:
 		return
 	copyTOArray = []
 	for entry_name in entry_names:
-		copyTOArray.append(currentRail.get_track_object(entry_name))
+		copyTOArray.append(currentRail.get_track_object(entry_name).duplicate(DUPLICATE_SCRIPTS))
 	$"Tab/TrackObjects/Settings".visible = true
 	Logger.log("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pasted a copy of it/them.")
 
@@ -310,7 +312,17 @@ func _on_BuildingSettings_updated() -> void:
 
 
 func _on_OptionButton_item_selected(index: int) -> void:
-	# TODO: _on_dialog_closed() does not exist
-	# find_parent("EditorHUD")._on_dialog_closed()
-	pass
+	if currentTO.sides == PlatformSide.LEFT and index == PlatformSide.RIGHT:
+		currentTO.rotationObjects += 180
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+	elif currentTO.sides == PlatformSide.RIGHT and index == PlatformSide.LEFT:
+		currentTO.rotationObjects -= 180
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+	currentTO.sides = index
+	update_current_rail_attachment()
 
+
+
+func _on_ObjectPositioningPlaceLast_pressed():
+	currentTO.placeLast = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed
+	update_current_rail_attachment()

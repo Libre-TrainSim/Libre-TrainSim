@@ -156,9 +156,10 @@ func _update() -> void:
 	if overheadLine:
 		update_overheadline(calculate_overhadline_mesh())
 
-	if Root.Editor:
+	if Root.Editor and visible:
 		$Ending.transform = get_local_transform_at_rail_distance(length)
 		$Mid.transform = get_local_transform_at_rail_distance(length/2.0)
+		update_connection_arrows()
 		for track_object in trackObjects:
 			track_object.update()
 
@@ -622,7 +623,7 @@ func update_connections() -> void:
 	_connected_rails_at_beginning = []
 	_connected_rails_at_ending = []
 	for rail in world.get_node("Rails").get_children():
-		if rail == self:
+		if rail == self or startpos.distance_to(rail.startpos) > 1500:
 			continue
 		# Check for beginning
 		if startpos.distance_to(rail.startpos) < 0.1 and abs(Math.normDeg(startrot) - Math.normDeg(rail.startrot+180)) < 1:
@@ -643,3 +644,29 @@ func get_connected_rails_at_beginning() -> Array:
 func get_connected_rails_at_ending() -> Array:
 	return _connected_rails_at_ending
 
+
+func update_connection_arrows():
+	_update_connection_arrows_not_recursive()
+	for rail in _connected_rails_at_beginning:
+		rail._update_connection_arrows_not_recursive()
+	for rail in _connected_rails_at_ending:
+		rail._update_connection_arrows_not_recursive()
+
+var _last_calculation_of_update_connection_arrows = 0
+func _update_connection_arrows_not_recursive():
+	if _last_calculation_of_update_connection_arrows == get_tree().get_frame():
+		return
+	if not Root.Editor:
+		return
+	update_connections()
+	if not _connected_rails_at_beginning.empty():
+		$Beginning/Beginning.material_override = preload("res://Data/Misc/Rail_Beginning_connected.tres")
+	else:
+		$Beginning/Beginning.material_override = preload("res://Data/Misc/Rail_Beginning_disconnected.tres")
+
+	if not _connected_rails_at_ending.empty():
+		$Ending/Ending.material_override = preload("res://Data/Misc/Rail_Ending_connected.tres")
+	else:
+		$Ending/Ending.material_override = preload("res://Data/Misc/Rail_Ending_disconnected.tres")
+
+	_last_calculation_of_update_connection_arrows == get_tree().get_frame()

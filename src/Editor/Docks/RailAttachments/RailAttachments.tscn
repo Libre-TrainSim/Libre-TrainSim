@@ -526,6 +526,7 @@ current_path = "res://Resources/"
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/WholeRail" to="." method="_on_AssignWholeRail_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Position/SaveAndUpdate" to="." method="_on_SavePosition_pressed"]
 [connection signal="item_selected" from="Tab/TrackObjects/Settings/Tab/Object Positioning/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast" to="." method="_on_ObjectPositioningPlaceLast_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/SaveAndUpdate" to="." method="_on_SavePositioning_pressed"]
 [connection signal="pressed" from="Tab/TrackObjects/Settings/Tab/Object Positioning/Randomize" to="." method="_on_Randomize_pressed"]
 [connection signal="file_selected" from="FileDialogObjects" to="." method="_on_FileDialog_onject_selected"]

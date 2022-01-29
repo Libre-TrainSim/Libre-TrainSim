@@ -834,7 +834,7 @@ func check_route_for_errors() -> void:
 	if baked_route.size() == 0:
 		var first_error_route_point: String = route_manager.get_description_of_point(route_manager.error_route_point_start_index)
 		var second_error_route_point: String = route_manager.get_description_of_point(route_manager.error_route_point_end_index)
-		error_message += "The train route can't be generated. Between '%s' and '%s' seems to be an error. Check, if a train could drive between these two points. Maybe some rails are not connected. Try adding a waypoint between these two route points to locate the error.\n\n" % [first_error_route_point, second_error_route_point]
+		error_message += "The train route can't be generated. Between '%s' and '%s' seems to be an error. Check, if a train could drive between these two points. Maybe some rails are not connected. Try adding a waypoint between these two route points to locate the error. Are your points in the correct order?\n\n" % [first_error_route_point, second_error_route_point]
 
 	if routes[current_route].general_settings.player_can_drive_this_route:
 		for route_point in route_points:

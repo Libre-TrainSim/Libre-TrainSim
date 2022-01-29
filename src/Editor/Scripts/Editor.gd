@@ -79,6 +79,9 @@ func handle_drag_mode() -> void:
 	# yes, this really needs idle_frame, won't work otherwise
 	yield(get_tree(), "idle_frame")
 
+	if not is_instance_valid(selected_object):
+		return
+
 	# lazy snapping done via collision areas
 	var snapped_object: Node = null
 	var snapped_start: bool = false

@@ -167,7 +167,7 @@ margin_bottom = 164.0
 [node name="S" type="VBoxContainer" parent="."]
 margin_top = 168.0
 margin_right = 800.0
-margin_bottom = 472.0
+margin_bottom = 416.0
 
 [node name="General" type="VBoxContainer" parent="S"]
 margin_right = 800.0
@@ -230,7 +230,7 @@ size_flags_horizontal = 3
 [node name="Settings" type="VBoxContainer" parent="S"]
 margin_top = 100.0
 margin_right = 800.0
-margin_bottom = 280.0
+margin_bottom = 224.0
 
 [node name="OptionButton" type="OptionButton" parent="S/Settings"]
 margin_right = 800.0
@@ -297,7 +297,7 @@ text = "0"
 [node name="Slope" type="VBoxContainer" parent="S/Settings"]
 margin_top = 80.0
 margin_right = 800.0
-margin_bottom = 156.0
+margin_bottom = 100.0
 
 [node name="ShowHideSlope" type="Button" parent="S/Settings/Slope"]
 margin_left = 358.0
@@ -307,6 +307,7 @@ size_flags_horizontal = 4
 text = "Show Slope"
 
 [node name="SlopeGrid" type="GridContainer" parent="S/Settings/Slope"]
+visible = false
 margin_top = 24.0
 margin_right = 800.0
 margin_bottom = 76.0
@@ -342,9 +343,9 @@ min_value = -100.0
 step = 0.001
 
 [node name="Tendency" type="VBoxContainer" parent="S/Settings"]
-margin_top = 160.0
+margin_top = 104.0
 margin_right = 800.0
-margin_bottom = 180.0
+margin_bottom = 124.0
 
 [node name="ShowHideTendency" type="Button" parent="S/Settings/Tendency"]
 margin_left = 345.0
@@ -597,9 +598,9 @@ text = "Shift"
 
 [node name="Update" type="Button" parent="S"]
 margin_left = 371.0
-margin_top = 284.0
+margin_top = 228.0
 margin_right = 429.0
-margin_bottom = 304.0
+margin_bottom = 248.0
 size_flags_horizontal = 4
 text = "Update"
 

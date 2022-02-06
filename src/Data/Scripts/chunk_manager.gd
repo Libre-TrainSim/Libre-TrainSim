@@ -4,7 +4,7 @@ extends Node
 signal chunks_finished_loading   # emitted when chunks finished loading (loaded_chunks == chunks_to_load)
 signal _thread_finished_loading
 
-const world_origin_shift_treshold: int = 7_000  # if further than this from origin, recenter world origin
+const world_origin_shift_treshold: int = 5_000  # if further than this from origin, recenter world origin
 const chunk_size: int = 1000  # extend of a chunk in all directions
 const GRASS_HEIGHT: float = -0.5
 

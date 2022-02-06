@@ -291,6 +291,7 @@ jSettings="*res://addons/jean28518.jTools/jSettings/JSettings.tscn"
 ContentLoader="*res://Data/Scripts/Singletons/content_loader.gd"
 LoadingScreen="*res://Data/UI/loading_screen.tscn"
 InputHelper="*res://Data/Scripts/Singletons/input_helper.gd"
+DebugDraw="*res://addons/zylann.debug_draw/debug_draw.gd"
 
 [debug]
 
@@ -305,6 +306,11 @@ window/handheld/orientation="sensor_landscape"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
+
+[game]
+
+debug/draw_paths=false
+debug/draw_paths.release=false
 
 [global]
 

@@ -1,4 +1,4 @@
-extends WorldObject
+extends Spatial
 
 export (float) var walkingSpeed: float = 1.5
 
@@ -15,18 +15,18 @@ var status: int = 0
 #0 Walking To Position
 #1: Sitting
 
-var destinationPos: Array = []
+var destinationPos := []
 
 var stopping: bool = false # Used, if for example doors where closed to early
 
+var debug_color := Color(randf(), randf(), randf(), 0.75)
 
 func _ready() -> void:
 	walkingSpeed = rand_range(walkingSpeed, walkingSpeed+0.3)
 
 
 func _process(delta: float) -> void:
-	if not get_tree().paused:
-		handleWalk(delta)
+	handleWalk(delta)
 
 
 var leave_wagon_timer: float = 0
@@ -50,13 +50,15 @@ func handleWalk(delta: float) -> void:
 			transitionToWagon = false
 			attachedWagon.registerPerson(self, assignedDoor)
 			assignedDoor = null
-		if transitionToStation and attachedWagon.player.whole_train_in_station and (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
+		if transitionToStation and attachedWagon.player.whole_train_in_station \
+				and (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
 			leave_wagon_timer += delta
 			if leave_wagon_timer > 1.8:
 				leave_wagon_timer = 0
 				transitionToStation = false
 				leave_current_wagon()
-		if destinationIsSeat and attachedSeat != null and translation.distance_to(attachedSeat.translation) < 0.1:
+		if destinationIsSeat and attachedSeat != null and \
+				translation.distance_to(attachedSeat.translation) < 0.1:
 			destinationIsSeat = false
 			rotation_degrees.y = attachedSeat.rotation_degrees.y + 90
 
@@ -70,26 +72,42 @@ func handleWalk(delta: float) -> void:
 	if !$VisualInstance/AnimationPlayer.is_playing():
 		$VisualInstance/AnimationPlayer.play("Walking")
 
-	if translation.distance_to(destinationPos[0]) < 0.1:
+
+	if transitionToStation or destinationIsSeat:
+		if translation.distance_to(destinationPos[0]) < 0.1:
+			destinationPos.pop_front()
+			return
+	elif global_transform.origin.distance_to(destinationPos[0]) < 0.1:
 		destinationPos.pop_front()
 		return
+
+	if stopping:
+		return
+
+	var vector_delta := Vector3.ZERO
+
+	if transitionToStation or destinationIsSeat:
+		translation = translation.move_toward(destinationPos[0], delta*walkingSpeed)
+		vector_delta = destinationPos[0] - translation
 	else:
-		if not stopping:
-			translation = translation.move_toward(destinationPos[0], delta*walkingSpeed)
-			var vector_delta = destinationPos[0] - translation
-#			rotation_degrees.y = rad2deg(translation.angle_to(destinationPos[0]))
-			if vector_delta.z != 0:
-				if vector_delta.z > 0:
-					rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))
-				else:
-					rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))+180
+		global_transform.origin = global_transform.origin \
+				.move_toward(destinationPos[0], delta*walkingSpeed)
+		vector_delta = destinationPos[0] - global_transform.origin
+
+	_debug_draw_path()
+	if vector_delta.z != 0:
+		if vector_delta.z > 0:
+			rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))
+		else:
+			rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))+180
 
 
 func leave_current_wagon()-> void:
-	destinationPos.append(assignedDoor.to_global(Vector3(0,0,0)))
-	translation = to_global(Vector3(0,0,0))
+	destinationPos.append(assignedDoor.global_transform.origin)
+	var old_position := global_transform.origin
 	attachedWagon.deregisterPerson(self)
 	attachedStation.registerPerson(self)
+	global_transform.origin = old_position
 	transitionToStation = false
 	attachedWagon = null
 	assignedDoor = null
@@ -105,3 +123,16 @@ func deSpawn() -> void:
 
 func clear_destinations() -> void:
 	destinationPos.clear()
+
+
+func _debug_draw_path() -> void:
+	if !ProjectSettings["game/debug/draw_paths"]:
+		return
+	var parent := get_parent_spatial()
+	var last_position := global_transform.origin
+	for position in destinationPos:
+		var new_position := parent.to_global(position) \
+				if transitionToStation or destinationIsSeat \
+				else position
+		DebugDraw.draw_line_3d(last_position, new_position, debug_color)
+		last_position = new_position

@@ -70,8 +70,8 @@ var attachedSignals: Array = []
 func _ready() -> void:
 	update_parallel_rail_settings()
 	manualMoving = false
-#	_update(false)
-	if not (Engine.is_editor_hint() or Root.Editor):
+	_update()
+	if not Root.Editor:
 		$Beginning.queue_free()
 		$Ending.queue_free()
 		$Mid.queue_free()
@@ -658,6 +658,9 @@ func _update_connection_arrows_not_recursive():
 		return
 	if not Root.Editor:
 		return
+	if world == null:
+		# Hack (but what follows is so broken and hacky...)
+		yield(self, "ready")
 	update_connections()
 	if not _connected_rails_at_beginning.empty():
 		$Beginning/Beginning.material_override = preload("res://Data/Misc/Rail_Beginning_connected.tres")

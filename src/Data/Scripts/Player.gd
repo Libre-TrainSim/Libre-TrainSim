@@ -172,9 +172,7 @@ signal reverser_changed(reverser_state)
 signal _textbox_closed
 
 
-# Called by World!
 func ready() -> void:
-
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	# Initiliaze Camera:
 	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
@@ -1361,6 +1359,7 @@ func spawnWagons() -> void:
 		get_parent().add_child(newWagon)
 		newWagon.owner = self.owner
 		wagonsI.append(newWagon)
+		newWagon.initalize()
 
 	# Handle Cabin:
 	if ai:

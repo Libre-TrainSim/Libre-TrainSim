@@ -82,7 +82,7 @@ func _ready() -> void:
 	jEssentials.call_delayed(1.0, self, "load_configs_to_cache")
 
 	## Create Persons-Node:
-	var personsNode := Spatial.new()
+	var personsNode := WorldObject.new()
 	personsNode.name = "Persons"
 	add_child(personsNode)
 	personsNode.owner = self

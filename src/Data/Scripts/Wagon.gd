@@ -26,15 +26,14 @@ var distanceToPlayer: float= -1
 
 export var pantographEnabled: bool = false
 
-var player: LTSPlayer
+onready var player: LTSPlayer
 var world: Node
 
 var attachedPersons := []
 
-var initialSet: bool = false
 
-
-func _ready() -> void:
+func initalize() -> void:
+	assert(player != null)
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	if cabinMode:
 		length = 4
@@ -51,6 +50,12 @@ func _ready() -> void:
 	personsNode.owner = self
 
 	initialize_outside_announcement_player()
+
+	# Move wagon into correct start position
+	if distanceToPlayer == -1:
+		distanceToPlayer = abs(player.distance_on_rail - distance_on_rail)
+	drive(0)
+	set_transform_on_rail()
 
 	# TODO: this is a performance hotfix, we should do a better implementation in 0.10
 	if not jSettings.get_dynamic_lights():
@@ -81,31 +86,37 @@ func _process(delta: float) -> void:
 		drive(delta)
 		return
 
-	if get_parent().name != "Players": return
+	assert(get_parent().name == "Players")
+	if get_parent().name != "Players":
+		return
 	if distanceToPlayer == -1:
 		distanceToPlayer = abs(player.distance_on_rail - distance_on_rail)
 	visible = player.wagonsVisible
-	if speed != 0 or not initialSet:
+	if speed != 0:
 		drive(delta)
-		initialSet = true
+	set_transform_on_rail()
 	check_doors()
 
 	if pantographEnabled:
 		check_pantograph()
 
-	if not visible: return
+	if not visible:
+		return
+
+	if has_node("InsideLight"):
+		$InsideLight.visible = player.insideLight
+
+
+func set_transform_on_rail() -> void:
 	if forward:
 		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
 	else:
 		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
 		rotate_object_local(Vector3(0,1,0), deg2rad(180))
 
-	if has_node("InsideLight"):
-		$InsideLight.visible = player.insideLight
-
 
 func drive(delta: float) -> void:
-	if currentRail  == player.currentRail:
+	if currentRail == player.currentRail:
 		## It is IMPORTANT that the `distance > length` and `distance < 0` are SEPARATE!
 		if player.forward:
 			distance_on_rail = player.distance_on_rail - distanceToPlayer # possibly < 0 !
@@ -221,6 +232,7 @@ func registerPerson(person: Spatial, door: Spatial):
 	var seatIndex: int = getRandomFreeSeatIndex()
 	if seatIndex == -1:
 		person.queue_free()
+		# We should add overcrowding :)
 		return
 	attachedPersons.append(person)
 	person.get_parent().remove_child(person)

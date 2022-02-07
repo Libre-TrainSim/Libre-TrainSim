@@ -1,7 +1,7 @@
 class_name Station
 extends RailLogic
 
-var personsNode: Node
+var personsNode: Spatial
 
 export (int) var length: int # Length of platform
 
@@ -27,25 +27,22 @@ func _get_type() -> String:
 
 
 var rail: Spatial
+
+
 func _ready():
-	if Root.Editor:
-		set_to_rail()
-		update_operation_mode_of_assigned_signal()
+	set_to_rail()
+	update_operation_mode_of_assigned_signal()
 	if not Root.Editor:
 		$Mesh.queue_free()
 		$SelectCollider.queue_free()
-		set_to_rail()
-		update_operation_mode_of_assigned_signal()
 		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
 
 
 func _process(_delta: float) -> void:
-	if rail == null:
-		set_to_rail()
+	assert(rail != null)
 
-	if not Engine.editor_hint and not Root.Editor:
-		if personSystem:
-			handlePersons()
+	if not Root.Editor and personSystem:
+		handlePersons()
 
 
 func set_to_rail() -> void:
@@ -77,8 +74,7 @@ func set_waiting_persons(count: int) -> void:
 func handlePersons() -> void:
 	if platform_side == PlatformSide.NONE:
 		return
-	if rail == null:
-		return
+	assert(rail != null)
 
 	if rail.visible and attachedPersons.size() < waitingPersonCount:
 		spawnRandomPerson()
@@ -91,7 +87,7 @@ func spawnRandomPerson() -> void:
 	var personI: Spatial = person.instance()
 	personI.add_child(personVI.instance())
 	personI.attachedStation = self
-	personI.transform = getRandomTransformAtPlatform()
+	personI.global_transform = getRandomTransformAtPlatform()
 	personsNode.add_child(personI)
 	personI.owner = world
 	attachedPersons.append(personI)
@@ -101,16 +97,32 @@ func getRandomTransformAtPlatform() -> Transform:
 	if forward:
 		var randRailDistance = int(rand_range(on_rail_position, on_rail_position+length))
 		if platform_side == PlatformSide.LEFT:
-			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)),  rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
+			return Transform(Basis( \
+					Vector3(0, deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)), \
+					rail.get_shifted_global_pos_at_RailDistance( \
+					randRailDistance, rand_range(-platformStart, -platformEnd)) \
+					+ Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
-			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
+			return Transform(Basis(Vector3(0, \
+					deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), \
+					rail.get_shifted_global_pos_at_RailDistance( \
+					randRailDistance, rand_range(platformStart, platformEnd)) \
+					+ Vector3(0, platformHeight, 0))
 	else:
 		var randRailDistance = int(rand_range(on_rail_position, on_rail_position-length))
 		if platform_side == PlatformSide.LEFT:
-			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
+			return Transform(Basis(Vector3(0, \
+					deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), \
+					rail.get_shifted_global_pos_at_RailDistance(randRailDistance, \
+					rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
-			return Transform(Basis(Vector3(0,deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)) , rail.get_shifted_pos_at_RailDistance(randRailDistance, rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
-	return Transform()
+			return Transform(Basis(Vector3(0, \
+					deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)), \
+					rail.get_shifted_global_pos_at_RailDistance(randRailDistance, \
+					rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
+	Logger.warn("Unsupported platform type %s" % platform_side, self)
+	#assert(false) # Unsupported platform type. I don't wanna fix here
+	return global_transform
 
 
 func setDoorPositions(doors: Array, doorsWagon: Array) -> void: ## Called by the train
@@ -120,12 +132,17 @@ func setDoorPositions(doors: Array, doorsWagon: Array) -> void: ## Called by the
 		person.clear_destinations()
 		var nearestDoorIndex = 0
 		for i in range(doors.size()):
-			if doors[i].global_transform.origin.distance_to(person.translation) <  doors[nearestDoorIndex].global_transform.origin.distance_to(person.translation):
+			if doors[i].global_transform.origin.distance_to(person.global_transform.origin) \
+					< doors[nearestDoorIndex].global_transform.origin \
+					.distance_to(person.global_transform.origin):
 				nearestDoorIndex = i
 		person.destinationPos.append(doors[nearestDoorIndex].global_transform.origin)
 		person.transitionToWagon = true
 		person.assignedDoor = doors[nearestDoorIndex]
 		person.attachedWagon = doorsWagon[nearestDoorIndex]
+		if ProjectSettings["game/debug/draw_paths"]:
+			DebugDraw.draw_box(doors[nearestDoorIndex].global_transform.origin, \
+					Vector3(2,2,2), person.debug_color)
 
 
 func deregisterPerson(personToDelete: Spatial) -> void:

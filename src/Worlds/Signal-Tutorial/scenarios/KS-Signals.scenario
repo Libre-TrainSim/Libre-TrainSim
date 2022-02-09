@@ -1,0 +1,197 @@
+[Main]
+
+empty=true
+routes={
+"Player": {
+"general_settings": {
+"activate_only_at_specific_routes": false,
+"description": "Learn how to use the new German KS Signalling System.",
+"interval": 0,
+"interval_end": 0,
+"interval_start": 43200.0,
+"player_can_drive_this_route": true,
+"specific_routes": [  ],
+"train_name": "JFR1_Red"
+},
+"route_points": [ {
+"distance": 50.0,
+"initial_speed": 0,
+"initial_speed_limit": -1,
+"rail_name": "KS_Rail",
+"type": 2
+}, {
+"rail_name": "KS_Rail2",
+"type": 1
+} ]
+}
+}
+rail_logic_settings={
+"HL_Signal_1": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_4": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_5": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_6": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_7": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HL_Signal_8": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPF_Signal_1": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPF_Signal_2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPF_Signal_3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPF_Signal_4": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPL_Signal_1": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPL_Signal_2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPL_Signal_3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"HPL_Signal_4": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"KS_Signal_1": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"KS_Signal_2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"KS_Signal_3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"KS_Signal_4": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"KS_Signal_5": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"KS_Signal_6": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"VOF_Signal_1": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"VOF_Signal_2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"VOF_Signal_3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"VOL_Signal_1": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"VOL_Signal_2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"VOL_Signal_3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+}
+}

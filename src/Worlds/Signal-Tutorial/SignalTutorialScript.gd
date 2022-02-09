@@ -1,15 +1,20 @@
 extends Node
 
-var scenario: String = Root.currentScenario
+var scenario := ""
 var world: Node = find_parent("World")
 var step: int = 0
 var player: LTSPlayer
 var message_sent: bool = false
 
-
-func _process(delta: float) -> void:
-	if Root.scenario_editor:
+var init_done := false
+func init() -> void:
+	if Root.Editor or Root.scenario_editor:
+		init_done = true
+		set_process(false)
 		return
+
+	scenario = Root.current_scenario.get_file().get_basename()
+
 	if world == null:
 		world = find_parent("World")
 	if player == null:
@@ -20,6 +25,13 @@ func _process(delta: float) -> void:
 		player.enforced_braking = false
 		player.command = 0
 		player.soll_command = 0
+
+	init_done = true
+
+func _process(delta: float) -> void:
+	if not init_done:
+		init()
+		return
 
 	send_message(delta)
 	if scenario == "H/V Form Signals":

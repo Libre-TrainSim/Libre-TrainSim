@@ -1,0 +1,53 @@
+[Main]
+
+empty=true
+routes={
+"Player": {
+"general_settings": {
+"activate_only_at_specific_routes": false,
+"description": "Learn how to use the SiFa system.",
+"interval": 0,
+"interval_end": 0,
+"interval_start": 43200.0,
+"player_can_drive_this_route": true,
+"specific_routes": [  ],
+"train_name": "JFR1_Red"
+},
+"route_points": [ {
+"distance": 100.0,
+"initial_speed": 0,
+"initial_speed_limit": -1,
+"rail_name": "Rail",
+"type": 2
+}, {
+"rail_name": "Rail6",
+"type": 1
+} ]
+}
+}
+rail_logic_settings={
+"Signal": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"Signal2": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"Signal3": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+},
+"Signal4": {
+"operation_mode": 0,
+"signal_free_time": -1,
+"speed": -1,
+"status": 0
+}
+}

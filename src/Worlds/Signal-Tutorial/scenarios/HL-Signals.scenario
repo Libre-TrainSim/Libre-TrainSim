@@ -29,37 +29,37 @@ rail_logic_settings={
 "HL_Signal_1": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": -1.0,
 "status": 0
 },
 "HL_Signal_2": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": -1.0,
 "status": 0
 },
 "HL_Signal_3": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 100.0,
 "status": 0
 },
 "HL_Signal_4": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 100.0,
 "status": 0
 },
 "HL_Signal_5": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 60.0,
 "status": 0
 },
 "HL_Signal_6": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 40.0,
 "status": 0
 },
 "HL_Signal_7": {
@@ -69,7 +69,7 @@ rail_logic_settings={
 "status": 0
 },
 "HL_Signal_8": {
-"operation_mode": 0,
+"operation_mode": 2,
 "signal_free_time": -1,
 "speed": -1,
 "status": 0
@@ -95,7 +95,7 @@ rail_logic_settings={
 "HPF_Signal_4": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": -1.0,
 "status": 0
 },
 "HPL_Signal_1": {

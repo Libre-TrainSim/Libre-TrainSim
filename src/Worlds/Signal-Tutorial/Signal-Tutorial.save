@@ -6,6 +6,35 @@ notes=""
 },
 "Rails": [ "HV_Form_Rail", "KS_Rail", "HV_Light_Rail", "HL_Rail" ],
 "TrackObjects": {
+"HL_Rail Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "HL_Rail",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "HL_Rail Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
+},
 "HL_Rail trees": {
 "data": {
 "applySlopeRotation": false,
@@ -35,6 +64,64 @@ notes=""
 "name": "HL_Rail trees",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
 },
+"HV_Form_Rail Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "HV_Form_Rail",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "HV_Form_Rail Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+},
+"HV_Light_Rail Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "HV_Light_Rail",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "HV_Light_Rail Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
+},
 "HV_Light_Rail trees": {
 "data": {
 "applySlopeRotation": false,
@@ -63,6 +150,35 @@ notes=""
 },
 "name": "HV_Light_Rail trees",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
+},
+"KS_Rail Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "KS_Rail",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "KS_Rail Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 },
 "KS_Rail trees": {
 "data": {
@@ -109,6 +225,35 @@ notes=""
 },
 "Rails": [ "KS_Rail2", "HV_Form_Rail2", "HV_Light_Rail2", "HL_Rail2" ],
 "TrackObjects": {
+"HL_Rail2 Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "HL_Rail2",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "HL_Rail2 Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 150 )
+},
 "HL_Rail2 trees": {
 "data": {
 "applySlopeRotation": false,
@@ -137,6 +282,64 @@ notes=""
 },
 "name": "HL_Rail2 trees",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 150 )
+},
+"HV_Form_Rail2 Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "HV_Form_Rail2",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "HV_Form_Rail2 Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 50 )
+},
+"HV_Light_Rail2 Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "HV_Light_Rail2",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "HV_Light_Rail2 Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 100 )
 },
 "HV_Light_Rail2 trees": {
 "data": {
@@ -167,6 +370,35 @@ notes=""
 "name": "HV_Light_Rail2 trees",
 "transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 100 )
 },
+"KS_Rail2 Poles": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "KS_Rail2",
+"description": "Poles",
+"distanceLength": 50.0,
+"distanceRows": 0.0,
+"height": 0.0,
+"length": 998.798,
+"materialPaths": [ "res://Resources/Materials/Beton.tres", "", "", "", "res://Resources/Materials/Beton.tres", "", "", "" ],
+"objectPath": "res://Resources/Objects/Pole1.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": false,
+"randomLocationFactor": 0.3,
+"randomRotation": false,
+"randomScale": false,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": -90.0,
+"rows": 1,
+"shift": 0.0,
+"sides": 1,
+"spawnRate": 1.0,
+"wholeRail": true
+},
+"name": "KS_Rail2 Poles",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0 )
+},
 "KS_Rail2 trees": {
 "data": {
 "applySlopeRotation": false,
@@ -175,7 +407,7 @@ notes=""
 "distanceLength": 5.0,
 "distanceRows": 10.0,
 "height": 0.0,
-"length": 1000.0,
+"length": 998.798,
 "materialPaths": [ "res://Resources/Materials/EasyTree.tres", "res://Resources/Materials/EasyTree.tres" ],
 "objectPath": "res://Resources/Objects/EasyTree.obj",
 "on_rail_position": 0.0,
@@ -250,8 +482,6 @@ notes=""
 2,1={
 "Buildings": {
 },
-"Flora": {
-},
 "Rails": [  ],
 "TrackObjects": {
 },
@@ -259,8 +489,6 @@ notes=""
 }
 2,0={
 "Buildings": {
-},
-"Flora": {
 },
 "Rails": [  ],
 "TrackObjects": {
@@ -270,10 +498,32 @@ notes=""
 2,-1={
 "Buildings": {
 },
-"Flora": {
-},
 "Rails": [  ],
 "TrackObjects": {
 },
 "position": Vector3( 2, 0, -1 )
+}
+3,-1={
+"Buildings": {
+},
+"Rails": [  ],
+"TrackObjects": {
+},
+"position": Vector3( 3, 0, -1 )
+}
+3,1={
+"Buildings": {
+},
+"Rails": [  ],
+"TrackObjects": {
+},
+"position": Vector3( 3, 0, 1 )
+}
+3,0={
+"Buildings": {
+},
+"Rails": [  ],
+"TrackObjects": {
+},
+"position": Vector3( 3, 0, 0 )
 }

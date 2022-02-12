@@ -7,6 +7,8 @@ var player: LTSPlayer
 var message_sent: bool = false
 
 var init_done := false
+var _end_timer: float = 0
+
 func init() -> void:
 	if Root.Editor or Root.scenario_editor:
 		init_done = true
@@ -14,6 +16,7 @@ func init() -> void:
 		return
 
 	scenario = Root.current_scenario.get_file().get_basename()
+	Logger.log("Loading scenario %s" % scenario)
 
 	if world == null:
 		world = find_parent("World")
@@ -34,21 +37,21 @@ func _process(delta: float) -> void:
 		return
 
 	send_message(delta)
-	if scenario == "H/V Form Signals":
-		hv_form_signals()
+	if scenario == "HV-Form-Signals":
+		hv_form_signals(delta)
 		return
-	elif scenario == "H/V Light Signals":
-		hv_light_signals()
+	elif scenario == "HV-Light-Signals":
+		hv_light_signals(delta)
 		return
-	elif scenario == "KS Signals":
-		ks_signals()
+	elif scenario == "KS-Signals":
+		ks_signals(delta)
 		return
-	elif scenario == "HL Signals":
-		hl_signals()
+	elif scenario == "HL-Signals":
+		hl_signals(delta)
 		return
 	message_sent = true
 
-func hv_form_signals() -> void:
+func hv_form_signals(delta: float) -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_HV_FORM_0")
@@ -88,9 +91,12 @@ func hv_form_signals() -> void:
 				next_step()
 		9:
 			message = tr("TUTORIAL_SIGNAL_BYE")
+			_end_timer += delta
+			if _end_timer > 3:
+				LoadingScreen.load_main_menu()
 
 
-func hv_light_signals() -> void:
+func hv_light_signals(delta: float) -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_HV_LIGHT_0")
@@ -130,9 +136,12 @@ func hv_light_signals() -> void:
 				next_step()
 		9:
 			message = tr("TUTORIAL_SIGNAL_BYE")
+			_end_timer += delta
+			if _end_timer > 3:
+				LoadingScreen.load_main_menu()
 
 
-func ks_signals() -> void:
+func ks_signals(delta: float) -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_KS_0")
@@ -164,9 +173,13 @@ func ks_signals() -> void:
 				next_step()
 		7:
 			message = tr("TUTORIAL_SIGNAL_BYE")
+			_end_timer += delta
+			if _end_timer > 3:
+				LoadingScreen.load_main_menu()
 
 
-func hl_signals() -> void:
+
+func hl_signals(delta: float) -> void:
 	match step:
 		0:
 			message = tr("TUTORIAL_HL_0")
@@ -206,6 +219,9 @@ func hl_signals() -> void:
 				next_step()
 		9:
 			message = tr("TUTORIAL_SIGNAL_BYE")
+			_end_timer += delta
+			if _end_timer > 3:
+				LoadingScreen.load_main_menu()
 
 
 var send_message_timer: float = 0

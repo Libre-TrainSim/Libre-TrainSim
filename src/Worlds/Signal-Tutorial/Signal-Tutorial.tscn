@@ -43,19 +43,19 @@ attached_rail = "KS_Rail"
 on_rail_position = 900
 
 [node name="KS_Signal_3" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1150, 0, 0 )
+transform = Transform( 1.07834, 0, 2.51458e-05, 0, 1.07834, 0, -2.51458e-05, 0, 1.07834, 1150, 0, 0 )
 status = 1
 attached_rail = "KS_Rail2"
 on_rail_position = 150
 
 [node name="KS_Signal_6" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1500, 0, 0 )
+transform = Transform( 1.07834, 0, 8.38193e-05, 0, 1.07834, 0, -8.38193e-05, 0, 1.07834, 1500, 0, 0 )
 status = 1
 attached_rail = "KS_Rail2"
 on_rail_position = 500
 
 [node name="KS_Signal_4" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1990, 0, 0 )
+transform = Transform( 1.07834, 0, 0.000165962, 0, 1.07834, 0, -0.000165962, 0, 1.07834, 1990, 0, 0 )
 signal_type = 1
 status = 1
 attached_rail = "KS_Rail2"
@@ -65,6 +65,7 @@ on_rail_position = 990
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 50 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 attached_rail = "HV_Form_Rail"
 on_rail_position = 200
 
@@ -72,6 +73,7 @@ on_rail_position = 200
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 450, 0, 50 )
 signal_type = 2
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/CombinedHpVo/Form/CombinedHpVoForm.tscn"
 attached_rail = "HV_Form_Rail"
 on_rail_position = 450
 
@@ -86,6 +88,7 @@ on_rail_position = 550
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 50 )
 signal_type = 2
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/CombinedHpVo/Form/CombinedHpVoForm.tscn"
 attached_rail = "HV_Form_Rail"
 on_rail_position = 700
 
@@ -93,6 +96,7 @@ on_rail_position = 700
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 50 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 attached_rail = "HV_Form_Rail"
 on_rail_position = 990
 
@@ -113,6 +117,7 @@ forward = true
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1700, 0, 50 )
 signal_type = 2
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/CombinedHpVo/Form/CombinedHpVoForm.tscn"
 attached_rail = "HV_Form_Rail2"
 on_rail_position = 700
 
@@ -120,6 +125,7 @@ on_rail_position = 700
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1990, 0, 50 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 attached_rail = "HV_Form_Rail2"
 on_rail_position = 990
 
@@ -127,6 +133,7 @@ on_rail_position = 990
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 100 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Light/HpLight.tscn"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 200
 
@@ -134,6 +141,7 @@ on_rail_position = 200
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 450, 0, 100 )
 signal_type = 2
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/CombinedHpVo/Light/CombinedHpVoLight.tscn"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 450
 
@@ -141,6 +149,7 @@ on_rail_position = 450
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 550, 0, 100 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Light/HpLight.tscn"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 550
 
@@ -148,6 +157,7 @@ on_rail_position = 550
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 100 )
 signal_type = 2
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/CombinedHpVo/Light/CombinedHpVoLight.tscn"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 700
 
@@ -155,6 +165,7 @@ on_rail_position = 700
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 100 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Light/HpLight.tscn"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 990
 
@@ -175,6 +186,7 @@ forward = true
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1700, 0, 100 )
 signal_type = 2
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/CombinedHpVo/Light/CombinedHpVoLight.tscn"
 attached_rail = "HV_Light_Rail2"
 on_rail_position = 700
 
@@ -182,54 +194,71 @@ on_rail_position = 700
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1990, 0, 100 )
 signal_type = 1
 status = 1
+visual_instance_path = "res://Resources/SignalTypes/Hp/Light/HpLight.tscn"
 attached_rail = "HV_Light_Rail2"
 on_rail_position = 990
 
 [node name="HL_Signal_1" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 150 )
 status = 1
+speed = 160.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail"
 on_rail_position = 200
 
 [node name="HL_Signal_2" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 400, 0, 150 )
 status = 1
+speed = 160.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail"
 on_rail_position = 400
 
 [node name="HL_Signal_3" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 150 )
 status = 1
+speed = 100.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail"
 on_rail_position = 700
 
 [node name="HL_Signal_4" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 150 )
 status = 1
+speed = 100.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail"
 on_rail_position = 990
 
 [node name="HL_Signal_5" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1200, 0, 150 )
 status = 1
+speed = 60.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail2"
 on_rail_position = 200
 
 [node name="HL_Signal_6" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1400, 0, 150 )
 status = 1
+speed = 40.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail2"
 on_rail_position = 400
 
 [node name="HL_Signal_7" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1700, 0, 150 )
 status = 1
+speed = 160.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail2"
 on_rail_position = 700
 
 [node name="HL_Signal_8" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1990, 0, 150 )
-status = 1
+signal_type = 1
+speed = 160.0
+visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 attached_rail = "HL_Rail2"
 on_rail_position = 990
 
@@ -272,10 +301,12 @@ isSwitchPart = [ "", "" ]
 [node name="KS_Rail2" parent="Rails" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0 )
 visible = false
-length = 1000.0
-visibleSegments = 1112
+length = 998.798
+radius = 6.43253e+06
+visibleSegments = 1110
+endrot = 0.00889649
 startpos = Vector3( 1000, 0, 0 )
-endpos = Vector3( 2000, 0, 0 )
+endpos = Vector3( 1998.8, 0, 0 )
 isSwitchPart = [ "", "" ]
 
 [node name="HV_Form_Rail2" parent="Rails" instance=ExtResource( 6 )]

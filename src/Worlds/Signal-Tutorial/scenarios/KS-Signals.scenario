@@ -125,7 +125,7 @@ rail_logic_settings={
 "KS_Signal_1": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": -1.0,
 "status": 0
 },
 "KS_Signal_2": {
@@ -137,11 +137,11 @@ rail_logic_settings={
 "KS_Signal_3": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 40.0,
 "status": 0
 },
 "KS_Signal_4": {
-"operation_mode": 0,
+"operation_mode": 2,
 "signal_free_time": -1,
 "speed": -1,
 "status": 0
@@ -155,7 +155,7 @@ rail_logic_settings={
 "KS_Signal_6": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": -1.0,
 "status": 0
 },
 "VOF_Signal_1": {

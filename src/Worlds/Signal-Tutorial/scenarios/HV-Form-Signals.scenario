@@ -89,13 +89,13 @@ rail_logic_settings={
 "HPF_Signal_3": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 40.0,
 "status": 0
 },
 "HPF_Signal_4": {
-"operation_mode": 0,
+"operation_mode": 2,
 "signal_free_time": -1,
-"speed": -1,
+"speed": -1.0,
 "status": 0
 },
 "HPL_Signal_1": {

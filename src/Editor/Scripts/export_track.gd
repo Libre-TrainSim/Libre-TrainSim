@@ -3,6 +3,13 @@ class_name ExportTrack
 static func export_editor_track(track_name: String, export_path: String) -> String:
 	var editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 	var mod_path = editor_directory.plus_file(track_name)
+	export_path = export_path.plus_file(track_name)
+
+	var directory := Directory.new()
+	directory.open("user://")
+	directory.make_dir_recursive(export_path)
+	directory.change_dir(export_path)
+
 	var packer = PCKPacker.new()
 	var ok = packer.pck_start(export_path.plus_file(track_name) + ".pck")
 	if ok != OK:
@@ -21,6 +28,9 @@ static func export_editor_track(track_name: String, export_path: String) -> Stri
 	if ok != OK:
 		Logger.err("Could not flush pck!", null)
 		return "Could not flush pck!"
+	ok = directory.copy(mod_path.plus_file("content.tres"), export_path.plus_file("content.tres"))
+	if ok != OK:
+		Logger.err("Unable to copy content.tres to mod folder!", "ExportTrack")
 	return "Track exported to the addons folder." + errors
 
 

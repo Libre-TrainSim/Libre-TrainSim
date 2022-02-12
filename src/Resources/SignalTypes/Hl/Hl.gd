@@ -38,11 +38,9 @@ func _blink() -> void:
 
 
 func update_visual_instance(instance: Node) -> void:
-	if instance.signal_after_node == null:
-		instance.status = SignalStatus.RED
-
 	# signal = red
-	if instance.status == SignalStatus.RED:
+	if instance.status == SignalStatus.RED \
+			or instance.signal_after_node == null:
 		hl13()  # halt  (main signal)
 	# signal = yellow, next signal = red
 	elif instance.signal_after_node.status == SignalStatus.RED:

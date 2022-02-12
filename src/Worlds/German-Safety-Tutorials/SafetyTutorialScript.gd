@@ -15,7 +15,13 @@ var pzb_module: Node
 
 var init_done: bool = false
 func init() -> void:
-	scenario = Root.currentScenario
+	if Root.Editor or Root.scenario_editor:
+		init_done = true
+		set_process(false)
+		Logger.log("Running in Editor, disabling Script!", self)
+		return
+
+	scenario = Root.current_scenario.get_file().get_basename()
 	world = find_parent("World")
 	player = world.get_node("Players/Player")
 
@@ -30,11 +36,13 @@ func init() -> void:
 	player.soll_command = 0
 	player.reverser = ReverserState.FORWARD
 
-	if player != null and scenario == "Sifa":
+	if player != null and scenario == "SiFa":
+		Logger.log("Running Sifa Scenario!", self)
 		player.find_node("PZBModule").queue_free()
 		sifa_module = player.find_node("SifaModule")
 		sifa_module.set_process_unhandled_key_input(false)
 	if player != null and scenario == "PZB":
+		Logger.log("Running PZB Scenario!", self)
 		player.speed = Math.kmHToSpeed(120)
 		player.currentSpeedLimit = 120
 		player.find_node("SifaModule").queue_free()
@@ -51,7 +59,7 @@ func _process(delta: float) -> void:
 
 	send_message(delta)
 
-	if scenario == "Sifa":
+	if scenario == "SiFa":
 		sifa(delta)
 		return
 	elif scenario == "PZB":

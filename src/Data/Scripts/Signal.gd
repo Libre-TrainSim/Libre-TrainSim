@@ -12,7 +12,7 @@ export(SignalType) var signal_type: int = SignalType.COMBINED
 export(SignalStatus.TypeHint) var status: int = SignalStatus.RED setget set_status
 signal signal_changed(signal_instance)
 
-var signal_after: String = "" # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
+var signal_after: String = "" setget set_signal_after # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 var signal_after_node: Node # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 
 export var signal_free_time: int = -1 # the signal will be turned to status = 1 at this specified time. Set to -1 to deactivate. Only available in manual mode.
@@ -73,18 +73,17 @@ func connect_visual_instance() -> void:
 
 
 func update() -> void:
+	assert(not not world)
+
 	if Root.Editor and operation_mode == SignalOperationMode.BLOCK:
 		set_status(SignalStatus.GREEN)
 
-	assert(not not world)
 
 	if operation_mode == SignalOperationMode.STATION:
 		if world.get_assigned_station_of_signal(name) == null:
 			Logger.warn("%s should run in station mode, but can't find it's correspondending station. Switching to block mode..." % name, "Signal")
 			set_operation_mode(SignalOperationMode.BLOCK)
 
-	if signal_after_node == null and signal_after != "":
-		signal_after_node = world.get_node("Signals/"+String(signal_after))
 
 	if operation_mode == SignalOperationMode.MANUAL and signal_free_time != -1 and not did_set_pass and not Root.Editor and world.time > signal_free_time:
 		set_status(SignalStatus.GREEN)
@@ -96,15 +95,11 @@ func update() -> void:
 
 
 func _ready() -> void:
+	# This is f****** hack and the whole deferred init is causing a lot of issues.
 	timer = Timer.new()
 	timer.connect("timeout", self, "update_visual_instance")
 	self.add_child(timer)
 	timer.start()
-
-	if get_node_or_null("VisualInstance") != null:
-		connect_visual_instance()
-	else:
-		create_visual_instance()
 
 	set_to_rail()
 	update()
@@ -121,10 +116,10 @@ func _ready() -> void:
 # signals necessary for RailMap to work
 func set_status(new_val: int) -> void:
 	if signal_type == SignalType.PRESIGNAL and new_val == SignalStatus.RED:
-		Logger.err(name + ": Cannot set a presignal to red!", self)
+		Logger.warn(name + ": Cannot set a presignal to red!", self)
 		return
 	if signal_type == SignalType.MAIN and new_val == SignalStatus.ORANGE:
-		Logger.err(name + ": Cannot set a main signal to orange!", self)
+		Logger.warn(name + ": Cannot set a main signal to orange!", self)
 		return
 
 	# make sure signal does not become green when it should be orange
@@ -188,3 +183,9 @@ func set_operation_mode(mode: int):
 	elif operation_mode == SignalOperationMode.STATION:
 		set_status(SignalStatus.RED)
 		signal_free_time = -1
+
+
+func set_signal_after(signal_name: String) -> void:
+	signal_after = signal_name
+	signal_after_node = world.get_node_or_null("Signals/"+signal_after)
+	emit_signal("signal_changed", self)

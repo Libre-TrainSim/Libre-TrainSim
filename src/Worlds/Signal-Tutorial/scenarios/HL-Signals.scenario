@@ -65,13 +65,13 @@ rail_logic_settings={
 "HL_Signal_7": {
 "operation_mode": 0,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 160.0,
 "status": 0
 },
 "HL_Signal_8": {
 "operation_mode": 2,
 "signal_free_time": -1,
-"speed": -1,
+"speed": 160.0,
 "status": 0
 },
 "HPF_Signal_1": {

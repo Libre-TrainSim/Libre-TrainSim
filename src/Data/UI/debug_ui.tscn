@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Data/UI/blur.tres" type="Material" id=1]
+[ext_resource path="res://Data/UI/debug_ui.gd" type="Script" id=2]
+
+[node name="DebugUI" type="CanvasLayer"]
+layer = 128
+script = ExtResource( 2 )
+
+[node name="DebugContainer" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPSContainer" type="ColorRect" parent="DebugContainer"]
+material = ExtResource( 1 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -38.0
+margin_bottom = 28.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPSLabel" type="Label" parent="DebugContainer/FPSContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+text = "999"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

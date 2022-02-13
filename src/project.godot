@@ -295,6 +295,7 @@ ContentLoader="*res://Data/Scripts/Singletons/content_loader.gd"
 LoadingScreen="*res://Data/UI/loading_screen.tscn"
 InputHelper="*res://Data/Scripts/Singletons/input_helper.gd"
 DebugDraw="*res://addons/zylann.debug_draw/debug_draw.gd"
+DebugUi="*res://Data/UI/debug_ui.tscn"
 
 [debug]
 
@@ -592,6 +593,11 @@ pzb_free={
 pzb_command={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777224,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+open_debug_ui={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lts_logo_256.png-f194e27f3915f63afbbaf85ab863e3ea.stex"
+path="res://.import/lts_logo_256.png-86f89252e73762207bc0586424f91202.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://misc/logos/lts_logo_256.png"
-dest_files=[ "res://.import/lts_logo_256.png-f194e27f3915f63afbbaf85ab863e3ea.stex" ]
+source_file="res://Data/Misc/logos/lts_logo_256.png"
+dest_files=[ "res://.import/lts_logo_256.png-86f89252e73762207bc0586424f91202.stex" ]
 
 [params]
 

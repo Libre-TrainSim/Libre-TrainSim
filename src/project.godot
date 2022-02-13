@@ -271,10 +271,10 @@ config/description="Train Simulator"
 run/main_scene="res://Data/UI/main_menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="libre_train_sim"
-boot_splash/image="res://misc/banner/lts_banner_both.png"
+boot_splash/image="res://Data/Misc/banner/lts_banner_both.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
-config/icon="res://misc/logos/lts_logo_16.png"
+config/icon="res://Data/Misc/logos/lts_logo_16.png"
 config/quit_on_go_back=false
 
 [audio]

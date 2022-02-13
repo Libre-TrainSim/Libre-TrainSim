@@ -25,7 +25,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-version = "0.9.dev"
+version = "0.9.beta1"
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0

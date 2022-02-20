@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/highway_bridge_1_30m.obj-afdc4bf01cb6f98de929a620b85aa3db.mesh"
+
+[deps]
+
+files=[ "res://.import/highway_bridge_1_30m.obj-afdc4bf01cb6f98de929a620b85aa3db.mesh" ]
+
+source_file="res://Resources/Objects/highway_bridge_1_30m.obj"
+dest_files=[ "res://.import/highway_bridge_1_30m.obj-afdc4bf01cb6f98de929a620b85aa3db.mesh", "res://.import/highway_bridge_1_30m.obj-afdc4bf01cb6f98de929a620b85aa3db.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

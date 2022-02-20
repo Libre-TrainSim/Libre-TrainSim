@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/transmission_tower.obj-eb0088481e761989bb2f06fe451fd215.mesh"
+
+[deps]
+
+files=[ "res://.import/transmission_tower.obj-eb0088481e761989bb2f06fe451fd215.mesh" ]
+
+source_file="res://Resources/Objects/transmission_tower.obj"
+dest_files=[ "res://.import/transmission_tower.obj-eb0088481e761989bb2f06fe451fd215.mesh", "res://.import/transmission_tower.obj-eb0088481e761989bb2f06fe451fd215.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

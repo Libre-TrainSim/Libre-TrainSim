@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Platform_undercrossing_end.obj-df983a46c07fe19ab4af91285ea70a41.mesh"
+
+[deps]
+
+files=[ "res://.import/Platform_undercrossing_end.obj-df983a46c07fe19ab4af91285ea70a41.mesh" ]
+
+source_file="res://Resources/Objects/Platform_undercrossing_end.obj"
+dest_files=[ "res://.import/Platform_undercrossing_end.obj-df983a46c07fe19ab4af91285ea70a41.mesh", "res://.import/Platform_undercrossing_end.obj-df983a46c07fe19ab4af91285ea70a41.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

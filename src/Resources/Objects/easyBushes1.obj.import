@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/easyBushes1.obj-5e7db9aa28fd9894fe4181bb8ffaf862.mesh"
+
+[deps]
+
+files=[ "res://.import/easyBushes1.obj-5e7db9aa28fd9894fe4181bb8ffaf862.mesh" ]
+
+source_file="res://Resources/Objects/easyBushes1.obj"
+dest_files=[ "res://.import/easyBushes1.obj-5e7db9aa28fd9894fe4181bb8ffaf862.mesh", "res://.import/easyBushes1.obj-5e7db9aa28fd9894fe4181bb8ffaf862.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

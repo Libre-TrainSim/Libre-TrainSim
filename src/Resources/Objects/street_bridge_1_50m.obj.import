@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/street_bridge_1_50m.obj-56524137390b8026c36073ef9e881588.mesh"
+
+[deps]
+
+files=[ "res://.import/street_bridge_1_50m.obj-56524137390b8026c36073ef9e881588.mesh" ]
+
+source_file="res://Resources/Objects/street_bridge_1_50m.obj"
+dest_files=[ "res://.import/street_bridge_1_50m.obj-56524137390b8026c36073ef9e881588.mesh", "res://.import/street_bridge_1_50m.obj-56524137390b8026c36073ef9e881588.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

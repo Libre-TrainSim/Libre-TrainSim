@@ -15,7 +15,7 @@
 [ext_resource path="res://Data/UI/styles/panel_popup.tres" type="StyleBox" id=13]
 [ext_resource path="res://Editor/Modules/scenario_editor_selection.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=15]
-[ext_resource path="res://misc/banner/lts_banner_version.png" type="Texture" id=16]
+[ext_resource path="res://Data/Misc/banner/lts_banner_version.png" type="Texture" id=16]
 [ext_resource path="res://Data/UI/blur_less.tres" type="Material" id=17]
 
 [node name="MainMenu" type="Control"]

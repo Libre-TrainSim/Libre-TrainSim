@@ -1,4 +1,4 @@
-![Banner](src/misc/banner/lts_banner_both.png)
+![Banner](src/Data/Misc/banner/lts_banner_both.png)
 
 [Libre Train Sim](https://libretrainsim.org) is a free and open source train driving simulator created using the Godot Engine. It is licensed under the [GPL v3 license](LICENSE).
 

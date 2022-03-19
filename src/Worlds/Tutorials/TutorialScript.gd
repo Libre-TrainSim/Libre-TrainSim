@@ -8,7 +8,7 @@ var message_sent: bool = false
 
 const THE_BASICS: String = "res://Worlds/Tutorials/scenarios/The Basics.scenario"
 const THE_BASICS_MOBILE: String = "res://Worlds/Tutorials/scenarios/The Basics - Mobile Version.scenario"
-const ADVANCED_TUTORIAL: String = "res://Worlds/Tutorials/scenarios/Adcanced Train Driving.scenario"
+const ADVANCED_TUTORIAL: String = "res://Worlds/Tutorials/scenarios/Advanced Train Driving.scenario"
 
 func _ready() -> void:
 	if Root.Editor:

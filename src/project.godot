@@ -307,7 +307,7 @@ window/handheld/orientation="sensor_landscape"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
 
 [game]
 

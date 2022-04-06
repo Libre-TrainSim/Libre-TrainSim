@@ -5,6 +5,9 @@ export var version = ""
 
 
 func _ready():
+	# Update GUI language directly at launch
+	jSettings.update_and_prepare_language_handling()
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 	$Version.text = "Version: %s" % version

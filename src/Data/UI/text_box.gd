@@ -18,7 +18,7 @@ func message(text: String) -> void:
 	$MarginContainer/VBoxContainer/Message.text = text
 	visible = true
 	get_tree().paused = true
-	$MarginContainer/VBoxContainer/Ok.grab_focus()
+	$MarginContainer/VBoxContainer/Ok.grab_click_focus()
 
 
 func _on_Ok_pressed():

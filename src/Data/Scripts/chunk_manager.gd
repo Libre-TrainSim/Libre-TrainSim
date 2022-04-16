@@ -266,7 +266,7 @@ func _unload_old_chunks(all: bool = false):
 	var chunks_to_unload = loaded_chunks.duplicate()
 	if not all:
 		for chunk in loaded_chunks:
-			if active_chunk.distance_to(chunk) <= jSettings.get_chunk_unload_distance():
+			if active_chunk.distance_to(chunk) <= ProjectSettings["game/gameplay/chunk_unload_distance"]:
 				chunks_to_unload.erase(chunk)
 
 	if Root.Editor:

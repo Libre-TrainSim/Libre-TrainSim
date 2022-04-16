@@ -14,140 +14,131 @@ func _ready():
 
 
 func apply_saved_settings():
-	OS.window_fullscreen = get_fullscreen()
-	ProjectSettings.set_setting("rendering/quality/filters/msaa", get_anti_aliasing())
-	jAudioManager.set_main_volume_db(get_main_volume())
-	jAudioManager.set_game_volume_db(get_game_volume())
-	jAudioManager.set_music_volume_db(get_music_volume())
+	if ProjectSettings["game/debug/first_run"]:
+		set_fullscreen(true)
+		ProjectSettings["game/debug/first_run"] = false
+		save_settings()
+
+	jAudioManager.set_main_volume_db(ProjectSettings["game/audio/main_volume"])
+	jAudioManager.set_game_volume_db(ProjectSettings["game/audio/game_volume"])
+	jAudioManager.set_music_volume_db(ProjectSettings["game/audio/music_volume"])
+
+
+func save_settings():
+	ProjectSettings.save_custom("user://override.cfg")
 
 
 func update_settings_window():
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = get_dynamic_lights()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = get_fog()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = get_persons()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = get_view_distance()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = ProjectSettings["display/window/size/fullscreen"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed = ProjectSettings["display/window/vsync/use_vsync"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = ProjectSettings["game/graphics/shadows"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = ProjectSettings["game/graphics/fog"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = ProjectSettings["game/gameplay/enable_persons"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = ProjectSettings["game/gameplay/view_distance"]
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AntiAliasing.selected = get_anti_aliasing()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = get_main_volume()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = get_music_volume()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = get_game_volume()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = get_sifa()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = get_pzb()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkUnloadDistance.value = get_chunk_unload_distance()
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkLoadAll.pressed = get_chunk_load_all()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AntiAliasing.selected = ProjectSettings["rendering/quality/filters/msaa"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = ProjectSettings["game/audio/main_volume"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = ProjectSettings["game/audio/music_volume"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = ProjectSettings["game/audio/game_volume"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = ProjectSettings["game/gameplay/sifa_enabled"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = ProjectSettings["game/gameplay/pzb_enabled"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkUnloadDistance.value = ProjectSettings["game/gameplay/chunk_unload_distance"]
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkLoadAll.pressed = ProjectSettings["game/gameplay/load_all_chunks"]
 
 
 ## Setter/Getter ###############################################################
-func get_fullscreen() -> bool:
-	return jSaveManager.get_setting("fullscreen", true)
-
 func set_fullscreen(val: bool):
-	jSaveManager.save_setting("fullscreen", val)
+	ProjectSettings["display/window/size/fullscreen"] = val
+	save_settings()
 	OS.window_fullscreen = val
 
 
-func set_shadows(val: bool):
-	jSaveManager.save_setting("shadows", val)
+func set_vsync(val: bool):
+	ProjectSettings["display/window/vsync/use_vsync"] = val
+	save_settings()
+	OS.set_use_vsync(val)
 
-func get_shadows() -> bool:
-	return jSaveManager.get_setting("shadows", true)
+
+func set_shadows(val: bool):
+	ProjectSettings["game/graphics/shadows"] = val
+	save_settings()
 
 
 func set_dynamic_lights(val: bool):
-	jSaveManager.save_setting("dynamic_lights", val)
-
-func get_dynamic_lights() -> bool:
-	return jSaveManager.get_setting("dynamic_lights", false)
+	ProjectSettings["game/graphics/enable_dynamic_lights"] = val
+	save_settings()
 
 
 func set_language(language_code: String):
-	jSaveManager.save_setting("language", language_code)
+	ProjectSettings["locale/overwritten_language"] = language_code
+	save_settings()
 	TranslationServer.set_locale(language_code)
 
 func get_language() -> String:
-	return jSaveManager.get_setting("language", TranslationServer.get_locale().rsplit("_")[0])
+	var language_code = ProjectSettings["locale/overwritten_language"]
+	if language_code == "":
+		return TranslationServer.get_locale().rsplit("_")[0]
+	else:
+		return language_code
 
 
 func set_anti_aliasing(val: int):
-	jSaveManager.save_setting("antiAliasing", val)
-	ProjectSettings.set_setting("rendering/quality/filters/msaa", val)
-
-func get_anti_aliasing() -> int:
-	return jSaveManager.get_setting("antiAliasing", 2)
+	ProjectSettings["rendering/quality/filters/msaa"] = val
+	save_settings()
 
 
 func set_main_volume(val: float):
-	jSaveManager.save_setting("mainVolume", val)
+	ProjectSettings["game/audio/main_volume"] = val
+	save_settings()
 	jAudioManager.set_main_volume_db(val)
-
-func get_main_volume() -> float:
-	return jSaveManager.get_setting("mainVolume", 1)
 
 
 func set_music_volume(val: float):
-	jSaveManager.save_setting("musicVolume", val)
+	ProjectSettings["game/audio/music_volume"] = val
+	save_settings()
 	jAudioManager.set_music_volume_db(val)
-
-func get_music_volume() -> float:
-	return jSaveManager.get_setting("musicVolume", 1)
 
 
 func set_game_volume(val: float):
-	jSaveManager.save_setting("gameVolume", val)
+	ProjectSettings["game/audio/game_volume"] = val
+	save_settings()
 	jAudioManager.set_game_volume_db(val)
 
-func get_game_volume() -> float:
-	return jSaveManager.get_setting("gameVolume", 1)
+
+func set_fog(val: bool):
+	ProjectSettings["game/graphics/fog"] = val
+	save_settings()
 
 
-func set_fog(value: bool):
-	jSaveManager.save_setting("fog", value)
-
-func get_fog() -> bool:
-	return jSaveManager.get_setting("fog", true)
+func set_persons(val: bool):
+	ProjectSettings["game/gameplay/enable_persons"] = val
+	save_settings()
 
 
-func set_persons(value: bool):
-	jSaveManager.save_setting("persons", value)
-
-func get_persons() -> bool:
-	return jSaveManager.get_setting("persons", true)
+func set_view_distance(val: int):
+	ProjectSettings["game/gameplay/view_distance"] = val
+	save_settings()
 
 
-func set_view_distance(value: int):
-	jSaveManager.save_setting("view_distance", value)
-
-func get_view_distance() -> int:
-	return jSaveManager.get_setting("view_distance", 1000)
+func set_sifa(val: bool):
+	ProjectSettings["game/gameplay/sifa_enabled"] = val
+	save_settings()
 
 
-func set_sifa(value: bool):
-	jSaveManager.save_setting("sifa_enabled", value)
-
-func get_sifa() -> bool:
-	return jSaveManager.get_setting("sifa_enabled", false)
+func set_pzb(val: bool):
+	ProjectSettings["game/gameplay/pzb_enabled"] = val
+	save_settings()
 
 
-func set_pzb(value: bool):
-	jSaveManager.save_setting("pzb_enabled", value)
-
-func get_pzb() -> bool:
-	return jSaveManager.get_setting("pzb_enabled", false)
+func set_chunk_unload_distance(val: float):
+	ProjectSettings["ǵgame/gameplay/chunk_unload_distance"] = int(val)
+	save_settings()
 
 
-func get_chunk_unload_distance() -> int:
-	return int(jSaveManager.get_setting("chunk_unload_distance", 2))
-
-func set_chunk_unload_distance(value: float):
-	jSaveManager.save_setting("chunk_unload_distance", int(value))
-
-func get_chunk_load_all() -> bool:
-	return jSaveManager.get_setting("chunk_load_all", false)
-
-func set_chunk_load_all(value: bool):
-	jSaveManager.save_setting("chunk_load_all", value)
+func set_chunk_load_all(val: bool):
+	ProjectSettings["game/gameplay/load_all_chunks"] = val
+	save_settings()
 
 ## Other Functionality #########################################################
 
@@ -202,6 +193,10 @@ func _on_Fullscreen_pressed():
 	set_fullscreen($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed)
 
 
+func _on_Vsync_pressed():
+	set_vsync($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed)
+
+
 func _on_Shadows_pressed():
 	set_shadows($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed)
 
@@ -228,4 +223,3 @@ func _on_SIFA_pressed():
 
 func _on_PZB_pressed():
 	set_pzb($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed)
-

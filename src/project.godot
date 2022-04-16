@@ -306,7 +306,6 @@ settings/stdout/verbose_stdout=true
 
 window/size/width="800"
 window/size/height="600"
-window/size/fullscreen=true
 window/handheld/orientation="sensor_landscape"
 
 [editor_plugins]
@@ -329,6 +328,7 @@ gameplay/pzb_enabled=true
 gameplay/chunk_unload_distance=2
 gameplay/load_all_chunks=false
 graphics/enable_dynamic_lights=false
+debug/first_run=true
 
 [global]
 

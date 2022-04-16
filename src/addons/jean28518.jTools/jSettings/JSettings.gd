@@ -14,6 +14,11 @@ func _ready():
 
 
 func apply_saved_settings():
+	if ProjectSettings["game/debug/first_run"]:
+		set_fullscreen(true)
+		ProjectSettings["game/debug/first_run"] = false
+		save_settings()
+
 	jAudioManager.set_main_volume_db(ProjectSettings["game/audio/main_volume"])
 	jAudioManager.set_game_volume_db(ProjectSettings["game/audio/game_volume"])
 	jAudioManager.set_music_volume_db(ProjectSettings["game/audio/music_volume"])

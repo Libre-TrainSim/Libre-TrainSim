@@ -58,7 +58,7 @@ func initalize() -> void:
 	set_transform_on_rail()
 
 	# TODO: this is a performance hotfix, we should do a better implementation in 0.10
-	if not jSettings.get_dynamic_lights():
+	if not ProjectSettings["game/graphics/enable_dynamic_lights"]:
 		if get_node_or_null("Lights") != null:
 			$Lights.queue_free()
 		if get_node_or_null("InteriorLights") != null:

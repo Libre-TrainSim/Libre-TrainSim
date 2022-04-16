@@ -35,7 +35,7 @@ func _ready():
 	if not Root.Editor:
 		$Mesh.queue_free()
 		$SelectCollider.queue_free()
-		personSystem = personSystem and jSettings.get_persons() and not Root.mobile_version
+		personSystem = personSystem and ProjectSettings["game/gameplay/enable_persons"] and not Root.mobile_version
 
 
 func _process(_delta: float) -> void:

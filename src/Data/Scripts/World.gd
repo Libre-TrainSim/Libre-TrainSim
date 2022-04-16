@@ -70,8 +70,8 @@ func _ready() -> void:
 		j_save_module.set_save_path(save_path)
 
 	if Root.Editor:
-		$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
-		$DirectionalLight.shadow_enabled = jSettings.get_shadows()
+		$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
+		$DirectionalLight.shadow_enabled = ProjectSettings["game/graphics/shadows"]
 		return
 
 	Root.world = self
@@ -112,10 +112,10 @@ func apply_user_settings() -> void:
 		$WorldEnvironment.environment.fog_enabled = false
 		return
 	if get_node("DirectionalLight") != null:
-		$DirectionalLight.shadow_enabled = jSettings.get_shadows()
-	player.get_node("Camera").far = jSettings.get_view_distance()
-	get_viewport().set_msaa(jSettings.get_anti_aliasing())
-	$WorldEnvironment.environment.fog_enabled = jSettings.get_fog()
+		$DirectionalLight.shadow_enabled = ProjectSettings["game/graphics/shadows"]
+	player.get_node("Camera").far = ProjectSettings["game/gameplay/view_distance"]
+	get_viewport().set_msaa(ProjectSettings["rendering/quality/filters/msaa"])
+	$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
 
 
 func _process(delta: float) -> void:

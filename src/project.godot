@@ -271,6 +271,7 @@ config/description="Train Simulator"
 run/main_scene="res://Data/UI/main_menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="libre_train_sim"
+config/project_settings_override="user://override.cfg"
 boot_splash/image="res://Data/Misc/banner/lts_banner_both.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
@@ -303,6 +304,9 @@ settings/stdout/verbose_stdout=true
 
 [display]
 
+window/size/width="800"
+window/size/height="600"
+window/size/fullscreen=true
 window/handheld/orientation="sensor_landscape"
 
 [editor_plugins]
@@ -313,6 +317,18 @@ enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://
 
 debug/draw_paths=false
 debug/draw_paths.release=false
+graphics/fog=true
+graphics/shadows=true
+audio/main_volume=1.0
+audio/music_volume=1.0
+audio/game_volume=1.0
+gameplay/enable_persons=true
+gameplay/view_distance=1000
+gameplay/sifa_enabled=true
+gameplay/pzb_enabled=true
+gameplay/chunk_unload_distance=2
+gameplay/load_all_chunks=false
+graphics/enable_dynamic_lights=false
 
 [global]
 
@@ -607,6 +623,7 @@ translations=PoolStringArray( "res://Translations/Ingame.bg.translation", "res:/
 locale_filter=[ 0, [ "bg", "de", "en", "es", "fr", "it", "ja", "uk" ] ]
 translation_remaps={
 }
+overwritten_language=""
 
 [rendering]
 

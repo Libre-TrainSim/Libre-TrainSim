@@ -15,6 +15,7 @@ func _ready():
 
 func apply_saved_settings():
 	OS.window_fullscreen = get_fullscreen()
+	OS.set_use_vsync(get_vsync())
 	ProjectSettings.set_setting("rendering/quality/filters/msaa", get_anti_aliasing())
 	jAudioManager.set_main_volume_db(get_main_volume())
 	jAudioManager.set_game_volume_db(get_game_volume())
@@ -23,6 +24,7 @@ func apply_saved_settings():
 
 func update_settings_window():
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = get_fullscreen()
+	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed = get_vsync()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = get_shadows()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = get_dynamic_lights()
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = get_fog()
@@ -46,6 +48,14 @@ func get_fullscreen() -> bool:
 func set_fullscreen(val: bool):
 	jSaveManager.save_setting("fullscreen", val)
 	OS.window_fullscreen = val
+
+
+func set_vsync(val: bool):
+	jSaveManager.save_setting("vsync", val)
+	OS.set_use_vsync(val)
+
+func get_vsync() -> bool:
+	return jSaveManager.get_setting("vsync", true)
 
 
 func set_shadows(val: bool):
@@ -201,6 +211,9 @@ func _on_Back_pressed():
 func _on_Fullscreen_pressed():
 	set_fullscreen($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed)
 
+func _on_Vsync_pressed():
+	set_vsync($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed)
+
 
 func _on_Shadows_pressed():
 	set_shadows($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed)
@@ -228,4 +241,3 @@ func _on_SIFA_pressed():
 
 func _on_PZB_pressed():
 	set_pzb($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed)
-

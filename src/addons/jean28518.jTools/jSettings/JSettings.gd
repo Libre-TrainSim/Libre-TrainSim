@@ -15,7 +15,11 @@ func _ready():
 
 func apply_saved_settings():
 	if ProjectSettings["game/debug/first_run"]:
+		# Workaround Godot resetting default settings in Editor
 		set_fullscreen(true)
+		set_sifa(true)
+		set_pzb(true)
+		set_chunk_unload_distance(2.0)
 		ProjectSettings["game/debug/first_run"] = false
 		save_settings()
 
@@ -132,7 +136,7 @@ func set_pzb(val: bool):
 
 
 func set_chunk_unload_distance(val: float):
-	ProjectSettings["ǵgame/gameplay/chunk_unload_distance"] = int(val)
+	ProjectSettings["game/gameplay/chunk_unload_distance"] = int(val)
 	save_settings()
 
 

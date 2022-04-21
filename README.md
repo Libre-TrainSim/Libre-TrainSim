@@ -20,11 +20,15 @@ Nothing is perfect. If you found a bug, please feel encouraged to create a [bug 
 ## Development Progress
 [Follow the development here](https://github.com/Libre-TrainSim/Libre-TrainSim/projects)
 
+## Installation (for contributers)
+
+Fork and clone the repository. Install the latest version of [Godot](https://godotengine.org/download). Start Godot and import the cloned folder.
+
 ## Links:
 - Website: https://www.libretrainsim.org/
 - Github: https://www.github.com/Libre-TrainSim/Libre-TrainSim
 - YouTube: https://www.youtube.com/channel/UCsPsL_AkVUZMmKOKJgm7xsQ
-- Itch: https://jean28518.itch.io/libre-train-sim
+- Itch.io: https://jean28518.itch.io/libre-train-sim
 - Google Play: https://play.google.com/store/apps/details?id=org.godotengine.libretrainsim
 - Flathub: https://flathub.org/apps/details/org.libretrainsim.Libre-TrainSim
 - Discord: https://discord.gg/AQdAtZZ

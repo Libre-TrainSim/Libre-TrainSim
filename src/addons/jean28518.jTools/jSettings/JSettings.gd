@@ -17,7 +17,7 @@ func _ready():
 func first_run_check():
 	# Check if this is the first run, and if it is, apply default settings
 	var dir = Directory.new()
-	if not dir.file_exists("user://override.cfg"):
+	if not dir.file_exists("user://override.cfg") or OS.has_feature("editor"):
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		set_fullscreen(true)
 		set_vsync(true)

@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+var language_selector_prepared = false
+
 func popup():
 	update_and_prepare_language_handling()
 	update_settings_window()
@@ -161,11 +163,13 @@ func update_and_prepare_language_handling():
 	for i in language_codes.size():
 		_language_table[language_codes[i]] = i
 
-	# Prepare language
-	for index in range(_language_table.size()):
-		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
-	for language in _language_table.keys():
-		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
+	# Prepare language selector
+	if not language_selector_prepared:
+		for index in range(_language_table.size()):
+			$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
+		for language in _language_table.keys():
+			$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
+		language_selector_prepared = true
 
 	# If Language is not found, select one language, which is available
 	var language_code = get_language()

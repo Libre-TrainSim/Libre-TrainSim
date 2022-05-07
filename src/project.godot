@@ -277,7 +277,7 @@ boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
 config/icon="res://Data/Misc/logos/lts_logo_16.png"
 config/quit_on_go_back=false
-config/custom_user_dir_name.editor="libre_train_sim_godot_editor"
+config/project_settings_override.editor="user://override_dev.cfg"
 
 [audio]
 

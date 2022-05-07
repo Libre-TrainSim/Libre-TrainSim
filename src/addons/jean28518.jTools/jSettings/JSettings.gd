@@ -43,7 +43,9 @@ func apply_saved_settings():
 
 
 func save_settings():
-	ProjectSettings.save_custom("user://override.cfg")
+	# Save, except if in Godot Editor
+	if not OS.has_feature("editor"):
+		ProjectSettings.save_custom("user://override.cfg")
 
 
 func update_settings_window():

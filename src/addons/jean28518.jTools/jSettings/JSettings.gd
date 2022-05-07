@@ -10,19 +10,33 @@ func popup():
 func _ready():
 	if get_parent().name == "root":
 		$JSettings.hide()
+	first_run_check()
 	apply_saved_settings()
 
 
-func apply_saved_settings():
-	if ProjectSettings["game/debug/first_run"]:
-		# Workaround Godot resetting default settings in Editor
+func first_run_check():
+	# Check if this is the first run, and if it is, apply default settings
+	var dir = Directory.new()
+	if not dir.file_exists("user://override.cfg"):
+		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		set_fullscreen(true)
+		set_vsync(true)
+		set_anti_aliasing(2)
+		set_fog(true)
+		set_shadows(true)
+		set_main_volume(1.0)
+		set_music_volume(1.0)
+		set_game_volume(1.0)
+		set_persons(true)
+		set_view_distance(1000)
 		set_sifa(true)
 		set_pzb(true)
-		set_chunk_unload_distance(2.0)
-		ProjectSettings["game/debug/first_run"] = false
-		save_settings()
+		set_chunk_unload_distance(2)
+		set_chunk_load_all(false)
+		set_dynamic_lights(false)
 
+
+func apply_saved_settings():
 	jAudioManager.set_main_volume_db(ProjectSettings["game/audio/main_volume"])
 	jAudioManager.set_game_volume_db(ProjectSettings["game/audio/game_volume"])
 	jAudioManager.set_music_volume_db(ProjectSettings["game/audio/music_volume"])

@@ -328,7 +328,6 @@ gameplay/pzb_enabled=true
 gameplay/chunk_unload_distance=2
 gameplay/load_all_chunks=false
 graphics/enable_dynamic_lights=false
-debug/first_run=true
 
 [global]
 

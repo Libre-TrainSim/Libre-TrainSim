@@ -95,22 +95,22 @@ func _on_SaveWithoutExit_pressed():
 
 func _on_x_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.translation.x = $ObjectTransform/HBoxContainer/x.value
+	selected_object.translation.x = value
 
 
 func _on_y_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.translation.y = $ObjectTransform/HBoxContainer/y.value
+	selected_object.translation.y = value
 
 
 func _on_z_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.translation.z = $ObjectTransform/HBoxContainer/z.value
+	selected_object.translation.z = value
 
 
 func _on_y_rot_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.rotation_degrees.y = $ObjectTransform/HBoxContainer/y_rot.value
+	selected_object.rotation_degrees.y = value
 
 
 func _onObjectName_text_entered(_new_text):

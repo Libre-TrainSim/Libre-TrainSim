@@ -2,8 +2,6 @@ extends Panel
 
 var selected_track: String = ""
 
-var available_scenarios = []
-
 var j_save_module = jSaveModule.new()
 
 func update_track_list():

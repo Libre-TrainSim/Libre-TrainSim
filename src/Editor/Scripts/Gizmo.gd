@@ -28,8 +28,6 @@ func _input(event):
 func _process(delta):
 	rotation_degrees.y = - get_parent().rotation_degrees.y
 
-	var screen_size = get_viewport().size
-
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and (x_active or y_active or z_active or x_rot_active):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if x_active:

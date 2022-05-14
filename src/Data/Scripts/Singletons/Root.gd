@@ -177,3 +177,7 @@ func set_low_resolution(value: bool) -> void:
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
 		ProjectSettings.set_setting("display/window/size/width", "800")
 		ProjectSettings.set_setting("display/window/size/height", "600")
+
+
+func world_origin_shifted(delta) -> void:
+	emit_signal("world_origin_shifted", delta)

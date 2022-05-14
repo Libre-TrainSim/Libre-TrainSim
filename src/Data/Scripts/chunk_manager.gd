@@ -134,7 +134,7 @@ func _shift_world_origin_to(position: Vector3):
 	_chunk_mutex.lock()
 	var delta: Vector3 = position - world_origin
 	world_origin = position
-	Root.emit_signal("world_origin_shifted", delta)
+	Root.world_origin_shifted(delta)
 	_chunk_mutex.unlock()
 
 

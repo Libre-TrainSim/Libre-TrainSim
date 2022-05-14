@@ -6,7 +6,7 @@ var currentRail: Node
 var eds # Editor Selection
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if editor:
 		visible = is_instance_valid(currentRail) and get_parent().current_tab == 1
 

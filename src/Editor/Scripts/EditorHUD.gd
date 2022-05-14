@@ -113,7 +113,7 @@ func _on_y_rot_value_changed(value):
 	selected_object.rotation_degrees.y = $ObjectTransform/HBoxContainer/y_rot.value
 
 
-func _onObjectName_text_entered(new_text):
+func _onObjectName_text_entered(_new_text):
 	_on_CurrentObjectRename_pressed()
 
 

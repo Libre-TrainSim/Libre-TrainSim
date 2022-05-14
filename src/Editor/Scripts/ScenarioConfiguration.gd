@@ -45,7 +45,7 @@ func init():
 
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("save"):
 		save()
 
@@ -287,7 +287,7 @@ func update_route_point_settings():
 		update_despawn_point_settings()
 
 
-func _on_RouteList_ItemList_item_selected(index):
+func _on_RouteList_ItemList_item_selected(_index):
 	update_route_point_settings()
 
 

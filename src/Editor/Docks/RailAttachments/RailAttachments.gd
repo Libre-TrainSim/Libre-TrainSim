@@ -226,7 +226,7 @@ func _on_jListTrackObjects_user_copied_entries(entry_names: Array) -> void:
 	Logger.log("TrackObject(s) copied. Please don't delete the TrackObject(s), until you pasted a copy of it/them.")
 
 
-func _on_jListTrackObjects_user_pasted_entries(source_entry_names: Array, source_jList_id, pasted_entry_names: Array) -> void:
+func _on_jListTrackObjects_user_pasted_entries(_source_entry_names: Array, _source_jList_id, pasted_entry_names: Array) -> void:
 	assert(pasted_entry_names.size() == copyTOArray.size())
 	for i in range (pasted_entry_names.size()):
 		copy_track_object_to_current_rail(copyTOArray[i], pasted_entry_names[i], $Tab/TrackObjects/MirrorPastedObjects.pressed)

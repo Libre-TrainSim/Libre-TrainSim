@@ -6,7 +6,7 @@ enum {MATERIALS, OBJECTS, RAIL_TYPES, SIGNAL_TYPES, SOUNDS, TEXTURES}
 signal resource_selected(complete_path)
 
 
-func _input(event):
+func _input(_event):
 	if visible and Input.is_action_just_pressed("ui_accept"):
 		emit_selected_resource()
 
@@ -75,11 +75,11 @@ func update_ItemList():
 	$ItemList.sort_items_by_text()
 
 
-func _on_LineEdit_text_changed(new_text):
+func _on_LineEdit_text_changed(_new_text):
 	update_ItemList()
 
 
-func _on_ItemList_item_activated(index):
+func _on_ItemList_item_activated(_index):
 	emit_selected_resource()
 
 

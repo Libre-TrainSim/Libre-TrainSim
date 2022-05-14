@@ -13,6 +13,7 @@ var velocity := Vector3.ZERO
 var is_moving_first_person := false
 var is_panning := false
 var in_movement_time: float = 0
+var focus_owner: Control = null
 
 onready var control: Control = get_node(control_path)
 
@@ -83,12 +84,12 @@ func _physics_process(delta: float) -> void:
 
 func _capture_mouse() -> void:
 	._capture_mouse()
-	var focus_owner := control.get_focus_owner()
+	focus_owner = control.get_focus_owner()
 	if focus_owner:
 		focus_owner.release_focus()
-		control = focus_owner
 
 
 func _free_mouse() -> void:
 	._free_mouse()
-	control.grab_focus()
+	if is_instance_valid(focus_owner):
+		focus_owner.grab_focus()

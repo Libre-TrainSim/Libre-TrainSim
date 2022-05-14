@@ -380,9 +380,7 @@ func update_generalInformation() -> void:
 
 func _on_ManualMoving_pressed() -> void:
 	currentRail.manualMoving = $ManualMoving.pressed
-	var editor: Node = find_parent("Editor")
-	if editor:
-		editor.set_selected_object(currentRail)
+	editor.set_selected_object(currentRail)
 
 
 func _on_automaticTendency_pressed() -> void:

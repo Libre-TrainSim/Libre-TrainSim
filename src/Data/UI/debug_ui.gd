@@ -3,7 +3,7 @@ extends CanvasLayer
 onready var fps_label = $DebugContainer/FPSContainer/FPSLabel
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	fps_label.text = str(int(Engine.get_frames_per_second()))
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -107,7 +107,7 @@ func _exit_tree():
 	_halt_thread()
 
 
-func _process(delta: float):
+func _process(_delta: float):
 	assert(world != null)
 
 	# get position of active camera

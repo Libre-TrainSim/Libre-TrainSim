@@ -84,7 +84,7 @@ func _on_scenarioList_user_pressed_action(entry_names):
 
 
 # TrackList:
-func _on_ItemList_item_activated(index):
+func _on_ItemList_item_activated(_index):
 	_on_Select_TrackList_pressed()
 
 

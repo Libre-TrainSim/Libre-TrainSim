@@ -13,7 +13,7 @@ func handle_object_transform_field():
 		$ObjectTransform/HBoxContainer/y_rot.value = selected_object.rotation_degrees.y
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("Escape"):
 		if $Pause.visible:
 			_on_Pause_Back_pressed()

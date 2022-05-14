@@ -24,7 +24,7 @@ func _ready():
 		possible_materials[material.get_file().get_basename()] = material
 
 
-func _input(event):
+func _input(_event):
 	if visible and not is_instance_valid(current_mesh):
 		Logger.warn("current_mesh was deleted but the building settings haven't been updated!", self)
 		hide()

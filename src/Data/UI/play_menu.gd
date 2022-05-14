@@ -151,7 +151,7 @@ func _make_image(path: String) -> Texture:
 	return screenshot_texture
 
 
-func _on_Tracks_item_activated(index) -> void:
+func _on_Tracks_item_activated(_index) -> void:
 	_on_Tracks_Select_pressed()
 
 
@@ -190,7 +190,7 @@ func _on_Scenarios_Select_pressed():
 	update_routes()
 
 
-func _on_Scenarios_item_activated(index):
+func _on_Scenarios_item_activated(_index):
 	_on_Scenarios_Select_pressed()
 
 
@@ -214,7 +214,7 @@ func _on_Routes_Select_pressed():
 	update_times()
 
 
-func _on_Routes_ItemList_item_activated(index):
+func _on_Routes_ItemList_item_activated(_index):
 	_on_Routes_Select_pressed()
 
 
@@ -228,7 +228,7 @@ func _on_Times_Select_pressed():
 	update_trains()
 
 
-func _on_Times_ItemList_item_activated(index):
+func _on_Times_ItemList_item_activated(_index):
 	_on_Times_Select_pressed()
 
 
@@ -283,5 +283,5 @@ func _on_Trains_Play_pressed():
 	load_game()
 
 
-func _on_Trains_item_activated(index):
+func _on_Trains_item_activated(_index):
 	_on_Trains_Play_pressed()

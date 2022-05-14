@@ -403,9 +403,9 @@ func _on_OverheadLine_pressed() -> void:
 	currentRail.update()
 
 
-func _on_LineEdit_text_entered(new_text: String) -> void:
+func _on_LineEdit_text_entered(_new_text: String) -> void:
 	_on_Update_pressed()
 
 
-func _on_RenameLine_text_entered(new_text: String) -> void:
+func _on_RenameLine_text_entered(_new_text: String) -> void:
 	_on_Rename_pressed()

@@ -29,12 +29,6 @@ var label_mask: Dictionary = {
 signal item_selected(path)
 
 
-func _process(delta : float) -> void:
-	var movement = mouse_motion * $Camera2D.zoom.x
-	$Camera2D.position += movement
-	mouse_motion = Vector2(0,0)
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action("zoom_in"):
 		var zoom = $Camera2D.zoom
@@ -52,6 +46,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
 		mouse_motion -= event.relative
+		var movement = mouse_motion * $Camera2D.zoom.x
+		$Camera2D.position += movement
+		mouse_motion = Vector2(0,0)
 		get_tree().set_input_as_handled()
 
 

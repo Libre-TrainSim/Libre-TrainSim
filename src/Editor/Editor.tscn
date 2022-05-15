@@ -11,7 +11,7 @@
 [ext_resource path="res://Editor/Scripts/EditorHUD.gd" type="Script" id=9]
 [ext_resource path="res://Editor/Modules/AddObjects.gd" type="Script" id=10]
 [ext_resource path="res://Editor/Modules/Content_Selector.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Editor/Modules/BuildingSettings.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=13]
 
 [node name="Editor" type="Spatial"]

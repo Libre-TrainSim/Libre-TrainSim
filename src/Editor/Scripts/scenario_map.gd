@@ -145,13 +145,13 @@ func create_line2d_from_rail(rail, special: bool = false):
 		$RailsSelection.add_child(line)
 		line.default_color = Color("2891c5")
 
-func init(world : Node):
-	self.world = world
-	var rails = world.get_node("Rails").get_children()
+func init(new_world : Node):
+	world = new_world
+	var rails = new_world.get_node("Rails").get_children()
 	for rail in rails:
 		create_line2d_from_rail(rail)
 
-	var signals = world.get_node("Signals").get_children()
+	var signals = new_world.get_node("Signals").get_children()
 	for signal_instance in signals:
 		if signal_instance.type == "Station" or signal_instance.type == "Signal"\
 				or  signal_instance.type == "ContactPoint":

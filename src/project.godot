@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Editor/Scripts/export_track.gd"
 }, {
+"base": "Object",
+"class": "FileTools",
+"language": "GDScript",
+"path": "res://Data/Scripts/Singletons/file_tools.gd"
+}, {
 "base": "Label",
 "class": "InputLabel",
 "language": "GDScript",
@@ -231,6 +236,7 @@ _global_script_class_icons={
 "DistanceMonitor": "",
 "EditorCamera": "",
 "ExportTrack": "",
+"FileTools": "",
 "InputLabel": "",
 "LTSPlayer": "",
 "LTSWorld": "",

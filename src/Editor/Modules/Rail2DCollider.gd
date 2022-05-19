@@ -56,6 +56,6 @@ func _ready():
 	collision_polygon_2d.polygon = polygon_points
 
 
-func _on_RailCollider_input_event(viewport, event, shape_idx):
+func _on_RailCollider_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.pressed:
 		input_handling_node._item_selected(name, get_parent().name)

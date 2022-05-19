@@ -116,9 +116,8 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 # the result is saved to the 'found_files' variable
 func crawl_directory(found_files: Array, directory_path: String, file_extensions: Array, recursion_depth: int = -1) -> void:
 	var dir := Directory.new()
-	if dir.open(directory_path) != OK:
+	if dir.open(directory_path) != OK or dir.list_dir_begin(true, true) != OK:
 		return
-	dir.list_dir_begin(true, true)
 
 	while true:
 		var file: String = dir.get_next()
@@ -138,9 +137,8 @@ func crawl_directory(found_files: Array, directory_path: String, file_extensions
 
 func get_subfolders_of(directory_path: String) -> Array:
 	var dir := Directory.new()
-	if dir.open(directory_path) != OK:
+	if dir.open(directory_path) != OK or dir.list_dir_begin(true, true) != OK:
 		return []
-	dir.list_dir_begin(true, true)
 	var folder_names: Array = []
 	while(true):
 		var file: String = dir.get_next()
@@ -177,3 +175,7 @@ func set_low_resolution(value: bool) -> void:
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
 		ProjectSettings.set_setting("display/window/size/width", "800")
 		ProjectSettings.set_setting("display/window/size/height", "600")
+
+
+func world_origin_shifted(delta) -> void:
+	emit_signal("world_origin_shifted", delta)

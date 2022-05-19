@@ -107,7 +107,7 @@ func _exit_tree():
 	_halt_thread()
 
 
-func _process(delta: float):
+func _process(_delta: float):
 	assert(world != null)
 
 	# get position of active camera
@@ -134,7 +134,7 @@ func _shift_world_origin_to(position: Vector3):
 	_chunk_mutex.lock()
 	var delta: Vector3 = position - world_origin
 	world_origin = position
-	Root.emit_signal("world_origin_shifted", delta)
+	Root.world_origin_shifted(delta)
 	_chunk_mutex.unlock()
 
 
@@ -351,7 +351,7 @@ func _chunk_loader_thread(_void):
 
 		_chunk_mutex.unlock()
 		_saving_mutex.unlock()
-		call_deferred("emit_signal", "_thread_finished_loading")
+		call_deferred("_emit_thread_finished_loading")
 
 
 func _generate_landscape(chunk, chunk_pos):
@@ -367,3 +367,7 @@ func _generate_landscape(chunk, chunk_pos):
 	else:
 		# TODO: load landscape (heightmap, whatever), not implemented yet
 		pass
+
+
+func _emit_thread_finished_loading() -> void:
+	emit_signal("_thread_finished_loading")

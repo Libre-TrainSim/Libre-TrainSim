@@ -10,7 +10,6 @@ signal station_index_selected(station_index)
 func update_list(player: Spatial) -> void:
 	$StationJumper/ItemList.clear()
 	current_station_indices.clear()
-	var stations: Array = player.station_table
 	for station_index in range(player.current_station_table_index, player.station_table.size()):
 		current_station_indices.append(station_index)
 	if player.is_in_station:

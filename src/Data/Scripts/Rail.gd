@@ -672,4 +672,4 @@ func _update_connection_arrows_not_recursive():
 	else:
 		$Ending/Ending.material_override = preload("res://Data/Misc/Rail_Ending_disconnected.tres")
 
-	_last_calculation_of_update_connection_arrows == get_tree().get_frame()
+	_last_calculation_of_update_connection_arrows = get_tree().get_frame()

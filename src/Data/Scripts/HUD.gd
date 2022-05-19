@@ -17,7 +17,6 @@ func _ready() -> void:
 		$IngameInformation/Next.rect_position.y += 100
 	$Pause.player = player
 	$Black.show()
-	$TextBox.connect("closed", self, "emit_signal", ["textbox_closed"])
 
 
 func _process(_delta: float) -> void:
@@ -109,6 +108,7 @@ func update_nextTable() -> void:
 
 
 func _on_TextBox_closed() -> void:
+	emit_signal("textbox_closed")
 	if $Black.visible:
 		$Black/AnimationPlayer.play("FadeOut")
 

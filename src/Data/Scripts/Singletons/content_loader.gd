@@ -209,7 +209,6 @@ func get_scenarios_for_track(track: String) -> Array:
 
 # If train_name is part of the path, this function returns the whole path
 func find_train_path(train_name: String) -> String:
-	var train_path: String = ""
 	for available_train_path in ContentLoader.repo.trains:
 		if available_train_path.find(train_name) != -1:
 			return available_train_path

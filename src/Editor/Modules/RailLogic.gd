@@ -38,8 +38,9 @@ func update_general_settings_ui():
 
 
 func _on_Distance_value_changed(value):
-	$GeneralSettings/Distance.value = clamp($GeneralSettings/Distance.value, 0, find_parent("Editor").get_rail(current_rail_logic.attached_rail).length)
-	current_rail_logic.on_rail_position = $GeneralSettings/Distance.value
+	value = clamp(value, 0, find_parent("Editor").get_rail(current_rail_logic.attached_rail).length)
+	$GeneralSettings/Distance.value = value
+	current_rail_logic.on_rail_position = value
 	current_rail_logic.set_to_rail()
 
 
@@ -103,7 +104,7 @@ func _on_StationName_text_entered(new_text):
 
 
 func _on_Length_value_changed(value):
-	current_rail_logic.length = $StationSettings/Length.value
+	current_rail_logic.length = value
 
 
 func _on_PlatformSide_item_selected(index):
@@ -131,7 +132,7 @@ func update_speed_limit_settings_ui():
 
 
 func _on_SpeedLimit_SpeedLimit_value_changed(value):
-	current_rail_logic.speed = $SpeedLimitSettings/SpeedLimit.value
+	current_rail_logic.speed = value
 	current_rail_logic.set_to_rail()
 
 
@@ -140,12 +141,12 @@ func update_warn_speed_limit_settings_ui():
 
 
 func _on_WarnSpeedLimit_value_changed(value):
-	current_rail_logic.warn_speed = $WarnSpeedLimitSettings/SpeedLimit.value
+	current_rail_logic.warn_speed = value
 	current_rail_logic.set_to_rail()
 
 
 func _on_ConnectedSignal_text_changed(new_text):
-	current_rail_logic.assigned_signal = $StationSettings/AssignedSignal.text
+	current_rail_logic.assigned_signal = new_text
 
 
 func _on_selected_rail_logic_deleted():

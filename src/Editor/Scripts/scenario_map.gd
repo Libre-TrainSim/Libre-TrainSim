@@ -29,12 +29,6 @@ var label_mask: Dictionary = {
 signal item_selected(path)
 
 
-func _process(delta : float) -> void:
-	var movement = mouse_motion * $Camera2D.zoom.x
-	$Camera2D.position += movement
-	mouse_motion = Vector2(0,0)
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action("zoom_in"):
 		var zoom = $Camera2D.zoom
@@ -52,6 +46,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
 		mouse_motion -= event.relative
+		var movement = mouse_motion * $Camera2D.zoom.x
+		$Camera2D.position += movement
+		mouse_motion = Vector2(0,0)
 		get_tree().set_input_as_handled()
 
 
@@ -148,13 +145,13 @@ func create_line2d_from_rail(rail, special: bool = false):
 		$RailsSelection.add_child(line)
 		line.default_color = Color("2891c5")
 
-func init(world : Node):
-	self.world = world
-	var rails = world.get_node("Rails").get_children()
+func init(new_world : Node):
+	world = new_world
+	var rails = new_world.get_node("Rails").get_children()
 	for rail in rails:
 		create_line2d_from_rail(rail)
 
-	var signals = world.get_node("Signals").get_children()
+	var signals = new_world.get_node("Signals").get_children()
 	for signal_instance in signals:
 		if signal_instance.type == "Station" or signal_instance.type == "Signal"\
 				or  signal_instance.type == "ContactPoint":

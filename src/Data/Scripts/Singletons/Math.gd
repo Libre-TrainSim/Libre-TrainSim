@@ -93,6 +93,8 @@ func time2String(time: Array) -> String:
 	return (hour + ":" + minute +":" + second)
 
 func seconds_to_string(time_seconds: int) -> String:
+	# warning-ignore:integer_division
+	# warning-ignore:integer_division
 	return "%02d:%02d:%02d" % [time_seconds/3600, (time_seconds/60)%60, time_seconds%60]
 
 
@@ -111,9 +113,9 @@ func time_to_seconds(time: Array) -> int:
 
 func seconds_to_time(seconds: int) -> Array:
 	var time: Array = [0, 0, 0]
-	time[0] = int(seconds/3600)
+	time[0] = seconds/3600 # warning-ignore: integer_division
 	seconds -= time[0] * 3600
-	time[1] = int(seconds/60)
+	time[1] = seconds/60 # warning-ignore: integer_division
 	seconds -= time[1] * 60
 	time[2] = seconds
 	return time

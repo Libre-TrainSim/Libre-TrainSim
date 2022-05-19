@@ -140,16 +140,15 @@ func get_signal_scenario_data() -> Dictionary:
 	return signals
 
 
-var train_spawn_information: Dictionary = {
-	time = 0,
-	player_train = false,
-	train_path = "",
-	route_name = "",
-	minimal_platform_length = 0,
-	route = [],
-	station_table = [],
-	despawn_information = {}
-}
+class TrainSpawnInformation:
+	var time = 0
+	var player_train = false
+	var train_path = ""
+	var route_name = ""
+	var minimal_platform_length = 0
+	var route = []
+	var station_table = []
+	var despawn_information = {}
 
 
 func set_scenario_to_world() -> void:
@@ -187,7 +186,7 @@ func set_scenario_to_world() -> void:
 			# If the spawn time was before our start time, or the start time is above 2.5 hours
 			if available_time < time or available_time - time > (3600*2.5):
 				continue
-			var pending_train_spawn: Dictionary = train_spawn_information.duplicate(true)
+			var pending_train_spawn = TrainSpawnInformation.new()
 			pending_train_spawn.time = available_time
 			pending_train_spawn.train_path = train_path
 			# Player Train:
@@ -206,7 +205,7 @@ func set_scenario_to_world() -> void:
 	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [tr(routes[Root.selected_route].general_settings.description)])
 
 
-func spawn_train(train_spawn_information: Dictionary) -> void:
+func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:
 	var new_train: Node = load(train_spawn_information.train_path).instance()
 	if train_spawn_information.player_train:
 		new_train.name = "Player"

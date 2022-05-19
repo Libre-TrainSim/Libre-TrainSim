@@ -6,7 +6,7 @@ var currentRail: Node
 var eds # Editor Selection
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if editor:
 		visible = is_instance_valid(currentRail) and get_parent().current_tab == 1
 
@@ -380,9 +380,7 @@ func update_generalInformation() -> void:
 
 func _on_ManualMoving_pressed() -> void:
 	currentRail.manualMoving = $ManualMoving.pressed
-	var editor: Node = find_parent("Editor")
-	if editor:
-		editor.set_selected_object(currentRail)
+	editor.set_selected_object(currentRail)
 
 
 func _on_automaticTendency_pressed() -> void:
@@ -405,9 +403,9 @@ func _on_OverheadLine_pressed() -> void:
 	currentRail.update()
 
 
-func _on_LineEdit_text_entered(new_text: String) -> void:
+func _on_LineEdit_text_entered(_new_text: String) -> void:
 	_on_Update_pressed()
 
 
-func _on_RenameLine_text_entered(new_text: String) -> void:
+func _on_RenameLine_text_entered(_new_text: String) -> void:
 	_on_Rename_pressed()

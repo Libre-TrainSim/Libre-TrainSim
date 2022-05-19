@@ -177,7 +177,7 @@ func ready() -> void:
 	# Initiliaze Camera:
 	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
 	if not ai:
-		$HUD.connect("textbox_closed", self, "emit_signal", ["_textbox_closed"])
+		$HUD.connect("textbox_closed", self, "_on_textbox_closed")
 		cameraZeroTransform = cameraNode.transform
 		cameraX = -$Camera.rotation_degrees.x
 		cameraY = $Camera.rotation_degrees.y
@@ -1197,6 +1197,10 @@ func bake_route() -> void: ## Generate the whole route for the train.
 
 func show_textbox_message(string: String) -> void:
 	$HUD.show_textbox_message(string)
+
+
+func _on_textbox_closed() -> void:
+	emit_signal("_textbox_closed")
 
 
 # returns an sorted array with the names of the signals. The first entry is the nearest.

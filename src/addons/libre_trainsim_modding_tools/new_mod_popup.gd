@@ -6,7 +6,12 @@ var base_control
 
 func validate():
 	var unique_name = $MarginContainer/VBoxContainer/Grid/Input_Unique.text
-	unique_name = Root.to_valid_filename(unique_name)
+	unique_name = FileTools.to_valid_filename(unique_name)
+	if unique_name.empty():
+		var notice := preload("empty_popup.tscn").instance()
+		add_child(notice)
+		notice.popup_centered()
+		return
 
 	var author_name = $MarginContainer/VBoxContainer/Grid/Input_Author.text
 	var display_name = $MarginContainer/VBoxContainer/Grid/Input_Name.text

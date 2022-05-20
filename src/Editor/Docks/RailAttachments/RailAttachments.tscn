@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Editor/Docks/RailAttachments/RailAttachments.gd" type="Script" id=1]
-[ext_resource path="res://Editor/Modules/BuildingSettings.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=3]
 
 [node name="Rail Attachments" type="VBoxContainer"]

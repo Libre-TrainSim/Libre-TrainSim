@@ -152,14 +152,6 @@ func get_subfolders_of(directory_path: String) -> Array:
 	return folder_names
 
 
-func to_valid_filename(filename: String) -> String:
-	return filename.to_lower().strip_edges().strip_escapes() \
-			.replace("/", "_").replace("\\", "_").replace(":", "_") \
-			.replace("?", "_").replace("*", "_").replace("\"", "_") \
-			.replace("|", "_").replace("%", "_").replace("<", "_") \
-			.replace(">", "_")
-
-
 func set_fullscreen(value: bool) -> void:
 	OS.window_fullscreen = value
 

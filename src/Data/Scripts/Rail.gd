@@ -155,6 +155,11 @@ func _update() -> void:
 
 	if overheadLine:
 		update_overheadline(calculate_overhadline_mesh())
+	else:
+		# Fix overhead line being visible on load despite being disabled
+		var that_overhead_line = get_node_or_null("OverheadLine")
+		if that_overhead_line != null:
+			that_overhead_line.queue_free()
 
 	if Root.Editor and visible:
 		$Ending.transform = get_local_transform_at_rail_distance(length)

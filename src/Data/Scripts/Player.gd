@@ -338,8 +338,6 @@ func _process(delta: float):
 
 	check_station(delta)
 
-	handle_input()
-
 	currentRailRadius = currentRail.radius
 
 	if not ai:
@@ -351,7 +349,7 @@ func _process(delta: float):
 
 
 func _unhandled_key_input(event) -> void:
-	if event.is_action_pressed("debug") and not ai:
+	if event.is_action_pressed("debug") and not event.is_echo() and not ai:
 		debug = !debug
 		if debug:
 			send_message("DEBUG_MODE_ENABLED")
@@ -401,9 +399,28 @@ func _unhandled_input(event) -> void:
 		return
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
+	
+	# The following input events should only happen when the button is first pressed,
+	# not when it is held down. Hence, we'll return early if it's an echo.
+	if event.is_echo():
+		return
 
 	if event.is_action_pressed("acc+") and reverser == ReverserState.NEUTRAL:
 		send_message("HINT_REVERSER_NEUTRAL", ["reverser+", "reverser-"])
+
+	if event.is_action_pressed("InsideLight"):
+		toggle_cabin_light()
+	elif event.is_action_pressed("FrontLight"):
+		toggle_front_light()
+
+	if event.is_action_pressed("Horn"):
+		horn()
+
+	if event.is_action_pressed("reverser+"):
+		change_reverser(+1)
+
+	if event.is_action_pressed("reverser-"):
+		change_reverser(-1)
 
 	# Handle camera zoom
 	if event.is_action_pressed("zoom_in") or event.is_action_pressed("zoom_out"):
@@ -1721,25 +1738,6 @@ func change_reverser(change: int) -> void:
 				jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
 
 	emit_signal("reverser_changed", reverser)
-
-
-func handle_input() -> void:
-	if ai:
-		return
-	if Input.is_action_just_pressed("FrontLight") and not Input.is_key_pressed(KEY_CONTROL):
-		toggle_front_light()
-
-	if Input.is_action_just_pressed("InsideLight"):
-		toggle_cabin_light()
-
-	if Input.is_action_just_pressed("Horn"):
-		horn()
-
-	if Input.is_action_just_pressed("reverser+"):
-		change_reverser(+1)
-
-	if Input.is_action_just_pressed("reverser-"):
-		change_reverser(-1)
 
 
 func fail_scenario(text: String) -> void:

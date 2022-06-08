@@ -350,8 +350,8 @@ func _process(delta: float):
 	check_overdriving_a_switch()
 
 
-func _unhandled_key_input(_event) -> void:
-	if Input.is_action_just_pressed("debug") and not ai:
+func _unhandled_key_input(event) -> void:
+	if event.is_action_pressed("debug") and not ai:
 		debug = !debug
 		if debug:
 			send_message("DEBUG_MODE_ENABLED")
@@ -402,26 +402,25 @@ func _unhandled_input(event) -> void:
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
 
-	if Input.is_action_just_pressed("acc+") and reverser == ReverserState.NEUTRAL:
+	if event.is_action_pressed("acc+") and reverser == ReverserState.NEUTRAL:
 		send_message("HINT_REVERSER_NEUTRAL", ["reverser+", "reverser-"])
 
-	if event.is_pressed():
-		# zoom in
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
+	# Handle camera zoom
+	if event.is_action_pressed("zoom_in") or event.is_action_pressed("zoom_out"):
+		# zoom out
+		if event.is_action_pressed("zoom_out"):
 			if camera_state == CameraState.CABIN_VIEW:
 				camera_fov_soll = camera_fov + 5
 			elif camera_state == CameraState.OUTER_VIEW:
 				camera_distance += camera_distance*0.2
 				has_camera_distance_changed = true
-			# call the zoom function
-		# zoom out
-		if Input.is_mouse_button_pressed(BUTTON_WHEEL_UP):
+		# zoom in
+		if event.is_action_pressed("zoom_in"):
 			if camera_state == CameraState.CABIN_VIEW:
 				camera_fov_soll = camera_fov - 5
 			elif camera_state == CameraState.OUTER_VIEW:
 				camera_distance -= camera_distance*0.2
 				has_camera_distance_changed = true
-			# call the zoom function
 
 		camera_fov_soll = clamp(camera_fov_soll, CAMERA_FOV_MIN, CAMERA_FOV_MAX)
 		camera_distance = clamp(camera_distance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)

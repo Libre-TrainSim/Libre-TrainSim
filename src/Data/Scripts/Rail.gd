@@ -174,9 +174,9 @@ func _update() -> void:
 func unload_visible_instance() -> void:
 	visible = false
 	if get_node_or_null("MultiMeshInstance") != null:
-		$MultiMeshInstance.free()
+		$MultiMeshInstance.queue_free()
 	if get_node_or_null("OverheadLine") != null:
-		$OverheadLine.free()
+		$OverheadLine.queue_free()
 	for track_object in trackObjects:
 		if is_instance_valid(track_object):
 			track_object.queue_free()

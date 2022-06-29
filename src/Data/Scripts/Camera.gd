@@ -107,17 +107,22 @@ func _process(delta: float) -> void:
 		translation.x -= missingCameraPosition * delta
 
 	if not fixed and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
-		var deltaFlyspeed: float = (delta / refDelta) * flyspeed
-
-		if(Input.is_key_pressed(KEY_W)):
-			self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(0,0,1) * deltaFlyspeed)
-		if(Input.is_key_pressed(KEY_S)):
-			self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(0,0,1) * -deltaFlyspeed)
-		if(Input.is_key_pressed(KEY_A) and not Input.is_key_pressed(KEY_CONTROL)):
-			self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(1,0,0) * deltaFlyspeed)
-		if(Input.is_key_pressed(KEY_D)):
-			self.set_translation(self.get_translation() - get_global_transform().basis*Vector3(1,0,0) * -deltaFlyspeed)
-		if(Input.is_key_pressed(KEY_SHIFT)):
-			flyspeed = 2
+		# Handle the camera speed toggle
+		if(Input.is_action_pressed("shift")):
+			flyspeed = 2.0
 		else:
 			flyspeed = 0.5
+		
+		# Account for delta time
+		var deltaFlyspeed: float = (delta / refDelta) * flyspeed
+
+		# Only apply movement if CTRL isn't pressed
+		# (Workaround for CTRL+A "Autopilot" overlapping with A "move left")
+		if not Input.is_key_pressed(KEY_CONTROL):
+			# Get current analog input direction
+			var direction_2d := Input.get_vector("left", "right", "forward", "backward")
+			var direction := Vector3(direction_2d[0], 0.0, direction_2d[1])
+			
+			# Apply the movement
+			if direction.length() != 0.0:
+				self.translate(direction * deltaFlyspeed)

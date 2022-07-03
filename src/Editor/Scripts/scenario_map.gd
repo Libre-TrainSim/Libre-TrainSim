@@ -173,9 +173,9 @@ func update_map():
 
 	# Clear old selection:
 	for child in $Special.get_children():
-		child.free()
+		child.queue_free()
 	for child in $RailsSelection.get_children():
-		child.free()
+		child.queue_free()
 
 	if label_mask.signals:
 		for signal_instance in $Signals.get_children():

@@ -175,7 +175,7 @@ func _on_Rename_pressed() -> void:
 
 
 func _on_Delete_pressed() -> void:
-	currentRail.free()
+	currentRail.queue_free()
 	currentRail = null
 	update_selected_rail(self)
 	Logger.log("Rail deleted.")

@@ -154,7 +154,7 @@ func update_ui_for_current_route():
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/P.visible = routes[current_route].general_settings.activate_only_at_specific_routes and not routes[current_route].general_settings.player_can_drive_this_route
 
 	for child in $TabContainer/Routes/RouteConfiguration/GeneralSettings/P/SpecificRoutes.get_children():
-		child.free()
+		child.queue_free()
 	for route_name in routes.keys():
 		if routes[route_name].general_settings.player_can_drive_this_route and route_name != current_route:
 			var checkbox: CheckBox = CheckBox.new()

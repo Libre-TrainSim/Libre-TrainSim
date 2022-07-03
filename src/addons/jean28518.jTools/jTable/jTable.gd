@@ -48,10 +48,10 @@ func update_table_in_editor(newvar):
 func clear():
 	current_entries = 0
 	for child in grid_node.get_children():
-		child.free()
+		child.queue_free()
 
 	for heading in headings_node.get_children():
-		heading.free()
+		heading.queue_free()
 
 func initialize():
 	if not check_configuration():

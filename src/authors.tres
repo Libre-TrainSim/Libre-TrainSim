@@ -6,4 +6,4 @@
 script = ExtResource( 1 )
 developers = [ "Jean3219 - Jean28518", "Johannes Witt - HaSa1002", "Dominik Waurenschk - DasCapschen" ]
 contributors = [ "librebob", "Bohdan Matviiv - bodamat", "Michele Comignano - comick", "Matthew - skyace65", "Yann Dirson - ydirson", "IntinteDAO", "Uli Horn - ulihorn", "simfann", "SeaMac", "JupiterRider", "rogerm4242", "nalquas" ]
-translators = [ [ "Bulgarian", "Georgi Georgiev (RacerBG)" ], [ "Ukrainian", "Bohdan Matviiv" ], [ "Polish", "toxicnet" ], [ "Japanese", "paontv" ], [ "Español", "Miguel de Dios Matias" ], [ "Bulgarian", "Georgi - RacerBG" ], [ "French", "Haeroxys", "Miks - Miksimus1" ] ]
+translators = [ [ "Bulgarian", "Georgi Georgiev (RacerBG)" ], [ "Ukrainian", "Bohdan Matviiv" ], [ "Polish", "toxicnet" ], [ "Japanese", "paontv" ], [ "Español", "Miguel de Dios Matias", "Pablo Lilao" ], [ "Bulgarian", "Georgi - RacerBG" ], [ "French", "Haeroxys", "Miks - Miksimus1" ] ]

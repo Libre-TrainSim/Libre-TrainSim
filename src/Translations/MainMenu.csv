@@ -79,17 +79,17 @@ SAVE_AND_EXIT,Save and exit,Speichern und beenden,,,,,Guardar y salir,Запис
 EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,,,,,Salir sin guardar,Излизане без записване,Quitter sans sauvegarder
 SAVE,Save,Speichern,,,,,,Записване,Sauvegarder
 ,,,,,,,,,
-TRACK_EDITOR,Track Editor,Strecken-Editor,,,,,,Редактор на линиите,Éditeur de parcours
-SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,,,,,,Редактор на направленията,Éditeur de scénario
-SELECT,Select,Auswählen,,,,,,Избиране,Sélectionner
-PLAY,Play,Spielen,,,,,,Начало,Jouer
-CREATE,Create,Erstellen,,,,,,Създаване,Créer
-DUPLICATE,Duplicate,Duplizieren,,,,,,Дублиране,Dupliquer
-EDIT,Edit,Bearbeiten,,,,,,Редактиране,Éditer
-DELETE,Delete,Löschen,,,,,,Изтриване,Supprimer
+TRACK_EDITOR,Track Editor,Strecken-Editor,,,,,Editor de vías,Редактор на линиите,Éditeur de parcours
+SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,,,,,Editor de escenarios,Редактор на направленията,Éditeur de scénario
+SELECT,Select,Auswählen,,,,,Seleccionar,Избиране,Sélectionner
+PLAY,Play,Spielen,,,,,Jugar,Начало,Jouer
+CREATE,Create,Erstellen,,,,,Crear,Създаване,Créer
+DUPLICATE,Duplicate,Duplizieren,,,,,Duplicar,Дублиране,Dupliquer
+EDIT,Edit,Bearbeiten,,,,,Editar,Редактиране,Éditer
+DELETE,Delete,Löschen,,,,,Eliminar,Изтриване,Supprimer
 ,,,,,,,,,
-SCENARIOS:,Scenarios:,Szenarien:,,,,,,Направления:,Scénarios :
+SCENARIOS:,Scenarios:,Szenarien:,,,,,Escenarios:,Направления:,Scénarios :
 ,,,,,,,,,
-DELETE_CONFIRMATION_TRACK,Do you really want to remove these files? The track itself with all associated scenarios will be deleted!,Möchten Sie wirklich die Strecke mit allen ihren Szenarien löschen?,,,,,,Искате ли да изтриете тези файлове? Линията и нейните направления ще бъдат изтрити!,Voulez-vous vraiment supprimer ces fichiers ? Le parcours lui-même avec tous les scénarios associés seront supprimés !
-CANCEL,Cancel,Abbrechen,,,,,,Отказ,Annuler
-DELETE_CONFIRMATION_SCENARIO,Do you really want to delete these scenarios?,Möchten Sie wirklich folgende Szenarien löschen?,,,,,,Искате ли да изтриете тези направления?,Voulez-vous vraiment supprimer ces scénarios ?
+DELETE_CONFIRMATION_TRACK,Do you really want to remove these files? The track itself with all associated scenarios will be deleted!,Möchten Sie wirklich die Strecke mit allen ihren Szenarien löschen?,,,,,¿Está seguro de que desea eliminar estos archivos? ¡La vía y todos los escenarios asociados serán eliminados!,Искате ли да изтриете тези файлове? Линията и нейните направления ще бъдат изтрити!,Voulez-vous vraiment supprimer ces fichiers ? Le parcours lui-même avec tous les scénarios associés seront supprimés !
+CANCEL,Cancel,Abbrechen,,,,,Cancelar,Отказ,Annuler
+DELETE_CONFIRMATION_SCENARIO,Do you really want to delete these scenarios?,Möchten Sie wirklich folgende Szenarien löschen?,,,,,¿Está seguro de que desea eliminar estos escenarios?,Искате ли да изтриете тези направления?,Voulez-vous vraiment supprimer ces scénarios ?

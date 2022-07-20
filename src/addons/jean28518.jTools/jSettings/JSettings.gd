@@ -23,6 +23,7 @@ func first_run_check():
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		set_fullscreen(true)
 		set_vsync(true)
+		set_fps_limit(0) # disable limit
 		set_anti_aliasing(2)
 		set_fog(true)
 		set_shadows(true)
@@ -53,6 +54,8 @@ func save_settings():
 func update_settings_window():
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = ProjectSettings["display/window/size/fullscreen"]
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed = ProjectSettings["display/window/vsync/use_vsync"]
+	$"%FpsLimitToggle".pressed = (ProjectSettings["debug/settings/fps/force_fps"] != 0)
+	show_fps_limit(not ProjectSettings["display/window/vsync/use_vsync"])
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = ProjectSettings["game/graphics/shadows"]
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
 	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = ProjectSettings["game/graphics/fog"]
@@ -78,8 +81,15 @@ func set_fullscreen(val: bool):
 
 func set_vsync(val: bool):
 	ProjectSettings["display/window/vsync/use_vsync"] = val
+	show_fps_limit(not val) # only show fps limit settings if vsync is off
 	save_settings()
 	OS.set_use_vsync(val)
+
+
+func set_fps_limit(target_fps: int):
+	ProjectSettings["debug/settings/fps/force_fps"] = target_fps
+	save_settings()
+	Engine.set_target_fps(target_fps)
 
 
 func set_shadows(val: bool):
@@ -202,6 +212,26 @@ func _id_to_language_code(id : int):
 		if _language_table[key] == id:
 			return key
 
+
+func show_fps_limit(val: bool):
+	$"%LabelFpsLimitToggle".visible = val
+	$"%FpsLimitToggle".visible = val
+	show_fps_limit_selector(val and $"%FpsLimitToggle".pressed)
+	if not val:
+		set_fps_limit(0)
+
+func show_fps_limit_selector(val: bool):
+	if val:
+		# Initate the FPS limit with the screen refresh rate if we just enabled the fps limiter.
+		# Otherwise, show the current fps limit.
+		if ProjectSettings["debug/settings/fps/force_fps"] == 0:
+			$"%FpsLimit".value = OS.get_screen_refresh_rate()
+		else:
+			$"%FpsLimit".value = ProjectSettings["debug/settings/fps/force_fps"]
+		set_fps_limit($"%FpsLimit".value)
+	$"%LabelFpsLimit".visible = val
+	$"%FpsLimit".visible = val
+
 ## Other Signals ###############################################################
 
 func _unhandled_key_input(event: InputEventKey) -> void:
@@ -219,6 +249,12 @@ func _on_Fullscreen_pressed():
 
 func _on_Vsync_pressed():
 	set_vsync($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed)
+
+
+func _on_FpsLimitToggle_toggled(button_pressed):
+	show_fps_limit_selector(button_pressed) # Only show selector when FPS limit is enabled
+	if not button_pressed:
+		set_fps_limit(0) # disable limit
 
 
 func _on_Shadows_pressed():

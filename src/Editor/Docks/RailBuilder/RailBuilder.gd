@@ -8,7 +8,7 @@ var eds # Editor Selection
 
 func _process(_delta: float) -> void:
 	if editor:
-		visible = is_instance_valid(currentRail) and get_parent().current_tab == 1
+		visible = is_instance_valid(currentRail) and get_parent().current_tab == 0
 
 
 func update_selected_rail(node: Node) -> void:

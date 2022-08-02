@@ -1,6 +1,11 @@
 extends CanvasLayer
 
 
+func _ready() -> void:
+	var station_popup: PopupMenu = $GlobalMenu/JumpToStation.get_popup()
+	station_popup.connect("index_pressed", self, "_on_jump_station_pressed")
+
+
 func handle_object_transform_field():
 	$ObjectName/Name/Duplicate.visible = get_parent().selected_object_type == "Building"
 	if not $ObjectTransform.visible:
@@ -14,21 +19,20 @@ func handle_object_transform_field():
 
 
 func _unhandled_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("Escape"):
-		if $Pause.visible:
-			_on_Pause_Back_pressed()
-		else:
-			$Pause.show()
-			get_tree().paused = true
 	handle_object_transform_field()
 
+
+func _unhandled_key_input(_event: InputEventKey) -> void:
+	if Input.is_action_just_released("ui_cancel", true):
+		get_tree().paused = true
+		$Pause.show()
 
 
 func update_ShowSettingsButton():
 	if not $Settings.visible:
-		$ShowSettingsButton.text = "Show Settings"
+		$GlobalMenu/ShowSettingsButton.text = "Show Settings"
 	else:
-		$ShowSettingsButton.text = "Hide Settings"
+		$GlobalMenu/ShowSettingsButton.text = "Hide Settings"
 
 
 func _on_ShowSettings_pressed():
@@ -77,22 +81,6 @@ func _on_DeleteCurrentObject_pressed():
 	get_parent().delete_selected_object()
 
 
-func _on_Pause_Back_pressed():
-	get_tree().paused = false
-	$Pause.hide()
-
-
-func _on_SaveAndExit_pressed():
-	get_parent().save_world()
-	get_tree().paused = false
-	LoadingScreen.load_main_menu()
-
-
-func _on_SaveWithoutExit_pressed():
-	get_tree().paused = false
-	LoadingScreen.load_main_menu()
-
-
 func _on_x_value_changed(value):
 	var selected_object = get_parent().selected_object
 	selected_object.translation.x = value
@@ -118,19 +106,16 @@ func _onObjectName_text_entered(_new_text):
 
 
 func show_building_settings():
-	show_settings()
-	$Settings/TabContainer.current_tab = 4
+	$Settings/TabContainer.current_tab = 3
 
 
 func show_signal_settings():
-	show_settings()
-	$Settings/TabContainer.current_tab = 2
+	$Settings/TabContainer.current_tab = 1
 
 
-func ensure_rail_settings():
-	show_settings()
-	if not $Settings/TabContainer.current_tab == 1 and not $Settings/TabContainer.current_tab == 3:
-		$Settings/TabContainer.current_tab = 1
+func show_rail_settings():
+	if not $Settings/TabContainer.current_tab == 0 and not $Settings/TabContainer.current_tab == 2:
+		$Settings/TabContainer.current_tab = 0
 
 
 func  _on_DuplicateObject_pressed():
@@ -138,19 +123,20 @@ func  _on_DuplicateObject_pressed():
 
 
 func _on_JumpToStation_pressed():
-	if $JumpToStation/ItemList.visible:
-		$JumpToStation/ItemList.hide()
-		return
-	$JumpToStation/ItemList.clear()
-	var station_node_names = get_parent().get_all_station_node_names_in_world()
+	var station_menu: PopupMenu = $GlobalMenu/JumpToStation.get_popup()
+	station_menu.clear()
+	var station_node_names: Array = get_parent().get_all_station_node_names_in_world()
+	station_node_names.sort()
 	for station_node_name in station_node_names:
-		$JumpToStation/ItemList.add_item(station_node_name)
-	$JumpToStation/ItemList.sort_items_by_text()
-	$JumpToStation/ItemList.show()
-	$JumpToStation/ItemList.grab_focus()
+		station_menu.add_item(station_node_name)
 
 
-func _on_JumpToStationItemList_item_selected(index):
-	$JumpToStation/ItemList.hide()
-	get_parent().jump_to_station($JumpToStation/ItemList.get_item_text(index))
+func _on_jump_station_pressed(index: int) -> void:
+	var station_menu: PopupMenu = $GlobalMenu/JumpToStation.get_popup()
+	get_parent().jump_to_station(station_menu.get_item_text(index))
 
+
+func _on_ShowConfig_pressed() -> void:
+	var config: WindowDialog = preload("res://Editor/Docks/Configuration/Configuration.tscn").instance()
+	add_child(config)
+	config.popup_centered()

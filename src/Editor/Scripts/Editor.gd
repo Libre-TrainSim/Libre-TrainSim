@@ -287,7 +287,7 @@ func provide_settings_for_selected_object() -> void:
 	if selected_object_type == "Rail":
 		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
 		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
-		$EditorHUD.ensure_rail_settings()
+		$EditorHUD.show_rail_settings()
 	else:
 		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(null)
 		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(null)
@@ -342,7 +342,6 @@ func save_world(send_message: bool = true) -> void:
 			send_message("An error occurred while saving the scene to disk.")
 			return
 
-	$EditorHUD/Settings/TabContainer/Configuration.save_everything()
 	$World.j_save_module.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
@@ -652,3 +651,7 @@ func get_children_of_type_recursive(node: Node, type) -> Array:
 func set_current_track_path(path: String) -> void:
 	current_track_path = path
 	current_track_name = path.get_file()
+
+
+func _on_Pause_save_requested() -> void:
+	save_world(false)

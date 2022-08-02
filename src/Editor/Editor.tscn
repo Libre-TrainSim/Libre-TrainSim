@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Editor/Scripts/editor_camera.gd" type="Script" id=1]
 [ext_resource path="res://Editor/Scripts/Editor.gd" type="Script" id=2]
@@ -7,83 +7,75 @@
 [ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Editor/Docks/RailBuilder/RailBuilder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Editor/Docks/RailAttachments/RailAttachments.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Editor/Docks/Configuration/Configuration.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Data/UI/blur.tres" type="Material" id=8]
 [ext_resource path="res://Editor/Scripts/EditorHUD.gd" type="Script" id=9]
 [ext_resource path="res://Editor/Modules/AddObjects.gd" type="Script" id=10]
 [ext_resource path="res://Editor/Modules/Content_Selector.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=13]
+[ext_resource path="res://Editor/Scripts/pause_menu.gd" type="Script" id=14]
 
 [node name="Editor" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="EditorHUD" type="CanvasLayer" parent="."]
-pause_mode = 2
 script = ExtResource( 9 )
 
-[node name="ShowSettingsButton" type="Button" parent="EditorHUD"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -102.612
-margin_top = 6.73477
-margin_right = -5.6123
-margin_bottom = 34.7348
+[node name="GlobalMenu" type="VBoxContainer" parent="EditorHUD"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ShowSettingsButton" type="Button" parent="EditorHUD/GlobalMenu"]
+margin_right = 111.0
+margin_bottom = 20.0
 grow_horizontal = 0
 text = "Hide Settings"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="SaveWorldButton" type="Button" parent="EditorHUD"]
-margin_left = 7.0
-margin_top = 6.78179
-margin_right = 90.0
-margin_bottom = 26.7818
+[node name="HSeparator" type="HSeparator" parent="EditorHUD/GlobalMenu"]
+margin_top = 24.0
+margin_right = 111.0
+margin_bottom = 28.0
+
+[node name="TestTrack" type="Button" parent="EditorHUD/GlobalMenu"]
+margin_top = 32.0
+margin_right = 111.0
+margin_bottom = 52.0
+text = "Test Track"
+
+[node name="SaveWorldButton" type="Button" parent="EditorHUD/GlobalMenu"]
+margin_top = 56.0
+margin_right = 111.0
+margin_bottom = 76.0
 text = "Save World"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="ExportTrack" type="Button" parent="EditorHUD"]
-margin_left = 7.49803
-margin_top = 62.2427
-margin_right = 96.498
-margin_bottom = 82.2427
+[node name="ExportTrack" type="Button" parent="EditorHUD/GlobalMenu"]
+margin_top = 80.0
+margin_right = 111.0
+margin_bottom = 100.0
 text = "Export Track"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="JumpToStation" type="Button" parent="EditorHUD"]
-margin_left = 6.60713
-margin_top = 90.087
-margin_right = 95.6071
-margin_bottom = 110.087
+[node name="HSeparator2" type="HSeparator" parent="EditorHUD/GlobalMenu"]
+margin_top = 104.0
+margin_right = 111.0
+margin_bottom = 108.0
+
+[node name="JumpToStation" type="MenuButton" parent="EditorHUD/GlobalMenu"]
+margin_top = 112.0
+margin_right = 111.0
+margin_bottom = 132.0
 text = "Jump To Station"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+flat = false
 
-[node name="ItemList" type="ItemList" parent="EditorHUD/JumpToStation"]
-visible = false
-margin_left = 0.114761
-margin_top = 20.304
-margin_right = 166.115
-margin_bottom = 55.304
-auto_height = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TestTrack" type="Button" parent="EditorHUD"]
-margin_left = 6.60713
-margin_top = 34.4249
-margin_right = 82.6071
-margin_bottom = 54.4249
-text = "Test Track"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ShowConfig" type="Button" parent="EditorHUD/GlobalMenu"]
+margin_top = 136.0
+margin_right = 111.0
+margin_bottom = 156.0
+text = "Show Config"
 
 [node name="Settings" type="Control" parent="EditorHUD"]
 anchor_left = 0.624
@@ -93,26 +85,12 @@ margin_left = -0.200012
 margin_top = 67.0
 margin_right = -7.0
 margin_bottom = -11.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TabContainer" type="TabContainer" parent="EditorHUD/Settings"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Configuration" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 8 )]
-anchor_left = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
 
 [node name="RailBuilder" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 6 )]
-visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
@@ -121,21 +99,21 @@ margin_bottom = -4.0
 [node name="RailLogic" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 3 )]
 visible = false
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 24.0
 margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 7 )]
 visible = false
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 24.0
 margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 12 )]
 visible = false
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 24.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -337,9 +315,6 @@ margin_top = -29.5459
 margin_right = 41.435
 margin_bottom = -9.5459
 text = " + "
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Menu1" type="ItemList" parent="EditorHUD/AddObjects"]
 visible = false
@@ -420,20 +395,16 @@ __meta__ = {
 }
 
 [node name="Pause" type="Control" parent="EditorHUD"]
+pause_mode = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 14 )
 
 [node name="ColorRect" type="ColorRect" parent="EditorHUD/Pause"]
+material = ExtResource( 8 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.784314 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EditorHUD/Pause"]
 anchor_left = 0.5
@@ -455,7 +426,7 @@ theme = ExtResource( 13 )
 custom_fonts/font = ExtResource( 5 )
 text = "BACK"
 
-[node name="SaveWithoutExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
+[node name="ExitWithoutSave" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
 margin_top = 53.0
 margin_right = 326.0
 margin_bottom = 102.0
@@ -498,12 +469,12 @@ control_path = NodePath("../EditorHUD/Settings")
 [node name="OutlinesPP" parent="." instance=ExtResource( 4 )]
 highlight_color = Color( 1, 1, 0, 1 )
 
-[connection signal="pressed" from="EditorHUD/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
-[connection signal="pressed" from="EditorHUD/SaveWorldButton" to="." method="_on_SaveWorldButton_pressed"]
-[connection signal="pressed" from="EditorHUD/ExportTrack" to="." method="_on_ExportTrack_pressed"]
-[connection signal="pressed" from="EditorHUD/JumpToStation" to="EditorHUD" method="_on_JumpToStation_pressed"]
-[connection signal="item_selected" from="EditorHUD/JumpToStation/ItemList" to="EditorHUD" method="_on_JumpToStationItemList_item_selected"]
-[connection signal="pressed" from="EditorHUD/TestTrack" to="." method="_on_TestTrack_pressed"]
+[connection signal="pressed" from="EditorHUD/GlobalMenu/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
+[connection signal="pressed" from="EditorHUD/GlobalMenu/TestTrack" to="." method="_on_TestTrack_pressed"]
+[connection signal="pressed" from="EditorHUD/GlobalMenu/SaveWorldButton" to="." method="_on_SaveWorldButton_pressed"]
+[connection signal="pressed" from="EditorHUD/GlobalMenu/ExportTrack" to="." method="_on_ExportTrack_pressed"]
+[connection signal="pressed" from="EditorHUD/GlobalMenu/JumpToStation" to="EditorHUD" method="_on_JumpToStation_pressed"]
+[connection signal="pressed" from="EditorHUD/GlobalMenu/ShowConfig" to="EditorHUD" method="_on_ShowConfig_pressed"]
 [connection signal="text_entered" from="EditorHUD/ObjectName/Name/LineEdit" to="EditorHUD" method="_onObjectName_text_entered"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Clear" to="EditorHUD" method="_on_ClearCurrentObject_pressed"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Rename" to="EditorHUD" method="_on_CurrentObjectRename_pressed"]
@@ -521,6 +492,8 @@ highlight_color = Color( 1, 1, 0, 1 )
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]
-[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD" method="_on_Pause_Back_pressed"]
-[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveWithoutExit" to="EditorHUD" method="_on_SaveWithoutExit_pressed"]
-[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD" method="_on_SaveAndExit_pressed"]
+[connection signal="hide" from="EditorHUD/Pause" to="EditorHUD/Pause" method="_on_hide"]
+[connection signal="save_requested" from="EditorHUD/Pause" to="." method="_on_Pause_save_requested"]
+[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD/Pause" method="_on_Back_pressed"]
+[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/ExitWithoutSave" to="EditorHUD/Pause" method="_on_ExitWithoutSave_pressed"]
+[connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD/Pause" method="_on_SaveAndExit_pressed"]

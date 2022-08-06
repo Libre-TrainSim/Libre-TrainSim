@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 			flyspeed = 2.0
 		else:
 			flyspeed = 0.5
-		
+
 		# Account for delta time
 		var deltaFlyspeed: float = (delta / refDelta) * flyspeed
 
@@ -122,7 +122,7 @@ func _process(delta: float) -> void:
 			# Get current analog input direction
 			var direction_2d := Input.get_vector("left", "right", "forward", "backward")
 			var direction := Vector3(direction_2d[0], 0.0, direction_2d[1])
-			
+
 			# Apply the movement
 			if direction.length() != 0.0:
 				self.translate(direction * deltaFlyspeed)

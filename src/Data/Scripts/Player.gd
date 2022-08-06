@@ -399,7 +399,7 @@ func _unhandled_input(event) -> void:
 		return
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative
-	
+
 	# The following input events should only happen when the button is first pressed,
 	# not when it is held down. Hence, we'll return early if it's an echo.
 	if event.is_echo():

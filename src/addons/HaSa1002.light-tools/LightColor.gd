@@ -7,7 +7,7 @@ func can_handle(object):
 
 
 func parse_property(object, type, path, hint, hint_text, usage):
-	if ((path == "light_color" and object is Light) || 
+	if ((path == "light_color" and object is Light) ||
 			(path == "color" and object is Light2D)):
 		add_property_editor(path, LightColorEditor.new())
 		return true

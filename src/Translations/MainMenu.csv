@@ -26,6 +26,8 @@ MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von
 MENU_SETTINGS:,Settings:,Einstellungen:,Impostazioni:,設定:,Ustawienia,Налаштування:,Configuración:,Настройки:,Paramètres :
 MENU_FULLSCREEN,Fullscreen,Vollbild,Schermo intero,フルスクリーン,Pełny ekran,Повноекранний режим,Pantalla completa,На цял екран,Plein écran
 MENU_VSYNC,Enable Vertical Synchronisation,Vertikale Synchronisation aktivieren,,,,,,,
+MENU_FPS_LIMIT_TOGGLE,Enable FPS Limit,FPS-Limit aktivieren,,,,,,,
+MENU_FPS_LIMIT,FPS Limit,FPS-Limit,,,,,,,
 MENU_MAIN_VOLUME,Main Volume,Lautstärke,Volume,音量,Głośność,Гучність ,Volumen Principal,Основен звук,Volume principal
 MENU_GAME_VOLUME,Game Volume,Spiellautstärke,Volume di gioco,ゲームの音量,Głośność gry,Гучність гри,Volumen del Juego,Звук на играта,Volume du jeu
 MENU_MUSIC_VOLUME,Music Volume,Musiklautstärke,Volume di musica,音楽の音量,Głośność muzyki,Гучність музики,Volumen de la Música,Звук на музиката,Volume de la musique

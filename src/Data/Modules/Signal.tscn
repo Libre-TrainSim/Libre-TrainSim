@@ -4,4 +4,3 @@
 
 [node name="Signal" type="Spatial" groups=["Signal"]]
 script = ExtResource( 1 )
-set_pass_at_h = 25

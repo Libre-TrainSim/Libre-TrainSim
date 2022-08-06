@@ -44,7 +44,6 @@ multimesh = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 material_override = ExtResource( 4 )
 mesh = ExtResource( 2 )
-material/0 = null
 
 [node name="AabbShape" type="CollisionShape" parent="Beginning"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.322, 0, 0 )
@@ -67,7 +66,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )
 [node name="Ending" type="MeshInstance" parent="Ending"]
 material_override = ExtResource( 5 )
 mesh = ExtResource( 2 )
-material/0 = null
 
 [node name="AabbShape" type="CollisionShape" parent="Ending"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, 0, 0 )
@@ -75,4 +73,3 @@ shape = SubResource( 7 )
 
 [node name="OverheadLine" type="MeshInstance" parent="."]
 mesh = SubResource( 6 )
-material/0 = null

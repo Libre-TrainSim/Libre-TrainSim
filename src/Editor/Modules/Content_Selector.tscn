@@ -6,23 +6,20 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
-margin_right = 655.0
+margin_right = 879.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
 [node name="ClearText" type="Button" parent="HBoxContainer"]
-margin_left = 659.0
-margin_right = 687.0
+margin_left = 883.0
+margin_right = 911.0
 margin_bottom = 24.0
 text = " X "
 __meta__ = {
@@ -30,20 +27,20 @@ __meta__ = {
 }
 
 [node name="Cancel" type="Button" parent="HBoxContainer"]
-margin_left = 691.0
-margin_right = 745.0
+margin_left = 915.0
+margin_right = 969.0
 margin_bottom = 24.0
 text = "Cancel"
 
 [node name="Select" type="Button" parent="HBoxContainer"]
-margin_left = 749.0
-margin_right = 800.0
+margin_left = 973.0
+margin_right = 1024.0
 margin_bottom = 24.0
 text = "Select"
 
 [node name="ItemList" type="ItemList" parent="."]
 margin_top = 28.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 

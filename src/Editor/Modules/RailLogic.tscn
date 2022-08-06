@@ -6,12 +6,9 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="GeneralSettings" type="GridContainer" parent="."]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 52.0
 columns = 2
 
@@ -23,7 +20,7 @@ text = "Distance:"
 
 [node name="Distance" type="SpinBox" parent="GeneralSettings"]
 margin_left = 64.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 max_value = 1000.0
@@ -41,7 +38,7 @@ text = "Forward:"
 [node name="Forwad" type="CheckBox" parent="GeneralSettings"]
 margin_left = 64.0
 margin_top = 28.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 52.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -49,12 +46,12 @@ __meta__ = {
 
 [node name="HSeparator" type="HSeparator" parent="."]
 margin_top = 56.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 60.0
 
 [node name="SignalSettings" type="GridContainer" parent="."]
 margin_top = 64.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 88.0
 columns = 2
 
@@ -66,19 +63,19 @@ text = "Visible Instance:"
 
 [node name="VisibleInstance" type="HBoxContainer" parent="SignalSettings"]
 margin_left = 110.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="LineEdit" type="LineEdit" parent="SignalSettings/VisibleInstance"]
-margin_right = 648.0
+margin_right = 872.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="PickVisibleInstance" type="Button" parent="SignalSettings/VisibleInstance"]
-margin_left = 652.0
-margin_right = 690.0
+margin_left = 876.0
+margin_right = 914.0
 margin_bottom = 24.0
 text = "Pick"
 __meta__ = {
@@ -87,7 +84,7 @@ __meta__ = {
 
 [node name="StationSettings" type="GridContainer" parent="."]
 margin_top = 92.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 308.0
 columns = 2
 
@@ -99,7 +96,7 @@ text = "Node Name:"
 
 [node name="Name" type="LineEdit" parent="StationSettings"]
 margin_left = 164.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
@@ -112,7 +109,7 @@ text = "Length of station"
 [node name="Length" type="SpinBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 28.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 52.0
 max_value = 1000.0
 step = 0.1
@@ -130,7 +127,7 @@ text = "Platform Side:"
 [node name="PlatformSide" type="OptionButton" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 56.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 76.0
 text = "No Side"
 items = [ "No Side", null, false, 0, null, "Left", null, false, 1, null, "Right", null, false, 2, null, "Both Sides", null, false, 3, null ]
@@ -148,7 +145,7 @@ text = "Assigned Signal:"
 [node name="AssignedSignal" type="LineEdit" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 80.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 104.0
 
 [node name="Label3" type="Label" parent="StationSettings"]
@@ -160,7 +157,7 @@ text = "Enable Person System:"
 [node name="EnablePersonSystem" type="CheckBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 108.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 132.0
 
 [node name="Label4" type="Label" parent="StationSettings"]
@@ -172,7 +169,7 @@ text = "Platform Height:"
 [node name="PlatformHeight" type="SpinBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 136.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 160.0
 step = 0.01
 __meta__ = {
@@ -188,7 +185,7 @@ text = "Platform Start (Left/Right)"
 [node name="PlatformStart" type="SpinBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 164.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 188.0
 step = 0.01
 __meta__ = {
@@ -204,7 +201,7 @@ text = "Platform End (Left/Right)"
 [node name="PlatformEnd" type="SpinBox" parent="StationSettings"]
 margin_left = 164.0
 margin_top = 192.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 216.0
 step = 0.01
 __meta__ = {
@@ -213,7 +210,7 @@ __meta__ = {
 
 [node name="SpeedLimitSettings" type="GridContainer" parent="."]
 margin_top = 312.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 336.0
 columns = 2
 
@@ -225,7 +222,7 @@ text = "Speed Limit: "
 
 [node name="SpeedLimit" type="SpinBox" parent="SpeedLimitSettings"]
 margin_left = 88.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1.0
@@ -237,7 +234,7 @@ __meta__ = {
 
 [node name="WarnSpeedLimitSettings" type="GridContainer" parent="."]
 margin_top = 340.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 364.0
 columns = 2
 
@@ -249,7 +246,7 @@ text = "Speed Limit: "
 
 [node name="SpeedLimit" type="SpinBox" parent="WarnSpeedLimitSettings"]
 margin_left = 88.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1.0

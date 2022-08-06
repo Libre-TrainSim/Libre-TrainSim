@@ -17,5 +17,5 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = null
+Label/fonts/font = ExtResource( 1 )
 Label/styles/normal = SubResource( 1 )

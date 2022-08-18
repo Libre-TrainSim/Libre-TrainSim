@@ -50,7 +50,7 @@ __meta__ = {
 
 [node name="GridContainer" type="GridContainer" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer"]
 margin_right = 962.0
-margin_bottom = 1047.0
+margin_bottom = 1163.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -105,92 +105,131 @@ margin_right = 734.0
 margin_bottom = 159.0
 size_flags_horizontal = 4
 
-[node name="Label2" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="LabelFpsLimitToggle" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_top = 167.0
 margin_right = 479.0
 margin_bottom = 212.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_FPS_LIMIT_TOGGLE"
+
+[node name="FpsLimitToggle" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+margin_left = 710.0
+margin_top = 163.0
+margin_right = 734.0
+margin_bottom = 216.0
+size_flags_horizontal = 4
+
+[node name="LabelFpsLimit" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+margin_top = 225.0
+margin_right = 479.0
+margin_bottom = 270.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "MENU_FPS_LIMIT"
+
+[node name="FpsLimit" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+margin_left = 483.0
+margin_top = 220.0
+margin_right = 962.0
+margin_bottom = 275.0
+min_value = 15.0
+max_value = 300.0
+value = 15.0
+allow_greater = true
+align = 1
+suffix = "FPS"
+
+[node name="Label2" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_top = 283.0
+margin_right = 479.0
+margin_bottom = 328.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_SHADOWS"
 
 [node name="Shadows" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 163.0
+margin_top = 279.0
 margin_right = 734.0
-margin_bottom = 216.0
+margin_bottom = 332.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label12" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 224.0
+margin_top = 340.0
 margin_right = 479.0
-margin_bottom = 269.0
+margin_bottom = 385.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_DYNAMIC_LIGHTS"
 
 [node name="DynamicLights" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 220.0
+margin_top = 336.0
 margin_right = 734.0
-margin_bottom = 273.0
+margin_bottom = 389.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label8" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 281.0
+margin_top = 397.0
 margin_right = 479.0
-margin_bottom = 326.0
+margin_bottom = 442.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_FOG"
 
 [node name="Fog" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 277.0
+margin_top = 393.0
 margin_right = 734.0
-margin_bottom = 330.0
+margin_bottom = 446.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label11" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 338.0
+margin_top = 454.0
 margin_right = 479.0
-margin_bottom = 383.0
+margin_bottom = 499.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_PERSONS"
 
 [node name="Persons" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 334.0
+margin_top = 450.0
 margin_right = 734.0
-margin_bottom = 387.0
+margin_bottom = 503.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label9" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 396.0
+margin_top = 512.0
 margin_right = 479.0
-margin_bottom = 441.0
+margin_bottom = 557.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_VIEW_DISTANCE"
 
 [node name="ViewDistance" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 391.0
+margin_top = 507.0
 margin_right = 962.0
-margin_bottom = 446.0
+margin_bottom = 562.0
 min_value = 250.0
 max_value = 1000.0
 value = 1000.0
 align = 1
 
 [node name="Label21" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 455.0
+margin_top = 571.0
 margin_right = 479.0
-margin_bottom = 500.0
+margin_bottom = 616.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_CHUNK_UNLOAD_DISTANCE"
@@ -200,9 +239,9 @@ __meta__ = {
 
 [node name="ChunkUnloadDistance" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 450.0
+margin_top = 566.0
 margin_right = 962.0
-margin_bottom = 505.0
+margin_bottom = 621.0
 min_value = 2.0
 max_value = 10.0
 value = 2.0
@@ -212,9 +251,9 @@ __meta__ = {
 }
 
 [node name="Label22" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 513.0
+margin_top = 629.0
 margin_right = 479.0
-margin_bottom = 558.0
+margin_bottom = 674.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_CHUNK_LOAD_ALL"
@@ -224,9 +263,9 @@ __meta__ = {
 
 [node name="ChunkLoadAll" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 509.0
+margin_top = 625.0
 margin_right = 734.0
-margin_bottom = 562.0
+margin_bottom = 678.0
 size_flags_horizontal = 4
 align = 1
 __meta__ = {
@@ -234,18 +273,18 @@ __meta__ = {
 }
 
 [node name="Label6" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 569.0
+margin_top = 685.0
 margin_right = 479.0
-margin_bottom = 614.0
+margin_bottom = 730.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_ANTI_ALIASING"
 
 [node name="AntiAliasing" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 566.0
+margin_top = 682.0
 margin_right = 962.0
-margin_bottom = 617.0
+margin_bottom = 733.0
 custom_fonts/font = ExtResource( 3 )
 text = "Disabled"
 align = 1
@@ -253,39 +292,39 @@ items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", nu
 selected = 0
 
 [node name="Label7" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 624.0
+margin_top = 740.0
 margin_right = 479.0
-margin_bottom = 669.0
+margin_bottom = 785.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_LANGUAGE"
 
 [node name="Language" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 621.0
+margin_top = 737.0
 margin_right = 962.0
-margin_bottom = 672.0
+margin_bottom = 788.0
 custom_fonts/font = ExtResource( 3 )
 align = 1
 
 [node name="HSeparator3" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 676.0
+margin_top = 792.0
 margin_right = 479.0
-margin_bottom = 680.0
+margin_bottom = 796.0
 size_flags_horizontal = 3
 
 [node name="HSeparator4" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 676.0
+margin_top = 792.0
 margin_right = 962.0
-margin_bottom = 680.0
+margin_bottom = 796.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="Label17" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 684.0
+margin_top = 800.0
 margin_right = 479.0
-margin_bottom = 729.0
+margin_bottom = 845.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
 custom_fonts/font = ExtResource( 3 )
@@ -294,26 +333,26 @@ valign = 1
 
 [node name="Label18" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 684.0
+margin_top = 800.0
 margin_right = 962.0
-margin_bottom = 729.0
+margin_bottom = 845.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
 valign = 1
 
 [node name="Label3" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 733.0
+margin_top = 849.0
 margin_right = 479.0
-margin_bottom = 778.0
+margin_bottom = 894.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_MAIN_VOLUME"
 
 [node name="MainVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 733.0
+margin_top = 849.0
 margin_right = 962.0
-margin_bottom = 778.0
+margin_bottom = 894.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 1
 max_value = 1.0
@@ -324,18 +363,18 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 782.0
+margin_top = 898.0
 margin_right = 479.0
-margin_bottom = 827.0
+margin_bottom = 943.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_GAME_VOLUME"
 
 [node name="GameVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 782.0
+margin_top = 898.0
 margin_right = 962.0
-margin_bottom = 827.0
+margin_bottom = 943.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 1
 max_value = 1.0
@@ -346,18 +385,18 @@ __meta__ = {
 }
 
 [node name="Label5" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 831.0
+margin_top = 947.0
 margin_right = 479.0
-margin_bottom = 876.0
+margin_bottom = 992.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_MUSIC_VOLUME"
 
 [node name="MusicVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 831.0
+margin_top = 947.0
 margin_right = 962.0
-margin_bottom = 876.0
+margin_bottom = 992.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 1
 max_value = 1.0
@@ -368,23 +407,23 @@ __meta__ = {
 }
 
 [node name="HSeparator" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 880.0
+margin_top = 996.0
 margin_right = 479.0
-margin_bottom = 884.0
+margin_bottom = 1000.0
 size_flags_horizontal = 3
 
 [node name="HSeparator2" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 880.0
+margin_top = 996.0
 margin_right = 962.0
-margin_bottom = 884.0
+margin_bottom = 1000.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="Label15" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 888.0
+margin_top = 1004.0
 margin_right = 479.0
-margin_bottom = 933.0
+margin_bottom = 1049.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
 custom_fonts/font = ExtResource( 3 )
@@ -393,40 +432,40 @@ valign = 1
 
 [node name="Label16" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 483.0
-margin_top = 888.0
+margin_top = 1004.0
 margin_right = 962.0
-margin_bottom = 933.0
+margin_bottom = 1049.0
 size_flags_horizontal = 3
 
 [node name="Label13" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 941.0
+margin_top = 1057.0
 margin_right = 479.0
-margin_bottom = 986.0
+margin_bottom = 1102.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_PZB"
 
 [node name="PZB" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 937.0
+margin_top = 1053.0
 margin_right = 734.0
-margin_bottom = 990.0
+margin_bottom = 1106.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label14" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 998.0
+margin_top = 1114.0
 margin_right = 479.0
-margin_bottom = 1043.0
+margin_bottom = 1159.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_SIFA"
 
 [node name="SIFA" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 710.0
-margin_top = 994.0
+margin_top = 1110.0
 margin_right = 734.0
-margin_bottom = 1047.0
+margin_bottom = 1163.0
 size_flags_horizontal = 4
 align = 1
 
@@ -445,6 +484,8 @@ __meta__ = {
 
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync" to="." method="_on_Vsync_pressed"]
+[connection signal="toggled" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/FpsLimitToggle" to="." method="_on_FpsLimitToggle_toggled"]
+[connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/FpsLimit" to="." method="set_fps_limit"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows" to="." method="_on_Shadows_pressed"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights" to="." method="_on_DynamicLights_pressed"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog" to="." method="_on_Fog_pressed"]

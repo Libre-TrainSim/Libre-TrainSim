@@ -744,13 +744,11 @@ transform = Transform( -1.04651e-07, 0.513183, -0.85828, 8.59631e-08, 0.85828, 0
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="ScreenObj" type="MeshInstance" parent="Cabin/ScreenMiddle"]
 transform = Transform( -4.37114e-08, 3.55271e-15, 1, -1.81126e-15, 1, -3.55271e-15, -1, 2.68878e-15, -4.37114e-08, 0, -4.76837e-07, -0.00600052 )
 mesh = SubResource( 24 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="DisplayMiddle" type="Viewport" parent="Cabin"]
 size = Vector2( 1300, 900 )
@@ -765,13 +763,11 @@ transform = Transform( 0.155608, 0.549783, -0.820685, 0.00892879, 0.829989, 0.55
 material_override = SubResource( 3 )
 cast_shadow = 0
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="ScreenObj" type="MeshInstance" parent="Cabin/ScreenLeft"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -0.006 )
 mesh = SubResource( 24 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="DisplayLeft" type="Viewport" parent="Cabin"]
 size = Vector2( 1200, 800 )
@@ -786,13 +782,11 @@ transform = Transform( -0.160148, 0.52316, -0.837052, -0.0142111, 0.846687, 0.53
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 6 )
-material/0 = null
 
 [node name="ScreenObj" type="MeshInstance" parent="Cabin/ScreenRight"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -0.006 )
 mesh = SubResource( 24 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="DisplayRight" type="Viewport" parent="Cabin"]
 size = Vector2( 1000, 750 )
@@ -819,7 +813,6 @@ material/10 = ExtResource( 36 )
 material/11 = ExtResource( 35 )
 material/12 = ExtResource( 34 )
 material/13 = ExtResource( 32 )
-material/14 = null
 
 [node name="BrakeRoll" type="MeshInstance" parent="Cabin"]
 transform = Transform( 0.64805, -0.469075, 0, 0.469075, 0.64805, 0, 0, 0, 0.8, 8.4507, 2.10677, 0.2 )
@@ -843,7 +836,6 @@ transform = Transform( -6.07538e-09, 0.138989, -0.119981, -7.34234e-10, 0.016797
 material_override = SubResource( 7 )
 cast_shadow = 0
 mesh = SubResource( 23 )
-material/0 = null
 
 [node name="DisplayReverser" type="Viewport" parent="Cabin"]
 size = Vector2( 1200, 800 )

@@ -20,9 +20,6 @@ anchor_bottom = 1.0
 theme = ExtResource( 13 )
 custom_styles/panel = ExtResource( 3 )
 script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TrackList" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -33,7 +30,7 @@ margin_right = -10.0
 margin_bottom = -10.0
 
 [node name="Label" type="Label" parent="TrackList"]
-margin_right = 780.0
+margin_right = 1004.0
 margin_bottom = 45.0
 text = "MENU_TRACKS:"
 align = 1
@@ -43,26 +40,26 @@ __meta__ = {
 
 [node name="ItemList" type="ItemList" parent="TrackList"]
 margin_top = 49.0
-margin_right = 780.0
+margin_right = 1004.0
 margin_bottom = 527.0
 size_flags_vertical = 3
 select_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TrackList"]
 margin_top = 531.0
-margin_right = 780.0
+margin_right = 1004.0
 margin_bottom = 580.0
 
 [node name="Back" type="Button" parent="TrackList/HBoxContainer"]
-margin_right = 388.0
+margin_right = 500.0
 margin_bottom = 49.0
 size_flags_horizontal = 3
 theme = ExtResource( 2 )
 text = "BACK"
 
 [node name="Select" type="Button" parent="TrackList/HBoxContainer"]
-margin_left = 392.0
-margin_right = 780.0
+margin_left = 504.0
+margin_right = 1004.0
 margin_bottom = 49.0
 size_flags_horizontal = 3
 theme = ExtResource( 6 )
@@ -173,10 +170,6 @@ margin_right = 780.0
 margin_bottom = 49.0
 
 [node name="ConfirmationDialog" parent="ScenarioList/scenarioList" index="2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 margin_left = -295.0
 margin_top = -159.0
 margin_right = 296.0

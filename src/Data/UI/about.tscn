@@ -17,22 +17,19 @@ margin_right = -16.0
 margin_bottom = -16.0
 custom_styles/panel = ExtResource( 4 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 authors = ExtResource( 3 )
 
 [node name="Control" type="VBoxContainer" parent="."]
 margin_left = 6.0
 margin_top = 10.0
-margin_right = 762.0
+margin_right = 986.0
 margin_bottom = 564.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LabelAbout" type="Label" parent="Control"]
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 90.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 8 )
@@ -45,7 +42,7 @@ __meta__ = {
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control"]
 margin_top = 94.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 501.0
 size_flags_vertical = 3
 theme = ExtResource( 5 )
@@ -54,21 +51,21 @@ __meta__ = {
 }
 
 [node name="VBoxAbout" type="VBoxContainer" parent="Control/ScrollContainer"]
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 186.0
 size_flags_horizontal = 3
 custom_constants/separation = 15
 alignment = 1
 
 [node name="Developers" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout"]
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 custom_constants/separation = 7
 alignment = 1
 
 [node name="DevelopersLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Developers"]
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 45.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 7 )
@@ -81,21 +78,21 @@ __meta__ = {
 
 [node name="Developers" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Developers"]
 margin_top = 52.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 52.0
 custom_constants/separation = 4
 alignment = 1
 
 [node name="Contributors" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout"]
 margin_top = 67.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 119.0
 size_flags_horizontal = 3
 custom_constants/separation = 7
 alignment = 1
 
 [node name="ContributorsLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Contributors"]
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 45.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 7 )
@@ -108,21 +105,21 @@ __meta__ = {
 
 [node name="Contributors" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Contributors"]
 margin_top = 52.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 52.0
 custom_constants/separation = 4
 alignment = 1
 
 [node name="Translators" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout"]
 margin_top = 134.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 186.0
 size_flags_horizontal = 3
 custom_constants/separation = 7
 alignment = 1
 
 [node name="TranslatorsLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Translators"]
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 45.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 7 )
@@ -135,14 +132,14 @@ __meta__ = {
 
 [node name="Translators" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Translators"]
 margin_top = 52.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 52.0
 custom_constants/separation = 4
 alignment = 1
 
 [node name="Back" type="Button" parent="Control"]
 margin_top = 505.0
-margin_right = 756.0
+margin_right = 980.0
 margin_bottom = 554.0
 rect_min_size = Vector2( 200, 0 )
 theme = ExtResource( 2 )

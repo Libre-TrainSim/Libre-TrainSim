@@ -115,26 +115,22 @@ transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0503279, 0.126566, -0
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight/Orange"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Green" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight"]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0503279, 0.126597, 0.097876 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance3" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight/Green"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="upperLight" type="BoneAttachment" parent="formsignal_vo/Armature/Skeleton" index="2"]
 transform = Transform( 1, 0, 2.05834e-06, 2.05834e-06, 0, -1, 0, 1, 0, -4.99553e-16, 2.26869, 0.356953 )
@@ -145,26 +141,22 @@ transform = Transform( 1.5, -4.33681e-19, -3.12978e-20, 0, 1.5, -7.10543e-15, -1
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight/Orange"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Green" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight"]
 transform = Transform( 1.5, -2.1684e-19, -3.12978e-20, 0, 1.5, -7.10543e-15, -1.65171e-20, 7.10543e-15, 1.5, -0.0503272, 0.121912, 0.0897388 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance3" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight/Green"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 16 )

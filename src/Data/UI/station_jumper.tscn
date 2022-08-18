@@ -15,14 +15,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 7 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="StationJumper" type="VBoxContainer" parent="."]
 margin_left = 6.0
 margin_top = 10.0
-margin_right = 794.0
+margin_right = 1018.0
 margin_bottom = 596.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -31,7 +28,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="StationJumper"]
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 30.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
@@ -40,7 +37,7 @@ align = 1
 
 [node name="ItemList" type="ItemList" parent="StationJumper"]
 margin_top = 34.0
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 444.0
 size_flags_vertical = 3
 theme = ExtResource( 4 )
@@ -52,7 +49,7 @@ __meta__ = {
 
 [node name="Label2" type="RichTextLabel" parent="StationJumper"]
 margin_top = 448.0
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 548.0
 rect_min_size = Vector2( 0, 100 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
@@ -61,11 +58,11 @@ script = ExtResource( 9 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="StationJumper"]
 margin_top = 552.0
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 586.0
 
 [node name="Cancel" type="Button" parent="StationJumper/HBoxContainer"]
-margin_right = 392.0
+margin_right = 504.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
 theme = ExtResource( 5 )
@@ -73,8 +70,8 @@ custom_fonts/font = ExtResource( 2 )
 text = "CANCEL"
 
 [node name="Jump" type="Button" parent="StationJumper/HBoxContainer"]
-margin_left = 396.0
-margin_right = 788.0
+margin_left = 508.0
+margin_right = 1012.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
 theme = ExtResource( 6 )

@@ -13,17 +13,17 @@ __meta__ = {
 }
 
 [node name="CurrentRail" type="HBoxContainer" parent="."]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 
 [node name="Name" type="LineEdit" parent="CurrentRail"]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Tab" type="TabContainer" parent="."]
 margin_top = 28.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 260.0
 tab_align = 0
 
@@ -39,7 +39,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tab/TrackObjects"]
-margin_right = 792.0
+margin_right = 1016.0
 margin_bottom = 14.0
 text = "Track Objects:"
 align = 1
@@ -48,7 +48,7 @@ align = 1
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
-margin_right = 792.0
+margin_right = 1016.0
 margin_bottom = 168.0
 rect_min_size = Vector2( 0, 150 )
 enable_rename_button = true
@@ -60,7 +60,7 @@ remove_button_text = "Delete"
 
 [node name="MirrorPastedObjects" type="CheckBox" parent="Tab/TrackObjects"]
 margin_top = 172.0
-margin_right = 792.0
+margin_right = 1016.0
 margin_bottom = 196.0
 text = "Mirror track objects (while pasting)"
 __meta__ = {
@@ -497,8 +497,6 @@ resizable = true
 mode = 0
 filters = PoolStringArray( "*.obj" )
 show_hidden_files = true
-current_dir = "res://Resources"
-current_path = "res://Resources/"
 
 [node name="FileDialogMaterials" type="FileDialog" parent="."]
 margin_top = 28.0
@@ -511,8 +509,6 @@ resizable = true
 mode = 0
 filters = PoolStringArray( "*.tres" )
 show_hidden_files = true
-current_dir = "res://Resources"
-current_path = "res://Resources/"
 
 [connection signal="user_added_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_added_entry"]
 [connection signal="user_copied_entries" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_copied_entries"]

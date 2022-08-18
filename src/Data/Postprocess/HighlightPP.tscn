@@ -21,7 +21,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="HighlightShader"]
-size = Vector2( 800, 600 )
+size = Vector2( 1024, 600 )
 transparent_bg = true
 handle_input_locally = false
 keep_3d_linear = true

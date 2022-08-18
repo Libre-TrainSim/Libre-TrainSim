@@ -1,7 +1,5 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Editor/Modules/time_field.gd" type="Script" id=1]
-[ext_resource path="res://addons/jean28518.jTools/jList/jList.gd" type="Script" id=2]
 [ext_resource path="res://Editor/Scripts/ScenarioConfiguration.gd" type="Script" id=3]
 [ext_resource path="res://Editor/Modules/TimeField.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=5]
@@ -32,14 +30,12 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Routes" type="Control" parent="TabContainer/Routes" instance=ExtResource( 5 )]
+[node name="Routes" parent="TabContainer/Routes" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 391.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 enable_rename_button = true
 enable_duplicate_button = true
 
@@ -84,16 +80,14 @@ margin_right = 210.0
 margin_bottom = 45.0
 text = "Interval Start"
 
-[node name="IntervalStart" type="Control" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" groups=["TimeField"] instance=ExtResource( 4 )]
+[node name="IntervalStart" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 214.0
 margin_top = 28.0
 margin_right = 383.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 0, 20 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label2" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
 margin_top = 57.0
@@ -119,16 +113,14 @@ margin_right = 210.0
 margin_bottom = 97.0
 text = "Interval End"
 
-[node name="IntervalEnd" type="Control" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" groups=["TimeField"] instance=ExtResource( 4 )]
+[node name="IntervalEnd" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 214.0
 margin_top = 80.0
 margin_right = 383.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 20 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label3" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
 margin_top = 109.0
@@ -913,15 +905,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeField" type="Control" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer" groups=["TimeField"] instance=ExtResource( 4 )]
+[node name="TimeField" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer" instance=ExtResource( 4 )]
 margin_left = 332.0
 margin_top = 24.0
 margin_right = 387.0
 margin_bottom = 48.0
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Signals/ManualSettings"]
 margin_top = 52.0

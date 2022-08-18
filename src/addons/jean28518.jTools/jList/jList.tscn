@@ -18,7 +18,7 @@ __meta__ = {
 }
 
 [node name="ItemList" type="ItemList" parent="VBoxContainer"]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 572.0
 rect_clip_content = false
 size_flags_horizontal = 3
@@ -27,26 +27,26 @@ select_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 576.0
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 600.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-margin_right = 691.0
+margin_right = 915.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Add" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 695.0
-margin_right = 732.0
+margin_left = 919.0
+margin_right = 956.0
 margin_bottom = 24.0
 text = "Add"
 
 [node name="Remove" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 736.0
-margin_right = 800.0
+margin_left = 960.0
+margin_right = 1024.0
 margin_bottom = 24.0
 text = "Remove"
 

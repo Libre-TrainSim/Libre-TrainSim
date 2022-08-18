@@ -133,13 +133,11 @@ transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.115328, 0.0942736 )
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="formsignal_hp/Armature/Skeleton/lowerLightAttachment/Orange"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="upperLightAttachment" type="BoneAttachment" parent="formsignal_hp/Armature/Skeleton" index="2"]
 transform = Transform( 1, 1.13687e-13, -1.10467e-06, -9.56672e-07, -0.5, -0.866025, -5.52335e-07, 0.866025, -0.5, -1.34172e-15, 6.03821, 0.452607 )
@@ -150,39 +148,33 @@ transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.11784, -0.088346 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance" type="MeshInstance" parent="formsignal_hp/Armature/Skeleton/upperLightAttachment/Red"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.00316238, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Red2" type="MeshInstance" parent="formsignal_hp/Armature/Skeleton/upperLightAttachment"]
 transform = Transform( -1.5, 1.31134e-07, 0, -1.31134e-07, -1.5, 0, 0, 0, 1.5, 0.118293, 0.117543, -0.0879941 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance" type="MeshInstance" parent="formsignal_hp/Armature/Skeleton/upperLightAttachment/Red2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.00316238, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Green" type="MeshInstance" parent="formsignal_hp/Armature/Skeleton/upperLightAttachment"]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.119603, 0.108365 )
 material_override = SubResource( 7 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance3" type="MeshInstance" parent="formsignal_hp/Armature/Skeleton/upperLightAttachment/Green"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 8 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 18 )

@@ -9,7 +9,7 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 
 [node name="Material-1" type="HBoxContainer" parent="."]
-margin_right = 800.0
+margin_right = 1024.0
 margin_bottom = 24.0
 
 [node name="Label" type="Label" parent="Material-1"]
@@ -20,13 +20,13 @@ text = "Material "
 
 [node name="LineEdit" type="LineEdit" parent="Material-1"]
 margin_left = 60.0
-margin_right = 758.0
+margin_right = 982.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Button" type="Button" parent="Material-1"]
-margin_left = 762.0
-margin_right = 800.0
+margin_left = 986.0
+margin_right = 1024.0
 margin_bottom = 24.0
 text = "Pick"
 script = ExtResource( 2 )

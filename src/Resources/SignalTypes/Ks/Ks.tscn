@@ -122,7 +122,6 @@ script = ExtResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.67658 )
 material_override = ExtResource( 10 )
 mesh = ExtResource( 2 )
-material/0 = null
 
 [node name="HpTafel" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 1.74491 )
@@ -147,13 +146,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0203973, 4.27763, 1.71823 )
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance" type="MeshInstance" parent="Red"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Orange" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00402704, 4.10741, 1.82482 )
@@ -161,13 +158,11 @@ visible = false
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="Orange"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Green" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00639483, 4.10783, 1.60503 )
@@ -175,13 +170,11 @@ visible = false
 material_override = SubResource( 7 )
 cast_shadow = 0
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MeshInstance3" type="MeshInstance" parent="Green"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 8 )
 mesh = SubResource( 4 )
-material/0 = null
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 500, 600 )
@@ -233,14 +226,12 @@ transform = Transform( -1.62921e-07, 3.25841e-07, 1, 0, -0.641995, 2.09188e-07, 
 visible = false
 material_override = SubResource( 12 )
 mesh = SubResource( 13 )
-material/0 = null
 
 [node name="Screen2" type="MeshInstance" parent="."]
 transform = Transform( -1.62921e-07, 3.25841e-07, 1, 0, -0.641995, 2.09188e-07, 0.641995, 3.40811e-14, 1.04594e-07, -0.0808081, 4.76666, 1.71943 )
 visible = false
 material_override = SubResource( 15 )
 mesh = SubResource( 13 )
-material/0 = null
 
 [node name="SelectCollider" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.622193, -1.33251, 1.46355 )

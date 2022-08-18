@@ -61,8 +61,8 @@ emission_operator = 0
 emission_on_uv2 = false
 
 [sub_resource type="CylinderShape" id=10]
-radius = 7.0
 height = 1.0
+radius = 7.0
 
 [node name="Gizmo" type="Spatial" groups=["Gizmo"]]
 script = ExtResource( 1 )

@@ -9,9 +9,6 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Heading" type="Sprite" parent="."]
 position = Vector2( 265.112, 96.2125 )
@@ -263,14 +260,14 @@ __meta__ = {
 }
 
 [node name="Page1" type="Button" parent="Pages"]
-margin_left = 14.0
-margin_right = 68.0
+margin_left = 126.0
+margin_right = 180.0
 margin_bottom = 20.0
 text = "Page 1"
 
 [node name="Page2" type="Button" parent="Pages"]
-margin_left = 78.0
-margin_right = 132.0
+margin_left = 190.0
+margin_right = 244.0
 margin_bottom = 20.0
 text = "Page 2"
 

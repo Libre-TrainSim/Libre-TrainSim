@@ -17,9 +17,6 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
@@ -32,7 +29,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 margin_left = 6.0
 margin_top = 10.0
-margin_right = 794.0
+margin_right = 1018.0
 margin_bottom = 596.0
 size_flags_horizontal = 3
 __meta__ = {
@@ -40,7 +37,7 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 49.0
 size_flags_horizontal = 3
 
@@ -54,7 +51,7 @@ text = "ABSOLUTE_EDITOR_PATH: "
 
 [node name="EditorPath" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 margin_left = 287.0
-margin_right = 661.0
+margin_right = 885.0
 margin_bottom = 49.0
 size_flags_horizontal = 3
 theme = ExtResource( 11 )
@@ -68,8 +65,8 @@ caret_blink = true
 caret_blink_speed = 0.5
 
 [node name="UpdateEditorPathButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 665.0
-margin_right = 788.0
+margin_left = 889.0
+margin_right = 1012.0
 margin_bottom = 49.0
 theme = ExtResource( 8 )
 custom_fonts/font = ExtResource( 3 )
@@ -77,7 +74,7 @@ text = "UPDATE"
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
 margin_top = 53.0
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 58.0
 rect_min_size = Vector2( 0, 5 )
 __meta__ = {
@@ -88,7 +85,7 @@ __meta__ = {
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 62.0
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 586.0
 size_flags_vertical = 3
 multi_selection_allowed = false
@@ -103,7 +100,7 @@ duplicate_button_text = "DUPLICATE"
 action_button_text = "OPEN"
 
 [node name="ItemList" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer" index="0"]
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 471.0
 theme = ExtResource( 7 )
 custom_fonts/font = ExtResource( 3 )
@@ -112,7 +109,7 @@ script = ExtResource( 6 )
 
 [node name="HBoxContainer" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer" index="1"]
 margin_top = 475.0
-margin_right = 788.0
+margin_right = 1012.0
 margin_bottom = 524.0
 
 [node name="Back" type="Button" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="0"]
@@ -124,14 +121,14 @@ align = 0
 
 [node name="LineEdit" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="1"]
 margin_left = 103.0
-margin_right = 539.0
+margin_right = 763.0
 margin_bottom = 49.0
 theme = ExtResource( 11 )
 custom_fonts/font = ExtResource( 3 )
 
 [node name="Add" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="2"]
-margin_left = 543.0
-margin_right = 593.0
+margin_left = 767.0
+margin_right = 817.0
 margin_bottom = 49.0
 theme = ExtResource( 9 )
 custom_fonts/font = ExtResource( 3 )
@@ -145,8 +142,8 @@ text = "REMOVE"
 
 [node name="Rename" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="4"]
 visible = true
-margin_left = 597.0
-margin_right = 688.0
+margin_left = 821.0
+margin_right = 912.0
 margin_bottom = 49.0
 theme = ExtResource( 9 )
 custom_fonts/font = ExtResource( 3 )
@@ -170,8 +167,8 @@ custom_fonts/font = ExtResource( 3 )
 
 [node name="Action" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="9"]
 visible = true
-margin_left = 692.0
-margin_right = 788.0
+margin_left = 916.0
+margin_right = 1012.0
 margin_bottom = 49.0
 theme = ExtResource( 8 )
 custom_fonts/font = ExtResource( 3 )
@@ -184,10 +181,6 @@ custom_fonts/font = ExtResource( 3 )
 custom_fonts/font = ExtResource( 3 )
 
 [node name="ConfirmationDialog" parent="PanelContainer/VBoxContainer/TracksList" index="2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 margin_left = -255.0
 margin_top = -128.0
 margin_right = 255.0

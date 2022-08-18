@@ -17,7 +17,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.2, 0, 0, 0 )
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = ExtResource( 1 )
-material/0 = null
 
 [node name="SelectCollider" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929181, -0.5, -1.07157 )

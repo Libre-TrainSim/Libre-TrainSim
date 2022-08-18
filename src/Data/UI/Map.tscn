@@ -29,7 +29,7 @@ __meta__ = {
 }
 
 [node name="RailMap" parent="ViewportContainer" instance=ExtResource( 1 )]
-size = Vector2( 800, 600 )
+size = Vector2( 1024, 600 )
 handle_input_locally = false
 render_target_update_mode = 0
 

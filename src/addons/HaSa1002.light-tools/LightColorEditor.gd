@@ -26,24 +26,24 @@ func _init():
 	add_focusable(color)
 	add_focusable(color_filter)
 	add_focusable(temperature)
-	
+
 	temperature.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	temperature.min_value = 1000
 	temperature.max_value = 40_000
 	temperature.connect("value_changed", self, "_on_temperature_changed")
 	temperature_hbox.add_child(temperature)
-	
+
 	color_filter.connect("color_changed", self, "_on_color_filter_changed")
 	color_filter_hbox.add_child(color_filter)
-	
+
 	color.connect("color_changed", self, "_on_color_changed")
 	color_hbox.add_child(color)
-	
+
 	vbox.size_flags_horizontal = VBoxContainer.SIZE_EXPAND_FILL
 	vbox.add_child(temperature_hbox)
 	vbox.add_child(color_filter_hbox)
 	vbox.add_child(color_hbox)
-	
+
 	add_child(vbox)
 	set_bottom_editor(vbox)
 
@@ -56,16 +56,16 @@ func update_property():
 		obj.set_meta("use_color_temperature", true)
 	enable_cb.pressed = obj.get_meta("use_color_temperature")
 	_on_enable_cb_toggled(enable_cb.pressed)
-	
+
 	if !obj.has_meta("color_temperature"):
 		obj.set_meta("color_temperature", 6500)
 	temperature.value = obj.get_meta("color_temperature")
-	
+
 	if !obj.has_meta("color_filter"):
 		obj.set_meta("color_filter", Color(1, 1, 1, 0))
 	color_filter.color = obj.get_meta("color_filter")
 	color.color = obj.get(get_edited_property())
-	
+
 	updating = false
 
 
@@ -149,7 +149,7 @@ static func calculate_color(temperature: int) -> Color:
 			light_color.g = 1.0
 		else:
 			light_color.g = green / 255
-		
+
 	else:
 		var red = t - 60
 		red = 329.698727446 * pow(red, -0.1332047592)
@@ -166,7 +166,7 @@ static func calculate_color(temperature: int) -> Color:
 			light_color.g = 1.0
 		else:
 			light_color.g = green / 255
-	
+
 	if t >= 66:
 		light_color.b = 1.0
 		return light_color

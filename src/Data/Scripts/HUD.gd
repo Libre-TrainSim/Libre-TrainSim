@@ -104,7 +104,7 @@ func update_nextTable() -> void:
 			$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 		else:
 			$IngameInformation/Next/GridContainer/Arrival.text = Math.seconds_to_string(player.current_station_table_entry.arrival_time)
-			$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance2String(player.distanceToNextStation)
+			$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance_to_string(player.distanceToNextStation)
 
 
 func _on_TextBox_closed() -> void:

@@ -204,7 +204,14 @@ func get_local_transform_at_distance(distance: float) -> Transform:
 		if parallel_rail == null:
 			update_parallel_rail_settings()
 		var parDistance: float = distance/length * parallel_rail.length
-		return Transform(Basis().rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance)).rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance)).rotated(Vector3(0,1,0), parallel_rail.circle_get_rad(parallel_rail.radius, parDistance)), parallel_rail.get_shifted_local_pos_at_distance(parDistance, distance_to_parallel_rail)+ ((parallel_rail.start_pos-start_pos).rotated(Vector3(0,1,0), -rotation.y)))
+		return Transform(\
+			Basis()\
+				.rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance))\
+				.rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance))\
+				.rotated(Vector3(0,1,0), parallel_rail.circle_get_rad(parallel_rail.radius, parDistance)),\
+			parallel_rail.get_shifted_local_pos_at_distance(parDistance, distance_to_parallel_rail)\
+			+ ((parallel_rail.start_pos-start_pos).rotated(Vector3(0,1,0), -rotation.y))\
+		)
 
 
 func register_signal(name: String, distance: float) -> void:
@@ -214,7 +221,7 @@ func register_signal(name: String, distance: float) -> void:
 
 func get_pos_at_distance(distance: float) -> Vector3:
 	var circlePos: Vector2 = circle_get_pos(radius, distance)
-	return(Vector3(circlePos.x, get_height(distance), -circlePos.y)).rotated(Vector3(0,1,0), start_rot)+start_pos
+	return(Vector3(circlePos.x, get_height(distance), -circlePos.y)).rotated(Vector3(0,1,0), start_rot) + start_pos
 
 
 func get_local_pos_at_distance(distance: float) -> Vector3:

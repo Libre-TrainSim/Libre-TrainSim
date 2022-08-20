@@ -78,4 +78,4 @@ func set_to_rail() -> void:
 	self.translation = attached_rail_node.get_pos_at_distance(on_rail_position)
 	self.rotation.y = attached_rail_node.get_rad_at_distance(on_rail_position)
 	if not forward:
-		self.rotation_degrees.y += 180
+		self.rotation.y += PI

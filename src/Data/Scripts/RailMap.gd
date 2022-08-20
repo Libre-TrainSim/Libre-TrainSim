@@ -83,7 +83,7 @@ func open_overlay_map() -> void:
 	var zoomx: float
 	var zoomy: float
 	if active_route_rect.size.x > active_route_rect.size.y:
-		camera.rotation = 90
+		camera.rotation = 0.5 * PI
 		zoomx = active_route_rect.size.x / self.size.y
 		zoomy = active_route_rect.size.y / self.size.x
 	else:
@@ -144,7 +144,7 @@ func _process(delta: float) -> void:
 
 	if follow_player == true:
 		camera.position = $PlayerPolygon.position
-		camera.rotation_degrees = $PlayerPolygon.rotation_degrees + 90
+		camera.rotation = $PlayerPolygon.rotation + (0.5 * PI)
 	else:
 		var movement: Vector2 = mouse_motion * $Camera2D.zoom.x * 0.5
 		camera.position += movement.rotated(camera.rotation)
@@ -177,7 +177,7 @@ func create_station(signal_instance: Spatial) -> void:
 		return
 
 	var node: Node2D = Node2D.new()
-	node.rotation_degrees = -30
+	node.rotation = deg2rad(-30)
 	#node.scale = Vector2(0.1, 0.1)
 	node.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
 	node.name = signal_instance.name

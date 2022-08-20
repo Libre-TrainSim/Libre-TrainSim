@@ -46,30 +46,30 @@ func _process(_delta: float) -> void:
 func update_reverser(command: int, node: Node) -> void:
 	match command:
 		ReverserState.FORWARD:
-			node.rotation_degrees.y = -120
+			node.rotation.y = deg2rad(-120)
 		ReverserState.NEUTRAL:
-			node.rotation_degrees.y = -90
+			node.rotation.y = -0.5 * PI
 		ReverserState.REVERSE:
-			node.rotation_degrees.y = -60
+			node.rotation.y = deg2rad(-60)
 
 
 func update_Combi_Roll(command: float, node: Node) -> void:
-	node.rotation_degrees.z = 45*command+1
+	node.rotation.z = (0.25 * PI) * command + deg2rad(1)
 
 
 func update_Brake_Roll(command: float, node: Node) -> void:
 	var rotation: float
 	if command > 0:
-		rotation = 45
+		rotation = 0.25 * PI
 	else:
-		rotation = 45 + command*90
-	node.rotation_degrees.z = rotation
+		rotation = (0.25 * PI) + (command * 0.5 * PI)
+	node.rotation.z = rotation
 
 
 func update_Acc_Roll(command: float, node: Node) -> void:
 	var rotation: float
 	if command < 0:
-		rotation = 45
+		rotation = 0.25 * PI
 	else:
-		rotation = 45 - command*90
-	node.rotation_degrees.z = rotation
+		rotation = (0.25 * PI) - (command * 0.5 * PI)
+	node.rotation.z = rotation

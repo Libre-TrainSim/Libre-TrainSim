@@ -18,18 +18,22 @@ var syncronizingScreen: bool = false
 
 
 func _ready():
+	SpeedPointerRotationAt100 = deg2rad(SpeedPointerRotationAt100)
+	SollSpeedPointerRotationAt100 = deg2rad(SollSpeedPointerRotationAt100)
+	CommandPointerRotationAt100 = deg2rad(CommandPointerRotationAt100)
+
 	if not  world.globalDict.has("Screen1.BlinkingStatus"):
 		syncronizingScreen = true
 		world.globalDict["Screen1.BlinkingStatus"] = false
 
-	SpeedPointerZero = $SpeedPointer.rotation_degrees
-	SpeedPerKmH = (SpeedPointerRotationAt100-SpeedPointerZero)/100.0
+	SpeedPointerZero = $SpeedPointer.rotation
+	SpeedPerKmH = (SpeedPointerRotationAt100 - SpeedPointerZero)/100.0
 
-	SollSpeedPointerZero = $SpeedLimitPointer.rotation_degrees
+	SollSpeedPointerZero = $SpeedLimitPointer.rotation
 	SollSpeedPerKmH = (SollSpeedPointerRotationAt100 - SollSpeedPointerZero)/100.0
 
-	CommandPointerZero = $CommandPointer.rotation_degrees
-	CommandPerPercent = (CommandPointerRotationAt100-CommandPointerZero)/100.0
+	CommandPointerZero = $CommandPointer.rotation
+	CommandPerPercent = (CommandPointerRotationAt100 - CommandPointerZero)/100.0
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
 
 	var player = find_parent("Player")
@@ -42,8 +46,8 @@ var SollSpeedLimitPointer: float = 0
 var blinkingTimer: float = 0
 var blinkStatus: bool = false
 func _process(delta: float) -> void:
-	$CommandPointer.rotation_degrees = (SollCommandPointer - $CommandPointer.rotation_degrees)*delta*4.0 + $CommandPointer.rotation_degrees
-	$SpeedLimitPointer.rotation_degrees = (SollSpeedLimitPointer - $SpeedLimitPointer.rotation_degrees)*delta*4.0 + $SpeedLimitPointer.rotation_degrees
+	$CommandPointer.rotation = (SollCommandPointer - $CommandPointer.rotation)*delta*4.0 + $CommandPointer.rotation
+	$SpeedLimitPointer.rotation = (SollSpeedLimitPointer - $SpeedLimitPointer.rotation)*delta*4.0 + $SpeedLimitPointer.rotation
 	if syncronizingScreen:
 		blinkingTimer += delta
 		if blinkingTimer > blinkingTime:
@@ -58,9 +62,9 @@ func update_display(speed: float, command: float, doorLeft: bool, doorRight: boo
 					doorsClosing: float, enforced_braking: bool, autopilot: bool,
 					speedLimit: float, engine: bool, reverser: int):
 	## Tachos:
-	$SpeedPointer.rotation_degrees = SpeedPointerZero+SpeedPerKmH*speed
-	SollCommandPointer = CommandPointerZero+CommandPerPercent*command*100
-	SollSpeedLimitPointer = SollSpeedPointerZero+SollSpeedPerKmH*speedLimit
+	$SpeedPointer.rotation = SpeedPointerZero + (SpeedPerKmH * speed)
+	SollCommandPointer = CommandPointerZero + (CommandPerPercent * command * 100)
+	SollSpeedLimitPointer = SollSpeedPointerZero + (SollSpeedPerKmH * speedLimit)
 
 	$Speed.text = String(int(speed))
 	$Time.text = Math.seconds_to_string(world.time)

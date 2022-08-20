@@ -15,7 +15,7 @@ func handle_object_transform_field():
 		$ObjectTransform/HBoxContainer/x.value = selected_object.translation.x
 		$ObjectTransform/HBoxContainer/y.value = selected_object.translation.y
 		$ObjectTransform/HBoxContainer/z.value = selected_object.translation.z
-		$ObjectTransform/HBoxContainer/y_rot.value = selected_object.rotation_degrees.y
+		$ObjectTransform/HBoxContainer/y_rot.value = rad2deg(selected_object.rotation.y)
 
 
 func _unhandled_input(_event: InputEvent) -> void:
@@ -98,7 +98,7 @@ func _on_z_value_changed(value):
 
 func _on_y_rot_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.rotation_degrees.y = value
+	selected_object.rotation.y = deg2rad(value)
 
 
 func _onObjectName_text_entered(_new_text):

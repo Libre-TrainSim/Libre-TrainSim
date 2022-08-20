@@ -60,7 +60,7 @@ func handleWalk(delta: float) -> void:
 		if destinationIsSeat and attachedSeat != null and \
 				translation.distance_to(attachedSeat.translation) < 0.1:
 			destinationIsSeat = false
-			rotation_degrees.y = attachedSeat.rotation_degrees.y + 90
+			rotation.y = attachedSeat.rotation.y + (0.5 * PI)
 
 			## Animation Sitting
 			$VisualInstance/AnimationPlayer.play("Sitting")
@@ -99,7 +99,7 @@ func handleWalk(delta: float) -> void:
 		if vector_delta.z > 0:
 			rotation.y = atan(vector_delta.x/vector_delta.z)
 		else:
-			rotation.y = atan(vector_delta.x/vector_delta.z)+PI
+			rotation.y = atan(vector_delta.x / vector_delta.z) + PI
 
 
 func leave_current_wagon()-> void:

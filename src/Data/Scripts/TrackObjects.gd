@@ -165,7 +165,7 @@ func update() -> void:
 						position += Vector3(shiftx, 0, shiftz)
 					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
-						rot = rand_range(0,360)
+						rot = rand_range(0, TAU)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0

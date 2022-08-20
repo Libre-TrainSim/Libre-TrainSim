@@ -6,7 +6,7 @@ var copyRail
 var copyTO
 var copyTOArray: Array
 var currentTO: Node
-var eds # Editor Selection
+var editor_selection # Editor Selection
 var pluginRoot
 
 
@@ -106,7 +106,7 @@ func copy_track_object_to_current_rail(source_track_object: Node, new_descriptio
 	new_track_object.attached_rail = currentRail.name
 	world.get_node("TrackObjects").add_child(new_track_object)
 	if mirror:
-		new_track_object.rotationObjects = source_track_object.rotationObjects + 180.0
+		new_track_object.rotationObjects = source_track_object.rotationObjects + PI
 		if source_track_object.sides == 1:
 			new_track_object.sides = 2
 		elif source_track_object.sides == 2:
@@ -133,17 +133,17 @@ func update_Position() -> void:
 		return
 	$Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed = currentTO.wholeRail
 
-	$Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value = currentTO.on_rail_position
-	$Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value = currentTO.on_rail_position + currentTO.length
+	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
+	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
 	_on_AssignWholeRail_pressed()
 
 
 func _on_AssignWholeRail_pressed() -> void:
-	$Tab/TrackObjects/Settings/Tab/Position/start_pos.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
-	$Tab/TrackObjects/Settings/Tab/Position/end_position.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
+	$Tab/TrackObjects/Settings/Tab/Position/StartPos.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
+	$Tab/TrackObjects/Settings/Tab/Position/EndPosition.visible = not $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed
 
-	$Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value = currentTO.on_rail_position
-	$Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value = currentTO.on_rail_position + currentTO.length
+	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
+	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
 
 	_on_SavePosition_pressed()
 	update_current_rail_attachment()
@@ -154,15 +154,15 @@ func _on_SavePosition_pressed() -> void:
 	if $Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed:
 		currentTO.wholeRail = true
 		return
-	if $Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value > currentRail.length:
-		$Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value = currentRail.length
-	if $Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value > currentRail.length:
-		$Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value = currentRail.length
-	if $Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value < $Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value:
-		$Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value = $Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value
+	if $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value > currentRail.length:
+		$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentRail.length
+	if $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value > currentRail.length:
+		$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentRail.length
+	if $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value < $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value:
+		$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.wholeRail = false
-	currentTO.on_rail_position = $Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value
-	currentTO.length = $Tab/TrackObjects/Settings/Tab/Position/end_position/SpinBox.value - $Tab/TrackObjects/Settings/Tab/Position/start_pos/SpinBox.value
+	currentTO.on_rail_position = $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
+	currentTO.length = $Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value - $Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value
 	currentTO.update()
 	Logger.log("Position Saved")
 
@@ -180,7 +180,7 @@ func _on_SavePositioning_pressed() -> void:
 	currentTO.randomRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".pressed
 	currentTO.randomScale = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".pressed
 	currentTO.randomScaleFactor = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomScale".value
-	currentTO.rotationObjects = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value
+	currentTO.rotationObjects = deg2rad($"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value)
 	currentTO.placeLast = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed
 	currentTO.applySlopeRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed
 	Logger.log("Positioning Saved")
@@ -202,7 +202,7 @@ func update_positioning() -> void:
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".pressed = currentTO.randomRotation
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".pressed = currentTO.randomScale
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomScale".value = currentTO.randomScaleFactor
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed = currentTO.placeLast
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed = currentTO.applySlopeRotation
 	Logger.log("Updating...")
@@ -313,11 +313,11 @@ func _on_BuildingSettings_updated() -> void:
 
 func _on_OptionButton_item_selected(index: int) -> void:
 	if currentTO.sides == PlatformSide.LEFT and index == PlatformSide.RIGHT:
-		currentTO.rotationObjects += 180
-		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+		currentTO.rotationObjects += PI
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	elif currentTO.sides == PlatformSide.RIGHT and index == PlatformSide.LEFT:
-		currentTO.rotationObjects -= 180
-		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+		currentTO.rotationObjects -= PI
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	currentTO.sides = index
 	update_current_rail_attachment()
 

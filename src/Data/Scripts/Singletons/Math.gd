@@ -21,14 +21,14 @@ func get_next_rad(radius: float, world_rot: float, distance: float) -> float:
 	return distance / radius + world_rot
 
 
-# Calculates from the radius of the circle, the position and rotation from the object the middlepoint of the circle.
+# Calculates from the radius of the circle, the position and rotation from the object the center of the circle.
 # Whith that the Function returns in the end the position after for example 2 degrees on "driving" on the rail.
-# only used sed by get_next_pos()
+# only used by get_next_pos()
 func rad_to_coord(radius: float, pos: Vector3, rad: float, world_rot: float) -> Vector3:
-	var mittelpunkt = pos - Vector3(sin(world_rot) * radius,0,cos(world_rot) * radius)
+	var center = pos - Vector3(sin(world_rot) * radius,0,cos(world_rot) * radius)
 	var a = cos(rad) * radius
 	var b = sin(rad) * radius
-	return mittelpunkt + Vector3(b, 0, a)
+	return center + Vector3(b, 0, a)
 
 
 ## converts m/s to km/h

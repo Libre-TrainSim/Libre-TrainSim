@@ -172,7 +172,7 @@ func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
 		var rail2: Node = _spawn_rail()
 		rail2.translation = selected_object.end_pos
 		rail2.start_pos = selected_object.end_pos
-		rail2.rotation_degrees.y = selected_object.end_rot
+		rail2.rotation.y = selected_object.end_rot
 		rail2.start_rot = selected_object.end_rot
 		var new_end = rail2.start_pos + Vector3(y_length, 0, y_sign * y_length).rotated(Vector3.UP, start_rot)
 		rail2.calculate_from_start_end(new_end)
@@ -184,7 +184,7 @@ func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
 		var rail2: Node = _spawn_rail()
 		rail2.translation = selected_object.end_pos
 		rail2.start_pos = selected_object.end_pos
-		rail2.rotation_degrees.y = selected_object.end_rot
+		rail2.rotation.y = selected_object.end_rot
 		rail2.start_rot = selected_object.end_rot
 		rail2.radius = 0
 		rail2.length = y_length - x_length
@@ -200,7 +200,7 @@ func _snap_simple_connector(snap_pos: Vector3, snap_rot: float) -> void:
 	var rail2: Node = _spawn_rail()
 	rail2.translation = rail1_end
 	rail2.start_pos = rail1_end
-	rail2.rotation_degrees.y = selected_object.end_rot
+	rail2.rotation.y = selected_object.end_rot
 	rail2.start_rot = selected_object.end_rot
 	rail2.calculate_from_start_end(snap_pos)
 
@@ -415,7 +415,7 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	track_object.attached_rail = rail.name
 	track_object.length = rail.length
 	track_object.distanceLength = 50
-	track_object.rotationObjects = -90.0
+	track_object.rotationObjects = -(0.5 * PI)
 	track_object.name = rail.name + " Poles"
 	track_object.description = "Poles"
 
@@ -611,7 +611,7 @@ func jump_to_station(station_node_name: String) -> void:
 		Logger.err("Station not found:" + station_node_name, self)
 		return
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
-	camera.rotation_degrees.y -= 90
+	camera.rotation.y -= (0.5 * PI)
 	camera.load_from_transform(camera.transform)
 
 

@@ -256,11 +256,11 @@ func update_map():
 
 func generate_rail_icon_at(rail_name: String, distance: float, forward: bool) -> Sprite:
 	var sprite = Sprite.new()
-	var position_3d = world.get_rail(rail_name).get_pos_at_RailDistance(distance)
-	var rotation_degrees =  world.get_rail(rail_name).get_deg_at_RailDistance(distance)
+	var position_3d = world.get_rail(rail_name).get_pos_at_distance(distance)
+	var rotation = world.get_rail(rail_name).get_rad_at_distance(distance)
 	if not forward:
-		rotation_degrees += 180
+		rotation += PI
 	sprite.position = Vector2(position_3d.x, position_3d.z)
 	sprite.scale = Vector2(0.1, 0.1)
-	sprite.rotation_degrees = -rotation_degrees + 90
+	sprite.rotation = -rotation + (0.5 * PI)
 	return sprite

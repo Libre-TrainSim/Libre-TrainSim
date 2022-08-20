@@ -179,8 +179,8 @@ func ready() -> void:
 	if not ai:
 		$HUD.connect("textbox_closed", self, "_on_textbox_closed")
 		cameraZeroTransform = cameraNode.transform
-		cameraX = -$Camera.rotation_degrees.x
-		cameraY = $Camera.rotation_degrees.y
+		cameraX = -$Camera.rotation.x
+		cameraY = $Camera.rotation.y
 		$Camera.current = true
 	world = get_parent().get_parent()
 
@@ -524,7 +524,7 @@ func getSpeed(delta: float) -> void:
 	if reverser == ReverserState.REVERSE:
 		currentSlope = -currentSlope
 	var slopeAcceleration = -currentSlope/10
-	speed += slopeAcceleration *delta
+	speed += slopeAcceleration * delta
 
 	var sollAcceleration
 	if command < 0:
@@ -647,8 +647,8 @@ func switch_to_cabin_view() -> void:
 	camera_state = CameraState.CABIN_VIEW
 	wagonsVisible = false
 	cameraNode.transform = cameraZeroTransform
-	cameraX = -cameraNode.rotation_degrees.x
-	cameraY = cameraNode.rotation_degrees.y
+	cameraX = -cameraNode.rotation.x
+	cameraY = cameraNode.rotation.y
 	$Camera.fov = camera_fov # reset to first person FOV (zoom)
 	$Cabin.show()
 	remove_free_camera()
@@ -705,12 +705,12 @@ func handleCamera(delta: float) -> void:
 
 		# FIXME: in the first frame, delta == 0, why?
 		if mouseMotion.length() > 0 and delta > 0 and (Input.is_mouse_button_pressed(BUTTON_RIGHT) or Root.mobile_version):
-			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * (camera_fov / ref_fov)
+			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * (camera_fov / ref_fov) * deg2rad(1)
 			cameraY += -mouseMotion.x * motionFactor
 			cameraX += +mouseMotion.y * motionFactor
-			cameraX = clamp(cameraX, -85, 85)
-			cameraNode.rotation_degrees.y = cameraY
-			cameraNode.rotation_degrees.x = -cameraX
+			cameraX = clamp(cameraX, deg2rad(-85), deg2rad(85))
+			cameraNode.rotation.y = cameraY
+			cameraNode.rotation.x = -cameraX
 		mouseMotion = Vector2(0,0)
 
 
@@ -720,15 +720,15 @@ func handleCamera(delta: float) -> void:
 
 	elif camera_state == CameraState.OUTER_VIEW:
 		if mouseMotion.length() > 0 or has_camera_distance_changed:
-			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity
+			var motionFactor = (refDelta / delta * refDelta) * mouseSensitivity * deg2rad(1)
 			cameraY += -mouseMotion.x * motionFactor
 			cameraX += +mouseMotion.y * motionFactor
-			cameraX = clamp(cameraX, -85, 85)
+			cameraX = clamp(cameraX, deg2rad(-85), deg2rad(85))
 			var cameraVector = Vector3(camera_distance, 0, 0)
-			cameraVector = cameraVector.rotated(Vector3(0,0,1), deg2rad(cameraX)).rotated(Vector3(0,1,0), deg2rad(cameraY))
+			cameraVector = cameraVector.rotated(Vector3(0,0,1), cameraX).rotated(Vector3(0,1,0), cameraY)
 			cameraNode.translation = cameraVector + camera_mid_point
-			cameraNode.rotation_degrees.y = cameraY + 90
-			cameraNode.rotation_degrees.x = -cameraX
+			cameraNode.rotation.y = cameraY + (0.5 * PI)
+			cameraNode.rotation.x = -cameraX
 			mouseMotion = Vector2(0,0)
 			has_camera_distance_changed = false
 
@@ -1111,7 +1111,7 @@ func bake_route() -> void: ## Generate the whole route for the train.
 		currentrot = currentR.end_rot
 	else: ## Backward
 		currentpos = currentR.start_pos
-		currentrot = currentR.start_rot - 180.0
+		currentrot = currentR.start_rot - PI
 
 	var rail_signals: Array = currentR.attached_signals
 
@@ -1194,7 +1194,7 @@ func bake_route() -> void: ## Generate the whole route for the train.
 			currentrot = currentR.end_rot
 		else: ## Backward
 			currentpos = currentR.start_pos
-			currentrot = currentR.start_rot - 180.0
+			currentrot = currentR.start_rot - PI
 	Logger.log(name + ": Baking Route finished:")
 	Logger.log(name + ": Baked Route: "+ String(baked_route))
 	Logger.log(name + ": Baked Route: Direction "+ String(baked_route_direction))

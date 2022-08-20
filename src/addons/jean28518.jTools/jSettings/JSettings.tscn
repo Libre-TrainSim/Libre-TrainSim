@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/JSettings.gd" type="Script" id=1]
-[ext_resource path="res://Data/UI/styles/item_list.tres" type="Theme" id=2]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=4]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
 
@@ -45,22 +43,20 @@ tab_align = 0
 use_hidden_tabs_for_min_size = true
 
 [node name="MENU_GENERAL_SETTINGS" type="ScrollContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 63.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 10.0
+margin_top = 59.0
+margin_right = -10.0
+margin_bottom = -10.0
 size_flags_horizontal = 3
-theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="GridContainer" type="GridContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS"]
-margin_right = 964.0
-margin_bottom = 514.0
+margin_right = 940.0
+margin_bottom = 550.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -69,97 +65,101 @@ __meta__ = {
 }
 
 [node name="Label17" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_right = 475.0
+margin_right = 468.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
-custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
 text = "MENU_ACCESSIBILITY_SETTINGS"
 valign = 1
 
 [node name="Label18" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_left = 479.0
-margin_right = 954.0
+margin_left = 472.0
+margin_right = 940.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 
 [node name="LabelLanguage" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 margin_top = 51.0
-margin_right = 475.0
+margin_right = 468.0
 margin_bottom = 96.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_LANGUAGE"
 
 [node name="Language" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 479.0
+margin_left = 472.0
 margin_top = 49.0
-margin_right = 954.0
+margin_right = 940.0
 margin_bottom = 98.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 align = 1
 
-[node name="Label19" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+[node name="HSeparator" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 margin_top = 102.0
-margin_right = 475.0
-margin_bottom = 147.0
+margin_right = 468.0
+margin_bottom = 124.0
+
+[node name="HSeparator2" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+margin_left = 472.0
+margin_top = 102.0
+margin_right = 940.0
+margin_bottom = 124.0
+
+[node name="Label19" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+margin_top = 128.0
+margin_right = 468.0
+margin_bottom = 173.0
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
-custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
 text = "MENU_GAMEPLAY_SETTINGS"
 valign = 1
 
 [node name="Label20" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_left = 479.0
-margin_top = 102.0
-margin_right = 954.0
-margin_bottom = 147.0
+margin_left = 472.0
+margin_top = 128.0
+margin_right = 940.0
+margin_bottom = 173.0
 size_flags_horizontal = 3
 
 [node name="Label11" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 153.0
-margin_right = 475.0
-margin_bottom = 198.0
+margin_top = 177.0
+margin_right = 468.0
+margin_bottom = 222.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_PERSONS"
 
-[node name="Persons" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+[node name="Persons" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 151.0
-margin_right = 743.0
-margin_bottom = 200.0
+margin_left = 671.0
+margin_top = 177.0
+margin_right = 741.0
+margin_bottom = 222.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label9" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 206.0
-margin_right = 475.0
-margin_bottom = 251.0
+margin_top = 228.0
+margin_right = 468.0
+margin_bottom = 273.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_VIEW_DISTANCE"
 
 [node name="ViewDistance" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 479.0
-margin_top = 204.0
-margin_right = 954.0
-margin_bottom = 253.0
+margin_left = 472.0
+margin_top = 226.0
+margin_right = 940.0
+margin_bottom = 275.0
 min_value = 250.0
 max_value = 1000.0
 value = 1000.0
 align = 1
 
 [node name="Label21" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 259.0
-margin_right = 475.0
-margin_bottom = 304.0
+margin_top = 281.0
+margin_right = 468.0
+margin_bottom = 326.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_CHUNK_UNLOAD_DISTANCE"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -167,10 +167,10 @@ __meta__ = {
 
 [node name="ChunkUnloadDistance" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 479.0
-margin_top = 257.0
-margin_right = 954.0
-margin_bottom = 306.0
+margin_left = 472.0
+margin_top = 279.0
+margin_right = 940.0
+margin_bottom = 328.0
 min_value = 2.0
 max_value = 10.0
 value = 2.0
@@ -180,176 +180,175 @@ __meta__ = {
 }
 
 [node name="Label22" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 312.0
-margin_right = 475.0
-margin_bottom = 357.0
+margin_top = 332.0
+margin_right = 468.0
+margin_bottom = 377.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_CHUNK_LOAD_ALL"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChunkLoadAll" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+[node name="ChunkLoadAll" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 310.0
-margin_right = 743.0
-margin_bottom = 359.0
+margin_left = 671.0
+margin_top = 332.0
+margin_right = 741.0
+margin_bottom = 377.0
 size_flags_horizontal = 4
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="HSeparator3" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+margin_top = 381.0
+margin_right = 468.0
+margin_bottom = 403.0
+
+[node name="HSeparator4" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+margin_left = 472.0
+margin_top = 381.0
+margin_right = 940.0
+margin_bottom = 403.0
 
 [node name="Label15" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 363.0
-margin_right = 475.0
-margin_bottom = 408.0
+margin_top = 407.0
+margin_right = 468.0
+margin_bottom = 452.0
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
-custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
 text = "MENU_DIFFICULTY_SETTINGS"
 valign = 1
 
 [node name="Label16" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_left = 479.0
-margin_top = 363.0
-margin_right = 954.0
-margin_bottom = 408.0
+margin_left = 472.0
+margin_top = 407.0
+margin_right = 940.0
+margin_bottom = 452.0
 size_flags_horizontal = 3
 
 [node name="Label13" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 414.0
-margin_right = 475.0
-margin_bottom = 459.0
+margin_top = 456.0
+margin_right = 468.0
+margin_bottom = 501.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_PZB"
 
-[node name="PZB" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+[node name="PZB" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 412.0
-margin_right = 743.0
-margin_bottom = 461.0
+margin_left = 671.0
+margin_top = 456.0
+margin_right = 741.0
+margin_bottom = 501.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label14" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
-margin_top = 467.0
-margin_right = 475.0
-margin_bottom = 512.0
+margin_top = 505.0
+margin_right = 468.0
+margin_bottom = 550.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_SIFA"
 
-[node name="SIFA" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+[node name="SIFA" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 465.0
-margin_right = 743.0
-margin_bottom = 514.0
+margin_left = 671.0
+margin_top = 505.0
+margin_right = 741.0
+margin_bottom = 550.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="MENU_VISUAL_SETTINGS" type="ScrollContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 63.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 10.0
+margin_top = 59.0
+margin_right = -10.0
+margin_bottom = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 2 )
 
 [node name="GridContainer" type="GridContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS"]
-margin_right = 954.0
-margin_bottom = 518.0
+margin_right = 952.0
+margin_bottom = 520.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
 [node name="Label23" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_right = 475.0
+margin_right = 468.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
-custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
 text = "MENU_DISPLAY_SETTINGS"
 valign = 1
 
 [node name="Label24" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_left = 479.0
-margin_right = 954.0
+margin_left = 472.0
+margin_right = 940.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 51.0
-margin_right = 475.0
-margin_bottom = 96.0
+margin_top = 49.0
+margin_right = 468.0
+margin_bottom = 94.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_FULLSCREEN"
 
-[node name="Fullscreen" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+[node name="Fullscreen" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
+margin_left = 671.0
 margin_top = 49.0
-margin_right = 743.0
-margin_bottom = 98.0
+margin_right = 741.0
+margin_bottom = 94.0
 size_flags_horizontal = 4
 
 [node name="Label10" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 104.0
-margin_right = 475.0
-margin_bottom = 149.0
+margin_top = 98.0
+margin_right = 468.0
+margin_bottom = 143.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_VSYNC"
 
-[node name="Vsync" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+[node name="Vsync" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 102.0
-margin_right = 743.0
-margin_bottom = 151.0
+margin_left = 671.0
+margin_top = 98.0
+margin_right = 741.0
+margin_bottom = 143.0
 size_flags_horizontal = 4
 
 [node name="LabelFpsLimitToggle" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_top = 157.0
-margin_right = 475.0
-margin_bottom = 202.0
+margin_top = 147.0
+margin_right = 468.0
+margin_bottom = 192.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_FPS_LIMIT_TOGGLE"
 
-[node name="FpsLimitToggle" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+[node name="FpsLimitToggle" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 155.0
-margin_right = 743.0
-margin_bottom = 204.0
+margin_left = 671.0
+margin_top = 147.0
+margin_right = 741.0
+margin_bottom = 192.0
 size_flags_horizontal = 4
 
 [node name="LabelFpsLimit" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_top = 210.0
-margin_right = 475.0
-margin_bottom = 255.0
+margin_top = 198.0
+margin_right = 468.0
+margin_bottom = 243.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_FPS_LIMIT"
 
 [node name="FpsLimit" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 479.0
-margin_top = 208.0
-margin_right = 954.0
-margin_bottom = 257.0
+margin_left = 472.0
+margin_top = 196.0
+margin_right = 940.0
+margin_bottom = 245.0
 min_value = 15.0
 max_value = 300.0
 value = 15.0
@@ -357,92 +356,97 @@ allow_greater = true
 align = 1
 suffix = "FPS"
 
+[node name="HSeparator5" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+margin_top = 128.0
+margin_right = 468.0
+margin_bottom = 150.0
+
+[node name="HSeparator6" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+margin_left = 472.0
+margin_top = 128.0
+margin_right = 940.0
+margin_bottom = 150.0
+
 [node name="Label25" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 261.0
-margin_right = 475.0
-margin_bottom = 306.0
+margin_top = 249.0
+margin_right = 468.0
+margin_bottom = 294.0
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 0, 0, 0, 0.501961 )
-custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
 text = "MENU_DETAIL_SETTINGS"
 valign = 1
 
 [node name="Label26" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_left = 479.0
-margin_top = 261.0
-margin_right = 954.0
-margin_bottom = 306.0
+margin_left = 472.0
+margin_top = 249.0
+margin_right = 940.0
+margin_bottom = 294.0
 size_flags_horizontal = 3
 
 [node name="Label6" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 312.0
-margin_right = 475.0
-margin_bottom = 357.0
+margin_top = 300.0
+margin_right = 468.0
+margin_bottom = 345.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_ANTI_ALIASING"
 
 [node name="AntiAliasing" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 479.0
-margin_top = 310.0
-margin_right = 954.0
-margin_bottom = 359.0
+margin_left = 472.0
+margin_top = 298.0
+margin_right = 940.0
+margin_bottom = 347.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "Disabled"
 align = 1
 items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null, "8x", null, false, 3, null, "16x", null, false, 4, null ]
 selected = 0
 
 [node name="Label2" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 365.0
-margin_right = 475.0
-margin_bottom = 410.0
+margin_top = 351.0
+margin_right = 468.0
+margin_bottom = 396.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_SHADOWS"
 
-[node name="Shadows" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+[node name="Shadows" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 363.0
-margin_right = 743.0
-margin_bottom = 412.0
+margin_left = 671.0
+margin_top = 351.0
+margin_right = 741.0
+margin_bottom = 396.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label12" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 418.0
-margin_right = 475.0
-margin_bottom = 463.0
+margin_top = 400.0
+margin_right = 468.0
+margin_bottom = 445.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_DYNAMIC_LIGHTS"
 
-[node name="DynamicLights" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+[node name="DynamicLights" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 416.0
-margin_right = 743.0
-margin_bottom = 465.0
+margin_left = 671.0
+margin_top = 400.0
+margin_right = 741.0
+margin_bottom = 445.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label8" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 471.0
-margin_right = 475.0
-margin_bottom = 516.0
+margin_top = 449.0
+margin_right = 468.0
+margin_bottom = 494.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_FOG"
 
-[node name="Fog" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
+[node name="Fog" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 689.0
-margin_top = 469.0
-margin_right = 743.0
-margin_bottom = 518.0
+margin_left = 671.0
+margin_top = 449.0
+margin_right = 741.0
+margin_bottom = 494.0
 size_flags_horizontal = 4
 align = 1
 
@@ -450,32 +454,30 @@ align = 1
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 63.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 10.0
+margin_top = 59.0
+margin_right = -10.0
+margin_bottom = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 2 )
 
 [node name="GridContainer" type="GridContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS"]
-margin_right = 964.0
-margin_bottom = 426.0
+margin_right = 952.0
+margin_bottom = 424.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
 [node name="Label3" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer"]
-margin_right = 480.0
+margin_right = 474.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_MAIN_VOLUME"
 
 [node name="MainVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 484.0
-margin_right = 964.0
+margin_left = 478.0
+margin_right = 952.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
@@ -489,17 +491,16 @@ __meta__ = {
 
 [node name="Label4" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer"]
 margin_top = 49.0
-margin_right = 480.0
+margin_right = 474.0
 margin_bottom = 94.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_GAME_VOLUME"
 
 [node name="GameVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 484.0
+margin_left = 478.0
 margin_top = 49.0
-margin_right = 964.0
+margin_right = 952.0
 margin_bottom = 94.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
@@ -513,17 +514,16 @@ __meta__ = {
 
 [node name="Label5" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer"]
 margin_top = 98.0
-margin_right = 480.0
+margin_right = 474.0
 margin_bottom = 143.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_MUSIC_VOLUME"
 
 [node name="MusicVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer"]
 unique_name_in_owner = true
-margin_left = 484.0
+margin_left = 478.0
 margin_top = 98.0
-margin_right = 964.0
+margin_right = 952.0
 margin_bottom = 143.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
@@ -560,7 +560,6 @@ margin_right = 972.0
 margin_bottom = 546.0
 rect_min_size = Vector2( 150, 0 )
 theme = ExtResource( 5 )
-custom_fonts/font = ExtResource( 3 )
 text = "MENU_BACK"
 align = 0
 __meta__ = {

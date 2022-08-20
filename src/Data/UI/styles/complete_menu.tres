@@ -1,18 +1,28 @@
-[gd_resource type="Theme" load_steps=19 format=2]
+[gd_resource type="Theme" load_steps=29 format=2]
 
-[ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=1]
+[ext_resource path="res://Data/UI/styles/line_edit_read_only.tres" type="StyleBox" id=1]
 [ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Data/UI/styles/line_edit_read_only.tres" type="StyleBox" id=4]
+[ext_resource path="res://Data/UI/check_button/on.png" type="Texture" id=4]
 [ext_resource path="res://Data/UI/styles/line_edit_normal.tres" type="StyleBox" id=5]
-[ext_resource path="res://Data/UI/styles/button_right_disabled.tres" type="StyleBox" id=6]
-[ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=7]
-[ext_resource path="res://Data/UI/check_button/off.png" type="Texture" id=8]
-[ext_resource path="res://Data/UI/check_button/on.png" type="Texture" id=9]
-[ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=10]
-[ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=11]
-[ext_resource path="res://Data/UI/styles/button_right_pressed.tres" type="StyleBox" id=12]
-[ext_resource path="res://Data/UI/styles/line_edit_focus.tres" type="StyleBox" id=13]
+[ext_resource path="res://Data/UI/styles/button_center_focus.tres" type="StyleBox" id=6]
+[ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=7]
+[ext_resource path="res://Data/UI/styles/line_edit_focus.tres" type="StyleBox" id=8]
+[ext_resource path="res://Data/UI/styles/separator_hline.tres" type="StyleBox" id=9]
+[ext_resource path="res://Data/UI/styles/button_right_disabled.tres" type="StyleBox" id=10]
+[ext_resource path="res://Data/UI/styles/button_center_normal.tres" type="StyleBox" id=11]
+[ext_resource path="res://Data/UI/styles/panel_section.tres" type="StyleBox" id=12]
+[ext_resource path="res://Data/UI/styles/button_right_pressed.tres" type="StyleBox" id=13]
+[ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=14]
+[ext_resource path="res://Data/UI/check_button/off.png" type="Texture" id=15]
+[ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=16]
+[ext_resource path="res://Data/UI/styles/button_center_disabled.tres" type="StyleBox" id=17]
+[ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=18]
+[ext_resource path="res://Data/UI/styles/button_both_disabled.tres" type="StyleBox" id=19]
+[ext_resource path="res://Data/UI/styles/button_both_hover.tres" type="StyleBox" id=20]
+[ext_resource path="res://Data/UI/styles/button_both_pressed.tres" type="StyleBox" id=21]
+[ext_resource path="res://Data/UI/styles/button_both_focus.tres" type="StyleBox" id=22]
+[ext_resource path="res://Data/UI/styles/button_both_normal.tres" type="StyleBox" id=23]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.913725, 0.94902, 0.92549, 1 )
@@ -59,27 +69,29 @@ anti_aliasing = false
 default_font = ExtResource( 2 )
 Button/colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 Button/colors/font_color_disabled = Color( 0.219608, 0.219608, 0.219608, 1 )
-Button/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
-Button/colors/font_color_hover = Color( 0.0941176, 0.345098, 0.470588, 1 )
+Button/colors/font_color_focus = Color( 0.0941176, 0.352941, 0.478431, 1 )
+Button/colors/font_color_hover = Color( 0.14902, 0.54902, 0.74902, 1 )
 Button/colors/font_color_pressed = Color( 0.0941176, 0.345098, 0.470588, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = ExtResource( 2 )
-Button/styles/disabled = ExtResource( 6 )
-Button/styles/focus = ExtResource( 11 )
-Button/styles/hover = ExtResource( 10 )
-Button/styles/normal = ExtResource( 7 )
-Button/styles/pressed = ExtResource( 12 )
-CheckButton/icons/off = ExtResource( 8 )
-CheckButton/icons/on = ExtResource( 9 )
+Button/styles/disabled = ExtResource( 10 )
+Button/styles/focus = ExtResource( 18 )
+Button/styles/hover = ExtResource( 14 )
+Button/styles/normal = ExtResource( 16 )
+Button/styles/pressed = ExtResource( 13 )
+CheckButton/icons/off = ExtResource( 15 )
+CheckButton/icons/on = ExtResource( 4 )
 CheckButton/styles/disabled = SubResource( 5 )
 CheckButton/styles/focus = SubResource( 5 )
 CheckButton/styles/hover = SubResource( 5 )
 CheckButton/styles/hover_pressed = SubResource( 5 )
 CheckButton/styles/normal = SubResource( 5 )
 CheckButton/styles/pressed = SubResource( 5 )
+HSeparator/constants/separation = 22
+HSeparator/styles/separator = ExtResource( 9 )
 ItemList/colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 ItemList/colors/font_color_selected = Color( 0.0941176, 0.345098, 0.470588, 1 )
-ItemList/colors/guide_color = Color( 0.832932, 0.863281, 0.843048, 1 )
+ItemList/colors/guide_color = Color( 0.831373, 0.823529, 0.843137, 1 )
 ItemList/constants/hseparation = 0
 ItemList/constants/icon_margin = 0
 ItemList/constants/line_separation = 0
@@ -109,11 +121,59 @@ LineEdit/colors/selection_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 LineEdit/constants/minimum_spaces = 12
 LineEdit/fonts/font = ExtResource( 2 )
 LineEdit/icons/clear = null
-LineEdit/styles/focus = ExtResource( 13 )
+LineEdit/styles/focus = ExtResource( 8 )
 LineEdit/styles/normal = ExtResource( 5 )
-LineEdit/styles/read_only = ExtResource( 4 )
-Panel/styles/panel = ExtResource( 1 )
-PanelContainer/styles/panel = ExtResource( 1 )
+LineEdit/styles/read_only = ExtResource( 1 )
+OptionButton/colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
+OptionButton/colors/font_color_disabled = Color( 0.219608, 0.219608, 0.219608, 1 )
+OptionButton/colors/font_color_focus = Color( 0.0941176, 0.352941, 0.478431, 1 )
+OptionButton/colors/font_color_hover = Color( 0.14902, 0.54902, 0.74902, 1 )
+OptionButton/colors/font_color_pressed = Color( 0.0941176, 0.345098, 0.470588, 1 )
+OptionButton/constants/arrow_margin = 0
+OptionButton/constants/hseparation = 0
+OptionButton/fonts/font = ExtResource( 2 )
+OptionButton/icons/arrow = null
+OptionButton/styles/disabled = ExtResource( 19 )
+OptionButton/styles/focus = ExtResource( 22 )
+OptionButton/styles/hover = ExtResource( 20 )
+OptionButton/styles/normal = ExtResource( 23 )
+OptionButton/styles/pressed = ExtResource( 21 )
+Panel/styles/panel = ExtResource( 7 )
+PanelContainer/styles/panel = ExtResource( 7 )
 PopupDialog/styles/panel = SubResource( 6 )
+PopupMenu/colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
+PopupMenu/colors/font_color_accel = Color( 0, 0, 0, 1 )
+PopupMenu/colors/font_color_disabled = Color( 0.219608, 0.219608, 0.219608, 1 )
+PopupMenu/colors/font_color_hover = Color( 0.14902, 0.54902, 0.74902, 1 )
+PopupMenu/colors/font_color_separator = Color( 0, 0, 0, 1 )
+PopupMenu/constants/hseparation = 4
+PopupMenu/constants/vseparation = 0
+PopupMenu/fonts/font = ExtResource( 2 )
+PopupMenu/fonts/font_separator = ExtResource( 2 )
+PopupMenu/icons/checked = null
+PopupMenu/icons/radio_checked = null
+PopupMenu/icons/radio_unchecked = null
+PopupMenu/icons/submenu = null
+PopupMenu/icons/unchecked = null
+PopupMenu/styles/hover = null
+PopupMenu/styles/labeled_separator_left = null
+PopupMenu/styles/labeled_separator_right = null
+PopupMenu/styles/panel = ExtResource( 12 )
+PopupMenu/styles/panel_disabled = null
+PopupMenu/styles/separator = null
 RichTextLabel/colors/default_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 RichTextLabel/fonts/normal_font = ExtResource( 3 )
+TabContainer/colors/font_color_bg = Color( 0.117647, 0.423529, 0.576471, 1 )
+TabContainer/colors/font_color_disabled = Color( 0.219608, 0.219608, 0.219608, 1 )
+TabContainer/colors/font_color_fg = Color( 0.160784, 0.588235, 0.8, 1 )
+TabContainer/fonts/font = ExtResource( 2 )
+TabContainer/icons/decrement = null
+TabContainer/icons/decrement_highlight = null
+TabContainer/icons/increment = null
+TabContainer/icons/increment_highlight = null
+TabContainer/icons/menu = null
+TabContainer/icons/menu_highlight = null
+TabContainer/styles/panel = ExtResource( 12 )
+TabContainer/styles/tab_bg = ExtResource( 11 )
+TabContainer/styles/tab_disabled = ExtResource( 17 )
+TabContainer/styles/tab_fg = ExtResource( 6 )

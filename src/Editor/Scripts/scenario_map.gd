@@ -96,8 +96,8 @@ func calculate_2d_points_from_rail(rail) -> Array:
 	var points = []
 
 	var length
-	if rail.parRail != null:
-		length = rail.parRail.length
+	if rail.parallel_rail != null:
+		length = rail.parallel_rail.length
 	else:
 		length = rail.length
 
@@ -106,18 +106,18 @@ func calculate_2d_points_from_rail(rail) -> Array:
 		var point_count = int(length / LINE_POINT_INTERVAL) + 1
 		# add point count many points along track
 		for i in range(0,point_count):
-			var rail_transform = rail.get_global_transform_at_rail_distance(i*LINE_POINT_INTERVAL)
+			var rail_transform = rail.get_global_transform_at_distance(i*LINE_POINT_INTERVAL)
 			points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# add end point
-		var rail_transform = rail.get_global_transform_at_rail_distance(rail.length)
+		var rail_transform = rail.get_global_transform_at_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 	# only 2 points for straight rails
 	else:
 		# Start Point
-		var rail_transform = rail.get_global_transform_at_rail_distance(0)
+		var rail_transform = rail.get_global_transform_at_distance(0)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# End Point
-		rail_transform = rail.get_global_transform_at_rail_distance(rail.length)
+		rail_transform = rail.get_global_transform_at_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 
 	return points

@@ -3,27 +3,27 @@ extends Reference
 
 # to overwrite default rail logic, I guess?
 # Dict[String, RailLogicSettings] ; RailLogicNodeName -> Settings
-export var rail_logic_settings := {}
+var rail_logic_settings := {}
 
 # Array[RoutePoint]
-export var route_points := []
+var route_points := []
 
-export var activate_only_at_specific_routes := false  # ?????
-export var specific_routes := []  # ???
+var activate_only_at_specific_routes := false  # ?????
+var specific_routes := []  # ???
 
-export var is_playable := true  # for AI trains set to false, I guess
-export var train_name := "JFR1_Red"  # which train drives here
+var is_playable := true  # for AI trains set to false, I guess
+var train_name := "JFR1_Red"  # which train drives here
 
-export var description := ""
+var description := ""
 
 # example:
 # route begins at 6:00, goes every 15 minutes, ends at 21:00
 # interval_start = 21600
 # interval_end = 75600
 # interval = 900
-export var interval := 0.0  # how frequently this route drives, in seconds
-export var interval_end := 0.0  # last time of day this route drives, in seconds
-export var interval_start := 0.0  # first time of day this route drives, in seconds
+var interval := 0  # how frequently this route drives, in minutes
+var interval_end := 0  # last time of day this route drives, in seconds
+var interval_start := 0  # first time of day this route drives, in seconds
 
 # calculated data
 var calculated_rail_route := []
@@ -54,7 +54,7 @@ func get_start_times() -> Array:
 		return times
 
 	while(time < interval_end):
-		time += interval
+		time += interval * 60  # minutes to seconds
 		times.append(time)
 
 	#print(times)

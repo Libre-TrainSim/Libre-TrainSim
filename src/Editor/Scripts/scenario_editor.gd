@@ -2,14 +2,15 @@ extends Node
 
 var world
 
-var j_save_module = jSaveModule.new()
-
 var current_track_path = ""
 var current_track_name = ""
-var content : ModContentDefinition
+var content: ModContentDefinition
+
+var scenario_info: TrackScenario = null
 
 func _ready():
 	# For now we retrieve the variables from Root. Later these should be filled by the LoadingScreenManager.
+	scenario_info = TrackScenario.new()
 	current_track_name = Root.current_editor_track
 	current_track_path = Root.current_editor_track_path.plus_file(Root.current_editor_track + ".tscn")
 	var editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
@@ -17,7 +18,6 @@ func _ready():
 	world = load(current_track_path).instance()
 	world.passive = true
 	add_child(world)
-	j_save_module.set_save_path(Root.current_scenario)
 	$ScenarioMap.init(world)
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")
@@ -25,6 +25,7 @@ func _ready():
 
 func _process(delta):
 	run_map_updater(delta)
+
 
 func show_message(text: String) -> void:
 	$CanvasLayer/Message/VBoxContainer/Label.text = text
@@ -40,8 +41,7 @@ func _unhandled_key_input(event):
 		$CanvasLayer/Message.hide()
 		get_tree().set_input_as_handled()
 
-
-	if event.is_action_pressed("Escape"):
+	if event.is_action_pressed("ui_cancel"):
 		$CanvasLayer/Pause.visible = !$CanvasLayer/Pause.visible
 		get_tree().set_input_as_handled()
 
@@ -81,6 +81,7 @@ func _on_LayoutSetting_pressed():
 func _on_Labels_pressed():
 	$CanvasLayer/LabelSettings.visible = not $CanvasLayer/LabelSettings.visible
 
+
 var _run_map_updater_timer: float = 0
 func run_map_updater(delta: float):
 	_run_map_updater_timer += delta
@@ -92,6 +93,7 @@ func run_map_updater(delta: float):
 func _on_TestTrack_pressed():
 	$CanvasLayer/Pause.hide()
 	test_track_pck()
+
 
 func _on_ExportTrack_pressed():
 	$CanvasLayer/Pause.hide()

@@ -33,3 +33,12 @@ static func load_scenario(path = null) -> TrackScenario:
 		return null
 
 	return current_scenario
+
+
+func save_scenario(path = null):
+	if path == null:
+		path = Root.current_track.get_base_dir().plus_file("scenarios").plus_file(Root.current_scenario) + ".tres"
+
+	if ResourceSaver.save(path, self) != OK:
+		Logger.err("Failed saving scenario at %s" % path, self)
+	pass

@@ -22,6 +22,91 @@ onready var camera := $Camera as EditorCamera
 func _ready() -> void:
 	if !load_world():
 		return
+	_port_to_new_chunk_system()
+
+
+func _port_to_new_chunk_system() -> void:
+	var save_file = current_track_path + ".save"
+	var dir = Directory.new()
+	if not dir.file_exists(save_file):
+		return
+
+	dir.make_dir_recursive(current_track_path.get_base_dir().plus_file("chunks"))
+
+	var jsavemodule = Node.new()
+	jsavemodule.set_script(load("res://addons/jean28518.jTools/jSaveManager/jSaveModule.gd"))
+	jsavemodule.set_save_path(save_file)
+	var keys = jsavemodule._config.get_section_keys("Main")
+
+	for key in keys:
+		if not "," in key:
+			continue
+		var old_chunk = jsavemodule.get_value(key, {})
+		if old_chunk.empty():
+			continue
+
+		var new_chunk = preload("res://Data/Modules/chunk_prefab.tscn").instance()
+		new_chunk.name = ChunkManager.chunk_to_string(old_chunk.position)
+		new_chunk.chunk_position = old_chunk.position
+		new_chunk.rails = old_chunk.Rails
+
+		var buildings_data: Dictionary = old_chunk.Buildings
+		for building_data in buildings_data:
+			var mesh_instance := MeshInstance.new()
+			mesh_instance.name = buildings_data[building_data].name
+			mesh_instance.set_mesh(load(buildings_data[building_data].mesh_path))
+			mesh_instance.transform = buildings_data[building_data].transform
+			var surfaceArr: Array = buildings_data[building_data].surfaceArr
+			if surfaceArr == null:
+				surfaceArr = []
+			for i in range (surfaceArr.size()):
+				mesh_instance.set_surface_material(i, surfaceArr[i])
+
+			new_chunk.get_node("Buildings").add_child(mesh_instance)
+			mesh_instance.owner = new_chunk
+
+		var track_objects: Dictionary = old_chunk.TrackObjects
+		var to_prefab = preload("res://Data/Modules/TrackObjects.tscn")
+		for to_key in track_objects:
+			var track_obj = track_objects[to_key]
+
+			var to_instance = to_prefab.instance()
+			to_instance.name = track_obj.name
+			to_instance.multimesh = MultiMesh.new()
+			to_instance.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+			to_instance.multimesh.mesh = load(track_obj.data.objectPath)
+			to_instance.materials = []
+			to_instance.mesh = load(track_obj.data.objectPath)
+
+			if to_instance.multimesh.mesh != null:
+				var i = 0
+				for material_path in track_obj.data.materialPaths:
+					to_instance.materials.append(load(material_path))
+					to_instance.multimesh.mesh.surface_set_material(i, load(material_path))
+					i += 1
+			else:
+				Logger.err("Could not load object '%s'." % track_obj.data.objectPath, self)
+
+			to_instance.set_data(track_obj.data)
+
+			to_instance.transform = track_obj.transform
+
+			new_chunk.get_node("TrackObjects").add_child(to_instance)
+			to_instance.owner = new_chunk
+
+		if len(new_chunk.rails) > 0 \
+				or new_chunk.get_node("Buildings").get_child_count() > 0 \
+				or new_chunk.get_node("TrackObjects").get_child_count() > 0:
+			new_chunk.is_empty = false
+			var packed_chunk := PackedScene.new()
+			packed_chunk.pack(new_chunk)
+			var path: String = current_track_path.get_base_dir().plus_file("chunks").plus_file(ChunkManager.chunk_to_string(old_chunk.position)) + ".tscn"
+			ResourceSaver.save(path, packed_chunk)
+
+		dir.remove(save_file)
+		new_chunk.queue_free()
+
+	send_message("Chunks were ported to v0.9, please close and reload the track.")
 
 
 func _enter_tree() -> void:
@@ -410,8 +495,13 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	track_object.rows = 1
 	track_object.wholeRail = true
 	track_object.placeLast = true
-	track_object.objectPath = "res://Resources/Objects/Pole1.obj"
-	track_object.materialPaths = [ "res://Resources/Materials/Beton.tres", "res://Resources/Materials/Metal_Green.tres", "res://Resources/Materials/Metal.tres", "res://Resources/Materials/Metal_Brown.tres" ]
+	track_object.mesh = load("res://Resources/Objects/Pole1.obj")
+	track_object.materials = [
+		load("res://Resources/Materials/Beton.tres"),
+		load("res://Resources/Materials/Metal_Green.tres"),
+		load("res://Resources/Materials/Metal.tres"),
+		load("res://Resources/Materials/Metal_Brown.tres")
+	]
 	track_object.attached_rail = rail.name
 	track_object.length = rail.length
 	track_object.distanceLength = 50

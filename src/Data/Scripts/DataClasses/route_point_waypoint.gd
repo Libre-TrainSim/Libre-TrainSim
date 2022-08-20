@@ -1,7 +1,7 @@
 class_name RoutePointWayPoint
 extends RoutePoint
 
-export var rail_name := ""
+var rail_name := ""
 
 func _init() -> void:
 	type = RoutePointType.WAY_POINT

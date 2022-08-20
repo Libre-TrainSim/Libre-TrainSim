@@ -84,6 +84,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_FULLSCREEN"
 
 [node name="Fullscreen" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 49.0
 margin_right = 734.0
@@ -99,6 +100,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_VSYNC"
 
 [node name="Vsync" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 106.0
 margin_right = 734.0
@@ -153,6 +155,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_SHADOWS"
 
 [node name="Shadows" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 279.0
 margin_right = 734.0
@@ -169,6 +172,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_DYNAMIC_LIGHTS"
 
 [node name="DynamicLights" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 336.0
 margin_right = 734.0
@@ -185,6 +189,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_FOG"
 
 [node name="Fog" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 393.0
 margin_right = 734.0
@@ -201,6 +206,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_PERSONS"
 
 [node name="Persons" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 450.0
 margin_right = 734.0
@@ -217,6 +223,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_VIEW_DISTANCE"
 
 [node name="ViewDistance" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 507.0
 margin_right = 962.0
@@ -238,6 +245,7 @@ __meta__ = {
 }
 
 [node name="ChunkUnloadDistance" type="SpinBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 566.0
 margin_right = 962.0
@@ -262,6 +270,7 @@ __meta__ = {
 }
 
 [node name="ChunkLoadAll" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 625.0
 margin_right = 734.0
@@ -281,6 +290,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_ANTI_ALIASING"
 
 [node name="AntiAliasing" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 682.0
 margin_right = 962.0
@@ -291,7 +301,7 @@ align = 1
 items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null, "8x", null, false, 3, null, "16x", null, false, 4, null ]
 selected = 0
 
-[node name="Label7" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="LabelLanguage" type="Label" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_top = 740.0
 margin_right = 479.0
 margin_bottom = 785.0
@@ -300,6 +310,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_LANGUAGE"
 
 [node name="Language" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 737.0
 margin_right = 962.0
@@ -349,6 +360,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_MAIN_VOLUME"
 
 [node name="MainVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 849.0
 margin_right = 962.0
@@ -371,6 +383,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_GAME_VOLUME"
 
 [node name="GameVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 898.0
 margin_right = 962.0
@@ -393,6 +406,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_MUSIC_VOLUME"
 
 [node name="MusicVolume" type="HSlider" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 483.0
 margin_top = 947.0
 margin_right = 962.0
@@ -446,6 +460,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_PZB"
 
 [node name="PZB" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 1053.0
 margin_right = 734.0
@@ -462,6 +477,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MENU_DIFFICULTY_SIFA"
 
 [node name="SIFA" type="CheckBox" parent="JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
 margin_left = 710.0
 margin_top = 1110.0
 margin_right = 734.0
@@ -470,6 +486,7 @@ size_flags_horizontal = 4
 align = 1
 
 [node name="Back" type="Button" parent="JSettings/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 margin_top = 497.0
 margin_right = 972.0
 margin_bottom = 546.0

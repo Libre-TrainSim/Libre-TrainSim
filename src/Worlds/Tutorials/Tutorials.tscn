@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=1]
 [ext_resource path="res://Data/Modules/Rail.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Data/Scripts/World.gd" type="Script" id=5]
 [ext_resource path="res://Data/Modules/Signal.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Worlds/Tutorials/TutorialScript.gd" type="Script" id=10]
 [ext_resource path="res://Data/Modules/Station.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Resources/Environments/BasicSun.tscn" type="PackedScene" id=18]
 
@@ -28,11 +27,12 @@ attached_rail = "Rail"
 assigned_signal = "Signal"
 
 [node name="Signal" parent="Signals" instance=ExtResource( 7 )]
-transform = Transform( 0.999118, 0, -0.0419877, 0, 1, 0, 0.0419877, 0, 0.999118, 209.938, 0, 4.40918 )
+transform = Transform( 0.999118, 0, -0.0419876, 0, 1, 0, 0.0419876, 0, 0.999118, 209.938, 0, 4.40918 )
 status = 1
 speed = 140.0
 attached_rail = "Rail"
 on_rail_position = 210
+operation_mode = 1
 
 [node name="Signal2" parent="Signals" instance=ExtResource( 7 )]
 transform = Transform( 0.996802, 0, -0.0799147, 0, 1, 0, 0.0799147, 0, 0.996802, 399.573, 0, 15.9917 )
@@ -47,20 +47,21 @@ attached_rail = "Rail"
 on_rail_position = 800
 
 [node name="Signal4" parent="Signals" instance=ExtResource( 7 )]
-transform = Transform( 0.997779, 0, -0.0666163, 0, 1, 0, 0.0666163, 0, 0.997779, 1389.5, 0, 152.803 )
+transform = Transform( 0.997779, 0, -0.0666173, 0, 1, 0, 0.0666173, 0, 0.997779, 1389.5, 0, 152.803 )
 status = 1
 speed = 80.0
 attached_rail = "Rail2"
 on_rail_position = 400
 
 [node name="Signal5" parent="Signals" instance=ExtResource( 7 )]
-transform = Transform( 0.997779, 0, 0.0666178, 0, 1, 0, -0.0666178, 0, 0.997779, 1789.21, 0, 152.803 )
+transform = Transform( 0.997779, 0, 0.0666173, 0, 1, 0, -0.0666173, 0, 0.997779, 1789.21, 0, 152.803 )
 status = 1
 attached_rail = "Rail2"
 on_rail_position = 800
+operation_mode = 1
 
 [node name="City2" parent="Signals" instance=ExtResource( 17 )]
-transform = Transform( 0.999999, 1.45409e-05, -0.00166622, 0, 0.999962, 0.00872654, 0.00166626, -0.00872652, 0.999961, 1584.35, 0, 159.463 )
+transform = Transform( 0.999999, 0, -0.00166626, 0, 1, 0, 0.00166626, 0, 0.999999, 1584.35, 0, 159.463 )
 length = 200
 platform_side = 1
 attached_rail = "Rail2"
@@ -73,40 +74,31 @@ assigned_signal = "Signal5"
 visible = false
 length = 1000.0
 radius = -5000.0
-visibleSegments = 1112
-endrot = -11.4592
-endpos = Vector3( 993.347, 0, 99.667 )
-tend1Pos = 50.0
+build_distance = 0.9
+visible_segments = 1112
+end_rot = -0.2
+end_pos = Vector3( 993.347, 0, 99.667 )
 tend1 = -0.3
-tend2Pos = 950.0
 tend2 = -0.3
-automaticTendency = true
-isSwitchPart = [ "", "" ]
 
 [node name="Rail2" parent="Rails" instance=ExtResource( 2 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 993.347, 0, 99.667 )
 visible = false
 length = 1000.0
 radius = 3000.0
-visibleSegments = 1112
-startrot = -11.4591
-endrot = 7.63946
-startpos = Vector3( 993.347, 0, 99.667 )
-endpos = Vector3( 1988.17, 0, 132.84 )
-tend1Pos = 50.0
+build_distance = 0.9
+visible_segments = 1112
+start_rot = -0.2
+end_rot = 0.133334
+start_pos = Vector3( 993.347, 0, 99.667 )
+end_pos = Vector3( 1988.17, 0, 132.84 )
 tend1 = 0.5
-tend2Pos = 950.0
 tend2 = 0.5
-automaticTendency = true
-isSwitchPart = [ "", "" ]
 
 [node name="Buildings" type="Spatial" parent="."]
 
 [node name="Flora" type="Spatial" parent="."]
 
 [node name="TrackObjects" type="Spatial" parent="."]
-
-[node name="Sctipting" type="Node" parent="."]
-script = ExtResource( 10 )
 
 [node name="Landscape" type="Spatial" parent="."]

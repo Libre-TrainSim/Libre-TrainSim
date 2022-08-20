@@ -197,12 +197,12 @@
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": -880217,
+"randomSeed": -968674,
 "rotationObjects": 0.0,
 "rows": 2,
 "shift": 15.0,
 "sides": 3,
-"spawnRate": 0.5,
+"spawnRate": 0.6,
 "wholeRail": true
 },
 "name": "Rail4 trees",
@@ -226,12 +226,12 @@
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": -775397,
+"randomSeed": -532526,
 "rotationObjects": 0.0,
 "rows": 2,
 "shift": 12.0,
 "sides": 3,
-"spawnRate": 0.5,
+"spawnRate": 0.6,
 "wholeRail": true
 },
 "name": "Rail4 trees_duplicate",
@@ -255,12 +255,12 @@
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": -925222,
+"randomSeed": -388661,
 "rotationObjects": 0.0,
 "rows": 2,
 "shift": 12.0,
 "sides": 3,
-"spawnRate": 0.5,
+"spawnRate": 0.6,
 "wholeRail": true
 },
 "name": "Rail4 trees_duplicate_duplicate",
@@ -424,8 +424,6 @@ notes=""
 2,1={
 "Buildings": {
 },
-"Flora": {
-},
 "Rails": [  ],
 "TrackObjects": {
 },
@@ -433,8 +431,6 @@ notes=""
 }
 2,0={
 "Buildings": {
-},
-"Flora": {
 },
 "Rails": [ "Rail5" ],
 "TrackObjects": {
@@ -449,19 +445,19 @@ notes=""
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Materials/EasyTree.tres", "res://Resources/Materials/EasyTree.tres" ],
 "objectPath": "res://Resources/Objects/EasyTree.obj",
-"on_rail_position": 0,
+"on_rail_position": 0.0,
 "placeLast": false,
 "randomLocation": true,
 "randomLocationFactor": 0.3,
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": 680065.0,
+"randomSeed": 680065,
 "rotationObjects": 0.0,
-"rows": 2.0,
+"rows": 2,
 "shift": 15.0,
 "sides": 3,
-"spawnRate": 1.0,
+"spawnRate": 0.6,
 "wholeRail": true
 },
 "name": "Rail5 tree",
@@ -478,7 +474,7 @@ notes=""
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Materials/EasyTree2.tres", "res://Resources/Materials/EasyTree2.tres" ],
 "objectPath": "res://Resources/Objects/EasyTree.obj",
-"on_rail_position": 0,
+"on_rail_position": 0.0,
 "placeLast": false,
 "randomLocation": true,
 "randomLocationFactor": 0.3,
@@ -487,10 +483,10 @@ notes=""
 "randomScaleFactor": 0.2,
 "randomSeed": 0,
 "rotationObjects": 0.0,
-"rows": 2.0,
+"rows": 2,
 "shift": 15.0,
 "sides": 3,
-"spawnRate": 1.0,
+"spawnRate": 0.6,
 "wholeRail": true
 },
 "name": "Rail5 tree2",
@@ -507,19 +503,19 @@ notes=""
 "length": 1000.0,
 "materialPaths": [ "res://Resources/Materials/EasyTree3.tres", "res://Resources/Materials/EasyTree3.tres" ],
 "objectPath": "res://Resources/Objects/EasyTree.obj",
-"on_rail_position": 0,
+"on_rail_position": 0.0,
 "placeLast": true,
 "randomLocation": true,
 "randomLocationFactor": 0.3,
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": 0,
+"randomSeed": 721850,
 "rotationObjects": 0.0,
-"rows": 2.0,
+"rows": 2,
 "shift": 15.0,
 "sides": 3,
-"spawnRate": 1.0,
+"spawnRate": 0.6,
 "wholeRail": true
 },
 "name": "Rail5 tree3",
@@ -531,8 +527,6 @@ notes=""
 2,-1={
 "Buildings": {
 },
-"Flora": {
-},
 "Rails": [  ],
 "TrackObjects": {
 },
@@ -540,8 +534,6 @@ notes=""
 }
 3,1={
 "Buildings": {
-},
-"Flora": {
 },
 "Rails": [  ],
 "TrackObjects": {
@@ -551,20 +543,127 @@ notes=""
 3,0={
 "Buildings": {
 },
-"Flora": {
-},
 "Rails": [ "Rail6" ],
 "TrackObjects": {
+"Rail6 tree": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "Rail6",
+"description": "tree",
+"distanceLength": 7.0,
+"distanceRows": 7.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/EasyTree.tres", "res://Resources/Materials/EasyTree.tres" ],
+"objectPath": "res://Resources/Objects/EasyTree.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": true,
+"randomLocationFactor": 0.3,
+"randomRotation": true,
+"randomScale": true,
+"randomScaleFactor": 0.2,
+"randomSeed": -383193,
+"rotationObjects": 0.0,
+"rows": 2,
+"shift": 15.0,
+"sides": 3,
+"spawnRate": 0.6,
+"wholeRail": true
+},
+"name": "Rail6 tree",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
+},
+"Rail6 tree2": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "Rail6",
+"description": "tree2",
+"distanceLength": 7.0,
+"distanceRows": 7.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/EasyTree2.tres", "res://Resources/Materials/EasyTree2.tres" ],
+"objectPath": "res://Resources/Objects/EasyTree.obj",
+"on_rail_position": 0.0,
+"placeLast": false,
+"randomLocation": true,
+"randomLocationFactor": 0.3,
+"randomRotation": true,
+"randomScale": true,
+"randomScaleFactor": 0.2,
+"randomSeed": -588160,
+"rotationObjects": 0.0,
+"rows": 2,
+"shift": 15.0,
+"sides": 3,
+"spawnRate": 0.6,
+"wholeRail": true
+},
+"name": "Rail6 tree2",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
+},
+"Rail6 tree3": {
+"data": {
+"applySlopeRotation": false,
+"attached_rail": "Rail6",
+"description": "tree3",
+"distanceLength": 7.0,
+"distanceRows": 7.0,
+"height": 0.0,
+"length": 1000.0,
+"materialPaths": [ "res://Resources/Materials/EasyTree3.tres", "res://Resources/Materials/EasyTree3.tres" ],
+"objectPath": "res://Resources/Objects/EasyTree.obj",
+"on_rail_position": 0.0,
+"placeLast": true,
+"randomLocation": true,
+"randomLocationFactor": 0.3,
+"randomRotation": true,
+"randomScale": true,
+"randomScaleFactor": 0.2,
+"randomSeed": 0,
+"rotationObjects": 0.0,
+"rows": 2,
+"shift": 15.0,
+"sides": 3,
+"spawnRate": 0.6,
+"wholeRail": true
+},
+"name": "Rail6 tree3",
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
+}
 },
 "position": Vector3( 3, 0, 0 )
 }
 3,-1={
 "Buildings": {
 },
-"Flora": {
-},
 "Rails": [  ],
 "TrackObjects": {
 },
 "position": Vector3( 3, 0, -1 )
+}
+4,-1={
+"Buildings": {
+},
+"Rails": [  ],
+"TrackObjects": {
+},
+"position": Vector3( 4, 0, -1 )
+}
+4,1={
+"Buildings": {
+},
+"Rails": [  ],
+"TrackObjects": {
+},
+"position": Vector3( 4, 0, 1 )
+}
+4,0={
+"Buildings": {
+},
+"Rails": [  ],
+"TrackObjects": {
+},
+"position": Vector3( 4, 0, 0 )
 }

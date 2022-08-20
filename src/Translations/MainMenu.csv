@@ -42,11 +42,17 @@ MENU_LANGUAGE,Language,Sprache,Lingua,言語,Język,,Idioma,Език,Langue
 MENU_AUTOMATIC_FRAMEDROP_FIX,Automatic Framedrop Fix,Automatischer Framedrop Fix,,,,,Corrección automática de caída de fotogramas,Автоматично коригиране на честотата на кадрите,Correction automatique de l'effet de cadre
 MENU_PERSONS,Enable Passengers,Passagiere,,,,,Activar pasajeros,Пътници,Activer les passagers
 MENU_DYNAMIC_LIGHTS,Dynamic Lights,dynamische Lichter,,,,,Luces dinámicas,Динамични светлини,Lumières dynamiques
+MENU_GENERAL_SETTINGS,General,Allgemein,,,,,,,
 MENU_VISUAL_SETTINGS,Visuals,Grafik,,,,,Visuales,Графика,Visuels
 MENU_AUDIO_SETTINGS,Audio,Audio,,,,,Audio,Звук,Audio
+MENU_INPUT_SETTINGS,Controls,Steuerung,,,,,,,
 MENU_DIFFICULTY_SETTINGS,Difficulty,Schwierigkeit,,,,,Dificultad,Трудност,Difficulté
 MENU_DIFFICULTY_PZB,Enable PZB,PZB einschalten,,,,,Activar PZB,Включване на PZB,Activer PZB
 MENU_DIFFICULTY_SIFA,Enable SIFA,SiFa einschalten,,,,,Activar Dispositivo HM,Включване на SIFA,Activer SIFA
+MENU_ACCESSIBILITY_SETTINGS,Accessibility,Barrierefreiheit,,,,,,,
+MENU_GAMEPLAY_SETTINGS,Gameplay,,,,,,,,
+MENU_DISPLAY_SETTINGS,Display,Anzeige,,,,,,,
+MENU_DETAIL_SETTINGS,Details,Details,,,,,,,
 ,,,,,,,,,
 MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...,Завантаження...,Cargando…,Зареждане…,Chargement…
 ,,,,,,,,,

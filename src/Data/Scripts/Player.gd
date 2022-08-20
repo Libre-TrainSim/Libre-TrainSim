@@ -144,9 +144,9 @@ var distance_on_route: float = 0 # Current position on the whole route (Doesn't 
 var currentRail: Spatial # Node Reference to the current Rail on which we are driving.
 var route_index: int = 0 # Index of the baked route Array.
 var next_signal_index: int = 0 # Index of NEXT signal on baked route signal array
-var spawn_information: Dictionary # Calculated by RouteManager, delivered by world.
-var station_table: Array # Calculated by RouteManager, delivered by world.
-var despawn_information: Dictionary # Calculated by RouteManager, delivered by world.
+var spawn_point: RoutePointSpawnPoint # Calculated by ScenarioRoute, delivered by world.
+var station_table: Array # Calculated by ScenarioRoute, delivered by world.
+var despawn_point: RoutePointDespawnPoint # Calculated by ScenarioRoute, delivered by world.
 
 # Reference delta at 60fps
 const refDelta: float = 0.0167 # 1.0 / 60
@@ -185,9 +185,9 @@ func ready() -> void:
 	world = get_parent().get_parent()
 
 	if ai:
-		initialSpeed = Math.kmHToSpeed(spawn_information.initial_speed)
-	if spawn_information.initial_speed_limit != -1:
-		currentSpeedLimit = spawn_information.initial_speed_limit
+		initialSpeed = Math.kmHToSpeed(spawn_point.initial_speed)
+	if spawn_point.initial_speed_limit != -1:
+		currentSpeedLimit = spawn_point.initial_speed_limit
 	else:
 		currentSpeedLimit = speedLimit
 	if station_table.size() > 0 and station_table[0].type == StopType.BEGINNING:
@@ -227,15 +227,15 @@ func ready() -> void:
 
 	## Get driving handled
 	## Set the Train at the beginning of the rail, and after that set the distance on the Rail forward, which is standing in var startPosition
-	distance_on_rail = spawn_information.distance
-	forward = spawn_information.forward
-	currentRail = world.get_rail(spawn_information.rail_name)
+	distance_on_rail = spawn_point.distance
+	forward = spawn_point.forward
+	currentRail = world.get_rail(spawn_point.rail_name)
 	assert(currentRail != null)
 
 	if forward:
-		distance_on_route = spawn_information.distance
+		distance_on_route = spawn_point.distance
 	else:
-		distance_on_route = currentRail.length - spawn_information.distance
+		distance_on_route = currentRail.length - spawn_point.distance
 
 	## Set Train to Route:
 	if forward:
@@ -1099,7 +1099,7 @@ func bake_route() -> void: ## Generate the whole route for the train.
 	baked_route = []
 	baked_route_direction = [forward]
 
-	baked_route.append(spawn_information.rail_name)
+	baked_route.append(spawn_point.rail_name)
 	var currentR = world.get_node("Rails").get_node(baked_route[0]) ## imagine: current rail, which the train will drive later
 
 	var currentpos: Vector3
@@ -1346,7 +1346,7 @@ func set_signalAfters() -> void:
 
 
 func spawnWagons() -> void:
-	var nextWagonPosition: float = spawn_information.distance
+	var nextWagonPosition: float = spawn_point.distance
 	for wagon in wagons:
 		var wagonNode: Spatial = get_node(wagon)
 		var newWagon: Spatial = wagonNode.duplicate()
@@ -1550,17 +1550,18 @@ func checkDespawn() -> void:
 	if not ai:
 		return
 
-	if despawn_information.type == RoutePointType.STATION and despawn_information.stop_type == StopType.END:
+	if despawn_point.type == RoutePointType.STATION and despawn_point.stop_type == StopType.END:
 		# Despawn if the train has arrived at the endstation and the planned arrival is two minutes in the past
-		if world.time > despawn_information.arrival_time + 60*2 and get_station_table_index_of_station_node_name(despawn_information.node_name) >= current_station_table_index:
+		if world.time > despawn_point.arrival_time + 60*2 and get_station_table_index_of_station_node_name(despawn_point.node_name) >= current_station_table_index:
 			despawn()
 
-	if despawn_information.type == RoutePointType.DESPAWN_POINT:
-		if currentRail.name == despawn_information.rail_name:
-			if forward and distance_on_rail > despawn_information.distance:
+	if despawn_point.type == RoutePointType.DESPAWN_POINT:
+		if currentRail.name == despawn_point.rail_name:
+			if forward and distance_on_rail > despawn_point.distance:
 				despawn()
-			if not forward and distance_on_rail < despawn_information.distance:
+			if not forward and distance_on_rail < despawn_point.distance:
 				despawn()
+
 
 func despawn() -> void:
 	freeLastSignalBecauseOfDespawn()

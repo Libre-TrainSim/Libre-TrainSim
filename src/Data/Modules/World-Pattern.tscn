@@ -23,7 +23,6 @@ environment = ExtResource( 7 )
 [node name="Rails" type="Spatial" parent="."]
 
 [node name="Rail" parent="Rails" instance=ExtResource( 3 )]
-isSwitchPart = [ "", "" ]
 
 [node name="Buildings" type="Spatial" parent="."]
 script = ExtResource( 9 )

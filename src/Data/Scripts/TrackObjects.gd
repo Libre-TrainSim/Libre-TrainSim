@@ -5,9 +5,9 @@ export (String) var attached_rail: String
 export (float) var on_rail_position: float
 export (float) var length: float
 
-export (String) var objectPath: String = ""
-export var materialPaths: Array = []
-export (PlatformSide.TypeHint) var sides: int = 0 #0: No Side, 1: Left, 2: Right 4: Both
+export (Mesh) var mesh: Mesh = null
+export (Array, Material) var materials := []
+export (PlatformSide.TypeHint) var sides: int = 0 # 0: No Side, 1: Left, 2: Right 4: Both
 export (float) var spawnRate: float = 1
 export (int) var rows: int
 export (float) var distanceLength: float = 10
@@ -40,8 +40,6 @@ func get_data() -> Dictionary:
 	d.attached_rail = attached_rail
 	d.on_rail_position = on_rail_position
 	d.length = length
-	d.objectPath = objectPath
-	d.materialPaths = materialPaths.duplicate()
 	d.sides = sides
 	d.spawnRate = spawnRate
 	d.rows = rows
@@ -69,8 +67,6 @@ func set_data(d: Dictionary) -> void:
 	attached_rail = d.attached_rail
 	on_rail_position = d.on_rail_position
 	length = d.length
-	objectPath = d.objectPath
-	materialPaths = d.materialPaths
 	sides = d.sides
 	spawnRate = d.spawnRate
 	rows = d.rows
@@ -110,12 +106,18 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	make_mesh_unique()
 
 
-func _on_world_origin_shifted(delta: Vector3):
-	translation += delta
-	update()
+func make_mesh_unique():
+	assert(mesh != null)
+
+	multimesh = MultiMesh.new()
+	multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	multimesh.mesh = mesh.duplicate()
+	var count: int = int(min(multimesh.mesh.get_surface_count(), materials.size()))
+	for i in range(count):
+		multimesh.mesh.surface_set_material(i, materials[i])
 
 
 func update() -> void:
@@ -129,15 +131,6 @@ func update() -> void:
 		length = rail_node.length
 
 	translation = rail_node.get_pos_at_distance(on_rail_position)
-	if multimesh.mesh == null and objectPath != "":
-		multimesh.mesh = load(objectPath).duplicate()
-
-	if is_instance_valid(multimesh.mesh):
-		var count: int = int(min(multimesh.mesh.get_surface_count(), materialPaths.size()))
-		for x in range(count):
-			if materialPaths[x] != "":
-				var material_path: String = materialPaths[x]
-				multimesh.mesh.surface_set_material(x, load(material_path))
 
 	var straightCount: int = int(length / distanceLength)
 	if placeLast:
@@ -151,6 +144,15 @@ func update() -> void:
 		self.multimesh.instance_count = int(straightCount * rows)
 	if sides == 3:
 		self.multimesh.instance_count = int(straightCount * rows)*2
+
+	update_multimesh_positions()
+
+
+func update_multimesh_positions() -> void:
+	var straightCount: int = int(length / distanceLength)
+	if placeLast:
+		straightCount += 1
+
 	var idx: int = 0
 	var railpos: float = on_rail_position
 	seed(randomSeed)
@@ -199,7 +201,7 @@ func update() -> void:
 					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
 					idx += 1
 		railpos += distanceLength
-		self.multimesh.visible_instance_count = idx
+	self.multimesh.visible_instance_count = idx
 
 
 func newSeed() -> void:

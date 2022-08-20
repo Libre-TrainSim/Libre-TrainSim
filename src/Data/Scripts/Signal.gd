@@ -161,7 +161,7 @@ func give_signal_free() -> void:
 		set_status(SignalStatus.GREEN)
 
 
-func set_data(d: Dictionary) -> void:
+func set_data(d: SignalSettings) -> void:
 	set_status(d.status)
 	signal_free_time = d.signal_free_time
 	set_speed(d.speed)

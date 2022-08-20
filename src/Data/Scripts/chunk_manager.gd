@@ -6,11 +6,10 @@ signal _thread_finished_loading
 
 const world_origin_shift_treshold: int = 5_000  # if further than this from origin, recenter world origin
 const chunk_size: int = 1000  # extend of a chunk in all directions
-const GRASS_HEIGHT: float = -0.5
+const chunk_prefab := preload("res://Data/Modules/chunk_prefab.tscn")
 
-var grass_mesh: PlaneMesh
-
-var world
+var world = null
+var editor = null
 var world_origin := Vector3(0, 0, 0)
 
 var loaded_chunks := []  # chunks that are *actually* loaded
@@ -27,7 +26,7 @@ var _thread_semaphore: Semaphore
 var _chunk_mutex: Mutex
 var _saving_mutex: Mutex
 var _kill_thread := false
-var _jsavemodule
+
 
 func position_to_chunk(position: Vector3) -> Vector3:
 	position = position - world_origin
@@ -39,8 +38,8 @@ func chunk_to_position(chunk: Vector3) -> Vector3:
 
 
 # needed for serialisation
-func chunk_to_string(chunk: Vector3) -> String:
-	return "%s,%s" % [chunk.x, chunk.z]
+static func chunk_to_string(chunk: Vector3) -> String:
+	return "chunk_%d_%d" % [chunk.x, chunk.z]
 
 
 func is_position_in_loaded_chunk(position: Vector3) -> bool:
@@ -70,13 +69,10 @@ func get_3x3_chunks(around: Vector3):
 
 
 func _ready():
-	grass_mesh = PlaneMesh.new()
-	grass_mesh.size = Vector2(500, 500)
-	grass_mesh.material = preload("res://Resources/Materials/Grass_new.tres")
-
 	assert(world != null)
-
-	_jsavemodule = world.j_save_module
+	if Root.Editor:
+		editor = find_parent("Editor")
+		assert(editor != null)
 
 	_thread_semaphore = Semaphore.new()
 	_chunk_mutex = Mutex.new()
@@ -84,11 +80,11 @@ func _ready():
 	connect("_thread_finished_loading", self, "_finish_chunk_loading")
 
 	# backwards compat.
-	if not world.has_node("Landscape"):
-		var landscape := Spatial.new()
-		landscape.name = "Landscape"
-		world.add_child(landscape)
-		landscape.owner = world
+	if not world.has_node("Chunks"):
+		var chunks_node := Spatial.new()
+		chunks_node.name = "Chunks"
+		world.add_child(chunks_node)
+		chunks_node.owner = world
 
 	_thread = Thread.new()
 	_thread.start(self, "_chunk_loader_thread")
@@ -147,45 +143,51 @@ func _save_chunks(chunks: Array):
 
 
 func _save_chunk(chunk_pos: Vector3):
-	var chunk := {
-		"position": chunk_pos,
-		"Rails": [],
-		"Buildings": {},
-		"TrackObjects": {}
-	}
+	assert(Root.Editor)
 
+	# get chunks dir
+	var base_path = editor.current_track_path.get_base_dir().plus_file("chunks")
+	var dir = Directory.new()
+	if not dir.dir_exists(base_path):
+		dir.make_dir_recursive(base_path)
+
+	# find the chunk
+	var chunk: Chunk = world.get_node("Chunks").get_node_or_null(chunk_to_string(chunk_pos))
+	if not is_instance_valid(chunk):
+		Logger.err("Trying to save chunk that has been free()'d: %s" % chunk_to_string(chunk_pos), self)
+		return
+
+	# add rails to chunk
+	chunk.rails = []
+	chunk.is_empty = true
 	for rail in world.get_node("Rails").get_children():
-		var rail_pos = position_to_chunk(rail.global_transform.origin)
-		if rail_pos == chunk_pos:
-			chunk.Rails.append(rail.name)
+		if not rail.has_meta("chunk_pos"):
+			rail.set_meta("chunk_pos", position_to_chunk(rail.global_transform.origin))
+		if rail.get_meta("chunk_pos") == chunk_pos:
+			chunk.rails.append(rail.name)
+			chunk.is_empty = false
 
-	for building in world.get_node("Buildings").get_children():
-		var building_pos = position_to_chunk(building.global_transform.origin)
-		if building_pos == chunk_pos:
-			var surface_arr := []
-			for i in range(building.get_surface_material_count()):
-				surface_arr.append(building.get_surface_material(i))
-			chunk.Buildings[building.name] = {
-				"name": building.name,
-				"transform": building.transform,
-				"mesh_path": building.mesh.resource_path,
-				"surfaceArr": surface_arr
-			}
+	# don't save empty chunks
+	if chunk.is_empty:
+		return
 
-	for track_object in world.get_node("TrackObjects").get_children():
-		var to_pos = position_to_chunk(track_object.global_transform.origin)
-		if to_pos == chunk_pos:
-			chunk.TrackObjects[track_object.name] = {
-				"name": track_object.name,
-				"transform": track_object.transform,
-				"data": track_object.get_data()
-			}
+	# write chunk to disk
+	chunk._prepare_saving()
 
-	_jsavemodule.save_value(chunk_to_string(chunk_pos), null)
-	_jsavemodule.save_value(chunk_to_string(chunk_pos), chunk)
+	var packed_chunk = PackedScene.new()
+	if packed_chunk.pack(chunk) != OK:
+		Logger.err("Could not pack chunk to tscn!", self)
+		return
+
+	var file = base_path.plus_file(chunk.name) + ".tscn"
+	if ResourceSaver.save(file, packed_chunk) != OK:
+		Logger.err("Could not save chunk tscn!", self)
+		return
+
+	# delete the chunk from scene tree, it's reloaded later
+	chunk.queue_free()
 
 	world.world_origin_on_last_save = world_origin
-
 	Logger.log("Saved Chunk " + chunk_to_string(chunk_pos))
 
 
@@ -205,7 +207,7 @@ func save_and_unload_all_chunks():
 
 	_saving_mutex.lock()
 	chunks_to_load = []
-	_unload_old_chunks(true)
+	_unload_old_chunks(true) # this also saves the chunks :)
 
 
 # this is the missing unlock from `save_and_unload_all_chunks()` - needed for Editor purposes
@@ -233,16 +235,16 @@ func _finish_chunk_loading():
 
 
 # called deferred from Thread
-func _add_node_to_scene_tree(parent: String, instance: Spatial):
-	if world.get_node(parent).get_node_or_null(instance.name) != null:
-		Logger.err("Tried to ad an object to world, which is already loaded. Skip loading this object.", instance)
+func _add_chunk_to_scene_tree(chunk: Chunk):
+	if world.get_node("Chunks").has_node(chunk.name) != null:
+		Logger.err("Chunk already loaded: %s" % chunk.name, self)
+		chunk.queue_free()
 		return
 
-	world.get_node(parent).add_child(instance)
-	instance.owner = world
-	instance.translation += world_origin
-	if instance.has_method("update"):
-		instance.update()
+	world.get_node("Chunks").add_child(chunk)
+	chunk.owner = world
+	chunk._on_world_origin_shifted(world_origin)
+	chunk.update()
 
 
 func append_deduplicated(A: Array, B: Array):
@@ -272,25 +274,28 @@ func _unload_old_chunks(all: bool = false):
 	if Root.Editor:
 		_save_chunks(chunks_to_unload)
 
+	# unload rails (they aren't chunked)
 	for rail in world.get_node("Rails").get_children():
-		var rail_pos = position_to_chunk(rail.global_transform.origin)
-		if rail_pos in chunks_to_unload:
+		if rail.get_meta("chunk_pos") in chunks_to_unload:
 			rail.unload_visible_instance()
 
-	for group in ["TrackObjects", "Buildings", "Landscape"]:
-		var parent = world.get_node(group)
-		for child in parent.get_children():
-			if all or (child.get_meta("chunk_pos") in chunks_to_unload):
-				child.free()
-
 	# remove unloaded chunks
-	for chunk in chunks_to_unload:
-		loaded_chunks.erase(chunk)
+	for chunk_pos in chunks_to_unload:
+		var chunk = world.get_node("Chunks").get_node_or_null(chunk_to_string(chunk_pos))
+		if is_instance_valid(chunk):
+			chunk.queue_free()
+		loaded_chunks.erase(chunk_pos)
+
 	_chunk_mutex.unlock()
 
 
 # handle loading chunks from disk on a separate thread to avoid lags
 func _chunk_loader_thread(_void):
+	var dir = Directory.new()
+	if dir.open("res://") != OK:
+		Logger.err("Cannot open resource directory.", self)
+		return
+
 	while true:
 		_thread_semaphore.wait()
 		#yield(get_tree(), "idle_frame")  # uncomment this for debugging
@@ -304,69 +309,28 @@ func _chunk_loader_thread(_void):
 		for chunk_pos in chunks_to_load:
 			if chunk_pos in loaded_chunks:
 				continue
-			var chunk: Dictionary = _jsavemodule.get_value(chunk_to_string(chunk_pos), {"empty": true})
 
-			_generate_landscape(chunk, chunk_pos)
+			var chunk_file := ""
+			if Root.Editor:
+				chunk_file = editor.current_track_path.get_base_dir().plus_file("chunks")
+			else:
+				chunk_file = Root.current_track.get_base_dir().plus_file("chunks")
+			chunk_file = chunk_file.plus_file(chunk_to_string(chunk_pos)) + ".tscn"
 
-			if chunk.has("empty"):
-				continue
+			var chunk: Chunk
+			if dir.file_exists(chunk_file):
+				chunk = load(chunk_file).instance() as Chunk
+			else:
+				# load empty chunk
+				chunk = chunk_prefab.instance() as Chunk
+				chunk.name = chunk_to_string(chunk_pos)
+				chunk.chunk_position = chunk_pos
 
-			## Buildings:
-			if chunk.has("Buildings"):
-				for building in chunk["Buildings"].values():
-					if not building.has_all(["name", "mesh_path", "transform", "surfaceArr"]):
-						Logger.warn("Building is missing some keys!", self)
-						continue
-
-					var instance := MeshInstance.new()
-					instance.set_script(load("res://Data/Scripts/world_object.gd"))
-					instance.name = building.name
-					instance.set_mesh(load(building.mesh_path))
-					instance.transform = building.transform
-					var surface_arr: Array = building.get("surfaceArr", [])
-					for i in range (surface_arr.size()):
-						instance.set_surface_material(i, surface_arr[i])
-					instance.set_meta("chunk_pos", chunk_pos)
-					var old_script = instance.get_script()
-					instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
-					instance.target = NodePath(".")
-					instance.generate_collider()
-					instance.set_script(old_script)
-					call_deferred("_add_node_to_scene_tree", "Buildings", instance)
-
-			## TrackObjects:
-			var track_object_prefab: PackedScene = preload("res://Data/Modules/TrackObjects.tscn")
-			if chunk.has("TrackObjects"):
-				for track_object in chunk["TrackObjects"].values():
-					if not track_object.has_all(["name", "data", "transform"]):
-						Logger.warn("TrackObject is missing some keys!", self)
-						continue
-
-					var instance: Spatial = track_object_prefab.instance()
-					instance.name = track_object.name
-					instance.set_data(track_object.data)
-					instance.transform = track_object.transform
-					instance.set_meta("chunk_pos", chunk_pos)
-					call_deferred("_add_node_to_scene_tree", "TrackObjects", instance)
+			call_deferred("_add_chunk_to_scene_tree", chunk)
 
 		_chunk_mutex.unlock()
 		_saving_mutex.unlock()
 		call_deferred("_emit_thread_finished_loading")
-
-
-func _generate_landscape(chunk, chunk_pos):
-	var has_landscape: bool = chunk.has("Landscape") and not chunk["Landscape"].empty()
-	if not has_landscape:
-		for v in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
-			var mi = MeshInstance.new()
-			mi.set_script(load("res://Data/Scripts/world_object.gd"))
-			mi.mesh = grass_mesh
-			mi.translation = (chunk_pos * chunk_size) + (Vector3(250 * v.x, GRASS_HEIGHT, 250 * v.y))
-			mi.set_meta("chunk_pos", chunk_pos)
-			call_deferred("_add_node_to_scene_tree", "Landscape", mi)
-	else:
-		# TODO: load landscape (heightmap, whatever), not implemented yet
-		pass
 
 
 func _emit_thread_finished_loading() -> void:

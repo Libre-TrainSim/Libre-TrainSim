@@ -52,9 +52,9 @@ func set_to_rail() -> void:
 	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
 		rail = get_parent().get_parent().get_node("Rails/"+attached_rail)
 		rail.register_signal(self.name, on_rail_position)
-		self.transform = rail.get_global_transform_at_rail_distance(on_rail_position)
+		self.transform = rail.get_global_transform_at_distance(on_rail_position)
 		if not forward:
-			rotation_degrees.y += 180
+			rotation.y += PI
 
 
 func spawnPersonsAtBeginning() -> void:
@@ -98,27 +98,27 @@ func getRandomTransformAtPlatform() -> Transform:
 		var randRailDistance = int(rand_range(on_rail_position, on_rail_position+length))
 		if platform_side == PlatformSide.LEFT:
 			return Transform(Basis( \
-					Vector3(0, deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)), \
-					rail.get_shifted_global_pos_at_RailDistance( \
+					Vector3(0, rail.get_rad_at_distance(randRailDistance), 0)), \
+					rail.get_shifted_global_pos_at_distance( \
 					randRailDistance, rand_range(-platformStart, -platformEnd)) \
 					+ Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0, \
-					deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), \
-					rail.get_shifted_global_pos_at_RailDistance( \
+					rail.get_rad_at_distance(randRailDistance)+PI, 0)), \
+					rail.get_shifted_global_pos_at_distance( \
 					randRailDistance, rand_range(platformStart, platformEnd)) \
 					+ Vector3(0, platformHeight, 0))
 	else:
 		var randRailDistance = int(rand_range(on_rail_position, on_rail_position-length))
 		if platform_side == PlatformSide.LEFT:
 			return Transform(Basis(Vector3(0, \
-					deg2rad(rail.get_deg_at_RailDistance(randRailDistance)+180.0), 0)), \
-					rail.get_shifted_global_pos_at_RailDistance(randRailDistance, \
+					rail.get_rad_at_distance(randRailDistance)+PI, 0)), \
+					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0, \
-					deg2rad(rail.get_deg_at_RailDistance(randRailDistance)), 0)), \
-					rail.get_shifted_global_pos_at_RailDistance(randRailDistance, \
+					rail.get_deg_at_distance(randRailDistance), 0)), \
+					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 	Logger.warn("Unsupported platform type %s" % platform_side, self)
 	#assert(false) # Unsupported platform type. I don't wanna fix here

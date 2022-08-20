@@ -287,9 +287,9 @@ func _get_path_from_to_helper(start_rail: Node, forward: bool, already_visited_r
 
 
 # Not called automaticly. From any instance or button, but very helpful.
-func update_all_rails_overhead_line_setting(overhead_line: bool) -> void:
+func update_all_rails_overhead_line_setting(has_overhead_line: bool) -> void:
 	for rail in $Rails.get_children():
-		rail.overheadLine = overhead_line
+		rail.has_overhead_line = has_overhead_line
 		rail.updateOverheadLine()
 
 

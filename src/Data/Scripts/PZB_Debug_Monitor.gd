@@ -28,7 +28,7 @@ func _process(_delta: float) -> void:
 		4: $PanelContainer/GridContainer/PZBMagnet.text = "1000Hz"
 		8: $PanelContainer/GridContainer/PZBMagnet.text = "2000Hz"
 
-	$PanelContainer/GridContainer/PZBSpeed.text = str(Math.speedToKmH(pzb.pzb_speed_limit))
+	$PanelContainer/GridContainer/PZBSpeed.text = str(Math.speed_to_kmh(pzb.pzb_speed_limit))
 
 	if $"../AckTimer".is_stopped():
 		$PanelContainer/GridContainer/AckTimer.text = "STOPPED"

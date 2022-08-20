@@ -61,7 +61,7 @@ func update_active(_signal_instance: Spatial) -> void:
 	if hz == 500 or hz == 2000:
 		is_active = (attached_signal_node.status == SignalStatus.RED)
 	elif hz == 1000:
-		is_active = (attached_signal_node.status == SignalStatus.ORANGE) or (attached_signal_node.warn_speed > 0 and attached_signal_node.warn_speed < Math.kmHToSpeed(80))
+		is_active = (attached_signal_node.status == SignalStatus.ORANGE) or (attached_signal_node.warn_speed > 0 and attached_signal_node.warn_speed < Math.kmh_to_speed(80))
 		# TODO: special case: warn_speed 80 or 90 still need Ack, but limit to different speeds
 		# warn speeds 100 and above are NOT checked and don't require PZB Ack
 
@@ -75,7 +75,7 @@ func set_to_rail() -> void:
 			return
 
 	attached_rail_node.register_signal(self.name, on_rail_position)
-	self.translation = attached_rail_node.get_pos_at_RailDistance(on_rail_position)
-	self.rotation_degrees.y = attached_rail_node.get_deg_at_RailDistance(on_rail_position)
+	self.translation = attached_rail_node.get_pos_at_distance(on_rail_position)
+	self.rotation.y = attached_rail_node.get_rad_at_distance(on_rail_position)
 	if not forward:
 		self.rotation_degrees.y += 180

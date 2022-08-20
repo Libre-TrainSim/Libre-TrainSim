@@ -150,10 +150,10 @@ func set_to_rail() -> void:
 		var rail: Node = world.get_node("Rails/"+attached_rail)
 		if not Root.scenario_editor:
 			rail.register_signal(self.name, on_rail_position)
-			self.translation = rail.get_pos_at_RailDistance(on_rail_position)
-			self.rotation_degrees.y = rail.get_deg_at_RailDistance(on_rail_position)
+			self.translation = rail.get_pos_at_distance(on_rail_position)
+			self.rotation.y = rail.get_rad_at_distance(on_rail_position)
 			if not forward:
-				self.rotation_degrees.y += 180
+				self.rotation.y += PI
 
 
 func give_signal_free() -> void:

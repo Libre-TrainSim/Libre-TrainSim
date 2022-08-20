@@ -239,10 +239,10 @@ func ready() -> void:
 
 	## Set Train to Route:
 	if forward:
-		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
+		self.transform = currentRail.get_transform_at_distance(distance_on_rail)
 	else:
-		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
-		rotate_object_local(Vector3(0,1,0), deg2rad(180))
+		self.transform = currentRail.get_transform_at_distance(distance_on_rail)
+		rotate_object_local(Vector3(0,1,0), PI)
 	if debug and not ai:
 		command = 0
 		soll_command = 0
@@ -518,7 +518,7 @@ func getSpeed(delta: float) -> void:
 		return
 	var lastspeed = speed
 	## Slope:
-	var currentSlope = currentRail.get_heightRot(distance_on_rail)
+	var currentSlope = currentRail.get_height_rot(distance_on_rail)
 	if not forward:
 		currentSlope = -currentSlope
 	if reverser == ReverserState.REVERSE:
@@ -545,8 +545,8 @@ func getSpeed(delta: float) -> void:
 
 #	if speed < 0:
 #		speed = 0
-	if Math.speedToKmH(speed) > speedLimit:
-		speed = Math.kmHToSpeed(speedLimit)
+	if Math.speed_to_kmh(speed) > speedLimit:
+		speed = Math.kmh_to_speed(speedLimit)
 	if delta != 0:
 		currentRealAcceleration = (speed - lastspeed) * 1/delta
 	if debug:
@@ -568,10 +568,10 @@ func drive(delta: float) -> void:
 
 	if not rendering: return
 	if forward:
-		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
+		self.transform = currentRail.get_transform_at_distance(distance_on_rail)
 	else:
-		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
-		rotate_object_local(Vector3(0,1,0), deg2rad(180))
+		self.transform = currentRail.get_transform_at_distance(distance_on_rail)
+		rotate_object_local(Vector3(0,1,0), PI)
 
 
 func change_to_next_rail() -> void:
@@ -634,7 +634,7 @@ func change_to_next_rail() -> void:
 	Logger.vlog(old_radius)
 
 	Logger.vlog(radius_difference_factor)
-	curve_shaking_factor = radius_difference_factor * Math.speedToKmH(speed) / 100.0 * camera_shaking_factor
+	curve_shaking_factor = radius_difference_factor * Math.speed_to_kmh(speed) / 100.0 * camera_shaking_factor
 
 
 var mouseMotion: Vector2 = Vector2()
@@ -1012,9 +1012,9 @@ func check_pantograph(delta: float) -> void:
 
 var checkSpeedLimitTimer: float = 0
 func checkSpeedLimit(delta: float) -> void:
-	if Math.speedToKmH(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
+	if Math.speed_to_kmh(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
-		score -= int(round((Math.speedToKmH(speed) - currentSpeedLimit) * SCORE_MULTIPLIER_TOO_FAST))
+		score -= int(round((Math.speed_to_kmh(speed) - currentSpeedLimit) * SCORE_MULTIPLIER_TOO_FAST))
 		send_message(tr("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
 	checkSpeedLimitTimer += delta
 
@@ -1107,13 +1107,13 @@ func bake_route() -> void: ## Generate the whole route for the train.
 	var currentF: bool = forward
 
 	if currentF: ## Forward
-		currentpos = currentR.endpos
-		currentrot = currentR.endrot
+		currentpos = currentR.end_pos
+		currentrot = currentR.end_rot
 	else: ## Backward
-		currentpos = currentR.startpos
-		currentrot = currentR.startrot - 180.0
+		currentpos = currentR.start_pos
+		currentrot = currentR.start_rot - 180.0
 
-	var rail_signals: Array = currentR.attachedSignals
+	var rail_signals: Array = currentR.attached_signals
 
 	rail_signals.sort_custom(self, "sort_signals_by_distance")
 	if not currentF:
@@ -1134,21 +1134,10 @@ func bake_route() -> void: ## Generate the whole route for the train.
 
 	while(true): ## Find next Rail
 		var possibleRails: Array = []
-		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the endposition of current rail:
-			# Dont delete, Could be useful for debugging:
-#			if rail.name == "HarrasPConnector" and currentR.name == "HarrasP":
-#				print("########")
-#				print(currentpos)
-#				print(rail.startpos)
-#				print(rail.endpos)
-#				print(currentrot)
-#				print(rail.startrot)
-#				print(rail.endrot)
-#				print(currentpos.distance_to(rail.endpos))
-#				print(Math.angle_distance_deg(currentrot, rail.endrot+180))
-			if rail.name != currentR.name and currentpos.distance_to(rail.startpos) < 0.2 and Math.angle_distance_deg(currentrot, rail.startrot) < 1:
+		for rail in world.get_node("Rails").get_children(): ## Get Rails, which are in the near of the end_position of current rail:
+			if rail.name != currentR.name and currentpos.distance_to(rail.start_pos) < 0.2 and Math.angle_distance_rad(currentrot, rail.start_rot) < deg2rad(1):
 				possibleRails.append(rail.name)
-			elif rail.name != currentR.name and currentpos.distance_to(rail.endpos) < 0.2 and Math.angle_distance_deg(currentrot, rail.endrot+180) < 1:
+			elif rail.name != currentR.name and currentpos.distance_to(rail.end_pos) < 0.2 and Math.angle_distance_rad(currentrot, rail.end_rot+PI) < deg2rad(1):
 				possibleRails.append(rail.name)
 
 		var rail_candidate: String = ""
@@ -1167,7 +1156,7 @@ func bake_route() -> void: ## Generate the whole route for the train.
 
 		## Set Rail to "End" of newly added Rail
 		currentR = world.get_node("Rails").get_node(rail_candidate) ## Get "current Rail"
-		if currentpos.distance_to(currentR.translation) < currentpos.distance_to(currentR.endpos):
+		if currentpos.distance_to(currentR.translation) < currentpos.distance_to(currentR.end_pos):
 			currentF = true
 		else:
 			currentF = false
@@ -1183,7 +1172,7 @@ func bake_route() -> void: ## Generate the whole route for the train.
 
 
 		# bake signals
-		rail_signals = currentR.attachedSignals
+		rail_signals = currentR.attached_signals
 		rail_signals.sort_custom(self, "sort_signals_by_distance")
 		if not currentF:
 			rail_signals.invert()
@@ -1201,11 +1190,11 @@ func bake_route() -> void: ## Generate the whole route for the train.
 		complete_route_length += currentR.length
 
 		if currentF: ## Forward
-			currentpos = currentR.endpos
-			currentrot = currentR.endrot
+			currentpos = currentR.end_pos
+			currentrot = currentR.end_rot
 		else: ## Backward
-			currentpos = currentR.startpos
-			currentrot = currentR.startrot - 180.0
+			currentpos = currentR.start_pos
+			currentrot = currentR.start_rot - 180.0
 	Logger.log(name + ": Baking Route finished:")
 	Logger.log(name + ": Baked Route: "+ String(baked_route))
 	Logger.log(name + ": Baked Route: Direction "+ String(baked_route_direction))
@@ -1541,7 +1530,7 @@ func autopilot() -> void:
 
 
 func handleSollSpeed() -> void:
-	var speedDifference: float = sollSpeed - Math.speedToKmH(speed)
+	var speedDifference: float = sollSpeed - Math.speed_to_kmh(speed)
 	if abs(speedDifference) > 4:
 		if speedDifference > 10:
 			soll_command = 1
@@ -1672,7 +1661,7 @@ func get_camera_shaking(delta: float) -> Vector3:
 
 	var camera_shaking: Vector3 = Vector3(sin(camera_shaking_time*10.0), cos(camera_shaking_time*7.0), sin(camera_shaking_time*13.0)) / 10000.0
 
-	var shaking_factor: float = Math.speedToKmH(speed) / 100.0 * abs(sin(camera_shaking_time/5)) * camera_shaking_factor
+	var shaking_factor: float = Math.speed_to_kmh(speed) / 100.0 * abs(sin(camera_shaking_time/5)) * camera_shaking_factor
 
 	shaking_factor = max(shaking_factor, curve_shaking_factor)
 
@@ -1683,20 +1672,20 @@ func get_camera_shaking(delta: float) -> Vector3:
 
 var switch_on_next_change: bool = false
 func updateSwitchOnNextChange():
-	if forward and currentRail.isSwitchPart[1] != "":
+	if forward and currentRail.switch_part[1] != "":
 		switch_on_next_change = true
 		return
-	elif not forward and currentRail.isSwitchPart[0] != "":
+	elif not forward and currentRail.switch_part[0] != "":
 		switch_on_next_change = true
 		return
 
 	if baked_route.size() > route_index+1:
 		var nextRail: Spatial = world.get_node("Rails").get_node(baked_route[route_index+1])
 		var nextForward: bool = baked_route_direction[route_index+1]
-		if nextForward and nextRail.isSwitchPart[0] != "":
+		if nextForward and nextRail.switch_part[0] != "":
 			switch_on_next_change = true
 			return
-		elif not nextForward and nextRail.isSwitchPart[1] != "":
+		elif not nextForward and nextRail.switch_part[1] != "":
 			switch_on_next_change = true
 			return
 

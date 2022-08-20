@@ -97,9 +97,9 @@ func handleWalk(delta: float) -> void:
 	_debug_draw_path()
 	if vector_delta.z != 0:
 		if vector_delta.z > 0:
-			rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))
+			rotation.y = atan(vector_delta.x/vector_delta.z)
 		else:
-			rotation_degrees.y = rad2deg(atan(vector_delta.x/vector_delta.z))+180
+			rotation.y = atan(vector_delta.x/vector_delta.z)+PI
 
 
 func leave_current_wagon()-> void:

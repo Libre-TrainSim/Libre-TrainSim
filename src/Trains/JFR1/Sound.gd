@@ -19,7 +19,7 @@ onready var player: LTSPlayer = get_parent()
 #	pass
 
 #func _process(delta):
-#	var speed = Math.speedToKmH((get_parent().speed))
+#	var speed = Math.speed_to_kmh((get_parent().speed))
 #	var command = get_parent().command
 #
 #	if player.cameraState == 0:

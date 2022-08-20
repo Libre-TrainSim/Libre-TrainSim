@@ -101,7 +101,7 @@ func _process(_delta: float) -> void:
 		send_message(tr("PZB_OVER_SPEED_LIMIT"))
 		emergency_brake()
 
-	if player.speed < Math.kmHToSpeed(10):
+	if player.speed < Math.kmh_to_speed(10):
 		if $RestrictiveTimer.is_stopped() and (pzb_mode & PZBMode.MONITORING):
 			$RestrictiveTimer.start()
 	elif not $RestrictiveTimer.is_stopped():
@@ -150,7 +150,7 @@ func mode_1000hz() -> void:
 	if not was_already_monitoring:
 		# the false is important, it prevents the timer from running when the game is paused
 		yield( get_tree().create_timer(23, false), "timeout" )
-	set_speed_limit(Math.kmHToSpeed(85))
+	set_speed_limit(Math.kmh_to_speed(85))
 
 
 func mode_500hz() -> void:
@@ -158,7 +158,7 @@ func mode_500hz() -> void:
 		send_message(tr("PZB_ILLEGAL_FREE"))
 		emergency_brake()
 	elif not (pzb_mode & PZBMode.EMERGENCY):
-		if player.speed > Math.kmHToSpeed(65):
+		if player.speed > Math.kmh_to_speed(65):
 			send_message(tr("PZB_FAST_500HZ"))
 			emergency_brake()
 
@@ -186,9 +186,9 @@ func restrictive_mode() -> void:
 
 	# set speed limit
 	if pzb_mode & PZBMode._500Hz:
-		pzb_speed_limit = Math.kmHToSpeed(25)
+		pzb_speed_limit = Math.kmh_to_speed(25)
 	else:
-		pzb_speed_limit = Math.kmHToSpeed(45)
+		pzb_speed_limit = Math.kmh_to_speed(45)
 
 	# start mode is equal to RESTRICTIVE_HIDDEN (ie. 1000Hz mode after 700m)
 	# this means it deactivates after 550 meters
@@ -226,9 +226,9 @@ func _on_153m_reached() -> void:
 	if not pzb_mode & PZBMode._500Hz:
 		return
 	if pzb_mode & PZBMode.MONITORING:
-		set_speed_limit(Math.kmHToSpeed(45))
+		set_speed_limit(Math.kmh_to_speed(45))
 	elif pzb_mode & PZBMode.RESTRICTIVE:
-		set_speed_limit(Math.kmHToSpeed(25))
+		set_speed_limit(Math.kmh_to_speed(25))
 
 
 func _on_700m_reached() -> void:
@@ -252,7 +252,7 @@ func _on_250m_reached() -> void:
 	if pzb_mode != PZBMode.EMERGENCY:
 		# 500Hz restrictive = 25km/h, but 500Hz just disabled, so reset to 45km/h
 		if pzb_mode & PZBMode.RESTRICTIVE:
-			pzb_speed_limit = Math.kmHToSpeed(45)
+			pzb_speed_limit = Math.kmh_to_speed(45)
 			pzb_mode = PZBMode.RESTRICTIVE
 		else:
 			pzb_speed_limit = player.currentSpeedLimit

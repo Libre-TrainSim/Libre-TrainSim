@@ -69,7 +69,7 @@ func end_drag_mode() -> void:
 var _last_connected_signal: String = ""
 func handle_drag_mode() -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var plane := Plane(Vector3(0,1,0), selected_object.startpos.y)
+	var plane := Plane(Vector3(0,1,0), selected_object.start_pos.y)
 	var mouse_pos_3d: Vector3 = plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
 	if mouse_pos_3d != null:
 		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
@@ -96,29 +96,29 @@ func handle_drag_mode() -> void:
 
 	# multi-segment snapping (subdivide rail to make angles fit together)
 	if snapped_object != null:
-		var startrot: float = selected_object.startrot
-		var endrot: float = selected_object.endrot
+		var start_rot: float = selected_object.start_rot
+		var end_rot: float = selected_object.end_rot
 		var snap_rot: float
 		var snap_pos: Vector3
 		if snapped_start:
-			snap_rot = snapped_object.startrot
-			snap_pos = snapped_object.startpos
+			snap_rot = snapped_object.start_rot
+			snap_pos = snapped_object.start_pos
 		else:
-			snap_rot = snapped_object.endrot
-			snap_pos = snapped_object.endpos
+			snap_rot = snapped_object.end_rot
+			snap_pos = snapped_object.end_pos
 
-		if Math.angle_distance_deg(endrot, snap_rot) < 1:
+		if Math.angle_distance_rad(end_rot, snap_rot) < deg2rad(1):
 			# angles snapped correctly, we can leave this as is :)
 			pass
-		elif Math.angle_distance_deg(startrot, snap_rot) < 1:
-			if _local_x_distance(startrot, selected_object.startpos, snap_pos) < 20:
+		elif Math.angle_distance_rad(start_rot, snap_rot) < deg2rad(1):
+			if _local_x_distance(start_rot, selected_object.start_pos, snap_pos) < 20:
 				return
 			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_simple_connector"):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_simple_connector"
 				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
-		elif abs(Math.angle_distance_deg(startrot, snap_rot) - 90) < 1:
+		elif abs(Math.angle_distance_rad(start_rot, snap_rot) - (0.5*PI)) < deg2rad(1):
 			# right angle, can be done with straight rail + 90deg curve
 			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_90deg_connector"):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
@@ -139,29 +139,29 @@ func handle_drag_mode() -> void:
 
 
 func _local_x_distance(rot: float, a: Vector3, b: Vector3) -> float:
-	var dir := Vector3(1,0,0).rotated(Vector3.UP, deg2rad(rot)).normalized()
+	var dir := Vector3(1,0,0).rotated(Vector3.UP, rot).normalized()
 	return dir.dot(b - a)
 
 
 func _local_z_distance(rot: float, a: Vector3, b: Vector3) -> float:
-	var dir := Vector3(0,0,1).rotated(Vector3.UP, deg2rad(rot)).normalized()
+	var dir := Vector3(0,0,1).rotated(Vector3.UP, rot).normalized()
 	return dir.dot(b - a)
 
 
 func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
-	var startpos: Vector3 = selected_object.startpos
-	var startrot: float = selected_object.startrot
+	var start_pos: Vector3 = selected_object.start_pos
+	var start_rot: float = selected_object.start_rot
 
-	var start_dir := Vector3(1,0,0).rotated(Vector3.UP, deg2rad(selected_object.startrot)).normalized()
-	var ortho_dir := Vector3(0,0,1).rotated(Vector3.UP, deg2rad(selected_object.startrot)).normalized()
+	var start_dir := Vector3(1,0,0).rotated(Vector3.UP, selected_object.start_rot).normalized()
+	var ortho_dir := Vector3(0,0,1).rotated(Vector3.UP, selected_object.start_rot).normalized()
 
-	var x_length: float = abs(start_dir.dot(snap_pos - startpos))
-	var y_length: float = ortho_dir.dot(snap_pos - startpos)
+	var x_length: float = abs(start_dir.dot(snap_pos - start_pos))
+	var y_length: float = ortho_dir.dot(snap_pos - start_pos)
 	var y_sign: float = sign(y_length)
 	y_length = abs(y_length)
 
 	if abs(x_length - y_length) < 1:
-		var new_end: Vector3 = startpos + Vector3(x_length, 0, y_sign * y_length).rotated(Vector3.UP, deg2rad(startrot))
+		var new_end: Vector3 = start_pos + Vector3(x_length, 0, y_sign * y_length).rotated(Vector3.UP, start_rot)
 		selected_object.calculate_from_start_end(new_end)
 
 	elif x_length > y_length:
@@ -170,22 +170,22 @@ func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
 		selected_object.update()
 
 		var rail2: Node = _spawn_rail()
-		rail2.translation = selected_object.endpos
-		rail2.startpos = selected_object.endpos
-		rail2.rotation_degrees.y = selected_object.endrot
-		rail2.startrot = selected_object.endrot
-		var new_end = rail2.startpos + Vector3(y_length, 0, y_sign * y_length).rotated(Vector3.UP, deg2rad(startrot))
+		rail2.translation = selected_object.end_pos
+		rail2.start_pos = selected_object.end_pos
+		rail2.rotation_degrees.y = selected_object.end_rot
+		rail2.start_rot = selected_object.end_rot
+		var new_end = rail2.start_pos + Vector3(y_length, 0, y_sign * y_length).rotated(Vector3.UP, start_rot)
 		rail2.calculate_from_start_end(new_end)
 
 	else:
-		var new_end: Vector3 = startpos + Vector3(x_length, 0, y_sign * x_length).rotated(Vector3.UP, deg2rad(startrot))
+		var new_end: Vector3 = start_pos + Vector3(x_length, 0, y_sign * x_length).rotated(Vector3.UP, start_rot)
 		selected_object.calculate_from_start_end(new_end)
 
 		var rail2: Node = _spawn_rail()
-		rail2.translation = selected_object.endpos
-		rail2.startpos = selected_object.endpos
-		rail2.rotation_degrees.y = selected_object.endrot
-		rail2.startrot = selected_object.endrot
+		rail2.translation = selected_object.end_pos
+		rail2.start_pos = selected_object.end_pos
+		rail2.rotation_degrees.y = selected_object.end_rot
+		rail2.start_rot = selected_object.end_rot
 		rail2.radius = 0
 		rail2.length = y_length - x_length
 		rail2.update()
@@ -194,17 +194,17 @@ func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
 func _snap_simple_connector(snap_pos: Vector3, snap_rot: float) -> void:
 	# can easily connect with 2 segments
 	# this is basically the old rail connector for switches
-	var rail1_end: Vector3 = 0.5 * (selected_object.startpos + snap_pos)
+	var rail1_end: Vector3 = 0.5 * (selected_object.start_pos + snap_pos)
 	selected_object.calculate_from_start_end(rail1_end)
 
 	var rail2: Node = _spawn_rail()
 	rail2.translation = rail1_end
-	rail2.startpos = rail1_end
-	rail2.rotation_degrees.y = selected_object.endrot
-	rail2.startrot = selected_object.endrot
+	rail2.start_pos = rail1_end
+	rail2.rotation_degrees.y = selected_object.end_rot
+	rail2.start_rot = selected_object.end_rot
 	rail2.calculate_from_start_end(snap_pos)
 
-	assert(Math.angle_distance_deg(rail2.endrot, snap_rot) < 1)
+	assert(Math.angle_distance_rad(rail2.end_rot, snap_rot) < deg2rad(1))
 
 	drag_mode = false
 
@@ -384,7 +384,7 @@ func set_selected_object(object: Node) -> void:
 		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
 		$EditorHUD.show_current_object_transform()
 	if selected_object_type == "Rail":
-		if selected_object.manualMoving:
+		if selected_object.manual_moving:
 			selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
 			$EditorHUD.show_current_object_transform()
 
@@ -398,7 +398,7 @@ func _spawn_rail() -> Node:
 	rail_instance.set_owner($World)
 	#rail_instance._update()
 
-	if rail_instance.overheadLine:
+	if rail_instance.has_overhead_line:
 		_spawn_poles_for_rail(rail_instance)
 
 	return rail_instance
@@ -419,7 +419,7 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	track_object.name = rail.name + " Poles"
 	track_object.description = "Poles"
 
-	rail.trackObjects.append(track_object)
+	rail.track_objects.append(track_object)
 
 	$World/TrackObjects.add_child(track_object)
 	track_object.set_owner($World/TrackObjects)

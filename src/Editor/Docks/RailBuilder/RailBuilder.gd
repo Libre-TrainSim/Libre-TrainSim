@@ -15,13 +15,13 @@ func update_selected_rail(node: Node) -> void:
 	if is_instance_valid(node) and node.is_in_group("Rail"):
 		currentRail = node
 		$CurrentRail/Name.text = node.name
-		$ManualMoving.pressed = currentRail.manualMoving
+		$ManualMoving.pressed = currentRail.manual_moving
 		currentRail.update()
 		$S.visible = true
 		$RotationHeight.visible = true
 		update_RotationHeightData()
 		update_generalInformation()
-		if currentRail.parallelRail != "":
+		if currentRail.parallel_rail_name != "":
 			$S/Settings.hide()
 			$S/General/ParallelRail.show()
 			return
@@ -29,7 +29,7 @@ func update_selected_rail(node: Node) -> void:
 		$S/General/ParallelRail.hide()
 		$S/Settings/Length/LineEdit.text = String(node.length)
 		$S/Settings/Radius/LineEdit.text = String(node.radius)
-		$S/Settings/Angle/LineEdit.text =  String(currentRail.endrot - currentRail.startrot)
+		$S/Settings/Angle/LineEdit.text =  String(rad2deg(currentRail.end_rot - currentRail.start_rot))
 		self.set_tendSlopeData(currentRail.get_tendSlopeData())
 	else:
 		currentRail = null
@@ -61,7 +61,7 @@ func _on_Update_pressed() -> void:
 		return
 
 	currentRail.rail_type_path = $S/General/RailType/LineEdit.text
-	currentRail.distanceToParallelRail = float($S/General/ParallelRail/ParallelDistance.text)
+	currentRail.distance_to_parallel_rail = float($S/General/ParallelRail/ParallelDistance.text)
 	if $S/Settings.visible:
 		var radius: float
 		var length: float
@@ -72,14 +72,14 @@ func _on_Update_pressed() -> void:
 		elif $S/Settings/OptionButton.selected == 1: ## Radius - Angle
 			radius = float($S/Settings/Radius/LineEdit.text)
 			var angle: float = float($S/Settings/Angle/LineEdit.text)
-			length = (radius * 2.0 * PI) * angle/360.0
+			length = deg2rad(radius * angle)
 		elif $S/Settings/OptionButton.selected == 2: ## Length Angle
 			length = float($S/Settings/Length/LineEdit.text)
 			var angle: float = float($S/Settings/Angle/LineEdit.text)
 			if angle == 0:
 				radius = 0
 			else:
-				radius = length / ((angle/360.0)*2.0*PI)
+				radius = length / deg2rad(angle)
 			Logger.vlog(radius)
 
 		if length > 1000:
@@ -105,15 +105,15 @@ func _on_AddRail_pressed() -> void:
 		var RailParent: Node = world.get_node("Rails")
 		var newRail: Node = editor._spawn_rail()
 		Logger.vlog(newRail.name)
-		newRail.translation = currentRail.endpos
-		newRail.rotation_degrees.y = currentRail.endrot
+		newRail.translation = currentRail.end_pos
+		newRail.rotation_degrees.y = currentRail.end_rot
 		newRail.length = float($S/Settings/Length/LineEdit.text)
 		newRail.radius = float($S/Settings/Radius/LineEdit.text)
 		newRail.rail_type_path = $S/General/RailType/LineEdit.text
-		newRail.startTend = currentRail.endTend
-		newRail.endTend = currentRail.endTend
-		newRail.startSlope = currentRail.endSlope
-		newRail.endSlope =  currentRail.endSlope
+		newRail.start_tend = currentRail.end_tend
+		newRail.end_tend = currentRail.end_tend
+		newRail.start_slope = currentRail.end_slope
+		newRail.end_slope =  currentRail.end_slope
 		RailParent.add_child(newRail)
 		newRail.set_owner(currentRail.find_parent("World"))
 		update_selected_rail(newRail)
@@ -124,8 +124,8 @@ func _on_AddRail_pressed() -> void:
 		var RailParent: Node = currentRail.get_parent()
 		var newRail: Node = editor._spawn_rail()
 		Logger.vlog(Root.name_node_appropriate(newRail, currentRail.name + "P", RailParent))
-		newRail.parallelRail = currentRail.name
-		newRail.distanceToParallelRail = float($AddRail/ParallelDistance/LineEdit.text)
+		newRail.parallel_rail_name = currentRail.name
+		newRail.distance_to_parallel_rail = float($AddRail/ParallelDistance/LineEdit.text)
 #		currentRail.othersDistance = float($AddRail/ParallelDistance/LineEdit.text)
 #		currentRail.calcParallelRail(true)
 #		newRail.translation = currentRail.translation + (Vector3(1, 0, 0).rotated(Vector3(0,1,0), deg2rad(currentRail.rotation_degrees.y-90))*float($AddRail/ParallelDistance/LineEdit.text))
@@ -149,10 +149,10 @@ func _on_AddRail_pressed() -> void:
 		newRail.length = float($S/Settings/Length/LineEdit.text)
 		newRail.radius = float($S/Settings/Radius/LineEdit.text)
 		newRail.rail_type_path = $S/General/RailType/LineEdit.text
-		newRail.startTend = -currentRail.startTend
-		newRail.endTend = -currentRail.startTend
-		newRail.startSlope = -currentRail.startSlope
-		newRail.endSlope = -currentRail.startSlope
+		newRail.start_tend = -currentRail.start_tend
+		newRail.end_tend = -currentRail.start_tend
+		newRail.start_slope = -currentRail.start_slope
+		newRail.end_slope = -currentRail.start_slope
 		RailParent.add_child(newRail)
 		newRail.set_owner(currentRail.find_parent("World"))
 		update_selected_rail(newRail)
@@ -224,13 +224,13 @@ func _on_Shift2Button_pressed() -> void:
 func calc_shift(x: float, y: float) -> Array: ## This is 2 dimensional
 	if y == 0:
 		return [0, x]
-	var delta: float = rad2deg(atan(y/x))
-	var gamma: float = 90 - delta
-	var beta: float = 180-90-gamma  ## Angle of "Rail Circle"
+	var delta: float = atan(y/x)
+	var gamma: float = (PI*0.5) - delta
+	var beta: float = (PI*0.5) - gamma  ## Angle of "Rail Circle"
 	#print(beta)
 	var b: float = sqrt((x*x) + (y*y)) ## Shortest length between beginning and end of the rail
-	var a: float = (b / cos(deg2rad(gamma)))/2 ## Radius of "Rail Circle"
-	var length: float = (beta*2)/360 * 2*PI*a ## Lenght of the rail
+	var a: float = (b / cos(gamma))/2 ## Radius of "Rail Circle"
+	var length: float = (beta*2) * a ## Lenght of the rail
 	return [a, length]
 
 
@@ -250,23 +250,23 @@ func _on_Connect_pressed() -> void:
 	var rot1: float
 	if $RailConnector/FirstRail/OptionButton.selected == 0:
 		pos1 = firstRail.translation
-		rot1 = firstRail.rotation_degrees.y + 180
+		rot1 = firstRail.rotation.y + PI
 	else:
-		pos1 = firstRail.endpos
-		rot1 = firstRail.endrot
+		pos1 = firstRail.end_pos
+		rot1 = firstRail.end_rot
 
 	var pos2: Vector3
 	var rot2: Vector3
 	if $RailConnector/SecondRail/OptionButton.selected == 0:
 		pos2 = secondRail.translation
-		rot2 = secondRail.rotation_degrees.y +180
+		rot2 = secondRail.rotation.y + PI
 	else:
-		pos2 = secondRail.endpos
-		rot2 = secondRail.endrot
+		pos2 = secondRail.end_pos
+		rot2 = secondRail.end_rot
 
 	var vector: Vector3 = (pos2 - pos1)/2
 	Logger.vlog(vector)
-	vector = vector.rotated(Vector3(0,1,0), -deg2rad(rot1))
+	vector = vector.rotated(Vector3(0,1,0), -rot1)
 
 	## Rail 1:
 	var newRail: Node = editor._spawn_rail()
@@ -278,8 +278,8 @@ func _on_Connect_pressed() -> void:
 	newRail.radius = data[0]
 	RailParent.add_child(newRail)
 	newRail.set_owner(currentRail.find_parent("World"))
-	pos2 = newRail.endpos
-	rot2 = newRail.endrot
+	pos2 = newRail.end_pos
+	rot2 = newRail.end_rot
 
 	## Rail 2:
 	newRail = editor._spawn_rail()
@@ -316,12 +316,12 @@ func _on_ShowHideTendency_pressed() -> void:
 		$S/Settings/Tendency/ShowHideTendency.text = "Show Tendency"
 		$S/Settings/Tendency/S.visible = false
 		$S/Settings/Tendency/S2.visible = false
-		$S/Settings/Tendency/automaticTendency.hide()
+		$S/Settings/Tendency/automatic_tend.hide()
 	else:
 		$S/Settings/Tendency/ShowHideTendency.text = "Hide Tendency"
 		$S/Settings/Tendency/S.visible = true
 		$S/Settings/Tendency/S2.visible = true
-		$S/Settings/Tendency/automaticTendency.show()
+		$S/Settings/Tendency/automatic_tend.show()
 
 
 func _on_ShowHideSlope_pressed() -> void:
@@ -335,65 +335,65 @@ func _on_ShowHideSlope_pressed() -> void:
 
 func get_tendSlopeData() -> Dictionary:
 	var d := {}
-	d.startSlope = $S/Settings/Slope/SlopeGrid/StartSlope.value
-	d.endSlope = $S/Settings/Slope/SlopeGrid/EndSlope.value
-	d.startTend = $S/Settings/Tendency/S/StartTend.value
-	d.endTend = $S/Settings/Tendency/S/EndTend.value
-	d.tend1Pos = $S/Settings/Tendency/S2/Tend1Pos.value
+	d.start_slope = deg2rad($S/Settings/Slope/SlopeGrid/start_slope.value)
+	d.end_slope = deg2rad($S/Settings/Slope/SlopeGrid/EndSlope.value)
+	d.start_tend = deg2rad($S/Settings/Tendency/S/StartTend.value)
+	d.end_tend = deg2rad($S/Settings/Tendency/S/EndTend.value)
+	d.tend1_pos = $S/Settings/Tendency/S2/Tend1Pos.value
 	d.tend1 = $S/Settings/Tendency/S2/Tend1.value
-	d.tend2Pos = $S/Settings/Tendency/S2/Tend2Pos.value
+	d.tend2_pos = $S/Settings/Tendency/S2/Tend2Pos.value
 	d.tend2 = $S/Settings/Tendency/S2/Tend2.value
-	d.automaticTendency = $S/Settings/Tendency/automaticTendency.pressed
+	d.automatic_tend = $S/Settings/Tendency/automatic_tend.pressed
 	return d
 
 
 func set_tendSlopeData(data: Dictionary) -> void:
 	var s := data
-	$S/Settings/Slope/SlopeGrid/StartSlope.value = s.startSlope
-	$S/Settings/Slope/SlopeGrid/EndSlope.value = s.endSlope
-	$S/Settings/Tendency/S/StartTend.value = s.startTend
-	$S/Settings/Tendency/S/EndTend.value = s.endTend
-	$S/Settings/Tendency/S2/Tend1Pos.value = s.tend1Pos
+	$S/Settings/Slope/SlopeGrid/StartSlope.value = rad2deg(s.start_slope)
+	$S/Settings/Slope/SlopeGrid/EndSlope.value = rad2deg(s.end_slope)
+	$S/Settings/Tendency/S/StartTend.value = rad2deg(s.start_tend)
+	$S/Settings/Tendency/S/EndTend.value = rad2deg(s.end_tend)
+	$S/Settings/Tendency/S2/Tend1Pos.value = s.tend1_pos
 	$S/Settings/Tendency/S2/Tend1.value = s.tend1
-	$S/Settings/Tendency/S2/Tend2Pos.value = s.tend2Pos
+	$S/Settings/Tendency/S2/Tend2Pos.value = s.tend2_pos
 	$S/Settings/Tendency/S2/Tend2.value = s.tend2
-	$S/Settings/Tendency/automaticTendency.pressed = s.automaticTendency
-	$S/Settings/Tendency/S2/Tend1Pos.editable = !s.automaticTendency
-	$S/Settings/Tendency/S2/Tend1.editable = !s.automaticTendency
-	$S/Settings/Tendency/S2/Tend2Pos.editable = !s.automaticTendency
-	$S/Settings/Tendency/S2/Tend2.editable = !s.automaticTendency
+	$S/Settings/Tendency/automaticTendency.pressed = s.automatic_tend
+	$S/Settings/Tendency/S2/Tend1Pos.editable = !s.automatic_tend
+	$S/Settings/Tendency/S2/Tend1.editable = !s.automatic_tend
+	$S/Settings/Tendency/S2/Tend2Pos.editable = !s.automatic_tend
+	$S/Settings/Tendency/S2/Tend2.editable = !s.automatic_tend
 
 
 func update_RotationHeightData() -> void:
-	$RotationHeight/StartRotation.text = String(currentRail.startrot)
-	$RotationHeight/EndRotation.text =String( currentRail.endrot)
-	$RotationHeight/StartHeight.text = String(currentRail.startpos.y)
-	$RotationHeight/EndHeight.text = String(currentRail.endpos.y)
+	$RotationHeight/StartRotation.text = String(rad2deg(currentRail.start_rot))
+	$RotationHeight/EndRotation.text =String(rad2deg(currentRail.end_rot))
+	$RotationHeight/StartHeight.text = String(currentRail.start_pos.y)
+	$RotationHeight/EndHeight.text = String(currentRail.end_pos.y)
 
 
 func update_generalInformation() -> void:
 	$S/General/RailType/LineEdit.text = currentRail.rail_type_path
-	$S/General/OverheadLine.pressed = currentRail.overheadLine
-	$S/General/ParallelRail/ParallelRail.text = currentRail.parallelRail
-	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distanceToParallelRail)
+	$S/General/OverheadLine.pressed = currentRail.has_overhead_line
+	$S/General/ParallelRail/ParallelRail.text = currentRail.parallel_rail_name
+	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distance_to_parallel_rail)
 
 
 func _on_ManualMoving_pressed() -> void:
-	currentRail.manualMoving = $ManualMoving.pressed
+	currentRail.manual_moving = $ManualMoving.pressed
 	editor.set_selected_object(currentRail)
 
 
 func _on_automaticTendency_pressed() -> void:
-	currentRail.automaticTendency = $S/Settings/Tendency/automaticTendency.pressed
-	currentRail.updateAutomaticTendency()
+	currentRail.automatic_tend = $S/Settings/Tendency/automatic_tend.pressed
+	currentRail.update_automatic_tend()
 	set_tendSlopeData(currentRail.get_tendSlopeData())
 	currentRail.update()
 
 
 func _on_OverheadLine_pressed() -> void:
-	currentRail.overheadLine = $S/General/OverheadLine.pressed
+	currentRail.has_overhead_line = $S/General/OverheadLine.pressed
 	if not $S/General/OverheadLine.pressed:
-		currentRail.update_overheadline(null)
+		currentRail.update_overhead_line(null)
 		if world.get_node("TrackObjects").has_node(currentRail.name + " Poles"):
 			world.get_node("TrackObjects") \
 				.get_node(currentRail.name + " Poles") \

@@ -30,7 +30,7 @@ func _process(_delta: float) -> void:
 	if not is_ready:
 		is_ready = true
 		ready()
-	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speedToKmH(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforced_braking, player.automaticDriving, player.currentSpeedLimit, player.engine, player.reverser)
+	get_node("../Cabin/DisplayMiddle/Display").update_display(Math.speed_to_kmh(player.speed), player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing, player.enforced_braking, player.automaticDriving, player.currentSpeedLimit, player.engine, player.reverser)
 
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_time(player.world.time)
 	get_node("../Cabin/DisplayLeft/ScreenLeft2").update_voltage(player.voltage)

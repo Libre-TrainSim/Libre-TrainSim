@@ -47,15 +47,15 @@ func _process(delta) -> void:
 	### Main Volume of accleration
 	var sollAcceleration = -50
 	if player.engine and player.speed != 0:
-		if  Math.speedToKmH(player.speed) < 60:
+		if  Math.speed_to_kmh(player.speed) < 60:
 			sollAcceleration = -30 + abs(player.command*30)
 		else:
-			sollAcceleration = -30 + abs(player.command*30) - (Math.speedToKmH(player.speed)-60)/10.0
+			sollAcceleration = -30 + abs(player.command*30) - (Math.speed_to_kmh(player.speed)-60)/10.0
 #		if player.command < 0:
 #			sollAcceleration = sollAcceleration - 10.0
 
 	### Control acceleration_sound_index
-	var speed = Math.speedToKmH(player.speed)
+	var speed = Math.speed_to_kmh(player.speed)
 	if speed > 10 and acceleration_sound_index == 1:
 		acceleration_sound_index = 0
 		acceleration_timer = 0.0
@@ -86,7 +86,7 @@ func _process(delta) -> void:
 	$AccelerationTransition.unit_db = sollAcceleration
 
 	### Pitching:
-	$Acceleration2.pitch_scale = 1.0 + (Math.speedToKmH(player.speed)-10.0)/300.0
+	$Acceleration2.pitch_scale = 1.0 + (Math.speed_to_kmh(player.speed)-10.0)/300.0
 
 	$Idle.stream_paused = not wagon.visible or get_tree().paused
 	$Acceleration1.stream_paused = not wagon.visible or get_tree().paused
@@ -96,18 +96,18 @@ func _process(delta) -> void:
 #
 #
 ### sollCurveSound:
-#	if wagon.currentRail.radius == 0 or Math.speedToKmH(player.speed) < 35:
+#	if wagon.currentRail.radius == 0 or Math.speed_to_kmh(player.speed) < 35:
 #		sollCurveSound = -50
 #	else:
-#		sollCurveSound = -25.0 + (Math.speedToKmH(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
+#		sollCurveSound = -25.0 + (Math.speed_to_kmh(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
 #
 ##	print(sollCurveSound)
 #	$CurveSound.unit_db = lerp(sollCurveSound, $CurveSound.unit_db, delta)
 ##	$CurveSound.unit_db = 10
 #
 #	## Drive Sound:
-#	$DriveSound.pitch_scale = 0.5 + Math.speedToKmH(player.speed)/200.0
-#	var driveSoundDb = -20.0 + Math.speedToKmH(player.speed)/2.0
+#	$DriveSound.pitch_scale = 0.5 + Math.speed_to_kmh(player.speed)/200.0
+#	var driveSoundDb = -20.0 + Math.speed_to_kmh(player.speed)/2.0
 #	if driveSoundDb > 10:
 #		driveSoundDb = 10
 #	if player.speed == 0:

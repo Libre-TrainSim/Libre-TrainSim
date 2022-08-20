@@ -18,18 +18,18 @@ func _process(delta: float) -> void:
 		return
 
 	## sollCurveSound:
-	if wagon.currentRail.radius == 0 or Math.speedToKmH(player.speed) < 35 or abs(wagon.currentRail.radius) > 600:
+	if wagon.currentRail.radius == 0 or Math.speed_to_kmh(player.speed) < 35 or abs(wagon.currentRail.radius) > 600:
 		sollCurveSound = -50
 	else:
-		sollCurveSound = -25.0 + (Math.speedToKmH(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
+		sollCurveSound = -25.0 + (Math.speed_to_kmh(player.speed)/80.0 * abs(300.0/wagon.currentRail.radius))*5
 
 #	print(sollCurveSound)
 	$CurveSound.unit_db = lerp(sollCurveSound, $CurveSound.unit_db, delta)
 #	$CurveSound.unit_db = 10
 
 	## Drive Sound:
-	$DriveSound.pitch_scale = 0.5 + Math.speedToKmH(player.speed)/200.0
-	var driveSoundDb: float = -20.0 + Math.speedToKmH(player.speed)/2.0
+	$DriveSound.pitch_scale = 0.5 + Math.speed_to_kmh(player.speed)/200.0
+	var driveSoundDb: float = -20.0 + Math.speed_to_kmh(player.speed)/2.0
 	if driveSoundDb > 10:
 		driveSoundDb = 10
 	if player.speed == 0:

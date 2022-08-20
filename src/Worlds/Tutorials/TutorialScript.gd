@@ -64,12 +64,12 @@ func basics() -> void:
 		4:
 #			message = "Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."
 			message = TranslationServer.translate("TUTORIAL_0_3")
-			if Math.speedToKmH(player.speed) > 20:
+			if Math.speed_to_kmh(player.speed) > 20:
 				next_step()
 		5:
 #			message = "Ahead you see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
 			message = TranslationServer.translate("TUTORIAL_0_4")
-			if Math.speedToKmH(player.speed) == 0:
+			if Math.speed_to_kmh(player.speed) == 0:
 				world.get_node("Signals/Signal2").set_status(SignalStatus.GREEN)
 				next_step()
 		6:
@@ -172,14 +172,14 @@ func basics_mobile_version() -> void:
 			player.get_node("HUD/MobileHUD/DoorClose").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/Up").modulate = Color(1, 0.5, 0, 1)
 			player.get_node("HUD/MobileHUD/Down").modulate = Color(1, 0.5, 0, 1)
-			if Math.speedToKmH(player.speed) > 20:
+			if Math.speed_to_kmh(player.speed) > 20:
 				next_step()
 		5:
 #			message = "Ahead you see an orange signal. That means that the next signal is going to be red. So make sure, you apply the brakes that you will stand before the red signal.\n\nWith the left arrow key you can easily set acceleration and brakes to zero. Try it, if you have brakes or accleration applied!"
 			message = TranslationServer.translate("TUTORIAL_4_5")
 			player.get_node("HUD/MobileHUD/Up").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/Down").modulate = Color(1, 0.5, 0, 1)
-			if Math.speedToKmH(player.speed) == 0:
+			if Math.speed_to_kmh(player.speed) == 0:
 				world.get_node("Signals/Signal2").set_status(SignalStatus.GREEN)
 				next_step()
 		6:

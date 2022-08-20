@@ -12,8 +12,8 @@ export var cameraFactor: float = 0.1 ## The Factor, how much the camera moves at
 var yaw: float = 0
 var pitch: float = 0
 
-onready var cameraY: float = rotation_degrees.y - 90.0
-onready var cameraX: float = -rotation_degrees.x
+onready var cameraY: float = rotation.y - (0.5 * PI)
+onready var cameraX: float = -rotation.x
 
 # whether the camera is tied to a point or can move around with wasd
 export var fixed: bool = true
@@ -77,8 +77,8 @@ func _process(delta: float) -> void:
 	if not player and world != null:
 		player = world.find_node("Player")
 
-	cameraY = rotation_degrees.y - 90.0
-	cameraX = -rotation_degrees.x
+	cameraY = rotation.y - (0.5 * PI)
+	cameraX = -rotation.x
 	#mouse movement
 
 	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor and not Root.pause_mode:
@@ -92,8 +92,8 @@ func _process(delta: float) -> void:
 			cameraX = 85
 		if cameraX < -85:
 			cameraX = -85
-		rotation_degrees.y = cameraY +90
-		rotation_degrees.x = -cameraX
+		rotation.y = cameraY + (0.5 * PI)
+		rotation.x = -cameraX
 		mouseMotion = Vector2(0,0)
 
 

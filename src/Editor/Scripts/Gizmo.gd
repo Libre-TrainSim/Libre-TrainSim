@@ -26,7 +26,7 @@ func _input(event):
 
 
 func _process(_delta):
-	rotation_degrees.y = - get_parent().rotation_degrees.y
+	rotation.y = - get_parent().rotation.y
 
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and (x_active or y_active or z_active or x_rot_active):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -38,7 +38,7 @@ func _process(_delta):
 			get_parent().translation.z += mouseMotion.x * 0.01
 
 		if x_rot_active:
-			get_parent().rotation_degrees.y += mouseMotion.x * 0.1
+			get_parent().rotation.y += mouseMotion.x * 0.1 * deg2rad(1)
 
 		mouseMotion = Vector2(0,0)
 

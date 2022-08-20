@@ -26,7 +26,7 @@ func _on_TimeButton_pressed():
 	$Popup.popup_centered_minsize()
 
 func update_button_text():
-	$TimeButton.text = Math.time2String(get_data())
+	$TimeButton.text = Math.time_to_string(get_data())
 
 func _on_Okay_pressed():
 	update_button_text()

@@ -109,10 +109,10 @@ func _process(delta: float) -> void:
 
 func set_transform_on_rail() -> void:
 	if forward:
-		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
+		self.transform = currentRail.get_transform_at_distance(distance_on_rail)
 	else:
-		self.transform = currentRail.get_transform_at_rail_distance(distance_on_rail)
-		rotate_object_local(Vector3(0,1,0), deg2rad(180))
+		self.transform = currentRail.get_transform_at_distance(distance_on_rail)
+		rotate_object_local(Vector3(0,1,0), PI)
 
 
 func drive(delta: float) -> void:
@@ -381,20 +381,20 @@ func play_outside_announcement(sound_path : String) -> void:
 
 var switch_on_next_change: bool = false
 func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these are needed: When the player drives over many small rails that could be inaccurate..
-	if forward and currentRail.isSwitchPart[1] != "":
+	if forward and currentRail.switch_part[1] != "":
 		switch_on_next_change = true
 		return
-	elif not forward and currentRail.isSwitchPart[0] != "":
+	elif not forward and currentRail.switch_part[0] != "":
 		switch_on_next_change = true
 		return
 
 	if baked_route.size() > route_index+1:
 		var nextRail: Spatial = world.get_node("Rails").get_node(baked_route[route_index+1])
 		var nextForward: bool = baked_route_direction[route_index+1]
-		if nextForward and nextRail.isSwitchPart[0] != "":
+		if nextForward and nextRail.switch_part[0] != "":
 			switch_on_next_change = true
 			return
-		elif not nextForward and nextRail.isSwitchPart[1] != "":
+		elif not nextForward and nextRail.switch_part[1] != "":
 			switch_on_next_change = true
 			return
 

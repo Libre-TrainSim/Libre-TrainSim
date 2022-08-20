@@ -6,7 +6,7 @@ var copyRail
 var copyTO
 var copyTOArray: Array
 var currentTO: Node
-var eds # Editor Selection
+var editor_selection # Editor Selection
 var pluginRoot
 
 
@@ -45,7 +45,7 @@ func update_selected_rail(node: Node) -> void:
 
 func update_itemList() -> void:
 	$Tab/TrackObjects/jListTrackObjects.clear()
-	var track_objects: Array = currentRail.trackObjects
+	var track_objects: Array = currentRail.track_objects
 	Logger.vlog(track_objects)
 	for x in range(track_objects.size()):
 		if track_objects[x].description == null:
@@ -55,12 +55,12 @@ func update_itemList() -> void:
 
 
 func _on_jListTrackObjects_user_removed_entries(entry_names: Array) -> void:
-	Logger.vlog(currentRail.trackObjects)
+	Logger.vlog(currentRail.track_objects)
 	for entry_name in entry_names:
 		var track_object: Node = currentRail.get_track_object(entry_name)
 		var track_object_name: String = track_object.name
 		track_object.queue_free()
-		currentRail.trackObjects.erase(track_object)
+		currentRail.track_objects.erase(track_object)
 		Logger.log("TrackObject " + track_object_name + " deleted")
 	update_itemList()
 
@@ -106,7 +106,7 @@ func copy_track_object_to_current_rail(source_track_object: Node, new_descriptio
 	new_track_object.attached_rail = currentRail.name
 	world.get_node("TrackObjects").add_child(new_track_object)
 	if mirror:
-		new_track_object.rotationObjects = source_track_object.rotationObjects + 180.0
+		new_track_object.rotationObjects = source_track_object.rotationObjects + PI
 		if source_track_object.sides == 1:
 			new_track_object.sides = 2
 		elif source_track_object.sides == 2:
@@ -180,7 +180,7 @@ func _on_SavePositioning_pressed() -> void:
 	currentTO.randomRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".pressed
 	currentTO.randomScale = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".pressed
 	currentTO.randomScaleFactor = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomScale".value
-	currentTO.rotationObjects = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value
+	currentTO.rotationObjects = deg2rad($"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value)
 	currentTO.placeLast = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed
 	currentTO.applySlopeRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed
 	Logger.log("Positioning Saved")
@@ -202,7 +202,7 @@ func update_positioning() -> void:
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".pressed = currentTO.randomRotation
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".pressed = currentTO.randomScale
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomScale".value = currentTO.randomScaleFactor
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed = currentTO.placeLast
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed = currentTO.applySlopeRotation
 	Logger.log("Updating...")
@@ -313,11 +313,11 @@ func _on_BuildingSettings_updated() -> void:
 
 func _on_OptionButton_item_selected(index: int) -> void:
 	if currentTO.sides == PlatformSide.LEFT and index == PlatformSide.RIGHT:
-		currentTO.rotationObjects += 180
-		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+		currentTO.rotationObjects += PI
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	elif currentTO.sides == PlatformSide.RIGHT and index == PlatformSide.LEFT:
-		currentTO.rotationObjects -= 180
-		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = currentTO.rotationObjects
+		currentTO.rotationObjects -= PI
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	currentTO.sides = index
 	update_current_rail_attachment()
 

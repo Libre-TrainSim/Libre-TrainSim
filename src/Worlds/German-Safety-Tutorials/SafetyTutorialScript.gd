@@ -43,7 +43,7 @@ func init() -> void:
 		sifa_module.set_process_unhandled_key_input(false)
 	if player != null and scenario == "PZB":
 		Logger.log("Running PZB Scenario!", self)
-		player.speed = Math.kmHToSpeed(120)
+		player.speed = Math.kmh_to_speed(120)
 		player.currentSpeedLimit = 120
 		player.find_node("SifaModule").queue_free()
 		pzb_module = player.find_node("PZBModule")
@@ -125,7 +125,7 @@ func pzb(delta: float) -> void:
 			message = tr("PZB_TUTORIAL_100")
 		2:
 			message = tr("PZB_TUTORIAL_3")
-			if pzb_module.pzb_speed_limit == Math.kmHToSpeed(85):
+			if pzb_module.pzb_speed_limit == Math.kmh_to_speed(85):
 				next_step()
 			elif pzb_module.pzb_mode & pzb_module.PZBMode.EMERGENCY:
 				step = 200

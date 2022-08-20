@@ -83,7 +83,7 @@ func open_overlay_map() -> void:
 	var zoomx: float
 	var zoomy: float
 	if active_route_rect.size.x > active_route_rect.size.y:
-		camera.rotation = 90
+		camera.rotation = 0.5 * PI
 		zoomx = active_route_rect.size.x / self.size.y
 		zoomy = active_route_rect.size.y / self.size.x
 	else:
@@ -144,7 +144,7 @@ func _process(delta: float) -> void:
 
 	if follow_player == true:
 		camera.position = $PlayerPolygon.position
-		camera.rotation_degrees = $PlayerPolygon.rotation_degrees + 90
+		camera.rotation = $PlayerPolygon.rotation + (0.5 * PI)
 	else:
 		var movement: Vector2 = mouse_motion * $Camera2D.zoom.x * 0.5
 		camera.position += movement.rotated(camera.rotation)
@@ -155,7 +155,7 @@ func _process(delta: float) -> void:
 
 func update_labels() -> void:
 	for node in $Stations.get_children():
-		node.rotation_degrees = camera.rotation_degrees# - 30
+		node.rotation = camera.rotation
 		if overlay:
 			node.scale = camera.zoom * 0.25
 		else:
@@ -177,7 +177,7 @@ func create_station(signal_instance: Spatial) -> void:
 		return
 
 	var node: Node2D = Node2D.new()
-	node.rotation_degrees = -30
+	node.rotation = deg2rad(-30)
 	#node.scale = Vector2(0.1, 0.1)
 	node.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
 	node.name = signal_instance.name
@@ -196,7 +196,7 @@ func create_signal(signal_instance: Spatial) -> void:
 	var sprite: Sprite = Sprite.new()
 	sprite.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
 	sprite.scale = Vector2(0.1, 0.1)
-	sprite.rotation_degrees = -signal_instance.rotation_degrees.y + 90
+	sprite.rotation = -signal_instance.rotation.y + (0.5*PI)
 	sprite.name = signal_instance.name
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
@@ -270,8 +270,8 @@ func build_rail(rail: Spatial) -> Array:
 	var points := []
 
 	var length: float
-	if rail.parRail != null:
-		length = rail.parRail.length
+	if rail.parallel_rail != null:
+		length = rail.parallel_rail.length
 	else:
 		length = rail.length
 
@@ -280,18 +280,18 @@ func build_rail(rail: Spatial) -> Array:
 		var point_count: int = int(length / LINE_POINT_INTERVAL) + 1
 		# add point count many points along track
 		for i in range(0,point_count):
-			var rail_transform: Transform = rail.get_global_transform_at_rail_distance(i*LINE_POINT_INTERVAL)
+			var rail_transform: Transform = rail.get_global_transform_at_distance(i*LINE_POINT_INTERVAL)
 			points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# add end point
-		var rail_transform: Transform = rail.get_global_transform_at_rail_distance(rail.length)
+		var rail_transform: Transform = rail.get_global_transform_at_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 	# only 2 points for straight rails
 	else:
 		# Start Point
-		var rail_transform: Transform = rail.get_global_transform_at_rail_distance(0)
+		var rail_transform: Transform = rail.get_global_transform_at_distance(0)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# End Point
-		rail_transform = rail.get_global_transform_at_rail_distance(rail.length)
+		rail_transform = rail.get_global_transform_at_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 
 	return points

@@ -22,7 +22,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	$FPS.text = String(Engine.get_frames_per_second())
 	update_nextTable()
-	$IngameInformation/TrainInfo/Screen1.update_display(Math.speedToKmH(player.speed), \
+	$IngameInformation/TrainInfo/Screen1.update_display(Math.speed_to_kmh(player.speed), \
 			player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing,\
 			player.enforced_braking, player.automaticDriving,\
 			player.currentSpeedLimit, player.engine, player.reverser)
@@ -77,7 +77,7 @@ var greenSignal: Texture = preload("res://Data/Misc/GreenSignal.png")
 var orangeSignal: Texture = preload("res://Data/Misc/OrangeSignal.png")
 func update_nextTable() -> void:
 	## Update Next Signal:
-	$IngameInformation/Next/GridContainer/DistanceToSignal.text = Math.distance2String(player.distanceToNextSignal)
+	$IngameInformation/Next/GridContainer/DistanceToSignal.text = Math.distance_to_string(player.distanceToNextSignal)
 	if player.nextSignal != null:
 		match player.nextSignal.status:
 			SignalStatus.RED:
@@ -89,7 +89,7 @@ func update_nextTable() -> void:
 
 	## Update next Speedlimit
 	if player.nextSpeedLimitNode != null:
-		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = Math.distance2String(player.distanceToNextSpeedLimit)
+		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = Math.distance_to_string(player.distanceToNextSpeedLimit)
 		$IngameInformation/Next/GridContainer/SpeedLimit.text = String(player.nextSpeedLimitNode.speed) + " km/h"
 	else:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = "-"
@@ -104,7 +104,7 @@ func update_nextTable() -> void:
 			$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 		else:
 			$IngameInformation/Next/GridContainer/Arrival.text = Math.seconds_to_string(player.current_station_table_entry.arrival_time)
-			$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance2String(player.distanceToNextStation)
+			$IngameInformation/Next/GridContainer/DistanceToStation.text = Math.distance_to_string(player.distanceToNextStation)
 
 
 func _on_TextBox_closed() -> void:

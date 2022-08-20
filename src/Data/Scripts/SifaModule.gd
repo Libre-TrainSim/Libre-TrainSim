@@ -33,7 +33,7 @@ func _force_enabled(is_enabled: bool) -> void:
 
 
 func _process(_delta: float) -> void:
-	if player.speed < Math.kmHToSpeed(3):
+	if player.speed < Math.kmh_to_speed(3):
 		$SifaTimer.stop()
 	elif $SifaTimer.is_stopped() and stage == 0:
 		$SifaTimer.start()

@@ -95,14 +95,14 @@ func set_data(d: Dictionary) -> void:
 
 func attach_to_rail(_rail_node: Spatial) -> void:
 	rail_node = _rail_node
-	if not rail_node.trackObjects.has(self):
-		rail_node.trackObjects.append(self)
+	if not rail_node.track_objects.has(self):
+		rail_node.track_objects.append(self)
 
 
 func unattach_from_rail() -> void:
 	if not is_instance_valid(rail_node):
 		return
-	rail_node.trackObjects.erase(self)
+	rail_node.track_objects.erase(self)
 
 
 func _exit_tree() -> void:
@@ -128,7 +128,7 @@ func update() -> void:
 		on_rail_position = 0
 		length = rail_node.length
 
-	translation = rail_node.get_pos_at_RailDistance(on_rail_position)
+	translation = rail_node.get_pos_at_distance(on_rail_position)
 	if multimesh.mesh == null and objectPath != "":
 		multimesh.mesh = load(objectPath).duplicate()
 
@@ -158,45 +158,45 @@ func update() -> void:
 		for b in range(rows):
 			if sides == 1 or sides == 3: ## Left Side
 				if rand_range(0,1) < spawnRate:
-					var position: Vector3 = rail_node.get_shifted_pos_at_RailDistance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx: float = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz: float = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
 						position += Vector3(shiftx, 0, shiftz)
-					var rot: float = rail_node.get_deg_at_RailDistance(railpos)
+					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
-						rot = rand_range(0,360)
+						rot = rand_range(0, TAU)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0
 					if applySlopeRotation:
-						slopeRot = rail_node.get_heightRot(railpos)
+						slopeRot = rail_node.get_height_rot(railpos)
 					var scale := Vector3(1,1,1)
 					if randomScale:
 						var scaleval: float = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), deg2rad(slopeRot)).rotated(Vector3(0,1,0), deg2rad(rot)).scaled(scale), position))
+					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
 					idx += 1
 			if sides == 2 or sides == 3: ## Right Side
 				if rand_range(0,1) < spawnRate:
-					var position: Vector3 = rail_node.get_shifted_pos_at_RailDistance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx: float = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz: float = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
 						position += Vector3(shiftx, 0, shiftz)
-					var rot: float = rail_node.get_deg_at_RailDistance(railpos)
+					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
 						rot = rand_range(0,360)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0
 					if applySlopeRotation:
-						slopeRot = rail_node.get_heightRot(railpos)
+						slopeRot = rail_node.get_height_rot(railpos)
 					var scale := Vector3(1,1,1)
 					if randomScale:
 						var scaleval: float = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), deg2rad(slopeRot)).rotated(Vector3(0,1,0), deg2rad(rot)).scaled(scale), position))
+					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
 					idx += 1
 		railpos += distanceLength
 		self.multimesh.visible_instance_count = idx

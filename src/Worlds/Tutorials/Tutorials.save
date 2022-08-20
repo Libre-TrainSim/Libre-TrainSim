@@ -25,7 +25,7 @@ unloaded_chunks=[  ]
 "randomScale": false,
 "randomScaleFactor": 0.2,
 "randomSeed": 0,
-"rotationObjects": 180.0,
+"rotationObjects": 3.14159,
 "rows": 1,
 "shift": 0.0,
 "sides": 2,
@@ -54,7 +54,7 @@ unloaded_chunks=[  ]
 "randomScale": false,
 "randomScaleFactor": 0.2,
 "randomSeed": 0,
-"rotationObjects": 180.0,
+"rotationObjects": 3.14159,
 "rows": 1,
 "shift": 3.5,
 "sides": 2,
@@ -83,7 +83,7 @@ unloaded_chunks=[  ]
 "randomScale": false,
 "randomScaleFactor": 0.2,
 "randomSeed": 0,
-"rotationObjects": -90.0,
+"rotationObjects": -1.5708,
 "rows": 1,
 "shift": 0.0,
 "sides": 1,
@@ -111,7 +111,7 @@ unloaded_chunks=[  ]
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": -230917,
+"randomSeed": -454912,
 "rotationObjects": 0.0,
 "rows": 4,
 "shift": 20.0,
@@ -141,7 +141,7 @@ unloaded_chunks=[  ]
 "randomScale": false,
 "randomScaleFactor": 0.2,
 "randomSeed": 0,
-"rotationObjects": 90.0,
+"rotationObjects": 1.5708,
 "rows": 1,
 "shift": 0.0,
 "sides": 1,
@@ -169,7 +169,7 @@ unloaded_chunks=[  ]
 "randomRotation": true,
 "randomScale": true,
 "randomScaleFactor": 0.2,
-"randomSeed": -601170,
+"randomSeed": 820355,
 "rotationObjects": 0.0,
 "rows": 4,
 "shift": 20.0,
@@ -223,7 +223,7 @@ unloaded_chunks=[  ]
 "wholeRail": false
 },
 "name": "Rail2 Bumper",
-"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1983.21, 0, 133.5 )
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1983.21, 0, 133.501 )
 },
 "Rail2 Platform": {
 "data": {

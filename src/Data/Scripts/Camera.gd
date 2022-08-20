@@ -32,7 +32,7 @@ var player: LTSPlayer
 
 var mouseMotion: Vector2 = Vector2(0,0)
 var saved_mouse_position: Vector2 = Vector2(0,0)
-var mouse_not_moved: bool = false
+var mouse_moved: bool = true
 
 
 func _ready() -> void:
@@ -51,19 +51,18 @@ func _input(event) -> void:
 
 	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		mouseMotion = mouseMotion + event.relative
-		if event.relative != Vector2(0,0):
-			mouse_not_moved = false
+		mouse_moved = (event.relative != Vector2(0,0))
 
 	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == true:
 		saved_mouse_position = get_viewport().get_mouse_position()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		mouse_not_moved = true
+		mouse_moved = false
 
 	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and Root.Editor:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		get_viewport().warp_mouse(saved_mouse_position)
 
-	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and mouse_not_moved:
+	if current and event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed == false and not mouse_moved:
 		emit_signal("single_rightclick")
 
 
@@ -79,23 +78,18 @@ func _process(delta: float) -> void:
 
 	cameraY = rotation.y - (0.5 * PI)
 	cameraX = -rotation.x
-	#mouse movement
 
 	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor and not Root.pause_mode:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	if mouseMotion.length() > 0 and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
-		var motionFactor: float = (refDelta / delta * refDelta) * mouseSensitivity
+		var motionFactor: float = (refDelta / delta * refDelta) * mouseSensitivity * deg2rad(1)
 		cameraY += -mouseMotion.x * motionFactor
 		cameraX += +mouseMotion.y * motionFactor
-		if cameraX > 85:
-			cameraX = 85
-		if cameraX < -85:
-			cameraX = -85
+		cameraX = clamp(cameraX, deg2rad(-85), deg2rad(85))
 		rotation.y = cameraY + (0.5 * PI)
 		rotation.x = -cameraX
 		mouseMotion = Vector2(0,0)
-
 
 	if accel and player:
 		var currentRealAcceleration = player.currentRealAcceleration

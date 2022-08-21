@@ -106,6 +106,7 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
 	make_mesh_unique()
 
 

@@ -499,7 +499,7 @@ func update_spawn_point_settings() -> void:
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
 	var p = loaded_route.get_point(selected_route_point_index)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Rail/LineEdit.text = p.rail_name
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Distance.value = p.distance
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Distance.value = p.distance_on_rail
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/InitialSpeed.value = p.initial_speed
 	update_scenario_map()
 
@@ -539,7 +539,7 @@ func update_despawn_point_settings():
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
 	var p = loaded_route.get_point(selected_route_point_index)
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Rail/LineEdit.text = p.rail_name
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Distance.value = p.distance
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Distance.value = p.distance_on_rail
 	update_scenario_map()
 
 func _on_DespawnPoint_Rail_Select_pressed():

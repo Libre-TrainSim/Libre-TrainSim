@@ -233,7 +233,7 @@ func update_map():
 			var station = world.get_signal(spawn_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
 		elif spawn_point is RoutePointSpawnPoint:
-			sprite = generate_rail_icon_at(spawn_point.rail_name, spawn_point.distance, baked_route[0].forward)
+			sprite = generate_rail_icon_at(spawn_point.rail_name, spawn_point.distance_on_rail, baked_route[0].forward)
 
 		sprite.name = "SpawnPoint"
 		sprite.texture = spawn_point_icon
@@ -247,7 +247,7 @@ func update_map():
 			var station = world.get_signal(despawn_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
 		elif despawn_point is RoutePointDespawnPoint:
-			sprite = generate_rail_icon_at(despawn_point.rail_name, despawn_point.distance, baked_route.back().forward)
+			sprite = generate_rail_icon_at(despawn_point.rail_name, despawn_point.distance_on_rail, baked_route.back().forward)
 		sprite.name = "DespawnPoint"
 		sprite.texture = despawn_point_icon
 		$Special.add_child(sprite)

@@ -1,0 +1,269 @@
+[gd_resource type="Resource" load_steps=37 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Resources/route_point_waypoint.gd" type="Script" id=3]
+[ext_resource path="res://Data/Scripts/Resources/route_point_spawn.gd" type="Script" id=4]
+[ext_resource path="res://Data/Scripts/Resources/scenario_route.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=61]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=62]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=63]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=64]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=65]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=66]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=67]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=68]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=69]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=70]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=71]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=72]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=73]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=74]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=75]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = 40
+status = 0
+
+[sub_resource type="Resource" id=76]
+script = ExtResource( 2 )
+operation_mode = 2
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=77]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=78]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=79]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=80]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=81]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=82]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=83]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=84]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=85]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=86]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=87]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=88]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=89]
+script = ExtResource( 4 )
+rail_name = "HV_Light_Rail"
+distance_on_rail = 50.0
+initial_speed = 0.0
+initial_speed_limit = -1
+
+[sub_resource type="Resource" id=90]
+script = ExtResource( 3 )
+rail_name = "HV_Light_Rail2"
+
+[sub_resource type="Resource" id=91]
+script = ExtResource( 5 )
+rail_logic_settings = {
+}
+route_points = [ SubResource( 89 ), SubResource( 90 ) ]
+activate_only_at_specific_routes = false
+specific_routes = [  ]
+is_playable = true
+train_name = "JFR1_Red"
+description = "Learn how to use the old German H/V Signalling System, using Light Signals."
+interval = 0
+interval_end = 0
+interval_start = 43200
+
+[resource]
+script = ExtResource( 1 )
+time = 0
+title = ""
+description = ""
+duration = 0
+is_hidden = false
+routes = {
+"Player": SubResource( 91 )
+}
+rail_logic_settings = {
+"HL_Signal_1": SubResource( 61 ),
+"HL_Signal_2": SubResource( 62 ),
+"HL_Signal_3": SubResource( 63 ),
+"HL_Signal_4": SubResource( 64 ),
+"HL_Signal_5": SubResource( 65 ),
+"HL_Signal_6": SubResource( 66 ),
+"HL_Signal_7": SubResource( 67 ),
+"HL_Signal_8": SubResource( 68 ),
+"HPF_Signal_1": SubResource( 69 ),
+"HPF_Signal_2": SubResource( 70 ),
+"HPF_Signal_3": SubResource( 71 ),
+"HPF_Signal_4": SubResource( 72 ),
+"HPL_Signal_1": SubResource( 73 ),
+"HPL_Signal_2": SubResource( 74 ),
+"HPL_Signal_3": SubResource( 75 ),
+"HPL_Signal_4": SubResource( 76 ),
+"KS_Signal_1": SubResource( 77 ),
+"KS_Signal_2": SubResource( 78 ),
+"KS_Signal_3": SubResource( 79 ),
+"KS_Signal_4": SubResource( 80 ),
+"KS_Signal_5": SubResource( 81 ),
+"KS_Signal_6": SubResource( 82 ),
+"VOF_Signal_1": SubResource( 83 ),
+"VOF_Signal_2": SubResource( 84 ),
+"VOF_Signal_3": SubResource( 85 ),
+"VOL_Signal_1": SubResource( 86 ),
+"VOL_Signal_2": SubResource( 87 ),
+"VOL_Signal_3": SubResource( 88 )
+}

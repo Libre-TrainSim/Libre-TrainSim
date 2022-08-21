@@ -1,0 +1,269 @@
+[gd_resource type="Resource" load_steps=37 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Resources/route_point_waypoint.gd" type="Script" id=3]
+[ext_resource path="res://Data/Scripts/Resources/route_point_spawn.gd" type="Script" id=4]
+[ext_resource path="res://Data/Scripts/Resources/scenario_route.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=91]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=92]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=93]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=94]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=95]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=96]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=97]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=98]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=99]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=100]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=101]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=102]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=103]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=104]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=105]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=106]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=107]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=108]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=109]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = 40
+status = 0
+
+[sub_resource type="Resource" id=110]
+script = ExtResource( 2 )
+operation_mode = 2
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=111]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=112]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=113]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=114]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=115]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=116]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=117]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=118]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=119]
+script = ExtResource( 4 )
+rail_name = "KS_Rail"
+distance_on_rail = 50.0
+initial_speed = 0.0
+initial_speed_limit = -1
+
+[sub_resource type="Resource" id=120]
+script = ExtResource( 3 )
+rail_name = "KS_Rail2"
+
+[sub_resource type="Resource" id=121]
+script = ExtResource( 5 )
+rail_logic_settings = {
+}
+route_points = [ SubResource( 119 ), SubResource( 120 ) ]
+activate_only_at_specific_routes = false
+specific_routes = [  ]
+is_playable = true
+train_name = "JFR1_Red"
+description = "Learn how to use the new German KS Signalling System."
+interval = 0
+interval_end = 0
+interval_start = 43200
+
+[resource]
+script = ExtResource( 1 )
+time = 0
+title = ""
+description = ""
+duration = 0
+is_hidden = false
+routes = {
+"Player": SubResource( 121 )
+}
+rail_logic_settings = {
+"HL_Signal_1": SubResource( 91 ),
+"HL_Signal_2": SubResource( 92 ),
+"HL_Signal_3": SubResource( 93 ),
+"HL_Signal_4": SubResource( 94 ),
+"HL_Signal_5": SubResource( 95 ),
+"HL_Signal_6": SubResource( 96 ),
+"HL_Signal_7": SubResource( 97 ),
+"HL_Signal_8": SubResource( 98 ),
+"HPF_Signal_1": SubResource( 99 ),
+"HPF_Signal_2": SubResource( 100 ),
+"HPF_Signal_3": SubResource( 101 ),
+"HPF_Signal_4": SubResource( 102 ),
+"HPL_Signal_1": SubResource( 103 ),
+"HPL_Signal_2": SubResource( 104 ),
+"HPL_Signal_3": SubResource( 105 ),
+"HPL_Signal_4": SubResource( 106 ),
+"KS_Signal_1": SubResource( 107 ),
+"KS_Signal_2": SubResource( 108 ),
+"KS_Signal_3": SubResource( 109 ),
+"KS_Signal_4": SubResource( 110 ),
+"KS_Signal_5": SubResource( 111 ),
+"KS_Signal_6": SubResource( 112 ),
+"VOF_Signal_1": SubResource( 113 ),
+"VOF_Signal_2": SubResource( 114 ),
+"VOF_Signal_3": SubResource( 115 ),
+"VOL_Signal_1": SubResource( 116 ),
+"VOL_Signal_2": SubResource( 117 ),
+"VOL_Signal_3": SubResource( 118 )
+}

@@ -1,0 +1,77 @@
+[gd_resource type="Resource" load_steps=13 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Resources/route_point_waypoint.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=3]
+[ext_resource path="res://Data/Scripts/Resources/route_point_spawn.gd" type="Script" id=4]
+[ext_resource path="res://Data/Scripts/Resources/scenario_route.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=127]
+script = ExtResource( 3 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=128]
+script = ExtResource( 3 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=129]
+script = ExtResource( 3 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=130]
+script = ExtResource( 3 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=131]
+script = ExtResource( 4 )
+rail_name = "Rail"
+distance_on_rail = 100.0
+initial_speed = 0.0
+initial_speed_limit = -1
+
+[sub_resource type="Resource" id=132]
+script = ExtResource( 2 )
+rail_name = "Rail6"
+
+[sub_resource type="Resource" id=133]
+script = ExtResource( 5 )
+rail_logic_settings = {
+}
+route_points = [ SubResource( 131 ), SubResource( 132 ) ]
+activate_only_at_specific_routes = false
+specific_routes = [  ]
+is_playable = true
+train_name = "JFR1_Red"
+description = "Learn how to use the SiFa system."
+interval = 0
+interval_end = 0
+interval_start = 43200
+
+[resource]
+script = ExtResource( 1 )
+time = 0
+title = ""
+description = ""
+duration = 0
+is_hidden = false
+routes = {
+"Player": SubResource( 133 )
+}
+rail_logic_settings = {
+"Signal": SubResource( 127 ),
+"Signal2": SubResource( 128 ),
+"Signal3": SubResource( 129 ),
+"Signal4": SubResource( 130 )
+}

@@ -10,7 +10,7 @@ var scenario_info: TrackScenario = null
 
 func _ready():
 	# For now we retrieve the variables from Root. Later these should be filled by the LoadingScreenManager.
-	scenario_info = TrackScenario.new()
+	scenario_info = load(Root.current_scenario) as TrackScenario
 	current_track_name = Root.current_editor_track
 	current_track_path = Root.current_editor_track_path.plus_file(Root.current_editor_track + ".tscn")
 	var editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")

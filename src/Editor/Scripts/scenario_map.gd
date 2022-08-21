@@ -25,8 +25,20 @@ var label_mask: Dictionary = {
 	other = true
 }
 
-
 signal item_selected(path)
+
+
+func init(new_world : Node):
+	world = new_world
+	var rails = new_world.get_node("Rails").get_children()
+	for rail in rails:
+		create_line2d_from_rail(rail)
+
+	var signals = new_world.get_node("Signals").get_children()
+	for signal_instance in signals:
+		if signal_instance.type == "Station" or signal_instance.type == "Signal"\
+				or  signal_instance.type == "ContactPoint":
+			create_signal(signal_instance)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -55,6 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func set_label_mask(_label_mask: Dictionary):
 	label_mask = _label_mask
 	update_map()
+
 
 func create_signal(signal_instance):
 	var sprite = generate_rail_icon_at(signal_instance.attached_rail, signal_instance.on_rail_position, signal_instance.forward)
@@ -87,9 +100,6 @@ func create_signal(signal_instance):
 func _item_selected(name : String, parent : String):
 	emit_signal("item_selected", parent + "/" + name)
 	Logger.log(name + " in " + parent + " Node selected.")
-
-
-
 
 
 func calculate_2d_points_from_rail(rail) -> Array:
@@ -145,18 +155,6 @@ func create_line2d_from_rail(rail, special: bool = false):
 		$RailsSelection.add_child(line)
 		line.default_color = Color("2891c5")
 
-func init(new_world : Node):
-	world = new_world
-	var rails = new_world.get_node("Rails").get_children()
-	for rail in rails:
-		create_line2d_from_rail(rail)
-
-	var signals = new_world.get_node("Signals").get_children()
-	for signal_instance in signals:
-		if signal_instance.type == "Station" or signal_instance.type == "Signal"\
-				or  signal_instance.type == "ContactPoint":
-			create_signal(signal_instance)
-
 
 func update_map():
 	var scenario_config_instance = find_parent("ScenarioEditor").get_node("CanvasLayer/ScenarioConfiguration")
@@ -204,9 +202,9 @@ func update_map():
 	for route_point in route_data:
 		if route_point is RoutePointStation:
 			var sprite: Sprite
-			var station = world.get_signal(route_point.node_name)
+			var station = world.get_signal(route_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
-			sprite.name = route_point.node_name
+			sprite.name = route_point.station_node_name
 			sprite.texture = station_image_selected
 			$Special.add_child(sprite)
 
@@ -232,7 +230,7 @@ func update_map():
 	if is_instance_valid(spawn_point):
 		var sprite: Sprite
 		if spawn_point is RoutePointStation:
-			var station = world.get_signal(spawn_point.node_name)
+			var station = world.get_signal(spawn_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
 		elif spawn_point is RoutePointSpawnPoint:
 			sprite = generate_rail_icon_at(spawn_point.rail_name, spawn_point.distance, baked_route[0].forward)
@@ -246,7 +244,7 @@ func update_map():
 	if despawn_point is RoutePointStation or despawn_point is RoutePointDespawnPoint:
 		var sprite: Sprite
 		if despawn_point is RoutePointStation:
-			var station = world.get_signal(despawn_point.node_name)
+			var station = world.get_signal(despawn_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
 		elif despawn_point is RoutePointDespawnPoint:
 			sprite = generate_rail_icon_at(despawn_point.rail_name, despawn_point.distance, baked_route.back().forward)

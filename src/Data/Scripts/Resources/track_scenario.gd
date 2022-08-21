@@ -23,7 +23,7 @@ func is_route_playable(route_name: String) -> bool:
 
 static func load_scenario(path = null) -> TrackScenario:
 	if path == null:
-		path = Root.current_track.get_base_dir().plus_file("scenarios").plus_file(Root.current_scenario) + ".tres"
+		path = Root.current_scenario
 
 	var current_scenario = load(path) as TrackScenario
 	if current_scenario == null:
@@ -35,7 +35,8 @@ static func load_scenario(path = null) -> TrackScenario:
 
 func save_scenario(path = null):
 	if path == null:
-		path = Root.current_track.get_base_dir().plus_file("scenarios").plus_file(Root.current_scenario) + ".tres"
+		path = Root.current_scenario
 
-	if ResourceSaver.save(path, self) != OK:
-		Logger.err("Failed saving scenario at %s" % path, self)
+	var err = ResourceSaver.save(path, self)
+	if err != OK:
+		Logger.err("Failed saving scenario at %s. Reason: %s" % [path, err], self)

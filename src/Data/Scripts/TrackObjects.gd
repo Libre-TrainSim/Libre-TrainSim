@@ -124,6 +124,7 @@ func make_mesh_unique():
 func update() -> void:
 	var _rail_node = world.get_node("Rails").get_node_or_null(attached_rail)
 	if _rail_node == null:
+		Logger.warn("TrackObject could not find attached_rail %s!" % attached_rail, self)
 		return
 
 	attach_to_rail(_rail_node)

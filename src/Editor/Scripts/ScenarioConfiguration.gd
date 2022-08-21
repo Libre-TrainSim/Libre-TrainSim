@@ -18,7 +18,10 @@ func init():
 	world = scenario_editor.get_node("World")
 
 	routes = scenario_editor.scenario_info.routes.duplicate(true)
-	rail_logic_settings = scenario_editor.scenario.rail_logic_settings.duplicate(true)
+	rail_logic_settings = scenario_editor.scenario_info.rail_logic_settings.duplicate(true)
+
+	# FIXME: scenario editor crashes if no route is selected...
+	set_current_route(routes.keys()[0])  # by default, select first route
 
 	for signal_instance in world.get_node("Signals").get_children():
 		if not rail_logic_settings.has(signal_instance.name):
@@ -98,7 +101,8 @@ func _on_Routes_user_selected_entry(entry_name):
 
 
 func set_current_route(route_name : String) -> void:
-	routes[current_route] = loaded_route.duplicate(true)
+	if is_instance_valid(loaded_route):
+		routes[current_route] = loaded_route.duplicate(true)
 	current_route = route_name
 	loaded_route = routes[current_route].duplicate(true)
 	update_ui_for_current_route()

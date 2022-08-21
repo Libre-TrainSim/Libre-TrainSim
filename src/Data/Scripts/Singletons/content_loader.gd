@@ -197,14 +197,11 @@ func get_editor_tracks() -> Dictionary:
 	return tracks
 
 
-
-
 func get_scenarios_for_track(track: String) -> Array:
 	var scenario_dir: String = track.get_base_dir().plus_file("scenarios")
 	var result: Array = []
-	Root.crawl_directory(result, scenario_dir, ["scenario"], 2)
+	Root.crawl_directory(result, scenario_dir, ["tres"], 2)
 	return result
-
 
 
 # If train_name is part of the path, this function returns the whole path

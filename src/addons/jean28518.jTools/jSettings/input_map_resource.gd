@@ -24,5 +24,7 @@ func apply() -> void:
 	# Apply content of input_map
 	for action in input_map:
 		InputMap.action_erase_events(action)
+		ProjectSettings["input/" + action]["events"] = []
 		for event in input_map[action]:
 			InputMap.action_add_event(action, event)
+			ProjectSettings["input/" + action]["events"].append(event)

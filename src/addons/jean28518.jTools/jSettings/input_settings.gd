@@ -62,8 +62,10 @@ func _on_any_button_toggled(button_pressed: bool, button: InputButton):
 	else:
 		# When a button is disabled, save its input settings
 		InputMap.action_erase_events(button.action)
+		ProjectSettings["input/" + button.action]["events"] = []
 		for event in button.events:
 			InputMap.action_add_event(button.action, event)
+			ProjectSettings["input/" + button.action]["events"].append(event)
 		emit_signal("save")
 
 
@@ -77,7 +79,7 @@ func _update_all_buttons():
 func _load_layout(path: String):
 	# Load a layout into InputMap from the provided Resource file
 	Logger.log("Loading InputMap from \"" + path + "\".")
-	var input_map_resource = ResourceLoader.load(path) as InputMapResource
+	var input_map_resource := ResourceLoader.load(path) as InputMapResource
 	if input_map_resource != null:
 		input_map_resource.apply()
 		_update_all_buttons()
@@ -109,7 +111,7 @@ func _on_LayoutImport_pressed():
 func _on_LayoutExportDialog_file_selected(path: String):
 	# Save current InputMap to selected path
 	Logger.log("Exporting current InputMap to \"" + path + "\".")
-	var input_map_resource = InputMapResource.new()
+	var input_map_resource := InputMapResource.new()
 	ResourceSaver.save(path, input_map_resource)
 
 

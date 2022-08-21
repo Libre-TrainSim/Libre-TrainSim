@@ -34,3 +34,24 @@ func get_description() -> String:
 		StopType.END:
 			return "Final Station: " + station_name
 	return "Unknown"
+
+
+func duplicate(deep: bool = true):
+	var copy = get_script().new()
+
+	copy.station_node_name = station_node_name
+	copy.station_name = station_name
+	copy.approach_sound_path = approach_sound_path
+	copy.arrival_sound_path = arrival_sound_path
+	copy.departure_sound_path = departure_sound_path
+	copy.duration_since_last_station = duration_since_last_station
+	copy.minimum_halt_time = minimum_halt_time
+	copy.planned_halt_time = planned_halt_time
+	copy.signal_time = signal_time
+	copy.arrival_time = arrival_time
+	copy.departure_time = departure_time
+	copy.stop_type = stop_type
+	copy.leaving_persons = leaving_persons
+	copy.waiting_persons = waiting_persons
+
+	return copy

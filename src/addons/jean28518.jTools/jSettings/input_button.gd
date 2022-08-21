@@ -51,6 +51,7 @@ func update_text():
 			text += "Button " + str(event.button_index)
 		elif event is InputEventJoypadMotion:
 			text += "Axis " + str(event.axis)
+			text += '+' if event.axis_value >= 0 else '-'
 		elif event is InputEventMouseButton:
 			text += "Mouse " + str(event.button_index)
 		else:

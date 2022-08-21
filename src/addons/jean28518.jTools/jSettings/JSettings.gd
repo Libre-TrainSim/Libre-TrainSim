@@ -30,7 +30,7 @@ func first_run_check():
 
 
 func reset_settings_to_default():
-	Logger.vlog("Settings reset to default.")
+	Logger.log("Settings reset to default.")
 	set_fullscreen(true)
 	set_vsync(true)
 	set_fps_limit(0) # disable limit

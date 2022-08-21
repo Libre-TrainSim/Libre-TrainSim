@@ -4,15 +4,22 @@ extends PanelContainer
 signal save
 
 export (PackedScene) var input_button_scene
+const path_preset_lts = "res://addons/jean28518.jTools/jSettings/input_presets/layout_lts.tres"
+const path_preset_openbve = "res://addons/jean28518.jTools/jSettings/input_presets/layout_openbve.tres"
 var _input_buttons := []
 
 onready var _input_grid := $"%InputGrid"
-onready var _input_reset_confirmation_dialog := $"%InputResetConfirmationDialog"
+onready var _layout_confirmation_lts := $"%LayoutConfirmationLTS"
+onready var _layout_confirmation_open_bve := $"%LayoutConfirmationOpenBVE"
+onready var _layout_export_dialog := $"%LayoutExportDialog"
+onready var _layout_import_dialog := $"%LayoutImportDialog"
 
 func _ready():
 	# Localize the Reset Dialog
-	_input_reset_confirmation_dialog.get_cancel().text = "NO"
-	_input_reset_confirmation_dialog.get_ok().text = "YES"
+	_layout_confirmation_lts.get_cancel().text = "NO"
+	_layout_confirmation_lts.get_ok().text = "YES"
+	_layout_confirmation_open_bve.get_cancel().text = "NO"
+	_layout_confirmation_open_bve.get_ok().text = "YES"
 	
 	# Load all available inputs into a list
 	var actions := InputMap.get_actions()
@@ -60,23 +67,62 @@ func _on_any_button_toggled(button_pressed: bool, button: InputButton):
 		emit_signal("save")
 
 
-func _on_InputReset_pressed():
-	# Ensure active remapping is stopped
-	finish()
-	
-	# Ask for confirmation
-	_input_reset_confirmation_dialog.popup_centered_clamped(Vector2(500,250))
-
-
-func _on_InputResetConfirmationDialog_confirmed():
-	# Reset to default
-	Logger.vlog("InputMap reset to default.")
-	InputMap.load_from_globals()
-	
-	# Update all buttons
+func _update_all_buttons():
+	# Update the text of all InputButtons
 	for button in _input_buttons:
 		button.events = InputMap.get_action_list(button.action)
 		button.update_text()
-	
-	# Save
-	emit_signal("save")
+
+
+func _load_layout(path: String):
+	# Load a layout into InputMap from the provided Resource file
+	Logger.log("Loading InputMap from \"" + path + "\".")
+	var input_map_resource = ResourceLoader.load(path) as InputMapResource
+	if input_map_resource != null:
+		input_map_resource.apply()
+		_update_all_buttons()
+		emit_signal("save")
+	else:
+		Logger.log("Failed to load InputMap from \"" + path + "\".")
+
+
+func _on_LayoutLTS_pressed():
+	finish()
+	_layout_confirmation_lts.popup_centered_clamped(Vector2(500,250))
+
+
+func _on_LayoutOpenBVE_pressed():
+	finish()
+	_layout_confirmation_open_bve.popup_centered_clamped(Vector2(500,250))
+
+
+func _on_LayoutExport_pressed():
+	finish()
+	_layout_export_dialog.popup_centered()
+
+
+func _on_LayoutImport_pressed():
+	finish()
+	_layout_import_dialog.popup_centered()
+
+
+func _on_LayoutExportDialog_file_selected(path: String):
+	# Save current InputMap to selected path
+	Logger.log("Exporting current InputMap to \"" + path + "\".")
+	var input_map_resource = InputMapResource.new()
+	ResourceSaver.save(path, input_map_resource)
+
+
+func _on_LayoutImportDialog_file_selected(path: String):
+	# Load and apply InputMap from selected path
+	_load_layout(path)
+
+
+func _on_LayoutConfirmationLTS_confirmed():
+	Logger.log("Applying LTS input layout preset.")
+	_load_layout(path_preset_lts)
+
+
+func _on_LayoutConfirmationOpenBVE_confirmed():
+	Logger.log("Applying OpenBVE input layout preset.")
+	_load_layout(path_preset_openbve)

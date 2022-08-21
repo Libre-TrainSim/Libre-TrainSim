@@ -146,7 +146,7 @@ var route_index: int = 0 # Index of the baked route Array.
 var next_signal_index: int = 0 # Index of NEXT signal on baked route signal array
 var spawn_point: RoutePointSpawnPoint # Calculated by ScenarioRoute, delivered by world.
 var station_table: Array # Calculated by ScenarioRoute, delivered by world.
-var despawn_point: RoutePointDespawnPoint # Calculated by ScenarioRoute, delivered by world.
+var despawn_point: RoutePoint # Calculated by ScenarioRoute, delivered by world.
 
 # Reference delta at 60fps
 const refDelta: float = 0.0167 # 1.0 / 60
@@ -1550,12 +1550,12 @@ func checkDespawn() -> void:
 	if not ai:
 		return
 
-	if despawn_point.type == RoutePointType.STATION and despawn_point.stop_type == StopType.END:
+	if despawn_point is RoutePointStation and despawn_point.stop_type == StopType.END:
 		# Despawn if the train has arrived at the endstation and the planned arrival is two minutes in the past
 		if world.time > despawn_point.arrival_time + 60*2 and get_station_table_index_of_station_node_name(despawn_point.node_name) >= current_station_table_index:
 			despawn()
 
-	if despawn_point.type == RoutePointType.DESPAWN_POINT:
+	if despawn_point is RoutePointDespawnPoint:
 		if currentRail.name == despawn_point.rail_name:
 			if forward and distance_on_rail > despawn_point.distance:
 				despawn()

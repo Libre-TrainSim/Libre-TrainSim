@@ -179,11 +179,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/DataClasses/route_point_station.gd"
 }, {
-"base": "Reference",
-"class": "RoutePointType",
-"language": "GDScript",
-"path": "res://Data/Scripts/Enums/route_point_type.gd"
-}, {
 "base": "RoutePoint",
 "class": "RoutePointWayPoint",
 "language": "GDScript",
@@ -319,7 +314,6 @@ _global_script_class_icons={
 "RoutePointDespawnPoint": "",
 "RoutePointSpawnPoint": "",
 "RoutePointStation": "",
-"RoutePointType": "",
 "RoutePointWayPoint": "",
 "SafetySystem": "",
 "ScenarioRoute": "",

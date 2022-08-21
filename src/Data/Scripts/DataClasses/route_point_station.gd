@@ -22,9 +22,6 @@ var stop_type := StopType.REGULAR
 var leaving_persons := 0.0
 var waiting_persons := 0.0
 
-func _init() -> void:
-	type = RoutePointType.STATION
-
 
 func get_description() -> String:
 	match stop_type:

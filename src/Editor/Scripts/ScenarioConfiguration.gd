@@ -245,16 +245,16 @@ func update_route_point_settings():
 	var index = selected_items[0]
 
 	var route_point = loaded_route.get_point(index)
-	if route_point.type == RoutePointType.STATION:
+	if route_point is RoutePointStation:
 		$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station.show()
 		update_station_point_settings()
-	if route_point.type == RoutePointType.WAY_POINT:
+	if route_point is RoutePointWayPoint:
 		$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint.show()
 		update_way_point_settings()
-	if route_point.type == RoutePointType.SPAWN_POINT:
+	if route_point is RoutePointSpawnPoint:
 		$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint.show()
 		update_spawn_point_settings()
-	if route_point.type == RoutePointType.DESPAWN_POINT:
+	if route_point is RoutePointDespawnPoint:
 		$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint.show()
 		update_despawn_point_settings()
 
@@ -796,17 +796,17 @@ func check_route_for_errors() -> void:
 		if world.get_signal(station_point.node_name).length <= 0:
 			error_message += "The station length of station '%s' is not valid! You have to fix this in the track editor.\n\n" % station_point.node_name
 
-	if route_points[0].type != RoutePointType.SPAWN_POINT and not\
-	(route_points[0].type == RoutePointType.STATION and route_points[0].stop_type == StopType.BEGINNING):
+	if not route_points[0] is RoutePointSpawnPoint and not\
+	(route_points[0] is RoutePointStation and route_points[0].stop_type == StopType.BEGINNING):
 		error_message += "No beginning station or spawn point found. The first route point should be a beginning station or a spawn point.\n\n"
 
 	if loaded_route.is_playable and not \
-	(route_points.back().type == RoutePointType.STATION and route_points.back().stop_type == StopType.END):
+	(route_points.back() is RoutePointStation and route_points.back().stop_type == StopType.END):
 		error_message += "The last route point has to be an end station. Otherwise the scenario won't be able to be finished.\n\n"
 
 	if not loaded_route.is_playable and not\
-	(route_points.back().type == RoutePointType.STATION and route_points.back().stop_type == StopType.END) and not\
-	(route_points.back().type == RoutePointType.DESPAWN_POINT):
+	(route_points.back() is RoutePointStation and route_points.back().stop_type == StopType.END) and not\
+	(route_points.back() is RoutePointDespawnPoint):
 		error_message += "The last point has to be an end station or a despawn point. Otherwise npc trains can't despawn.\n\n"
 
 	var baked_route: Array = loaded_route.get_calculated_rail_route(world)
@@ -817,7 +817,7 @@ func check_route_for_errors() -> void:
 
 	if loaded_route.is_playable:
 		for route_point in route_points:
-			if route_point.type == RoutePointType.DESPAWN_POINT:
+			if route_point is RoutePointDespawnPoint:
 				error_message += "In the route there is a despawn point. Routes which should be playable can't have a despawn point. Try deleting the depspawn point and add a endstation in the end of your route.\n\n"
 				break
 
@@ -829,20 +829,17 @@ func check_route_for_errors() -> void:
 		error_message += "Just for notice: The following signals are set to manual mode. They don't turn automatically back to green if not explicit called by a script, a contact point or by the time field in the signal settings. If you don't want this change them to block mode: \n%s\n\n" % String(signals_with_manual_mode)
 
 	for i in range(loaded_route.size()):
-		if i != 0 and ((route_points[i].type == RoutePointType.STATION and route_points[i].stop_type == StopType.BEGINNING) or route_points[i].type == RoutePointType.SPAWN_POINT):
+		if i != 0 and ((route_points[i] is RoutePointStation and route_points[i].stop_type == StopType.BEGINNING) or route_points[i] is RoutePointSpawnPoint):
 			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very start of the route.\n\n" % loaded_route.route_points[i].get_description()
-		if i != loaded_route.size()-1 and ((route_points[i].type == RoutePointType.STATION and route_points[i].stop_type == StopType.END) or route_points[i].type == RoutePointType.DESPAWN_POINT):
+		if i != loaded_route.size()-1 and ((route_points[i] is RoutePointStation and route_points[i].stop_type == StopType.END) or route_points[i] is RoutePointDespawnPoint):
 			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very end of the route.\n\n" % loaded_route.route_points[i].get_description()
 
 	for i in range(loaded_route.size()):
 		var route_point = route_points[i]
-		match route_point.type:
-			RoutePointType.STATION:
-				if world.get_signal(route_point.node_name) == null:
-					error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % loaded_route.route_points[i].get_description()
-			_:
-				if world.get_rail(route_point.rail_name) == null:
-					error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % loaded_route.route_points[i].get_description()
+		if route_point is RoutePointStation and world.get_signal(route_point.station_node_name) == null:
+			error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % loaded_route.route_points[i].get_description()
+		elif world.get_rail(route_point.rail_name) == null:
+			error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % loaded_route.route_points[i].get_description()
 
 	if error_message == "\n":
 		error_message += "No errors found. Your route seems to be valid."

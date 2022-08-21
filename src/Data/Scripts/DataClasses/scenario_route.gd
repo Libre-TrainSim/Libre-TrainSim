@@ -109,8 +109,8 @@ func get_calculated_rail_route(world: Node) -> Array:
 
 		# wtf is this for loop even doing here???
 		for j in range(2):
-			var route_point: Dictionary = route_points[i+j]
-			if route_point.type == RoutePointType.STATION:
+			var route_point: RoutePoint = route_points[i+j]
+			if route_point is RoutePointStation:
 				var station: Node = world.get_signal(route_point.node_name)
 				if station == null:
 					return []

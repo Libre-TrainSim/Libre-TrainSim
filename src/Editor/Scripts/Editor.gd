@@ -22,8 +22,37 @@ onready var camera := $Camera as EditorCamera
 func _ready() -> void:
 	if !load_world():
 		return
+	_port_to_new_trackinfo()
 	_port_to_new_chunk_system()
 	_port_to_new_scenario_system()
+
+
+func _port_to_new_trackinfo():
+	var info_file = current_track_path + ".trackinfo"
+	var dir = Directory.new()
+	if not dir.file_exists(info_file):
+		return
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(info_file)
+
+	var new_file = current_track_path + "_config.tres"
+	var world_config = WorldConfig.new()
+	world_config.author = jsavemodule.get_value("author", "Unknown")
+	world_config.track_description = jsavemodule.get_value("description")
+	world_config.editor_notes = jsavemodule.get_value("editor_notes")
+	var release_date = jsavemodule.get_value("release_date")
+	world_config.release_date = {
+		"day": release_date[0],
+		"month": release_date[1],
+		"year": release_date[2]
+	}
+
+	if ResourceSaver.save(new_file, world_config) != OK:
+		Logger.err("Failed to save world config %s" % new_file, self)
+
+	dir.remove(info_file)
+
 
 func _port_to_new_chunk_system() -> void:
 	var save_file = current_track_path + ".save"
@@ -33,8 +62,7 @@ func _port_to_new_chunk_system() -> void:
 
 	dir.make_dir_recursive(current_track_path.get_base_dir().plus_file("chunks"))
 
-	var jsavemodule = Node.new()
-	jsavemodule.set_script(load("res://addons/jean28518.jTools/jSaveManager/jSaveModule.gd"))
+	var jsavemodule = jSaveModule.new()
 	jsavemodule.set_save_path(save_file)
 	var keys = jsavemodule._config.get_section_keys("Main")
 
@@ -123,7 +151,7 @@ func _port_to_new_scenario_system():
 	filename = dir.get_next()
 	while filename != "":
 		if filename.ends_with(".scenario"):
-			_convert_scenario(filename)
+			_convert_scenario(path.plus_file(filename))
 			files_to_remove.append(filename)
 		filename = dir.get_next()
 
@@ -133,8 +161,7 @@ func _port_to_new_scenario_system():
 
 
 func _convert_scenario(filename):
-	var jsavemodule = Node.new()
-	jsavemodule.set_script(load("res://addons/jean28518.jTools/jSaveManager/jSaveModule.gd"))
+	var jsavemodule = jSaveModule.new()
 	jsavemodule.set_save_path(filename)
 
 	var rail_logic_settings = jsavemodule.get_value("rail_logic_settings")
@@ -161,9 +188,10 @@ func _convert_scenario(filename):
 
 		new_scenario.routes[route_name] = new_route
 
-	var new_file = filename.get_basename() + ".tscn"
-	if ResourceSaver.save(new_file, new_scenario) != OK:
-		Logger.err("Failed to save new scenario at %s" % new_file, self)
+	var new_file = filename.get_basename() + ".tres"
+	var err = ResourceSaver.save(new_file, new_scenario)
+	if err != OK:
+		Logger.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
 
 
 func _convert_rail_logic_settings(old_settings) -> Dictionary:
@@ -188,9 +216,9 @@ func _convert_rail_logic_settings(old_settings) -> Dictionary:
 			new_logic.speed = old_settings[logic_name]["speed"]
 			new_logic.status = old_settings[logic_name]["status"]
 
-		elif old_settings[logic_name].has("assigned_signal_name"):
+		elif old_settings[logic_name].has("assigned_signal"):
 			new_logic = StationSettings.new()
-			new_logic.assigned_signal_name = old_settings[logic_name]["assigned_signal_name"]
+			new_logic.assigned_signal_name = old_settings[logic_name]["assigned_signal"]
 			new_logic.enable_person_system = old_settings[logic_name]["enable_person_system"]
 			new_logic.overwrite = old_settings[logic_name]["overwrite"]
 
@@ -520,7 +548,6 @@ func load_world() -> bool:
 
 	var world: Node = world_resource.instance()
 	world.FileName = current_track_name
-	world.j_save_module.set_save_path(current_track_path + ".save")
 	add_child(world)
 	world.owner = self
 
@@ -550,8 +577,6 @@ func save_world(send_message: bool = true) -> void:
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
-
-	$World.j_save_module.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
 

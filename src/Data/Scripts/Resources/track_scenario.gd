@@ -2,18 +2,18 @@ class_name TrackScenario
 extends Resource
 
 
-export var time: int = 0  # seconds
-export var title := ""
-export var description := ""
-export var duration: int = 0  # minutes
+export (int) var time: int = 0  # seconds
+export (String) var title := ""
+export (String) var description := ""
+export (int) var duration: int = 0  # minutes
 
-export var is_hidden := false  # true = visible only in Editor, not in Play menu
+export (bool) var is_hidden := false  # true = visible only in Editor, not in Play menu
 
 # Dict[String, ScenarioRoute]
-export var routes := {}
+export (Dictionary) var routes := {}
 
 # Dict[String, RailLogicSettings]
-export var rail_logic_settings := {}
+export (Dictionary) var rail_logic_settings := {}
 
 
 func is_route_playable(route_name: String) -> bool:

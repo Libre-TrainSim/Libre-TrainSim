@@ -23,7 +23,7 @@ func _ready() -> void:
 	if !load_world():
 		return
 	_port_to_new_chunk_system()
-
+	_port_to_new_scenario_system()
 
 func _port_to_new_chunk_system() -> void:
 	var save_file = current_track_path + ".save"
@@ -107,6 +107,130 @@ func _port_to_new_chunk_system() -> void:
 		new_chunk.queue_free()
 
 	send_message("Chunks were ported to v0.9, please close and reload the track.")
+
+
+func _port_to_new_scenario_system():
+	var path = current_track_path.get_base_dir().plus_file("scenarios")
+	var dir = Directory.new()
+	if dir.open(path) != OK:
+		Logger.err("Track has no scenarios folder!", self)
+		return
+
+	var files_to_remove := []
+
+	# convert .scenario to scenario.tscn files
+	dir.list_dir_begin(true, true)
+	filename = dir.get_next()
+	while filename != "":
+		if filename.ends_with(".scenario"):
+			_convert_scenario(filename)
+			files_to_remove.append(filename)
+		filename = dir.get_next()
+
+	# remove old .scenario files
+	for file in files_to_remove:
+		dir.remove(file)
+
+
+func _convert_scenario(filename):
+	var jsavemodule = Node.new()
+	jsavemodule.set_script(load("res://addons/jean28518.jTools/jSaveManager/jSaveModule.gd"))
+	jsavemodule.set_save_path(filename)
+
+	var rail_logic_settings = jsavemodule.get_value("rail_logic_settings")
+	var routes = jsavemodule.get_value("routes")
+
+	var new_scenario = TrackScenario.new()
+	new_scenario.rail_logic_settings = _convert_rail_logic_settings(rail_logic_settings)
+
+	for route_name in routes:
+		var new_route = ScenarioRoute.new()
+		new_route.activate_only_at_specific_routes = routes[route_name]["general_settings"]["activate_only_at_specific_routes"]
+		new_route.description = routes[route_name]["general_settings"]["description"]
+		new_route.interval = routes[route_name]["general_settings"]["interval"]
+		new_route.interval_end = routes[route_name]["general_settings"]["interval_end"]
+		new_route.interval_start = routes[route_name]["general_settings"]["interval_start"]
+		new_route.is_playable = routes[route_name]["general_settings"]["player_can_drive_this_route"]
+		new_route.specific_routes = routes[route_name]["general_settings"]["specific_routes"]
+		new_route.train_name = routes[route_name]["general_settings"]["train_name"]
+		new_route.rail_logic_settings = _convert_rail_logic_settings(routes[route_name]["rail_logic_settings"])
+
+		for route_point in routes[route_name]["route_points"]:
+			var new_route_point: RoutePoint = _convert_route_point(route_point)
+			new_route.route_points.append(new_route_point)
+
+		new_scenario.routes[route_name] = new_route
+
+	var new_file = filename.get_basename() + ".tscn"
+	if ResourceSaver.save(new_file, new_scenario) != OK:
+		Logger.err("Failed to save new scenario at %s" % new_file, self)
+
+
+func _convert_rail_logic_settings(old_settings) -> Dictionary:
+	var new_settings := {}
+	for logic_name in old_settings:
+		var new_logic
+
+		if old_settings[logic_name].has("affected_signal"):
+			new_logic = ContactPointSettings.new()
+			new_logic.enabled = old_settings[logic_name]["enabled"]
+			new_logic.affected_signal = old_settings[logic_name]["affected_signal"]
+			new_logic.affect_time = old_settings[logic_name]["affect_time"]
+			new_logic.new_speed_limit = old_settings[logic_name]["new_speed_limit"]
+			new_logic.new_status = old_settings[logic_name]["new_status"]
+			new_logic.enable_for_all_trains = old_settings[logic_name]["enable_for_all_trains"]
+			new_logic.specific_train = old_settings[logic_name]["specific_train"]
+
+		elif old_settings[logic_name].has("operation_mode"):
+			new_logic = SignalSettings.new()
+			new_logic.operation_mode = old_settings[logic_name]["operation_mode"]
+			new_logic.signal_free_time = old_settings[logic_name]["signal_free_time"]
+			new_logic.speed = old_settings[logic_name]["speed"]
+			new_logic.status = old_settings[logic_name]["status"]
+
+		elif old_settings[logic_name].has("assigned_signal_name"):
+			new_logic = StationSettings.new()
+			new_logic.assigned_signal_name = old_settings[logic_name]["assigned_signal_name"]
+			new_logic.enable_person_system = old_settings[logic_name]["enable_person_system"]
+			new_logic.overwrite = old_settings[logic_name]["overwrite"]
+
+		new_settings[logic_name] = new_logic
+	return new_settings
+
+
+func _convert_route_point(old_point: Dictionary) -> RoutePoint:
+	var new_point: RoutePoint
+
+	match old_point["type"]:
+		0:
+			new_point = RoutePointStation.new()
+			new_point.station_node_name = old_point["node_name"]
+			new_point.station_name = old_point["station_name"]
+			new_point.stop_type = old_point["stop_type"]
+			new_point.duration_since_last_station = old_point["duration_since_station_before"]
+			new_point.minimum_halt_time = old_point["minimal_halt_time"]
+			new_point.planned_halt_time = old_point["planned_halt_time"]
+			new_point.signal_time = old_point["signal_time"]
+			new_point.approach_sound_path = old_point["approach_sound_path"]
+			new_point.arrival_sound_path = old_point["arrival_sound_path"]
+			new_point.departure_sound_path = old_point["departure_sound_path"]
+			new_point.leaving_persons = old_point["leaving_persons"]
+			new_point.waiting_persons = old_point["waiting_persons"]
+		1:
+			new_point = RoutePointWayPoint.new()
+			new_point.rail_name = old_point["rail_name"]
+		2:
+			new_point = RoutePointSpawnPoint.new()
+			new_point.rail_name = old_point["rail_name"]
+			new_point.distance_on_rail = old_point["distance"]
+			new_point.initial_speed = old_point["initial_speed"]
+			new_point.initial_speed_limit = old_point["initial_speed_limit"]
+		3:
+			new_point = RoutePointDespawnPoint.new()
+			new_point.rail_name = old_point["rail_name"]
+			new_point.distance_on_rail = old_point["distance"]
+
+	return new_point
 
 
 func _enter_tree() -> void:

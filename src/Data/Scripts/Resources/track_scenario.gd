@@ -10,11 +10,9 @@ export var duration: int = 0  # minutes
 export var is_hidden := false  # true = visible only in Editor, not in Play menu
 
 # Dict[String, ScenarioRoute]
-# see World.gd spawn_train()
 export var routes := {}
 
 # Dict[String, RailLogicSettings]
-# see Signal.gd get_scenario_data()
 export var rail_logic_settings := {}
 
 

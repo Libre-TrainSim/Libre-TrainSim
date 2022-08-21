@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/JSettings.gd" type="Script" id=1]
+[ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=2]
 [ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=4]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
 
@@ -553,14 +554,32 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
-[node name="Back" type="Button" parent="JSettings/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="JSettings/MarginContainer/VBoxContainer"]
 margin_top = 497.0
 margin_right = 972.0
 margin_bottom = 546.0
+
+[node name="Back" type="Button" parent="JSettings/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_right = 677.0
+margin_bottom = 49.0
 rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 3
 theme = ExtResource( 5 )
 text = "MENU_BACK"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reset" type="Button" parent="JSettings/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 681.0
+margin_right = 972.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 150, 0 )
+theme = ExtResource( 2 )
+text = "MENU_SETTINGS_RESET"
 align = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -584,4 +603,5 @@ __meta__ = {
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/MainVolume" to="." method="set_main_volume"]
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/GameVolume" to="." method="set_game_volume"]
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/MusicVolume" to="." method="set_music_volume"]
-[connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/HBoxContainer/Reset" to="." method="_on_Reset_pressed"]

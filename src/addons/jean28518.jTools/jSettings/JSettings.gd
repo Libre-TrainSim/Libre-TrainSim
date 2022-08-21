@@ -21,22 +21,27 @@ func first_run_check():
 	var dir = Directory.new()
 	if not dir.file_exists("user://override.cfg") or OS.has_feature("editor"):
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
-		set_fullscreen(true)
-		set_vsync(true)
-		set_fps_limit(0) # disable limit
-		set_anti_aliasing(2)
-		set_fog(true)
-		set_shadows(true)
-		set_main_volume(1.0)
-		set_music_volume(1.0)
-		set_game_volume(1.0)
-		set_persons(true)
-		set_view_distance(1000)
-		set_sifa(true)
-		set_pzb(true)
-		set_chunk_unload_distance(2)
-		set_chunk_load_all(false)
-		set_dynamic_lights(false)
+		reset_settings_to_default()
+
+
+func reset_settings_to_default():
+	Logger.vlog("Settings reset to default.")
+	set_fullscreen(true)
+	set_vsync(true)
+	set_fps_limit(0) # disable limit
+	set_anti_aliasing(2)
+	set_fog(true)
+	set_shadows(true)
+	set_main_volume(1.0)
+	set_music_volume(1.0)
+	set_game_volume(1.0)
+	set_persons(true)
+	set_view_distance(1000)
+	set_sifa(true)
+	set_pzb(true)
+	set_chunk_unload_distance(2)
+	set_chunk_load_all(false)
+	set_dynamic_lights(false)
 
 
 func apply_saved_settings():
@@ -283,3 +288,8 @@ func _on_SIFA_pressed():
 
 func _on_PZB_pressed():
 	set_pzb($"%PZB".pressed)
+
+
+func _on_Reset_pressed():
+	reset_settings_to_default()
+	update_settings_window()

@@ -37,7 +37,7 @@ func get_point_description(index: int) -> String:
 
 
 func get_point(index: int) -> RoutePoint:
-	return route_points[index]
+	return route_points[index].duplicate(true)
 
 
 func size() -> int:
@@ -45,7 +45,7 @@ func size() -> int:
 
 
 func get_start_times() -> Array:
-	var times: Array = []
+	var times := []
 
 	var time: int = interval_start
 	times.append(time)
@@ -63,18 +63,19 @@ func get_start_times() -> Array:
 
 func get_calculated_station_points(start_time: int) -> Array:
 	var time: int = start_time
-	var station_table: Array = []
+	var station_table := []
 
 	for route_point in route_points:
 		if not route_point is RoutePointStation:
 			continue
 
-		if route_point.stop_type != StopType.BEGINNING:
-			time += route_point.duration_since_station_before
-		route_point.arrival_time = time
-		time += route_point.planned_halt_time
-		route_point.departure_time = time
-		station_table.append(route_point)
+		var p: RoutePoint = route_point.duplicate(true)
+		if p.stop_type != StopType.BEGINNING:
+			time += p.duration_since_station_before
+		p.arrival_time = time
+		time += p.planned_halt_time
+		p.departure_time = time
+		station_table.append(p)
 
 	return station_table
 
@@ -99,13 +100,13 @@ func get_calculated_station_point(index: int, start_time: int):
 
 func get_calculated_rail_route(world: Node) -> Array:
 	world.update_rail_connections() # why is this necessary? :(
-	var rail_route: Array = []
+	var rail_route := []
 
 	for i in range (size()-1):
 		# get start and end rails for calculation
-		var start_end_rails: Array = []
-		var start_direction_set: bool = false
-		var forward: bool = true
+		var start_end_rails := []
+		var start_direction_set := false
+		var forward := true
 
 		# wtf is this for loop even doing here???
 		for j in range(2):
@@ -147,7 +148,7 @@ func get_calculated_rail_route(world: Node) -> Array:
 			rail_route.pop_back()
 		rail_route.append_array(calculated_route)
 
-	calculated_rail_route = rail_route
+	calculated_rail_route = rail_route.duplicate(true)
 	return rail_route
 
 
@@ -174,7 +175,7 @@ func get_spawn_point(train_length, world: Node) -> RoutePointSpawnPoint:
 
 
 func get_despawn_point() -> RoutePointDespawnPoint:
-	return route_points.back()  # cannot duplicate() objects :(
+	return route_points.back().duplicate(true)
 
 
 func get_minimal_platform_length(world: Node) -> int:
@@ -210,5 +211,3 @@ func move_point_down(index: int) -> void:
 	var tmp = route_points[index+1]
 	route_points[index+1] = route_points[index]
 	route_points[index] = tmp
-
-

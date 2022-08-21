@@ -1,7 +1,7 @@
 extends Panel
 
+# local cache of things edited
 var routes: Dictionary = {}
-
 var rail_logic_settings: Dictionary = {}
 
 var current_route: String = ""
@@ -17,8 +17,8 @@ func init():
 	scenario_editor = find_parent("ScenarioEditor")
 	world = scenario_editor.get_node("World")
 
-	routes = scenario_editor.scenario_info.routes
-	rail_logic_settings = scenario_editor.scenario.rail_logic_settings
+	routes = scenario_editor.scenario_info.routes.duplicate(true)
+	rail_logic_settings = scenario_editor.scenario.rail_logic_settings.duplicate(true)
 
 	for signal_instance in world.get_node("Signals").get_children():
 		if not rail_logic_settings.has(signal_instance.name):
@@ -41,9 +41,9 @@ func _input(_event):
 
 
 func save():
-	routes[current_route] = loaded_route
-	scenario_editor.scenario_info.routes = routes
-	scenario_editor.scenario_info.rail_logic_settings = rail_logic_settings
+	routes[current_route] = loaded_route.duplicate(true)
+	scenario_editor.scenario_info.routes = routes.duplicate(true)
+	scenario_editor.scenario_info.rail_logic_settings = rail_logic_settings.duplicate(true)
 	scenario_editor.scenario_info.save_scenario()  # write to disk
 	find_parent("ScenarioEditor").show_message("Successfully saved!")
 
@@ -88,7 +88,7 @@ func _on_Routes_user_renamed_entry(old_name, new_name):
 func _on_Routes_user_duplicated_entries(source_entry_names, duplicated_entry_names):
 	var source_entry_name = source_entry_names[0]
 	var duplicated_entry_name = duplicated_entry_names[0]
-	routes[duplicated_entry_name] = routes[source_entry_name]
+	routes[duplicated_entry_name] = routes[source_entry_name].duplicate(true)
 	update_route_list()
 	set_current_route(duplicated_entry_name)
 
@@ -98,9 +98,9 @@ func _on_Routes_user_selected_entry(entry_name):
 
 
 func set_current_route(route_name : String) -> void:
-	routes[current_route] = loaded_route
+	routes[current_route] = loaded_route.duplicate(true)
 	current_route = route_name
-	loaded_route = routes[current_route]
+	loaded_route = routes[current_route].duplicate(true)
 	update_ui_for_current_route()
 	update_scenario_map()
 
@@ -185,7 +185,7 @@ func update_route_point_list():
 	item_list.clear()
 	var size = loaded_route.size()
 	for i in range (size):
-		item_list.add_item(loaded_route.route_points[i].get_description())
+		item_list.add_item(loaded_route.get_point_description(i))
 	if (selected_items.size() > 0):
 		item_list.select(selected_items[0])
 
@@ -811,8 +811,8 @@ func check_route_for_errors() -> void:
 
 	var baked_route: Array = loaded_route.get_calculated_rail_route(world)
 	if baked_route.size() == 0:
-		var first_error_route_point: String = loaded_route.route_points[loaded_route.error_route_point_start_index].get_description()
-		var second_error_route_point: String = loaded_route.route_points[loaded_route.error_route_point_end_index].get_description()
+		var first_error_route_point: String = loaded_route.get_point_description(loaded_route.error_route_point_start_index)
+		var second_error_route_point: String = loaded_route.get_point_description(loaded_route.error_route_point_end_index)
 		error_message += "The train route can't be generated. Between '%s' and '%s' seems to be an error. Check, if a train could drive between these two points. Maybe some rails are not connected. Try adding a waypoint between these two route points to locate the error. Are your points in the correct order?\n\n" % [first_error_route_point, second_error_route_point]
 
 	if loaded_route.is_playable:
@@ -830,16 +830,16 @@ func check_route_for_errors() -> void:
 
 	for i in range(loaded_route.size()):
 		if i != 0 and ((route_points[i] is RoutePointStation and route_points[i].stop_type == StopType.BEGINNING) or route_points[i] is RoutePointSpawnPoint):
-			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very start of the route.\n\n" % loaded_route.route_points[i].get_description()
+			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very start of the route.\n\n" % loaded_route.get_point_description(i)
 		if i != loaded_route.size()-1 and ((route_points[i] is RoutePointStation and route_points[i].stop_type == StopType.END) or route_points[i] is RoutePointDespawnPoint):
-			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very end of the route.\n\n" % loaded_route.route_points[i].get_description()
+			error_message += "The route point '%s' cant be at this position. A point of this type can be just at the very end of the route.\n\n" % loaded_route.get_point_description(i)
 
 	for i in range(loaded_route.size()):
 		var route_point = route_points[i]
 		if route_point is RoutePointStation and world.get_signal(route_point.station_node_name) == null:
-			error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % loaded_route.route_points[i].get_description()
+			error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % loaded_route.get_point_description(i)
 		elif world.get_rail(route_point.rail_name) == null:
-			error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % loaded_route.route_points[i].get_description()
+			error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % loaded_route.get_point_description(i)
 
 	if error_message == "\n":
 		error_message += "No errors found. Your route seems to be valid."

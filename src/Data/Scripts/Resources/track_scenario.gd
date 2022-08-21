@@ -41,4 +41,3 @@ func save_scenario(path = null):
 
 	if ResourceSaver.save(path, self) != OK:
 		Logger.err("Failed saving scenario at %s" % path, self)
-	pass

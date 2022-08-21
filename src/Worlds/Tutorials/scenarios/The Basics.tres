@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=20 format=2]
+[gd_resource type="Resource" load_steps=16 format=2]
 
 [ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
 [ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=2]
@@ -53,7 +53,7 @@ signal_free_time = -1
 speed = -1
 status = 0
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=26]
 script = ExtResource( 4 )
 station_node_name = "City1"
 station_name = "Tutorialhausen"
@@ -68,7 +68,7 @@ stop_type = 2
 leaving_persons = 50
 waiting_persons = 100
 
-[sub_resource type="Resource" id=9]
+[sub_resource type="Resource" id=27]
 script = ExtResource( 4 )
 station_node_name = "City2"
 station_name = "Tutorialbach"
@@ -83,71 +83,11 @@ stop_type = 3
 leaving_persons = 50
 waiting_persons = 100
 
-[sub_resource type="Resource" id=17]
-script = ExtResource( 4 )
-station_node_name = "City1"
-station_name = "Tutorialhausen"
-approach_sound_path = ""
-arrival_sound_path = ""
-departure_sound_path = "res://Resources/Sounds/platform_departure.ogg"
-duration_since_last_station = 300
-minimum_halt_time = 15
-planned_halt_time = 10
-signal_time = 2
-stop_type = 2
-leaving_persons = 50
-waiting_persons = 100
-
-[sub_resource type="Resource" id=18]
-script = ExtResource( 4 )
-station_node_name = "City2"
-station_name = "Tutorialbach"
-approach_sound_path = "res://Resources/Sounds/next_station_tutorialbach.ogg"
-arrival_sound_path = "res://Resources/Sounds/platform_endstation.ogg"
-departure_sound_path = ""
-duration_since_last_station = 80
-minimum_halt_time = 15
-planned_halt_time = 20
-signal_time = 60
-stop_type = 3
-leaving_persons = 50
-waiting_persons = 100
-
-[sub_resource type="Resource" id=26]
-script = ExtResource( 4 )
-station_node_name = "City1"
-station_name = "Tutorialhausen"
-approach_sound_path = ""
-arrival_sound_path = ""
-departure_sound_path = "res://Resources/Sounds/platform_departure.ogg"
-duration_since_last_station = 300
-minimum_halt_time = 15
-planned_halt_time = 30
-signal_time = 3
-stop_type = 2
-leaving_persons = 50
-waiting_persons = 100
-
-[sub_resource type="Resource" id=27]
-script = ExtResource( 4 )
-station_node_name = "City2"
-station_name = "Tutorialbach"
-approach_sound_path = "res://Resources/Sounds/next_station_tutorialbach.ogg"
-arrival_sound_path = "res://Resources/Sounds/platform_endstation.ogg"
-departure_sound_path = ""
-duration_since_last_station = 80
-minimum_halt_time = 15
-planned_halt_time = 20
-signal_time = 60
-stop_type = 3
-leaving_persons = 50
-waiting_persons = 100
-
 [sub_resource type="Resource" id=28]
 script = ExtResource( 3 )
 rail_logic_settings = {
 }
-route_points = [ SubResource( 8 ), SubResource( 9 ), SubResource( 17 ), SubResource( 18 ), SubResource( 26 ), SubResource( 27 ) ]
+route_points = [ SubResource( 26 ), SubResource( 27 ) ]
 activate_only_at_specific_routes = false
 specific_routes = [  ]
 is_playable = true

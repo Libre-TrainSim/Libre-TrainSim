@@ -346,9 +346,9 @@ func update_station_point_settings():
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StationNode/LineEdit.text = p.station_node_name
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StationName.text = p.station_name
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StopType.selected = p.stop_type
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/DurationSinceStationBefore.value = p.duration_since_station_before
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/DurationSinceStationBefore.value = p.duration_since_last_station
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/PlannedHalttime.value = p.planned_halt_time
-	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/MinimalHalttime.value = p.minimal_halt_time
+	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/MinimalHalttime.value = p.minimum_halt_time
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/SignalTime.value = p.signal_time
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/WaitingPersons.value = p.waiting_persons
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/LeavingPersons.value = p.leaving_persons
@@ -409,7 +409,7 @@ func _on_StationPoint_StopType_item_selected(index):
 
 func _on_StationPoint_DurationSinceStationBefore_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	loaded_route.route_points[selected_route_point_index].duration_since_station_before = value
+	loaded_route.route_points[selected_route_point_index].duration_since_last_station = value
 	update_station_point_settings()
 
 
@@ -420,7 +420,7 @@ func _on_StationPoint_PlannedHalttime_value_changed(value):
 
 func _on_StationPoint_MinimalHalttime_value_changed(value):
 	var selected_route_point_index = $TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.get_selected_items()[0]
-	loaded_route.route_points[selected_route_point_index].minimal_halt_time = value
+	loaded_route.route_points[selected_route_point_index].minimum_halt_time = value
 
 
 func _on_StationPoint_signal_time_value_changed(value):
@@ -793,8 +793,8 @@ func check_route_for_errors() -> void:
 
 	var station_points = loaded_route.get_calculated_station_points(0)
 	for station_point in station_points:
-		if world.get_signal(station_point.node_name).length <= 0:
-			error_message += "The station length of station '%s' is not valid! You have to fix this in the track editor.\n\n" % station_point.node_name
+		if world.get_signal(station_point.station_node_name).length <= 0:
+			error_message += "The station length of station '%s' is not valid! You have to fix this in the track editor.\n\n" % station_point.station_node_name
 
 	if not route_points[0] is RoutePointSpawnPoint and not\
 	(route_points[0] is RoutePointStation and route_points[0].stop_type == StopType.BEGINNING):
@@ -836,8 +836,9 @@ func check_route_for_errors() -> void:
 
 	for i in range(loaded_route.size()):
 		var route_point = route_points[i]
-		if route_point is RoutePointStation and world.get_signal(route_point.station_node_name) == null:
-			error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % loaded_route.get_point_description(i)
+		if route_point is RoutePointStation:
+			if world.get_signal(route_point.station_node_name) == null:
+				error_message += "The route point %s is not assigned to any station! Please fix that by clicking on 'Select' at the 'Node Name' setting of the route point and then select a blue arrow.\n\n" % loaded_route.get_point_description(i)
 		elif world.get_rail(route_point.rail_name) == null:
 			error_message += "The route point %s is not assigned to any rail! Please fix that by clicking on 'Select' at the 'Rail' setting of the route point and then select a blue line.\n\n" % loaded_route.get_point_description(i)
 

@@ -147,7 +147,7 @@ func set_scenario_to_world() -> void:
 		var minimal_platform_length: int = route.get_minimal_platform_length(self)
 		var train_rail_route: Array  = route.get_calculated_rail_route(self)
 		var train_station_table: Array = route.get_calculated_station_points(Root.selected_time)
-		var despawn_point: RoutePointDespawnPoint = route.get_despawn_point()
+		var despawn_point = route.get_despawn_point()
 		var available_times: Array = route.get_start_times()
 
 		for available_time in available_times:

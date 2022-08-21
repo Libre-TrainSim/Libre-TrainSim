@@ -173,8 +173,8 @@ func get_perfect_halt_distance_on_rail(train_length: int):
 		return on_rail_position - (length - (length-train_length)/2.0)
 
 
-func set_data(d: Dictionary) -> void:
+func set_data(d: StationSettings) -> void:
 	if not d.overwrite:
 		return
-	assigned_signal = d.assigned_signal
+	assigned_signal = d.assigned_signal_name
 	personSystem = d.enable_person_system

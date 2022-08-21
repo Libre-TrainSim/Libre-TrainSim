@@ -41,7 +41,7 @@ var reverser: int = ReverserState.NEUTRAL
 
 ## For Station Control:
 var current_station_table_index: int = 0 # Displays the index of the next or current station of station_table
-var current_station_table_entry: Dictionary = {}
+var current_station_table_entry: RoutePointStation = null
 var current_station_node: Node = null # If we are in a station, this variable stores the current station node, otherwise its null.
 var whole_train_in_station: bool = false # true if speed = 0, and the train is fully in the station
 var is_in_station := false # true if the train speed = 0, the train is fully in the station, and doors were opened. - Until depart Message
@@ -190,8 +190,8 @@ func ready() -> void:
 		currentSpeedLimit = spawn_point.initial_speed_limit
 	else:
 		currentSpeedLimit = speedLimit
-	if station_table.size() > 0 and station_table[0].type == StopType.BEGINNING:
-		match world.get_signal(station_table[0].node_name).platform_side:
+	if station_table.size() > 0 and station_table[0].stop_type == StopType.BEGINNING:
+		match world.get_signal(station_table[0].station_node_name).platform_side:
 			PlatformSide.NONE:
 				pass
 			PlatformSide.LEFT:
@@ -227,15 +227,15 @@ func ready() -> void:
 
 	## Get driving handled
 	## Set the Train at the beginning of the rail, and after that set the distance on the Rail forward, which is standing in var startPosition
-	distance_on_rail = spawn_point.distance
+	distance_on_rail = spawn_point.distance_on_rail
 	forward = spawn_point.forward
 	currentRail = world.get_rail(spawn_point.rail_name)
 	assert(currentRail != null)
 
 	if forward:
-		distance_on_route = spawn_point.distance
+		distance_on_route = spawn_point.distance_on_rail
 	else:
-		distance_on_route = currentRail.length - spawn_point.distance
+		distance_on_route = currentRail.length - spawn_point.distance_on_rail
 
 	## Set Train to Route:
 	if forward:
@@ -813,7 +813,7 @@ func handle_signal(signal_name: String) -> void:
 			if speed == 0:
 				return
 			else:
-				Logger.err("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].node_name).name], self)
+				Logger.err("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].station_node_name).name], self)
 
 		current_station_table_index = station_table_index
 		current_station_table_entry = station_table[current_station_table_index]
@@ -941,7 +941,7 @@ func check_station(delta: float) -> void:
 
 	# train waited long enough in station
 	elif is_in_station and world.time >= current_station_table_entry.departure_time and \
-			world.time >= real_arrival_time + current_station_table_entry.minimal_halt_time:
+			world.time >= real_arrival_time + current_station_table_entry.minimum_halt_time:
 		# scenario finished if last station
 		if current_station_table_entry.stop_type == StopType.END:
 			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)
@@ -1265,7 +1265,7 @@ func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1
 		nextStation = nextStations[0]
 		stationMessageSent = false
 
-	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.node_name == nextStation and current_station_table_entry.stop_type != StopType.DO_NOT_STOP and not is_in_station:
+	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.station_node_name == nextStation and current_station_table_entry.stop_type != StopType.DO_NOT_STOP and not is_in_station:
 		stationMessageSent = true
 		var distanceS: String = String(int(get_distance_to_signal(nextStation)/100)*100+100)
 		if distanceS == "1000":
@@ -1346,7 +1346,7 @@ func set_signalAfters() -> void:
 
 
 func spawnWagons() -> void:
-	var nextWagonPosition: float = spawn_point.distance
+	var nextWagonPosition: float = spawn_point.distance_on_rail
 	for wagon in wagons:
 		var wagonNode: Spatial = get_node(wagon)
 		var newWagon: Spatial = wagonNode.duplicate()
@@ -1448,7 +1448,7 @@ func updateNextStation() -> void:  ## Used for Autopilot
 	# Because get_distance_to_signal can regulary only used, if signal is before the train. In this case, signal is after the train,
 	# so get_distance_to_signal thinks, we are at a loop edge, and adds the complete route length to it. So we remove the complete_route_length here.
 	if not is_in_station:
-		distanceToNextStation = get_distance_to_signal(current_station_table_entry.node_name) + world.get_signal(current_station_table_entry.node_name).length
+		distanceToNextStation = get_distance_to_signal(current_station_table_entry.station_node_name) + world.get_signal(current_station_table_entry.station_node_name).length
 		if distanceToNextStation > complete_route_length:
 			distanceToNextStation -= complete_route_length
 
@@ -1459,8 +1459,8 @@ func handle_station_signal():
 	if current_station_table_index == _signal_was_freed_for_station_index or station_table.size() == 0\
 	or _signal_was_freed_for_station_index+1 > station_table.size():
 		return
-	var station_table_entry: Dictionary = station_table[_signal_was_freed_for_station_index+1]
-	var signal_node: Node = world.get_signal(world.get_signal(station_table_entry.node_name).assigned_signal)
+	var station_table_entry: RoutePointStation = station_table[_signal_was_freed_for_station_index+1]
+	var signal_node: Node = world.get_signal(world.get_signal(station_table_entry.station_node_name).assigned_signal)
 	if signal_node == null:
 		_signal_was_freed_for_station_index += 1
 		return
@@ -1507,7 +1507,7 @@ func autopilot() -> void:
 	## Next Station:
 	sollSpeedArr[2] = speedLimit
 	if not is_in_station and station_table.size() != 0:
-		if get_station_table_index_of_station_node_name(current_station_table_entry.node_name) != -1:
+		if get_station_table_index_of_station_node_name(current_station_table_entry.station_node_name) != -1:
 			sollSpeedArr[2] = min(sqrt(15*distanceToNextStation+20), (distanceToNextStation+10)/4.0)
 			if sollSpeedArr[2] < 10:
 				sollSpeedArr[2] = 0
@@ -1552,14 +1552,14 @@ func checkDespawn() -> void:
 
 	if despawn_point is RoutePointStation and despawn_point.stop_type == StopType.END:
 		# Despawn if the train has arrived at the endstation and the planned arrival is two minutes in the past
-		if world.time > despawn_point.arrival_time + 60*2 and get_station_table_index_of_station_node_name(despawn_point.node_name) >= current_station_table_index:
+		if world.time > despawn_point.arrival_time + 60*2 and get_station_table_index_of_station_node_name(despawn_point.station_node_name) >= current_station_table_index:
 			despawn()
 
 	if despawn_point is RoutePointDespawnPoint:
 		if currentRail.name == despawn_point.rail_name:
-			if forward and distance_on_rail > despawn_point.distance:
+			if forward and distance_on_rail > despawn_point.distance_on_rail:
 				despawn()
-			if not forward and distance_on_rail < despawn_point.distance:
+			if not forward and distance_on_rail < despawn_point.distance_on_rail:
 				despawn()
 
 
@@ -1773,7 +1773,7 @@ func jump_to_rail(rail_name: String, distance: float, fwd: bool = true) -> void:
 func jump_to_station(station_table_index : int) -> void:
 	set_speed_to_zero()
 
-	var station_node: Spatial = world.get_signal(station_table[station_table_index].node_name)
+	var station_node: Spatial = world.get_signal(station_table[station_table_index].station_node_name)
 	var rail_name: String = station_node.rail.name
 	var local_forward: bool = station_node.forward
 	var local_distance_on_rail: float = station_node.get_perfect_halt_distance_on_rail(length)
@@ -1783,7 +1783,7 @@ func jump_to_station(station_table_index : int) -> void:
 
 
 func force_to_be_in_station(station_table_index: int) -> void:
-	current_station_node = world.get_signal(station_table[station_table_index].node_name)
+	current_station_node = world.get_signal(station_table[station_table_index].station_node_name)
 	current_station_table_index = station_table_index
 	current_station_table_entry = station_table[current_station_table_index]
 	route_distance_at_station_begin = distance_on_route - length - 1.0
@@ -1801,6 +1801,6 @@ func force_to_be_in_station(station_table_index: int) -> void:
 # Returns -1, if station node not found in station_table
 func get_station_table_index_of_station_node_name(node_name: String) -> int:
 	for i in range(station_table.size()):
-		if station_table[i].node_name == node_name:
+		if station_table[i].station_node_name == node_name:
 			return i
 	return -1

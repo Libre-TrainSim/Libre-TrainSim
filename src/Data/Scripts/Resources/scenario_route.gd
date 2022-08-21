@@ -95,7 +95,7 @@ func get_calculated_station_points(start_time: int) -> Array:
 
 		var p: RoutePoint = route_point.duplicate(true)
 		if p.stop_type != StopType.BEGINNING:
-			time += p.duration_since_station_before
+			time += p.duration_since_last_station
 		p.arrival_time = time
 		time += p.planned_halt_time
 		p.departure_time = time
@@ -136,7 +136,7 @@ func get_calculated_rail_route(world: Node) -> Array:
 		for j in range(2):
 			var route_point: RoutePoint = route_points[i+j]
 			if route_point is RoutePointStation:
-				var station: Node = world.get_signal(route_point.node_name)
+				var station: Node = world.get_signal(route_point.station_node_name)
 				if station == null:
 					return []
 				start_end_rails.append(world.get_rail(station.attached_rail))

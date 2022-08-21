@@ -180,7 +180,8 @@ func _convert_scenario(filename):
 		new_route.is_playable = routes[route_name]["general_settings"]["player_can_drive_this_route"]
 		new_route.specific_routes = routes[route_name]["general_settings"]["specific_routes"]
 		new_route.train_name = routes[route_name]["general_settings"]["train_name"]
-		new_route.rail_logic_settings = _convert_rail_logic_settings(routes[route_name]["rail_logic_settings"])
+		if routes[route_name].has("rail_logic_settings"):
+			new_route.rail_logic_settings = _convert_rail_logic_settings(routes[route_name]["rail_logic_settings"])
 
 		for route_point in routes[route_name]["route_points"]:
 			var new_route_point: RoutePoint = _convert_route_point(route_point)
@@ -569,6 +570,7 @@ func save_world(send_message: bool = true) -> void:
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
 	$World.chunk_manager.save_and_unload_all_chunks()
+	assert($World/Chunks.get_child_count() == 0)
 
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)

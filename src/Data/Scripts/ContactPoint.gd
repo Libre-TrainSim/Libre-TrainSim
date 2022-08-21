@@ -39,7 +39,7 @@ func set_to_rail() -> void:
 			self.rotation.y += PI
 
 
-func set_data(d: Dictionary) -> void:
+func set_data(d: ContactPointSettings) -> void:
 	affectTime = d.affect_time
 	affectedSignal = d.affected_signal
 	enable_for_all_trains = d.enable_for_all_trains
@@ -48,11 +48,13 @@ func set_data(d: Dictionary) -> void:
 	newStatus = d.new_status
 	bySpecificTrain = d.specific_train
 
+
 func reset() -> void:
 	affectedSignal = ""
 	bySpecificTrain = ""
 	newStatus = 1
 	affectTime = 0.1
+
 
 func activateContactPoint(trainName: String) -> void:
 	if disabled:
@@ -61,6 +63,7 @@ func activateContactPoint(trainName: String) -> void:
 		return
 	if enable_for_all_trains or trainName == bySpecificTrain:
 		$Timer.start()
+
 
 func _on_Timer_timeout() -> void:
 	var signalN: Spatial = get_parent().get_node(affectedSignal)

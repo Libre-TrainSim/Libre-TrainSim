@@ -236,7 +236,7 @@ func _finish_chunk_loading():
 
 # called deferred from Thread
 func _add_chunk_to_scene_tree(chunk: Chunk):
-	if world.get_node("Chunks").has_node(chunk.name) != null:
+	if world.get_node("Chunks").has_node(chunk.name):
 		Logger.err("Chunk already loaded: %s" % chunk.name, self)
 		chunk.queue_free()
 		return
@@ -276,6 +276,8 @@ func _unload_old_chunks(all: bool = false):
 
 	# unload rails (they aren't chunked)
 	for rail in world.get_node("Rails").get_children():
+		if not rail.has_meta("chunk_pos"):
+			rail.set_meta("chunk_pos", position_to_chunk(rail.global_transform.origin))
 		if rail.get_meta("chunk_pos") in chunks_to_unload:
 			rail.unload_visible_instance()
 

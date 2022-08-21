@@ -183,6 +183,12 @@ func _convert_scenario(filename):
 		if routes[route_name].has("rail_logic_settings"):
 			new_route.rail_logic_settings = _convert_rail_logic_settings(routes[route_name]["rail_logic_settings"])
 
+		# something is bugged here, every time _convert_scenario is called
+		# this for loop seems to add additional route points
+		# example: scenario1 has 2 route points, scenario2 also has 2 route points
+		# after conversion, scenario1 has 2 route points, scenario2 has 4 route points
+		# scenario2 has the points from scenario1 and scenario2 WTF
+		# I bet the jsavemodule is at fault
 		for route_point in routes[route_name]["route_points"]:
 			var new_route_point: RoutePoint = _convert_route_point(route_point)
 			new_route.route_points.append(new_route_point)

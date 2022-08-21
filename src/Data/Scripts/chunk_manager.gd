@@ -237,7 +237,7 @@ func _finish_chunk_loading():
 # called deferred from Thread
 func _add_chunk_to_scene_tree(chunk: Chunk):
 	if world.get_node("Chunks").has_node(chunk.name):
-		Logger.err("Chunk already loaded: %s" % chunk.name, self)
+		Logger.warn("Chunk already loaded: %s" % chunk.name, self)
 		chunk.queue_free()
 		return
 
@@ -285,7 +285,7 @@ func _unload_old_chunks(all: bool = false):
 	for chunk_pos in chunks_to_unload:
 		var chunk = world.get_node("Chunks").get_node_or_null(chunk_to_string(chunk_pos))
 		if is_instance_valid(chunk):
-			chunk.queue_free()
+			chunk.free()  # no, we cannot use queue_free() here, because the chunks won't get unloaded before Editor saves the map!
 		loaded_chunks.erase(chunk_pos)
 
 	_chunk_mutex.unlock()

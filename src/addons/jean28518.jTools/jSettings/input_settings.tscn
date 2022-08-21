@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/jSettings/input_settings.gd" type="Script" id=1]
+[ext_resource path="res://addons/jean28518.jTools/jSettings/input_button.tscn" type="PackedScene" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="InputSettings" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 1 )
+input_button_scene = ExtResource( 2 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InputGrid" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+margin_right = 1024.0
+size_flags_horizontal = 3
+columns = 2
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 4.0
+margin_right = 1024.0
+margin_bottom = 8.0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 12.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_top = 3.0
+margin_right = 510.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "MENU_INPUT_RESET"
+
+[node name="InputReset" type="Button" parent="ScrollContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+margin_left = 514.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "MENU_INPUT_RESET_BUTTON"
+
+[node name="InputResetConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 207.0
+margin_bottom = 82.0
+window_title = "MENU_INPUT_RESET"
+dialog_text = "MENU_INPUT_RESET_CONFIRM_TEXT"
+dialog_autowrap = true
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/GridContainer/InputReset" to="." method="_on_InputReset_pressed"]
+[connection signal="confirmed" from="InputResetConfirmationDialog" to="." method="_on_InputResetConfirmationDialog_confirmed"]

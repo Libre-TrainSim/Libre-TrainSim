@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/JSettings.gd" type="Script" id=1]
 [ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=2]
+[ext_resource path="res://addons/jean28518.jTools/jSettings/input_settings.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=4]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
 
@@ -358,20 +359,20 @@ align = 1
 suffix = "FPS"
 
 [node name="HSeparator5" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 128.0
+margin_top = 249.0
 margin_right = 468.0
-margin_bottom = 150.0
+margin_bottom = 271.0
 
 [node name="HSeparator6" type="HSeparator" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 margin_left = 472.0
-margin_top = 128.0
+margin_top = 249.0
 margin_right = 940.0
-margin_bottom = 150.0
+margin_bottom = 271.0
 
 [node name="Label25" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 249.0
+margin_top = 275.0
 margin_right = 468.0
-margin_bottom = 294.0
+margin_bottom = 320.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
 text = "MENU_DETAIL_SETTINGS"
@@ -379,24 +380,24 @@ valign = 1
 
 [node name="Label26" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 margin_left = 472.0
-margin_top = 249.0
+margin_top = 275.0
 margin_right = 940.0
-margin_bottom = 294.0
+margin_bottom = 320.0
 size_flags_horizontal = 3
 
 [node name="Label6" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 300.0
+margin_top = 326.0
 margin_right = 468.0
-margin_bottom = 345.0
+margin_bottom = 371.0
 size_flags_horizontal = 3
 text = "MENU_ANTI_ALIASING"
 
 [node name="AntiAliasing" type="OptionButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
 margin_left = 472.0
-margin_top = 298.0
+margin_top = 324.0
 margin_right = 940.0
-margin_bottom = 347.0
+margin_bottom = 373.0
 size_flags_horizontal = 3
 text = "Disabled"
 align = 1
@@ -404,50 +405,50 @@ items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", nu
 selected = 0
 
 [node name="Label2" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 351.0
+margin_top = 377.0
 margin_right = 468.0
-margin_bottom = 396.0
+margin_bottom = 422.0
 size_flags_horizontal = 3
 text = "MENU_SHADOWS"
 
 [node name="Shadows" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
 margin_left = 671.0
-margin_top = 351.0
+margin_top = 377.0
 margin_right = 741.0
-margin_bottom = 396.0
+margin_bottom = 422.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label12" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 400.0
+margin_top = 426.0
 margin_right = 468.0
-margin_bottom = 445.0
+margin_bottom = 471.0
 size_flags_horizontal = 3
 text = "MENU_DYNAMIC_LIGHTS"
 
 [node name="DynamicLights" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
 margin_left = 671.0
-margin_top = 400.0
+margin_top = 426.0
 margin_right = 741.0
-margin_bottom = 445.0
+margin_bottom = 471.0
 size_flags_horizontal = 4
 align = 1
 
 [node name="Label8" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
-margin_top = 449.0
+margin_top = 475.0
 margin_right = 468.0
-margin_bottom = 494.0
+margin_bottom = 520.0
 size_flags_horizontal = 3
 text = "MENU_FOG"
 
 [node name="Fog" type="CheckButton" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
 unique_name_in_owner = true
 margin_left = 671.0
-margin_top = 449.0
+margin_top = 475.0
 margin_right = 741.0
-margin_bottom = 494.0
+margin_bottom = 520.0
 size_flags_horizontal = 4
 align = 1
 
@@ -536,23 +537,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MENU_INPUT_SETTINGS" type="ScrollContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer"]
+[node name="MENU_INPUT_SETTINGS" parent="JSettings/MarginContainer/VBoxContainer/TabContainer" instance=ExtResource( 3 )]
+unique_name_in_owner = true
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 63.0
-margin_right = -4.0
-margin_bottom = -4.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="GridContainer" type="GridContainer" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_INPUT_SETTINGS"]
-margin_right = 964.0
-margin_bottom = 426.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-columns = 2
+margin_left = 10.0
+margin_top = 59.0
+margin_right = -10.0
+margin_bottom = -10.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="JSettings/MarginContainer/VBoxContainer"]
 margin_top = 497.0
@@ -613,6 +604,7 @@ dialog_autowrap = true
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/MainVolume" to="." method="set_main_volume"]
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/GameVolume" to="." method="set_game_volume"]
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/MusicVolume" to="." method="set_music_volume"]
+[connection signal="save" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_INPUT_SETTINGS" to="." method="_on_MENU_INPUT_SETTINGS_save"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/HBoxContainer/Reset" to="." method="_on_Reset_pressed"]
 [connection signal="confirmed" from="JSettings/ResetConfirmationDialog" to="." method="_on_ResetConfirmationDialog_confirmed"]

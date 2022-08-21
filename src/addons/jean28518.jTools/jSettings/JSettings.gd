@@ -82,6 +82,11 @@ func update_settings_window():
 	$"%ChunkLoadAll".pressed = ProjectSettings["game/gameplay/load_all_chunks"]
 
 
+func hide():
+	$"%MENU_INPUT_SETTINGS".finish() # Apply any remaining input changes
+	$JSettings.hide()
+
+
 ## Setter/Getter ###############################################################
 func set_fullscreen(val: bool):
 	ProjectSettings["display/window/size/fullscreen"] = val
@@ -246,11 +251,11 @@ func show_fps_limit_selector(val: bool):
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action("Escape"):
-		$JSettings.hide()
+		hide()
 
 
 func _on_Back_pressed():
-	$JSettings.hide()
+	hide()
 
 
 func _on_Fullscreen_pressed():
@@ -302,3 +307,7 @@ func _on_Reset_pressed():
 func _on_ResetConfirmationDialog_confirmed():
 	reset_settings_to_default()
 	update_settings_window()
+
+
+func _on_MENU_INPUT_SETTINGS_save():
+	save_settings()

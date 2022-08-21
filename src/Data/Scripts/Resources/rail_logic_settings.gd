@@ -1,2 +1,2 @@
 class_name RailLogicSettings
-extends Reference
+extends Resource

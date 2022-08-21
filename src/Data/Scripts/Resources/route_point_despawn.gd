@@ -1,8 +1,8 @@
 class_name RoutePointDespawnPoint
 extends RoutePoint
 
-var rail_name := ""
-var distance_on_rail := 0.0
+export var rail_name := ""
+export var distance_on_rail := 0.0
 
 
 func get_description() -> String:

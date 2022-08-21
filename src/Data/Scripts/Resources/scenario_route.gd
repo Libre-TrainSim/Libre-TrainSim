@@ -1,29 +1,29 @@
 class_name ScenarioRoute
-extends Reference
+extends Resource
 
 # to overwrite default rail logic, I guess?
 # Dict[String, RailLogicSettings] ; RailLogicNodeName -> Settings
-var rail_logic_settings := {}
+export var rail_logic_settings := {}
 
 # Array[RoutePoint]
-var route_points := []
+export var route_points := []
 
-var activate_only_at_specific_routes := false  # ?????
-var specific_routes := []  # ???
+export var activate_only_at_specific_routes := false  # ?????
+export var specific_routes := []  # ???
 
-var is_playable := true  # for AI trains set to false, I guess
-var train_name := "JFR1_Red"  # which train drives here
+export var is_playable := true  # for AI trains set to false, I guess
+export var train_name := "JFR1_Red"  # which train drives here
 
-var description := ""
+export var description := ""
 
 # example:
 # route begins at 6:00, goes every 15 minutes, ends at 21:00
 # interval_start = 21600
 # interval_end = 75600
 # interval = 900
-var interval := 0  # how frequently this route drives, in minutes
-var interval_end := 0  # last time of day this route drives, in seconds
-var interval_start := 0  # first time of day this route drives, in seconds
+export var interval := 0  # how frequently this route drives, in minutes
+export var interval_end := 0  # last time of day this route drives, in seconds
+export var interval_start := 0  # first time of day this route drives, in seconds
 
 # calculated data
 var calculated_rail_route := []

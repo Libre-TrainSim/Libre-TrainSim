@@ -1,5 +1,5 @@
 class_name RoutePoint
-extends Reference
+extends Resource
 
 
 func get_description() -> String:

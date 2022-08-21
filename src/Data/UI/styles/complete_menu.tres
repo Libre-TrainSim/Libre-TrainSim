@@ -23,6 +23,7 @@
 [ext_resource path="res://Data/UI/styles/button_both_pressed.tres" type="StyleBox" id=21]
 [ext_resource path="res://Data/UI/styles/button_both_focus.tres" type="StyleBox" id=22]
 [ext_resource path="res://Data/UI/styles/button_both_normal.tres" type="StyleBox" id=23]
+[ext_resource path="res://Data/UI/styles/panel_popup.tres" type="StyleBox" id=24]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.913725, 0.94902, 0.92549, 1 )
@@ -49,21 +50,6 @@ bg_color = Color( 0.74902, 0.776471, 0.760784, 1 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.705882, 0.729412, 0.713726, 1 )
-
-[sub_resource type="StyleBoxFlat" id=6]
-content_margin_left = 6.0
-content_margin_right = 6.0
-content_margin_top = 10.0
-content_margin_bottom = 4.0
-bg_color = Color( 0.913725, 0.94902, 0.92549, 1 )
-border_width_left = 4
-border_width_top = 8
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.117647, 0.423529, 0.576471, 1 )
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-anti_aliasing = false
 
 [resource]
 default_font = ExtResource( 2 )
@@ -140,7 +126,6 @@ OptionButton/styles/normal = ExtResource( 23 )
 OptionButton/styles/pressed = ExtResource( 21 )
 Panel/styles/panel = ExtResource( 7 )
 PanelContainer/styles/panel = ExtResource( 7 )
-PopupDialog/styles/panel = SubResource( 6 )
 PopupMenu/colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 PopupMenu/colors/font_color_accel = Color( 0, 0, 0, 1 )
 PopupMenu/colors/font_color_disabled = Color( 0.219608, 0.219608, 0.219608, 1 )
@@ -177,3 +162,12 @@ TabContainer/styles/panel = ExtResource( 12 )
 TabContainer/styles/tab_bg = ExtResource( 11 )
 TabContainer/styles/tab_disabled = ExtResource( 17 )
 TabContainer/styles/tab_fg = ExtResource( 6 )
+WindowDialog/colors/title_color = Color( 0.913725, 0.94902, 0.92549, 1 )
+WindowDialog/constants/close_h_ofs = 32
+WindowDialog/constants/close_v_ofs = 18
+WindowDialog/constants/scaleborder_size = 0
+WindowDialog/constants/title_height = 19
+WindowDialog/fonts/title_font = ExtResource( 2 )
+WindowDialog/icons/close = null
+WindowDialog/icons/close_highlight = null
+WindowDialog/styles/panel = ExtResource( 24 )

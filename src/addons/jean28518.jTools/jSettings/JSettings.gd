@@ -12,6 +12,11 @@ func popup():
 func _ready():
 	if get_parent().name == "root":
 		$JSettings.hide()
+	
+	# Localize the Reset Dialog
+	$"%ResetConfirmationDialog".get_cancel().text = "NO"
+	$"%ResetConfirmationDialog".get_ok().text = "YES"
+	
 	first_run_check()
 	apply_saved_settings()
 
@@ -291,5 +296,9 @@ func _on_PZB_pressed():
 
 
 func _on_Reset_pressed():
+	$"%ResetConfirmationDialog".popup_centered_clamped(Vector2(500,250))
+
+
+func _on_ResetConfirmationDialog_confirmed():
 	reset_settings_to_default()
 	update_settings_window()

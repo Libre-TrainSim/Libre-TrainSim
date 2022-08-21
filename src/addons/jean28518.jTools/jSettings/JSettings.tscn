@@ -585,6 +585,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ResetConfirmationDialog" type="ConfirmationDialog" parent="JSettings"]
+unique_name_in_owner = true
+margin_left = 6.0
+margin_top = 10.0
+margin_right = 994.0
+margin_bottom = 572.0
+window_title = "MENU_SETTINGS_RESET"
+dialog_text = "MENU_SETTINGS_RESET_CONFIRM_TEXT"
+dialog_autowrap = true
+
 [connection signal="item_selected" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer/Language" to="." method="_on_Language_item_selected"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer/Persons" to="." method="_on_Persons_pressed"]
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer/ViewDistance" to="." method="set_view_distance"]
@@ -605,3 +615,4 @@ __meta__ = {
 [connection signal="value_changed" from="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_AUDIO_SETTINGS/GridContainer/MusicVolume" to="." method="set_music_volume"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="JSettings/MarginContainer/VBoxContainer/HBoxContainer/Reset" to="." method="_on_Reset_pressed"]
+[connection signal="confirmed" from="JSettings/ResetConfirmationDialog" to="." method="_on_ResetConfirmationDialog_confirmed"]

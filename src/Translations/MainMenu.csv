@@ -54,6 +54,7 @@ MENU_GAMEPLAY_SETTINGS,Gameplay,,,,,,,,
 MENU_DISPLAY_SETTINGS,Display,Anzeige,,,,,,,
 MENU_DETAIL_SETTINGS,Details,Details,,,,,,,
 MENU_SETTINGS_RESET,Reset to default,Einstellungen zurücksetzen,,,,,,,
+MENU_SETTINGS_RESET_CONFIRM_TEXT,Are you sure you want to reset all of your settings to their defaults?\nWarning: This is not reversible!,Wollen Sie wirklich alle Einstellungen zurücksetzen?\nAchtung: Dies ist unumkehrbar!,,,,,,,
 ,,,,,,,,,
 MENU_LOADING,Loading…,Laden…,Caricamento…,ロード中...,Ładowanie...,Завантаження...,Cargando…,Зареждане…,Chargement…
 ,,,,,,,,,

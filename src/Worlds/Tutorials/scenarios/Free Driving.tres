@@ -1,0 +1,148 @@
+[gd_resource type="Resource" load_steps=18 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Resources/scenario_route.gd" type="Script" id=3]
+[ext_resource path="res://Data/Scripts/Resources/route_point_station.gd" type="Script" id=4]
+[ext_resource path="res://Data/Scripts/Resources/station_settings.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 5 )
+assigned_signal_name = "Signal"
+enable_person_system = true
+overwrite = false
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 5 )
+assigned_signal_name = "Signal5"
+enable_person_system = true
+overwrite = false
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 2 )
+operation_mode = 1
+signal_free_time = -1
+speed = 120
+status = 0
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = 80
+status = 0
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 2 )
+operation_mode = 1
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 4 )
+station_node_name = "City1"
+station_name = "Tutorialhausen"
+approach_sound_path = ""
+arrival_sound_path = ""
+departure_sound_path = "res://Resources/Sounds/platform_departure.ogg"
+duration_since_last_station = 300
+minimum_halt_time = 15
+planned_halt_time = 30
+signal_time = 5
+stop_type = 2
+leaving_persons = 50
+waiting_persons = 100
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 4 )
+station_node_name = "City2"
+station_name = "Tutorialbach"
+approach_sound_path = "res://Resources/Sounds/next_station_tutorialbach.ogg"
+arrival_sound_path = "res://Resources/Sounds/platform_endstation.ogg"
+departure_sound_path = ""
+duration_since_last_station = 90
+minimum_halt_time = 15
+planned_halt_time = 20
+signal_time = 60
+stop_type = 3
+leaving_persons = 50
+waiting_persons = 100
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 4 )
+station_node_name = "City1"
+station_name = "Tutorialhausen"
+approach_sound_path = ""
+arrival_sound_path = ""
+departure_sound_path = "res://Resources/Sounds/platform_departure.ogg"
+duration_since_last_station = 300
+minimum_halt_time = 15
+planned_halt_time = 10
+signal_time = 2
+stop_type = 2
+leaving_persons = 50
+waiting_persons = 100
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 4 )
+station_node_name = "City2"
+station_name = "Tutorialbach"
+approach_sound_path = "res://Resources/Sounds/next_station_tutorialbach.ogg"
+arrival_sound_path = "res://Resources/Sounds/platform_endstation.ogg"
+departure_sound_path = ""
+duration_since_last_station = 80
+minimum_halt_time = 15
+planned_halt_time = 20
+signal_time = 60
+stop_type = 3
+leaving_persons = 50
+waiting_persons = 100
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 3 )
+rail_logic_settings = {
+}
+route_points = [ SubResource( 8 ), SubResource( 9 ), SubResource( 17 ), SubResource( 18 ) ]
+activate_only_at_specific_routes = false
+specific_routes = [  ]
+is_playable = true
+train_name = "JFR1_Red"
+description = "TUTORIAL_3_0"
+interval = 0
+interval_end = 0
+interval_start = 43200
+
+[resource]
+script = ExtResource( 1 )
+time = 0
+title = ""
+description = ""
+duration = 0
+is_hidden = false
+routes = {
+"Player Route": SubResource( 19 )
+}
+rail_logic_settings = {
+"City1": SubResource( 10 ),
+"City2": SubResource( 11 ),
+"Signal": SubResource( 12 ),
+"Signal2": SubResource( 13 ),
+"Signal3": SubResource( 14 ),
+"Signal4": SubResource( 15 ),
+"Signal5": SubResource( 16 )
+}

@@ -1,0 +1,119 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Data/Scripts/TrackObjects.gd" type="Script" id=1]
+[ext_resource path="res://Data/Modules/TrackObjects.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Materials/Grass_new.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=4]
+[ext_resource path="res://Resources/Materials/Black_Plastic.tres" type="Material" id=5]
+[ext_resource path="res://Data/Scripts/chunk.gd" type="Script" id=6]
+[ext_resource path="res://Resources/Materials/White_Plastic.tres" type="Material" id=7]
+[ext_resource path="res://Resources/Objects/Platform-1.obj" type="ArrayMesh" id=8]
+[ext_resource path="res://Resources/Materials/Red_Plastic.tres" type="Material" id=9]
+[ext_resource path="res://Resources/Materials/PlasterStones.tres" type="Material" id=10]
+[ext_resource path="res://Resources/Objects/bumper.obj" type="ArrayMesh" id=11]
+[ext_resource path="res://Resources/Materials/PlasterStonesLight.tres" type="Material" id=12]
+[ext_resource path="res://Resources/Materials/Metal_Grey_Light.tres" type="Material" id=13]
+
+[sub_resource type="MultiMesh" id=2]
+transform_format = 1
+mesh = ExtResource( 11 )
+
+[sub_resource type="MultiMesh" id=3]
+transform_format = 1
+mesh = ExtResource( 8 )
+
+[sub_resource type="PlaneMesh" id=1]
+material = ExtResource( 3 )
+size = Vector2( 500, 500 )
+
+[node name="chunk_1_0" type="Spatial"]
+script = ExtResource( 6 )
+is_empty = false
+generate_grass = true
+chunk_position = Vector3( 1, 0, 0 )
+rails = [  ]
+
+[node name="TrackObjects" type="Spatial" parent="."]
+
+[node name="Rail2 Bumper" type="MultiMeshInstance" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1983.21, 0, 133.501 )
+lod_max_distance = 100.0
+multimesh = SubResource( 2 )
+script = ExtResource( 1 )
+description = "Bumper"
+attached_rail = "Rail2"
+on_rail_position = 995.0
+length = 5.0
+mesh = ExtResource( 11 )
+materials = [ ExtResource( 5 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 13 ) ]
+sides = 1
+spawnRate = 1.0
+rows = 1
+distanceLength = 10.0
+distanceRows = 0.0
+shift = 0.0
+height = 0.0
+rotationObjects = 0.0
+randomLocation = false
+randomLocationFactor = 0.3
+randomRotation = false
+randomScale = false
+randomScaleFactor = 0.2
+placeLast = true
+applySlopeRotation = false
+randomSeed = 0
+wholeRail = false
+
+[node name="Rail2 Platform" type="MultiMeshInstance" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1589.35, 0, 159.467 )
+lod_max_distance = 100.0
+multimesh = SubResource( 3 )
+script = ExtResource( 1 )
+description = "Platform"
+attached_rail = "Rail2"
+on_rail_position = 600.0
+length = 200.0
+mesh = ExtResource( 8 )
+materials = [ ExtResource( 7 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 4 ) ]
+sides = 1
+spawnRate = 1.0
+rows = 1
+distanceLength = 10.0
+distanceRows = 0.0
+shift = 3.5
+height = 0.6
+rotationObjects = 0.0
+randomLocation = false
+randomLocationFactor = 0.3
+randomRotation = false
+randomScale = false
+randomScaleFactor = 0.2
+placeLast = false
+applySlopeRotation = false
+randomSeed = 0
+wholeRail = false
+
+[node name="Buildings" type="Spatial" parent="."]
+
+[node name="DefaultGrass" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="DefaultGrass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, 250 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="DefaultGrass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, -250 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="DefaultGrass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, -250 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="DefaultGrass"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, 250 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )

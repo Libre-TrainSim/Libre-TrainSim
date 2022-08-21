@@ -25,11 +25,11 @@ func _ready():
 		else: # Other Points
 			var direction_1 = line_points[i-1].angle_to_point(line_points[i])
 			var direction_2 = line_points[i].angle_to_point(line_points[i+1])
-			direction = deg2rad(Math.angle_distance_deg(rad2deg(direction_1), rad2deg(direction_2)))/2.0
+			direction = 0.5 * Math.angle_distance_rad(direction_1, direction_2)
 
-		if rad2deg(direction) > 90:
+		if direction > (0.5 * PI):
 			direction -= PI
-		elif rad2deg(direction) < -90:
+		elif direction < (-0.5 * PI):
 			direction += PI
 		polygon_points.append(line_points[i] + Vector2(0, width/2).rotated(direction))
 
@@ -45,11 +45,11 @@ func _ready():
 		else: # Other Points
 			var direction_1 = line_points[i+1].angle_to_point(line_points[i])
 			var direction_2 = line_points[i].angle_to_point(line_points[i-1])
-			direction = deg2rad(Math.angle_distance_deg(rad2deg(direction_1), rad2deg(direction_2)))/2.0
+			direction = 0.5 * Math.angle_distance_rad(direction_1, direction_2)
 
-		if rad2deg(direction) > 90:
+		if direction > (0.5 * PI):
 			direction -= PI
-		elif rad2deg(direction) < -90:
+		elif direction < (-0.5 * PI):
 			direction += PI
 		polygon_points.append(line_points[i] - Vector2(0, width/2).rotated(direction))
 

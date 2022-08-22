@@ -328,6 +328,9 @@ func _chunk_loader_thread(_void):
 				chunk.name = chunk_to_string(chunk_pos)
 				chunk.chunk_position = chunk_pos
 
+			# do not generate grass if it was disabled by world
+			chunk.generate_grass = world.current_world_config.generate_grass
+
 			call_deferred("_add_chunk_to_scene_tree", chunk)
 
 		_chunk_mutex.unlock()

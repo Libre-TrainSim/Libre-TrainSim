@@ -95,6 +95,8 @@ func _on_TracksList_user_pressed_action(entry_names):
 		texture.create_from_image(screenshot)
 	else:
 		texture = null
+
+	Root.current_track = entry_names[0]
 	LoadingScreen.load_editor(entry_names[0], tracks[entry_names[0]][0], \
 			tracks[entry_names[0]][1], texture)
 

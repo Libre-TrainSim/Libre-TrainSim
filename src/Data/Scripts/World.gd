@@ -9,6 +9,7 @@ var default_persons_at_station: int = 20
 var globalDict := {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
 
 var current_scenario: TrackScenario = null
+var current_world_config: WorldConfig = null
 
 export (String) var FileName := "Name Me!"
 onready var trackName: String = FileName.rsplit("/")[0]
@@ -38,9 +39,11 @@ var passive := false
 
 func _ready() -> void:
 	passive = Root.scenario_editor
-
 	if passive:
 		return
+
+	current_world_config = load(Root.current_track.get_basename() + "_config.tres") as WorldConfig
+	assert(is_instance_valid(current_world_config))
 
 	chunk_manager = ChunkManager.new()
 	chunk_manager.world = self

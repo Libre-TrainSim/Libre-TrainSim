@@ -9,6 +9,7 @@ export var chunk_position: Vector3
 # array of node names
 export (Array, String) var rails := []
 
+var default_grass_prefab = preload("res://Data/Modules/chunk_prefab_default_grass.tscn")
 
 # see chunk_prefab.tscn
 # TrackObjects are saved in global coordinates, NOT relative to the chunk!
@@ -21,8 +22,14 @@ export (Array, String) var rails := []
 func _ready() -> void:
 	translation = Vector3(0, 0, 0)
 	if not generate_grass:
-		$DefaultGrass.queue_free()
+		if is_instance_valid($DefaultGrass):
+			$DefaultGrass.queue_free()
 	else:
+		if not is_instance_valid($DefaultGrass):
+			var default_grass = default_grass_prefab.instance()
+			default_grass.name = "DefaultGrass"
+			add_child(default_grass)
+			default_grass.owner = self
 		$DefaultGrass.translation = chunk_position * 1000  # 1000 = ChunkManager.chunk_size
 		$DefaultGrass.translation.y = -0.5
 	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")

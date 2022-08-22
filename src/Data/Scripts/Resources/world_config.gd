@@ -9,14 +9,15 @@ export (Dictionary) var release_date := {
 	"month": 11,
 	"day": 9
 }
-export (String) var title := "Unknown"
+export (String) var title := "Untitled"  # right now, the filename is used I think
 export (String) var author := "Unknown"
 export (String) var track_description := "n/a"
 
-export(String, FILE, "*.png,*.jpeg,*.jpg,*.bmp,*.gif") var thumbnail_path := ""
+# set this to false if you want to make underground maps, for example
+export (bool) var generate_grass := true
 
-# path to the individual scenario.tres's
-export(Array, String, FILE, "*.tres,*.res") var scenarios := []
+# AFAIK this is a hardcoded path anyways
+#export(String, FILE, "*.png,*.jpeg,*.jpg,*.bmp,*.gif") var thumbnail_path := ""
 
 # shown in the editor
 export (String) var editor_notes := ""

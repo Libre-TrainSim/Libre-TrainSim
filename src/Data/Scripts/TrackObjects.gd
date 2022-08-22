@@ -62,7 +62,7 @@ func get_data() -> Dictionary:
 	return d
 
 
-func set_data(d: Dictionary) -> void:
+func set_data(d: Dictionary, convert_deg_rad = false) -> void:
 	description = d.description
 	attached_rail = d.attached_rail
 	on_rail_position = d.on_rail_position
@@ -82,7 +82,10 @@ func set_data(d: Dictionary) -> void:
 	wholeRail = d.wholeRail
 #	meshSet = d.meshSet
 #	multimesh = d.multimesh
-	rotationObjects = d.rotationObjects
+	if convert_deg_rad:
+		rotationObjects = deg2rad(d.rotationObjects)
+	else:
+		rotationObjects = d.rotationObjects
 	placeLast = d.placeLast
 	randomSeed = d.get("randomSeed", 0)
 	if d.has("applySlopeRotation"):

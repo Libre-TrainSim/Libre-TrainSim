@@ -204,7 +204,7 @@ func get_local_transform_at_distance(distance: float) -> Transform:
 				.rotated(Vector3(1,0,0), get_tend_at_distance(distance))\
 				.rotated(Vector3(0,0,1), get_height_rot(distance))\
 				.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)),\
-			 get_local_pos_at_distance(distance)\
+			get_local_pos_at_distance(distance)\
 		)
 	else:
 		if parallel_rail == null:
@@ -611,6 +611,7 @@ func update_connection_arrows():
 		rail._update_connection_arrows_not_recursive()
 	for rail in _connected_rails_at_ending:
 		rail._update_connection_arrows_not_recursive()
+
 
 var _last_calculation_of_update_connection_arrows = 0
 func _update_connection_arrows_not_recursive():

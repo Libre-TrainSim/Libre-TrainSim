@@ -22,6 +22,19 @@ onready var camera := $Camera as EditorCamera
 func _ready() -> void:
 	if !load_world():
 		return
+
+	# uncomment this if you are converting an old world
+	# I don't know how to automatically detect and fix this
+	# you have to manually rename variables in the .tscn files
+	# of old maps anyways, so, you know... manual conversion anyways :/
+
+	#for rail in $World/Rails.get_children():
+	#	rail.start_rot = deg2rad(rail.start_rot)
+	#	rail.end_rot = deg2rad(rail.end_rot)
+	#	rail._update()
+	#for logic in $World/Signals.get_children():
+	#	logic.set_to_rail()
+
 	_port_to_new_trackinfo()
 	_port_to_new_chunk_system()
 	_port_to_new_scenario_system()
@@ -115,7 +128,8 @@ func _port_to_new_chunk_system() -> void:
 			else:
 				Logger.err("Could not load object '%s'." % track_obj.data.objectPath, self)
 
-			to_instance.set_data(track_obj.data)
+			# true = convert degrees to radians
+			to_instance.set_data(track_obj.data, true)
 
 			to_instance.transform = track_obj.transform
 

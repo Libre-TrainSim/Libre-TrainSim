@@ -27,7 +27,7 @@ var attached_rail_node: Node
 export var forward: bool = true # Internal. Never change this via script.
 export (int) var on_rail_position: int # Internal. Never change this via script.
 
-export var operation_mode: int = SignalOperationMode.BLOCK
+export (SignalOperationMode.TypeHint) var operation_mode: int = SignalOperationMode.BLOCK
 
 
 func _get_type() -> String:

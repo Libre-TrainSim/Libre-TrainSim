@@ -23,8 +23,8 @@ export (Vector3) var end_pos: Vector3
 
 
 ## Steep
-export (float) var start_slope: float = 0  # Radians
-export (float) var end_slope: float = 0  # Radians
+export (float) var start_slope: float = 0  # % (meters / 100 meters)
+export (float) var end_slope: float = 0  # % (meters / 100 meters)
 
 export (float) var start_tend: float = 0
 export (float) var tend1_pos: float = -1
@@ -335,15 +335,15 @@ func get_height_rot(distance: float) -> float: ## Get Slope
 			new_radius = 0
 		var newDistance = distance
 		if radius != 0:
-			newDistance = distance * ((new_radius)/(radius))
+			newDistance = distance * (new_radius / radius)
 		return parallel_rail.get_height_rot(newDistance)
+
 	var start_gradient = atan(start_slope/100)
 	var end_gradient = atan(end_slope/100)
-
 	var basicRot = start_gradient
 	if end_gradient - start_gradient == 0:
 		return basicRot
-	var heightRadius = length/(end_gradient - start_gradient)
+	var heightRadius = length / (end_gradient - start_gradient)
 	return circle_get_rad(heightRadius, distance) + basicRot
 
 

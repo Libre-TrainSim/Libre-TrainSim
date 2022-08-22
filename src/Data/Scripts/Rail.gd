@@ -199,7 +199,13 @@ func get_global_transform_at_distance(distance: float) -> Transform:
 # local to this rail
 func get_local_transform_at_distance(distance: float) -> Transform:
 	if parallel_rail_name == "":
-		return Transform(Basis().rotated(Vector3(1,0,0), get_tend_at_distance(distance)).rotated(Vector3(0,0,1), get_height_rot(distance)).rotated(Vector3(0,1,0), circle_get_rad(radius, distance)), get_local_pos_at_distance(distance) )
+		return Transform(\
+			Basis()\
+				.rotated(Vector3(1,0,0), get_tend_at_distance(distance))\
+				.rotated(Vector3(0,0,1), get_height_rot(distance))\
+				.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)),\
+			 get_local_pos_at_distance(distance)\
+		)
 	else:
 		if parallel_rail == null:
 			update_parallel_rail_settings()
@@ -347,6 +353,7 @@ func get_height_rot(distance: float) -> float: ## Get Slope
 	return circle_get_rad(heightRadius, distance) + basicRot
 
 
+# I do not understand this calculation, so I will leave it as is and use deg2rad() instead...
 func get_tend_at_distance(distance: float) -> float:
 	if is_instance_valid(parallel_rail):
 		var new_radius: float = radius - distance_to_parallel_rail
@@ -358,15 +365,15 @@ func get_tend_at_distance(distance: float) -> float:
 		return parallel_rail.get_tend_at_distance(newDistance)
 
 	if distance >= tend1_pos and distance < tend2_pos:
-		return -(tend1 + (tend2-tend1) * (distance - tend1_pos)/(tend2_pos - tend1_pos))
+		return deg2rad(-(tend1 + (tend2-tend1) * (distance - tend1_pos)/(tend2_pos - tend1_pos)))
 
 	if distance <= tend1_pos:
-		return -(start_tend + (tend1-start_tend) * (distance)/(tend1_pos))
+		return deg2rad(-(start_tend + (tend1-start_tend) * (distance)/(tend1_pos)))
 
 	if tend2_pos > 0 and distance >= tend2_pos:
-		return -(tend2 + (end_tend-tend2) * (distance -tend2_pos)/(length-tend2_pos))
+		return deg2rad(-(tend2 + (end_tend-tend2) * (distance -tend2_pos)/(length-tend2_pos)))
 
-	return -(start_tend + (end_tend-start_tend) * (distance/length))
+	return deg2rad(-(start_tend + (end_tend-start_tend) * (distance/length)))
 
 
 func get_tendSlopeData() -> Dictionary:

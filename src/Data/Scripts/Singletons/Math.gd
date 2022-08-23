@@ -46,9 +46,12 @@ func norm_rad(radians: float) -> float:
 
 # returns the shortest distance in between the 2 rotations in radians
 func angle_distance_rad(rad1: float, rad2: float) -> float:
-	var norm1 = norm_rad(rad1)
-	var norm2 = norm_rad(rad2)
-	return PI - abs(abs(norm1 - norm2) - PI)
+	# https://stackoverflow.com/questions/28036652/finding-the-shortest-distance-between-two-angles
+	# ± PI because we shift to be in [-180, 180] instead of [0, 360]
+	var diff = fmod(rad1 - rad2 + PI, TAU) - PI  # returns an angle in [-540, 180)
+	if diff < -PI:
+		diff += TAU  # fix to [-180, 180)
+	return abs(diff)  # return DISTANCE (-> absolute) between angles
 
 
 # Gets A Dict like {"name": [], "position" : []}, returns the array of the signal

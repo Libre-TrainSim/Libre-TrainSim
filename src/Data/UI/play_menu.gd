@@ -125,7 +125,7 @@ func _on_Tracklist_item_selected(index) -> void:
 	selected_track = ContentLoader.repo.worlds[index]
 	Root.checkAndLoadTranslationsForTrack(selected_track.get_file().get_basename())
 	var config_path: String = ContentLoader.repo.worlds[index].get_basename() + "_config.tres"
-	world_config = load(config_path) as WorldConfig
+	world_config = load(config_path)
 
 	$V/Tracks/H/Information.show()
 	var author_text = tr("MENU_AUTHOR") + ": " + world_config.author

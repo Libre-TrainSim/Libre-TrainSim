@@ -5,7 +5,7 @@ var save_path: String
 
 func _ready() -> void:
 	save_path = find_parent("Editor").current_track_path + "_config.tres"
-	world_config = load(save_path) as WorldConfig
+	world_config = load(save_path)
 	load_stored_config()
 
 

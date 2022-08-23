@@ -81,6 +81,7 @@ margin_bottom = 45.0
 size_flags_horizontal = 3
 
 [node name="LabelLanguage" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer"]
+unique_name_in_owner = true
 margin_top = 51.0
 margin_right = 468.0
 margin_bottom = 96.0

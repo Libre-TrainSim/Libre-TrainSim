@@ -194,7 +194,7 @@ func update_and_prepare_language_handling():
 	var language_codes = TranslationServer.get_loaded_locales()
 	language_codes = jEssentials.remove_duplicates(language_codes)
 	if language_codes.size() == 0:
-		$"%Label7".hide()
+		$"%LabelLanguage".hide()
 		$"%Language".hide()
 		return
 

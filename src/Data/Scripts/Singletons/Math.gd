@@ -41,7 +41,13 @@ func kmh_to_speed(speed: float) -> float:
 
 
 func norm_rad(radians: float) -> float:
-	return fmod(radians, PI)
+	var norm = fmod(radians, PI)
+
+	# if norm is negative, angle_distance_rad will not return a correct result
+	if norm < 0:
+		norm += PI
+
+	return norm
 
 
 # returns the shortest distance in between the 2 rotations in radians

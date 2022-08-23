@@ -55,11 +55,12 @@ func _on_Back_ScenarioList_pressed():
 
 func _on_scenarioList_user_added_entry(entry_name):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	var scenario_file = scenarios_folder.plus_file(entry_name + ".tscn")
+	var scenario_file = scenarios_folder.plus_file(entry_name + ".tres")
 	var empty_scenario = TrackScenario.new()
 
-	if ResourceSaver.save(scenario_file, empty_scenario) != OK:
-		Logger.err("Failed to create new scenario at %s" % scenario_file, self)
+	var err = ResourceSaver.save(scenario_file, empty_scenario)
+	if err != OK:
+		Logger.err("Failed to create new scenario at %s. (Reason %s)" % [scenario_file, err], self)
 
 
 func _on_scenarioList_user_duplicated_entries(source_entry_names, duplicated_entry_names):

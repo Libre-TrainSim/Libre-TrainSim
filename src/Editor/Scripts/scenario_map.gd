@@ -189,6 +189,9 @@ func update_map():
 	if not label_mask.other:
 		return
 
+	if not is_instance_valid(loaded_route):
+		return
+
 	var route_data: Array = loaded_route.route_points
 	var baked_route: Array = loaded_route.get_calculated_rail_route(world)
 	if baked_route.size() == 0:

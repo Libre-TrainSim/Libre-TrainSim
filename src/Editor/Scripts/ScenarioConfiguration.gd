@@ -20,9 +20,6 @@ func init():
 	routes = scenario_editor.scenario_info.routes.duplicate(true)
 	rail_logic_settings = scenario_editor.scenario_info.rail_logic_settings.duplicate(true)
 
-	# FIXME: scenario editor crashes if no route is selected...
-	set_current_route(routes.keys()[0])  # by default, select first route
-
 	for signal_instance in world.get_node("Signals").get_children():
 		if not rail_logic_settings.has(signal_instance.name):
 			match signal_instance.type:

@@ -117,7 +117,7 @@ func getRandomTransformAtPlatform() -> Transform:
 					rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0, \
-					rail.get_deg_at_distance(randRailDistance), 0)), \
+					rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 	Logger.warn("Unsupported platform type %s" % platform_side, self)

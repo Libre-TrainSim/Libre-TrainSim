@@ -45,24 +45,44 @@ func _on_export_dir_selected(dir: String) -> void:
 	directory.change_dir(mod_path)
 
 	var packer = PCKPacker.new()
-	var ok = packer.pck_start(mod_path.plus_file(mod_name) + ".pck")
-	if ok != OK:
-		Logger.err("Error creating %s!" % mod_path.plus_file(mod_name) + ".pck", self)
+	var err = packer.pck_start(mod_path.plus_file(mod_name) + ".pck")
+	if err != OK:
+		Logger.err("Error creating %s! (Reason: %s)" % [mod_path.plus_file(mod_name) + ".pck", err], self)
 		return
+
+	var import_files_to_pack = []
 
 	var files = get_files_in_directory("res://Mods/".plus_file(mod_name))
 	for file in files:
-		ok = packer.add_file(file, file)
-		if ok != OK:
-			Logger.err("Could not add file %s to pck!" % file, self)
+		if file.ends_with(".import"):
+			import_files_to_pack.append_array(_get_imported_paths(file))
 
-	ok = packer.flush(true)
-	if ok != OK:
-		Logger.err("Could not flush pck!", self)
+		err = packer.add_file(file, file)
+		if err != OK:
+			Logger.err("Could not add file %s to pck! (Reason: %s)" % [file, err], self)
 
-	ok = directory.copy(dir.plus_file("content.tres"), mod_path.plus_file("content.tres"))
-	if ok != OK:
-		Logger.err("Unable to copy content.tres to mod folder!", self)
+	for file in import_files_to_pack:
+		err = packer.add_file(file, file)
+		if err != OK:
+			Logger.err("Could not add file %s to pck! (Reason: %s)" % [file, err], self)
+
+	err = packer.flush(true)
+	if err != OK:
+		Logger.err("Could not flush pck! (Reason: %s)" % err, self)
+
+	err = directory.copy(dir.plus_file("content.tres"), mod_path.plus_file("content.tres"))
+	if err != OK:
+		Logger.err("Unable to copy content.tres to mod folder! (Reason: %s)" % err, self)
+
+
+func _get_imported_paths(file):
+	var cfg = ConfigFile.new()
+	if cfg.load(file) != OK:
+		Logger.err("cannot open .import file", self)
+	var type = cfg.get_value("remap", "type", "")
+	if type == "StreamTexture" or type == "Mesh":
+		return cfg.get_value("deps", "dest_files", [])
+	return []
 
 
 func get_files_in_directory(path: String) -> Array:

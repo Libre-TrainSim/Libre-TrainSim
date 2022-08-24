@@ -190,6 +190,8 @@ func _convert_scenario(filename):
 
 	var rail_logic_settings = jsavemodule.get_value("rail_logic_settings")
 	var routes = jsavemodule.get_value("routes")
+	if not is_instance_valid(routes):
+		routes = {}  # prevent for loop crashing if routes is null
 
 	var new_scenario = TrackScenario.new()
 	new_scenario.rail_logic_settings = _convert_rail_logic_settings(rail_logic_settings)
@@ -207,16 +209,11 @@ func _convert_scenario(filename):
 		if routes[route_name].has("rail_logic_settings"):
 			new_route.rail_logic_settings = _convert_rail_logic_settings(routes[route_name]["rail_logic_settings"])
 
-		# something is bugged here, every time _convert_scenario is called
-		# this for loop seems to add additional route points
-		# example: scenario1 has 2 route points, scenario2 also has 2 route points
-		# after conversion, scenario1 has 2 route points, scenario2 has 4 route points
-		# scenario2 has the points from scenario1 and scenario2 WTF
-		# I bet the jsavemodule is at fault
+		# there is a bug here, where route points from previous routes
+		# get added to the new route as well. No idea.
 		for route_point in routes[route_name]["route_points"]:
-			if is_instance_valid(route_point):
-				var new_route_point: RoutePoint = _convert_route_point(route_point)
-				new_route.route_points.append(new_route_point)
+			var new_route_point: RoutePoint = _convert_route_point(route_point)
+			new_route.route_points.append(new_route_point)
 
 		new_scenario.routes[route_name] = new_route
 
@@ -262,6 +259,9 @@ func _convert_rail_logic_settings(old_settings) -> Dictionary:
 
 
 func _convert_route_point(old_point: Dictionary) -> RoutePoint:
+	if not old_point.has("type"):
+		return
+
 	var new_point: RoutePoint
 	match old_point["type"]:
 		0:

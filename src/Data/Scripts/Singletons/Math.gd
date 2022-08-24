@@ -54,9 +54,12 @@ func normDeg(degree: float) -> float:
 # angle_dist_deg(-45, 45) = 90
 # angle_dist_deg(0, 170) = 170
 func angle_distance_deg(rot1: float, rot2: float) -> float:
-	var normed1 = normDeg(rot1)
-	var normed2 = normDeg(rot2)
-	return 180.0 - abs(abs(normed1 - normed2) - 180.0)
+	# https://stackoverflow.com/questions/28036652/finding-the-shortest-distance-between-two-angles
+	# ± 180 because we shift to be in [-180, 180] instead of [0, 360]
+	var diff = fmod(rot1 - rot2 + 180.0, 360.0) - 180.0  # returns an angle in [-540, 180)
+	if diff < -180.0:
+		diff += 360.0
+	return abs(diff)  # distance is always positive :)
 
 
 # Gets A Dict like {"name": [], "position" : []}, returns the array of the signal

@@ -320,10 +320,10 @@ func _on_ShowHideSlope_pressed() -> void:
 
 func get_tendSlopeData() -> Dictionary:
 	var d := {}
-	d.start_slope = deg2rad($S/Settings/Slope/SlopeGrid/StartSlope.value)
-	d.end_slope = deg2rad($S/Settings/Slope/SlopeGrid/EndSlope.value)
-	d.start_tend = deg2rad($S/Settings/Tendency/S/StartTend.value)
-	d.end_tend = deg2rad($S/Settings/Tendency/S/EndTend.value)
+	d.start_slope = $S/Settings/Slope/SlopeGrid/StartSlope.value
+	d.end_slope = $S/Settings/Slope/SlopeGrid/EndSlope.value
+	d.start_tend = $S/Settings/Tendency/S/StartTend.value
+	d.end_tend = $S/Settings/Tendency/S/EndTend.value
 	d.tend1_pos = $S/Settings/Tendency/S2/Tend1Pos.value
 	d.tend1 = $S/Settings/Tendency/S2/Tend1.value
 	d.tend2_pos = $S/Settings/Tendency/S2/Tend2Pos.value
@@ -334,10 +334,10 @@ func get_tendSlopeData() -> Dictionary:
 
 func set_tendSlopeData(data: Dictionary) -> void:
 	var s := data
-	$S/Settings/Slope/SlopeGrid/StartSlope.value = rad2deg(s.start_slope)
-	$S/Settings/Slope/SlopeGrid/EndSlope.value = rad2deg(s.end_slope)
-	$S/Settings/Tendency/S/StartTend.value = rad2deg(s.start_tend)
-	$S/Settings/Tendency/S/EndTend.value = rad2deg(s.end_tend)
+	$S/Settings/Slope/SlopeGrid/StartSlope.value = s.start_slope
+	$S/Settings/Slope/SlopeGrid/EndSlope.value = s.end_slope
+	$S/Settings/Tendency/S/StartTend.value = s.start_tend
+	$S/Settings/Tendency/S/EndTend.value = s.end_tend
 	$S/Settings/Tendency/S2/Tend1Pos.value = s.tend1_pos
 	$S/Settings/Tendency/S2/Tend1.value = s.tend1
 	$S/Settings/Tendency/S2/Tend2Pos.value = s.tend2_pos

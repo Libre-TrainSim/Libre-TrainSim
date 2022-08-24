@@ -214,8 +214,9 @@ func _convert_scenario(filename):
 		# scenario2 has the points from scenario1 and scenario2 WTF
 		# I bet the jsavemodule is at fault
 		for route_point in routes[route_name]["route_points"]:
-			var new_route_point: RoutePoint = _convert_route_point(route_point)
-			new_route.route_points.append(new_route_point)
+			if is_instance_valid(route_point):
+				var new_route_point: RoutePoint = _convert_route_point(route_point)
+				new_route.route_points.append(new_route_point)
 
 		new_scenario.routes[route_name] = new_route
 
@@ -226,6 +227,9 @@ func _convert_scenario(filename):
 
 
 func _convert_rail_logic_settings(old_settings) -> Dictionary:
+	if not is_instance_valid(old_settings):
+		return {}
+
 	var new_settings := {}
 	for logic_name in old_settings:
 		var new_logic
@@ -259,7 +263,6 @@ func _convert_rail_logic_settings(old_settings) -> Dictionary:
 
 func _convert_route_point(old_point: Dictionary) -> RoutePoint:
 	var new_point: RoutePoint
-
 	match old_point["type"]:
 		0:
 			new_point = RoutePointStation.new()

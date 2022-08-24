@@ -42,8 +42,11 @@ func _ready() -> void:
 	if passive:
 		return
 
-	current_world_config = load(Root.current_track.get_basename() + "_config.tres") as WorldConfig
-	assert(is_instance_valid(current_world_config))
+	var world_config_path = Root.current_track.get_basename() + "_config.tres"
+	current_world_config = load(world_config_path) as WorldConfig
+	if not is_instance_valid(current_world_config):
+		Logger.err("Could not load world config at %s" % world_config_path, self)
+		return
 
 	chunk_manager = ChunkManager.new()
 	chunk_manager.world = self

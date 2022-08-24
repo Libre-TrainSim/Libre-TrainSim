@@ -213,7 +213,8 @@ func _convert_scenario(filename):
 		# get added to the new route as well. No idea.
 		for route_point in routes[route_name]["route_points"]:
 			var new_route_point: RoutePoint = _convert_route_point(route_point)
-			new_route.route_points.append(new_route_point)
+			if is_instance_valid(new_route_point):
+				new_route.route_points.append(new_route_point)
 
 		new_scenario.routes[route_name] = new_route
 
@@ -260,7 +261,7 @@ func _convert_rail_logic_settings(old_settings) -> Dictionary:
 
 func _convert_route_point(old_point: Dictionary) -> RoutePoint:
 	if not old_point.has("type"):
-		return
+		return null
 
 	var new_point: RoutePoint
 	match old_point["type"]:

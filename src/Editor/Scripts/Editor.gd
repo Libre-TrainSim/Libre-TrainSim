@@ -20,22 +20,13 @@ onready var camera := $Camera as EditorCamera
 
 
 func _ready() -> void:
+	# must port trackinfo -> config.tres before loading the world
+	# because it contains the world config
+	_port_to_new_trackinfo()
+
 	if !load_world():
 		return
 
-	# uncomment this if you are converting an old world
-	# I don't know how to automatically detect and fix this
-	# you have to manually rename variables in the .tscn files
-	# of old maps anyways, so, you know... manual conversion anyways :/
-
-	#for rail in $World/Rails.get_children():
-	#	rail.start_rot = deg2rad(rail.start_rot)
-	#	rail.end_rot = deg2rad(rail.end_rot)
-	#	rail._update()
-	#for logic in $World/Signals.get_children():
-	#	logic.set_to_rail()
-
-	_port_to_new_trackinfo()
 	_port_to_new_chunk_system()
 	_port_to_new_scenario_system()
 
@@ -72,6 +63,16 @@ func _port_to_new_chunk_system() -> void:
 	var dir = Directory.new()
 	if not dir.file_exists(save_file):
 		return
+
+	# convert degrees to radians and fix track object positions
+	for rail in $World/Rails.get_children():
+		rail.start_rot = deg2rad(rail.start_rot)
+		rail.end_rot = deg2rad(rail.end_rot)
+		# fixes rail and track object positions
+		rail.visible = true
+		rail.update()
+	for logic in $World/Signals.get_children():
+		logic.set_to_rail()
 
 	dir.make_dir_recursive(current_track_path.get_base_dir().plus_file("chunks"))
 
@@ -136,6 +137,11 @@ func _port_to_new_chunk_system() -> void:
 			new_chunk.get_node("TrackObjects").add_child(to_instance)
 			to_instance.owner = new_chunk
 
+			# correctly position the track object before saving
+			# if we don't do this, user must click on every rail individually to fix it
+			to_instance.world = $World
+			to_instance.update()
+
 		if len(new_chunk.rails) > 0 \
 				or new_chunk.get_node("Buildings").get_child_count() > 0 \
 				or new_chunk.get_node("TrackObjects").get_child_count() > 0:
@@ -148,7 +154,11 @@ func _port_to_new_chunk_system() -> void:
 		dir.remove(save_file)
 		new_chunk.queue_free()
 
-	send_message("Chunks were ported to v0.9, please close and reload the track.")
+	# remove track object references, they have been freed
+	for rail in $World/Rails.get_children():
+		rail.track_objects = []
+
+	send_message("Chunks were ported to a new version, please save, close and reload the track.")
 
 
 func _port_to_new_scenario_system():
@@ -488,7 +498,7 @@ func select_object_under_mouse() -> void:
 		clear_selected_object()
 		return
 
-	while !(obj_to_select is WorldObject or obj_to_select is MeshInstance):
+	while not (obj_to_select is WorldObject or obj_to_select is MeshInstance):
 		Logger.vlog("Trying to find object", obj_to_select)
 		obj_to_select = obj_to_select.get_parent_spatial()
 		if obj_to_select == self or obj_to_select == null:
@@ -500,7 +510,6 @@ func select_object_under_mouse() -> void:
 		begin_drag_mode()
 
 	set_selected_object(obj_to_select)
-	provide_settings_for_selected_object()
 	Logger.vlog("selected!", obj_to_select)
 
 

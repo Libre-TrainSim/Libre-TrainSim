@@ -5,7 +5,7 @@ var currentRail: Node
 var copyRail
 var copyTO
 var copyTOArray: Array
-var currentTO: Node
+var currentTO: TrackObject
 var editor_selection # Editor Selection
 var pluginRoot
 
@@ -277,7 +277,10 @@ func update_object_tab() -> void:
 		return
 	if $Tab/TrackObjects/Settings/Tab.current_tab == 0:
 		$Tab/TrackObjects/Settings/Tab/Object.show()
-	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = currentTO.mesh.resource_path
+	if currentTO.mesh != null:
+		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = currentTO.mesh.resource_path
+	else:
+		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = ""
 	update_material_list()
 
 
@@ -286,19 +289,18 @@ func update_material_list() -> void:
 		$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(null)
 		return
 	var material_array: Array = currentTO.materials
-	for i in range(currentTO.mesh.get_surface_material_count()):
-		if i < material_array.size() and ResourceLoader.exists(material_array[i]):
-			currentTO.mesh.set_surface_material(i, load(material_array[i]))
+	for i in range(currentTO.mesh.get_surface_count()):
+		if i < material_array.size() and is_instance_valid(material_array[i]):
+			currentTO.mesh.surface_set_material(i, material_array[i])
 	$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(currentTO.mesh)
 
 
 func apply_object_tab() -> void:
-	currentTO.mesh = load($Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text) as Mesh
-	update_material_list()
+	if currentTO.mesh.resource_path != $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text:
+		currentTO.set_mesh(load($Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text) as ArrayMesh)
+		update_material_list()
 	var material_array: Array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
-	currentTO.materials = []
-	for mat in material_array:
-		currentTO.materials.append(load(mat))
+	currentTO.set_materials(material_array)
 	currentTO.update()
 
 

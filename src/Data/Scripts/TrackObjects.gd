@@ -1,3 +1,4 @@
+class_name TrackObject
 extends MultiMeshInstance
 
 export (String) var description: String = ""
@@ -109,12 +110,13 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
 	make_mesh_unique()
 
 
 func make_mesh_unique():
-	assert(mesh != null)
+	if mesh == null:
+		Logger.log("TrackObject: make_mesh_unique(): Mesh is null", self)
+		return
 
 	multimesh = MultiMesh.new()
 	multimesh.transform_format = MultiMesh.TRANSFORM_3D
@@ -212,3 +214,20 @@ func update_multimesh_positions() -> void:
 func newSeed() -> void:
 	randomize()
 	randomSeed = int(rand_range(-1000000,1000000))
+
+
+func set_mesh(new_mesh: ArrayMesh):
+	mesh = new_mesh
+	multimesh.mesh = new_mesh
+
+
+# new_materials: Array[String]
+func set_materials(new_materials: Array):
+	materials = []
+	for mat in new_materials:
+		materials.append(load(mat))
+
+	var count: int = int(min(multimesh.mesh.get_surface_count(), materials.size()))
+	for i in range(count):
+		multimesh.mesh.surface_set_material(i, materials[i])
+

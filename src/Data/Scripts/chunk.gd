@@ -22,10 +22,10 @@ var default_grass_prefab = preload("res://Data/Modules/chunk_prefab_default_gras
 func _ready() -> void:
 	translation = Vector3(0, 0, 0)
 	if not generate_grass:
-		if is_instance_valid($DefaultGrass):
+		if has_node("DefaultGrass") and is_instance_valid($DefaultGrass):
 			$DefaultGrass.queue_free()
 	else:
-		if not is_instance_valid($DefaultGrass):
+		if not has_node("DefaultGrass"):
 			var default_grass = default_grass_prefab.instance()
 			default_grass.name = "DefaultGrass"
 			add_child(default_grass)

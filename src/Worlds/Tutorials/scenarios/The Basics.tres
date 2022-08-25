@@ -27,7 +27,7 @@ status = 0
 
 [sub_resource type="Resource" id=22]
 script = ExtResource( 2 )
-operation_mode = 2
+operation_mode = 0
 signal_free_time = -1
 speed = 100
 status = 0

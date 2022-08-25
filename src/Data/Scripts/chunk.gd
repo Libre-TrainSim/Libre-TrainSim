@@ -32,6 +32,14 @@ func _ready() -> void:
 			default_grass.owner = self
 		$DefaultGrass.translation = chunk_position * 1000  # 1000 = ChunkManager.chunk_size
 		$DefaultGrass.translation.y = -0.5
+
+	if Root.Editor:
+		for building in $Buildings.get_children():
+			building.set_script(load("res://Data/Scripts/aabb_to_collider.gd"))
+			building.target = building.get_path()
+			building.generate_collider()
+			building.set_script(null)
+
 	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
 
 
@@ -45,6 +53,11 @@ func _prepare_saving():
 	# saves disk space
 	for obj in $TrackObjects.get_children():
 		obj.multimesh = null
+
+	for building in $Buildings.get_children():
+		var node = building.find_node("SelectCollider")
+		if is_instance_valid(node):
+			node.queue_free()
 
 
 func _on_world_origin_shifted(delta):

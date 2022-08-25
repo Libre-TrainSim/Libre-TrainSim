@@ -4,6 +4,8 @@ extends VBoxContainer
 var base: Control
 var dir_select_dialog: FileDialog
 
+var IMPORTED_RESOURCE_TYPES := ["StreamTexture", "Mesh"]
+
 func _on_new_mod_pressed() -> void:
 	var popup = preload("new_mod_popup.tscn").instance()
 	popup.base_control = base
@@ -80,7 +82,8 @@ func _get_imported_paths(file):
 	if cfg.load(file) != OK:
 		Logger.err("cannot open .import file", self)
 	var type = cfg.get_value("remap", "type", "")
-	if type == "StreamTexture" or type == "Mesh":
+  
+	if type in IMPORTED_RESOURCE_TYPES:
 		return cfg.get_value("deps", "dest_files", [])
 	return []
 

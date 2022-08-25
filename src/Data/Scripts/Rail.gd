@@ -199,12 +199,12 @@ func get_global_transform_at_distance(distance: float) -> Transform:
 # local to this rail
 func get_local_transform_at_distance(distance: float) -> Transform:
 	if parallel_rail_name == "":
-		return Transform(\
-			Basis()\
-				.rotated(Vector3(1,0,0), get_tend_at_distance(distance))\
-				.rotated(Vector3(0,0,1), get_height_rot(distance))\
-				.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)),\
-			get_local_pos_at_distance(distance)\
+		return Transform( \
+			Basis() \
+				.rotated(Vector3(1,0,0), get_tend_at_distance(distance)) \
+				.rotated(Vector3(0,0,1), get_height_rot(distance)) \
+				.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)), \
+			 get_local_pos_at_distance(distance) \
 		)
 	else:
 		if parallel_rail == null:

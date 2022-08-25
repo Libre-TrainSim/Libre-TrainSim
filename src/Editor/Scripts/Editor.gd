@@ -146,6 +146,7 @@ func _port_to_new_chunk_system() -> void:
 				or new_chunk.get_node("Buildings").get_child_count() > 0 \
 				or new_chunk.get_node("TrackObjects").get_child_count() > 0:
 			new_chunk.is_empty = false
+			new_chunk._prepare_saving()
 			var packed_chunk := PackedScene.new()
 			packed_chunk.pack(new_chunk)
 			var path: String = current_track_path.get_base_dir().plus_file("chunks").plus_file(ChunkManager.chunk_to_string(old_chunk.position)) + ".tscn"

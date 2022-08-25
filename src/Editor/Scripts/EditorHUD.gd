@@ -11,7 +11,7 @@ func handle_object_transform_field():
 	if not $ObjectTransform.visible:
 		return
 	var selected_object = get_parent().selected_object
-	if selected_object:
+	if is_instance_valid(selected_object):
 		$ObjectTransform/HBoxContainer/x.value = selected_object.translation.x
 		$ObjectTransform/HBoxContainer/y.value = selected_object.translation.y
 		$ObjectTransform/HBoxContainer/z.value = selected_object.translation.z
@@ -83,22 +83,26 @@ func _on_DeleteCurrentObject_pressed():
 
 func _on_x_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.translation.x = value
+	if is_instance_valid(selected_object):
+		selected_object.translation.x = value
 
 
 func _on_y_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.translation.y = value
+	if is_instance_valid(selected_object):
+		selected_object.translation.y = value
 
 
 func _on_z_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.translation.z = value
+	if is_instance_valid(selected_object):
+		selected_object.translation.z = value
 
 
 func _on_y_rot_value_changed(value):
 	var selected_object = get_parent().selected_object
-	selected_object.rotation.y = deg2rad(value)
+	if is_instance_valid(selected_object):
+		selected_object.rotation.y = deg2rad(value)
 
 
 func _onObjectName_text_entered(_new_text):

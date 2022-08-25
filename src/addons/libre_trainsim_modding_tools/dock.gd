@@ -82,7 +82,7 @@ func _get_imported_paths(file):
 	if cfg.load(file) != OK:
 		Logger.err("cannot open .import file", self)
 	var type = cfg.get_value("remap", "type", "")
-  
+
 	if type in IMPORTED_RESOURCE_TYPES:
 		return cfg.get_value("deps", "dest_files", [])
 	return []

@@ -8,4 +8,4 @@ var route_name := ""
 var minimal_platform_length := 0
 var route := []
 var station_table := []
-var despawn_point
+var despawn_point: RoutePoint = null

@@ -198,7 +198,7 @@ func get_spawn_point(train_length, world: Node) -> RoutePointSpawnPoint:
 	return null
 
 
-func get_despawn_point() -> RoutePointDespawnPoint:
+func get_despawn_point() -> RoutePoint:
 	return route_points.back().duplicate(true)
 
 

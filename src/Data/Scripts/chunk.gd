@@ -64,6 +64,9 @@ func _on_world_origin_shifted(delta):
 	if generate_grass:
 		$DefaultGrass.translation += delta
 
+	# buildings are just mesh instances, we need to shift them!
+	$Buildings.translation += delta
+
 	# FIXME: this does not actually work...
 	#        it would be so nice, if we could just shift the entire chunk node
 	#        instead of all the track objects,

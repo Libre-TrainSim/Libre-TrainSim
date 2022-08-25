@@ -296,7 +296,7 @@ func update_material_list() -> void:
 
 
 func apply_object_tab() -> void:
-	if currentTO.mesh.resource_path != $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text:
+	if not is_instance_valid(currentTO.mesh) or currentTO.mesh.resource_path != $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text:
 		currentTO.set_mesh(load($Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text) as ArrayMesh)
 		update_material_list()
 	var material_array: Array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()

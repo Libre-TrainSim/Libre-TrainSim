@@ -14,8 +14,6 @@ script = ExtResource( 1 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 7 )
 
-[node name="Landscape" type="Spatial" parent="."]
-
 [node name="Players" type="Spatial" parent="."]
 
 [node name="Signals" type="Spatial" parent="."]
@@ -27,6 +25,4 @@ environment = ExtResource( 7 )
 [node name="Buildings" type="Spatial" parent="."]
 script = ExtResource( 9 )
 
-[node name="Flora" type="Spatial" parent="."]
-
-[node name="TrackObjects" type="Spatial" parent="."]
+[node name="Chunks" type="Spatial" parent="."]

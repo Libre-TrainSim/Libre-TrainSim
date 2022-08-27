@@ -27,6 +27,8 @@ func _ready() -> void:
 	if !load_world():
 		return
 
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+
 	_port_to_new_chunk_system()
 	_port_to_new_scenario_system()
 
@@ -603,8 +605,23 @@ func save_world(send_message: bool = true) -> void:
 	last_editor_camera_transforms[current_track_name] = camera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
+	# move newly created buildings from world to chunks
+	for building in $World/Buildings.get_children():
+		var chunk_pos = $World.chunk_manager.position_to_chunk(building.global_transform.origin)
+		var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
+
+		var chunk = $World/Chunks.find_node(chunk_name)
+		if not is_instance_valid(chunk):
+			chunk = $World.chunk_manager._force_load_chunk_immediately(chunk_pos)
+
+		$World/Buildings.remove_child(building)
+		chunk.get_node("Buildings").add_child(building)
+		building.owner = chunk
+
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)
+
+	$World/Buildings.translation = Vector3(0, 0, 0)
 
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
@@ -613,6 +630,8 @@ func save_world(send_message: bool = true) -> void:
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
+
+	$World/Buildings.translation = $World.chunk_manager.world_origin
 
 	$World.chunk_manager.resume_chunking()
 
@@ -717,19 +736,23 @@ func get_current_ground_position() -> Vector3:
 
 func add_object(complete_path: String) -> void:
 	var position: Vector3 = get_current_ground_position()
-	var obj_res: Mesh = load(complete_path)
+
 	var mesh_instance := MeshInstance.new()
-	mesh_instance.mesh = obj_res
+	mesh_instance.mesh = load(complete_path)
+
 	var mesh_name: String = complete_path.get_file().get_basename() + "_"
 	mesh_instance.name = Root.name_node_appropriate(mesh_instance, mesh_name, $World/Buildings)
+
 	mesh_instance.translation = position
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
+
 	var old_script = mesh_instance.get_script()
 	mesh_instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
 	mesh_instance.target = NodePath(".")
 	mesh_instance.generate_collider()
 	mesh_instance.set_script(old_script)
+
 	set_selected_object(mesh_instance)
 
 
@@ -930,3 +953,7 @@ func set_current_track_path(path: String) -> void:
 
 func _on_Pause_save_requested() -> void:
 	save_world(false)
+
+
+func _on_world_origin_shifted(delta: Vector3):
+	$World/Buildings.translation += delta

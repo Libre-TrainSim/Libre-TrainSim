@@ -238,7 +238,7 @@ func _finish_chunk_loading():
 func _add_chunk_to_scene_tree(chunk: Chunk):
 	if world.get_node("Chunks").has_node(chunk.name):
 		Logger.warn("Chunk already loaded: %s" % chunk.name, self)
-		chunk.queue_free()
+		chunk.free()
 		return
 
 	world.get_node("Chunks").add_child(chunk)
@@ -340,3 +340,27 @@ func _chunk_loader_thread(_void):
 
 func _emit_thread_finished_loading() -> void:
 	emit_signal("_thread_finished_loading")
+
+
+func _force_load_chunk_immediately(chunk_pos: Vector3):
+	assert(Root.Editor == true)
+
+	_saving_mutex.lock()
+	_chunk_mutex.lock()
+
+	var file = editor.current_track_path.get_base_dir().plus_file("chunks")
+	file = file.plus_file(chunk_to_string(chunk_pos)) + ".tscn"
+	var chunk: Chunk = load(file).instance() as Chunk
+	chunk.generate_grass = world.current_world_config.generate_grass
+
+	_add_chunk_to_scene_tree(chunk)
+
+	for rail in world.get_node("Rails").get_children():
+		var rail_pos = position_to_chunk(rail.global_transform.origin)
+		if rail_pos == chunk_pos:
+			rail._update()
+
+	_chunk_mutex.unlock()
+	_saving_mutex.unlock()
+
+	return chunk

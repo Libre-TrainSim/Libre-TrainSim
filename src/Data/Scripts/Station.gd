@@ -32,17 +32,18 @@ var rail: Spatial
 func _ready():
 	set_to_rail()
 	update_operation_mode_of_assigned_signal()
+
 	if not Root.Editor:
 		$Mesh.queue_free()
 		$SelectCollider.queue_free()
 		personSystem = personSystem and ProjectSettings["game/gameplay/enable_persons"] and not Root.mobile_version
 
+	if Root.Editor or not personSystem or not is_instance_valid(rail):
+		set_process(false)
+
 
 func _process(_delta: float) -> void:
-	assert(rail != null)
-
-	if not Root.Editor and personSystem:
-		handlePersons()
+	handlePersons()
 
 
 func set_to_rail() -> void:

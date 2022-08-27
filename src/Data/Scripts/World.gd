@@ -306,6 +306,7 @@ func get_assigned_station_of_signal(signal_name : String) -> Node:
 			return signal_node
 	return null
 
+
 # Used from scenario editor, does update assigned signals from stations
 func write_station_data(rail_logic_settings) -> void:
 	for rail_logic_name in rail_logic_settings.keys():

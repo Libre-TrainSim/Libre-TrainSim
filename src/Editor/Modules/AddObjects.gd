@@ -1,5 +1,11 @@
 extends Control
 
+var editor
+
+
+func _ready():
+	editor = find_parent("Editor")
+
 
 func _on_ShowMenu_pressed():
 	if $ShowMenu.text == " + ":
@@ -23,7 +29,6 @@ func hide_menu():
 
 var current_waiting_index = -1
 func _on_ItemList_item_selected(index):
-	var editor = find_parent("Editor")
 	$Menu1.unselect_all()
 	if index == 0: # Rail
 		editor.add_rail()
@@ -35,18 +40,17 @@ func _on_ItemList_item_selected(index):
 		current_waiting_index = 1
 		hide_menu()
 	if index == 2: # Rail Logic
-		if find_parent("Editor").selected_object_type != "Rail":
-			find_parent("Editor").send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
+		if editor.selected_object_type != "Rail":
+			editor.send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
 			hide_menu()
 		else:
 			$RailLogicMenu.show()
 
 
 func _on_RailLogicMenu_item_selected(index):
-	var editor = find_parent("Editor")
 	hide_menu()
-	if find_parent("Editor").selected_object_type != "Rail":
-		find_parent("Editor").send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
+	if editor.selected_object_type != "Rail":
+		editor.send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
 		return
 	match index:
 		0:
@@ -67,6 +71,6 @@ func _on_Content_Selector_resource_selected(complete_path):
 	if current_waiting_index == -1: ## Not waiting for any input
 		return
 	if current_waiting_index == 1: ## Object
-		find_parent("Editor").add_object(complete_path)
+		editor.add_object(complete_path)
 		current_waiting_index = -1
 

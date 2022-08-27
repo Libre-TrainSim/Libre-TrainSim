@@ -35,10 +35,11 @@ func _ready() -> void:
 
 	if Root.Editor:
 		for building in $Buildings.get_children():
+			var old_script = building.get_script()
 			building.set_script(load("res://Data/Scripts/aabb_to_collider.gd"))
-			building.target = building.get_path()
+			building.target = NodePath(".")
 			building.generate_collider()
-			building.set_script(null)
+			building.set_script(old_script)
 
 	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
 

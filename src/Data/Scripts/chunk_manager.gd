@@ -159,12 +159,13 @@ func save_and_unload_all_chunks():
 		if file.ends_with("_temp.tscn"):
 			files_to_save.append(file)
 	_dir.list_dir_end()
-	_dir.change_dir("res://")
 
 	for file in files_to_save:
 		var real_file = file.substr(0, file.length()-len("_temp.tscn")) + ".tscn"
-		_dir.copy(file, real_file)
+		_dir.copy(file, real_file)  # TODO: sometimes says failed to open, but always works...
 		_dir.remove(file)
+
+	_dir.change_dir("res://")
 
 	# then save the currently in-memory chunks
 	# and unload them
@@ -233,8 +234,10 @@ func resume_chunking():
 	loader.load_chunks(get_3x3_chunks(active_chunk))
 
 
-func _save_chunk(chunk_pos: Vector3, saving: bool = false):
+func _save_chunk(chunk_name: String, saving: bool = false):
 	assert(Root.Editor)
+
+	var chunk_pos = string_to_chunk(chunk_name)
 
 	# get chunks dir
 	var base_path = editor.current_track_path.get_base_dir().plus_file("chunks")
@@ -242,9 +245,9 @@ func _save_chunk(chunk_pos: Vector3, saving: bool = false):
 		_dir.make_dir_recursive(base_path)
 
 	# find the chunk
-	var chunk: Chunk = world.get_node("Chunks").get_node_or_null(chunk_to_string(chunk_pos))
+	var chunk: Chunk = world.get_node("Chunks").get_node_or_null(chunk_name)
 	if not is_instance_valid(chunk):
-		Logger.err("Trying to save chunk that has been free()'d: %s" % chunk_to_string(chunk_pos), self)
+		Logger.err("Trying to save chunk that has been free()'d: %s" % chunk_name, self)
 		return
 
 	# add rails to chunk
@@ -284,7 +287,7 @@ func _save_chunk(chunk_pos: Vector3, saving: bool = false):
 		return
 
 	world.world_origin_on_last_save = world_origin
-	Logger.log("Saved Chunk " + chunk_to_string(chunk_pos))
+	Logger.log("Saved Chunk " + chunk_name)
 
 
 func cleanup():
@@ -306,10 +309,9 @@ func cleanup():
 		if file.ends_with("_temp.tscn"):
 			files_to_remove.append(file)
 	_dir.list_dir_end()
-	_dir.change_dir("res://")
 
 	for file in files_to_remove:
 		_dir.remove(file)
 
-
+	_dir.change_dir("res://")
 

@@ -4,6 +4,7 @@ extends Spatial
 var updateTimer: float = 0
 func _process(delta: float) -> void:
 	if Root.Editor:
+		set_process(false)
 		return
 	updateTimer += delta
 	if updateTimer > 0.5:

@@ -625,8 +625,6 @@ func save_world(send_message: bool = true) -> void:
 	assert($World/Chunks.get_child_count() == 0)
 	$World.chunk_manager.cleanup()
 
-	$World/Buildings.translation = Vector3(0, 0, 0)
-
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
@@ -634,8 +632,6 @@ func save_world(send_message: bool = true) -> void:
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
-
-	$World/Buildings.translation = $World.chunk_manager.world_origin
 
 	$World.chunk_manager.resume_chunking()
 
@@ -745,15 +741,13 @@ func get_current_ground_position() -> Vector3:
 
 
 func add_object(complete_path: String) -> void:
-	var position: Vector3 = get_current_ground_position()
-
 	var mesh_instance := MeshInstance.new()
 	mesh_instance.mesh = load(complete_path)
 
 	var mesh_name: String = complete_path.get_file().get_basename() + "_"
 	mesh_instance.name = Root.name_node_appropriate(mesh_instance, mesh_name, $World/Buildings)
 
-	mesh_instance.translation = position
+	mesh_instance.translation = get_current_ground_position() - $World.chunk_manager.world_origin
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
 

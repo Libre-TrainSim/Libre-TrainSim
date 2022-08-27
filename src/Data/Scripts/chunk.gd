@@ -50,6 +50,11 @@ func update():
 
 
 func _prepare_saving():
+	# do NOT save world origin shift!!
+	if has_node("DefaultGrass"):
+		$DefaultGrass.translation = Vector3(0, 0, 0)
+	$Buildings.translation = Vector3(0, 0, 0)
+
 	# clear multimesh data, it is generated at runtime
 	# saves disk space
 	for obj in $TrackObjects.get_children():

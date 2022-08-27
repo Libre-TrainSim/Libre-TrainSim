@@ -4,7 +4,7 @@ extends Node
 const world_origin_shift_treshold: int = 5_000  # if further than this from origin, recenter world origin
 const chunk_size: int = 1000  # extend of a chunk in all directions
 
-var loader: ChunkLoaderInteractive = null
+var loader = null
 var world = null
 var editor = null
 var world_origin := Vector3(0, 0, 0)
@@ -66,7 +66,8 @@ func _ready():
 
 	_order_rails_by_chunk()
 
-	loader = ChunkLoaderInteractive.new()
+	# TODO: ChunkLoaderInteractive is not a valid type
+	loader = load("res://Data/Scripts/chunk_loader_interactive.gd").new()
 	loader.chunk_manager = self
 	add_child(loader)
 

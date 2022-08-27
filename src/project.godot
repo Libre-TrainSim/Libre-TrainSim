@@ -35,11 +35,6 @@ _global_script_classes=[ {
 "path": "res://Data/Scripts/chunk.gd"
 }, {
 "base": "Node",
-"class": "ChunkLoaderInteractive",
-"language": "GDScript",
-"path": "res://Data/Scripts/chunk_loader_interactive.gd"
-}, {
-"base": "Node",
 "class": "ChunkManager",
 "language": "GDScript",
 "path": "res://Data/Scripts/chunk_manager.gd"
@@ -290,7 +285,6 @@ _global_script_class_icons={
 "AutoDynamicFont": "",
 "CameraBase": "",
 "Chunk": "",
-"ChunkLoaderInteractive": "",
 "ChunkManager": "",
 "ColoredItemList": "",
 "ContactPoint": "",

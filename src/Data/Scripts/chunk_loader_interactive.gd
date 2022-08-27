@@ -1,4 +1,4 @@
-class_name ChunkLoaderInteractive
+# class_name ChunkLoaderInteractive  # TODO: ChunkLoaderInteractive isn't a valid type ???????
 extends Node
 
 # This class will become obsolete with Godot 4.0

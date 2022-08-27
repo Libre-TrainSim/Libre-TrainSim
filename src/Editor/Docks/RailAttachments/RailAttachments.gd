@@ -5,7 +5,7 @@ var currentRail: Node
 var copyRail
 var copyTO
 var copyTOArray: Array
-var currentTO: TrackObject
+var currentTO  # TODO: Godot Export "TrackObject" is not a valid type
 var editor_selection # Editor Selection
 var pluginRoot
 

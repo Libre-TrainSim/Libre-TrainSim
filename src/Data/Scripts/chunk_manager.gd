@@ -178,7 +178,8 @@ func _force_load_chunk_immediately(chunk_pos: Vector3):
 	return loader._force_load_chunk_immediately(chunk_name)
 
 
-func add_track_object(track_object: TrackObject):
+# TODO: Godot Export "TrackObject is not a valid type"
+func add_track_object(track_object):
 	var rail_name = track_object.attached_rail
 	var rail = world.get_node("Rails").get_node_or_null(rail_name)
 	if not is_instance_valid(rail):

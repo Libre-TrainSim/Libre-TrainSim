@@ -249,11 +249,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Editor/Modules/time_field.gd"
 }, {
-"base": "MultiMeshInstance",
-"class": "TrackObject",
-"language": "GDScript",
-"path": "res://Data/Scripts/TrackObjects.gd"
-}, {
 "base": "Resource",
 "class": "TrackScenario",
 "language": "GDScript",
@@ -338,7 +333,6 @@ _global_script_class_icons={
 "StopType": "",
 "TextBox": "",
 "TimeField": "",
-"TrackObject": "",
 "TrackScenario": "",
 "TrainSpawnInformation": "",
 "TranslatedRichTextLabel": "",

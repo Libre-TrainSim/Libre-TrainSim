@@ -1,4 +1,4 @@
-class_name TrackObject
+#class_name TrackObject  # TODO: Godot Export "TrackObject" is not a valid type
 extends MultiMeshInstance
 
 export (String) var description: String = ""

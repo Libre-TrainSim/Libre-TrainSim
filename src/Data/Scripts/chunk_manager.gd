@@ -9,8 +9,6 @@ var world = null
 var editor = null
 var world_origin := Vector3(0, 0, 0)
 
-# whatever node tells us *which* chunk to load. Usually player. Maybe editor camera.
-var position_provider: Spatial = null
 var active_chunk = null  # chunk the player is currently in (Vector3)
 
 var rails_by_chunk := {}
@@ -34,7 +32,7 @@ static func chunk_to_string(chunk: Vector3) -> String:
 
 static func string_to_chunk(chunk: String) -> Vector3:
 	var idx1 = chunk.find('_') + 1
-	var idx2 = chunk.find('_')
+	var idx2 = chunk.find('_', idx1)
 
 	var x = chunk.substr(idx1, idx2 - idx1)
 	var z = chunk.substr(idx2+1)
@@ -94,7 +92,7 @@ func _process(_delta: float):
 	assert(world != null)
 
 	# get position of active camera
-	position_provider = get_viewport().get_camera()
+	var position_provider = get_viewport().get_camera()
 	if position_provider == null:
 		return
 

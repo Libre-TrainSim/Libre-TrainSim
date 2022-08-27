@@ -7,29 +7,27 @@ extends Node
 const MAX_LOAD_TIME_STEP = 1.0  # control for how long we block main thread
 const chunk_prefab := preload("res://Data/Modules/chunk_prefab.tscn")
 
-var _loaded_chunks = []  # Array[String]
-var _chunks_to_load = []  # Array[String] ; Queue
+var _loaded_chunks := []  # Array[String]
+var _chunks_to_load := []  # Array[String] ; Queue
 
-var chunk_manager
+var chunk_manager = null
 
 var _loader: ResourceInteractiveLoader
 var _currently_loading_chunk: String
-var _resources_to_instance = []  # Array[Resource]
-var _instances_to_add_to_tree = []  # Array[Node]
 
 var _dir: Directory
 
 
 func load_chunks(new_chunks: Array):
 	for chunk in new_chunks:
-		# make sure we have a string
-		var chunk_name = chunk
-		if chunk is Vector3:
-			chunk_name = chunk_manager.chunk_to_string(chunk)
 		# load the chunk only if it is not yet loaded
-		if not chunk in _loaded_chunks:
+		if (not chunk in _loaded_chunks) \
+			and (not chunk in _chunks_to_load) \
+			and chunk != _currently_loading_chunk:
 			_chunks_to_load.push_back(chunk)
-	set_process(true)
+
+	if not _chunks_to_load.empty():
+		set_process(true)
 
 
 func unload_chunks(old_chunks: Array):
@@ -46,8 +44,8 @@ func unload_chunks(old_chunks: Array):
 				chunk.free() # necessary for saving
 			else:
 				chunk.queue_free()
-		_loaded_chunks.erase(chunk)
-		_chunks_to_load.erase(chunk)
+		_loaded_chunks.erase(chunk_name)
+		_chunks_to_load.erase(chunk_name)
 
 
 func _ready() -> void:
@@ -60,6 +58,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if _chunks_to_load.empty():
 		set_process(false)
+		return
 
 	if _loader == null:
 		_currently_loading_chunk = _chunks_to_load.pop_front()
@@ -68,6 +67,8 @@ func _process(delta: float) -> void:
 			_loader = ResourceLoader.load_interactive(file)
 		else:
 			_spawn_empty_chunk()
+			_currently_loading_chunk = ""
+			return
 
 	assert(_loader != null)
 
@@ -122,8 +123,9 @@ func _add_chunk_to_scene_tree(chunk):
 	chunk._on_world_origin_shifted(chunk_manager.world_origin)
 	chunk.update()
 
-	for rail in chunk_manager.rails_by_chunk[chunk.chunk_name]:
-		rail._update()
+	if chunk_manager.rails_by_chunk.has(chunk.name):
+		for rail in chunk_manager.rails_by_chunk[chunk.name]:
+			rail._update()
 
 	_loaded_chunks.push_back(_currently_loading_chunk)
 

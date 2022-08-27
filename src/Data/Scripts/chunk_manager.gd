@@ -1,31 +1,21 @@
 class_name ChunkManager
 extends Node
 
-signal chunks_finished_loading   # emitted when chunks finished loading (loaded_chunks == chunks_to_load)
-signal _thread_finished_loading
-
 const world_origin_shift_treshold: int = 5_000  # if further than this from origin, recenter world origin
 const chunk_size: int = 1000  # extend of a chunk in all directions
-const chunk_prefab := preload("res://Data/Modules/chunk_prefab.tscn")
 
+var loader: ChunkLoaderInteractive = null
 var world = null
 var editor = null
 var world_origin := Vector3(0, 0, 0)
 
-var loaded_chunks := []  # chunks that are *actually* loaded
-var chunks_to_load := []  # chunks that should be loaded
-var are_chunks_loaded: bool = false setget , get_are_chunks_loaded
-
-var active_chunk = null  # chunk the player is currently in (Vector3)
-
 # whatever node tells us *which* chunk to load. Usually player. Maybe editor camera.
 var position_provider: Spatial = null
+var active_chunk = null  # chunk the player is currently in (Vector3)
 
-var _thread: Thread
-var _thread_semaphore: Semaphore
-var _chunk_mutex: Mutex
-var _saving_mutex: Mutex
-var _kill_thread := false
+var rails_by_chunk := {}
+
+var _dir: Directory = null
 
 
 func position_to_chunk(position: Vector3) -> Vector3:
@@ -42,29 +32,27 @@ static func chunk_to_string(chunk: Vector3) -> String:
 	return "chunk_%d_%d" % [chunk.x, chunk.z]
 
 
-func is_position_in_loaded_chunk(position: Vector3) -> bool:
-	return is_chunk_loaded(position_to_chunk(position))
+static func string_to_chunk(chunk: String) -> Vector3:
+	var idx1 = chunk.find('_') + 1
+	var idx2 = chunk.find('_')
 
+	var x = chunk.substr(idx1, idx2 - idx1)
+	var z = chunk.substr(idx2+1)
 
-func is_chunk_loaded(chunk: Vector3) -> bool:
-	return chunk in loaded_chunks
-
-
-func get_are_chunks_loaded() -> bool:
-	return chunks_to_load == loaded_chunks
+	return Vector3(x, 0, z)
 
 
 func get_3x3_chunks(around: Vector3):
 	return [
-		Vector3(around.x - 1, 0, around.z),
-		Vector3(around.x - 1, 0, around.z - 1),
-		Vector3(around.x - 1, 0, around.z + 1),
-		Vector3(around.x + 1, 0, around.z),
-		Vector3(around.x + 1, 0, around.z - 1),
-		Vector3(around.x + 1, 0, around.z + 1),
-		Vector3(around.x, 0, around.z),
-		Vector3(around.x, 0, around.z - 1),
-		Vector3(around.x, 0, around.z + 1),
+		chunk_to_string(Vector3(around.x - 1, 0, around.z)),
+		chunk_to_string(Vector3(around.x - 1, 0, around.z - 1)),
+		chunk_to_string(Vector3(around.x - 1, 0, around.z + 1)),
+		chunk_to_string(Vector3(around.x + 1, 0, around.z)),
+		chunk_to_string(Vector3(around.x + 1, 0, around.z - 1)),
+		chunk_to_string(Vector3(around.x + 1, 0, around.z + 1)),
+		chunk_to_string(Vector3(around.x, 0, around.z)),
+		chunk_to_string(Vector3(around.x, 0, around.z - 1)),
+		chunk_to_string(Vector3(around.x, 0, around.z + 1)),
 	]
 
 
@@ -74,10 +62,15 @@ func _ready():
 		editor = find_parent("Editor")
 		assert(editor != null)
 
-	_thread_semaphore = Semaphore.new()
-	_chunk_mutex = Mutex.new()
-	_saving_mutex = Mutex.new()
-	connect("_thread_finished_loading", self, "_finish_chunk_loading")
+	_dir = Directory.new()
+	if _dir.open("res://") != OK:
+		Logger.err("Dir cannot open res://", self)
+
+	_order_rails_by_chunk()
+
+	loader = ChunkLoaderInteractive.new()
+	loader.chunk_manager = self
+	add_child(loader)
 
 	# backwards compat.
 	if not world.has_node("Chunks"):
@@ -86,21 +79,15 @@ func _ready():
 		world.add_child(chunks_node)
 		chunks_node.owner = world
 
-	_thread = Thread.new()
-	_thread.start(self, "_chunk_loader_thread")
 
-
-func _halt_thread():
-	_chunk_mutex.lock()
-	_kill_thread = true
-	_chunk_mutex.unlock()
-	_thread_semaphore.post()
-	_thread.wait_to_finish()
-
-
-# kill thread when ChunkManager gets destroyed
-func _exit_tree():
-	_halt_thread()
+func _order_rails_by_chunk():
+	for rail in world.get_node("Rails").get_children():
+		var chunk_pos = position_to_chunk(rail.global_transform.origin)
+		var chunk_name = chunk_to_string(chunk_pos)
+		if rails_by_chunk.has(chunk_name):
+			rails_by_chunk[chunk_name].append(rail)
+		else:
+			rails_by_chunk[chunk_name] = [rail]
 
 
 func _process(_delta: float):
@@ -113,43 +100,148 @@ func _process(_delta: float):
 
 	# handle world origin
 	var position = position_provider.global_transform.origin
+	var chunk_position = position_to_chunk(position)
 	if position.length() > world_origin_shift_treshold:
-		_shift_world_origin_to(-position_to_chunk(position)*chunk_size)
+		_shift_world_origin_to(-chunk_position * chunk_size)
 
 	# handle chunks
-	var chunk_position = position_to_chunk(position)
 	if chunk_position != active_chunk:
-		_chunk_mutex.lock()
 		active_chunk = chunk_position
-		chunks_to_load = get_3x3_chunks(active_chunk)
-		_chunk_mutex.unlock()
-		_thread_semaphore.post()
+		loader.load_chunks(get_3x3_chunks(active_chunk))
+		_unload_old_chunks()
 
 
 func _shift_world_origin_to(position: Vector3):
-	_chunk_mutex.lock()
 	var delta: Vector3 = position - world_origin
 	world_origin = position
 	Root.world_origin_shifted(delta)
-	_chunk_mutex.unlock()
 
 
-func _save_chunks(chunks: Array):
-	_chunk_mutex.lock()
-	for chunk in chunks:
-		if chunk in loaded_chunks:
-			_save_chunk(chunk)
-	_chunk_mutex.unlock()
+func _unload_old_chunks(saving: bool = false):
+	if saving:
+		assert(Root.Editor)
+
+	var chunks_to_unload = loader._loaded_chunks.duplicate()
+
+	# chunks_to_unload = all chunks further away than treshold
+	if not saving:
+		for chunk_name in loader._loaded_chunks:
+			var chunk_pos = string_to_chunk(chunk_name)
+			if active_chunk.distance_to(chunk_pos) <= ProjectSettings["game/gameplay/chunk_unload_distance"]:
+				chunks_to_unload.erase(chunk_name)
+
+	if Root.Editor:
+		for chunk in chunks_to_unload:
+			_save_chunk(chunk, saving)
+
+	loader.unload_chunks(chunks_to_unload)
 
 
-func _save_chunk(chunk_pos: Vector3):
+# TODO: in future we could refactor send_message to be a signal in Root ?
+func _send_message(msg: String):
+	if Root.Editor:
+		editor.send_message(msg)
+	else:
+		world.player.send_message(msg)
+
+
+### Editor functions
+func save_and_unload_all_chunks():
+	assert(Root.Editor)
+
+	# first save chunks that have been temporarily swapped to disk
+	var files_to_save := []
+	var chunk_path = editor.current_track_path.get_base_dir().plus_file("chunks")
+	_dir.change_dir(chunk_path)
+	_dir.list_dir_begin(true, true)
+	while(true):
+		var file: String = _dir.get_next()
+		if file == "":
+			break
+		if file.ends_with("_temp.tscn"):
+			files_to_save.append(file)
+	_dir.list_dir_end()
+	_dir.change_dir("res://")
+
+	for file in files_to_save:
+		var real_file = file.substr(0, file.length()-len("_temp.tscn")) + ".tscn"
+		_dir.copy(file, real_file)
+		_dir.remove(file)
+
+	# then save the currently in-memory chunks
+	# and unload them
+	_unload_old_chunks(true)
+
+
+func _force_load_chunk_immediately(chunk_pos: Vector3):
+	assert(Root.Editor)
+	var chunk_name = chunk_to_string(chunk_pos)
+	return loader._force_load_chunk_immediately(chunk_name)
+
+
+func add_track_object(track_object: TrackObject):
+	var rail_name = track_object.attached_rail
+	var rail = world.get_node("Rails").get_node_or_null(rail_name)
+	if not is_instance_valid(rail):
+		Logger.err("Your track object is attached to an invalid rail.", self)
+		_send_message("Cannot create track object. Rail not found.")
+		return
+
+	var chunk_pos = position_to_chunk(rail.global_transform.origin)
+	var chunk_name = chunk_to_string(chunk_pos)
+	var chunk = world.get_node("Chunks").get_node_or_null(chunk_name)
+	if not is_instance_valid(chunk):
+		Logger.err("Trying to create track object in unloaded chunk.", self)
+		_send_message("Cannot create track object. Chunk not loaded.")
+		return
+
+	chunk.get_node("TrackObjects").add_child(track_object)
+	track_object.owner = chunk
+
+
+func add_rail(rail):
+	assert(Root.Editor)
+
+	var chunk_pos = position_to_chunk(rail.global_transform.origin)
+	var chunk_name = chunk_to_string(chunk_pos)
+
+	if rails_by_chunk.has(chunk_name):
+		rails_by_chunk[chunk_name].append(rail)
+	else:
+		rails_by_chunk[chunk_name] = [rail]
+
+
+func remove_rail(rail):
+	assert(Root.Editor)
+
+	var chunk_pos = position_to_chunk(rail.global_transform.origin)
+	var chunk_name = chunk_to_string(chunk_pos)
+
+	rails_by_chunk[chunk_name].erase(rail)
+
+
+func pause_chunking():
+	assert(Root.Editor)
+
+	set_process(false)
+	loader.set_process(false)
+
+
+func resume_chunking():
+	assert(Root.Editor)
+
+	set_process(true)
+	loader.set_process(true)
+	loader.load_chunks(get_3x3_chunks(active_chunk))
+
+
+func _save_chunk(chunk_pos: Vector3, saving: bool = false):
 	assert(Root.Editor)
 
 	# get chunks dir
 	var base_path = editor.current_track_path.get_base_dir().plus_file("chunks")
-	var dir = Directory.new()
-	if not dir.dir_exists(base_path):
-		dir.make_dir_recursive(base_path)
+	if not _dir.dir_exists(base_path):
+		_dir.make_dir_recursive(base_path)
 
 	# find the chunk
 	var chunk: Chunk = world.get_node("Chunks").get_node_or_null(chunk_to_string(chunk_pos))
@@ -167,8 +259,18 @@ func _save_chunk(chunk_pos: Vector3):
 			chunk.rails.append(rail.name)
 			chunk.is_empty = false
 
+	# save a temp file if the chunk gets unloaded before the editor saves!
+	# -> do not overwrite old chunks unless the USER presses "save"
+	var file = base_path.plus_file(chunk.name)
+	if saving:
+		file += ".tscn"
+	else:
+		file += "_temp.tscn"
+
 	# don't save empty chunks
 	if chunk.is_empty:
+		chunk.queue_free()
+		_dir.remove(file)  # delete stale chunk files
 		return
 
 	# write chunk to disk
@@ -179,188 +281,37 @@ func _save_chunk(chunk_pos: Vector3):
 		Logger.err("Could not pack chunk to tscn!", self)
 		return
 
-	var file = base_path.plus_file(chunk.name) + ".tscn"
 	if ResourceSaver.save(file, packed_chunk) != OK:
 		Logger.err("Could not save chunk tscn!", self)
 		return
-
-	# delete the chunk from scene tree, it's reloaded later
-	chunk.queue_free()
 
 	world.world_origin_on_last_save = world_origin
 	Logger.log("Saved Chunk " + chunk_to_string(chunk_pos))
 
 
-func _get_all_chunks() -> Array:
-	var _all_chunks := []
-	for rail in world.get_node("Rails").get_children():
-		var pos: Vector3 = position_to_chunk(rail.global_transform.origin)
-		for chunk in get_3x3_chunks(pos):
-			_all_chunks.append(chunk)
-	_all_chunks = jEssentials.remove_duplicates(_all_chunks)
-	return _all_chunks
-
-
-# needed for editor only
-func save_and_unload_all_chunks():
+func cleanup():
 	assert(Root.Editor)
+	# clean up temporary chunk files
 
-	_saving_mutex.lock()
-	chunks_to_load = []
-	_unload_old_chunks(true) # this also saves the chunks :)
+	set_process(false)
+	loader.set_process(false)
 
+	var files_to_remove := []
 
-# this is the missing unlock from `save_and_unload_all_chunks()` - needed for Editor purposes
-func resume_chunking():
-	chunks_to_load = get_3x3_chunks(active_chunk)
-	_thread_semaphore.post()
-	_saving_mutex.unlock()
+	var chunk_path = editor.current_track_path.get_base_dir().plus_file("chunks")
+	_dir.change_dir(chunk_path)
+	_dir.list_dir_begin(true, true)
+	while(true):
+		var file: String = _dir.get_next()
+		if file == "":
+			break
+		if file.ends_with("_temp.tscn"):
+			files_to_remove.append(file)
+	_dir.list_dir_end()
+	_dir.change_dir("res://")
 
-
-# do finishing touches sync. on main thread (tree is not thread safe!)
-func _finish_chunk_loading():
-	_chunk_mutex.lock()
-	var new_chunks = without(chunks_to_load, loaded_chunks)
-	for rail in world.get_node("Rails").get_children():
-		var rail_pos = position_to_chunk(rail.global_transform.origin)
-		if rail_pos in new_chunks:
-			rail._update()
-	_chunk_mutex.unlock()
-
-	# append, but remove duplicates
-	append_deduplicated(loaded_chunks, chunks_to_load)
-
-	emit_signal("chunks_finished_loading")
-	_unload_old_chunks()
+	for file in files_to_remove:
+		_dir.remove(file)
 
 
-# called deferred from Thread
-func _add_chunk_to_scene_tree(chunk: Chunk):
-	if world.get_node("Chunks").has_node(chunk.name):
-		Logger.warn("Chunk already loaded: %s" % chunk.name, self)
-		chunk.free()
-		return
 
-	world.get_node("Chunks").add_child(chunk)
-	chunk.owner = world
-	chunk._on_world_origin_shifted(world_origin)
-	chunk.update()
-
-
-func append_deduplicated(A: Array, B: Array):
-	for b in B:
-		if not b in A:
-			A.append(b)
-
-
-func without(A: Array, B: Array) -> Array:
-	var retval = A.duplicate()
-	for b in B:
-		retval.erase(b)
-	return retval
-
-
-# delete old nodes from main thread (tree is not thread safe!)
-func _unload_old_chunks(all: bool = false):
-	_chunk_mutex.lock()
-
-	# chunks_to_unload = all chunks further away than treshold
-	var chunks_to_unload = loaded_chunks.duplicate()
-	if not all:
-		for chunk in loaded_chunks:
-			if active_chunk.distance_to(chunk) <= ProjectSettings["game/gameplay/chunk_unload_distance"]:
-				chunks_to_unload.erase(chunk)
-
-	if Root.Editor:
-		_save_chunks(chunks_to_unload)
-
-	# unload rails (they aren't chunked)
-	for rail in world.get_node("Rails").get_children():
-		if not rail.has_meta("chunk_pos"):
-			rail.set_meta("chunk_pos", position_to_chunk(rail.global_transform.origin))
-		if rail.get_meta("chunk_pos") in chunks_to_unload:
-			rail.unload_visible_instance()
-
-	# remove unloaded chunks
-	for chunk_pos in chunks_to_unload:
-		var chunk = world.get_node("Chunks").get_node_or_null(chunk_to_string(chunk_pos))
-		if is_instance_valid(chunk):
-			chunk.free()  # no, we cannot use queue_free() here, because the chunks won't get unloaded before Editor saves the map!
-		loaded_chunks.erase(chunk_pos)
-
-	_chunk_mutex.unlock()
-
-
-# handle loading chunks from disk on a separate thread to avoid lags
-func _chunk_loader_thread(_void):
-	var dir = Directory.new()
-	if dir.open("res://") != OK:
-		Logger.err("Cannot open resource directory.", self)
-		return
-
-	while true:
-		_thread_semaphore.wait()
-		#yield(get_tree(), "idle_frame")  # uncomment this for debugging
-
-		_saving_mutex.lock()
-		_chunk_mutex.lock()
-		if _kill_thread:
-			_chunk_mutex.unlock()
-			return
-
-		for chunk_pos in chunks_to_load:
-			if chunk_pos in loaded_chunks:
-				continue
-
-			var chunk_file := ""
-			if Root.Editor:
-				chunk_file = editor.current_track_path.get_base_dir().plus_file("chunks")
-			else:
-				chunk_file = Root.current_track.get_base_dir().plus_file("chunks")
-			chunk_file = chunk_file.plus_file(chunk_to_string(chunk_pos)) + ".tscn"
-
-			var chunk: Chunk
-			if dir.file_exists(chunk_file):
-				chunk = load(chunk_file).instance() as Chunk
-			else:
-				# load empty chunk
-				chunk = chunk_prefab.instance() as Chunk
-				chunk.name = chunk_to_string(chunk_pos)
-				chunk.chunk_position = chunk_pos
-
-			# do not generate grass if it was disabled by world
-			chunk.generate_grass = world.current_world_config.generate_grass
-
-			call_deferred("_add_chunk_to_scene_tree", chunk)
-
-		_chunk_mutex.unlock()
-		_saving_mutex.unlock()
-		call_deferred("_emit_thread_finished_loading")
-
-
-func _emit_thread_finished_loading() -> void:
-	emit_signal("_thread_finished_loading")
-
-
-func _force_load_chunk_immediately(chunk_pos: Vector3):
-	assert(Root.Editor == true)
-
-	_saving_mutex.lock()
-	_chunk_mutex.lock()
-
-	var file = editor.current_track_path.get_base_dir().plus_file("chunks")
-	file = file.plus_file(chunk_to_string(chunk_pos)) + ".tscn"
-	var chunk: Chunk = load(file).instance() as Chunk
-	chunk.generate_grass = world.current_world_config.generate_grass
-
-	_add_chunk_to_scene_tree(chunk)
-
-	for rail in world.get_node("Rails").get_children():
-		var rail_pos = position_to_chunk(rail.global_transform.origin)
-		if rail_pos == chunk_pos:
-			rail._update()
-
-	_chunk_mutex.unlock()
-	_saving_mutex.unlock()
-
-	return chunk

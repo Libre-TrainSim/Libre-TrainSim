@@ -71,8 +71,9 @@ func _on_jListTrackObjects_user_added_entry(entry_name: String) -> void:
 	track_object.name = currentRail.name + " " + entry_name
 	track_object.attached_rail = currentRail.name
 	track_object.materials = []
-	world.get_node("TrackObjects").add_child(track_object)
-	track_object.set_owner(world)
+
+	world.chunk_manager.add_track_object(track_object)
+
 	track_object.attach_to_rail(currentRail)
 	Logger.log("Created track object " + track_object.name)
 	update_object_tab()

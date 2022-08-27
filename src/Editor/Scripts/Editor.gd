@@ -304,6 +304,7 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
+	$World.chunk_manager.cleanup()
 	Root.Editor = false
 
 
@@ -605,6 +606,8 @@ func save_world(send_message: bool = true) -> void:
 	last_editor_camera_transforms[current_track_name] = camera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
+	$World.chunk_manager.pause_chunking()
+
 	# move newly created buildings from world to chunks
 	for building in $World/Buildings.get_children():
 		var chunk_pos = $World.chunk_manager.position_to_chunk(building.global_transform.origin)
@@ -620,6 +623,7 @@ func save_world(send_message: bool = true) -> void:
 
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)
+	$World.chunk_manager.cleanup()
 
 	$World/Buildings.translation = Vector3(0, 0, 0)
 
@@ -650,6 +654,9 @@ func rename_selected_object(new_name: String) -> void:
 
 
 func delete_selected_object() -> void:
+	if selected_object_type == "Rail":
+		$World.chunk_manager.remove_rail(selected_object)
+
 	selected_object.queue_free()
 	clear_selected_object()
 
@@ -725,6 +732,9 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 func add_rail() -> void:
 	var rail_instance: Node = _spawn_rail()
 	rail_instance.translation = get_current_ground_position()
+
+	$World.chunk_manager.add_rail(rail_instance)
+
 	set_selected_object(rail_instance)
 
 

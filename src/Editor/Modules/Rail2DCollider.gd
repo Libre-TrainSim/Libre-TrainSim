@@ -17,7 +17,7 @@ func _ready():
 
 		var length = points[i].distance_to(points[i+1])
 		var rect = RectangleShape2D.new()
-		rect.extents = Vector2(length/2, width)
+		rect.extents = Vector2(length/2, width/2)
 
 		shape.shape = rect
 		area_2d.add_child(shape)

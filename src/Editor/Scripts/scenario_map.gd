@@ -81,15 +81,18 @@ func create_signal(signal_instance):
 				sprite.texture = signal_icon_station
 			SignalOperationMode.MANUAL:
 				sprite.texture = signal_icon
-		collider.set_radius(50)
+		var rect = RectangleShape2D.new()
+		rect.extents = Vector2(20, 50)
+		collider.get_node("CollisionShape2D").shape = rect
+		collider.position += Vector2(36, 0)
 		sprite.add_to_group("Signal")
 	elif signal_instance.type == "Station":
 		sprite.texture = station_image
-		collider.set_radius(50)
+		collider.set_radius(48)
 		sprite.add_to_group("Station")
 	elif signal_instance.type == "ContactPoint":
 		sprite.texture = contact_point_image
-		collider.set_radius(50)
+		collider.set_radius(48)
 		sprite.add_to_group("ContactPoint")
 	collider.input_handling_node = self
 	sprite.add_child(collider)
@@ -153,7 +156,7 @@ func create_line2d_from_rail(rail, special: bool = false):
 		line.default_color = Color("1e6c93")
 	else:
 		$RailsSelection.add_child(line)
-		line.default_color = Color("2891c5")
+		line.default_color = Color("1e9480")
 
 
 func update_map():

@@ -131,8 +131,11 @@ func get_calculated_station_point(index: int, start_time: int):
 	return station_table[station_index]
 
 
+# TODO: this is buggy! It DOES calculate the correct route,
+# BUT it also keeps any connected route in the same direction
+# ie if you're going left on a switch, the right track is still part of the route
 func get_calculated_rail_route(world: Node) -> Array:
-	world.update_rail_connections() # why is this necessary? :(
+	world.update_rail_connections()
 	var rail_route := []
 
 	for i in range (size()-1):

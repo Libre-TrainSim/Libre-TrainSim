@@ -102,7 +102,8 @@ func set_current_route(route_name : String) -> void:
 	if is_instance_valid(loaded_route):
 		routes[current_route] = loaded_route.duplicate(true)
 	current_route = route_name
-	loaded_route = routes[current_route].duplicate(true)
+	if current_route != "":
+		loaded_route = routes[current_route].duplicate(true)
 	update_ui_for_current_route()
 	update_scenario_map()
 

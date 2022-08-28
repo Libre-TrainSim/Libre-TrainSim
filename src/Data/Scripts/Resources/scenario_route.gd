@@ -31,6 +31,15 @@ var error_route_point_start_index: int
 var error_route_point_end_index: int
 
 
+# because Godot's initialisation sucks so hard,
+# if we don't do it manually, all instances share the same arrays / dicts
+func _init() -> void:
+	rail_logic_settings = {}
+	route_points = []
+	specific_routes = []
+	calculated_rail_route = []
+
+
 func duplicate(recursive: bool = true):
 	var copy = get_script().new()
 

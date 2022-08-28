@@ -209,7 +209,7 @@ func _on_Routes_Select_pressed():
 		return
 	var routes = loaded_scenario.routes.keys()
 	selected_route = routes[$V/Routes/ItemList.get_selected_items()[0]]
-	loaded_route = loaded_scenario[selected_route]
+	loaded_route = loaded_scenario.routes[selected_route]
 	$V/Routes.hide()
 	$V/Times.show()
 	update_times()

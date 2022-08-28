@@ -16,6 +16,11 @@ export (Dictionary) var routes := {}
 export (Dictionary) var rail_logic_settings := {}
 
 
+func _init() -> void:
+	routes = {}
+	rail_logic_settings = {}
+
+
 func is_route_playable(route_name: String) -> bool:
 	assert(routes.has(route_name))
 	return routes[route_name].is_playable

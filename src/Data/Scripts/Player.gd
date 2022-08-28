@@ -185,7 +185,7 @@ func ready() -> void:
 	world = get_parent().get_parent()
 
 	if ai:
-		initialSpeed = Math.kmHToSpeed(spawn_point.initial_speed)
+		initialSpeed = Math.kmh_to_speed(spawn_point.initial_speed)
 	if spawn_point.initial_speed_limit != -1:
 		currentSpeedLimit = spawn_point.initial_speed_limit
 	else:
@@ -1452,12 +1452,13 @@ func updateNextStation() -> void:  ## Used for Autopilot
 		if distanceToNextStation > complete_route_length:
 			distanceToNextStation -= complete_route_length
 
+
 # If signal of the current station was set to green, this is stored in this value.
 var _signal_was_freed_for_station_index: int = -1
 func handle_station_signal():
 	# Signal of next station already set to green or we reached endstation
 	if current_station_table_index == _signal_was_freed_for_station_index or station_table.size() == 0\
-	or _signal_was_freed_for_station_index+1 > station_table.size():
+	or _signal_was_freed_for_station_index+1 >= station_table.size():
 		return
 	var station_table_entry: RoutePointStation = station_table[_signal_was_freed_for_station_index+1]
 	var signal_node: Node = world.get_signal(world.get_signal(station_table_entry.station_node_name).assigned_signal)
@@ -1580,7 +1581,7 @@ func checkVisibility(delta: float) -> void:
 		# doesn't update the 3D postition in this state. We don't need the accurate 3D Postition if you can't
 		# see the train.
 		if not rendering:
-			self.translation = currentRail.get_pos_at_RailDistance(distance_on_rail)
+			self.translation = currentRail.get_pos_at_distance(distance_on_rail)
 
 		rendering = world.chunk_manager.is_position_in_loaded_chunk(self.global_transform.origin)
 		self.visible = rendering

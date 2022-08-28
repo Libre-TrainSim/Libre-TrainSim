@@ -54,6 +54,12 @@ func get_3x3_chunks(around: Vector3):
 	]
 
 
+func is_position_in_loaded_chunk(position: Vector3):
+	var chunk_pos = position_to_chunk(position)
+	var chunk_name = chunk_to_string(chunk_pos)
+	return world.get_node("Chunks").has_node(chunk_name)
+
+
 func _ready():
 	assert(world != null)
 	if Root.Editor:

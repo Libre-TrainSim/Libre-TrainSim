@@ -23,6 +23,7 @@ func _ready() -> void:
 	# must port trackinfo -> config.tres before loading the world
 	# because it contains the world config
 	_port_to_new_trackinfo()
+	_port_very_old_trackinfo()
 
 	if !load_world():
 		return
@@ -31,6 +32,7 @@ func _ready() -> void:
 
 	_port_to_new_chunk_system()
 	_port_to_new_scenario_system()
+	_port_very_old_scenarios()
 
 
 func _port_to_new_trackinfo():
@@ -58,6 +60,33 @@ func _port_to_new_trackinfo():
 		Logger.err("Failed to save world config %s" % new_file, self)
 
 	dir.remove(info_file)
+
+
+func _port_very_old_trackinfo():
+	var old_cfg = current_track_path + "-scenarios.cfg"
+	var dir = Directory.new()
+	if not dir.file_exists(old_cfg):
+		return
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(old_cfg)
+
+	var old_world_config: Dictionary = jsavemodule.get_value("world_config", {})
+
+	var world_config = WorldConfig.new()
+	world_config.author = old_world_config.get("Author", "Unknown")
+	world_config.track_description = old_world_config.get("TrackDesciption", "")
+	world_config.editor_notes = ""
+	var release_date = old_world_config.get("ReleaseDate", [9, 11, 1989])
+	world_config.release_date = {
+		"day": release_date[0],
+		"month": release_date[1],
+		"year": release_date[2]
+	}
+
+	var new_file = current_track_path + "_config.tres"
+	if ResourceSaver.save(new_file, world_config) != OK:
+		Logger.err("Failed to save world config %s" % new_file, self)
 
 
 func _port_to_new_chunk_system() -> void:
@@ -297,6 +326,114 @@ func _convert_route_point(old_point: Dictionary) -> RoutePoint:
 			new_point.distance_on_rail = old_point["distance"]
 
 	return new_point
+
+
+func _port_very_old_scenarios():
+	var old_file = current_track_path + "-scenarios.cfg"
+	var dir = Directory.new()
+	if not dir.file_exists(old_file):
+		return
+
+	if not dir.dir_exists(current_track_path.get_base_dir().plus_file("scenarios")):
+		dir.make_dir_recursive(current_track_path.get_base_dir().plus_file("scenarios"))
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(old_file)
+
+	var scenario_list = jsavemodule.get_value("scenario_list", [])
+	var scenario_data = jsavemodule.get_value("scenario_data", {})
+	for scenario in scenario_list:
+		var data = scenario_data[scenario]
+
+		var new_scenario = TrackScenario.new()
+		new_scenario.title = scenario
+		new_scenario.description = data.get("Description", "")
+		new_scenario.duration = data.get("Duration", "")
+
+		var hour = data.get("TimeH", 12)
+		var minute = data.get("TimeM", 0)
+		var second = data.get("TimeS", 0)
+		new_scenario.time = Math.time_to_seconds([hour, minute, second])
+
+		var signal_infos = data.get("Signals", {})
+		for signal_name in signal_infos:
+			var info = signal_infos[signal_name]
+			if info == null:
+				continue
+			elif info.has("affectTime"):
+				var settings = ContactPointSettings.new()
+				settings.affect_time = info["affectTime"]
+				settings.affected_signal = info["affectedSignal"]
+				settings.enabled = true
+				if info["bySpecificTrain"] != "":
+					settings.enable_for_all_trains = false
+					settings.specific_train = info["bySpecificTrain"]
+				settings.new_status = info.get("newStatus", 1)
+				settings.new_speed_limit = info.get("newSpeed", -1)
+				new_scenario.rail_logic_settings[signal_name] = settings
+			elif info.has("is_block_signal"):
+				var settings = SignalSettings.new()
+				if info["is_block_signal"] == true:
+					settings.operation_mode = SignalOperationMode.BLOCK
+				else:
+					settings.operation_mode = SignalOperationMode.MANUAL
+				settings.speed = info["speed"]
+				settings.status = info["status"]
+				var _hour = info["set_pass_at_h"]
+				var _minute = info["set_pass_at_m"]
+				var _second = info["set_pass_at_s"]
+				settings.signal_free_time = Math.time_to_seconds([_hour, _minute, _second])
+				new_scenario.rail_logic_settings[signal_name] = settings
+
+		var trains = data.get("Trains", {})
+		for train_name in trains:
+			var info = trains[train_name]
+			var route = ScenarioRoute.new()
+			if train_name == "Player":
+				route.is_playable = true
+			route.train_name = info["PreferredTrain"]
+
+			var spawn_point = RoutePointSpawnPoint.new()
+			spawn_point.rail_name = info["StartRail"]
+			spawn_point.forward = bool(info["Direction"])
+			spawn_point.distance_on_rail = info["StartRailPosition"]
+			spawn_point.initial_speed = info["InitialSpeed"]
+			spawn_point.initial_speed_limit = info["InitialSpeedLimit"]
+			route.route_points.append(spawn_point)
+
+			var stations = info["Stations"]
+			for i in range(len(stations["nodeName"])):
+				var point = RoutePointStation.new()
+				point.station_node_name = stations["nodeName"][i]
+				point.station_name = stations["stationName"][i]
+				point.approach_sound_path = stations["approachAnnouncePath"][i]
+				point.arrival_sound_path = stations["arrivalAnnouncePath"][i]
+				point.departure_sound_path = stations["departureAnnouncePath"][i]
+				point.planned_halt_time = stations["haltTime"][i]
+				point.leaving_persons = stations["leavingPersons"][i]
+				point.waiting_persons = stations["waitingPersons"][i]
+				point.stop_type = stations["stopType"][i]
+				if i > 0:
+					var last_depart = Math.time_to_seconds(stations["departureTime"][i-1])
+					var arrival = Math.time_to_seconds(stations["arrivalTime"][i])
+					point.duration_since_last_station = arrival - last_depart
+				route.route_points.append(point)
+
+			if info["DespawnRail"] != "":
+				var despawn_point = RoutePointDespawnPoint.new()
+				despawn_point.rail_name = info["DespawnRail"]
+				route.route_points.append(despawn_point)
+
+			new_scenario.routes[train_name] = route
+
+		var path = current_track_path.get_base_dir().plus_file("scenarios")
+		var new_file = path.plus_file(scenario) + ".tres"
+		var err = ResourceSaver.save(new_file, new_scenario)
+		if err != OK:
+			Logger.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
+
+	dir.remove(old_file)
+
 
 
 func _enter_tree() -> void:

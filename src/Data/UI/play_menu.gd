@@ -57,7 +57,7 @@ func update_tracks() -> void:
 func update_scenarios() -> void:
 	update_breadcrumb()
 	$V/Scenarios/ItemList.clear()
-	var scenarios = ContentLoader.get_scenarios_for_track(selected_track)
+	var scenarios = ContentLoader.get_scenarios_for_track(selected_track.get_base_dir())
 	if scenarios.size() == 1:
 		selected_scenario = scenarios[0]
 		loaded_scenario = TrackScenario.load_scenario(selected_scenario)
@@ -182,7 +182,7 @@ func _on_Scenarios_Back_pressed():
 func _on_Scenarios_Select_pressed():
 	if $V/Scenarios/ItemList.get_selected_items().size() != 1:
 		return
-	var scenarios = ContentLoader.get_scenarios_for_track(selected_track)
+	var scenarios = ContentLoader.get_scenarios_for_track(selected_track.get_base_dir())
 	selected_scenario = scenarios[$V/Scenarios/ItemList.get_selected_items()[0]]
 	loaded_scenario = TrackScenario.load_scenario(selected_scenario)
 	$V/Scenarios.hide()

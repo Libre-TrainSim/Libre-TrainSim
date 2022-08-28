@@ -40,7 +40,7 @@ func update_scenario_list():
 	if not jEssentials.does_path_exist(scenarios_folder):
 		jEssentials.create_directory(scenarios_folder)
 		return
-	var available_scenarios: Array = ContentLoader.get_scenarios_for_track(selected_track)
+	var available_scenarios: Array = ContentLoader.get_scenarios_for_track(selected_track.get_base_dir())
 	var available_scenarios_names = []
 	for scenario in available_scenarios:
 		available_scenarios_names.append(scenario.get_file().get_basename())

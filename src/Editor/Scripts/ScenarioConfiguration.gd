@@ -41,7 +41,8 @@ func _input(_event):
 
 
 func save():
-	routes[current_route] = loaded_route.duplicate(true)
+	if is_instance_valid(loaded_route):
+		routes[current_route] = loaded_route.duplicate(true)
 	scenario_editor.scenario_info.routes = routes.duplicate(true)
 	scenario_editor.scenario_info.rail_logic_settings = rail_logic_settings.duplicate(true)
 	scenario_editor.scenario_info.save_scenario()  # write to disk
@@ -107,7 +108,7 @@ func set_current_route(route_name : String) -> void:
 
 
 func update_ui_for_current_route():
-	if current_route == "":
+	if current_route == "" or not is_instance_valid(loaded_route):
 		$TabContainer/Routes/RouteConfiguration.hide()
 		return
 	$TabContainer/Routes/RouteConfiguration.show()

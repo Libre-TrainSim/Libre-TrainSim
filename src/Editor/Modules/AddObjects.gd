@@ -1,10 +1,6 @@
 extends Control
 
-var editor
-
-
-func _ready():
-	editor = find_parent("Editor")
+onready var editor = find_parent("Editor")
 
 
 func _on_ShowMenu_pressed():

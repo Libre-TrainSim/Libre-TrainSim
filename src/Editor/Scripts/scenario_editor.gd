@@ -12,10 +12,10 @@ func _ready():
 	# For now we retrieve the variables from Root. Later these should be filled by the LoadingScreenManager.
 	scenario_info = load(Root.current_scenario) as TrackScenario
 	current_track_name = Root.current_editor_track
-	current_track_path = Root.current_editor_track_path.plus_file(Root.current_editor_track + ".tscn")
+	current_track_path = Root.current_editor_track_path
 	var editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 	content = load(editor_directory.plus_file(current_track_name).plus_file("content.tres")) as ModContentDefinition
-	world = load(current_track_path).instance()
+	world = load(current_track_path.plus_file(current_track_name+".tscn")).instance()
 	world.passive = true
 	add_child(world)
 	$ScenarioMap.init(world)
@@ -110,7 +110,7 @@ func test_track_pck() -> void:
 				+ "Please use a build of Libre TrainSim to test tracks. ")
 		return
 
-	if ContentLoader.get_scenarios_for_track(Root.current_editor_track_path).size() == 0:
+	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
 		show_message("Cannot test the track! Please create a scenario.")
 		return
 

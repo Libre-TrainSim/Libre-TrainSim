@@ -23,6 +23,11 @@ func _ready():
 	Logger.log("Successfully loaded track data.")
 
 
+func _exit_tree() -> void:
+	Root.Editor = false
+	Root.scenario_editor = false
+
+
 func _process(delta):
 	run_map_updater(delta)
 
@@ -56,15 +61,11 @@ func _on_Save_pressed():
 
 
 func _on_Pause_QuitWithoutSaving_pressed():
-	Root.Editor = false
-	Root.scenario_editor = false
 	LoadingScreen.load_main_menu()
 
 
 func _on_Pause_SaveAndQuit_pressed():
 	$CanvasLayer/ScenarioConfiguration.save()
-	Root.Editor = false
-	Root.scenario_editor = false
 	LoadingScreen.load_main_menu()
 
 
@@ -105,19 +106,18 @@ func save_scenario():
 
 
 func test_track_pck() -> void:
-	if OS.has_feature("editor"):
-		show_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
-				+ "Please use a build of Libre TrainSim to test tracks. ")
-		return
+	#if OS.has_feature("editor"):
+	#	show_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
+	#			+ "Please use a build of Libre TrainSim to test tracks. ")
+	#	return
 
 	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
 		show_message("Cannot test the track! Please create a scenario.")
 		return
 
-	save_scenario()
 	export_mod()
 
-	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [current_track_name, current_track_name]):
+	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
 		Logger.warn("Can't load content pack!", self)
 		show_message("Can't load content pack!")
 		return
@@ -130,6 +130,7 @@ func export_mod() -> void:
 	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
 		show_message("No scenario found! Please create a scenario.")
 		return
+
 	save_scenario()
 	var track_name = current_track_path.get_file().get_basename()
 	var export_path = "user://addons/"

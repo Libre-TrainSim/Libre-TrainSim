@@ -50,7 +50,7 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	var packed_chunk := PackedScene.new()
 	if packed_chunk.pack(chunk_0_0) != OK:
 		Logger.err("Failed to pack default chunk", self)
-	if ResourceSaver.save("%s.tscn" % mod_path.plus_file(worlds_path).plus_file("chunks").plus_file("chunk_0_0.tscn"), packed_chunk) != OK:
+	if ResourceSaver.save(mod_path.plus_file(worlds_path).plus_file("chunks").plus_file("chunk_0_0.tscn"), packed_chunk) != OK:
 		Logger.err("Failed to write default chunk to disk", self)
 	chunk_0_0.free()
 
@@ -65,6 +65,15 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	if ResourceSaver.save(mod_path.plus_file("content.tres"), content) != OK:
 		Logger.err("Can't save content at path %s" % mod_path + "content.tres", self)
 		return false
+
+	var world_config = WorldConfig.new()
+	world_config.title = entry_name
+	var path = mod_path.plus_file(worlds_path).plus_file(entry_name + "_config.tres")
+	var err = ResourceSaver.save(path, world_config)
+	if err != OK:
+		Logger.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
+		return false
+
 	return true
 
 

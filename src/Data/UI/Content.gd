@@ -16,7 +16,7 @@ func show() -> void:
 func update_content_list() -> void:
 	$VBoxContainer/Packlist.clear_items()
 	for mod in ContentLoader.loaded_mods:
-		$VBoxContainer/Packlist.add_item(mod.display_name)
+		$VBoxContainer/Packlist.add_item(ContentLoader.loaded_mods[mod].display_name)
 
 
 func _on_Back_pressed() -> void:

@@ -6,7 +6,7 @@ var found_mods := {
 	"content.tres": [],
 	"unique_name": [],
 }
-var loaded_mods := []
+var loaded_mods := {}
 var repo := ModContentDefinition.new()
 
 var dependency_tree_root: Node
@@ -162,6 +162,9 @@ func _remove_top_most_mod_except_siblings(node: Node) -> void:
 
 
 func append_content_to_global_repo(content: ModContentDefinition) -> void:
+	if loaded_mods.has(content.unique_name):
+		return
+
 	repo.trains.append_array(content.trains)
 	repo.worlds.append_array(content.worlds)
 	repo.environment_folders.append_array(content.environment_folders)
@@ -174,7 +177,7 @@ func append_content_to_global_repo(content: ModContentDefinition) -> void:
 	repo.sound_folders.append_array(content.sound_folders)
 	repo.texture_folders.append_array(content.texture_folders)
 
-	loaded_mods.append(content)
+	loaded_mods[content.unique_name] = content
 
 
 func get_editor_tracks() -> Dictionary:

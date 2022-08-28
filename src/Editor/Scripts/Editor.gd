@@ -856,8 +856,12 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 
 	rail.track_objects.append(track_object)
 
-	$World/TrackObjects.add_child(track_object)
-	track_object.set_owner($World/TrackObjects)
+	var chunk_pos = $World.chunk_manager.position_to_chunk(rail.global_transform.position)
+	var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
+	var chunk = $World/Chunks.get_node(chunk_name)
+
+	chunk.get_node("TrackObjects").add_child(track_object)
+	track_object.owner = chunk
 
 	track_object.update()
 	rail.update()

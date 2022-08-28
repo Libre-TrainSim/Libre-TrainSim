@@ -133,7 +133,7 @@ func _add_chunk_to_scene_tree(chunk):
 func _get_chunk_file_path(chunk: String):
 	var chunk_path := ""
 	if Root.Editor:
-		chunk_path = chunk_manager.editor.current_track_path.get_base_dir().plus_file("chunks")
+		chunk_path = chunk_manager.editor.current_track_path.plus_file("chunks")
 	else:
 		chunk_path = Root.current_track.get_base_dir().plus_file("chunks")
 	var chunk_file = chunk_path.plus_file(chunk) + ".tscn"

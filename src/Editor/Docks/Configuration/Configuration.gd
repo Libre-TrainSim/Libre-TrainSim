@@ -4,7 +4,8 @@ var world_config: WorldConfig
 var save_path: String
 
 func _ready() -> void:
-	save_path = find_parent("Editor").current_track_path + "_config.tres"
+	var editor = find_parent("Editor")
+	save_path = editor.current_track_path.plus_file(editor.current_track_name) + "_config.tres"
 	world_config = load(save_path)
 	load_stored_config()
 

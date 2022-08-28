@@ -156,7 +156,7 @@ func save_and_unload_all_chunks():
 
 	# first save chunks that have been temporarily swapped to disk
 	var files_to_save := []
-	var chunk_path = editor.current_track_path.get_base_dir().plus_file("chunks")
+	var chunk_path = editor.current_track_path.plus_file("chunks")
 	_dir.change_dir(chunk_path)
 	_dir.list_dir_begin(true, true)
 	while(true):
@@ -248,7 +248,7 @@ func _save_chunk(chunk_name: String, saving: bool = false):
 	var chunk_pos = string_to_chunk(chunk_name)
 
 	# get chunks dir
-	var base_path = editor.current_track_path.get_base_dir().plus_file("chunks")
+	var base_path = editor.current_track_path.plus_file("chunks")
 	if not _dir.dir_exists(base_path):
 		_dir.make_dir_recursive(base_path)
 
@@ -307,7 +307,7 @@ func cleanup():
 
 	var files_to_remove := []
 
-	var chunk_path = editor.current_track_path.get_base_dir().plus_file("chunks")
+	var chunk_path = editor.current_track_path.plus_file("chunks")
 	_dir.change_dir(chunk_path)
 	_dir.list_dir_begin(true, true)
 	while(true):

@@ -54,8 +54,8 @@ func get_data() -> Dictionary:
 	d.randomScale = randomScale
 	d.randomScaleFactor = randomScaleFactor
 	d.wholeRail = wholeRail
-#	d.meshSet = meshSet
-#	d.multimesh = multimesh.duplicate()
+	d.mesh = mesh
+	d.materials = materials
 	d.rotationObjects = rotationObjects
 	d.placeLast = placeLast
 	d.applySlopeRotation = applySlopeRotation
@@ -81,8 +81,8 @@ func set_data(d: Dictionary, convert_deg_rad = false) -> void:
 	randomScale = d.randomScale
 	randomScaleFactor = d.randomScaleFactor
 	wholeRail = d.wholeRail
-#	meshSet = d.meshSet
-#	multimesh = d.multimesh
+	mesh = d.mesh
+	materials = d.materials
 	if convert_deg_rad:
 		rotationObjects = deg2rad(d.rotationObjects)
 	else:

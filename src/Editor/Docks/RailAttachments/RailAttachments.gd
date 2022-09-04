@@ -98,21 +98,25 @@ func _on_jListTrackObjects_user_duplicated_entries(source_entry_names: Array, du
 func copy_track_object_to_current_rail(source_track_object: Node, new_description: String, mirror: bool = false) -> void:
 	if source_track_object == null:
 		return
+	# order is important
 	var new_track_object: Node = track_object_resource.instance()
-	var data: Dictionary = source_track_object.get_data()
-	new_track_object.set_data(data)
+	new_track_object.materials = []
+	new_track_object.set_data(source_track_object.get_data())
 	new_track_object.name = currentRail.name + " " + new_description
 	new_track_object.description = new_description
 	new_track_object.attached_rail = currentRail.name
-	world.get_node("TrackObjects").add_child(new_track_object)
+
+	world.chunk_manager.add_track_object(new_track_object)
+
 	if mirror:
 		new_track_object.rotationObjects = source_track_object.rotationObjects + PI
 		if source_track_object.sides == 1:
 			new_track_object.sides = 2
 		elif source_track_object.sides == 2:
 			new_track_object.sides = 1
-	new_track_object.set_owner(world)
+
 	new_track_object.update()
+	update_object_tab()
 
 
 

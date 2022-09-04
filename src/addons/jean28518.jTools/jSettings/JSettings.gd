@@ -48,7 +48,33 @@ func apply_saved_settings():
 func save_settings():
 	# Save, except if in Godot Editor
 	if not OS.has_feature("editor"):
-		ProjectSettings.save_custom("user://override.cfg")
+		var err := ProjectSettings.save_custom("user://override.cfg")
+		if err != OK:
+			Logger.err("Failed to save user settings", self)
+			# Nothing was saved, so nothing needs special treatment
+			return
+		# _global_script_classes gets saved, too
+		# ...
+		# and overriden on load ...
+		# Meaning, any new class that we register in an update will not work causing a crash
+		# this IS a Godot bug, but until I have time to fix it, let's just work around
+		# https://github.com/godotengine/godot/issues/61556 may be intersting as well
+		var file := ConfigFile.new()
+		err = file.load("user://override.cfg")
+		if err != OK:
+			Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \
+					"stripping. This is a major functionality threat! " + \
+					"Please ensure removal of the file!", self)
+			return
+		file.erase_section_key("", "_global_script_classes")
+		file.erase_section_key("", "_global_script_class_icons")
+		err = file.save("user://override.cfg")
+		if err != OK:
+			Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \
+					"stripping. This is a major functionality threat! " + \
+					"Please ensure removal of the file!", self)
+			return
+
 
 
 func update_settings_window():

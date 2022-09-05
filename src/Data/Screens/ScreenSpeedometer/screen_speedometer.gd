@@ -37,7 +37,8 @@ func _ready():
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
 
 	var player = find_parent("Player")
-	player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint")
+	if is_instance_valid(player):
+		player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint")
 	$Info/Sifa.visible = false
 
 

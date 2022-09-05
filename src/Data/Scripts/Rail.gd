@@ -612,6 +612,7 @@ func update_connection_arrows():
 	for rail in _connected_rails_at_ending:
 		rail._update_connection_arrows_not_recursive()
 
+
 var _last_calculation_of_update_connection_arrows = 0
 func _update_connection_arrows_not_recursive():
 	if _last_calculation_of_update_connection_arrows == get_tree().get_frame():

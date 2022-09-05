@@ -1,13 +1,12 @@
 extends WindowDialog
 
-
-var save_path := ""
-var j_save_module := jSaveModule.new()
-
+var world_config: WorldConfig
+var save_path: String
 
 func _ready() -> void:
-	save_path = find_parent("Editor").current_track_path + ".trackinfo"
-	j_save_module.set_save_path(save_path)
+	var editor = find_parent("Editor")
+	save_path = editor.current_track_path.plus_file(editor.current_track_name) + "_config.tres"
+	world_config = load(save_path)
 	load_stored_config()
 
 
@@ -20,21 +19,28 @@ func _unhandled_key_input(_event: InputEventKey) -> void:
 
 
 func save_config() -> void:
-	j_save_module.save_value("author", $Configuration/GridContainer/Author.text)
-	j_save_module.save_value("release_date", [$Configuration/GridContainer/ReleaseDate/Day.value, $Configuration/GridContainer/ReleaseDate/Month.value, $Configuration/GridContainer/ReleaseDate/Year.value])
-	j_save_module.save_value("description", $Configuration/GridContainer/TrackDescription.text)
-	j_save_module.save_value("editor_notes", $Configuration/Notes.text)
-	j_save_module.write_to_disk()
-	Logger.log("Trackinfo saved.")
+	world_config.author = $Configuration/GridContainer/Author.text
+	world_config.release_date = {
+		"day": $Configuration/GridContainer/ReleaseDate/Day.value,
+		"month": $Configuration/GridContainer/ReleaseDate/Month.value,
+		"year": $Configuration/GridContainer/ReleaseDate/Year.value
+	}
+	world_config.track_description = $Configuration/GridContainer/TrackDescription.text
+	world_config.editor_notes = $Configuration/Notes.text
+
+	if ResourceSaver.save(save_path, world_config) != OK:
+		Logger.err("Error saving world config at '%s'" % save_path, self)
+		return
+	Logger.log("World Config saved.")
 
 
 func load_stored_config() -> void:
-	$Configuration/GridContainer/ReleaseDate/Day.value = j_save_module.get_value("release_date", [1, 1, 2021])[0]
-	$Configuration/GridContainer/ReleaseDate/Month.value = j_save_module.get_value("release_date", [1, 1, 2021])[1]
-	$Configuration/GridContainer/ReleaseDate/Year.value = j_save_module.get_value("release_date", [1, 1, 2021])[2]
-	$Configuration/GridContainer/Author.text = j_save_module.get_value("author", "Unknown")
-	$Configuration/GridContainer/TrackDescription.text = j_save_module.get_value("description", "")
-	$Configuration/Notes.text = j_save_module.get_value("editor_notes", "")
+	$Configuration/GridContainer/ReleaseDate/Day.value = world_config.release_date["day"]
+	$Configuration/GridContainer/ReleaseDate/Month.value = world_config.release_date["month"]
+	$Configuration/GridContainer/ReleaseDate/Year.value = world_config.release_date["year"]
+	$Configuration/GridContainer/Author.text = world_config.author
+	$Configuration/GridContainer/TrackDescription.text = world_config.track_description
+	$Configuration/Notes.text = world_config.editor_notes
 
 
 func _on_Cancel_pressed() -> void:

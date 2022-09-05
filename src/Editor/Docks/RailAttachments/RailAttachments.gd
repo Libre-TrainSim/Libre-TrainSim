@@ -2,13 +2,8 @@ extends Control
 
 var world: Node
 var currentRail: Node
-var copyRail
-var copyTO
 var copyTOArray: Array
-var currentTO: Node
-var editor_selection # Editor Selection
-var pluginRoot
-
+var currentTO: TrackObject
 
 var track_object_resource: PackedScene = preload("res://Data/Modules/TrackObjects.tscn")
 
@@ -71,9 +66,10 @@ func _on_jListTrackObjects_user_added_entry(entry_name: String) -> void:
 	track_object.description = entry_name
 	track_object.name = currentRail.name + " " + entry_name
 	track_object.attached_rail = currentRail.name
-	track_object.materialPaths = []
-	world.get_node("TrackObjects").add_child(track_object)
-	track_object.set_owner(world)
+	track_object.materials = []
+
+	world.chunk_manager.add_track_object(track_object)
+
 	track_object.attach_to_rail(currentRail)
 	Logger.log("Created track object " + track_object.name)
 	update_object_tab()
@@ -98,21 +94,25 @@ func _on_jListTrackObjects_user_duplicated_entries(source_entry_names: Array, du
 func copy_track_object_to_current_rail(source_track_object: Node, new_description: String, mirror: bool = false) -> void:
 	if source_track_object == null:
 		return
+	# order is important
 	var new_track_object: Node = track_object_resource.instance()
-	var data: Dictionary = source_track_object.get_data()
-	new_track_object.set_data(data)
+	new_track_object.materials = []
+	new_track_object.set_data(source_track_object.get_data())
 	new_track_object.name = currentRail.name + " " + new_description
 	new_track_object.description = new_description
 	new_track_object.attached_rail = currentRail.name
-	world.get_node("TrackObjects").add_child(new_track_object)
+
+	world.chunk_manager.add_track_object(new_track_object)
+
 	if mirror:
 		new_track_object.rotationObjects = source_track_object.rotationObjects + PI
 		if source_track_object.sides == 1:
 			new_track_object.sides = 2
 		elif source_track_object.sides == 2:
 			new_track_object.sides = 1
-	new_track_object.set_owner(world)
+
 	new_track_object.update()
+	update_object_tab()
 
 
 
@@ -278,30 +278,30 @@ func update_object_tab() -> void:
 		return
 	if $Tab/TrackObjects/Settings/Tab.current_tab == 0:
 		$Tab/TrackObjects/Settings/Tab/Object.show()
-	$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = currentTO.objectPath
+	if currentTO.mesh != null:
+		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = currentTO.mesh.resource_path
+	else:
+		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = ""
 	update_material_list()
 
 
 func update_material_list() -> void:
-	if not ResourceLoader.exists(currentTO.objectPath):
+	if not is_instance_valid(currentTO.mesh):
 		$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(null)
 		return
-	var mesh_instance: MeshInstance = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.current_mesh
-	if not is_instance_valid(mesh_instance) or mesh_instance.mesh.resource_path != currentTO.objectPath:
-		mesh_instance = MeshInstance.new()
-		mesh_instance.mesh = load(currentTO.objectPath)
-	var material_array: Array = currentTO.materialPaths
-	for i in range(mesh_instance.get_surface_material_count()):
-		if i < material_array.size() and ResourceLoader.exists(material_array[i]):
-			mesh_instance.set_surface_material(i, load(material_array[i]))
-	$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(mesh_instance)
+	var material_array: Array = currentTO.materials
+	for i in range(currentTO.mesh.get_surface_count()):
+		if i < material_array.size() and is_instance_valid(material_array[i]):
+			currentTO.mesh.surface_set_material(i, material_array[i])
+	$Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.set_mesh(currentTO.mesh)
 
 
 func apply_object_tab() -> void:
-	currentTO.objectPath = $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text
-	update_material_list()
+	if not is_instance_valid(currentTO.mesh) or currentTO.mesh.resource_path != $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text:
+		currentTO.set_mesh(load($Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text) as ArrayMesh)
+		update_material_list()
 	var material_array: Array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
-	currentTO.materialPaths = material_array
+	currentTO.set_materials(material_array)
 	currentTO.update()
 
 
@@ -320,7 +320,6 @@ func _on_OptionButton_item_selected(index: int) -> void:
 		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
 	currentTO.sides = index
 	update_current_rail_attachment()
-
 
 
 func _on_ObjectPositioningPlaceLast_pressed():

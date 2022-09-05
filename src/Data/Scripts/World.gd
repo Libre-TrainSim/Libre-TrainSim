@@ -8,7 +8,8 @@ var default_persons_at_station: int = 20
 
 var globalDict := {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
 
-var currentScenario := ""
+var current_scenario: TrackScenario = null
+var current_world_config: WorldConfig = null
 
 export (String) var FileName := "Name Me!"
 onready var trackName: String = FileName.rsplit("/")[0]
@@ -33,19 +34,18 @@ var personVisualInstances := [
 
 var chunk_manager: ChunkManager = null
 
-var route_manager = RouteManager.new()
-var j_save_module = jSaveModule.new()
-var scenario_manager = ScenarioManager.new()
-
-
-
 # If the World is just use as data source (e.g. for scenario editor)
 var passive := false
 
 func _ready() -> void:
 	passive = Root.scenario_editor
-
 	if passive:
+		return
+
+	var world_config_path = Root.current_track.get_basename() + "_config.tres"
+	current_world_config = load(world_config_path) as WorldConfig
+	if not is_instance_valid(current_world_config):
+		Logger.err("Could not load world config at %s" % world_config_path, self)
 		return
 
 	chunk_manager = ChunkManager.new()
@@ -64,22 +64,13 @@ func _ready() -> void:
 	Logger.log("trackName: " +trackName + " " + FileName)
 
 	if Root.Editor:
-		j_save_module.set_save_path(find_parent("Editor").current_track_path + ".save")
-	else:
-		var save_path: String = Root.current_track.get_base_dir() + "/" + Root.current_track.get_file().get_basename() + ".save"
-		j_save_module.set_save_path(save_path)
-
-	if Root.Editor:
 		$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
 		$DirectionalLight.shadow_enabled = ProjectSettings["game/graphics/shadows"]
 		return
 
 	Root.world = self
 	Root.checkAndLoadTranslationsForTrack(trackName)
-	currentScenario = Root.current_scenario
 	set_scenario_to_world()
-
-	jEssentials.call_delayed(1.0, self, "load_configs_to_cache")
 
 	## Create Persons-Node:
 	var personsNode := WorldObject.new()
@@ -94,14 +85,6 @@ func _ready() -> void:
 
 	player = $Players/Player
 	apply_user_settings()
-
-
-func save_value(key: String, value):
-	return j_save_module.save_value(key, value)
-
-
-func get_value(key: String,  default_value = null):
-	return j_save_module.get_value(key,  default_value)
 
 
 func apply_user_settings() -> void:
@@ -140,69 +123,61 @@ func get_signal_scenario_data() -> Dictionary:
 	return signals
 
 
-class TrainSpawnInformation:
-	var time = 0
-	var player_train = false
-	var train_path = ""
-	var route_name = ""
-	var minimal_platform_length = 0
-	var route = []
-	var station_table = []
-	var despawn_information = {}
-
-
 func set_scenario_to_world() -> void:
-	scenario_manager.set_save_path(Root.current_scenario)
+	current_scenario = TrackScenario.load_scenario()
+	assert(current_scenario != null)
 
 	# Apply General Settins
 	time = Root.selected_time
 
 	# Apply Signal Data
-	var rail_logic_data: Dictionary = scenario_manager.get_rail_logic_settings()
+	var rail_logic_data = current_scenario.rail_logic_settings
 	for signal_node in $Signals.get_children():
 		if rail_logic_data.has(signal_node.name):
 			signal_node.set_data(rail_logic_data[signal_node.name])
 
 	# Apply all other routes
-	var routes: Dictionary = scenario_manager.get_route_data()
-	for i in range (routes.size()):
+	var routes = current_scenario.routes
+	for i in range(routes.size()):
 		var route_name: String = routes.keys()[i]
-		var route: Dictionary = routes[route_name]
+		var route: ScenarioRoute = routes[route_name]
+
 		# If this is a npc route, and this route should not be loaded for the current selected route, skip
-		if not route.general_settings.player_can_drive_this_route and \
-		route.general_settings.activate_only_at_specific_routes and \
-		not route.general_settings.specific_routes.has(Root.selected_route):
+		if not route.is_playable and route.activate_only_at_specific_routes and not route.specific_routes.has(Root.selected_route):
 			continue
-		route_manager.set_route_data(route.route_points)
-		var train_path: String = ContentLoader.find_train_path(route.general_settings.train_name)
+
+		var train_path: String = ContentLoader.find_train_path(route.train_name)
 		if train_path == "":
 			train_path = Root.selected_train
-		var minimal_platform_length: int = route_manager.get_minimal_platform_length(self)
-		var train_rail_route: Array  = route_manager.get_calculated_rail_route(self)
-		var train_station_table: Array = route_manager.get_calculated_station_points(Root.selected_time)
-		var despawn_information: Dictionary = route_manager.get_despawn_information()
-		var available_times: Array = scenario_manager.get_available_start_times_of_route(route_name)
+
+		var minimal_platform_length: int = route.get_minimal_platform_length(self)
+		var train_rail_route: Array  = route.get_calculated_rail_route(self)
+		var train_station_table: Array = route.get_calculated_station_points(Root.selected_time)
+		var despawn_point: RoutePoint = route.get_despawn_point()
+		var available_times: Array = route.get_start_times()
+
 		for available_time in available_times:
 			# If the spawn time was before our start time, or the start time is above 2.5 hours
 			if available_time < time or available_time - time > (3600*2.5):
 				continue
+
 			var pending_train_spawn = TrainSpawnInformation.new()
-			pending_train_spawn.time = available_time
-			pending_train_spawn.train_path = train_path
 			# Player Train:
 			if available_time == time and Root.selected_route == route_name:
 				pending_train_spawn.player_train = true
 				pending_train_spawn.train_path = Root.selected_train
+
+			pending_train_spawn.time = available_time
+			pending_train_spawn.train_path = train_path
 			pending_train_spawn.route_name = route_name
 			pending_train_spawn.minimal_platform_length = minimal_platform_length
 			pending_train_spawn.route = train_rail_route
 			pending_train_spawn.station_table = train_station_table
-			pending_train_spawn.despawn_information = despawn_information
+			pending_train_spawn.despawn_point = despawn_point
 			pending_train_spawns.append(pending_train_spawn)
 
 	check_train_spawn(1)
-
-	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [tr(routes[Root.selected_route].general_settings.description)])
+	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [tr(routes[Root.selected_route].description)])
 
 
 func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:
@@ -220,14 +195,13 @@ func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:
 	if new_train.length + 25 > train_spawn_information.minimal_platform_length:
 		new_train.length = train_spawn_information.minimal_platform_length - 25
 	new_train.route_information = train_spawn_information.route
-	route_manager.set_route_data(scenario_manager.get_route_data()[train_spawn_information.route_name].route_points)
-	route_manager.calculated_rail_route = train_spawn_information.route
-	new_train.spawn_information = route_manager.get_spawn_position(new_train.length, self)
-	new_train.despawn_information = train_spawn_information.despawn_information
+
+	var route = current_scenario.routes[train_spawn_information.route_name]
+	new_train.spawn_point = route.get_spawn_point(new_train.length, self)
+	new_train.despawn_point = train_spawn_information.despawn_point
 	new_train.station_table = train_spawn_information.station_table
-
-
 	new_train.ready()
+
 
 var _check_train_spawn_timer: float = 0
 func check_train_spawn(delta: float) -> void:
@@ -298,10 +272,6 @@ func get_terrain_height_at(_position: Vector2) -> float:
 	return 0.0
 
 
-func load_configs_to_cache() -> void:
-	j_save_module.load_everything_into_cache()
-
-
 func jump_player_to_station(station_table_index: int) -> void:
 	Logger.log("Jumping player to station " + player.station_table[station_table_index].station_name)
 	var new_station_node: Spatial = get_signal(player.station_table[station_table_index].node_name)
@@ -335,6 +305,7 @@ func get_assigned_station_of_signal(signal_name : String) -> Node:
 		if signal_node.type == "Station" and signal_node.assigned_signal == signal_name:
 			return signal_node
 	return null
+
 
 # Used from scenario editor, does update assigned signals from stations
 func write_station_data(rail_logic_settings) -> void:

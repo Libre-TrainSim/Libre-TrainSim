@@ -35,23 +35,45 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	var mod_path := editor_directory + entry_name
 	if dir.dir_exists(mod_path):
 		return false
-	var worlds_path := "/Worlds/%s/" % entry_name
-	dir.make_dir_recursive(mod_path + worlds_path)
+
+	var worlds_path := "Worlds".plus_file(entry_name)
+	dir.make_dir_recursive(mod_path.plus_file(worlds_path))
+	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("chunks"))
+	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("scenarios"))
+
 	dir.copy("res://Data/Modules/World-Pattern.tscn", \
-			"%s%s/%s.tscn" % [mod_path, worlds_path, entry_name])
-	dir.copy("res://Data/Modules/World-Pattern.save", \
-			"%s%s/%s.save" % [mod_path, worlds_path, entry_name])
+			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name))
+
+	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instance() as Chunk
+	chunk_0_0.name = "chunk_0_0"
+	chunk_0_0.rails = ["Rail"]
+	var packed_chunk := PackedScene.new()
+	if packed_chunk.pack(chunk_0_0) != OK:
+		Logger.err("Failed to pack default chunk", self)
+	if ResourceSaver.save(mod_path.plus_file(worlds_path).plus_file("chunks").plus_file("chunk_0_0.tscn"), packed_chunk) != OK:
+		Logger.err("Failed to write default chunk to disk", self)
+	chunk_0_0.free()
 
 	var authors := Authors.new()
 	if ResourceSaver.save(mod_path.plus_file("authors.tres"), authors) != OK:
-		Logger.warn("Can't save authors at path %s" % mod_path + "authors.tres", self)
+		Logger.err("Can't save authors at path %s" % mod_path + "authors.tres", self)
+
 	var content := ModContentDefinition.new()
 	content.display_name = entry_name
 	content.unique_name = "%s" % entry_name
-	content.worlds.push_back("res://Mods/%s%s%s.tscn" % [entry_name, worlds_path, entry_name])
+	content.worlds.push_back("res://Mods/%s.tscn" % entry_name.plus_file(worlds_path).plus_file(entry_name))
 	if ResourceSaver.save(mod_path.plus_file("content.tres"), content) != OK:
 		Logger.err("Can't save content at path %s" % mod_path + "content.tres", self)
 		return false
+
+	var world_config = WorldConfig.new()
+	world_config.title = entry_name
+	var path = mod_path.plus_file(worlds_path).plus_file(entry_name + "_config.tres")
+	var err = ResourceSaver.save(path, world_config)
+	if err != OK:
+		Logger.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
+		return false
+
 	return true
 
 
@@ -82,6 +104,8 @@ func _on_TracksList_user_pressed_action(entry_names):
 		texture.create_from_image(screenshot)
 	else:
 		texture = null
+
+	Root.current_track = entry_names[0]
 	LoadingScreen.load_editor(entry_names[0], tracks[entry_names[0]][0], \
 			tracks[entry_names[0]][1], texture)
 

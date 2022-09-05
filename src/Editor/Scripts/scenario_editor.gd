@@ -2,29 +2,35 @@ extends Node
 
 var world
 
-var j_save_module = jSaveModule.new()
-
 var current_track_path = ""
 var current_track_name = ""
-var content : ModContentDefinition
+var content: ModContentDefinition
+
+var scenario_info: TrackScenario = null
 
 func _ready():
 	# For now we retrieve the variables from Root. Later these should be filled by the LoadingScreenManager.
+	scenario_info = load(Root.current_scenario) as TrackScenario
 	current_track_name = Root.current_editor_track
-	current_track_path = Root.current_editor_track_path.plus_file(Root.current_editor_track + ".tscn")
+	current_track_path = Root.current_editor_track_path
 	var editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 	content = load(editor_directory.plus_file(current_track_name).plus_file("content.tres")) as ModContentDefinition
-	world = load(current_track_path).instance()
+	world = load(current_track_path.plus_file(current_track_name+".tscn")).instance()
 	world.passive = true
 	add_child(world)
-	j_save_module.set_save_path(Root.current_scenario)
 	$ScenarioMap.init(world)
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")
 
 
+func _exit_tree() -> void:
+	Root.Editor = false
+	Root.scenario_editor = false
+
+
 func _process(delta):
 	run_map_updater(delta)
+
 
 func show_message(text: String) -> void:
 	$CanvasLayer/Message/VBoxContainer/Label.text = text
@@ -40,8 +46,7 @@ func _unhandled_key_input(event):
 		$CanvasLayer/Message.hide()
 		get_tree().set_input_as_handled()
 
-
-	if event.is_action_pressed("Escape"):
+	if event.is_action_pressed("ui_cancel"):
 		$CanvasLayer/Pause.visible = !$CanvasLayer/Pause.visible
 		get_tree().set_input_as_handled()
 
@@ -56,15 +61,11 @@ func _on_Save_pressed():
 
 
 func _on_Pause_QuitWithoutSaving_pressed():
-	Root.Editor = false
-	Root.scenario_editor = false
 	LoadingScreen.load_main_menu()
 
 
 func _on_Pause_SaveAndQuit_pressed():
 	$CanvasLayer/ScenarioConfiguration.save()
-	Root.Editor = false
-	Root.scenario_editor = false
 	LoadingScreen.load_main_menu()
 
 
@@ -81,6 +82,7 @@ func _on_LayoutSetting_pressed():
 func _on_Labels_pressed():
 	$CanvasLayer/LabelSettings.visible = not $CanvasLayer/LabelSettings.visible
 
+
 var _run_map_updater_timer: float = 0
 func run_map_updater(delta: float):
 	_run_map_updater_timer += delta
@@ -93,6 +95,7 @@ func _on_TestTrack_pressed():
 	$CanvasLayer/Pause.hide()
 	test_track_pck()
 
+
 func _on_ExportTrack_pressed():
 	$CanvasLayer/Pause.hide()
 	export_mod()
@@ -103,19 +106,18 @@ func save_scenario():
 
 
 func test_track_pck() -> void:
-	if OS.has_feature("editor"):
-		show_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
-				+ "Please use a build of Libre TrainSim to test tracks. ")
-		return
+	#if OS.has_feature("editor"):
+	#	show_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
+	#			+ "Please use a build of Libre TrainSim to test tracks. ")
+	#	return
 
-	if ContentLoader.get_scenarios_for_track(Root.current_editor_track_path).size() == 0:
+	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
 		show_message("Cannot test the track! Please create a scenario.")
 		return
 
-	save_scenario()
 	export_mod()
 
-	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [current_track_name, current_track_name]):
+	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
 		Logger.warn("Can't load content pack!", self)
 		show_message("Can't load content pack!")
 		return
@@ -128,6 +130,7 @@ func export_mod() -> void:
 	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
 		show_message("No scenario found! Please create a scenario.")
 		return
+
 	save_scenario()
 	var track_name = current_track_path.get_file().get_basename()
 	var export_path = "user://addons/"

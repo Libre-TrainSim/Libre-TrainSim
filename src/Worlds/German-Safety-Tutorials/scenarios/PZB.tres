@@ -1,0 +1,77 @@
+[gd_resource type="Resource" load_steps=13 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Resources/route_point_waypoint.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=3]
+[ext_resource path="res://Data/Scripts/Resources/route_point_spawn.gd" type="Script" id=4]
+[ext_resource path="res://Data/Scripts/Resources/scenario_route.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=121]
+script = ExtResource( 3 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=122]
+script = ExtResource( 3 )
+operation_mode = 2
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=123]
+script = ExtResource( 3 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=124]
+script = ExtResource( 3 )
+operation_mode = 2
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=125]
+script = ExtResource( 4 )
+rail_name = "Rail4"
+distance_on_rail = 100.0
+initial_speed = 120.0
+initial_speed_limit = -1
+
+[sub_resource type="Resource" id=126]
+script = ExtResource( 2 )
+rail_name = "Rail6"
+
+[sub_resource type="Resource" id=127]
+script = ExtResource( 5 )
+rail_logic_settings = {
+}
+route_points = [ SubResource( 125 ), SubResource( 126 ) ]
+activate_only_at_specific_routes = false
+specific_routes = [  ]
+is_playable = true
+train_name = "JFR1_Red"
+description = "Learn how to use the PZB System."
+interval = 0
+interval_end = 0
+interval_start = 43200
+
+[resource]
+script = ExtResource( 1 )
+time = 0
+title = ""
+description = ""
+duration = 0
+is_hidden = false
+routes = {
+"Player": SubResource( 127 )
+}
+rail_logic_settings = {
+"Signal": SubResource( 121 ),
+"Signal2": SubResource( 122 ),
+"Signal3": SubResource( 123 ),
+"Signal4": SubResource( 124 )
+}

@@ -32,17 +32,18 @@ var rail: Spatial
 func _ready():
 	set_to_rail()
 	update_operation_mode_of_assigned_signal()
+
 	if not Root.Editor:
 		$Mesh.queue_free()
 		$SelectCollider.queue_free()
 		personSystem = personSystem and ProjectSettings["game/gameplay/enable_persons"] and not Root.mobile_version
 
+	if Root.Editor or not personSystem or not is_instance_valid(rail):
+		set_process(false)
+
 
 func _process(_delta: float) -> void:
-	assert(rail != null)
-
-	if not Root.Editor and personSystem:
-		handlePersons()
+	handlePersons()
 
 
 func set_to_rail() -> void:
@@ -117,7 +118,7 @@ func getRandomTransformAtPlatform() -> Transform:
 					rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
 			return Transform(Basis(Vector3(0, \
-					rail.get_deg_at_distance(randRailDistance), 0)), \
+					rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 	Logger.warn("Unsupported platform type %s" % platform_side, self)
@@ -173,8 +174,8 @@ func get_perfect_halt_distance_on_rail(train_length: int):
 		return on_rail_position - (length - (length-train_length)/2.0)
 
 
-func set_data(d: Dictionary) -> void:
+func set_data(d: StationSettings) -> void:
 	if not d.overwrite:
 		return
-	assigned_signal = d.assigned_signal
+	assigned_signal = d.assigned_signal_name
 	personSystem = d.enable_person_system

@@ -6,7 +6,7 @@ var found_mods := {
 	"content.tres": [],
 	"unique_name": [],
 }
-var loaded_mods := []
+var loaded_mods := {}
 var repo := ModContentDefinition.new()
 
 var dependency_tree_root: Node
@@ -162,6 +162,9 @@ func _remove_top_most_mod_except_siblings(node: Node) -> void:
 
 
 func append_content_to_global_repo(content: ModContentDefinition) -> void:
+	if loaded_mods.has(content.unique_name):
+		return
+
 	repo.trains.append_array(content.trains)
 	repo.worlds.append_array(content.worlds)
 	repo.environment_folders.append_array(content.environment_folders)
@@ -174,7 +177,7 @@ func append_content_to_global_repo(content: ModContentDefinition) -> void:
 	repo.sound_folders.append_array(content.sound_folders)
 	repo.texture_folders.append_array(content.texture_folders)
 
-	loaded_mods.append(content)
+	loaded_mods[content.unique_name] = content
 
 
 func get_editor_tracks() -> Dictionary:
@@ -197,14 +200,11 @@ func get_editor_tracks() -> Dictionary:
 	return tracks
 
 
-
-
-func get_scenarios_for_track(track: String) -> Array:
-	var scenario_dir: String = track.get_base_dir().plus_file("scenarios")
+func get_scenarios_for_track(track_folder: String) -> Array:
+	var scenario_dir: String = track_folder.plus_file("scenarios")
 	var result: Array = []
-	Root.crawl_directory(result, scenario_dir, ["scenario"], 2)
+	Root.crawl_directory(result, scenario_dir, ["tres"], 2)
 	return result
-
 
 
 # If train_name is part of the path, this function returns the whole path

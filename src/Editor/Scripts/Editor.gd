@@ -20,8 +20,410 @@ onready var camera := $Camera as EditorCamera
 
 
 func _ready() -> void:
+	# must port trackinfo -> config.tres before loading the world
+	# because it contains the world config
+	_port_to_new_trackinfo()
+	_port_very_old_trackinfo()
+
 	if !load_world():
 		return
+
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+
+	_port_to_new_chunk_system()
+	_port_to_new_scenario_system()
+	_port_very_old_scenarios()
+
+
+func _port_to_new_trackinfo():
+	var info_file = current_track_path.plus_file(current_track_name) + ".trackinfo"
+	var dir = Directory.new()
+	if not dir.file_exists(info_file):
+		return
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(info_file)
+
+	var new_file = current_track_path.plus_file(current_track_name) + "_config.tres"
+	var world_config = WorldConfig.new()
+	world_config.author = jsavemodule.get_value("author", "Unknown")
+	world_config.track_description = jsavemodule.get_value("description")
+	world_config.editor_notes = jsavemodule.get_value("editor_notes")
+	var release_date = jsavemodule.get_value("release_date")
+	world_config.release_date = {
+		"day": release_date[0],
+		"month": release_date[1],
+		"year": release_date[2]
+	}
+
+	if ResourceSaver.save(new_file, world_config) != OK:
+		Logger.err("Failed to save world config %s" % new_file, self)
+
+	dir.remove(info_file)
+
+
+func _port_very_old_trackinfo():
+	var old_cfg = current_track_path.plus_file(current_track_name) + "-scenarios.cfg"
+	var dir = Directory.new()
+	if not dir.file_exists(old_cfg):
+		return
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(old_cfg)
+
+	var old_world_config: Dictionary = jsavemodule.get_value("world_config", {})
+
+	var world_config = WorldConfig.new()
+	world_config.author = old_world_config.get("Author", "Unknown")
+	world_config.track_description = old_world_config.get("TrackDesciption", "")
+	world_config.editor_notes = ""
+	var release_date = old_world_config.get("ReleaseDate", [9, 11, 1989])
+	world_config.release_date = {
+		"day": release_date[0],
+		"month": release_date[1],
+		"year": release_date[2]
+	}
+
+	var new_file = current_track_path.plus_file(current_track_name) + "_config.tres"
+	if ResourceSaver.save(new_file, world_config) != OK:
+		Logger.err("Failed to save world config %s" % new_file, self)
+
+
+func _port_to_new_chunk_system() -> void:
+	var save_file = current_track_path.plus_file(current_track_name) + ".save"
+	var dir = Directory.new()
+	if not dir.file_exists(save_file):
+		return
+
+	# convert degrees to radians and fix track object positions
+	for rail in $World/Rails.get_children():
+		rail.start_rot = deg2rad(rail.start_rot)
+		rail.end_rot = deg2rad(rail.end_rot)
+		# fixes rail and track object positions
+		rail.visible = true
+		rail.update()
+	for logic in $World/Signals.get_children():
+		logic.set_to_rail()
+
+	dir.make_dir_recursive(current_track_path.plus_file("chunks"))
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(save_file)
+	var keys = jsavemodule._config.get_section_keys("Main")
+
+	for key in keys:
+		if not "," in key:
+			continue
+		var old_chunk = jsavemodule.get_value(key, {})
+		if old_chunk.empty():
+			continue
+
+		var new_chunk = preload("res://Data/Modules/chunk_prefab.tscn").instance()
+		new_chunk.name = ChunkManager.chunk_to_string(old_chunk.position)
+		new_chunk.chunk_position = old_chunk.position
+		new_chunk.rails = old_chunk.Rails
+
+		var buildings_data: Dictionary = old_chunk.Buildings
+		for building_data in buildings_data:
+			var mesh_instance := MeshInstance.new()
+			mesh_instance.name = buildings_data[building_data].name
+			mesh_instance.set_mesh(load(buildings_data[building_data].mesh_path))
+			mesh_instance.transform = buildings_data[building_data].transform
+			var surfaceArr: Array = buildings_data[building_data].surfaceArr
+			if surfaceArr == null:
+				surfaceArr = []
+			for i in range (surfaceArr.size()):
+				mesh_instance.set_surface_material(i, surfaceArr[i])
+
+			new_chunk.get_node("Buildings").add_child(mesh_instance)
+			mesh_instance.owner = new_chunk
+
+		var track_objects: Dictionary = old_chunk.TrackObjects
+		var to_prefab = preload("res://Data/Modules/TrackObjects.tscn")
+		for to_key in track_objects:
+			var track_obj = track_objects[to_key]
+			track_obj.data.mesh = load(track_obj.data.objectPath)
+			track_obj.data.materials = []
+			for path in track_obj.data.materialPaths:
+				track_obj.data.materials.append(load(path))
+
+			var to_instance = to_prefab.instance()
+			to_instance.name = track_obj.name
+			to_instance.multimesh = MultiMesh.new()
+			to_instance.multimesh.transform_format = MultiMesh.TRANSFORM_3D
+			to_instance.materials = []
+			to_instance.transform = track_obj.transform
+			to_instance.set_data(track_obj.data, true)  # true = convert degrees to radians
+
+			new_chunk.get_node("TrackObjects").add_child(to_instance)
+			to_instance.owner = new_chunk
+
+			# correctly position the track object before saving
+			# if we don't do this, user must click on every rail individually to fix it
+			to_instance.world = $World
+			to_instance.update()
+
+		if len(new_chunk.rails) > 0 \
+				or new_chunk.get_node("Buildings").get_child_count() > 0 \
+				or new_chunk.get_node("TrackObjects").get_child_count() > 0:
+			new_chunk.is_empty = false
+			new_chunk._prepare_saving()
+			var packed_chunk := PackedScene.new()
+			packed_chunk.pack(new_chunk)
+			var path: String = current_track_path.plus_file("chunks").plus_file(ChunkManager.chunk_to_string(old_chunk.position)) + ".tscn"
+			ResourceSaver.save(path, packed_chunk)
+
+		dir.remove(save_file)
+		new_chunk.queue_free()
+
+	# remove track object references, they have been freed
+	for rail in $World/Rails.get_children():
+		rail.track_objects = []
+
+	send_message("Chunks were ported to a new version, please save, close and reload the track.")
+
+
+func _port_to_new_scenario_system():
+	var path = current_track_path.plus_file("scenarios")
+	var dir = Directory.new()
+	if dir.open(path) != OK:
+		Logger.err("Track has no scenarios folder!", self)
+		return
+
+	var files_to_remove := []
+
+	# convert .scenario to scenario.tscn files
+	dir.list_dir_begin(true, true)
+	filename = dir.get_next()
+	while filename != "":
+		if filename.ends_with(".scenario"):
+			_convert_scenario(path.plus_file(filename))
+			files_to_remove.append(filename)
+		filename = dir.get_next()
+
+	# remove old .scenario files
+	for file in files_to_remove:
+		dir.remove(file)
+
+
+func _convert_scenario(filename):
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(filename)
+
+	var rail_logic_settings = jsavemodule.get_value("rail_logic_settings")
+	var routes = jsavemodule.get_value("routes")
+	if not is_instance_valid(routes):
+		routes = {}  # prevent for loop crashing if routes is null
+
+	var new_scenario = TrackScenario.new()
+	new_scenario.rail_logic_settings = _convert_rail_logic_settings(rail_logic_settings)
+
+	for route_name in routes:
+		var new_route = ScenarioRoute.new()
+		new_route.activate_only_at_specific_routes = routes[route_name]["general_settings"]["activate_only_at_specific_routes"]
+		new_route.description = routes[route_name]["general_settings"]["description"]
+		new_route.interval = routes[route_name]["general_settings"]["interval"]
+		new_route.interval_end = routes[route_name]["general_settings"]["interval_end"]
+		new_route.interval_start = routes[route_name]["general_settings"]["interval_start"]
+		new_route.is_playable = routes[route_name]["general_settings"]["player_can_drive_this_route"]
+		new_route.specific_routes = routes[route_name]["general_settings"]["specific_routes"]
+		new_route.train_name = routes[route_name]["general_settings"]["train_name"]
+		if routes[route_name].has("rail_logic_settings"):
+			new_route.rail_logic_settings = _convert_rail_logic_settings(routes[route_name]["rail_logic_settings"])
+
+		# there is a bug here, where route points from previous routes
+		# get added to the new route as well. No idea.
+		for route_point in routes[route_name]["route_points"]:
+			var new_route_point: RoutePoint = _convert_route_point(route_point)
+			if is_instance_valid(new_route_point):
+				new_route.route_points.append(new_route_point)
+
+		new_scenario.routes[route_name] = new_route
+
+	var new_file = filename.get_basename() + ".tres"
+	var err = ResourceSaver.save(new_file, new_scenario)
+	if err != OK:
+		Logger.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
+
+
+func _convert_rail_logic_settings(old_settings) -> Dictionary:
+	if not is_instance_valid(old_settings):
+		return {}
+
+	var new_settings := {}
+	for logic_name in old_settings:
+		var new_logic
+
+		if old_settings[logic_name].has("affected_signal"):
+			new_logic = ContactPointSettings.new()
+			new_logic.enabled = old_settings[logic_name]["enabled"]
+			new_logic.affected_signal = old_settings[logic_name]["affected_signal"]
+			new_logic.affect_time = old_settings[logic_name]["affect_time"]
+			new_logic.new_speed_limit = old_settings[logic_name]["new_speed_limit"]
+			new_logic.new_status = old_settings[logic_name]["new_status"]
+			new_logic.enable_for_all_trains = old_settings[logic_name]["enable_for_all_trains"]
+			new_logic.specific_train = old_settings[logic_name]["specific_train"]
+
+		elif old_settings[logic_name].has("operation_mode"):
+			new_logic = SignalSettings.new()
+			new_logic.operation_mode = old_settings[logic_name]["operation_mode"]
+			new_logic.signal_free_time = old_settings[logic_name]["signal_free_time"]
+			new_logic.speed = old_settings[logic_name]["speed"]
+			new_logic.status = old_settings[logic_name]["status"]
+
+		elif old_settings[logic_name].has("assigned_signal"):
+			new_logic = StationSettings.new()
+			new_logic.assigned_signal_name = old_settings[logic_name]["assigned_signal"]
+			new_logic.enable_person_system = old_settings[logic_name]["enable_person_system"]
+			new_logic.overwrite = old_settings[logic_name]["overwrite"]
+
+		new_settings[logic_name] = new_logic
+	return new_settings
+
+
+func _convert_route_point(old_point: Dictionary) -> RoutePoint:
+	if not old_point.has("type"):
+		return null
+
+	var new_point: RoutePoint
+	match old_point["type"]:
+		0:
+			new_point = RoutePointStation.new()
+			new_point.station_node_name = old_point["node_name"]
+			new_point.station_name = old_point["station_name"]
+			new_point.stop_type = old_point["stop_type"]
+			new_point.duration_since_last_station = old_point["duration_since_station_before"]
+			new_point.minimum_halt_time = old_point["minimal_halt_time"]
+			new_point.planned_halt_time = old_point["planned_halt_time"]
+			new_point.signal_time = old_point["signal_time"]
+			new_point.approach_sound_path = old_point["approach_sound_path"]
+			new_point.arrival_sound_path = old_point["arrival_sound_path"]
+			new_point.departure_sound_path = old_point["departure_sound_path"]
+			new_point.leaving_persons = old_point["leaving_persons"]
+			new_point.waiting_persons = old_point["waiting_persons"]
+		1:
+			new_point = RoutePointWayPoint.new()
+			new_point.rail_name = old_point["rail_name"]
+		2:
+			new_point = RoutePointSpawnPoint.new()
+			new_point.rail_name = old_point["rail_name"]
+			new_point.distance_on_rail = old_point["distance"]
+			new_point.initial_speed = old_point["initial_speed"]
+			new_point.initial_speed_limit = old_point["initial_speed_limit"]
+		3:
+			new_point = RoutePointDespawnPoint.new()
+			new_point.rail_name = old_point["rail_name"]
+			new_point.distance_on_rail = old_point["distance"]
+
+	return new_point
+
+
+func _port_very_old_scenarios():
+	var old_file = current_track_path.plus_file(current_track_name) + "-scenarios.cfg"
+	var dir = Directory.new()
+	if not dir.file_exists(old_file):
+		return
+
+	if not dir.dir_exists(current_track_path.plus_file("scenarios")):
+		dir.make_dir_recursive(current_track_path.plus_file("scenarios"))
+
+	var jsavemodule = jSaveModule.new()
+	jsavemodule.set_save_path(old_file)
+
+	var scenario_list = jsavemodule.get_value("scenario_list", [])
+	var scenario_data = jsavemodule.get_value("scenario_data", {})
+	for scenario in scenario_list:
+		var data = scenario_data[scenario]
+
+		var new_scenario = TrackScenario.new()
+		new_scenario.title = scenario
+		new_scenario.description = data.get("Description", "")
+		new_scenario.duration = data.get("Duration", "")
+
+		var hour = data.get("TimeH", 12)
+		var minute = data.get("TimeM", 0)
+		var second = data.get("TimeS", 0)
+		new_scenario.time = Math.time_to_seconds([hour, minute, second])
+
+		var signal_infos = data.get("Signals", {})
+		for signal_name in signal_infos:
+			var info = signal_infos[signal_name]
+			if info == null:
+				continue
+			elif info.has("affectTime"):
+				var settings = ContactPointSettings.new()
+				settings.affect_time = info["affectTime"]
+				settings.affected_signal = info["affectedSignal"]
+				settings.enabled = true
+				if info["bySpecificTrain"] != "":
+					settings.enable_for_all_trains = false
+					settings.specific_train = info["bySpecificTrain"]
+				settings.new_status = info.get("newStatus", 1)
+				settings.new_speed_limit = info.get("newSpeed", -1)
+				new_scenario.rail_logic_settings[signal_name] = settings
+			elif info.has("is_block_signal"):
+				var settings = SignalSettings.new()
+				if info["is_block_signal"] == true:
+					settings.operation_mode = SignalOperationMode.BLOCK
+				else:
+					settings.operation_mode = SignalOperationMode.MANUAL
+				settings.speed = info["speed"]
+				settings.status = info["status"]
+				var _hour = info["set_pass_at_h"]
+				var _minute = info["set_pass_at_m"]
+				var _second = info["set_pass_at_s"]
+				settings.signal_free_time = Math.time_to_seconds([_hour, _minute, _second])
+				new_scenario.rail_logic_settings[signal_name] = settings
+
+		var trains = data.get("Trains", {})
+		for train_name in trains:
+			var info = trains[train_name]
+			var route = ScenarioRoute.new()
+			if train_name == "Player":
+				route.is_playable = true
+			route.train_name = info["PreferredTrain"]
+
+			var spawn_point = RoutePointSpawnPoint.new()
+			spawn_point.rail_name = info["StartRail"]
+			spawn_point.forward = bool(info["Direction"])
+			spawn_point.distance_on_rail = info["StartRailPosition"]
+			spawn_point.initial_speed = info["InitialSpeed"]
+			spawn_point.initial_speed_limit = info["InitialSpeedLimit"]
+			route.route_points.append(spawn_point)
+
+			var stations = info["Stations"]
+			for i in range(len(stations["nodeName"])):
+				var point = RoutePointStation.new()
+				point.station_node_name = stations["nodeName"][i]
+				point.station_name = stations["stationName"][i]
+				point.approach_sound_path = stations["approachAnnouncePath"][i]
+				point.arrival_sound_path = stations["arrivalAnnouncePath"][i]
+				point.departure_sound_path = stations["departureAnnouncePath"][i]
+				point.planned_halt_time = stations["haltTime"][i]
+				point.leaving_persons = stations["leavingPersons"][i]
+				point.waiting_persons = stations["waitingPersons"][i]
+				point.stop_type = stations["stopType"][i]
+				if i > 0:
+					var last_depart = Math.time_to_seconds(stations["departureTime"][i-1])
+					var arrival = Math.time_to_seconds(stations["arrivalTime"][i])
+					point.duration_since_last_station = arrival - last_depart
+				route.route_points.append(point)
+
+			if info["DespawnRail"] != "":
+				var despawn_point = RoutePointDespawnPoint.new()
+				despawn_point.rail_name = info["DespawnRail"]
+				route.route_points.append(despawn_point)
+
+			new_scenario.routes[train_name] = route
+
+		var path = current_track_path.plus_file("scenarios")
+		var new_file = path.plus_file(scenario) + ".tres"
+		var err = ResourceSaver.save(new_file, new_scenario)
+		if err != OK:
+			Logger.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
+
+	dir.remove(old_file)
+
 
 
 func _enter_tree() -> void:
@@ -29,6 +431,8 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
+	if is_instance_valid($World) and is_instance_valid($World.chunk_manager):
+		$World.chunk_manager.cleanup()
 	Root.Editor = false
 
 
@@ -230,7 +634,7 @@ func select_object_under_mouse() -> void:
 		clear_selected_object()
 		return
 
-	while !(obj_to_select is WorldObject or obj_to_select is MeshInstance):
+	while not (obj_to_select is WorldObject or obj_to_select is MeshInstance):
 		Logger.vlog("Trying to find object", obj_to_select)
 		obj_to_select = obj_to_select.get_parent_spatial()
 		if obj_to_select == self or obj_to_select == null:
@@ -242,7 +646,6 @@ func select_object_under_mouse() -> void:
 		begin_drag_mode()
 
 	set_selected_object(obj_to_select)
-	provide_settings_for_selected_object()
 	Logger.vlog("selected!", obj_to_select)
 
 
@@ -303,7 +706,7 @@ func provide_settings_for_selected_object() -> void:
 ## Should be used, if world is loaded into scene.
 func load_world() -> bool:
 	editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
-	var path := current_track_path + ".tscn"
+	var path := current_track_path.plus_file(current_track_name) + ".tscn"
 	var world_resource: PackedScene = load(path)
 	if world_resource == null:
 		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
@@ -311,7 +714,6 @@ func load_world() -> bool:
 
 	var world: Node = world_resource.instance()
 	world.FileName = current_track_name
-	world.j_save_module.set_save_path(current_track_path + ".save")
 	add_child(world)
 	world.owner = self
 
@@ -332,17 +734,32 @@ func save_world(send_message: bool = true) -> void:
 	last_editor_camera_transforms[current_track_name] = camera.transform
 	jSaveManager.save_value("last_editor_camera_transforms", last_editor_camera_transforms)
 
+	$World.chunk_manager.pause_chunking()
+
+	# move newly created buildings from world to chunks
+	for building in $World/Buildings.get_children():
+		var chunk_pos = $World.chunk_manager.position_to_chunk(building.global_transform.origin)
+		var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
+
+		var chunk = $World/Chunks.find_node(chunk_name)
+		if not is_instance_valid(chunk):
+			chunk = $World.chunk_manager._force_load_chunk_immediately(chunk_pos)
+
+		$World/Buildings.remove_child(building)
+		chunk.get_node("Buildings").add_child(building)
+		building.owner = chunk
+
 	$World.chunk_manager.save_and_unload_all_chunks()
+	assert($World/Chunks.get_child_count() == 0)
+	$World.chunk_manager.cleanup()
 
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
-		var error = ResourceSaver.save(current_track_path + ".tscn", packed_scene)
+		var error = ResourceSaver.save(current_track_path.plus_file(current_track_name) + ".tscn", packed_scene)
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
-
-	$World.j_save_module.write_to_disk()
 
 	$World.chunk_manager.resume_chunking()
 
@@ -361,6 +778,9 @@ func rename_selected_object(new_name: String) -> void:
 
 
 func delete_selected_object() -> void:
+	if selected_object_type == "Rail":
+		$World.chunk_manager.remove_rail(selected_object)
+
 	selected_object.queue_free()
 	clear_selected_object()
 
@@ -410,8 +830,13 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	track_object.rows = 1
 	track_object.wholeRail = true
 	track_object.placeLast = true
-	track_object.objectPath = "res://Resources/Objects/Pole1.obj"
-	track_object.materialPaths = [ "res://Resources/Materials/Beton.tres", "res://Resources/Materials/Metal_Green.tres", "res://Resources/Materials/Metal.tres", "res://Resources/Materials/Metal_Brown.tres" ]
+	track_object.mesh = load("res://Resources/Objects/Pole1.obj")
+	track_object.materials = [
+		load("res://Resources/Materials/Beton.tres"),
+		load("res://Resources/Materials/Metal_Green.tres"),
+		load("res://Resources/Materials/Metal.tres"),
+		load("res://Resources/Materials/Metal_Brown.tres")
+	]
 	track_object.attached_rail = rail.name
 	track_object.length = rail.length
 	track_object.distanceLength = 50
@@ -421,8 +846,12 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 
 	rail.track_objects.append(track_object)
 
-	$World/TrackObjects.add_child(track_object)
-	track_object.set_owner($World/TrackObjects)
+	var chunk_pos = $World.chunk_manager.position_to_chunk(rail.global_transform.origin)
+	var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
+	var chunk = $World/Chunks.get_node(chunk_name)
+
+	chunk.get_node("TrackObjects").add_child(track_object)
+	track_object.owner = chunk
 
 	track_object.update()
 	rail.update()
@@ -431,6 +860,9 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 func add_rail() -> void:
 	var rail_instance: Node = _spawn_rail()
 	rail_instance.translation = get_current_ground_position()
+
+	$World.chunk_manager.add_rail(rail_instance)
+
 	set_selected_object(rail_instance)
 
 
@@ -441,20 +873,22 @@ func get_current_ground_position() -> Vector3:
 
 
 func add_object(complete_path: String) -> void:
-	var position: Vector3 = get_current_ground_position()
-	var obj_res: Mesh = load(complete_path)
 	var mesh_instance := MeshInstance.new()
-	mesh_instance.mesh = obj_res
+	mesh_instance.mesh = load(complete_path)
+
 	var mesh_name: String = complete_path.get_file().get_basename() + "_"
 	mesh_instance.name = Root.name_node_appropriate(mesh_instance, mesh_name, $World/Buildings)
-	mesh_instance.translation = position
+
+	mesh_instance.translation = get_current_ground_position() - $World.chunk_manager.world_origin
 	$World/Buildings.add_child(mesh_instance)
 	mesh_instance.set_owner($World)
+
 	var old_script = mesh_instance.get_script()
 	mesh_instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
 	mesh_instance.target = NodePath(".")
 	mesh_instance.generate_collider()
 	mesh_instance.set_script(old_script)
+
 	set_selected_object(mesh_instance)
 
 
@@ -649,9 +1083,13 @@ func get_children_of_type_recursive(node: Node, type) -> Array:
 
 
 func set_current_track_path(path: String) -> void:
-	current_track_path = path
+	current_track_path = path.get_base_dir()
 	current_track_name = path.get_file()
 
 
 func _on_Pause_save_requested() -> void:
 	save_world(false)
+
+
+func _on_world_origin_shifted(delta: Vector3):
+	$World/Buildings.translation += delta

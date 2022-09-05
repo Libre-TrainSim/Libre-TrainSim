@@ -2,8 +2,6 @@ extends Panel
 
 var selected_track: String = ""
 
-var j_save_module = jSaveModule.new()
-
 func update_track_list():
 	$TrackList/ItemList.clear()
 	for track in ContentLoader.repo.worlds:
@@ -12,8 +10,6 @@ func update_track_list():
 	var tracks = ContentLoader.get_editor_tracks()
 	for track in tracks.keys():
 		$TrackList/ItemList.add_item("Track-Editor: " + track.get_file().get_basename())
-
-
 
 
 func _on_Back_TrackList_pressed():
@@ -44,7 +40,7 @@ func update_scenario_list():
 	if not jEssentials.does_path_exist(scenarios_folder):
 		jEssentials.create_directory(scenarios_folder)
 		return
-	var available_scenarios: Array = ContentLoader.get_scenarios_for_track(selected_track)
+	var available_scenarios: Array = ContentLoader.get_scenarios_for_track(selected_track.get_base_dir())
 	var available_scenarios_names = []
 	for scenario in available_scenarios:
 		available_scenarios_names.append(scenario.get_file().get_basename())
@@ -59,25 +55,32 @@ func _on_Back_ScenarioList_pressed():
 
 func _on_scenarioList_user_added_entry(entry_name):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	j_save_module.set_save_path(scenarios_folder.plus_file(entry_name + ".scenario"))
-	j_save_module.save_value("empty", true)
-	j_save_module.write_to_disk()
+	var scenario_file = scenarios_folder.plus_file(entry_name + ".tres")
+	var empty_scenario = TrackScenario.new()
+
+	var err = ResourceSaver.save(scenario_file, empty_scenario)
+	if err != OK:
+		Logger.err("Failed to create new scenario at %s. (Reason %s)" % [scenario_file, err], self)
 
 
 func _on_scenarioList_user_duplicated_entries(source_entry_names, duplicated_entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	jEssentials.copy_file(scenarios_folder.plus_file(source_entry_names[0] + ".scenario"), scenarios_folder.plus_file(duplicated_entry_names[0] + ".scenario"))
+	var scenario_file = scenarios_folder.plus_file(source_entry_names[0] + ".tres")
+	var new_file = scenarios_folder.plus_file(duplicated_entry_names[0] + ".tres")
+	jEssentials.copy_file(scenario_file, new_file)
 
 
 func _on_scenarioList_user_renamed_entry(old_name, new_name):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	jEssentials.rename_file(scenarios_folder.plus_file(old_name + ".scenario"), scenarios_folder.plus_file(new_name + ".scenario"))
+	var old_file = scenarios_folder.plus_file(old_name + ".tres")
+	var new_file = scenarios_folder.plus_file(new_name + ".tres")
+	jEssentials.rename_file(old_file, new_file)
 
 
 func _on_scenarioList_user_pressed_action(entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
 	var entry_name = entry_names[0]
-	Root.current_scenario = scenarios_folder.plus_file(entry_name + ".scenario")
+	Root.current_scenario = scenarios_folder.plus_file(entry_name + ".tres")
 	Root.Editor = true
 	Root.scenario_editor = true
 	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
@@ -91,7 +94,7 @@ func _on_ItemList_item_activated(_index):
 func _on_scenarioList_user_removed_entries(entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
 	var dir = Directory.new()
-	dir.remove(scenarios_folder.plus_file(entry_names[0] + ".scenario"))
+	dir.remove(scenarios_folder.plus_file(entry_names[0] + ".tres"))
 
 
 

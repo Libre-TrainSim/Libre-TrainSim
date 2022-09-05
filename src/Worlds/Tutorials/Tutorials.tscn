@@ -72,6 +72,9 @@ assigned_signal = "Signal5"
 
 [node name="Rail" parent="Rails" instance=ExtResource( 2 )]
 visible = false
+__meta__ = {
+"chunk_pos": Vector3( 0, 0, 0 )
+}
 length = 1000.0
 radius = -5000.0
 build_distance = 0.9
@@ -84,6 +87,9 @@ tend2 = -0.3
 [node name="Rail2" parent="Rails" instance=ExtResource( 2 )]
 transform = Transform( 0.980067, 0, -0.198669, 0, 1, 0, 0.198669, 0, 0.980067, 993.347, 0, 99.667 )
 visible = false
+__meta__ = {
+"chunk_pos": Vector3( 0, 0, 0 )
+}
 length = 1000.0
 radius = 3000.0
 build_distance = 0.9
@@ -102,3 +108,5 @@ tend2 = 0.5
 [node name="TrackObjects" type="Spatial" parent="."]
 
 [node name="Landscape" type="Spatial" parent="."]
+
+[node name="Chunks" type="Spatial" parent="."]

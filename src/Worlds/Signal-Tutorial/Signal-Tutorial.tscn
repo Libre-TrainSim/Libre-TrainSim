@@ -79,7 +79,7 @@ on_rail_position = 900
 operation_mode = 0
 
 [node name="KS_Signal_3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 2.51458e-05, 0, 1.07834, 0, -2.51458e-05, 0, 1.07834, 150, 0, 0 )
+transform = Transform( 1.07834, 0, 2.51458e-05, 0, 1.07834, 0, -2.51458e-05, 0, 1.07834, 1150, 0, 0 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -92,7 +92,7 @@ on_rail_position = 150
 operation_mode = 0
 
 [node name="KS_Signal_6" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 8.38193e-05, 0, 1.07834, 0, -8.38193e-05, 0, 1.07834, 500, 0, 0 )
+transform = Transform( 1.07834, 0, 8.38193e-05, 0, 1.07834, 0, -8.38193e-05, 0, 1.07834, 1500, 0, 0 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -105,7 +105,7 @@ on_rail_position = 500
 operation_mode = 0
 
 [node name="KS_Signal_4" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0.000165962, 0, 1.07834, 0, -0.000165962, 0, 1.07834, 990, 0, 0 )
+transform = Transform( 1.07834, 0, 0.000165962, 0, 1.07834, 0, -0.000165962, 0, 1.07834, 1990, 0, 0 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -118,7 +118,7 @@ on_rail_position = 990
 operation_mode = 0
 
 [node name="HPF_Signal_1" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 50 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -131,7 +131,7 @@ on_rail_position = 200
 operation_mode = 0
 
 [node name="VOF_Signal_1" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 450, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 450, 0, 50 )
 script = ExtResource( 3 )
 signal_type = 2
 status = 1
@@ -144,7 +144,7 @@ on_rail_position = 450
 operation_mode = 0
 
 [node name="HPF_Signal_2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 550, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 550, 0, 50 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -157,7 +157,7 @@ on_rail_position = 550
 operation_mode = 0
 
 [node name="VOF_Signal_2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 50 )
 script = ExtResource( 3 )
 signal_type = 2
 status = 1
@@ -170,7 +170,7 @@ on_rail_position = 700
 operation_mode = 0
 
 [node name="HPF_Signal_3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 50 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -183,7 +183,7 @@ on_rail_position = 990
 operation_mode = 0
 
 [node name="WarnSpeed_HPF" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 300, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1300, 0, 50 )
 script = ExtResource( 4 )
 warn_speed = 30.0
 attached_rail = "HV_Form_Rail2"
@@ -191,7 +191,7 @@ on_rail_position = 300.0
 forward = true
 
 [node name="Speed_HPF" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1500, 0, 50 )
 script = ExtResource( 13 )
 speed = 30.0
 attached_rail = "HV_Form_Rail2"
@@ -199,7 +199,7 @@ on_rail_position = 500.0
 forward = true
 
 [node name="VOF_Signal_3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1700, 0, 50 )
 script = ExtResource( 3 )
 signal_type = 2
 status = 1
@@ -225,7 +225,7 @@ on_rail_position = 990
 operation_mode = 0
 
 [node name="HPL_Signal_1" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -238,7 +238,7 @@ on_rail_position = 200
 operation_mode = 0
 
 [node name="VOL_Signal_1" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 450, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 450, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 2
 status = 1
@@ -251,7 +251,7 @@ on_rail_position = 450
 operation_mode = 0
 
 [node name="HPL_Signal_2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 550, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 550, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -264,7 +264,7 @@ on_rail_position = 550
 operation_mode = 0
 
 [node name="VOL_Signal_2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 2
 status = 1
@@ -277,7 +277,7 @@ on_rail_position = 700
 operation_mode = 0
 
 [node name="HPL_Signal_3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -290,7 +290,7 @@ on_rail_position = 990
 operation_mode = 0
 
 [node name="WarnSpeed_HPL" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 300, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1300, 0, 100 )
 script = ExtResource( 4 )
 warn_speed = 30.0
 attached_rail = "HV_Light_Rail2"
@@ -298,7 +298,7 @@ on_rail_position = 300.0
 forward = true
 
 [node name="Speed_HPL" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1500, 0, 100 )
 script = ExtResource( 13 )
 speed = 30.0
 attached_rail = "HV_Light_Rail2"
@@ -306,7 +306,7 @@ on_rail_position = 500.0
 forward = true
 
 [node name="VOL_Signal_3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1700, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 2
 status = 1
@@ -319,7 +319,7 @@ on_rail_position = 700
 operation_mode = 0
 
 [node name="HPL_Signal_4" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1990, 0, 100 )
 script = ExtResource( 3 )
 signal_type = 1
 status = 1
@@ -332,7 +332,7 @@ on_rail_position = 990
 operation_mode = 0
 
 [node name="HL_Signal_1" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -345,7 +345,7 @@ on_rail_position = 200
 operation_mode = 0
 
 [node name="HL_Signal_2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 400, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 400, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -358,7 +358,7 @@ on_rail_position = 400
 operation_mode = 0
 
 [node name="HL_Signal_3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -371,7 +371,7 @@ on_rail_position = 700
 operation_mode = 0
 
 [node name="HL_Signal_4" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -384,7 +384,7 @@ on_rail_position = 990
 operation_mode = 0
 
 [node name="HL_Signal_5" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 200, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1200, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -397,7 +397,7 @@ on_rail_position = 200
 operation_mode = 0
 
 [node name="HL_Signal_6" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 400, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1400, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -410,7 +410,7 @@ on_rail_position = 400
 operation_mode = 0
 
 [node name="HL_Signal_7" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 700, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1700, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -423,7 +423,7 @@ on_rail_position = 700
 operation_mode = 0
 
 [node name="HL_Signal_8" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 990, 0, 0 )
+transform = Transform( 1.07834, 0, 0, 0, 1.07834, 0, 0, 0, 1.07834, 1990, 0, 150 )
 script = ExtResource( 3 )
 signal_type = 3
 status = 1
@@ -441,6 +441,9 @@ operation_mode = 0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 0, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -468,6 +471,9 @@ switch_part = [ "", "" ]
 [node name="KS_Rail" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 0, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -496,6 +502,9 @@ switch_part = [ "", "" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 0, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -524,6 +533,9 @@ switch_part = [ "", "" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 0, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -552,6 +564,9 @@ switch_part = [ "", "" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 1, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 998.798
 radius = 6.43253e+06
@@ -580,6 +595,9 @@ switch_part = [ "", "" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 50 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 1, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -608,6 +626,9 @@ switch_part = [ "", "" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 100 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 1, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -636,6 +657,9 @@ switch_part = [ "", "" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 150 )
 visible = false
 script = ExtResource( 10 )
+__meta__ = {
+"chunk_pos": Vector3( 1, 0, 0 )
+}
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
 length = 1000.0
 radius = 0.0
@@ -671,3 +695,5 @@ script = ExtResource( 9 )
 script = ExtResource( 5 )
 
 [node name="Landscape" type="Spatial" parent="."]
+
+[node name="Chunks" type="Spatial" parent="."]

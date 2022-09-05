@@ -1,0 +1,269 @@
+[gd_resource type="Resource" load_steps=37 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/track_scenario.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Resources/signal_settings.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Resources/route_point_waypoint.gd" type="Script" id=3]
+[ext_resource path="res://Data/Scripts/Resources/route_point_spawn.gd" type="Script" id=4]
+[ext_resource path="res://Data/Scripts/Resources/scenario_route.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=31]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=32]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=33]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=34]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=35]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=36]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=37]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=38]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=39]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=40]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=41]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = 40
+status = 0
+
+[sub_resource type="Resource" id=42]
+script = ExtResource( 2 )
+operation_mode = 2
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=43]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=44]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=45]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=46]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=47]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=48]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=49]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=50]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=51]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=52]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=53]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=54]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=55]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=56]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=57]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=58]
+script = ExtResource( 2 )
+operation_mode = 0
+signal_free_time = -1
+speed = -1
+status = 0
+
+[sub_resource type="Resource" id=59]
+script = ExtResource( 4 )
+rail_name = "HV_Form_Rail"
+distance_on_rail = 50.0
+initial_speed = 0.0
+initial_speed_limit = -1
+
+[sub_resource type="Resource" id=60]
+script = ExtResource( 3 )
+rail_name = "HV_Form_Rail2"
+
+[sub_resource type="Resource" id=61]
+script = ExtResource( 5 )
+rail_logic_settings = {
+}
+route_points = [ SubResource( 59 ), SubResource( 60 ) ]
+activate_only_at_specific_routes = false
+specific_routes = [  ]
+is_playable = true
+train_name = "JFR1_Red"
+description = "Learn how to use the old German H/V Signalling System, with Form Signals (Semaphores)."
+interval = 0
+interval_end = 0
+interval_start = 43200
+
+[resource]
+script = ExtResource( 1 )
+time = 0
+title = ""
+description = ""
+duration = 0
+is_hidden = false
+routes = {
+"Player": SubResource( 61 )
+}
+rail_logic_settings = {
+"HL_Signal_1": SubResource( 31 ),
+"HL_Signal_2": SubResource( 32 ),
+"HL_Signal_3": SubResource( 33 ),
+"HL_Signal_4": SubResource( 34 ),
+"HL_Signal_5": SubResource( 35 ),
+"HL_Signal_6": SubResource( 36 ),
+"HL_Signal_7": SubResource( 37 ),
+"HL_Signal_8": SubResource( 38 ),
+"HPF_Signal_1": SubResource( 39 ),
+"HPF_Signal_2": SubResource( 40 ),
+"HPF_Signal_3": SubResource( 41 ),
+"HPF_Signal_4": SubResource( 42 ),
+"HPL_Signal_1": SubResource( 43 ),
+"HPL_Signal_2": SubResource( 44 ),
+"HPL_Signal_3": SubResource( 45 ),
+"HPL_Signal_4": SubResource( 46 ),
+"KS_Signal_1": SubResource( 47 ),
+"KS_Signal_2": SubResource( 48 ),
+"KS_Signal_3": SubResource( 49 ),
+"KS_Signal_4": SubResource( 50 ),
+"KS_Signal_5": SubResource( 51 ),
+"KS_Signal_6": SubResource( 52 ),
+"VOF_Signal_1": SubResource( 53 ),
+"VOF_Signal_2": SubResource( 54 ),
+"VOF_Signal_3": SubResource( 55 ),
+"VOL_Signal_1": SubResource( 56 ),
+"VOL_Signal_2": SubResource( 57 ),
+"VOL_Signal_3": SubResource( 58 )
+}

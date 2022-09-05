@@ -12,4 +12,7 @@ border_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 expand_margin_top = 29.0
+shadow_color = Color( 0, 0, 0, 0.501961 )
+shadow_size = 1
+shadow_offset = Vector2( 0, 2 )
 anti_aliasing = false

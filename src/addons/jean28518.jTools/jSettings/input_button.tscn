@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/jean28518.jTools/jSettings/input_button.gd" type="Script" id=1]
+
+[node name="InputButton" type="Button"]
+margin_right = 12.0
+margin_bottom = 20.0
+toggle_mode = true
+clip_text = true
+script = ExtResource( 1 )

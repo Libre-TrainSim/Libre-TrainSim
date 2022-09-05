@@ -12,6 +12,11 @@ func popup():
 func _ready():
 	if get_parent().name == "root":
 		$JSettings.hide()
+	
+	# Localize the Reset Dialog
+	$"%ResetConfirmationDialog".get_cancel().text = "NO"
+	$"%ResetConfirmationDialog".get_ok().text = "YES"
+	
 	first_run_check()
 	apply_saved_settings()
 
@@ -21,22 +26,27 @@ func first_run_check():
 	var dir = Directory.new()
 	if not dir.file_exists("user://override.cfg") or OS.has_feature("editor"):
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
-		set_fullscreen(true)
-		set_vsync(true)
-		set_fps_limit(0) # disable limit
-		set_anti_aliasing(2)
-		set_fog(true)
-		set_shadows(true)
-		set_main_volume(1.0)
-		set_music_volume(1.0)
-		set_game_volume(1.0)
-		set_persons(true)
-		set_view_distance(1000)
-		set_sifa(true)
-		set_pzb(true)
-		set_chunk_unload_distance(2)
-		set_chunk_load_all(false)
-		set_dynamic_lights(false)
+		reset_settings_to_default()
+
+
+func reset_settings_to_default():
+	Logger.log("Settings reset to default.")
+	set_fullscreen(true)
+	set_vsync(true)
+	set_fps_limit(0) # disable limit
+	set_anti_aliasing(2)
+	set_fog(true)
+	set_shadows(true)
+	set_main_volume(1.0)
+	set_music_volume(1.0)
+	set_game_volume(1.0)
+	set_persons(true)
+	set_view_distance(1000)
+	set_sifa(true)
+	set_pzb(true)
+	set_chunk_unload_distance(2)
+	set_chunk_load_all(false)
+	set_dynamic_lights(false)
 
 
 func apply_saved_settings():
@@ -52,24 +62,29 @@ func save_settings():
 
 
 func update_settings_window():
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed = ProjectSettings["display/window/size/fullscreen"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed = ProjectSettings["display/window/vsync/use_vsync"]
+	$"%Fullscreen".pressed = ProjectSettings["display/window/size/fullscreen"]
+	$"%Vsync".pressed = ProjectSettings["display/window/vsync/use_vsync"]
 	$"%FpsLimitToggle".pressed = (ProjectSettings["debug/settings/fps/force_fps"] != 0)
 	show_fps_limit(not ProjectSettings["display/window/vsync/use_vsync"])
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed = ProjectSettings["game/graphics/shadows"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed = ProjectSettings["game/graphics/fog"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed = ProjectSettings["game/gameplay/enable_persons"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ViewDistance.value = ProjectSettings["game/gameplay/view_distance"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.select(_language_table[get_language()])
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AntiAliasing.selected = ProjectSettings["rendering/quality/filters/msaa"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MainVolume.value = ProjectSettings["game/audio/main_volume"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/MusicVolume.value = ProjectSettings["game/audio/music_volume"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/GameVolume.value = ProjectSettings["game/audio/game_volume"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed = ProjectSettings["game/gameplay/sifa_enabled"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed = ProjectSettings["game/gameplay/pzb_enabled"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkUnloadDistance.value = ProjectSettings["game/gameplay/chunk_unload_distance"]
-	$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ChunkLoadAll.pressed = ProjectSettings["game/gameplay/load_all_chunks"]
+	$"%Shadows".pressed = ProjectSettings["game/graphics/shadows"]
+	$"%DynamicLights".pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
+	$"%Fog".pressed = ProjectSettings["game/graphics/fog"]
+	$"%Persons".pressed = ProjectSettings["game/gameplay/enable_persons"]
+	$"%ViewDistance".value = ProjectSettings["game/gameplay/view_distance"]
+	$"%Language".select(_language_table[get_language()])
+	$"%AntiAliasing".selected = ProjectSettings["rendering/quality/filters/msaa"]
+	$"%MainVolume".value = ProjectSettings["game/audio/main_volume"]
+	$"%MusicVolume".value = ProjectSettings["game/audio/music_volume"]
+	$"%GameVolume".value = ProjectSettings["game/audio/game_volume"]
+	$"%SIFA".pressed = ProjectSettings["game/gameplay/sifa_enabled"]
+	$"%PZB".pressed = ProjectSettings["game/gameplay/pzb_enabled"]
+	$"%ChunkUnloadDistance".value = ProjectSettings["game/gameplay/chunk_unload_distance"]
+	$"%ChunkLoadAll".pressed = ProjectSettings["game/gameplay/load_all_chunks"]
+
+
+func hide():
+	$"%MENU_INPUT_SETTINGS".finish() # Apply any remaining input changes
+	$JSettings.hide()
 
 
 ## Setter/Getter ###############################################################
@@ -179,8 +194,8 @@ func update_and_prepare_language_handling():
 	var language_codes = TranslationServer.get_loaded_locales()
 	language_codes = jEssentials.remove_duplicates(language_codes)
 	if language_codes.size() == 0:
-		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Label7.hide()
-		$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.hide()
+		$"%LabelLanguage".hide()
+		$"%Language".hide()
 		return
 
 	# Prepare _language_table
@@ -192,9 +207,9 @@ func update_and_prepare_language_handling():
 	# Prepare language selector
 	if not language_selector_prepared:
 		for index in range(_language_table.size()):
-			$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.add_item("",index)
+			$"%Language".add_item("",index)
 		for language in _language_table.keys():
-			$JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Language.set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
+			$"%Language".set_item_text(_language_table[language], TranslationServer.get_locale_name(language))
 		language_selector_prepared = true
 
 	# If Language is not found, select one language, which is available
@@ -236,19 +251,19 @@ func show_fps_limit_selector(val: bool):
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action("Escape"):
-		$JSettings.hide()
+		hide()
 
 
 func _on_Back_pressed():
-	$JSettings.hide()
+	hide()
 
 
 func _on_Fullscreen_pressed():
-	set_fullscreen($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fullscreen.pressed)
+	set_fullscreen($"%Fullscreen".pressed)
 
 
 func _on_Vsync_pressed():
-	set_vsync($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Vsync.pressed)
+	set_vsync($"%Vsync".pressed)
 
 
 func _on_FpsLimitToggle_toggled(button_pressed):
@@ -258,7 +273,7 @@ func _on_FpsLimitToggle_toggled(button_pressed):
 
 
 func _on_Shadows_pressed():
-	set_shadows($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Shadows.pressed)
+	set_shadows($"%Shadows".pressed)
 
 
 func _on_Language_item_selected(index):
@@ -266,20 +281,33 @@ func _on_Language_item_selected(index):
 
 
 func _on_Fog_pressed():
-	set_fog($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Fog.pressed)
+	set_fog($"%Fog".pressed)
 
 
 func _on_Persons_pressed():
-	set_persons($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Persons.pressed)
+	set_persons($"%Persons".pressed)
 
 
 func _on_DynamicLights_pressed():
-	set_dynamic_lights($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DynamicLights.pressed)
+	set_dynamic_lights($"%DynamicLights".pressed)
 
 
 func _on_SIFA_pressed():
-	set_sifa($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SIFA.pressed)
+	set_sifa($"%SIFA".pressed)
 
 
 func _on_PZB_pressed():
-	set_pzb($JSettings/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/PZB.pressed)
+	set_pzb($"%PZB".pressed)
+
+
+func _on_Reset_pressed():
+	$"%ResetConfirmationDialog".popup_centered_clamped(Vector2(500,250))
+
+
+func _on_ResetConfirmationDialog_confirmed():
+	reset_settings_to_default()
+	update_settings_window()
+
+
+func _on_MENU_INPUT_SETTINGS_save():
+	save_settings()

@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/input_settings.gd" type="Script" id=1]
-[ext_resource path="res://addons/jean28518.jTools/jSettings/input_button.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=3]
 [ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=4]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
@@ -14,7 +13,6 @@ anchor_bottom = 1.0
 theme = ExtResource( 4 )
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
-input_button_scene = ExtResource( 2 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_right = 1024.0

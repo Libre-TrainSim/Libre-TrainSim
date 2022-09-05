@@ -3,9 +3,9 @@ extends PanelContainer
 
 signal save
 
-export (PackedScene) var input_button_scene
-const path_preset_lts = "res://addons/jean28518.jTools/jSettings/input_presets/layout_lts.tres"
-const path_preset_openbve = "res://addons/jean28518.jTools/jSettings/input_presets/layout_openbve.tres"
+const input_button_scene = preload("res://addons/jean28518.jTools/jSettings/input_button.tscn")
+const preset_lts = preload("res://addons/jean28518.jTools/jSettings/input_presets/layout_lts.tres")
+const preset_openbve = preload("res://addons/jean28518.jTools/jSettings/input_presets/layout_openbve.tres")
 var _input_buttons := []
 
 onready var _input_grid := $"%InputGrid"
@@ -76,14 +76,18 @@ func _update_all_buttons():
 		button.update_text()
 
 
+func _apply_layout(input_map_resource: InputMapResource):
+	input_map_resource.apply()
+	_update_all_buttons()
+	emit_signal("save")
+
+
 func _load_layout(path: String):
 	# Load a layout into InputMap from the provided Resource file
 	Logger.log("Loading InputMap from \"" + path + "\".")
 	var input_map_resource := ResourceLoader.load(path) as InputMapResource
 	if input_map_resource != null:
-		input_map_resource.apply()
-		_update_all_buttons()
-		emit_signal("save")
+		_apply_layout(input_map_resource)
 	else:
 		Logger.log("Failed to load InputMap from \"" + path + "\".")
 
@@ -122,9 +126,9 @@ func _on_LayoutImportDialog_file_selected(path: String):
 
 func _on_LayoutConfirmationLTS_confirmed():
 	Logger.log("Applying LTS input layout preset.")
-	_load_layout(path_preset_lts)
+	_apply_layout(preset_lts)
 
 
 func _on_LayoutConfirmationOpenBVE_confirmed():
 	Logger.log("Applying OpenBVE input layout preset.")
-	_load_layout(path_preset_openbve)
+	_apply_layout(preset_openbve)

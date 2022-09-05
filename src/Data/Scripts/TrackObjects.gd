@@ -1,4 +1,4 @@
-#class_name TrackObject  # TODO: Godot Export "TrackObject" is not a valid type
+class_name TrackObject
 extends MultiMeshInstance
 
 export (String) var description: String = ""
@@ -91,6 +91,8 @@ func set_data(d: Dictionary, convert_deg_rad = false) -> void:
 	randomSeed = d.get("randomSeed", 0)
 	if d.has("applySlopeRotation"):
 		applySlopeRotation = d.applySlopeRotation
+
+	make_mesh_unique()  # update multimesh
 
 
 func attach_to_rail(_rail_node: Spatial) -> void:

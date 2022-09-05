@@ -142,28 +142,18 @@ func _port_to_new_chunk_system() -> void:
 		var to_prefab = preload("res://Data/Modules/TrackObjects.tscn")
 		for to_key in track_objects:
 			var track_obj = track_objects[to_key]
+			track_obj.data.mesh = load(track_obj.data.objectPath)
+			track_obj.data.materials = []
+			for path in track_obj.data.materialPaths:
+				track_obj.data.materials.append(load(path))
 
 			var to_instance = to_prefab.instance()
 			to_instance.name = track_obj.name
 			to_instance.multimesh = MultiMesh.new()
 			to_instance.multimesh.transform_format = MultiMesh.TRANSFORM_3D
-			to_instance.multimesh.mesh = load(track_obj.data.objectPath)
 			to_instance.materials = []
-			to_instance.mesh = load(track_obj.data.objectPath)
-
-			if to_instance.multimesh.mesh != null:
-				var i = 0
-				for material_path in track_obj.data.materialPaths:
-					to_instance.materials.append(load(material_path))
-					to_instance.multimesh.mesh.surface_set_material(i, load(material_path))
-					i += 1
-			else:
-				Logger.err("Could not load object '%s'." % track_obj.data.objectPath, self)
-
-			# true = convert degrees to radians
-			to_instance.set_data(track_obj.data, true)
-
 			to_instance.transform = track_obj.transform
+			to_instance.set_data(track_obj.data, true)  # true = convert degrees to radians
 
 			new_chunk.get_node("TrackObjects").add_child(to_instance)
 			to_instance.owner = new_chunk
@@ -856,7 +846,7 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 
 	rail.track_objects.append(track_object)
 
-	var chunk_pos = $World.chunk_manager.position_to_chunk(rail.global_transform.position)
+	var chunk_pos = $World.chunk_manager.position_to_chunk(rail.global_transform.origin)
 	var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
 	var chunk = $World/Chunks.get_node(chunk_name)
 

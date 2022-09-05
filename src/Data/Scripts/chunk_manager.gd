@@ -4,7 +4,7 @@ extends Node
 const world_origin_shift_treshold: int = 5_000  # if further than this from origin, recenter world origin
 const chunk_size: int = 1000  # extend of a chunk in all directions
 
-var loader = null
+var loader: ChunkLoaderInteractive = null
 var world = null
 var editor = null
 var world_origin := Vector3(0, 0, 0)
@@ -72,8 +72,7 @@ func _ready():
 
 	_order_rails_by_chunk()
 
-	# TODO: ChunkLoaderInteractive is not a valid type
-	loader = load("res://Data/Scripts/chunk_loader_interactive.gd").new()
+	loader = ChunkLoaderInteractive.new()
 	loader.chunk_manager = self
 	add_child(loader)
 
@@ -186,7 +185,7 @@ func _force_load_chunk_immediately(chunk_pos: Vector3):
 
 
 # TODO: Godot Export "TrackObject is not a valid type"
-func add_track_object(track_object):
+func add_track_object(track_object: TrackObject):
 	var rail_name = track_object.attached_rail
 	var rail = world.get_node("Rails").get_node_or_null(rail_name)
 	if not is_instance_valid(rail):

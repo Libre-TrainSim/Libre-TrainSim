@@ -2,12 +2,8 @@ extends Control
 
 var world: Node
 var currentRail: Node
-var copyRail
-var copyTO
 var copyTOArray: Array
-var currentTO  # TODO: Godot Export "TrackObject" is not a valid type
-var editor_selection # Editor Selection
-var pluginRoot
+var currentTO: TrackObject
 
 var track_object_resource: PackedScene = preload("res://Data/Modules/TrackObjects.tscn")
 

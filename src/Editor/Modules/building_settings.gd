@@ -48,19 +48,22 @@ func set_mesh(new_mesh: ArrayMesh):
 
 		var line_edit := new_child.get_node("LineEdit") as LineEdit
 
+		var material_name := new_mesh.surface_get_name(i)
+		if material_name in possible_materials:
+			line_edit.placeholder_text = material_name
+		else:
+			line_edit.placeholder_text = material_name
+
 		var current_material := current_mesh.surface_get_material(i)
 		if current_material != null:
 			line_edit.text = current_material.resource_path
 		else:
-			var material_name := new_mesh.surface_get_name(i)
 			if material_name in possible_materials:
 				line_edit.text = possible_materials[material_name]
-				line_edit.placeholder_text = material_name
 				current_material = load(possible_materials[material_name])
 				current_mesh.surface_set_material(i, current_material)
 			else:
 				line_edit.text = ""
-				line_edit.placeholder_text = material_name
 
 		new_child.get_node("Label").text += String(i)
 		add_child(new_child)

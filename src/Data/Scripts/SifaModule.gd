@@ -19,7 +19,7 @@ func _on_settings_changed() -> void:
 	#   connect "settings changed" signal, then re-check if sifa is on
 	#   in case the player toggles it in the pause-menu options menu
 
-	is_sifa_enabled = (not Root.EasyMode) and jSaveManager.get_setting("sifa_enabled")
+	is_sifa_enabled = (not Root.EasyMode) and jSettings.get_sifa()
 	set_process(is_sifa_enabled)
 	set_process_unhandled_key_input(is_sifa_enabled)
 

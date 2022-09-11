@@ -199,9 +199,17 @@ func set_sifa(val: bool):
 	save_settings()
 
 
+func get_sifa() -> bool:
+	return ProjectSettings["game/gameplay/sifa_enabled"]
+
+
 func set_pzb(val: bool):
 	ProjectSettings["game/gameplay/pzb_enabled"] = val
 	save_settings()
+
+
+func get_pzb() -> bool:
+	return ProjectSettings["game/gameplay/pzb_enabled"]
 
 
 func set_chunk_unload_distance(val: float):

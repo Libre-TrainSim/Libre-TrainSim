@@ -16,6 +16,10 @@ one_shot = true
 wait_time = 15.0
 one_shot = true
 
+[node name="SpeedTimer" type="Timer" parent="."]
+wait_time = 23.0
+one_shot = true
+
 [node name="153mMonitor" type="Node" parent="."]
 script = ExtResource( 2 )
 _distance = 153
@@ -37,9 +41,6 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PanelContainer" type="PanelContainer" parent="DEBUG"]
 margin_left = 60.0
@@ -54,7 +55,7 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 136.0
-margin_bottom = 201.0
+margin_bottom = 219.0
 columns = 2
 
 [node name="PZBType_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
@@ -127,69 +128,80 @@ margin_top = 90.0
 margin_right = 129.0
 margin_bottom = 104.0
 
-[node name="Monitor153m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+[node name="SpeedTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
 margin_top = 108.0
 margin_right = 125.0
 margin_bottom = 122.0
+text = "Speed Timer: "
+
+[node name="SpeedTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_left = 129.0
+margin_top = 108.0
+margin_right = 129.0
+margin_bottom = 122.0
+
+[node name="Monitor153m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
+margin_top = 126.0
+margin_right = 125.0
+margin_bottom = 140.0
 text = "153m: "
 
 [node name="Monitor153m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
 margin_left = 129.0
-margin_top = 108.0
+margin_top = 126.0
 margin_right = 129.0
-margin_bottom = 122.0
+margin_bottom = 140.0
 
 [node name="Monitor250m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-margin_top = 126.0
+margin_top = 144.0
 margin_right = 125.0
-margin_bottom = 140.0
+margin_bottom = 158.0
 text = "250m: "
 
 [node name="Monitor250m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
 margin_left = 129.0
-margin_top = 126.0
+margin_top = 144.0
 margin_right = 129.0
-margin_bottom = 140.0
+margin_bottom = 158.0
 
 [node name="Monitor700m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-margin_top = 144.0
+margin_top = 162.0
 margin_right = 125.0
-margin_bottom = 158.0
+margin_bottom = 176.0
 text = "700m: "
 
 [node name="Monitor700m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
 margin_left = 129.0
-margin_top = 144.0
+margin_top = 162.0
 margin_right = 129.0
-margin_bottom = 158.0
+margin_bottom = 176.0
 
 [node name="Monitor1250m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-margin_top = 162.0
+margin_top = 180.0
 margin_right = 125.0
-margin_bottom = 176.0
+margin_bottom = 194.0
 text = "1250m: "
 
 [node name="Monitor1250m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
 margin_left = 129.0
-margin_top = 162.0
+margin_top = 180.0
 margin_right = 129.0
-margin_bottom = 176.0
+margin_bottom = 194.0
 
 [node name="Brakes_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-margin_top = 180.0
+margin_top = 198.0
 margin_right = 125.0
-margin_bottom = 194.0
+margin_bottom = 212.0
 text = "Emergency Brakes: "
 
 [node name="Brakes" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
 margin_left = 129.0
-margin_top = 180.0
+margin_top = 198.0
 margin_right = 129.0
-margin_bottom = 194.0
+margin_bottom = 212.0
 
 [connection signal="timeout" from="AckTimer" to="." method="emergency_brake"]
 [connection signal="timeout" from="RestrictiveTimer" to="." method="restrictive_mode"]
-[connection signal="reached" from="153mMonitor" to="." method="_on_153m_reached"]
 [connection signal="reached" from="250mMonitor" to="." method="_on_250m_reached"]
 [connection signal="reached" from="700mMonitor" to="." method="_on_700m_reached"]
 [connection signal="reached" from="1250mMonitor" to="." method="_on_1250m_reached"]

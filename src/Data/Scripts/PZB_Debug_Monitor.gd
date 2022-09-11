@@ -40,6 +40,11 @@ func _process(_delta: float) -> void:
 	else:
 		$PanelContainer/GridContainer/RestrictiveTimer.text = str($"../RestrictiveTimer".time_left)
 
+	if $"../SpeedTimer".is_stopped():
+		$PanelContainer/GridContainer/SpeedTimer.text = "STOPPED"
+	else:
+		$PanelContainer/GridContainer/SpeedTimer.text = str($"../SpeedTimer".time_left)
+
 	if $"../153mMonitor".is_stopped:
 		$PanelContainer/GridContainer/Monitor153m.text = "STOPPED"
 	else:

@@ -19,7 +19,8 @@ func set_player(player: Spatial) -> void:
 
 
 func distance_left() -> float:
-	return (_start_dist + _distance) - _player.distance_on_route
+	var dist = (_start_dist + _distance) - _player.distance_on_route
+	return max(dist, 0)  # never return negative values
 
 
 func _ready() -> void:

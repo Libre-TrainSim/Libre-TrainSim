@@ -4,6 +4,19 @@ extends SafetySystem
 # we only check speed at certain points, and not continuously
 # There might also be some Edge Cases that are not 100% correct.
 
+const PZB_SPEED_MAX = 165.0
+const PZB_SPEED_1000_START = PZB_SPEED_MAX
+const PZB_SPEED_1000_END = 85.0
+const PZB_SPEED_500_START = 65.0
+const PZB_SPEED_500_END = 45.0
+
+const PZB_SPEED_1000_RESTRICTIVE_THRESHOLD = 10.0
+const PZB_SPEED_1000_RESTRICTIVE = 45.0
+
+const PZB_SPEED_500_RESTRICTIVE_THRESHOLD_START = 30.0
+const PZB_SPEED_500_RESTRICTIVE_THRESHOLD_END = 10.0
+const PZB_SPEED_500_RESTRICTIVE = 25.0
+
 # passing the module so that the connected node can get all information it wants
 # most likely only needs mode and magnet, but maybe wants speed_limit as well!
 signal pzb_changed(pzb_module)
@@ -17,10 +30,10 @@ var pzb_type: int = PZBType.PASSENGER setget set_type
 
 enum PZBMode {
 	DISABLED =    0b0000_0000, # 0
-	IDLE =        0b0000_0001  # 1
+	IDLE =        0b0000_0001, # 1
 	MONITORING =  0b0000_0010, # 2
 	RESTRICTIVE = 0b0000_0100, # 4
-	EMERGENCY =   0b0000_1000  # 8
+	EMERGENCY =   0b0000_1000, # 8
 	MASK_MODE =   0b0000_1111,
 	_HIDDEN =     0b0001_0000, # 16
 	_500Hz =      0b0010_0000, # 32
@@ -30,6 +43,8 @@ enum PZBMode {
 }
 var pzb_mode: int = PZBMode.IDLE setget set_mode
 var pzb_speed_limit: float setget set_speed_limit  # no speed limit
+
+var pzb_command_pressed: bool = false
 
 onready var player: LTSPlayer = find_parent("Player")
 
@@ -42,8 +57,7 @@ func _ready() -> void:
 
 	_on_settings_changed()
 
-	if pzb_speed_limit == null:
-		pzb_speed_limit = 1000
+	pzb_speed_limit = Math.kmh_to_speed(PZB_SPEED_MAX)
 
 
 func _on_settings_changed() -> void:
@@ -51,7 +65,7 @@ func _on_settings_changed() -> void:
 	#   connect "settings changed" signal, then re-check if pzb is on
 	#   in case the player toggles it in the pause-menu options menu
 
-	var is_pzb_enabled: bool = (not Root.EasyMode) and jSaveManager.get_setting("pzb_enabled")
+	var is_pzb_enabled: bool = (not Root.EasyMode) and jSettings.get_pzb()
 
 	if is_pzb_enabled:
 		pzb_reset()
@@ -91,21 +105,57 @@ func set_speed_limit(new_val: float) -> void:
 
 func pzb_reset() -> void:
 	pzb_mode = PZBMode.IDLE
-	pzb_speed_limit = player.currentSpeedLimit
 	release_emergency_brakes()
 	emit_signal("pzb_changed", self)
 
 
-func _process(_delta: float) -> void:
-	if player.speed > pzb_speed_limit and not (pzb_mode & PZBMode.EMERGENCY):
-		send_message(tr("PZB_OVER_SPEED_LIMIT"))
-		emergency_brake()
+func _calc_pzb_speed_limit():
+	if pzb_mode & (PZBMode.IDLE | PZBMode.DISABLED):
+		pzb_speed_limit = Math.kmh_to_speed(PZB_SPEED_MAX)
 
-	if player.speed < Math.kmh_to_speed(10):
+	elif pzb_mode & PZBMode.RESTRICTIVE:
+		if pzb_mode & (PZBMode._1000Hz | PZBMode._HIDDEN):
+			pzb_speed_limit = Math.kmh_to_speed(PZB_SPEED_1000_RESTRICTIVE)
+		elif pzb_mode & PZBMode._500Hz:
+			var alpha = 1.0 - ($"153mMonitor".distance_left() / $"153mMonitor"._distance)
+			pzb_speed_limit = Math.kmh_to_speed(lerp(PZB_SPEED_1000_RESTRICTIVE, PZB_SPEED_500_RESTRICTIVE, alpha))
+
+	elif pzb_mode & PZBMode.MONITORING:
+		if pzb_mode & (PZBMode._1000Hz | PZBMode._HIDDEN):
+			var alpha = 1.0 - ($SpeedTimer.time_left / $SpeedTimer.wait_time)
+			pzb_speed_limit = Math.kmh_to_speed(lerp(PZB_SPEED_1000_START, PZB_SPEED_1000_END, alpha))
+		elif pzb_mode & PZBMode._500Hz:
+			var alpha = 1.0 - ($"153mMonitor".distance_left() / $"153mMonitor"._distance)
+			pzb_speed_limit = Math.kmh_to_speed(lerp(PZB_SPEED_500_START, PZB_SPEED_500_END, alpha))
+
+
+func _check_restrictive_mode():
+	if player.speed <= 0:
+		restrictive_mode()
+		return
+
+	var threshold = PZB_SPEED_1000_RESTRICTIVE_THRESHOLD
+	if pzb_mode & PZBMode._500Hz:
+		var alpha = 1.0 - ($"153mMonitor".distance_left() / $"153mMonitor"._distance)
+		threshold = lerp(PZB_SPEED_500_RESTRICTIVE_THRESHOLD_START, \
+						 PZB_SPEED_500_RESTRICTIVE_THRESHOLD_END, \
+						 alpha)
+
+	if player.speed < Math.kmh_to_speed(threshold):
 		if $RestrictiveTimer.is_stopped() and (pzb_mode & PZBMode.MONITORING):
 			$RestrictiveTimer.start()
 	elif not $RestrictiveTimer.is_stopped():
 		$RestrictiveTimer.stop()
+
+
+func _process(_delta: float) -> void:
+	_calc_pzb_speed_limit()
+
+	if player.speed > pzb_speed_limit and not (pzb_mode & PZBMode.EMERGENCY):
+		send_message(tr("PZB_OVER_SPEED_LIMIT"))
+		emergency_brake()
+
+	_check_restrictive_mode()
 
 
 func _unhandled_key_input(_event: InputEventKey) -> void:
@@ -124,7 +174,6 @@ func _unhandled_key_input(_event: InputEventKey) -> void:
 		if not (pzb_mode & (PZBMode._1000Hz | PZBMode._500Hz | PZBMode.EMERGENCY)) \
 		or (pzb_mode & PZBMode.EMERGENCY and player.speed == 0):
 			release_emergency_brakes()
-			pzb_speed_limit = player.currentSpeedLimit
 			if pzb_mode & PZBMode._HIDDEN:
 				pzb_mode = PZBMode.IDLE | PZBMode._HIDDEN
 			else:
@@ -133,6 +182,9 @@ func _unhandled_key_input(_event: InputEventKey) -> void:
 
 	if Input.is_action_just_pressed("pzb_command"):
 		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
+		pzb_command_pressed = true
+	if Input.is_action_just_released("pzb_command"):
+		pzb_command_pressed = false
 
 
 func mode_1000hz() -> void:
@@ -149,8 +201,9 @@ func mode_1000hz() -> void:
 	# then we SKIP the 23 seconds timer!
 	if not was_already_monitoring:
 		# the false is important, it prevents the timer from running when the game is paused
-		yield( get_tree().create_timer(23, false), "timeout" )
-	set_speed_limit(Math.kmh_to_speed(85))
+		$SpeedTimer.start()
+	else:
+		set_speed_limit(Math.kmh_to_speed(PZB_SPEED_1000_END))
 
 
 func mode_500hz() -> void:
@@ -158,13 +211,12 @@ func mode_500hz() -> void:
 		send_message(tr("PZB_ILLEGAL_FREE"))
 		emergency_brake()
 	elif not (pzb_mode & PZBMode.EMERGENCY):
-		if player.speed > Math.kmh_to_speed(65):
+		if player.speed > Math.kmh_to_speed(PZB_SPEED_500_START):
 			send_message(tr("PZB_FAST_500HZ"))
 			emergency_brake()
 
 		pzb_mode &= ~PZBMode.MASK_MAGNET  # disable any magnet info
 		pzb_mode |= PZBMode._500Hz  # enable 500Hz
-		$"1250mMonitor".stop()
 		$"153mMonitor".start()
 		$"250mMonitor".start()
 
@@ -177,18 +229,13 @@ func _on_reverser_changed(state: int) -> void:
 		return
 
 	if state == ReverserState.FORWARD and pzb_mode == PZBMode.IDLE:
+		pzb_mode = PZBMode.RESTRICTIVE | PZBMode._HIDDEN
 		restrictive_mode()
 
 
 func restrictive_mode() -> void:
 	pzb_mode &= ~PZBMode.MASK_MODE   # disable current mode
 	pzb_mode |= PZBMode.RESTRICTIVE  # enable restrictive
-
-	# set speed limit
-	if pzb_mode & PZBMode._500Hz:
-		pzb_speed_limit = Math.kmh_to_speed(25)
-	else:
-		pzb_speed_limit = Math.kmh_to_speed(45)
 
 	# start mode is equal to RESTRICTIVE_HIDDEN (ie. 1000Hz mode after 700m)
 	# this means it deactivates after 550 meters
@@ -210,6 +257,8 @@ func _on_passed_signal(signal_instance: Spatial) -> void:
 			500:
 				mode_500hz()
 			2000:
+				if pzb_command_pressed:
+					return
 				send_message(tr("PZB_PASSED_2000HZ"))
 				pzb_mode |= PZBMode._2000Hz
 				emergency_brake()
@@ -220,15 +269,6 @@ func emergency_brake() -> void:
 	pzb_mode |= PZBMode.EMERGENCY
 	enable_emergency_brakes()
 	emit_signal("pzb_changed", self)
-
-
-func _on_153m_reached() -> void:
-	if not pzb_mode & PZBMode._500Hz:
-		return
-	if pzb_mode & PZBMode.MONITORING:
-		set_speed_limit(Math.kmh_to_speed(45))
-	elif pzb_mode & PZBMode.RESTRICTIVE:
-		set_speed_limit(Math.kmh_to_speed(25))
 
 
 func _on_700m_reached() -> void:
@@ -249,16 +289,16 @@ func _on_1250m_reached() -> void:
 # 500Hz Mode stops after 250 meters
 # but if it is restrictive, then it stays restrictive!
 func _on_250m_reached() -> void:
-	if pzb_mode != PZBMode.EMERGENCY:
-		# 500Hz restrictive = 25km/h, but 500Hz just disabled, so reset to 45km/h
-		if pzb_mode & PZBMode.RESTRICTIVE:
-			pzb_speed_limit = Math.kmh_to_speed(45)
-			pzb_mode = PZBMode.RESTRICTIVE
-		else:
-			pzb_speed_limit = player.currentSpeedLimit
-			pzb_mode = PZBMode.IDLE
+	if pzb_mode == PZBMode.EMERGENCY:
+		return
 
-		emit_signal("pzb_changed", self)
+	# 500Hz restrictive = 25km/h, but 500Hz just disabled, so reset to 45km/h
+	if pzb_mode & PZBMode.RESTRICTIVE:
+		pzb_mode = PZBMode.RESTRICTIVE | PZBMode._HIDDEN
+	else:
+		pzb_mode = PZBMode.IDLE
+
+	emit_signal("pzb_changed", self)
 
 
 func send_message(msg: String) -> void:

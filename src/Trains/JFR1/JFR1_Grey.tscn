@@ -106,7 +106,7 @@ size = Vector2( 1, 0.75 )
 [sub_resource type="Animation" id=9]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Doors/DoorR1:translation")
+tracks/0/path = NodePath("DoorR1:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -118,7 +118,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Doors/DoorR2:translation")
+tracks/1/path = NodePath("DoorR2:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -130,7 +130,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Doors/DoorR4:translation")
+tracks/2/path = NodePath("DoorR4:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -142,7 +142,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Doors/DoorR3:translation")
+tracks/3/path = NodePath("DoorR3:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -154,7 +154,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Doors/DoorR6:translation")
+tracks/4/path = NodePath("DoorR6:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -166,7 +166,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Doors/DoorR5:translation")
+tracks/5/path = NodePath("DoorR5:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -181,7 +181,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=10]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Doors/DoorR12:translation")
+tracks/0/path = NodePath("DoorR12:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -193,7 +193,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Doors/DoorR11:translation")
+tracks/1/path = NodePath("DoorR11:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -205,7 +205,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Doors/DoorR10:translation")
+tracks/2/path = NodePath("DoorR10:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -217,7 +217,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Doors/DoorR9:translation")
+tracks/3/path = NodePath("DoorR9:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -229,7 +229,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Doors/DoorR8:translation")
+tracks/4/path = NodePath("DoorR8:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -241,7 +241,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Doors/DoorR7:translation")
+tracks/5/path = NodePath("DoorR7:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -307,7 +307,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=12]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Doors/DoorR1:translation")
+tracks/0/path = NodePath("DoorR1:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -319,7 +319,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Doors/DoorR2:translation")
+tracks/1/path = NodePath("DoorR2:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -331,7 +331,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Doors/DoorR4:translation")
+tracks/2/path = NodePath("DoorR4:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -343,7 +343,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Doors/DoorR3:translation")
+tracks/3/path = NodePath("DoorR3:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -355,7 +355,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Doors/DoorR6:translation")
+tracks/4/path = NodePath("DoorR6:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -367,7 +367,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Doors/DoorR5:translation")
+tracks/5/path = NodePath("DoorR5:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -382,7 +382,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=13]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Doors/DoorR12:translation")
+tracks/0/path = NodePath("DoorR12:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -394,7 +394,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Doors/DoorR11:translation")
+tracks/1/path = NodePath("DoorR11:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -406,7 +406,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Doors/DoorR10:translation")
+tracks/2/path = NodePath("DoorR10:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -418,7 +418,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Doors/DoorR9:translation")
+tracks/3/path = NodePath("DoorR9:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -430,7 +430,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Doors/DoorR8:translation")
+tracks/4/path = NodePath("DoorR8:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -442,7 +442,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Doors/DoorR7:translation")
+tracks/5/path = NodePath("DoorR7:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -530,7 +530,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id=18]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Doors/DoorR1:translation")
+tracks/0/path = NodePath("DoorR1:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -542,7 +542,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, 1.51497 ), Vector3( -5.05109, 1.02943, 1.56736 ), Vector3( -5.75106, 1.02943, 1.56736 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Doors/DoorR2:translation")
+tracks/1/path = NodePath("DoorR2:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -554,7 +554,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, 1.51497 ), Vector3( -4.33488, 1.02943, 1.56736 ), Vector3( -3.58466, 1.02943, 1.56736 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Doors/DoorR4:translation")
+tracks/2/path = NodePath("DoorR4:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -566,7 +566,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, 1.51497 ), Vector3( -0.363548, 1.02943, 1.56736 ), Vector3( -1.06352, 1.02943, 1.56736 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Doors/DoorR3:translation")
+tracks/3/path = NodePath("DoorR3:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -578,7 +578,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, 1.51497 ), Vector3( 0.352662, 1.02943, 1.56736 ), Vector3( 1.10287, 1.02943, 1.56736 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Doors/DoorR6:translation")
+tracks/4/path = NodePath("DoorR6:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -590,7 +590,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, 1.51497 ), Vector3( 4.33724, 1.02943, 1.56736 ), Vector3( 3.63727, 1.02943, 1.56736 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Doors/DoorR5:translation")
+tracks/5/path = NodePath("DoorR5:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -605,7 +605,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=19]
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Doors/DoorR12:translation")
+tracks/0/path = NodePath("DoorR12:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -617,7 +617,7 @@ tracks/0/keys = {
 "values": [ Vector3( -5.05109, 1.02943, -1.51171 ), Vector3( -5.05109, 1.02943, -1.5828 ), Vector3( -5.77302, 1.02943, -1.5828 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Doors/DoorR11:translation")
+tracks/1/path = NodePath("DoorR11:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -629,7 +629,7 @@ tracks/1/keys = {
 "values": [ Vector3( -4.33488, 1.02943, -1.51171 ), Vector3( -4.33488, 1.02943, -1.5828 ), Vector3( -3.61846, 1.02943, -1.5828 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Doors/DoorR10:translation")
+tracks/2/path = NodePath("DoorR10:translation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -641,7 +641,7 @@ tracks/2/keys = {
 "values": [ Vector3( -0.363548, 1.02943, -1.51171 ), Vector3( -0.363548, 1.02943, -1.5828 ), Vector3( -1.08548, 1.02943, -1.5828 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Doors/DoorR9:translation")
+tracks/3/path = NodePath("DoorR9:translation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -653,7 +653,7 @@ tracks/3/keys = {
 "values": [ Vector3( 0.352662, 1.02943, -1.51171 ), Vector3( 0.352662, 1.02943, -1.5828 ), Vector3( 1.06908, 1.02943, -1.5828 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Doors/DoorR8:translation")
+tracks/4/path = NodePath("DoorR8:translation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -665,7 +665,7 @@ tracks/4/keys = {
 "values": [ Vector3( 4.33724, 1.02943, -1.51171 ), Vector3( 4.33724, 1.02943, -1.5828 ), Vector3( 3.61531, 1.02943, -1.5828 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Doors/DoorR7:translation")
+tracks/5/path = NodePath("DoorR7:translation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false

@@ -1,12 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Editor/Scripts/Gizmo.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 5.5, 0.5, 0.5 )
 
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 11, 1, 1 )
+[sub_resource type="CylinderMesh" id=11]
 
 [sub_resource type="SpatialMaterial" id=3]
 flags_no_depth_test = true
@@ -21,6 +20,8 @@ emission_on_uv2 = false
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 5.5, 0.5, 0.5 )
 
+[sub_resource type="CylinderMesh" id=12]
+
 [sub_resource type="SpatialMaterial" id=5]
 flags_no_depth_test = true
 flags_disable_ambient_light = true
@@ -33,6 +34,8 @@ emission_on_uv2 = false
 
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 5.5, 0.5, 0.5 )
+
+[sub_resource type="CylinderMesh" id=13]
 
 [sub_resource type="SpatialMaterial" id=7]
 flags_no_depth_test = true
@@ -75,20 +78,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="x-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
-mesh = SubResource( 2 )
+transform = Transform( -2.18557e-08, -4.5, 0, 0.5, -1.96701e-07, 0, 0, 0, 0.5, 2, 0, 0 )
+mesh = SubResource( 11 )
 material/0 = SubResource( 3 )
 
 [node name="y-axis" type="StaticBody" parent="."]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 4, 0 )
+transform = Transform( 0.5, 0, 0, 0, 4.5, 0, 0, 0, 0.5, 0, 4, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="y-axis"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
 shape = SubResource( 4 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="y-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 12 )
 material/0 = SubResource( 5 )
 
 [node name="z-axis" type="StaticBody" parent="."]
@@ -99,8 +101,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
 shape = SubResource( 6 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="z-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
-mesh = SubResource( 2 )
+transform = Transform( -2.18557e-08, -4.5, 0, 0.5, -1.96701e-07, 0, -4.23516e-22, 0, 0.5, 1, 0, 0 )
+mesh = SubResource( 13 )
 material/0 = SubResource( 7 )
 
 [node name="x_rot" type="StaticBody" parent="."]

@@ -11,7 +11,8 @@ var x_rot_active = false
 var mouseMotion = Vector2(0,0)
 func _input(event):
 	if event is InputEventMouseMotion:
-		mouseMotion = mouseMotion + event.relative
+		mouseMotion = mouseMotion + event.relative * (-1 if z_active else 1)
+
 
 	if event is InputEventMouseButton and event.pressed == true:
 		mouseMotion = Vector2(0,0)

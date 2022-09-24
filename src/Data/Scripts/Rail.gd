@@ -10,7 +10,7 @@ export (float) var length: float
 export (float) var radius: float
 export (float) var build_distance: float = 1
 export (int) var visible_segments: int
-export (bool) var manual_moving: bool = false
+export (bool) var manual_moving: bool = true
 
 var track_objects: Array = []
 
@@ -53,7 +53,6 @@ var attached_signals: Array = []
 
 func _ready() -> void:
 	update_parallel_rail_settings()
-	manual_moving = false
 	_update()
 	if not Root.Editor:
 		$Beginning.queue_free()

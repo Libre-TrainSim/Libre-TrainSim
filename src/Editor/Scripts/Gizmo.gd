@@ -11,6 +11,8 @@ var y_hovered = false
 var z_hovered = false
 var x_rot_hovered = false
 
+var mouse_position_before_capture = null
+
 var mouseMotion = Vector2(0,0)
 
 func _input(event):
@@ -21,7 +23,7 @@ func _input(event):
 		if event.pressed:
 			# Reset mouse motion
 			mouseMotion = Vector2(0,0)
-			
+
 			# Ensure only one axis is active at a time
 			if x_hovered:
 				x_active = true
@@ -34,6 +36,7 @@ func _input(event):
 
 			# Capture mouse
 			if any_axis_active():
+				mouse_position_before_capture = get_viewport().get_mouse_position()
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 		elif any_axis_active():
@@ -45,6 +48,7 @@ func _input(event):
 
 			# Release mouse
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			get_viewport().warp_mouse(mouse_position_before_capture)
 
 
 func _process(_delta):

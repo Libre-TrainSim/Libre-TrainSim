@@ -3,7 +3,7 @@
 [ext_resource path="res://Editor/Scripts/Gizmo.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 5.5, 0.5, 0.5 )
+extents = Vector3( 4.5, 0.5, 0.5 )
 
 [sub_resource type="CylinderMesh" id=11]
 
@@ -18,7 +18,7 @@ emission_operator = 0
 emission_on_uv2 = false
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 5.5, 0.5, 0.5 )
+extents = Vector3( 4.5, 0.5, 0.5 )
 
 [sub_resource type="CylinderMesh" id=12]
 
@@ -33,7 +33,7 @@ emission_operator = 0
 emission_on_uv2 = false
 
 [sub_resource type="BoxShape" id=6]
-extents = Vector3( 5.5, 0.5, 0.5 )
+extents = Vector3( 4.5, 0.5, 0.5 )
 
 [sub_resource type="CylinderMesh" id=13]
 
@@ -71,25 +71,26 @@ radius = 7.0
 script = ExtResource( 1 )
 
 [node name="x-axis" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="x-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="x-axis"]
-transform = Transform( -2.18557e-08, -4.5, 0, 0.5, -1.96701e-07, 0, 0, 0, 0.5, 2, 0, 0 )
+transform = Transform( -2.18557e-08, -4.5, 0, 0.5, -1.96701e-07, 0, 0, 0, 0.5, 1, 0, 0 )
 mesh = SubResource( 11 )
 material/0 = SubResource( 3 )
 
 [node name="y-axis" type="StaticBody" parent="."]
-transform = Transform( 0.5, 0, 0, 0, 4.5, 0, 0, 0, 0.5, 0, 4, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="y-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 4 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="y-axis"]
+transform = Transform( 0.5, 0, 0, 0, 4.5, 0, 0, 0, 0.5, 0, 1, 0 )
 mesh = SubResource( 12 )
 material/0 = SubResource( 5 )
 
@@ -97,7 +98,7 @@ material/0 = SubResource( 5 )
 transform = Transform( 4.37114e-08, -3.82137e-15, -1, -8.74228e-08, -1, 0, -1, 8.74228e-08, -4.37114e-08, 0, 0, -4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="z-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 shape = SubResource( 6 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="z-axis"]

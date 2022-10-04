@@ -1,23 +1,23 @@
 extends Spatial
 
 
-var x_active = false
-var y_active = false
-var z_active = false
-var x_rot_active = false
+var x_active := false
+var y_active := false
+var z_active := false
+var x_rot_active := false
 
-var x_hovered = false
-var y_hovered = false
-var z_hovered = false
-var x_rot_hovered = false
+var x_hovered := false
+var y_hovered := false
+var z_hovered := false
+var x_rot_hovered := false
 
-var mouse_position_before_capture = null
+var mouse_position_before_capture := Vector2(0,0)
 
-var mouseMotion = Vector2(0,0)
+var mouseMotion := Vector2(0,0)
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		mouseMotion = mouseMotion + event.relative * (-1 if z_active else 1)
+		mouseMotion += event.relative * (-1 if z_active else 1)
 
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if event.pressed:
@@ -68,33 +68,33 @@ func _process(_delta):
 		mouseMotion = Vector2(0,0)
 
 
-func any_axis_active():
+func any_axis_active() -> bool:
 	return x_active or y_active or z_active or x_rot_active
 
 
-func _on_xaxis_mouse_entered():
+func _on_xaxis_mouse_entered() -> void:
 	x_hovered = true
 
-func _on_xaxis_mouse_exited():
+func _on_xaxis_mouse_exited() -> void:
 	x_hovered = false
 
 
-func _on_yaxis_mouse_entered():
+func _on_yaxis_mouse_entered() -> void:
 	y_hovered = true
 
-func _on_yaxis_mouse_exited():
+func _on_yaxis_mouse_exited() -> void:
 	y_hovered = false
 
 
-func _on_zaxis_mouse_entered():
+func _on_zaxis_mouse_entered() -> void:
 	z_hovered = true
 
-func _on_zaxis_mouse_exited():
+func _on_zaxis_mouse_exited() -> void:
 	z_hovered = false
 
 
-func _on_x_rot_mouse_entered():
+func _on_x_rot_mouse_entered() -> void:
 	x_rot_hovered = true
 
-func _on_x_rot_mouse_exited():
+func _on_x_rot_mouse_exited() -> void:
 	x_rot_hovered = false

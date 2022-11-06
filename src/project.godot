@@ -144,7 +144,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/PassengerPathNode.gd"
 }, {
-"base": "Control",
+"base": "Reference",
 "class": "Pause",
 "language": "GDScript",
 "path": "res://Data/UI/pause.gd"

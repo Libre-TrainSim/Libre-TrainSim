@@ -14,9 +14,6 @@ shader_param/tint_color = Color( 0.42, 0.42, 0.42, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background" type="ColorRect" parent="."]
 modulate = Color( 1, 1, 1, 0.564706 )
@@ -86,7 +83,7 @@ text = "QUIT_TO_MENU"
 margin_top = 314.0
 margin_right = 294.0
 margin_bottom = 363.0
-text = "QUIT_TO_OS"
+text = "EXIT_GAME"
 
 [node name="StationJumper" parent="." instance=ExtResource( 3 )]
 visible = false

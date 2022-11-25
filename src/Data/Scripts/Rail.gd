@@ -73,7 +73,7 @@ func _generate_rail_collision():
 	for i in range(1, child_count):
 		area.get_child(i).queue_free()
 
-	var step := int(clamp(length/100, 3, 10))
+	var step := int(clamp(length / 100, 3, 10))
 	var box: BoxShape = col_shape_prefab.shape
 	box.extents.x = step
 	col_shape_prefab.transform.origin.x = step

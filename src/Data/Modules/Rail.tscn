@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Data/Scripts/Rail.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Objects/editor_arrow.obj" type="ArrayMesh" id=2]
@@ -9,10 +9,17 @@
 [sub_resource type="MultiMesh" id=1]
 transform_format = 1
 
+[sub_resource type="BoxShape" id=8]
+resource_local_to_scene = true
+extents = Vector3( 1, 0.379, 2.227 )
+
 [sub_resource type="BoxShape" id=7]
 extents = Vector3( 1.25213, 0.500005, 0.963791 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="MultiMesh" id=9]
+resource_local_to_scene = true
+transform_format = 1
+mesh = ExtResource( 2 )
 
 [sub_resource type="ArrayMesh" id=6]
 surfaces/0 = {
@@ -31,12 +38,15 @@ surfaces/0 = {
 [node name="Rail" type="Spatial" groups=["Rail"]]
 script = ExtResource( 1 )
 length = 100.0
-buildDistance = 0.9
-endpos = Vector3( 100, 0, 0 )
-isSwitchPart = [ "Rail2", "" ]
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 1 )
+
+[node name="Area" type="Area" parent="MultiMeshInstance"]
+
+[node name="CS1" type="CollisionShape" parent="MultiMeshInstance/Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.334, 0 )
+shape = SubResource( 8 )
 
 [node name="Beginning" type="Area" parent="."]
 
@@ -49,16 +59,8 @@ mesh = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.322, 0, 0 )
 shape = SubResource( 7 )
 
-[node name="Mid" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 0 )
-
-[node name="Beginning" type="MeshInstance" parent="Mid"]
-mesh = ExtResource( 2 )
-material/0 = SubResource( 4 )
-
-[node name="AabbShape" type="CollisionShape" parent="Mid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, 0, 0 )
-shape = SubResource( 7 )
+[node name="Arrows" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 9 )
 
 [node name="Ending" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )

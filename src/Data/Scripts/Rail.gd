@@ -57,7 +57,45 @@ func _ready() -> void:
 	if not Root.Editor:
 		$Beginning.queue_free()
 		$Ending.queue_free()
-		$Mid.queue_free()
+		$Arrows.queue_free()
+		$MultiMeshInstance/Area.queue_free()
+	else:
+		_generate_rail_collision()
+		_generate_direction_arrows()
+
+
+func _generate_rail_collision():
+	var area := $MultiMeshInstance/Area
+	var child_count := area.get_child_count()
+	var col_shape_prefab: CollisionShape = $MultiMeshInstance/Area/CS1
+	var offset := col_shape_prefab.transform.origin
+
+	for i in range(1, child_count):
+		area.get_child(i).queue_free()
+
+	var step := int(clamp(length / 100, 3, 10))
+	var box: BoxShape = col_shape_prefab.shape
+	box.extents.x = step
+	col_shape_prefab.transform.origin.x = step
+
+	for i in range(2 * step, length, 2 * step):
+		var col_shape: CollisionShape = col_shape_prefab.duplicate()
+		area.add_child(col_shape)
+		col_shape.owner = area
+		col_shape.transform = get_local_transform_at_distance(i)
+		col_shape.transform.origin += col_shape.transform.basis.xform(offset)
+
+
+func _generate_direction_arrows():
+	var transforms := []
+	var count := 0
+	var step := 50
+	for i in range(step, length, step):
+		count += 1
+		transforms.append(get_local_transform_at_distance(i))
+	$Arrows.multimesh.instance_count = count
+	for i in range(count):
+		$Arrows.multimesh.set_instance_transform(i, transforms[i])
 
 
 func _exit_tree() -> void:
@@ -144,7 +182,8 @@ func _update() -> void:
 
 	if Root.Editor and visible:
 		$Ending.transform = get_local_transform_at_distance(length)
-		$Mid.transform = get_local_transform_at_distance(length/2.0)
+		_generate_rail_collision()
+		_generate_direction_arrows()
 		update_connection_arrows()
 		for track_object in track_objects:
 			track_object.update()

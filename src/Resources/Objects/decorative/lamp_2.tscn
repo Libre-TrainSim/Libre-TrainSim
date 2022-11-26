@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Objects/platform_light_1_double.obj" type="ArrayMesh" id=1]
+
+[node name="Lamp2" type="MeshInstance"]
+mesh = ExtResource( 1 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.573777, 0.819012, 0, -0.819012, 0.573777, 0, 9.46636, -0.396636 )
+light_color = Color( 1, 0.807122, 0.651299, 1 )
+spot_range = 28.8592
+spot_angle = 36.6187
+__meta__ = {
+"color_filter": Color( 1, 1, 1, 0 ),
+"color_temperature": 4000,
+"use_color_temperature": true
+}
+
+[node name="SpotLight2" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.588914, 0.808196, 0, -0.808196, -0.588914, 0, 9.46636, 0.387644 )
+light_color = Color( 1, 0.807122, 0.651299, 1 )
+spot_range = 28.8592
+spot_angle = 36.6187
+__meta__ = {
+"color_filter": Color( 1, 1, 1, 0 ),
+"color_temperature": 4000,
+"use_color_temperature": true
+}

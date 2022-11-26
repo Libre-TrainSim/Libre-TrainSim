@@ -16,9 +16,6 @@ onready var trackName: String = FileName.rsplit("/")[0]
 
 export var world_origin_on_last_save = Vector3(0,0,0) # Used for chunk manager.
 
-var author: String = ""
-var picturePath: String = "res://screenshot.png"
-var description: String = ""
 
 var pending_train_spawns := []
 
@@ -177,7 +174,10 @@ func set_scenario_to_world() -> void:
 			pending_train_spawns.append(pending_train_spawn)
 
 	check_train_spawn(1)
-	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [tr(routes[Root.selected_route].description)])
+	var description := tr(current_scenario.description) if \
+			routes[Root.selected_route].description.empty() \
+			else tr(routes[Root.selected_route].description)
+	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [description])
 
 
 func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:

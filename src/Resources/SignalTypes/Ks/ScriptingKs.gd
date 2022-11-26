@@ -46,23 +46,14 @@ func blink() -> void:
 
 
 func update_visual_instance(instance: Node) -> void:
+	$Viewport2/Node2D/Label.text = make_speed_str(instance.speed)
+	$Viewport/Node2D/Label.text = make_speed_str(instance.warn_speed)
+
 	match instance.status:
 		SignalStatus.RED: red()
 		SignalStatus.GREEN: green()
 		SignalStatus.ORANGE: orange()
 		SignalStatus.OFF: off()
-
-	if instance.speed < 0:
-		$Screen2.visible = false
-	else:
-		$Viewport2/Node2D/Label.text = make_speed_str(instance.speed)
-		$Screen2.visible = true
-
-	if instance.warn_speed < 0:
-		$Screen1.visible = false
-	else:
-		$Viewport/Node2D/Label.text = make_speed_str(instance.warn_speed)
-		$Screen1.visible = true
 
 
 func green() -> void:

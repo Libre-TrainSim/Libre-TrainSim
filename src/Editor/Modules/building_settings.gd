@@ -4,6 +4,7 @@ signal updated
 
 var current_material_index := 0
 var current_mesh: ArrayMesh = null
+var mesh_instance: MeshInstance = null # for buildings
 var material_count := 0
 
 var requested_content_selector := false
@@ -24,21 +25,17 @@ func _ready():
 		possible_materials[material.get_file().get_basename()] = material
 
 
-func _input(_event):
-	if visible and not is_instance_valid(current_mesh):
-		Logger.warn("current_mesh was deleted but the building settings haven't been updated!", self)
-		hide()
-
-
-func set_mesh(new_mesh: ArrayMesh):
+func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 	#if current_mesh == new_mesh:
 	#	Logger.warn("BuildingSettings is set with the already set mesh. There is a logic issue anywhere. We are probably hiding a bug here.", self)
 	#	return
 
 	current_mesh = new_mesh
+	mesh_instance = new_mesh_instance
 	clear_materials_list()
 	if not is_instance_valid(current_mesh):
 		hide()
+		mesh_instance = null
 		return
 
 	material_count = new_mesh.get_surface_count()
@@ -54,14 +51,20 @@ func set_mesh(new_mesh: ArrayMesh):
 		else:
 			line_edit.placeholder_text = material_name
 
-		var current_material := current_mesh.surface_get_material(i)
+		var current_material := mesh_instance.get_active_material(i) if mesh_instance \
+				else current_mesh.surface_get_material(i)
+		if "::" in current_material.resource_path:
+			current_material = null
 		if current_material != null:
 			line_edit.text = current_material.resource_path
 		else:
 			if material_name in possible_materials:
 				line_edit.text = possible_materials[material_name]
 				current_material = load(possible_materials[material_name])
-				current_mesh.surface_set_material(i, current_material)
+				if mesh_instance:
+					mesh_instance.set_surface_material(i, current_material)
+				else:
+					current_mesh.surface_set_material(i, current_material)
 			else:
 				line_edit.text = ""
 
@@ -96,9 +99,10 @@ func set_current_config_to_mesh():
 		var material_path: String = child.get_node("LineEdit").text
 
 		if ResourceLoader.exists(material_path):
-			current_mesh.surface_set_material(counter, load(material_path))
-		elif material_path.empty():
-			current_mesh.surface_set_material(counter, null)
+			if mesh_instance:
+				mesh_instance.set_surface_material(counter, load(material_path))
+			else:
+				current_mesh.surface_set_material(counter, load(material_path))
 
 		counter += 1
 

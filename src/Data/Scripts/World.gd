@@ -225,39 +225,47 @@ func update_rail_connections() -> void:
 # Ensure you called update_rail_connections() before.
 # pathfinding from a start rail to an end rail. returns an array of dicts with rail nodes and direction
 func get_path_from_to(start_rail: Node, forward: bool, destination_rail: Node) -> Array:
-	var route = _get_path_from_to_helper(start_rail, forward, [], destination_rail)
-	return route
+	var visited_rails = {start_rail: {forward = forward, from = null}}
+	visited_rails = _get_path_from_to_helper(start_rail, forward, visited_rails, destination_rail)
+	if visited_rails.size() == 0:
+		return []
+	return _backtrack_path(visited_rails, destination_rail)
 
 
 # Recursive Function
-func _get_path_from_to_helper(start_rail: Node, forward: bool, already_visited_rails: Array, destination_rail: Node) -> Array:
-	already_visited_rails.append({
-		rail = start_rail,
-		forward = forward
-		})
+func _get_path_from_to_helper(start_rail: Node, forward: bool, visited_rails: Dictionary, destination_rail: Node) -> Dictionary:
 	if start_rail == destination_rail:
-		return already_visited_rails
-	else:
-		var possbile_rails: Array
-		if forward:
-			possbile_rails = start_rail.get_connected_rails_at_ending()
-		else:
-			possbile_rails = start_rail.get_connected_rails_at_beginning()
-		for rail_node in possbile_rails:
-			if rail_node.get_connected_rails_at_ending().has(start_rail):
-				forward = false
-			if rail_node.get_connected_rails_at_beginning().has(start_rail):
-				forward = true
-			var loop_detected: bool = false
-			for entry in already_visited_rails:
-				if rail_node == entry.rail and forward == entry.forward:
-					loop_detected = true
-					break
-			if not loop_detected:
-				var outcome: Array = _get_path_from_to_helper(rail_node, forward, already_visited_rails, destination_rail)
-				if outcome != []:
-					return outcome
-	return []
+		return visited_rails
+
+	var possbile_rails: Array = start_rail.get_connected_rails(forward)
+
+	for rail_node in possbile_rails:
+		forward = rail_node.get_connection_direction(start_rail)
+
+		var loop_detected: bool = false
+		for entry in visited_rails:
+			if rail_node == entry and forward == visited_rails[entry].forward:
+				loop_detected = true
+				break
+
+		if not loop_detected:
+			visited_rails[rail_node] = {forward = forward, from = start_rail}
+			var outcome = _get_path_from_to_helper(rail_node, forward, visited_rails, destination_rail)
+			if outcome.size() != 0:
+				return outcome
+	return {}
+
+
+func _backtrack_path(visited_rails: Dictionary, destination_rail: Node) -> Array:
+	var route = []
+	var current_rail = destination_rail
+
+	while current_rail != null:
+		route.append({rail = current_rail, forward = visited_rails[current_rail].forward})
+		current_rail = visited_rails[current_rail].from
+
+	route.invert()
+	return route
 
 
 # Not called automaticly. From any instance or button, but very helpful.

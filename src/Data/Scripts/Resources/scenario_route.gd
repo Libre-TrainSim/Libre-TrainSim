@@ -131,61 +131,53 @@ func get_calculated_station_point(index: int, start_time: int):
 	return station_table[station_index]
 
 
-# TODO: this is buggy! It DOES calculate the correct route,
-# BUT it also keeps any connected route in the same direction
-# ie if you're going left on a switch, the right track is still part of the route
+func _get_rail(world: Node, route_point: RoutePoint) -> Node:
+	if route_point is RoutePointStation:
+		var station: Node = world.get_signal(route_point.station_node_name)
+		return world.get_rail(station.attached_rail)
+	return world.get_rail(route_point.rail_name)
+
+
 func get_calculated_rail_route(world: Node) -> Array:
 	world.update_rail_connections()
-	var rail_route := []
+	var route: Array = []
+	var forward = null
 
-	for i in range (size()-1):
-		# get start and end rails for calculation
-		var start_end_rails := []
-		var start_direction_set := false
-		var forward := true
+	for i in range(size()-1):
+		var start = _get_rail(world, route_points[i])
+		var end = _get_rail(world, route_points[i+1])
 
-		# wtf is this for loop even doing here???
-		for j in range(2):
-			var route_point: RoutePoint = route_points[i+j]
-			if route_point is RoutePointStation:
-				var station: Node = world.get_signal(route_point.station_node_name)
-				if station == null:
-					return []
-				start_end_rails.append(world.get_rail(station.attached_rail))
-				if j == 0 and rail_route.size() == 0:
-					start_direction_set = true
-					forward = station.forward
+		# first time, have to check both directions, we don't know where to go!
+		if forward == null:
+			var path_fwd = world.get_path_from_to(start, true, end)
+			var path_bwd = world.get_path_from_to(start, false, end)
+
+			# no route found, return nothing
+			if path_fwd == [] and path_bwd == []:
+				error_route_point_start_index = i
+				error_route_point_end_index = i+1
+				return []
+
+			if path_fwd == []:
+				route.append_array(path_bwd)
 			else:
-				start_end_rails.append(world.get_rail(route_point.rail_name))
-		if rail_route.size() != 0:
-			start_direction_set = true
-			forward = rail_route.back().forward
+				route.append_array(path_fwd)
+			forward = route.back().forward  # keep searching in the direction of the last rail
 
-		# calculate route
-		var calculated_route: Array = []
-		if not start_direction_set:
-			var possible_route_1: Array = world.get_path_from_to(start_end_rails[0], true, start_end_rails[1])
-			var possible_route_2: Array = world.get_path_from_to(start_end_rails[0], false, start_end_rails[1])
-			if possible_route_1.size() > possible_route_2.size():
-				calculated_route = possible_route_1
-			else:
-				calculated_route = possible_route_2
 		else:
-			calculated_route = world.get_path_from_to(start_end_rails[0], forward, start_end_rails[1])
+			var path: Array = world.get_path_from_to(start, forward, end)
+			if path == []:
+				error_route_point_start_index = i
+				error_route_point_end_index = i+1
+				return []
 
-		# If no route found - error!
-		if calculated_route.size() == 0:
-			error_route_point_start_index = i
-			error_route_point_end_index = i+1
-			return []
+			# last destination rail == this start rail
+			# so the rail is already in route, don't add it again!
+			path.pop_front()
+			route.append_array(path)
 
-		# Append calculated route to whole route:
-		if rail_route.size() > 0:
-			rail_route.pop_back()
-		rail_route.append_array(calculated_route)
-
-	calculated_rail_route = rail_route.duplicate(true)
-	return rail_route
+	calculated_rail_route = route.duplicate(true)
+	return route
 
 
 # call get_calculated_rail_route() before!

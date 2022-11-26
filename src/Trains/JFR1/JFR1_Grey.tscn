@@ -1655,39 +1655,39 @@ spot_angle = 77.4
 
 [node name="PassengerPathNode" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../Seats/PassengerPathNode2"), NodePath("../../Seats/PassengerPathNode3") ]
+connections = [ NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3") ]
 
 [node name="PassengerPathNode3" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerDoor3"), NodePath("../../Seats/PassengerDoor4"), NodePath("../../Seats/PassengerPathNode6"), NodePath("../../Seats/PassengerPathNode7") ]
+connections = [ NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7") ]
 
 [node name="PassengerPathNode7" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerPathNode8"), NodePath("../../Seats/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28") ]
+connections = [ NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28") ]
 
 [node name="PassengerPathNode8" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerPathNode4"), NodePath("../../Seats/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36") ]
+connections = [ NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36") ]
 
 [node name="PassengerPathNode6" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerPathNode"), NodePath("../../Seats/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20") ]
+connections = [ NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20") ]
 
 [node name="PassengerPathNode4" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerDoor"), NodePath("../../Seats/PassengerDoor2"), NodePath("../../Seats/PassengerPathNode8"), NodePath("../../Seats/PassengerPathNode9") ]
+connections = [ NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9") ]
 
 [node name="PassengerPathNode9" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40") ]
+connections = [ NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40") ]
 
 [node name="PassengerPathNode2" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerDoor5"), NodePath("../../Seats/PassengerDoor6"), NodePath("../../Seats/PassengerPathNode"), NodePath("../../Seats/PassengerPathNode5") ]
+connections = [ NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5") ]
 
 [node name="PassengerPathNode5" parent="DriverCabinB/PathNodes" instance=ExtResource( 42 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878 )
-connections = [ NodePath("../../Seats/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12") ]
+connections = [ NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12") ]
 
 [node name="Seats" type="Spatial" parent="DriverCabinB"]
 

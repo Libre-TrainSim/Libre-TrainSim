@@ -324,6 +324,7 @@ func _process(delta: float):
 
 	if despawning:
 		queue_free()
+		return
 
 	if electric:
 		check_pantograph(delta)
@@ -592,7 +593,7 @@ func change_to_next_rail() -> void:
 	else:
 		route_index += 1
 
-	if baked_route.size() == route_index or route_index == -1:
+	if route_index >= baked_route.size() or route_index < 0:
 		if baked_route_is_loop:
 			if route_index == baked_route.size():
 				route_index = 0
@@ -605,13 +606,14 @@ func change_to_next_rail() -> void:
 			if ai:
 				Logger.log(name + ": Route no more rail found, despawning me...")
 				despawn()
+				return
 			else:
 				fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_LAST_RAIL"))
 				connect("_textbox_closed", LoadingScreen, "load_main_menu", [], CONNECT_ONESHOT)
 				return
 
 
-	currentRail =  world.get_node("Rails").get_node(baked_route[route_index])
+	currentRail = world.get_node("Rails").get_node(baked_route[route_index])
 	forward = baked_route_direction[route_index]
 
 	var new_radius = currentRail.radius
@@ -1552,8 +1554,8 @@ func checkDespawn() -> void:
 		return
 
 	if despawn_point is RoutePointStation and despawn_point.stop_type == StopType.END:
-		# Despawn if the train has arrived at the endstation and the planned arrival is two minutes in the past
-		if world.time > despawn_point.arrival_time + 60*2 and get_station_table_index_of_station_node_name(despawn_point.station_node_name) >= current_station_table_index:
+		# Despawn if the train has arrived at the endstation and the planned arrival is 20 seconds in the past
+		if world.time > despawn_point.arrival_time + 20 and get_station_table_index_of_station_node_name(despawn_point.station_node_name) >= current_station_table_index:
 			despawn()
 
 	if despawn_point is RoutePointDespawnPoint:

@@ -379,7 +379,7 @@ boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
 config/icon="res://Data/Misc/logos/lts_logo_16.png"
 config/quit_on_go_back=false
-config/project_settings_override.editor="user://override_dev.cfg"
+config/project_settings_override.editor="user://dev.override.cfg"
 
 [audio]
 
@@ -429,6 +429,7 @@ gameplay/pzb_enabled=true
 gameplay/chunk_unload_distance=2
 gameplay/load_all_chunks=false
 graphics/enable_dynamic_lights=false
+audio/music_volume.editor=0.0
 
 [global]
 
@@ -724,6 +725,7 @@ locale_filter=[ 0, [ "bg", "de", "en", "es", "fr", "it", "ja", "uk" ] ]
 translation_remaps={
 }
 overwritten_language=""
+overwritten_language.editor="en"
 
 [rendering]
 

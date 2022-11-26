@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Materials/Wood.tres" type="Material" id=2]
+[ext_resource path="res://Resources/Objects/Bench.obj" type="ArrayMesh" id=3]
+
+[node name="Bench" type="MeshInstance"]
+mesh = ExtResource( 3 )
+material/0 = ExtResource( 2 )
+material/1 = ExtResource( 1 )

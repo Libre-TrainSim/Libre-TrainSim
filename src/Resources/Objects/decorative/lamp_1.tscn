@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Objects/platform_light_1.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Resources/Materials/White_Plastic.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Materials/LEDLamp.tres" type="Material" id=4]
+
+[node name="Lamp1" type="MeshInstance"]
+mesh = ExtResource( 2 )
+material/0 = ExtResource( 1 )
+material/1 = ExtResource( 3 )
+material/2 = ExtResource( 4 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.526244, 0.850334, 0, -0.850334, 0.526244, 0, 9.51571, -0.407207 )
+light_color = Color( 1, 0.807122, 0.651299, 1 )
+spot_range = 29.3067
+spot_angle = 39.375
+__meta__ = {
+"color_filter": Color( 1, 1, 1, 0 ),
+"color_temperature": 4000,
+"use_color_temperature": true
+}

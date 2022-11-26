@@ -1,0 +1,18 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Resources/Materials/RoofDark.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Materials/Glass.tres" type="Material" id=2]
+[ext_resource path="res://Resources/Materials/Wall_Grey.tres" type="Material" id=3]
+[ext_resource path="res://Resources/Objects/house2.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://Resources/Materials/Wall_Blue_Light.tres" type="Material" id=5]
+[ext_resource path="res://Resources/Materials/Roof.tres" type="Material" id=6]
+[ext_resource path="res://Resources/Materials/Wall_Beige.tres" type="Material" id=7]
+
+[node name="House2" type="MeshInstance"]
+mesh = ExtResource( 4 )
+material/0 = ExtResource( 6 )
+material/1 = ExtResource( 7 )
+material/2 = ExtResource( 5 )
+material/3 = ExtResource( 1 )
+material/4 = ExtResource( 2 )
+material/5 = ExtResource( 3 )

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/object_group.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Objects/houses/house_7.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Objects/houses/house_3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Objects/houses/house_4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Resources/Objects/houses/house_1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Resources/Objects/houses/house_2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/Objects/houses/house_6.tscn" type="PackedScene" id=7]
+
+[resource]
+script = ExtResource( 1 )
+group_name = "Houses"
+scenes = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 2 ) ]
+is_building = true
+is_vegetation = false
+is_infrastructure = false
+is_decorative = false

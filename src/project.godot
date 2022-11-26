@@ -436,6 +436,8 @@ gameplay/chunk_unload_distance=2
 gameplay/load_all_chunks=false
 graphics/enable_dynamic_lights=false
 audio/music_volume.editor=0.0
+debug/editor_save_thumbnails=true
+debug/editor_save_thumbnails.release=false
 debug/display_chunk=true
 debug/display_chunk.release=false
 

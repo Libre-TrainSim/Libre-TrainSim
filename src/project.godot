@@ -421,6 +421,10 @@ settings/stdout/verbose_stdout=true
 
 window/handheld/orientation="sensor_landscape"
 
+[editor]
+
+scene_naming=2
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )

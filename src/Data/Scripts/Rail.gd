@@ -633,14 +633,17 @@ func update_connections() -> void:
 			_connected_rails_at_ending.append(rail)
 
 
-# Returns array of rail nodes
-func get_connected_rails_at_beginning() -> Array:
+# returns all connected rails, either at ending (forward = true) or beginning (forward = false)
+func get_connected_rails(forward: bool) -> Array:
+	if forward:
+		return _connected_rails_at_ending
 	return _connected_rails_at_beginning
 
 
-# Returns array of rail nodes
-func get_connected_rails_at_ending() -> Array:
-	return _connected_rails_at_ending
+# true if other is connected at beginning, false otherwise
+# also false if rails are NOT connected !!!
+func get_connection_direction(other: Node) -> bool:
+	return _connected_rails_at_beginning.has(other)
 
 
 func update_connection_arrows():

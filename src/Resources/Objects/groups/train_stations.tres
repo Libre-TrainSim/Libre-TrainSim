@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/object_group.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Objects/train_stations/train_station_building_1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Objects/train_stations/train_station_building_4.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Objects/train_stations/train_station_building_3.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Resources/Objects/train_stations/train_station_building_2.tscn" type="PackedScene" id=5]
+
+[resource]
+script = ExtResource( 1 )
+group_name = "Train Stations"
+scenes = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ]
+is_building = true
+is_vegetation = false
+is_infrastructure = false
+is_decorative = false

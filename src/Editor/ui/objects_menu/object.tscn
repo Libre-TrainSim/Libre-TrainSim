@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Editor/ui/icons/star.png" type="Texture" id=1]
+[ext_resource path="res://Editor/ui/icons/star_outline.png" type="Texture" id=2]
+[ext_resource path="res://Editor/ui/objects_menu/scene_object.gd" type="Script" id=3]
+[ext_resource path="res://Editor/ui/icons/star_hover.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 24, 24 )
+
+[node name="Object" type="Button"]
+margin_right = 76.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 76, 70 )
+toggle_mode = true
+script = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -14.0
+text = "logo.tscn"
+align = 1
+clip_text = true
+
+[node name="MarkFavourite" type="CheckBox" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -24.0
+margin_bottom = 24.0
+custom_icons/checked = ExtResource( 1 )
+custom_icons/unchecked = ExtResource( 2 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/hover_pressed = SubResource( 1 )
+
+[connection signal="toggled" from="MarkFavourite" to="." method="_on_MarkFavourite_toggled"]

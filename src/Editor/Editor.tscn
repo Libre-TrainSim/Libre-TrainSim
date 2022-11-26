@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Editor/Scripts/editor_camera.gd" type="Script" id=1]
 [ext_resource path="res://Editor/Scripts/Editor.gd" type="Script" id=2]
@@ -9,11 +9,45 @@
 [ext_resource path="res://Editor/Docks/RailAttachments/RailAttachments.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Data/UI/blur.tres" type="Material" id=8]
 [ext_resource path="res://Editor/Scripts/EditorHUD.gd" type="Script" id=9]
-[ext_resource path="res://Editor/Modules/AddObjects.gd" type="Script" id=10]
+[ext_resource path="res://Editor/Modules/add_objects.gd" type="Script" id=10]
 [ext_resource path="res://Editor/Modules/Content_Selector.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Editor/ui/icons/building.png" type="Texture" id=12]
 [ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=13]
 [ext_resource path="res://Editor/Scripts/pause_menu.gd" type="Script" id=14]
+[ext_resource path="res://Editor/ui/icons/random.png" type="Texture" id=15]
+[ext_resource path="res://Editor/ui/icons/star.png" type="Texture" id=16]
+[ext_resource path="res://Editor/ui/size_changer.gd" type="Script" id=17]
+[ext_resource path="res://Editor/ui/objects_menu/objects_menu.gd" type="Script" id=18]
+[ext_resource path="res://Editor/ui/objects_menu/thumbnail_generator.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Editor/ui/objects_menu/filters.gd" type="Script" id=20]
+[ext_resource path="res://Editor/Scripts/world_cursor.gd" type="Script" id=21]
+[ext_resource path="res://Editor/ui/icons/decoration.png" type="Texture" id=22]
+[ext_resource path="res://Editor/ui/icons/infrastructure.png" type="Texture" id=23]
+[ext_resource path="res://Editor/ui/icons/common.png" type="Texture" id=24]
+[ext_resource path="res://Editor/ui/icons/recent.png" type="Texture" id=25]
+[ext_resource path="res://Editor/ui/icons/vegetation.png" type="Texture" id=26]
+[ext_resource path="res://Editor/ui/objects_menu/add_rail_object_button.gd" type="Script" id=27]
+[ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=28]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 8.0
+bg_color = Color( 0.223529, 0.215686, 0.25098, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.34902, 0.34902, 0.34902, 1 )
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+shadow_size = 1
+anti_aliasing = false
 
 [node name="Editor" type="Spatial"]
 script = ExtResource( 2 )
@@ -89,33 +123,41 @@ margin_bottom = -11.0
 [node name="TabContainer" type="TabContainer" parent="EditorHUD/Settings"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -7.224
+custom_styles/panel = SubResource( 1 )
 
 [node name="RailBuilder" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 6 )]
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 8.0
+margin_top = 25.0
+margin_right = -1.0
+margin_bottom = -1.0
 
 [node name="RailLogic" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 3 )]
 visible = false
 margin_left = 4.0
-margin_top = 24.0
+margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 7 )]
 visible = false
 margin_left = 4.0
-margin_top = 24.0
+margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 12 )]
+[node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 28 )]
 visible = false
-margin_left = 4.0
-margin_top = 24.0
-margin_right = -4.0
-margin_bottom = -4.0
+
+[node name="VSeparator" type="VSeparator" parent="EditorHUD/Settings"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -60.0
+margin_right = 4.0
+margin_bottom = 60.0
+script = ExtResource( 17 )
+drag_side = 0
+target_path = NodePath("..")
 
 [node name="ObjectName" type="Control" parent="EditorHUD"]
 anchor_left = 0.5
@@ -297,50 +339,221 @@ step = 0.0
 allow_greater = true
 allow_lesser = true
 
+[node name="Objects" type="PanelContainer" parent="EditorHUD"]
+anchor_bottom = 1.0
+margin_top = 168.0
+margin_right = 241.0
+margin_bottom = -45.0
+script = ExtResource( 18 )
+cursor_path = NodePath("../../WorldCusor")
+
+[node name="MarginContainer" type="MarginContainer" parent="EditorHUD/Objects"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 234.0
+margin_bottom = 380.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_left = 34
+
+[node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer"]
+margin_left = 34.0
+margin_right = 219.0
+margin_bottom = 373.0
+mouse_filter = 0
+
+[node name="Search" type="LineEdit" parent="EditorHUD/Objects/MarginContainer/Content"]
+margin_right = 185.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+clear_button_enabled = true
+placeholder_text = "Search"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="EditorHUD/Objects/MarginContainer/Content"]
+margin_top = 30.0
+margin_right = 185.0
+margin_bottom = 373.0
+size_flags_vertical = 3
+follow_focus = true
+scroll_horizontal_enabled = false
+
+[node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer/Content/ScrollContainer"]
+margin_right = 185.0
+margin_bottom = 343.0
+hint_tooltip = "- Use shift to select multiple objects.
+- Right-click deselects all selected objects.
+- Shift+scroll wheel chooses a random object of the selected objects."
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Overlay" type="Control" parent="EditorHUD/Objects"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 234.0
+margin_bottom = 380.0
+mouse_filter = 2
+
+[node name="Filters" type="VBoxContainer" parent="EditorHUD/Objects/Overlay"]
+margin_right = 30.0
+margin_bottom = 186.0
+script = ExtResource( 20 )
+
+[node name="Buildings" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_right = 30.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Buildings"
+icon = ExtResource( 12 )
+clip_text = true
+align = 0
+
+[node name="Vegetation" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 26.0
+margin_right = 30.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Vegetation"
+icon = ExtResource( 26 )
+clip_text = true
+align = 0
+
+[node name="Infrastructure" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 52.0
+margin_right = 30.0
+margin_bottom = 74.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Infrastructure"
+icon = ExtResource( 23 )
+clip_text = true
+align = 0
+
+[node name="Decorative" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 78.0
+margin_right = 30.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Decorative"
+icon = ExtResource( 22 )
+clip_text = true
+align = 0
+
+[node name="HSeparator" type="HSeparator" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 104.0
+margin_right = 30.0
+margin_bottom = 108.0
+
+[node name="Favourites" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 112.0
+margin_right = 30.0
+margin_bottom = 134.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Favourites"
+icon = ExtResource( 16 )
+clip_text = true
+align = 0
+
+[node name="MostCommon" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 138.0
+margin_right = 30.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Most Commonly Used"
+icon = ExtResource( 24 )
+clip_text = true
+align = 0
+
+[node name="MostRecent" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
+margin_top = 164.0
+margin_right = 30.0
+margin_bottom = 186.0
+rect_min_size = Vector2( 30, 0 )
+toggle_mode = true
+text = "Most Recently Used"
+icon = ExtResource( 25 )
+clip_text = true
+align = 0
+
+[node name="Random" type="Button" parent="EditorHUD/Objects/Overlay"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = 116.0
+margin_right = 30.0
+margin_bottom = 146.0
+toggle_mode = true
+text = "Random"
+icon = ExtResource( 15 )
+clip_text = true
+align = 0
+script = ExtResource( 20 )
+
+[node name="SizeChanger" type="VSeparator" parent="EditorHUD/Objects/Overlay"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -60.0
+margin_bottom = 60.0
+script = ExtResource( 17 )
+target_path = NodePath("../..")
+
+[node name="ThumbnailGenerator" parent="EditorHUD/Objects" instance=ExtResource( 19 )]
+
 [node name="AddObjects" type="Control" parent="EditorHUD"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -123.0
-margin_right = 185.0
 script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ShowMenu" type="Button" parent="EditorHUD/AddObjects"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 13.435
-margin_top = -29.5459
-margin_right = 41.435
-margin_bottom = -9.5459
-text = " + "
-
-[node name="Menu1" type="ItemList" parent="EditorHUD/AddObjects"]
-visible = false
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 12.0
-margin_top = -94.0
-margin_right = 173.0
-margin_bottom = -31.0
-items = [ "Rail", null, false, "Object", null, false, "Rail Logic", null, false ]
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="RailLogicMenu" type="ItemList" parent="EditorHUD/AddObjects"]
 visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 12.0
-margin_top = -130.0
-margin_right = 173.0
-margin_bottom = -31.0
+margin_left = 11.2063
+margin_top = -152.224
+margin_right = 172.206
+margin_bottom = -53.2236
 items = [ "Signal", null, false, "Station", null, false, "Speed Limit", null, false, "Warn Speed Limit", null, false, "Contact Point", null, false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/AddObjects"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+margin_right = 194.0
+
+[node name="AddRail" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
+margin_right = 35.0
+margin_bottom = 40.0
+text = "Rail"
+
+[node name="AddRailObject" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
+margin_left = 39.0
+margin_right = 128.0
+margin_bottom = 40.0
+hint_tooltip = "Please select a rail first before adding a dependent rail object."
+disabled = true
+text = "Rail Objects"
+script = ExtResource( 27 )
+
+[node name="AddObjects" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
+margin_left = 132.0
+margin_right = 194.0
+margin_bottom = 40.0
+toggle_mode = true
+pressed = true
+text = "Objects"
 
 [node name="Content_Selector" parent="EditorHUD" instance=ExtResource( 11 )]
 visible = false
@@ -469,6 +682,11 @@ control_path = NodePath("../EditorHUD/Settings")
 [node name="OutlinesPP" parent="." instance=ExtResource( 4 )]
 highlight_color = Color( 1, 1, 0, 1 )
 
+[node name="WorldCusor" type="Spatial" parent="."]
+script = ExtResource( 21 )
+
+[connection signal="selected_object_changed" from="." to="EditorHUD/AddObjects" method="_on_selected_object_changed"]
+[connection signal="selected_object_changed" from="." to="EditorHUD/AddObjects/HBoxContainer/AddRailObject" method="_on_selected_object_changed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/TestTrack" to="." method="_on_TestTrack_pressed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/SaveWorldButton" to="." method="_on_SaveWorldButton_pressed"]
@@ -484,16 +702,32 @@ highlight_color = Color( 1, 1, 0, 1 )
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y" to="EditorHUD" method="_on_y_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z" to="EditorHUD" method="_on_z_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y_rot" to="EditorHUD" method="_on_y_rot_value_changed"]
-[connection signal="pressed" from="EditorHUD/AddObjects/ShowMenu" to="EditorHUD/AddObjects" method="_on_ShowMenu_pressed"]
-[connection signal="item_selected" from="EditorHUD/AddObjects/Menu1" to="EditorHUD/AddObjects" method="_on_ItemList_item_selected"]
+[connection signal="object_added" from="EditorHUD/Objects" to="." method="_on_object_added"]
+[connection signal="text_changed" from="EditorHUD/Objects/MarginContainer/Content/Search" to="EditorHUD/Objects" method="_on_search_text_changed"]
+[connection signal="mouse_entered" from="EditorHUD/Objects/Overlay/Filters" to="EditorHUD/Objects/Overlay/Filters" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="EditorHUD/Objects/Overlay/Filters" to="EditorHUD/Objects/Overlay/Filters" method="_on_mouse_exited"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/Buildings" to="EditorHUD/Objects" method="_on_buildings_toggled"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/Vegetation" to="EditorHUD/Objects" method="_on_vegetation_toggled"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/Infrastructure" to="EditorHUD/Objects" method="_on_infrastructure_toggled"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/Decorative" to="EditorHUD/Objects" method="_on_decorative_toggled"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/Favourites" to="EditorHUD/Objects" method="_on_favourites_toggled"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/MostCommon" to="EditorHUD/Objects" method="_on_most_common_toggled"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Filters/MostRecent" to="EditorHUD/Objects" method="_on_most_recent_toggled"]
+[connection signal="mouse_entered" from="EditorHUD/Objects/Overlay/Random" to="EditorHUD/Objects/Overlay/Random" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="EditorHUD/Objects/Overlay/Random" to="EditorHUD/Objects/Overlay/Random" method="_on_mouse_exited"]
+[connection signal="toggled" from="EditorHUD/Objects/Overlay/Random" to="EditorHUD/Objects" method="_on_random_toggled"]
 [connection signal="item_selected" from="EditorHUD/AddObjects/RailLogicMenu" to="EditorHUD/AddObjects" method="_on_RailLogicMenu_item_selected"]
+[connection signal="pressed" from="EditorHUD/AddObjects/HBoxContainer/AddRail" to="EditorHUD/AddObjects" method="_on_AddRail_pressed"]
+[connection signal="pressed" from="EditorHUD/AddObjects/HBoxContainer/AddRailObject" to="EditorHUD/AddObjects" method="_on_AddRailObject_pressed"]
+[connection signal="toggled" from="EditorHUD/AddObjects/HBoxContainer/AddObjects" to="EditorHUD/AddObjects" method="_on_AddObjects_toggled"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailLogic" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
-[connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/AddObjects" method="_on_Content_Selector_resource_selected"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]
 [connection signal="hide" from="EditorHUD/Pause" to="EditorHUD/Pause" method="_on_hide"]
 [connection signal="save_requested" from="EditorHUD/Pause" to="." method="_on_Pause_save_requested"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD/Pause" method="_on_Back_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/ExitWithoutSave" to="EditorHUD/Pause" method="_on_ExitWithoutSave_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD/Pause" method="_on_SaveAndExit_pressed"]
+[connection signal="first_person_movement_started" from="Camera" to="EditorHUD/Objects" method="_on_Camera_first_person_movement_started"]
+[connection signal="first_person_was_moved" from="Camera" to="EditorHUD/Objects" method="_on_first_person_was_moved"]

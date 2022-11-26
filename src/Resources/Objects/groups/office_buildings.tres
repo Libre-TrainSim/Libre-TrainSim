@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=7 format=2]
+
+[ext_resource path="res://Data/Scripts/Resources/object_group.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Objects/offices/office_1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Objects/offices/office_2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Objects/offices/office_3.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Resources/Objects/offices/office_4.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Resources/Objects/offices/office_5.tscn" type="PackedScene" id=6]
+
+[resource]
+script = ExtResource( 1 )
+group_name = "Office Buildings"
+scenes = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+is_building = true
+is_vegetation = false
+is_infrastructure = false
+is_decorative = false

@@ -114,6 +114,9 @@ func _process(_delta: float):
 		loader.load_chunks(get_3x3_chunks(active_chunk))
 		_unload_old_chunks()
 
+	if ProjectSettings["game/debug/display_chunk"]:
+		DebugDraw.set_text("Chunk", active_chunk)
+
 
 func _shift_world_origin_to(position: Vector3):
 	var delta: Vector3 = position - world_origin

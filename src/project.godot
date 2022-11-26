@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "VisualInstance",
+"base": "Node",
 "class": "AabbToCollider",
 "language": "GDScript",
 "path": "res://Data/Scripts/aabb_to_collider.gd"
@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Editor/Scripts/editor_camera.gd"
 }, {
+"base": "Resource",
+"class": "EditorInfo",
+"language": "GDScript",
+"path": "res://Data/Scripts/Resources/editor_info.gd"
+}, {
 "base": "Reference",
 "class": "ExportTrack",
 "language": "GDScript",
@@ -133,6 +138,11 @@ _global_script_classes=[ {
 "class": "ModContentDefinition",
 "language": "GDScript",
 "path": "res://Data/Scripts/Resources/mod_content.gd"
+}, {
+"base": "Resource",
+"class": "ObjectGroup",
+"language": "GDScript",
+"path": "res://Data/Scripts/Resources/object_group.gd"
 }, {
 "base": "RailLogic",
 "class": "PZBMagnet",
@@ -234,6 +244,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Enums/signal_status.gd"
 }, {
+"base": "Separator",
+"class": "SizeChanger",
+"language": "GDScript",
+"path": "res://Editor/ui/size_changer.gd"
+}, {
 "base": "RailLogic",
 "class": "SpeedLimit",
 "language": "GDScript",
@@ -295,6 +310,11 @@ _global_script_classes=[ {
 "path": "res://Data/Scripts/Resources/world_config.gd"
 }, {
 "base": "Spatial",
+"class": "WorldCursor",
+"language": "GDScript",
+"path": "res://Editor/Scripts/world_cursor.gd"
+}, {
+"base": "Spatial",
 "class": "WorldObject",
 "language": "GDScript",
 "path": "res://Data/Scripts/world_object.gd"
@@ -318,6 +338,7 @@ _global_script_class_icons={
 "ControlType": "",
 "DistanceMonitor": "",
 "EditorCamera": "",
+"EditorInfo": "",
 "ExportTrack": "",
 "FileTools": "",
 "InputButton": "",
@@ -330,6 +351,7 @@ _global_script_class_icons={
 "Logger": "",
 "Map": "",
 "ModContentDefinition": "",
+"ObjectGroup": "",
 "PZBMagnet": "",
 "PassengerPathNode": "",
 "Pause": "",
@@ -350,6 +372,7 @@ _global_script_class_icons={
 "SignalOperationMode": "",
 "SignalSettings": "",
 "SignalStatus": "",
+"SizeChanger": "",
 "SpeedLimit": "",
 "Station": "",
 "StationSettings": "",
@@ -362,6 +385,7 @@ _global_script_class_icons={
 "TranslatedRichTextLabel": "",
 "WarnSpeedLimit": "",
 "WorldConfig": "",
+"WorldCursor": "",
 "WorldObject": "",
 "jSaveModule": ""
 }
@@ -379,7 +403,7 @@ boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
 config/icon="res://Data/Misc/logos/lts_logo_16.png"
 config/quit_on_go_back=false
-config/project_settings_override.editor="user://override_dev.cfg"
+config/project_settings_override.editor="user://dev.override.cfg"
 
 [audio]
 
@@ -409,6 +433,10 @@ settings/stdout/verbose_stdout=true
 
 window/handheld/orientation="sensor_landscape"
 
+[editor]
+
+scene_naming=2
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
@@ -429,6 +457,11 @@ gameplay/pzb_enabled=true
 gameplay/chunk_unload_distance=2
 gameplay/load_all_chunks=false
 graphics/enable_dynamic_lights=false
+audio/music_volume.editor=0.0
+debug/editor_save_thumbnails=true
+debug/editor_save_thumbnails.release=false
+debug/display_chunk=true
+debug/display_chunk.release=false
 
 [global]
 
@@ -724,6 +757,7 @@ locale_filter=[ 0, [ "bg", "de", "en", "es", "fr", "it", "ja", "uk" ] ]
 translation_remaps={
 }
 overwritten_language=""
+overwritten_language.editor="en"
 
 [rendering]
 

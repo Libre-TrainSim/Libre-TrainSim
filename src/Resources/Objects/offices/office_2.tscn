@@ -1,0 +1,15 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Resources/Materials/Roof.tres" type="Material" id=1]
+[ext_resource path="res://Resources/Materials/Bricks.tres" type="Material" id=2]
+[ext_resource path="res://Resources/Objects/office2.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Resources/Materials/Glass.tres" type="Material" id=4]
+[ext_resource path="res://Resources/Materials/Wood.tres" type="Material" id=5]
+
+[node name="Office2" type="MeshInstance"]
+mesh = ExtResource( 3 )
+material/0 = ExtResource( 2 )
+material/1 = ExtResource( 1 )
+material/2 = ExtResource( 1 )
+material/3 = ExtResource( 4 )
+material/4 = ExtResource( 5 )

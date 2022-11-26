@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Editor/ui/objects_menu/thumbnail_generator.gd" type="Script" id=2]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+tonemap_mode = 4
+
+[sub_resource type="World" id=3]
+environment = SubResource( 2 )
+
+[node name="ThumbnailGenerator" type="Viewport"]
+size = Vector2( 64, 64 )
+own_world = true
+world = SubResource( 3 )
+transparent_bg = true
+msaa = 2
+render_target_v_flip = true
+render_target_update_mode = 3
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.68644, 0.317419, -0.654251, 3.76872e-10, 0.899703, 0.436503, 0.727186, -0.299633, 0.617592, -1.19185, 1.64518, 2.99765 )
+size = 1.929
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+skeleton = NodePath("../..")

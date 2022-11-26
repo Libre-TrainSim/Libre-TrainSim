@@ -1,8 +1,13 @@
 extends Spatial
 
+
+signal selected_object_changed(new_object, type_string)
+
+
 var editor_directory: String = ""
 var content: ModContentDefinition
 var authors: Authors
+var editor_info: EditorInfo = null
 ## Track path without file extension
 var current_track_path := "" setget set_current_track_path
 ## Track name is the string after the last /
@@ -14,6 +19,7 @@ var selected_object: Node = null
 var selected_object_type: String = ""
 
 var rail_res: PackedScene = preload("res://Data/Modules/Rail.tscn")
+var world: LTSWorld = null
 
 
 onready var camera := $Camera as EditorCamera
@@ -661,11 +667,8 @@ func clear_selected_object() -> void:
 			vi.set_layer_mask_bit(1, false)
 
 		if selected_object_type == "Building":
-			$EditorHUD.hide_current_object_transform()
-			for child in selected_object.get_children():
-				if child.is_in_group("Gizmo"):
-					child.queue_free()
-		if selected_object_type == "Rail":
+			$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(null)
+		if selected_object_type in ["Building", "Rail"]:
 			$EditorHUD.hide_current_object_transform()
 			for child in selected_object.get_children():
 				if child.is_in_group("Gizmo"):
@@ -673,18 +676,20 @@ func clear_selected_object() -> void:
 		if selected_object_type == "Signal":
 			$EditorHUD/Settings/TabContainer/RailLogic._on_selected_rail_logic_deleted()
 
+		emit_signal("selected_object_changed", null, "")
+
 	selected_object = null
 	selected_object_type = ""
 	$EditorHUD.clear_current_object_name()
 
 
 func get_type_of_object(object: Node) -> String:
-	if object is MeshInstance:
-		return "Building"
 	if object.is_in_group("Rail"):
 		return "Rail"
 	if object.is_in_group("Signal"):
 		return "Signal"
+	if object.get_parent().name == "Buildings":
+		return "Building"
 	else:
 		Logger.warn("Unknown object type encountered!", object)
 		return "Unknown"
@@ -704,19 +709,22 @@ func object_has_active_gizmo(object: Node) -> bool:
 
 
 func provide_settings_for_selected_object() -> void:
-	if selected_object_type == "Rail":
-		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
-		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
-		$EditorHUD.show_rail_settings()
-	else:
-		$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(null)
-		$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(null)
-	if selected_object_type == "Building":
-		$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(selected_object.mesh)
-		$EditorHUD.show_building_settings()
-	if selected_object_type == "Signal":
-		$EditorHUD/Settings/TabContainer/RailLogic.set_rail_logic(selected_object)
-		$EditorHUD.show_signal_settings()
+	match selected_object_type:
+		"Rail":
+			$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
+			$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
+			$EditorHUD.show_rail_settings()
+		"Building":
+			var children := get_children_of_type_recursive(selected_object, MeshInstance)
+			var mesh: ArrayMesh = children[0].mesh as ArrayMesh if children.size() > 0 else null
+			$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(mesh, children[0])
+			$EditorHUD.show_building_settings()
+		"Signal":
+			$EditorHUD/Settings/TabContainer/RailLogic.set_rail_logic(selected_object)
+			$EditorHUD.show_signal_settings()
+		_:
+			$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(null)
+			$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(null)
 	$EditorHUD.update_ShowSettingsButton()
 
 
@@ -729,7 +737,16 @@ func load_world() -> bool:
 		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
 		return false
 
-	var world: Node = world_resource.instance()
+	world = world_resource.instance() as LTSWorld
+	if !world:
+		send_message("Failed to load world. World is not an LTSWorld.")
+		return false
+
+	editor_info = load(current_track_path.plus_file("editor_info.tres"))
+	if !editor_info:
+		editor_info = EditorInfo.new()
+	$EditorHUD/Objects.editor_info = editor_info
+
 	world.FileName = current_track_name
 	add_child(world)
 	world.owner = self
@@ -777,6 +794,10 @@ func save_world(send_message: bool = true) -> void:
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
+
+
+	if ResourceSaver.save(current_track_path.plus_file("editor_info.tres"), editor_info) != OK:
+		Logger.warn("Failed to save editor info meta data.", self)
 
 	$World.chunk_manager.resume_chunking()
 
@@ -826,6 +847,7 @@ func set_selected_object(object: Node) -> void:
 			$EditorHUD.show_current_object_transform()
 
 	provide_settings_for_selected_object()
+	emit_signal("selected_object_changed", object, selected_object_type)
 
 
 func _spawn_rail() -> Node:
@@ -887,26 +909,6 @@ func get_current_ground_position() -> Vector3:
 	var position: Vector3 = camera.translation
 	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
 	return position
-
-
-func add_object(complete_path: String) -> void:
-	var mesh_instance := MeshInstance.new()
-	mesh_instance.mesh = load(complete_path)
-
-	var mesh_name: String = complete_path.get_file().get_basename() + "_"
-	mesh_instance.name = Root.name_node_appropriate(mesh_instance, mesh_name, $World/Buildings)
-
-	mesh_instance.translation = get_current_ground_position() - $World.chunk_manager.world_origin
-	$World/Buildings.add_child(mesh_instance)
-	mesh_instance.set_owner($World)
-
-	var old_script = mesh_instance.get_script()
-	mesh_instance.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
-	mesh_instance.target = NodePath(".")
-	mesh_instance.generate_collider()
-	mesh_instance.set_script(old_script)
-
-	set_selected_object(mesh_instance)
 
 
 func test_track_pck() -> void:
@@ -1110,3 +1112,18 @@ func _on_Pause_save_requested() -> void:
 
 func _on_world_origin_shifted(delta: Vector3):
 	$World/Buildings.translation += delta
+
+
+func _on_object_added(object: Spatial, position: Vector3) -> void:
+	world.get_node("Buildings").add_child(object)
+	object.global_translation = position
+	object.set_owner(world)
+
+	var old_script = object.get_script()
+	object.set_script(preload("res://Data/Scripts/aabb_to_collider.gd"))
+	object.target = NodePath(".")
+	object.generate_collider()
+	object.set_script(old_script)
+
+	yield(get_tree(), "idle_frame")
+	set_selected_object(object)

@@ -2,6 +2,10 @@ class_name EditorCamera
 extends CameraBase
 
 
+signal first_person_movement_started
+signal first_person_was_moved
+
+
 export var mouse_sensitivity: float = 0.003
 export var normal_speed: float = 1
 export var fast_speed: float = 3
@@ -14,6 +18,8 @@ var is_moving_first_person := false
 var is_panning := false
 var in_movement_time: float = 0
 var focus_owner: Control = null
+var significantly_moved := false
+var start_rotation := Quat()
 
 onready var control: Control = get_node(control_path)
 
@@ -30,6 +36,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	var mm := event as InputEventMouseMotion
 	if mm != null and is_moving_first_person:
 		_rotate_local(mm.relative * mouse_sensitivity)
+		if !significantly_moved and start_rotation.angle_to(transform.basis.get_rotation_quat()) > 0.01:
+			significantly_moved = true
+			emit_signal("first_person_was_moved")
 	elif mm != null and is_panning:
 		if get_parent() == orbit_rotation_helper and (mm.shift || mm.alt || mm.control):
 			_remove_orbit()
@@ -46,8 +55,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if mb != null and mb.button_index == BUTTON_RIGHT:
 		if mb.pressed and !is_moving_first_person:
 			_capture_mouse()
+			significantly_moved = false
+			start_rotation = transform.basis.get_rotation_quat()
+			emit_signal("first_person_movement_started")
 		elif !mb.pressed and is_moving_first_person:
 			_free_mouse()
+			velocity = Vector3()
 		is_moving_first_person = mb.pressed
 	elif mb != null and mb.button_index == BUTTON_MIDDLE:
 		if mb.pressed and !is_panning:
@@ -59,9 +72,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			if get_parent() == orbit_rotation_helper:
 				_remove_orbit()
 		is_panning = mb.pressed
-	elif mb != null and mb.button_index == BUTTON_WHEEL_DOWN:
+	elif mb != null and mb.button_index == BUTTON_WHEEL_DOWN and _no_modifier(mb):
 		_zoom(10 * max(mb.factor, 1))
-	elif mb != null and mb.button_index == BUTTON_WHEEL_UP:
+	elif mb != null and mb.button_index == BUTTON_WHEEL_UP and _no_modifier(mb):
 		_zoom(-10 * max(mb.factor, 1))
 
 
@@ -79,6 +92,9 @@ func _physics_process(delta: float) -> void:
 	direction *= max(1, in_movement_time / 3)
 	direction = lerp(velocity, direction, 0.3)
 	velocity = direction
+	if !significantly_moved and direction.length_squared() > 0.01:
+		significantly_moved = true
+		emit_signal("first_person_was_moved")
 	translate_object_local(direction)
 
 
@@ -93,3 +109,7 @@ func _free_mouse() -> void:
 	._free_mouse()
 	if is_instance_valid(focus_owner):
 		focus_owner.grab_focus()
+
+
+func _no_modifier(ev: InputEventWithModifiers) -> bool:
+	return !ev.shift and !ev.alt and !ev.control and !ev.command and !ev.meta

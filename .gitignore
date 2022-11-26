@@ -22,3 +22,7 @@ src/android/*
 # ignore jetbrains IDE files
 .idea/
 src/.idea/
+
+# Ignore vendor specific asset files
+
+*.afdesign

@@ -22,6 +22,7 @@ const TEXT_BG_COLOR = Color(0.3, 0.3, 0.3, 0.8)
 # 2D
 
 var _canvas_item : CanvasItem = null
+var _canvas_layer := CanvasLayer.new()
 var _texts := {}
 var _font : Font = null
 
@@ -41,6 +42,8 @@ func _ready():
 	add_child(c)
 	_font = c.get_font("font")
 	c.queue_free()
+	_canvas_layer.layer = 100
+	add_child(_canvas_layer)
 
 
 ## @brief Draws the unshaded outline of a 3D box.
@@ -166,10 +169,11 @@ func _process(delta: float):
 
 	# Update canvas
 	if _canvas_item == null:
-		_canvas_item = Node2D.new()
-		_canvas_item.position = Vector2(8, 8)
+		_canvas_item = Control.new()
+		_canvas_item.set_anchors_and_margins_preset(Control.PRESET_TOP_RIGHT)
+		_canvas_item.margin_top = 8
 		_canvas_item.connect("draw", self, "_on_CanvasItem_draw")
-		add_child(_canvas_item)
+		_canvas_layer.add_child(_canvas_item)
 	_canvas_item.update()
 
 
@@ -182,14 +186,19 @@ func _on_CanvasItem_draw():
 	var ypad := 1
 	var font_offset := ascent + Vector2(xpad, ypad)
 	var line_height := _font.get_height() + 2 * ypad
+	var max_width := 0
 
 	for key in _texts.keys():
 		var t = _texts[key]
 		var text := str(key, ": ", t.text, "\n")
 		var ss := _font.get_string_size(text)
-		ci.draw_rect(Rect2(pos, Vector2(ss.x + xpad * 2, line_height)), TEXT_BG_COLOR)
+		var width := ss.x + xpad * 2
+		max_width = max(max_width, width)
+		ci.draw_rect(Rect2(pos, Vector2(width, line_height)), TEXT_BG_COLOR)
 		ci.draw_string(_font, pos + font_offset, text, TEXT_COLOR)
 		pos.y += line_height
+
+	_canvas_item.margin_left = -max_width - 8
 
 
 static func _create_wirecube_mesh(color := Color(1,1,1)) -> ArrayMesh:

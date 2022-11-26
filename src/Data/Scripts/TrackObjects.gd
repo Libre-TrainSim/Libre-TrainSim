@@ -125,6 +125,8 @@ func make_mesh_unique():
 	multimesh.mesh = mesh.duplicate()
 	var count: int = int(min(multimesh.mesh.get_surface_count(), materials.size()))
 	for i in range(count):
+		if materials[i] == null:
+			continue
 		multimesh.mesh.surface_set_material(i, materials[i])
 
 
@@ -231,5 +233,7 @@ func set_materials(new_materials: Array):
 
 	var count: int = int(min(multimesh.mesh.get_surface_count(), materials.size()))
 	for i in range(count):
+		if materials[i] == null:
+			continue
 		multimesh.mesh.surface_set_material(i, materials[i])
 

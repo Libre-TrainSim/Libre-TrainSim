@@ -265,6 +265,7 @@ func _on_Content_Selector_resource_selected(complete_path: String) -> void:
 		$Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text = complete_path
 		apply_object_tab()
 		update_current_rail_attachment() # update
+		update_object_tab()
 
 
 func _on_FileDialog_onject_selected(path: String) -> void:
@@ -299,17 +300,13 @@ func update_material_list() -> void:
 func apply_object_tab() -> void:
 	if not is_instance_valid(currentTO.mesh) or currentTO.mesh.resource_path != $Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text:
 		currentTO.set_mesh(load($Tab/TrackObjects/Settings/Tab/Object/HBoxContainer/LineEdit.text) as ArrayMesh)
-		update_material_list()
 	var material_array: Array = $Tab/TrackObjects/Settings/Tab/Object/BuildingSettings.get_material_array()
 	currentTO.set_materials(material_array)
 	currentTO.update()
 
 
 func _on_BuildingSettings_updated() -> void:
-	# TODO: _on_dialog_closed() does not exist
-	# find_parent("EditorHUD")._on_dialog_closed()
 	apply_object_tab()
-
 
 func _on_OptionButton_item_selected(index: int) -> void:
 	if currentTO.sides == PlatformSide.LEFT and index == PlatformSide.RIGHT:

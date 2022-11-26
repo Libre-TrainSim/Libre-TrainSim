@@ -24,7 +24,7 @@ size_flags_horizontal = 3
 [node name="Tab" type="TabContainer" parent="."]
 margin_top = 28.0
 margin_right = 1024.0
-margin_bottom = 260.0
+margin_bottom = 388.0
 tab_align = 0
 
 [node name="TrackObjects" type="VBoxContainer" parent="Tab"]
@@ -68,14 +68,13 @@ __meta__ = {
 }
 
 [node name="Settings" type="VBoxContainer" parent="Tab/TrackObjects"]
-visible = false
 margin_top = 200.0
-margin_right = 792.0
-margin_bottom = 300.0
+margin_right = 1016.0
+margin_bottom = 324.0
 
 [node name="Tab" type="TabContainer" parent="Tab/TrackObjects/Settings"]
-margin_right = 792.0
-margin_bottom = 100.0
+margin_right = 1016.0
+margin_bottom = 124.0
 
 [node name="Object" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 anchor_right = 1.0
@@ -86,24 +85,24 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Label" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
-margin_right = 784.0
+margin_right = 1008.0
 margin_bottom = 14.0
 text = "Object: (.obj)"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tab/TrackObjects/Settings/Tab/Object"]
 margin_top = 18.0
-margin_right = 784.0
+margin_right = 1008.0
 margin_bottom = 42.0
 
 [node name="LineEdit" type="LineEdit" parent="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer"]
-margin_right = 742.0
+margin_right = 966.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Pick" type="Button" parent="Tab/TrackObjects/Settings/Tab/Object/HBoxContainer"]
-margin_left = 746.0
-margin_right = 784.0
+margin_left = 970.0
+margin_right = 1008.0
 margin_bottom = 24.0
 text = "Pick"
 __meta__ = {
@@ -112,7 +111,7 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="Tab/TrackObjects/Settings/Tab/Object"]
 margin_top = 46.0
-margin_right = 784.0
+margin_right = 1008.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 text = "Materials:"
@@ -122,8 +121,8 @@ align = 1
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 64.0
-margin_right = 784.0
-margin_bottom = 64.0
+margin_right = 1008.0
+margin_bottom = 88.0
 
 [node name="Position" type="VBoxContainer" parent="Tab/TrackObjects/Settings/Tab"]
 visible = false

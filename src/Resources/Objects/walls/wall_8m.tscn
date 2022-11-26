@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/Objects/Wall8m.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Resources/Materials/Wall_Blue.tres" type="Material" id=2]
+
+[node name="Wall8m" type="MeshInstance"]
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 2 )

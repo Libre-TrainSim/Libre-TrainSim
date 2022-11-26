@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Editor/ui/objects_menu/group_entry.gd" type="Script" id=2]
+
+[node name="Entry" type="VBoxContainer"]
+margin_right = 185.0
+margin_bottom = 345.0
+size_flags_horizontal = 3
+script = ExtResource( 2 )
+
+[node name="Header" type="HBoxContainer" parent="."]
+margin_right = 185.0
+margin_bottom = 24.0
+
+[node name="Description" type="Button" parent="Header"]
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Description"
+clip_text = true
+
+[node name="SelectAll" type="CheckBox" parent="Header"]
+margin_left = 161.0
+margin_right = 185.0
+margin_bottom = 24.0
+
+[node name="Objects" type="HFlowContainer" parent="."]
+margin_top = 28.0
+margin_right = 185.0
+margin_bottom = 28.0
+mouse_filter = 1
+
+[connection signal="pressed" from="Header/Description" to="." method="_on_description_pressed"]
+[connection signal="toggled" from="Header/SelectAll" to="." method="_on_select_all"]

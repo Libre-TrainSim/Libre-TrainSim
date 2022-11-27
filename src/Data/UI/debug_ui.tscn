@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Data/UI/blur.tres" type="Material" id=1]
 [ext_resource path="res://Data/UI/debug_ui.gd" type="Script" id=2]
+[ext_resource path="res://Data/UI/colored_item_list.gd" type="Script" id=3]
 
 [node name="DebugUI" type="CanvasLayer"]
 layer = 128
 script = ExtResource( 2 )
 
 [node name="DebugContainer" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 16.0
@@ -16,9 +16,6 @@ margin_top = 16.0
 margin_right = -16.0
 margin_bottom = -16.0
 mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="FPSContainer" type="ColorRect" parent="DebugContainer"]
 material = ExtResource( 1 )
@@ -40,3 +37,29 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="DebugCameraTargets" type="ItemList" parent="DebugContainer"]
+margin_top = 26.0
+margin_right = 166.0
+margin_bottom = 388.0
+script = ExtResource( 3 )
+
+[node name="DeactivateDebugCamera" type="Button" parent="DebugContainer"]
+margin_right = 165.0
+margin_bottom = 20.0
+text = "Deactive Debug Camera"
+
+[node name="TimeScale" type="SpinBox" parent="DebugContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -73.5
+margin_right = 73.5
+margin_bottom = 24.0
+max_value = 8.0
+step = 0.25
+value = 1.0
+prefix = "Time Scale x"
+
+[connection signal="item_selected" from="DebugContainer/DebugCameraTargets" to="." method="_on_DebugCameraTargets_item_selected"]
+[connection signal="pressed" from="DebugContainer/DeactivateDebugCamera" to="." method="_on_DeactivateDebugCamera_pressed"]
+[connection signal="value_changed" from="DebugContainer/TimeScale" to="." method="_on_TimeScale_value_changed"]

@@ -514,7 +514,7 @@ func handle_drag_mode() -> void:
 			snap_rot = snapped_object.start_rot
 			snap_pos = snapped_object.start_pos
 		else:
-			snap_rot = snapped_object.end_rot
+			snap_rot = snapped_object.end_rot - deg2rad(180.0)
 			snap_pos = snapped_object.end_pos
 
 		if Math.angle_distance_rad(end_rot, snap_rot) < deg2rad(1):
@@ -628,7 +628,7 @@ func select_object_under_mouse() -> void:
 	# Return early if we currently have an active gizmo
 	if object_has_active_gizmo(selected_object):
 		return
-	
+
 	var ray_length: float = 1000
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var from: Vector3 = camera.project_ray_origin(mouse_pos)
@@ -699,7 +699,7 @@ func object_has_active_gizmo(object: Node) -> bool:
 	# Return early if object is null
 	if not is_instance_valid(object):
 		return false
-	
+
 	# Iterate over children and return true if an ACTIVE gizmo is found
 	for node in object.get_children():
 		if node.is_in_group("Gizmo"):

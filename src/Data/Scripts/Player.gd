@@ -555,7 +555,7 @@ func getSpeed(delta: float) -> void:
 
 
 func drive(delta: float) -> void:
-	var driven_distance = speed * delta
+	var driven_distance = max(speed * delta, 0) # not the right place and this is a bug, but I wanna know what's going wrong
 	if reverser == ReverserState.REVERSE:
 		driven_distance = -driven_distance
 	distance_on_route += driven_distance

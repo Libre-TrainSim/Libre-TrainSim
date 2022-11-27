@@ -95,7 +95,7 @@ func update_nextTable() -> void:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = "-"
 
 	## Update Next Station
-	if player.station_table.size() == 0 or (player.current_station_table_entry.stop_type == StopType.END and player.is_in_station):
+	if player.station_table.size() == 0 or !player.current_station_table_entry or (player.current_station_table_entry.stop_type == StopType.END and player.is_in_station):
 		$IngameInformation/Next/GridContainer/Arrival.text = "-"
 		$IngameInformation/Next/GridContainer/DistanceToStation.text = "-"
 	else:

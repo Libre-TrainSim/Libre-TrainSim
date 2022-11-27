@@ -677,7 +677,7 @@ func handleCamera(delta: float) -> void:
 		wagonsVisible = true
 		camera_state = CameraState.FREE_VIEW
 		get_node("Camera").current = false
-		var cam = load("res://Data/Modules/FreeCamera.tscn").instance()
+		var cam = load("res://Data/Modules/FreeCamera.tscn").instance() # load because cycle
 		cam.current = true
 		world.add_child(cam)
 		cam.owner = world
@@ -969,6 +969,8 @@ func leave_current_station() -> void:
 	current_station_table_index += 1
 	if current_station_table_index < station_table.size():
 		current_station_table_entry = station_table[current_station_table_index]
+	else:
+		current_station_table_entry = null
 	current_station_node = null
 	_door_open_message_sent = false
 	nextStation = ""
@@ -1509,7 +1511,7 @@ func autopilot() -> void:
 
 	## Next Station:
 	sollSpeedArr[2] = speedLimit
-	if not is_in_station and station_table.size() != 0:
+	if not is_in_station and station_table.size() != 0 and current_station_table_entry:
 		if get_station_table_index_of_station_node_name(current_station_table_entry.station_node_name) != -1:
 			sollSpeedArr[2] = min(sqrt(15*distanceToNextStation+20), (distanceToNextStation+10)/4.0)
 			if sollSpeedArr[2] < 10:

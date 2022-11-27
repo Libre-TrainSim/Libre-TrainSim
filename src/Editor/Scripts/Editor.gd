@@ -628,7 +628,7 @@ func select_object_under_mouse() -> void:
 	# Return early if we currently have an active gizmo
 	if object_has_active_gizmo(selected_object):
 		return
-	
+
 	var ray_length: float = 1000
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var from: Vector3 = camera.project_ray_origin(mouse_pos)
@@ -699,7 +699,7 @@ func object_has_active_gizmo(object: Node) -> bool:
 	# Return early if object is null
 	if not is_instance_valid(object):
 		return false
-	
+
 	# Iterate over children and return true if an ACTIVE gizmo is found
 	for node in object.get_children():
 		if node.is_in_group("Gizmo"):
@@ -785,6 +785,9 @@ func save_world(send_message: bool = true) -> void:
 
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)
+
+	# We only want to keep the _temp files if the editor crashes or the user didn't save until now.
+	# When the user saves the whole world and nothing crashed until here we can now safely delete our _temp files.
 	$World.chunk_manager.cleanup()
 
 	var packed_scene = PackedScene.new()

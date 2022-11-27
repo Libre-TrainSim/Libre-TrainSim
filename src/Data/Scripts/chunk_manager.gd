@@ -310,6 +310,7 @@ func cleanup():
 	var files_to_remove := []
 
 	var chunk_path = editor.current_track_path.plus_file("chunks")
+	_dir.open(chunk_path)
 	_dir.change_dir(chunk_path)
 	_dir.list_dir_begin(true, true)
 	while(true):

@@ -514,7 +514,7 @@ func handle_drag_mode() -> void:
 			snap_rot = snapped_object.start_rot
 			snap_pos = snapped_object.start_pos
 		else:
-			snap_rot = snapped_object.end_rot - deg2rad(180.0)
+			snap_rot = snapped_object.end_rot - PI
 			snap_pos = snapped_object.end_pos
 
 		if Math.angle_distance_rad(end_rot, snap_rot) < deg2rad(1):

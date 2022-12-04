@@ -14,12 +14,12 @@ columns = 2
 
 [node name="Label" type="Label" parent="GeneralSettings"]
 margin_top = 5.0
-margin_right = 60.0
+margin_right = 122.0
 margin_bottom = 19.0
-text = "Distance:"
+text = "Distance along rail:"
 
 [node name="Distance" type="SpinBox" parent="GeneralSettings"]
-margin_left = 64.0
+margin_left = 126.0
 margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -31,12 +31,12 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="GeneralSettings"]
 margin_top = 33.0
-margin_right = 60.0
+margin_right = 122.0
 margin_bottom = 47.0
 text = "Forward:"
 
 [node name="Forwad" type="CheckBox" parent="GeneralSettings"]
-margin_left = 64.0
+margin_left = 126.0
 margin_top = 28.0
 margin_right = 1024.0
 margin_bottom = 52.0

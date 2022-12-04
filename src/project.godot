@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Enums/control_type.gd"
 }, {
+"base": "CameraBase",
+"class": "DebugCamera",
+"language": "GDScript",
+"path": "res://Data/Scripts/debug_camera.gd"
+}, {
 "base": "Node",
 "class": "DistanceMonitor",
 "language": "GDScript",
@@ -336,6 +341,7 @@ _global_script_class_icons={
 "ContactPoint": "",
 "ContactPointSettings": "",
 "ControlType": "",
+"DebugCamera": "",
 "DistanceMonitor": "",
 "EditorCamera": "",
 "EditorInfo": "",
@@ -747,6 +753,11 @@ pzb_command={
 open_debug_ui={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+free_cursor={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

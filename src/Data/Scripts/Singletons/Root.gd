@@ -150,6 +150,10 @@ func get_subfolders_of(directory_path: String) -> Array:
 	return folder_names
 
 
+func set_fullscreen(value: bool) -> void:
+	OS.window_fullscreen = value
+
+
 func set_low_resolution(value: bool) -> void:
 	if value:
 		if ProjectSettings.get_setting("display/window/stretch/mode") == "viewport":
@@ -161,7 +165,7 @@ func set_low_resolution(value: bool) -> void:
 	else:
 		ProjectSettings.set_setting("display/window/stretch/mode", "disabled")
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
-		ProjectSettings.set_setting("display/window/size/width", "1024")
+		ProjectSettings.set_setting("display/window/size/width", "800")
 		ProjectSettings.set_setting("display/window/size/height", "600")
 
 

@@ -409,7 +409,7 @@ boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
 config/icon="res://Data/Misc/logos/lts_logo_16.png"
 config/quit_on_go_back=false
-config/project_settings_override.editor="user://dev.override.cfg"
+config/project_settings_override.editor="user://override_hack.cfg"
 
 [audio]
 
@@ -438,6 +438,7 @@ settings/stdout/verbose_stdout=true
 [display]
 
 window/handheld/orientation="sensor_landscape"
+window/size/fullscreen.editor=false
 
 [editor]
 
@@ -769,6 +770,10 @@ translation_remaps={
 }
 overwritten_language=""
 overwritten_language.editor="en"
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=65536
 
 [rendering]
 

@@ -24,8 +24,7 @@ func _ready():
 func first_run_check():
 	# Check if this is the first run, and if it is, apply default settings
 	var dir = Directory.new()
-	if (not dir.file_exists("user://override.cfg") and not OS.has_feature("editor")) \
-			or (OS.has_feature("editor") and not dir.file_exists("user://dev.override.cfg")):
+	if not dir.file_exists("user://override.cfg") and not OS.has_feature("editor"):
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		reset_settings_to_default()
 
@@ -58,11 +57,11 @@ func apply_saved_settings():
 
 func save_settings():
 	# Save, except if in Godot Editor
-	var settings_path := "user://dev.override.cfg" if OS.has_feature("editor") \
-			else "user://override.cfg"
-	var err := ProjectSettings.save_custom(settings_path)
+	if OS.has_feature("editor"):
+		return
+	var err := ProjectSettings.save_custom("user://override.cfg")
 	if err != OK:
-		Logger.err("Failed to save user settings (%d)" % err, self)
+		Logger.err("Failed to save user settings", self)
 		# Nothing was saved, so nothing needs special treatment
 		return
 	# _global_script_classes gets saved, too
@@ -72,19 +71,19 @@ func save_settings():
 	# this IS a Godot bug, but until I have time to fix it, let's just work around
 	# https://github.com/godotengine/godot/issues/61556 may be intersting as well
 	var file := ConfigFile.new()
-	err = file.load(settings_path)
+	err = file.load("user://override.cfg")
 	if err != OK:
-		Logger.err("Couldn't load %s for _global_script_classes" + \
+		Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \
 				"stripping. This is a major functionality threat! " + \
-				"Please ensure removal of the file!" % settings_path, self)
+				"Please ensure removal of the file!", self)
 		return
 	file.erase_section_key("", "_global_script_classes")
 	file.erase_section_key("", "_global_script_class_icons")
-	err = file.save(settings_path)
+	err = file.save("user://override.cfg")
 	if err != OK:
-		Logger.err("Couldn't load %s for _global_script_classes" + \
+		Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \
 				"stripping. This is a major functionality threat! " + \
-				"Please ensure removal of the file!" % settings_path, self)
+				"Please ensure removal of the file!", self)
 		return
 
 

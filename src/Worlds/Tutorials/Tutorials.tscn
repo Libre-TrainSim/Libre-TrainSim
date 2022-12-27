@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=1]
 [ext_resource path="res://Data/Modules/Rail.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Worlds/Tutorials/TutorialScript.gd" type="Script" id=3]
 [ext_resource path="res://Data/Scripts/World.gd" type="Script" id=5]
 [ext_resource path="res://Data/Modules/Signal.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Data/Modules/Station.tscn" type="PackedScene" id=17]
@@ -110,3 +111,6 @@ tend2 = 0.5
 [node name="Landscape" type="Spatial" parent="."]
 
 [node name="Chunks" type="Spatial" parent="."]
+
+[node name="TutorialScript" type="Node" parent="."]
+script = ExtResource( 3 )

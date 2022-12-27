@@ -480,7 +480,7 @@ var _last_connected_signal: String = ""
 func handle_drag_mode() -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var plane := Plane(Vector3(0,1,0), selected_object.start_pos.y)
-	var mouse_pos_3d: Vector3 = plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
+	var mouse_pos_3d := plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
 	if mouse_pos_3d != null:
 		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
 		provide_settings_for_selected_object()  # update ui

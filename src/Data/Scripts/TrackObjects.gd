@@ -113,6 +113,7 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	make_mesh_unique()
+	Root.connect("world_origin_shifted", self, "update")
 
 
 func make_mesh_unique():
@@ -130,7 +131,7 @@ func make_mesh_unique():
 		multimesh.mesh.surface_set_material(i, materials[i])
 
 
-func update() -> void:
+func update(_delta := Vector3()) -> void:
 	var _rail_node = world.get_node("Rails").get_node_or_null(attached_rail)
 	if _rail_node == null:
 		Logger.warn("TrackObject could not find attached_rail %s!" % attached_rail, self)

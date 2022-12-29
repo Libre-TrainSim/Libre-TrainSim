@@ -767,7 +767,6 @@ func handle_signal(signal_name: String) -> void:
 	nextSignal = null
 	nextSpeedLimitNode = null
 	var signal_passed = world.get_node("Signals/"+signal_name)
-	if signal_passed.forward != forward: return
 
 	Logger.log(name + ": SIGNAL: " + signal_passed.name)
 
@@ -834,6 +833,8 @@ func handle_signal(signal_name: String) -> void:
 		Logger.log(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
 	elif signal_passed.type == "ContactPoint":
 		signal_passed.activateContactPoint(name)
+	else:
+		Logger.err("Unrecognised signal type %s passed" % signal_passed.type, self)
 
 	emit_signal("passed_signal", signal_passed)
 

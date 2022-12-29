@@ -136,3 +136,13 @@ func export_mod() -> void:
 	var export_path = "user://addons/"
 	show_message(ExportTrack.export_editor_track(track_name, export_path))
 	return
+
+
+func _on_AutoUpdating_toggled(update: bool) -> void:
+	set_process(update)
+	$CanvasLayer/UpdateMode/VBoxContainer/UpdateNow.visible = !update
+
+
+func _on_UpdateNow_pressed() -> void:
+	$ScenarioMap.update_map()
+	_run_map_updater_timer = 0

@@ -104,6 +104,7 @@ func set_current_route(route_name : String) -> void:
 	current_route = route_name
 	if current_route != "":
 		loaded_route = routes[current_route].duplicate(true)
+		loaded_route.connect_points()
 	update_ui_for_current_route()
 	update_scenario_map()
 
@@ -323,7 +324,7 @@ func _on_SelectMessage_Cancel_pressed():
 
 ## Station #########################################################################################
 func _on_Station_pressed():
-	loaded_route.route_points.append(RoutePointStation.new())
+	loaded_route.add_point(RoutePointStation.new())
 	update_route_point_list()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(loaded_route.size()-1)
 	update_route_point_settings()
@@ -458,7 +459,7 @@ func _on_SelectApporachSoundPath_pressed():
 
 ## Waypoint ########################################################################################
 func _on_AddRoutePoint_Waypoint_pressed():
-	loaded_route.route_points.append(RoutePointWayPoint.new())
+	loaded_route.add_point(RoutePointWayPoint.new())
 	update_route_point_list()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(loaded_route.size()-1)
 	update_route_point_settings()
@@ -486,7 +487,7 @@ func _rail_way_point_selected(rail_name: String):
 
 ## Spawnpoint ######################################################################################
 func _on_AddRoutePoint_Spawnpoint_pressed():
-	loaded_route.route_points.append(RoutePointSpawnPoint.new())
+	loaded_route.add_point(RoutePointSpawnPoint.new())
 	update_route_point_list()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(loaded_route.size()-1)
 	update_route_point_settings()
@@ -526,7 +527,7 @@ func _on_SpawnPoint_InitialSpeed_value_changed(value):
 
 ## Despawnpoint ####################################################################################
 func _on_AddRoutePoint_Despawnpoint_pressed():
-	loaded_route.route_points.append(RoutePointDespawnPoint.new())
+	loaded_route.add_point(RoutePointDespawnPoint.new())
 	update_route_point_list()
 	$TabContainer/Routes/RouteConfiguration/RoutePoints/ItemList.select(loaded_route.size()-1)
 	update_route_point_settings()

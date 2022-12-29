@@ -1,7 +1,7 @@
 class_name RoutePointDespawnPoint
 extends RoutePoint
 
-export (String) var rail_name := ""
+export (String) var rail_name := "" setget _set_rail_name
 export (float) var distance_on_rail := 0.0
 
 
@@ -16,3 +16,8 @@ func duplicate(deep: bool = true):
 	copy.distance_on_rail = distance_on_rail
 
 	return copy
+
+
+func _set_rail_name(new_name: String) -> void:
+	rail_name = new_name
+	emit_route_change()

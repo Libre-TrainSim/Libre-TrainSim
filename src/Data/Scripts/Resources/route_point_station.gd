@@ -1,8 +1,10 @@
 class_name RoutePointStation
 extends RoutePoint
 
-export (String) var station_node_name := ""  # the RailLogic node of the station
-export (String) var station_name := ""  # the name of the station displayed in GUI
+# the RailLogic node of the station
+export (String) var station_node_name := "" setget _set_station_node_name
+# the name of the station displayed in GUI
+export (String) var station_name := ""
 
 export (String) var approach_sound_path := ""
 export (String) var arrival_sound_path := ""
@@ -55,3 +57,8 @@ func duplicate(deep: bool = true):
 	copy.waiting_persons = waiting_persons
 
 	return copy
+
+
+func _set_station_node_name(new_name: String) -> void:
+	station_node_name = new_name
+	emit_route_change()

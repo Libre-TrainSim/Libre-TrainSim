@@ -260,6 +260,29 @@ margin_top = -151.5
 margin_right = 238.5
 margin_bottom = 151.5
 
+[node name="UpdateMode" type="PanelContainer" parent="CanvasLayer"]
+margin_right = 14.0
+margin_bottom = 14.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UpdateMode"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 208.0
+margin_bottom = 47.0
+
+[node name="AutoUpdating" type="CheckButton" parent="CanvasLayer/UpdateMode/VBoxContainer"]
+margin_right = 201.0
+margin_bottom = 40.0
+pressed = true
+text = "Auto Update Route"
+
+[node name="UpdateNow" type="Button" parent="CanvasLayer/UpdateMode/VBoxContainer"]
+visible = false
+margin_top = 44.0
+margin_right = 201.0
+margin_bottom = 64.0
+text = "Update"
+
 [node name="ScenarioMap" parent="." instance=ExtResource( 3 )]
 
 [connection signal="pressed" from="CanvasLayer/Message/VBoxContainer/Ok" to="." method="_on_Message_Ok_pressed"]
@@ -276,4 +299,6 @@ margin_bottom = 151.5
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitWithoutSaving" to="." method="_on_Pause_QuitWithoutSaving_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/SaveAndQuit" to="." method="_on_Pause_SaveAndQuit_pressed"]
 [connection signal="resource_selected" from="CanvasLayer/Content_Selector" to="CanvasLayer/ScenarioConfiguration" method="_on_Content_Selector_resource_selected"]
+[connection signal="toggled" from="CanvasLayer/UpdateMode/VBoxContainer/AutoUpdating" to="." method="_on_AutoUpdating_toggled"]
+[connection signal="pressed" from="CanvasLayer/UpdateMode/VBoxContainer/UpdateNow" to="." method="_on_UpdateNow_pressed"]
 [connection signal="item_selected" from="ScenarioMap" to="CanvasLayer/ScenarioConfiguration" method="_on_ScenarioMap_item_selected"]

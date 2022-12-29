@@ -247,6 +247,7 @@ func _get_path_from_to_helper(start_rail: Node, forward: bool, visited_rails: Di
 		return visited_rails
 
 	var possbile_rails: Array = start_rail.get_connected_rails(forward)
+	var paths := []
 
 	for rail_node in possbile_rails:
 		forward = rail_node.get_connection_direction(start_rail)
@@ -258,11 +259,24 @@ func _get_path_from_to_helper(start_rail: Node, forward: bool, visited_rails: Di
 				break
 
 		if not loop_detected:
-			visited_rails[rail_node] = {forward = forward, from = start_rail}
-			var outcome = _get_path_from_to_helper(rail_node, forward, visited_rails, destination_rail)
-			if outcome.size() != 0:
-				return outcome
-	return {}
+			var visits := visited_rails.duplicate()
+			visits[rail_node] = {forward = forward, from = start_rail}
+			var outcome = _get_path_from_to_helper(rail_node, forward, visits, destination_rail)
+			if outcome.size() > 0:
+				paths.append(outcome)
+
+	if paths.size() == 0:
+		return {}
+
+	var min_length: int = paths[0].size()
+	var shortest_index := 0
+	for i in range(paths.size()):
+		if paths[i].size() < min_length:
+			min_length = paths[i].size()
+			shortest_index = i
+
+	visited_rails.merge(paths[shortest_index])
+	return paths[shortest_index]
 
 
 func _backtrack_path(visited_rails: Dictionary, destination_rail: Node) -> Array:

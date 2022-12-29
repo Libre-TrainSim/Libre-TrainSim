@@ -1670,6 +1670,10 @@ func get_station_table_index_of_station_node_name(node_name: String) -> int:
 	return -1
 
 
+func sort_signals_by_distance(a: Dictionary, b: Dictionary) -> bool:
+	return a["distance"] < b["distance"]
+
+
 # Compat until block system
 func _bake_signals() -> void:
 	var current_step_length: float = 0.0

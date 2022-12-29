@@ -1125,19 +1125,15 @@ var _check_for_next_stationTimer: float = 0
 var stationMessageSent: bool = false
 func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1000m there is ...)
 	_check_for_next_stationTimer += delta
-	if _check_for_next_stationTimer < 1:
+	if _check_for_next_stationTimer < 1 or current_station_table_entry == null:
 		return
 
 	_check_for_next_stationTimer = 0
 	if nextStation == "":
-		var nextStations: Array = get_all_upcoming_signals_of_types(["Station"])
-		if nextStations.size() == 0:
-			stationMessageSent = true
-			return
-		nextStation = nextStations[0]
+		nextStation = current_station_table_entry.station_node_name
 		stationMessageSent = false
 
-	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.station_node_name == nextStation and current_station_table_entry.stop_type != StopType.DO_NOT_STOP and not is_in_station:
+	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.stop_type != StopType.DO_NOT_STOP and not is_in_station:
 		stationMessageSent = true
 		var distanceS: String = String(int(get_distance_to_signal(nextStation)/100)*100+100)
 		if distanceS == "1000":

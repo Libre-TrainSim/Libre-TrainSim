@@ -229,8 +229,11 @@ func create_line2d_from_rail(rail: Spatial):
 	line.width = 1.435
 	line.antialiased = true
 	line.name = rail.name
+	var baked_route := {}
+	for entry in train_world.player.route_information:
+		baked_route[entry.rail] = entry.forward
 
-	if train_world.player.baked_route.has(rail.name):
+	if baked_route.has(rail):
 		line.default_color = Color("9eea18")
 		$RouteLines.add_child(line)
 		line.owner = $RouteLines

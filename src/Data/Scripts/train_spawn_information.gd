@@ -9,3 +9,4 @@ var minimal_platform_length := 0
 var route := []
 var station_table := []
 var despawn_point: RoutePoint = null
+var scenario_route: ScenarioRoute = null

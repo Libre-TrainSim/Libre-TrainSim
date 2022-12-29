@@ -81,6 +81,7 @@ func _ready() -> void:
 			signalN.spawnPersonsAtBeginning()
 
 	player = $Players/Player
+	assert(player)
 	apply_user_settings()
 
 
@@ -148,7 +149,7 @@ func set_scenario_to_world() -> void:
 			train_path = Root.selected_train
 
 		var minimal_platform_length: int = route.get_minimal_platform_length(self)
-		var train_rail_route: Array  = route.get_calculated_rail_route(self)
+		var train_rail_route: Array = route.get_calculated_rail_route(self)
 		var train_station_table: Array = route.get_calculated_station_points(Root.selected_time)
 		var despawn_point: RoutePoint = route.get_despawn_point()
 		var available_times: Array = route.get_start_times()
@@ -171,6 +172,7 @@ func set_scenario_to_world() -> void:
 			pending_train_spawn.route = train_rail_route
 			pending_train_spawn.station_table = train_station_table
 			pending_train_spawn.despawn_point = despawn_point
+			pending_train_spawn.scenario_route = route
 			pending_train_spawns.append(pending_train_spawn)
 
 	check_train_spawn(1)
@@ -195,8 +197,9 @@ func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:
 	if new_train.length + 25 > train_spawn_information.minimal_platform_length:
 		new_train.length = train_spawn_information.minimal_platform_length - 25
 	new_train.route_information = train_spawn_information.route
+	new_train.route = train_spawn_information.scenario_route
 
-	var route = current_scenario.routes[train_spawn_information.route_name]
+	var route = train_spawn_information.scenario_route
 	new_train.spawn_point = route.get_spawn_point(new_train.length, self)
 	new_train.despawn_point = train_spawn_information.despawn_point
 	new_train.station_table = train_spawn_information.station_table
@@ -209,10 +212,16 @@ func check_train_spawn(delta: float) -> void:
 	if _check_train_spawn_timer < 0.5:
 		return
 	_check_train_spawn_timer = 0
-	for pending_train_spawn in pending_train_spawns:
-		if pending_train_spawn.time <= time:
+	var restart := true
+	while restart:
+		restart = false
+		for pending_train_spawn in pending_train_spawns:
+			if pending_train_spawn.time > time:
+				continue
 			spawn_train(pending_train_spawn)
 			pending_train_spawns.erase(pending_train_spawn)
+			restart = true
+			break
 
 
 func update_rail_connections() -> void:

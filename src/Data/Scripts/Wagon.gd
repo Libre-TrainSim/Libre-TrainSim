@@ -4,8 +4,6 @@ export (float) var length: float = 17.5
 export (bool) var cabinMode: bool = false
 
 var baked_route: Array
-var baked_route_direction: Array
-var baked_route_is_loop: bool = false
 var complete_route_length: float = 0
 var route_index: int = 0
 var forward: bool
@@ -157,20 +155,16 @@ func change_to_next_rail() -> void:
 		route_index += 1
 
 	if baked_route.size() == route_index or route_index == -1:
-		if baked_route_is_loop:
-			if route_index == baked_route.size():
-				route_index = 0
-				distance_on_route = 0
-			else:
-				route_index = baked_route.size() -1
-				distance_on_route = complete_route_length
+		if route_index == baked_route.size():
+			route_index = 0
+			distance_on_route = 0
 		else:
 			Logger.vlog(name + ": Route no more rail found, despawning me...", self)
 			despawn()
 			return
 
-	currentRail =  world.get_node("Rails").get_node(baked_route[route_index])
-	forward = baked_route_direction[route_index]
+	currentRail = baked_route[route_index].rail
+	forward = baked_route[route_index].forward
 
 	updateSwitchOnNextChange()
 
@@ -389,8 +383,8 @@ func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these 
 		return
 
 	if baked_route.size() > route_index+1:
-		var nextRail: Spatial = world.get_node("Rails").get_node(baked_route[route_index+1])
-		var nextForward: bool = baked_route_direction[route_index+1]
+		var nextRail: Spatial = baked_route[route_index+1].rail
+		var nextForward: bool = baked_route[route_index+1].forward
 		if nextForward and nextRail.switch_part[0] != "":
 			switch_on_next_change = true
 			return

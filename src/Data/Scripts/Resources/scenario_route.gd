@@ -29,6 +29,7 @@ export (int) var interval_start := 0  # first time of day this route drives, in 
 var calculated_rail_route := []
 var error_route_point_start_index: int
 var error_route_point_end_index: int
+var length: float = 0.0
 
 
 # because Godot's initialisation sucks so hard,
@@ -142,10 +143,12 @@ func get_calculated_rail_route(world: Node) -> Array:
 	world.update_rail_connections()
 	var route: Array = []
 	var forward = null
+	length = 0
 
 	for i in range(size()-1):
 		var start = _get_rail(world, route_points[i])
 		var end = _get_rail(world, route_points[i+1])
+		var path: Array
 
 		# first time, have to check both directions, we don't know where to go!
 		if forward == null:
@@ -160,12 +163,14 @@ func get_calculated_rail_route(world: Node) -> Array:
 
 			if path_fwd == []:
 				route.append_array(path_bwd)
+				path = path_bwd
 			else:
 				route.append_array(path_fwd)
+				path = path_fwd
 			forward = route.back().forward  # keep searching in the direction of the last rail
 
 		else:
-			var path: Array = world.get_path_from_to(start, forward, end)
+			path = world.get_path_from_to(start, forward, end)
 			if path == []:
 				error_route_point_start_index = i
 				error_route_point_end_index = i+1
@@ -175,6 +180,9 @@ func get_calculated_rail_route(world: Node) -> Array:
 			# so the rail is already in route, don't add it again!
 			path.pop_front()
 			route.append_array(path)
+
+		for entry in path:
+			length += entry.rail.length
 
 	calculated_rail_route = route.duplicate(true)
 	return route

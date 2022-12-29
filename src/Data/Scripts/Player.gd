@@ -964,12 +964,13 @@ func leave_current_station() -> void:
 	current_station_table_index += 1
 	if current_station_table_index < station_table.size():
 		current_station_table_entry = station_table[current_station_table_index]
+		update_waiting_persons_on_next_station()
 	else:
 		current_station_table_entry = null
 	current_station_node = null
 	_door_open_message_sent = false
 	nextStation = ""
-	update_waiting_persons_on_next_station()
+
 
 
 func update_waiting_persons_on_next_station() -> void:

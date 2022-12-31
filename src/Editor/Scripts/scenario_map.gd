@@ -206,7 +206,7 @@ func update_map():
 
 	# Mark stations at route and add waypoints:
 	for route_point in route_data:
-		if route_point is RoutePointStation:
+		if route_point is RoutePointStation and not route_point.station_node_name.empty():
 			var sprite: Sprite
 			var station = world.get_signal(route_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
@@ -214,7 +214,7 @@ func update_map():
 			sprite.texture = station_image_selected
 			$Special.add_child(sprite)
 
-		if route_point is RoutePointWayPoint:
+		if route_point is RoutePointWayPoint and not route_point.rail_name.empty():
 			var forward = true
 			for entry in baked_route:
 				if entry.rail.name == route_point.rail_name:

@@ -56,7 +56,7 @@ script = ExtResource( 4 )
 hz = 1000
 on_rail_position = 0.0
 forward = true
-attached_rail = NodePath("../../Rails/Rail")
+attached_rail = "Rail"
 attached_signal = NodePath("../Signal")
 
 [node name="PZBMagnet2" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
@@ -65,7 +65,7 @@ script = ExtResource( 4 )
 hz = 500
 on_rail_position = 750.0
 forward = true
-attached_rail = NodePath("../../Rails/Rail2")
+attached_rail = "Rail2"
 attached_signal = NodePath("../Signal2")
 
 [node name="Signal2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
@@ -87,7 +87,7 @@ script = ExtResource( 4 )
 hz = 2000
 on_rail_position = 998.0
 forward = true
-attached_rail = NodePath("../../Rails/Rail2")
+attached_rail = "Rail2"
 attached_signal = NodePath("../Signal2")
 
 [node name="Signal3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
@@ -109,7 +109,7 @@ script = ExtResource( 4 )
 hz = 1000
 on_rail_position = 498.0
 forward = true
-attached_rail = NodePath("../../Rails/Rail3")
+attached_rail = "Rail3"
 attached_signal = NodePath("../Signal3")
 
 [node name="PZBMagnet5" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
@@ -118,7 +118,7 @@ script = ExtResource( 4 )
 hz = 500
 on_rail_position = 460.0
 forward = true
-attached_rail = NodePath("../../Rails/Rail5")
+attached_rail = "Rail5"
 attached_signal = NodePath("../Signal4")
 
 [node name="Signal4" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
@@ -140,7 +140,7 @@ script = ExtResource( 4 )
 hz = 2000
 on_rail_position = 698.0
 forward = true
-attached_rail = NodePath("../../Rails/Rail5")
+attached_rail = "Rail5"
 attached_signal = NodePath("../Signal4")
 
 [node name="Rails" type="Spatial" parent="."]

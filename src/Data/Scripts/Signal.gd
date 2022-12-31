@@ -22,11 +22,6 @@ export var speed: float = -1 setget set_speed # SpeedLimit, which will be applie
 var warn_speed: float = -1 setget set_warn_speed # Displays the speed of the following speedlimit. Just used for the player train. It doesn't affect any train..
 
 export (String, FILE, "*.tscn,*.scn") var visual_instance_path: String = "res://Resources/SignalTypes/Ks/Ks.tscn"
-export (String) var attached_rail: String # Internal. Never change this via script.
-var attached_rail_node: Node
-export var forward: bool = true # Internal. Never change this via script.
-export (int) var on_rail_position: int # Internal. Never change this via script.
-
 export (SignalOperationMode.TypeHint) var operation_mode: int = SignalOperationMode.BLOCK
 
 
@@ -37,14 +32,14 @@ func _get_type() -> String:
 var timer
 func update_visual_instance() -> void:
 	update()
-	if not is_instance_valid(attached_rail_node):
-		attached_rail_node = world.get_node("Rails/" + attached_rail)
-		if attached_rail_node == null:
+	if not is_instance_valid(rail):
+		rail = world.get_node("Rails/" + attached_rail)
+		if rail == null:
 			queue_free()
 			return
 
-	visible = attached_rail_node.visible
-	if not attached_rail_node.visible:
+	visible = rail.visible
+	if not rail.visible:
 		if get_node_or_null("VisualInstance") != null:
 			self.disconnect("signal_changed", $VisualInstance, "update_visual_instance")
 			$VisualInstance.queue_free()
@@ -55,6 +50,7 @@ func update_visual_instance() -> void:
 
 	if get_node_or_null("VisualInstance") == null:
 		create_visual_instance()
+
 
 
 func create_visual_instance() -> void:
@@ -101,7 +97,7 @@ func _ready() -> void:
 	self.add_child(timer)
 	timer.start()
 
-	set_to_rail()
+	set_to_rail(true)
 	update()
 
 	if operation_mode == SignalOperationMode.BLOCK:
@@ -139,21 +135,6 @@ func set_speed(new_speed: float) -> void:
 func set_warn_speed(new_speed: float) -> void:
 	warn_speed = new_speed
 	emit_signal("signal_changed", self)
-
-
-
-func set_to_rail() -> void:
-	assert(is_inside_tree())
-	assert(not not world)
-
-	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
-		var rail: Node = world.get_node("Rails/"+attached_rail)
-		if not Root.scenario_editor:
-			rail.register_signal(self.name, on_rail_position)
-			self.translation = rail.get_pos_at_distance(on_rail_position)
-			self.rotation.y = rail.get_rad_at_distance(on_rail_position)
-			if not forward:
-				self.rotation.y += PI
 
 
 func give_signal_free() -> void:

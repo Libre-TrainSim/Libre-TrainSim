@@ -29,6 +29,8 @@ export (int) var interval_start := 0  # first time of day this route drives, in 
 var calculated_rail_route := []
 var error_route_point_start_index: int
 var error_route_point_end_index: int
+var length: float = 0.0
+var dirty := true
 
 
 # because Godot's initialisation sucks so hard,
@@ -134,18 +136,29 @@ func get_calculated_station_point(index: int, start_time: int):
 func _get_rail(world: Node, route_point: RoutePoint) -> Node:
 	if route_point is RoutePointStation:
 		var station: Node = world.get_signal(route_point.station_node_name)
+		if station == null:
+			return null
 		return world.get_rail(station.attached_rail)
 	return world.get_rail(route_point.rail_name)
 
 
-func get_calculated_rail_route(world: Node) -> Array:
+func _get_station(world: Node, route_point: RoutePointStation) -> Station:
+	return world.get_signal(route_point.station_node_name)
+
+
+func get_calculated_rail_route(world: Node, force_recalc := false) -> Array:
+	if !force_recalc and !dirty:
+		return calculated_rail_route.duplicate(true)
+
 	world.update_rail_connections()
 	var route: Array = []
 	var forward = null
+	length = 0
 
 	for i in range(size()-1):
 		var start = _get_rail(world, route_points[i])
 		var end = _get_rail(world, route_points[i+1])
+		var path: Array
 
 		# first time, have to check both directions, we don't know where to go!
 		if forward == null:
@@ -160,15 +173,18 @@ func get_calculated_rail_route(world: Node) -> Array:
 
 			if path_fwd == []:
 				route.append_array(path_bwd)
+				path = path_bwd
 			else:
 				route.append_array(path_fwd)
+				path = path_fwd
 			forward = route.back().forward  # keep searching in the direction of the last rail
 
 		else:
-			var path: Array = world.get_path_from_to(start, forward, end)
+			path = world.get_path_from_to(start, forward, end)
 			if path == []:
 				error_route_point_start_index = i
 				error_route_point_end_index = i+1
+				dirty = false
 				return []
 
 			# last destination rail == this start rail
@@ -176,6 +192,10 @@ func get_calculated_rail_route(world: Node) -> Array:
 			path.pop_front()
 			route.append_array(path)
 
+		for entry in path:
+			length += entry.rail.length
+
+	dirty = false
 	calculated_rail_route = route.duplicate(true)
 	return route
 
@@ -218,11 +238,20 @@ func get_minimal_platform_length(world: Node) -> int:
 
 
 func remove_point(index: int):
+	route_points[index].disconnect("route_rebuild_required", self, "_on_route_changed")
 	route_points.remove(index)
+	dirty = true
+
+
+func add_point(point: RoutePoint) -> void:
+	route_points.append(point)
+	point.connect("route_rebuild_required", self, "_on_route_changed")
+	dirty = true
 
 
 func clear_route():
 	route_points.clear()
+	dirty = true
 
 
 func move_point_up(index: int) -> void:
@@ -231,6 +260,7 @@ func move_point_up(index: int) -> void:
 	var tmp = route_points[index-1]
 	route_points[index-1] = route_points[index]
 	route_points[index] = tmp
+	dirty = true
 
 
 func move_point_down(index: int) -> void:
@@ -239,3 +269,18 @@ func move_point_down(index: int) -> void:
 	var tmp = route_points[index+1]
 	route_points[index+1] = route_points[index]
 	route_points[index] = tmp
+	dirty = true
+
+
+func connect_points() -> void:
+	for point in route_points:
+		point.connect("route_rebuild_required", self, "_on_route_changed")
+
+
+func _on_route_changed(changed_point: RoutePoint) -> void:
+	Logger.vlog("I am dirty", changed_point)
+	if dirty:
+		return
+	dirty = route_points.has(changed_point)
+	if !dirty:
+		changed_point.disconnect("route_rebuild_required", self, "_on_route_changed")

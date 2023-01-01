@@ -12,15 +12,6 @@ enum Hz {
 	Hz2000 = 2000
 }
 export(Hz) var hz: int
-export(int) var on_rail_position: float = 0
-export(bool) var forward: bool = true
-
-
-export(NodePath) var attached_rail: NodePath setget set_attached_rail
-var attached_rail_node: Spatial
-func set_attached_rail(val: NodePath) -> void:
-	attached_rail = val
-	attached_rail_node = get_node(val)
 
 
 export(NodePath) var attached_signal: NodePath setget set_attached_signal
@@ -64,18 +55,3 @@ func update_active(_signal_instance: Spatial) -> void:
 		is_active = (attached_signal_node.status == SignalStatus.ORANGE) or (attached_signal_node.warn_speed > 0 and attached_signal_node.warn_speed < Math.kmh_to_speed(80))
 		# TODO: special case: warn_speed 80 or 90 still need Ack, but limit to different speeds
 		# warn speeds 100 and above are NOT checked and don't require PZB Ack
-
-
-func set_to_rail() -> void:
-	if attached_rail_node == null:
-		attached_rail_node = get_node(attached_rail)
-		if attached_rail_node == null:
-			print(name, ": CAN'T FIND ATTACHED RAIL NODE! (", attached_rail, ")")
-			#queue_free()
-			return
-
-	attached_rail_node.register_signal(self.name, on_rail_position)
-	self.translation = attached_rail_node.get_pos_at_distance(on_rail_position)
-	self.rotation.y = attached_rail_node.get_rad_at_distance(on_rail_position)
-	if not forward:
-		self.rotation.y += PI

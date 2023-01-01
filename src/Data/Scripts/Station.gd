@@ -12,10 +12,6 @@ export (float) var platformHeight: float = 1.2
 export (float) var platformStart: float = 2.5
 export (float) var platformEnd: float = 4.5
 
-export (String) var attached_rail: String
-export (float) var on_rail_position: float
-export var forward: bool = true
-
 export var assigned_signal: String = ""
 
 var waitingPersonCount: int = 5
@@ -24,9 +20,6 @@ var attachedPersons: Array = []
 
 func _get_type() -> String:
 	return RailLogicTypes.STATION
-
-
-var rail: Spatial
 
 
 func _ready():
@@ -44,18 +37,6 @@ func _ready():
 
 func _process(_delta: float) -> void:
 	handlePersons()
-
-
-func set_to_rail() -> void:
-	assert(is_inside_tree())
-	assert(not not world)
-
-	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
-		rail = get_parent().get_parent().get_node("Rails/"+attached_rail)
-		rail.register_signal(self.name, on_rail_position)
-		self.transform = rail.get_global_transform_at_distance(on_rail_position)
-		if not forward:
-			rotation.y += PI
 
 
 func spawnPersonsAtBeginning() -> void:

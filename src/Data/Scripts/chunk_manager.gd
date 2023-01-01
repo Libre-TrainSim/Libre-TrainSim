@@ -116,6 +116,8 @@ func _process(_delta: float):
 
 	if ProjectSettings["game/debug/display_chunk"]:
 		DebugDraw.set_text("Chunk", active_chunk)
+		DebugDraw.set_text("World Origin", world_origin)
+		DebugDraw.set_text("Distance to Origin", position.length())
 
 
 func _shift_world_origin_to(position: Vector3):

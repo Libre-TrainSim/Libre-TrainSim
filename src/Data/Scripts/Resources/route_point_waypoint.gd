@@ -1,7 +1,7 @@
 class_name RoutePointWayPoint
 extends RoutePoint
 
-export (String) var rail_name := ""
+export (String) var rail_name := "" setget _set_rail_name
 
 
 func get_description() -> String:
@@ -14,3 +14,8 @@ func duplicate(deep: bool = true):
 	copy.rail_name = rail_name
 
 	return copy
+
+
+func _set_rail_name(new_name: String) -> void:
+	rail_name = new_name
+	emit_route_change()

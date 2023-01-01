@@ -9,10 +9,6 @@ export var enable_for_all_trains: bool = true
 export var bySpecificTrain: String = ""
 export var affectTime: float = 0.1
 
-export (String) var attached_rail: String
-export (int) var on_rail_position: int
-export var forward: bool = true
-
 
 func _get_type() -> String:
 	return RailLogicTypes.CONTACT_POINT
@@ -24,19 +20,6 @@ func _ready() -> void:
 		$Mesh.queue_free()
 
 	set_to_rail()
-
-
-func set_to_rail() -> void:
-	assert(is_inside_tree())
-	assert(not not world)
-
-	if world.has_node("Rails/"+attached_rail) and attached_rail != "":
-		var rail = world.get_node("Rails/"+attached_rail)
-		rail.register_signal(self.name, on_rail_position)
-		self.translation = rail.get_pos_at_distance(on_rail_position)
-		self.rotation.y = rail.get_rad_at_distance(on_rail_position)
-		if not forward:
-			self.rotation.y += PI
 
 
 func set_data(d: ContactPointSettings) -> void:

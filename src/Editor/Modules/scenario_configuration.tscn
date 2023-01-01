@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Editor/ui/size_changer.gd" type="Script" id=1]
 [ext_resource path="res://Editor/Scripts/ScenarioConfiguration.gd" type="Script" id=3]
 [ext_resource path="res://Editor/Modules/TimeField.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=5]
@@ -10,9 +11,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -409.0
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
@@ -51,6 +49,7 @@ margin_bottom = 554.0
 size_flags_vertical = 3
 
 [node name="GeneralSettings" type="VBoxContainer" parent="TabContainer/Routes/RouteConfiguration"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -179,7 +178,6 @@ margin_bottom = 406.0
 size_flags_vertical = 3
 
 [node name="RoutePoints" type="VBoxContainer" parent="TabContainer/Routes/RouteConfiguration"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -224,40 +222,39 @@ size_flags_horizontal = 3
 text = "Add"
 
 [node name="AddRoutePoint" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
-visible = false
-margin_top = 154.0
-margin_right = 387.0
-margin_bottom = 174.0
+margin_top = 128.0
+margin_right = 383.0
+margin_bottom = 148.0
 
 [node name="Station" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_right = 90.0
+margin_right = 89.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Station"
 
 [node name="Waypoint" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_left = 94.0
-margin_right = 185.0
+margin_left = 93.0
+margin_right = 182.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Waypoint"
 
 [node name="Spawnpoint" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_left = 189.0
-margin_right = 279.0
+margin_left = 186.0
+margin_right = 276.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Spawnpoint"
 
 [node name="Despawnpoint" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_left = 283.0
-margin_right = 386.0
+margin_left = 280.0
+margin_right = 383.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Despawnpoint"
 
 [node name="Configuration" type="Control" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
-margin_top = 128.0
+margin_top = 152.0
 margin_right = 383.0
 margin_bottom = 406.0
 size_flags_horizontal = 3
@@ -273,7 +270,7 @@ __meta__ = {
 }
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station"]
-margin_right = 383.0
+margin_right = 371.0
 margin_bottom = 411.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -542,7 +539,7 @@ __meta__ = {
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint"]
 margin_right = 383.0
-margin_bottom = 278.0
+margin_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -587,7 +584,7 @@ anchor_bottom = 1.0
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint"]
 margin_right = 383.0
-margin_bottom = 278.0
+margin_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -681,7 +678,7 @@ anchor_bottom = 1.0
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint"]
 margin_right = 383.0
-margin_bottom = 278.0
+margin_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -1121,6 +1118,16 @@ margin_top = 168.0
 margin_right = 387.0
 margin_bottom = 199.0
 size_flags_horizontal = 3
+
+[node name="VSeparator" type="VSeparator" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -20.0
+margin_right = 4.0
+margin_bottom = 20.0
+script = ExtResource( 1 )
+drag_side = 0
+target_path = NodePath("..")
 
 [connection signal="user_added_entry" from="TabContainer/Routes/Routes" to="." method="_on_Routes_user_added_entry"]
 [connection signal="user_duplicated_entries" from="TabContainer/Routes/Routes" to="." method="_on_Routes_user_duplicated_entries"]

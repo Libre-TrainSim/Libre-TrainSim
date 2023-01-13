@@ -29,7 +29,7 @@ func load_main_menu():
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
-	get_tree().paused = false
+	Root.reset_game_pause();
 	jAudioManager.clear_all_sounds()
 	jEssentials.remove_all_pending_delayed_calls()
 	$ProgressBar/Bar.max_value = loader.get_stage_count()

@@ -294,7 +294,7 @@ func processLong(delta: float) -> void: ## All functions in it are called every 
 
 var processLongTimer: float = 0
 func _process(delta: float):
-	if get_tree().paused and not Root.ingame_pause:
+	if get_tree().paused and not (Root.game_pause["ingame_pause"] and Root.game_pause.values().count(true) == 1):
 		return
 
 	if world == null:
@@ -400,7 +400,7 @@ func stopEngine() -> void:
 func _unhandled_input(event) -> void:
 	if ai:
 		return
-	if get_tree().paused and not Root.ingame_pause:
+	if get_tree().paused and not (Root.game_pause["ingame_pause"] and Root.game_pause.values().count(true) == 1):
 		return
 	if event is InputEventMouseMotion:
 		mouseMotion = mouseMotion + event.relative

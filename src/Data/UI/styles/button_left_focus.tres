@@ -2,11 +2,10 @@
 
 [resource]
 content_margin_left = 38.0
-bg_color = Color( 0.929412, 0.929412, 0.929412, 0.956863 )
-draw_center = false
+bg_color = Color( 0.764706, 0.890196, 0.921569, 0.956863 )
 border_width_left = 4
 border_width_top = 4
-border_color = Color( 0.2, 0.733333, 1, 0.486275 )
+border_color = Color( 0.164706, 0.6, 0.819608, 1 )
 corner_radius_top_left = 66
 corner_radius_bottom_left = 20
 corner_detail = 1

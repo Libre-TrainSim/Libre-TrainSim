@@ -18,7 +18,7 @@ var _dir: Directory = null
 
 func position_to_chunk(position: Vector3) -> Vector3:
 	position = position - world_origin
-	return Vector3(int(position.x / chunk_size), 0, int(position.z / chunk_size))
+	return Vector3(round(position.x / chunk_size), 0, round(position.z / chunk_size))
 
 
 func chunk_to_position(chunk: Vector3) -> Vector3:
@@ -65,6 +65,7 @@ func _ready():
 	if Root.Editor:
 		editor = find_parent("Editor")
 		assert(editor != null)
+		_test_position_calc()
 
 	_dir = Directory.new()
 	if _dir.open("res://") != OK:
@@ -189,6 +190,11 @@ func _force_load_chunk_immediately(chunk_pos: Vector3):
 	return loader._force_load_chunk_immediately(chunk_name)
 
 
+func _force_load_chunk_name_immediately(chunk_name: String):
+	assert(Root.Editor)
+	return loader._force_load_chunk_immediately(chunk_name)
+
+
 # TODO: Godot Export "TrackObject is not a valid type"
 func add_track_object(track_object: TrackObject):
 	var rail_name = track_object.attached_rail
@@ -243,7 +249,8 @@ func resume_chunking():
 
 	set_process(true)
 	loader.set_process(true)
-	loader.load_chunks(get_3x3_chunks(active_chunk))
+	if active_chunk:
+		loader.load_chunks(get_3x3_chunks(active_chunk))
 
 
 func _save_chunk(chunk_name: String, saving: bool = false):
@@ -328,3 +335,22 @@ func cleanup():
 
 	_dir.change_dir("res://")
 
+
+func _test_position_calc() -> void:
+	var cases := PoolVector3Array([
+		Vector3(0, 0, 0),
+		Vector3(500, 0, 0),
+		Vector3(-499, 0, 152),
+		Vector3(-501, 0, 0),
+		Vector3(1000, 0, -1000),
+		Vector3(499, 0, 1000),
+		Vector3(600, 0, 300),
+		Vector3(-700, 0, -700),
+	])
+
+	Logger.warn("Running position test", self)
+
+	for case in cases:
+		printt(case, position_to_chunk(case))
+
+	print(Vector3() == position_to_chunk(Vector3(-499, 0, 152)))

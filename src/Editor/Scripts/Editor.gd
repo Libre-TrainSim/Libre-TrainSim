@@ -37,6 +37,7 @@ func _ready() -> void:
 	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
 
 	_port_to_new_chunk_system()
+	_port_v1_to_v2_chunks()
 	_port_to_new_scenario_system()
 	_port_very_old_scenarios()
 
@@ -93,6 +94,145 @@ func _port_very_old_trackinfo():
 	var new_file = current_track_path.plus_file(current_track_name) + "_config.tres"
 	if ResourceSaver.save(new_file, world_config) != OK:
 		Logger.err("Failed to save world config %s" % new_file, self)
+
+
+func _port_v1_to_v2_chunks() -> void:
+	var save_file := current_track_path.plus_file(current_track_name) + ".save"
+	var dir := Directory.new()
+	if dir.file_exists(save_file):
+		return
+	if world.get_meta("chunk_version", 1) >= 2:
+		return
+
+	randomize()
+
+	# We mess with the chunk manager internals so yeah
+	var chunk_manager: ChunkManager = world.chunk_manager
+	chunk_manager.pause_chunking()
+	chunk_manager.loader._loaded_chunks.clear()
+	chunk_manager.loader._chunks_to_load.clear()
+	for chunk in world.get_node("Chunks").get_children():
+		chunk.get_parent().remove_child(chunk)
+		chunk.free()
+
+	# Load all chunks
+	var chunks := {} # chunk pos, chunk nodes
+	var buildings := []
+	var track_objects := []
+
+	var err := dir.open(current_track_path.plus_file("chunks"))
+	dir.list_dir_begin()
+	var file_name := dir.get_next()
+	while file_name != "":
+		if file_name in [".", ".."]:
+			file_name = dir.get_next()
+			continue
+
+		var chunk_name := file_name.get_file().get_basename()
+
+		# Load all chunks and ensure they don't fail
+		var chunk = chunk_manager._force_load_chunk_name_immediately(chunk_name) as Chunk
+		chunk.name = str(randi())
+
+		var correct_position := chunk_manager.position_to_chunk(chunk.global_transform.origin)
+		if not (correct_position in chunks):
+			chunks[correct_position] = []
+
+		chunks[correct_position].push_back(chunk)
+
+		track_objects.append_array(chunk.get_node("TrackObjects").get_children())
+		buildings.append_array(chunk.get_node("Buildings").get_children())
+
+		dir.remove(file_name)
+		file_name = dir.get_next()
+
+	# Again ensure the internal list is clear as we merge and move chunks now.
+	chunk_manager.loader._loaded_chunks.clear()
+
+	# Fix rail chunk assignments
+	for rail in world.get_node("Rails").get_children():
+		rail.set_meta("chunk_pos", world.chunk_manager.position_to_chunk( \
+				rail.global_transform.origin))
+
+	# Merge possible duplicates
+	for chunk_position in chunks:
+		if chunks[chunk_position].size() == 1:
+			continue
+
+		var best_fit: int = 0
+		for i in range(chunks[chunk_position].size()):
+			if not chunks[chunk_position][i].is_empty:
+				best_fit = i
+				break
+
+		var best: Chunk = chunks[chunk_position][best_fit]
+		chunks[chunk_position][best_fit] = chunks[chunk_position][0]
+		chunks[chunk_position][0] = best
+
+		var building_parent := best.get_node("Buildings")
+		var track_object_parent := best.get_node("TrackObjects")
+
+		for i in range(1, chunks[chunk_position].size()):
+			var local_chunk: Chunk = chunks[chunk_position][i]
+
+			var local_buildings: Spatial = local_chunk.get_node("Buildings")
+			for building in local_buildings.get_children():
+				var xform: Transform = building.global_transform
+				local_buildings.remove_child(building)
+				building_parent.add_child(building)
+				building.global_transform = xform
+
+			var local_track_objects: Spatial = local_chunk.get_node("TrackObjects")
+			for track_object in local_track_objects.get_children():
+				var xform: Transform = track_object.global_transform
+				local_track_objects.remove_child(track_object)
+				track_object_parent.add_child(track_object)
+				track_object.global_transform = xform
+
+			local_chunk.get_parent().remove_child(local_chunk)
+			local_chunk.free()
+
+		best.name = ChunkManager.chunk_to_string(chunk_position)
+		chunk_manager.loader._loaded_chunks.append(best.name)
+
+	# Move buildings
+	for building in buildings:
+		var xform = building.global_transform
+		var chunk := chunk_manager.position_to_chunk(xform.origin)
+		if not (chunk in chunks):
+			chunks[chunk] = [chunk_manager._force_load_chunk_immediately(chunk)]
+
+		building.get_parent().remove_child(building)
+		chunks[chunk][0].get_node("Buildings").add_child(building)
+		building.global_transform = xform
+		building.owner = chunks[chunk][0]
+
+	# Create rail look-up table to not go into O(n^2) territory
+	var rails := {} # rail name (ask the track object), chunk
+	for rail in world.get_node("Rails").get_children():
+		rails[rail.name] = chunk_manager.position_to_chunk(rail.global_transform.origin)
+
+	# Move track objects
+	for track_object in track_objects:
+		if not track_object.attached_rail in rails:
+			Logger.err("Rail %s was not found in %s." % \
+					[track_object.attached_rail, track_object], self)
+			continue
+		var chunk = rails[track_object.attached_rail]
+		if not (chunk in chunks):
+			chunks[chunk] = [chunk_manager._force_load_chunk_immediately(chunk)]
+
+		track_object.get_parent().remove_child(track_object)
+		chunks[chunk][0].get_node("TrackObjects").add_child(track_object)
+		track_object.owner = chunks[chunk][0]
+		track_object.update()
+
+	# Save (Resume chunking)
+	world.set_meta("chunk_version", 2)
+	save_world(false)
+	#chunk_manager.resume_chunking()
+	send_message("World was converted to v2 chunks. Please reload the world")
+
 
 
 func _port_to_new_chunk_system() -> void:

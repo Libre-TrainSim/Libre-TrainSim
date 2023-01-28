@@ -40,18 +40,22 @@ static func string_to_chunk(chunk: String) -> Vector3:
 	return Vector3(x, 0, z)
 
 
-func get_3x3_chunks(around: Vector3):
-	return [
-		chunk_to_string(Vector3(around.x - 1, 0, around.z)),
-		chunk_to_string(Vector3(around.x - 1, 0, around.z - 1)),
-		chunk_to_string(Vector3(around.x - 1, 0, around.z + 1)),
-		chunk_to_string(Vector3(around.x + 1, 0, around.z)),
-		chunk_to_string(Vector3(around.x + 1, 0, around.z - 1)),
-		chunk_to_string(Vector3(around.x + 1, 0, around.z + 1)),
+func get_chunks(around: Vector3, distance: int):
+	var chunks := [
 		chunk_to_string(Vector3(around.x, 0, around.z)),
-		chunk_to_string(Vector3(around.x, 0, around.z - 1)),
-		chunk_to_string(Vector3(around.x, 0, around.z + 1)),
 	]
+	for i in range(1, distance + 1):
+		chunks.append_array([
+			chunk_to_string(Vector3(around.x - i, 0, around.z)),
+			chunk_to_string(Vector3(around.x - i, 0, around.z - i)),
+			chunk_to_string(Vector3(around.x - i, 0, around.z + i)),
+			chunk_to_string(Vector3(around.x + i, 0, around.z)),
+			chunk_to_string(Vector3(around.x + i, 0, around.z - i)),
+			chunk_to_string(Vector3(around.x + i, 0, around.z + i)),
+			chunk_to_string(Vector3(around.x, 0, around.z - i)),
+			chunk_to_string(Vector3(around.x, 0, around.z + i)),
+		])
+	return chunks
 
 
 func is_position_in_loaded_chunk(position: Vector3):
@@ -111,8 +115,8 @@ func _process(_delta: float):
 
 	# handle chunks
 	if chunk_position != active_chunk:
+		loader.load_chunks(get_chunks(chunk_position, ProjectSettings["game/gameplay/chunk_load_distance"]))
 		active_chunk = chunk_position
-		loader.load_chunks(get_3x3_chunks(active_chunk))
 		_unload_old_chunks()
 
 	if ProjectSettings["game/debug/display_chunk"]:
@@ -250,7 +254,7 @@ func resume_chunking():
 	set_process(true)
 	loader.set_process(true)
 	if active_chunk:
-		loader.load_chunks(get_3x3_chunks(active_chunk))
+		loader.load_chunks(get_chunks(active_chunk, ProjectSettings["game/gameplay/chunk_load_distance"]))
 
 
 func _save_chunk(chunk_name: String, saving: bool = false):

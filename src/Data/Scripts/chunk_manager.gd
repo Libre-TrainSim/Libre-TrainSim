@@ -88,6 +88,18 @@ func _ready():
 		world.add_child(chunks_node)
 		chunks_node.owner = world
 
+	yield(get_tree(), "idle_frame")
+	# get position of active camera
+	var position_provider = get_viewport().get_camera()
+	if position_provider == null:
+		Logger.err("Failed to perform initial move", self)
+		return
+
+	# handle world origin
+	var position = position_provider.global_transform.origin
+	var chunk_position = position_to_chunk(position)
+	_shift_world_origin_to(-chunk_position * chunk_size)
+
 
 func _order_rails_by_chunk():
 	for rail in world.get_node("Rails").get_children():

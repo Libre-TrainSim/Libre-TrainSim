@@ -26,14 +26,20 @@ func _ready() -> void:
 			$HpTafel.visible = true
 			$VoTafel.visible = false
 			$KsTafel.visible = false
+			$Zs3v.visible = false
+			$Zs3.visible = true
 		signal_logic.SignalType.PRESIGNAL:
 			$HpTafel.visible = false
 			$VoTafel.visible = true
 			$KsTafel.visible = false
+			$Zs3.visible = false
+			$Zs3v.visible = true
 		signal_logic.SignalType.COMBINED:
 			$HpTafel.visible = true
 			$VoTafel.visible = false
 			$KsTafel.visible = true
+			$Zs3v.visible = true
+			$Zs3.visible = true
 
 	# initialize signal
 	update_visual_instance(signal_logic)

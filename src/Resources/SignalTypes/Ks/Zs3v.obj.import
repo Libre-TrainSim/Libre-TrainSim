@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Zs3v.obj-7e783fdf7574ba095e4ff47c23ff9d1a.mesh"
+
+[deps]
+
+files=[ "res://.import/Zs3v.obj-7e783fdf7574ba095e4ff47c23ff9d1a.mesh" ]
+
+source_file="res://Resources/SignalTypes/Ks/Zs3v.obj"
+dest_files=[ "res://.import/Zs3v.obj-7e783fdf7574ba095e4ff47c23ff9d1a.mesh", "res://.import/Zs3v.obj-7e783fdf7574ba095e4ff47c23ff9d1a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

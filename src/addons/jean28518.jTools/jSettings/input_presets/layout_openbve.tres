@@ -2,148 +2,18 @@
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/input_map_resource.gd" type="Script" id=1]
 
-[sub_resource type="InputEventKey" id=89]
+[sub_resource type="InputEventKey" id=107]
 pressed = true
-scancode = 16777354
-physical_scancode = 16777354
-unicode = 52
+scancode = 16777244
+physical_scancode = 16777244
 
-[sub_resource type="InputEventKey" id=137]
-pressed = true
-scancode = 16777231
-physical_scancode = 16777231
-
-[sub_resource type="InputEventKey" id=90]
-pressed = true
-scancode = 16777356
-physical_scancode = 16777356
-unicode = 54
-
-[sub_resource type="InputEventKey" id=138]
-pressed = true
-scancode = 16777233
-physical_scancode = 16777233
-
-[sub_resource type="InputEventKey" id=3]
+[sub_resource type="InputEventKey" id=108]
 control = true
 command = true
-scancode = 68
-
-[sub_resource type="InputEventKey" id=91]
 pressed = true
-scancode = 16777358
-physical_scancode = 16777358
-unicode = 56
-
-[sub_resource type="InputEventKey" id=5]
-scancode = 16777237
-
-[sub_resource type="InputEventKey" id=6]
-control = true
-command = true
-scancode = 83
-
-[sub_resource type="InputEventKey" id=7]
-scancode = 16777221
-
-[sub_resource type="InputEventKey" id=8]
-scancode = 16777222
-
-[sub_resource type="InputEventJoypadButton" id=9]
-
-[sub_resource type="InputEventJoypadButton" id=10]
-button_index = 3
-
-[sub_resource type="InputEventKey" id=11]
-scancode = 16777217
-
-[sub_resource type="InputEventJoypadButton" id=12]
-button_index = 1
-
-[sub_resource type="InputEventKey" id=13]
-scancode = 16777218
-
-[sub_resource type="InputEventKey" id=14]
-shift = true
-scancode = 16777218
-
-[sub_resource type="InputEventKey" id=15]
-scancode = 16777231
-
-[sub_resource type="InputEventJoypadButton" id=16]
-button_index = 14
-
-[sub_resource type="InputEventKey" id=17]
-scancode = 16777233
-
-[sub_resource type="InputEventJoypadButton" id=18]
-button_index = 15
-
-[sub_resource type="InputEventKey" id=19]
-scancode = 16777232
-
-[sub_resource type="InputEventJoypadButton" id=20]
-button_index = 12
-
-[sub_resource type="InputEventKey" id=21]
-scancode = 16777234
-
-[sub_resource type="InputEventJoypadButton" id=22]
-button_index = 13
-
-[sub_resource type="InputEventKey" id=23]
-scancode = 16777235
-
-[sub_resource type="InputEventKey" id=24]
-scancode = 16777236
-
-[sub_resource type="InputEventKey" id=25]
-scancode = 16777229
-
-[sub_resource type="InputEventKey" id=26]
-scancode = 16777230
-
-[sub_resource type="InputEventJoypadButton" id=28]
-device = -1
-button_index = 3
-
-[sub_resource type="InputEventKey" id=92]
-pressed = true
-scancode = 50
-physical_scancode = 50
-unicode = 50
-
-[sub_resource type="InputEventKey" id=93]
-pressed = true
-scancode = 51
-physical_scancode = 51
-unicode = 51
-
-[sub_resource type="InputEventJoypadButton" id=30]
-device = -1
-button_index = 15
-
-[sub_resource type="InputEventKey" id=94]
-pressed = true
-scancode = 16777249
-physical_scancode = 16777249
-
-[sub_resource type="InputEventJoypadButton" id=32]
-device = -1
-button_index = 14
-
-[sub_resource type="InputEventKey" id=95]
-pressed = true
-scancode = 16777248
-physical_scancode = 16777248
-
-[sub_resource type="InputEventKey" id=33]
-scancode = 79
-
-[sub_resource type="InputEventKey" id=96]
-pressed = true
-scancode = 16777250
-physical_scancode = 16777250
+scancode = 49
+physical_scancode = 49
+unicode = 49
 
 [sub_resource type="InputEventKey" id=34]
 scancode = 16777217
@@ -152,23 +22,84 @@ scancode = 16777217
 device = -1
 button_index = 11
 
-[sub_resource type="InputEventJoypadButton" id=37]
-device = -1
-button_index = 4
-
-[sub_resource type="InputEventKey" id=133]
-shift = true
+[sub_resource type="InputEventKey" id=113]
 pressed = true
-scancode = 16777244
-physical_scancode = 16777244
+scancode = 16777246
+physical_scancode = 16777246
 
-[sub_resource type="InputEventKey" id=134]
+[sub_resource type="InputEventKey" id=114]
 control = true
 command = true
 pressed = true
-scancode = 72
-physical_scancode = 72
-unicode = 104
+scancode = 51
+physical_scancode = 51
+unicode = 51
+
+[sub_resource type="InputEventJoypadButton" id=56]
+device = -1
+button_index = 8
+
+[sub_resource type="InputEventKey" id=111]
+pressed = true
+scancode = 53
+physical_scancode = 53
+unicode = 53
+
+[sub_resource type="InputEventJoypadMotion" id=49]
+device = -1
+axis = 6
+axis_value = 1.0
+
+[sub_resource type="InputEventKey" id=103]
+pressed = true
+scancode = 16777220
+physical_scancode = 16777220
+
+[sub_resource type="InputEventKey" id=104]
+pressed = true
+scancode = 16777349
+physical_scancode = 16777349
+unicode = 43
+
+[sub_resource type="InputEventKey" id=105]
+pressed = true
+scancode = 32
+physical_scancode = 32
+unicode = 32
+
+[sub_resource type="InputEventJoypadButton" id=58]
+device = -1
+button_index = 9
+
+[sub_resource type="InputEventKey" id=112]
+pressed = true
+scancode = 52
+physical_scancode = 52
+unicode = 52
+
+[sub_resource type="InputEventKey" id=109]
+pressed = true
+scancode = 16777245
+physical_scancode = 16777245
+
+[sub_resource type="InputEventKey" id=110]
+control = true
+command = true
+pressed = true
+scancode = 50
+physical_scancode = 50
+unicode = 50
+
+[sub_resource type="InputEventJoypadMotion" id=51]
+device = -1
+axis = 7
+axis_value = 1.0
+
+[sub_resource type="InputEventKey" id=106]
+pressed = true
+scancode = 32
+physical_scancode = 32
+unicode = 32
 
 [sub_resource type="InputEventJoypadMotion" id=38]
 device = -1
@@ -198,6 +129,22 @@ scancode = 65
 physical_scancode = 65
 unicode = 97
 
+[sub_resource type="InputEventKey" id=54]
+control = true
+command = true
+scancode = 65
+
+[sub_resource type="InputEventKey" id=126]
+pressed = true
+scancode = 16777234
+physical_scancode = 16777234
+
+[sub_resource type="InputEventKey" id=127]
+pressed = true
+scancode = 16777353
+physical_scancode = 16777353
+unicode = 51
+
 [sub_resource type="InputEventJoypadMotion" id=42]
 device = -1
 axis = 3
@@ -220,118 +167,106 @@ scancode = 44
 physical_scancode = 44
 unicode = 44
 
-[sub_resource type="InputEventJoypadButton" id=47]
-device = -1
-button_index = 5
-
-[sub_resource type="InputEventKey" id=135]
-pressed = true
-scancode = 72
-physical_scancode = 72
-unicode = 104
-
-[sub_resource type="InputEventKey" id=136]
-shift = true
-pressed = true
-scancode = 16777245
-physical_scancode = 16777245
-
-[sub_resource type="InputEventJoypadMotion" id=49]
-device = -1
-axis = 6
-axis_value = 1.0
-
-[sub_resource type="InputEventKey" id=103]
-pressed = true
-scancode = 16777220
-physical_scancode = 16777220
-
-[sub_resource type="InputEventKey" id=104]
-pressed = true
-scancode = 16777349
-physical_scancode = 16777349
-unicode = 43
-
-[sub_resource type="InputEventKey" id=105]
-pressed = true
-scancode = 32
-physical_scancode = 32
-unicode = 32
-
-[sub_resource type="InputEventJoypadMotion" id=51]
-device = -1
-axis = 7
-axis_value = 1.0
-
-[sub_resource type="InputEventKey" id=106]
-pressed = true
-scancode = 32
-physical_scancode = 32
-unicode = 32
-
-[sub_resource type="InputEventKey" id=107]
-pressed = true
-scancode = 16777244
-physical_scancode = 16777244
-
-[sub_resource type="InputEventKey" id=108]
+[sub_resource type="InputEventKey" id=69]
 control = true
 command = true
-pressed = true
-scancode = 49
-physical_scancode = 49
-unicode = 49
+scancode = 89
 
-[sub_resource type="InputEventKey" id=109]
-pressed = true
-scancode = 16777245
-physical_scancode = 16777245
-
-[sub_resource type="InputEventKey" id=110]
+[sub_resource type="InputEventKey" id=70]
 control = true
 command = true
+scancode = 16777224
+
+[sub_resource type="InputEventKey" id=33]
+scancode = 79
+
+[sub_resource type="InputEventKey" id=96]
 pressed = true
-scancode = 50
-physical_scancode = 50
+scancode = 16777250
+physical_scancode = 16777250
+
+[sub_resource type="InputEventJoypadButton" id=32]
+device = -1
+button_index = 14
+
+[sub_resource type="InputEventKey" id=95]
+pressed = true
+scancode = 16777248
+physical_scancode = 16777248
+
+[sub_resource type="InputEventJoypadButton" id=30]
+device = -1
+button_index = 15
+
+[sub_resource type="InputEventKey" id=94]
+pressed = true
+scancode = 16777249
+physical_scancode = 16777249
+
+[sub_resource type="InputEventKey" id=128]
+pressed = true
+scancode = 16777352
+physical_scancode = 16777352
 unicode = 50
 
-[sub_resource type="InputEventKey" id=54]
+[sub_resource type="InputEventKey" id=3]
 control = true
 command = true
-scancode = 65
+scancode = 68
 
-[sub_resource type="InputEventJoypadButton" id=56]
+[sub_resource type="InputEventKey" id=67]
+scancode = 69
+
+[sub_resource type="InputEventJoypadButton" id=68]
 device = -1
-button_index = 8
+button_index = 2
 
-[sub_resource type="InputEventKey" id=111]
+[sub_resource type="InputEventKey" id=124]
 pressed = true
-scancode = 53
-physical_scancode = 53
-unicode = 53
+scancode = 16777232
+physical_scancode = 16777232
 
-[sub_resource type="InputEventJoypadButton" id=58]
-device = -1
-button_index = 9
-
-[sub_resource type="InputEventKey" id=112]
+[sub_resource type="InputEventKey" id=125]
 pressed = true
-scancode = 52
-physical_scancode = 52
+scancode = 16777359
+physical_scancode = 16777359
+unicode = 57
+
+[sub_resource type="InputEventKey" id=81]
+alt = true
+scancode = 16777221
+
+[sub_resource type="InputEventKey" id=123]
+control = true
+command = true
+pressed = true
+scancode = 70
+physical_scancode = 70
+unicode = 102
+
+[sub_resource type="InputEventKey" id=76]
+scancode = 16777225
+
+[sub_resource type="InputEventKey" id=89]
+pressed = true
+scancode = 16777354
+physical_scancode = 16777354
 unicode = 52
 
-[sub_resource type="InputEventKey" id=113]
+[sub_resource type="InputEventKey" id=137]
 pressed = true
-scancode = 16777246
-physical_scancode = 16777246
+scancode = 16777231
+physical_scancode = 16777231
 
-[sub_resource type="InputEventKey" id=114]
-control = true
-command = true
-pressed = true
-scancode = 51
-physical_scancode = 51
-unicode = 51
+[sub_resource type="InputEventKey" id=75]
+scancode = 32
+
+[sub_resource type="InputEventKey" id=73]
+scancode = 77
+
+[sub_resource type="InputEventJoypadButton" id=74]
+device = -1
+button_index = 10
 
 [sub_resource type="InputEventKey" id=115]
 control = true
@@ -340,6 +275,25 @@ pressed = true
 scancode = 84
 physical_scancode = 84
 unicode = 116
+
+[sub_resource type="InputEventKey" id=88]
+scancode = 16777255
+
+[sub_resource type="InputEventJoypadButton" id=28]
+device = -1
+button_index = 3
+
+[sub_resource type="InputEventKey" id=92]
+pressed = true
+scancode = 50
+physical_scancode = 50
+unicode = 50
+
+[sub_resource type="InputEventKey" id=93]
+pressed = true
+scancode = 51
+physical_scancode = 51
+unicode = 51
 
 [sub_resource type="InputEventKey" id=116]
 control = true
@@ -389,43 +343,20 @@ scancode = 57
 physical_scancode = 57
 unicode = 57
 
-[sub_resource type="InputEventKey" id=67]
-scancode = 69
+[sub_resource type="InputEventKey" id=129]
+pressed = true
+scancode = 16777230
+physical_scancode = 16777230
 
-[sub_resource type="InputEventJoypadButton" id=68]
-device = -1
-button_index = 2
-
-[sub_resource type="InputEventKey" id=69]
-control = true
-command = true
-scancode = 89
-
-[sub_resource type="InputEventKey" id=70]
-control = true
-command = true
+[sub_resource type="InputEventKey" id=131]
+pressed = true
 scancode = 16777224
+physical_scancode = 16777224
 
-[sub_resource type="InputEventMouseButton" id=71]
-device = -1
-button_index = 4
-
-[sub_resource type="InputEventMouseButton" id=72]
-device = -1
-button_index = 5
-
-[sub_resource type="InputEventKey" id=73]
-scancode = 77
-
-[sub_resource type="InputEventJoypadButton" id=74]
-device = -1
-button_index = 10
-
-[sub_resource type="InputEventKey" id=75]
-scancode = 32
-
-[sub_resource type="InputEventKey" id=76]
-scancode = 16777225
+[sub_resource type="InputEventKey" id=130]
+pressed = true
+scancode = 16777236
+physical_scancode = 16777236
 
 [sub_resource type="InputEventKey" id=77]
 scancode = 70
@@ -444,63 +375,132 @@ scancode = 86
 physical_scancode = 86
 unicode = 118
 
-[sub_resource type="InputEventKey" id=81]
-alt = true
-scancode = 16777221
+[sub_resource type="InputEventKey" id=90]
+pressed = true
+scancode = 16777356
+physical_scancode = 16777356
+unicode = 54
 
-[sub_resource type="InputEventKey" id=123]
+[sub_resource type="InputEventKey" id=138]
+pressed = true
+scancode = 16777233
+physical_scancode = 16777233
+
+[sub_resource type="InputEventKey" id=6]
+control = true
+command = true
+scancode = 83
+
+[sub_resource type="InputEventKey" id=5]
+scancode = 16777237
+
+[sub_resource type="InputEventJoypadButton" id=37]
+device = -1
+button_index = 4
+
+[sub_resource type="InputEventKey" id=133]
+shift = true
+pressed = true
+scancode = 16777244
+physical_scancode = 16777244
+
+[sub_resource type="InputEventKey" id=134]
 control = true
 command = true
 pressed = true
-scancode = 70
-physical_scancode = 70
-unicode = 102
+scancode = 72
+physical_scancode = 72
+unicode = 104
 
-[sub_resource type="InputEventKey" id=124]
-pressed = true
-scancode = 16777232
-physical_scancode = 16777232
+[sub_resource type="InputEventJoypadButton" id=47]
+device = -1
+button_index = 5
 
-[sub_resource type="InputEventKey" id=125]
+[sub_resource type="InputEventKey" id=135]
 pressed = true
-scancode = 16777359
-physical_scancode = 16777359
-unicode = 57
+scancode = 72
+physical_scancode = 72
+unicode = 104
 
-[sub_resource type="InputEventKey" id=126]
+[sub_resource type="InputEventKey" id=136]
+shift = true
 pressed = true
+scancode = 16777245
+physical_scancode = 16777245
+
+[sub_resource type="InputEventKey" id=7]
+scancode = 16777221
+
+[sub_resource type="InputEventKey" id=8]
+scancode = 16777222
+
+[sub_resource type="InputEventJoypadButton" id=9]
+
+[sub_resource type="InputEventKey" id=11]
+scancode = 16777217
+
+[sub_resource type="InputEventJoypadButton" id=12]
+button_index = 1
+
+[sub_resource type="InputEventKey" id=21]
 scancode = 16777234
-physical_scancode = 16777234
 
-[sub_resource type="InputEventKey" id=127]
-pressed = true
-scancode = 16777353
-physical_scancode = 16777353
-unicode = 51
+[sub_resource type="InputEventJoypadButton" id=22]
+button_index = 13
 
-[sub_resource type="InputEventKey" id=128]
-pressed = true
-scancode = 16777352
-physical_scancode = 16777352
-unicode = 50
-
-[sub_resource type="InputEventKey" id=129]
-pressed = true
+[sub_resource type="InputEventKey" id=26]
 scancode = 16777230
-physical_scancode = 16777230
 
-[sub_resource type="InputEventKey" id=130]
-pressed = true
+[sub_resource type="InputEventKey" id=13]
+scancode = 16777218
+
+[sub_resource type="InputEventKey" id=14]
+shift = true
+scancode = 16777218
+
+[sub_resource type="InputEventKey" id=25]
+scancode = 16777229
+
+[sub_resource type="InputEventKey" id=15]
+scancode = 16777231
+
+[sub_resource type="InputEventJoypadButton" id=16]
+button_index = 14
+
+[sub_resource type="InputEventKey" id=24]
 scancode = 16777236
-physical_scancode = 16777236
 
-[sub_resource type="InputEventKey" id=131]
+[sub_resource type="InputEventKey" id=23]
+scancode = 16777235
+
+[sub_resource type="InputEventKey" id=17]
+scancode = 16777233
+
+[sub_resource type="InputEventJoypadButton" id=18]
+button_index = 15
+
+[sub_resource type="InputEventJoypadButton" id=10]
+button_index = 3
+
+[sub_resource type="InputEventKey" id=19]
+scancode = 16777232
+
+[sub_resource type="InputEventJoypadButton" id=20]
+button_index = 12
+
+[sub_resource type="InputEventKey" id=91]
 pressed = true
-scancode = 16777224
-physical_scancode = 16777224
+scancode = 16777358
+physical_scancode = 16777358
+unicode = 56
 
-[sub_resource type="InputEventKey" id=88]
-scancode = 16777255
+[sub_resource type="InputEventMouseButton" id=71]
+device = -1
+button_index = 4
+
+[sub_resource type="InputEventMouseButton" id=72]
+device = -1
+button_index = 5
 
 [resource]
 script = ExtResource( 1 )

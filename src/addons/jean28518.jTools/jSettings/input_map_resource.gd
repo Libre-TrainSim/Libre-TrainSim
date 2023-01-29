@@ -12,7 +12,7 @@ func _init():
 func update() -> void:
 	# Clear input_map
 	input_map = {}
-	
+
 	# Parse all InputMap content into input_map
 	for action in InputMap.get_actions():
 		input_map[action] = []

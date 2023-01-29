@@ -222,7 +222,6 @@ wholeRail = true
 [node name="Buildings" type="Spatial" parent="."]
 
 [node name="DefaultGrass" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="DefaultGrass"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, 250 )

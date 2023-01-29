@@ -410,6 +410,11 @@ boot_splash/bg_color=Color( 0.65098, 0.65098, 0.65098, 1 )
 config/icon="res://Data/Misc/logos/lts_logo_16.png"
 config/quit_on_go_back=false
 config/project_settings_override.editor="user://override_hack.cfg"
+version/dirty=false
+version/broken=false
+version/custom=false
+version/commit=""
+version/label="v0.9.beta1"
 
 [audio]
 
@@ -446,7 +451,7 @@ scene_naming=2
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/hasa1002.buildversion/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
 
 [game]
 

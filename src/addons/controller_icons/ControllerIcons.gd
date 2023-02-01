@@ -112,6 +112,52 @@ func get_action_path(path: String, input_type: int = _last_input_type) -> String
 		return root_path
 	return ""
 
+func get_action_paths(path: String, input_type: int = _last_input_type) -> Array:
+	var actionPaths := []
+	if input_type == null:
+		return []
+	var root_paths := _expand_path(path, input_type)
+	var event = _get_matching_event(path, input_type)
+	
+	for root_path in root_paths:
+		if not _cached_icons.has(root_path):
+			if _load_icon(root_path):
+				continue
+		var combination := [root_path]
+		if event.control:
+			combination.push_front(fake_event(KEY_CONTROL))
+		if event.alt:
+			combination.push_front(fake_event(KEY_ALT))
+		if event.shift:
+			combination.push_front(fake_event(KEY_SHIFT))
+		if event.meta:
+			combination.push_front(fake_event(KEY_META))
+		return combination
+
+	return []
+
+func fake_event(key_code: int) -> String:
+	var fake_input = InputEventKey.new()
+	fake_input.set_scancode(key_code)
+	var paths := event_to_global_paths(fake_input)
+	for path in paths:
+		if not _cached_icons.has(path):
+			if _load_icon(path):
+				continue
+		return path
+	return ""
+
+func event_to_global_paths(event: InputEvent) -> Array:
+	var paths := []
+	var base_paths := [
+		_settings.custom_asset_dir + "/",
+		"res://addons/controller_icons/assets/"
+	]
+	for base_path in base_paths:
+		if base_path.empty():
+			continue
+		paths.push_back(base_path + _convert_event_to_path(event) + ".png")
+	return paths
 
 func parse_event(event: InputEvent) -> Texture:
 	var path = _convert_event_to_path(event)

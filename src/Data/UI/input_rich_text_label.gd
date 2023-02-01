@@ -25,6 +25,9 @@ func set_text(text: String) -> void:
 
 func update_text(var _x = null) -> void:
 	var replaces := []
-	for action in actions:
-		replaces.push_back("[font=res://Data/Fonts/image_offset_pseudo.tres][img=36]%s[/img][/font]" % ControllerIcons.get_action_path(action))
+	for possibleAction in actions:
+		var combinations := ""
+		for action in ControllerIcons.get_action_paths(possibleAction):
+			combinations += "[font=res://Data/Fonts/image_offset_pseudo.tres][img=36]%s[/img][/font]" % action
+		replaces.push_back(combinations)
 	bbcode_text = tr(translation_id) % replaces

@@ -3,22 +3,22 @@ extends Resource
 class_name ControllerSettings
 
 enum Devices {
-  LUNA,
-  OUYA,
-  PS3,
-  PS4,
-  PS5,
-  STADIA,
-  STEAM,
-  SWITCH,
-  JOYCON,
-  VITA,
-  WII,
-  WIIU,
-  XBOX360,
-  XBOXONE,
-  XBOXSERIES,
-  STEAM_DECK
+	LUNA,
+	OUYA,
+	PS3,
+	PS4,
+	PS5,
+	STADIA,
+	STEAM,
+	SWITCH,
+	JOYCON,
+	VITA,
+	WII,
+	WIIU,
+	XBOX360,
+	XBOXONE,
+	XBOXSERIES,
+	STEAM_DECK
 }
 
 ## Controller type to fallback to if automatic

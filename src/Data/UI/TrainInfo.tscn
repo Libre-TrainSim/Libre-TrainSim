@@ -112,18 +112,12 @@ max_width = 36
 
 [node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/Pantograpgh"]
 margin_left = 325.0
-margin_right = 557.0
+margin_right = 753.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 2 )
 text = "TRAIN_INFO_PANTOGRAPH_END"
-
-[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer/VBoxContainer/Pantograpgh"]
-margin_left = 561.0
-margin_right = 753.0
-margin_bottom = 36.0
-size_flags_horizontal = 3
 
 [node name="Engine" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 89.0

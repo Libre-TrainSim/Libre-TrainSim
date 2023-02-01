@@ -64,6 +64,36 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Enums/control_type.gd"
 }, {
+"base": "Button",
+"class": "ControllerButton",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/Button.gd"
+}, {
+"base": "Node",
+"class": "ControllerMapper",
+"language": "GDScript",
+"path": "res://addons/controller_icons/Mapper.gd"
+}, {
+"base": "Resource",
+"class": "ControllerSettings",
+"language": "GDScript",
+"path": "res://addons/controller_icons/Settings.gd"
+}, {
+"base": "Sprite",
+"class": "ControllerSprite",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/Sprite.gd"
+}, {
+"base": "Sprite3D",
+"class": "ControllerSprite3D",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/Sprite3D.gd"
+}, {
+"base": "TextureRect",
+"class": "ControllerTextureRect",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/TextureRect.gd"
+}, {
 "base": "CameraBase",
 "class": "DebugCamera",
 "language": "GDScript",
@@ -341,6 +371,12 @@ _global_script_class_icons={
 "ContactPoint": "",
 "ContactPointSettings": "",
 "ControlType": "",
+"ControllerButton": "",
+"ControllerMapper": "",
+"ControllerSettings": "",
+"ControllerSprite": "",
+"ControllerSprite3D": "",
+"ControllerTextureRect": "",
 "DebugCamera": "",
 "DistanceMonitor": "",
 "EditorCamera": "",
@@ -430,6 +466,7 @@ LoadingScreen="*res://Data/UI/loading_screen.tscn"
 InputHelper="*res://Data/Scripts/Singletons/input_helper.gd"
 DebugDraw="*res://addons/zylann.debug_draw/debug_draw.gd"
 DebugUi="*res://Data/UI/debug_ui.tscn"
+ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 
 [debug]
 
@@ -446,7 +483,7 @@ scene_naming=2
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
 
 [game]
 
@@ -770,6 +807,10 @@ translation_remaps={
 }
 overwritten_language=""
 overwritten_language.editor="en"
+
+[mono]
+
+project/assembly_name="Libre Train Sim"
 
 [network]
 

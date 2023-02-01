@@ -34,6 +34,4 @@ func update_text(var _x = null) -> void:
 	bbcode_text = ""
 	if centered:
 		bbcode_text = "[center]"
-	bbcode_text += tr(translation_id) % replaces
-	if centered:
-		bbcode_text += "[/center]"
+	append_bbcode(tr(translation_id) % replaces)

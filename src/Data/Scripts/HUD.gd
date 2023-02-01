@@ -38,10 +38,10 @@ func _unhandled_input(_event) -> void:
 
 var messages: int = 0
 func send_message(text: String, actions := []) -> void:
-	var Message: InputLabel = $PanelContainer/MessageLabel as InputLabel
-	Message.backing_text = text
+	var Message: RichTextLabel = $PanelContainer/MessageLabel as RichTextLabel
+	Message.translation_id = text
 	Message.actions = actions
-	Message.make_string()
+	Message.update_text()
 	$Bling.play()
 	if messages == 0:
 		$Message.play("fade")

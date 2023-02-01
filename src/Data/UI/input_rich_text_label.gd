@@ -3,6 +3,7 @@ extends RichTextLabel
 
 
 export(Array, String) var actions := []
+export(bool) var centered := false
 
 
 onready var translation_id := text
@@ -25,9 +26,14 @@ func set_text(text: String) -> void:
 
 func update_text(var _x = null) -> void:
 	var replaces := []
-	for possibleAction in actions:
+	for possible_action in actions:
 		var combinations := ""
-		for action in ControllerIcons.get_action_paths(possibleAction):
+		for action in ControllerIcons.get_action_paths(possible_action):
 			combinations += "[font=res://Data/Fonts/image_offset_pseudo.tres][img=36]%s[/img][/font]" % action
 		replaces.push_back(combinations)
-	bbcode_text = tr(translation_id) % replaces
+	bbcode_text = ""
+	if centered:
+		bbcode_text = "[center]"
+	bbcode_text += tr(translation_id) % replaces
+	if centered:
+		bbcode_text += "[/center]"

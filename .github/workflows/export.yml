@@ -5,209 +5,256 @@ on:
   pull_request:
     branches: [ master ]
 
+concurrency:
+  group: ci-${{github.ref}}-test
+  cancel-in-progress: true
+
 env:
-  GODOT_VERSION: 3.5
+  GODOT_VERSION: 3.5.1
   EXPORT_NAME: Libre_TrainSim
 
 jobs:
-# TODO: Use native export platforms and add code sign/adhoc notarization
   export-windows:
-    name: Windows Export (Release)
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.5
+    if: false # Disabled because @HaSa can't wrap his head around Godot not wanting to properly start and terminate.
+    name: Windows Exports
+    runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Load Cache
-        uses: actions/cache@v2
+        uses: actions/checkout@v3
+
+      - name: Load Import Folder
+        uses: actions/cache/restore@v3
         with:
           path: src/.import
-          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          enableCrossOsArchive: true
+          key: Import-Windows-${{hashFiles('src/.import')}}
           restore-keys: |
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.BASE_BRANCH}}
-        continue-on-error: true
-      - name: Setup
+            Import-Windows-${{hashFiles('src/.import')}}
+            Import-Windows-
+            Import-
+      
+      - name: Download Godot
+        run: Invoke-WebRequest -o ../Godot_v${{env.GODOT_VERSION}}-stable_win64.exe.zip  https://github.com/godotengine/godot/releases/download/${{env.GODOT_VERSION}}-stable/Godot_v${{env.GODOT_VERSION}}-stable_win64.exe.zip
+      
+      - name: Extract Godot
+        run: 7z e ../Godot_v${{env.GODOT_VERSION}}-stable_win64.exe.zip -o".."
+      
+      - name: Create Export Template Directory
+        run: mkdir "$env:appdata/godot/templates/"
+      
+      - name: Get Export Templates from Cache
+        id: export-templates-cache
+        uses: actions/cache@v3
+        with:
+          path: ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+          key: Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+
+      - name: Download Godot Release Templates
+        if: steps.export-templates-cache.outputs.cache-hit != 'true'
+        run: Invoke-WebRequest -o ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz https://github.com/godotengine/godot/releases/download/${{env.GODOT_VERSION}}-stable/Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+
+      - name: Extract and Install Templates
         run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Windows Build
+          7z e ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz -o"$env:appdata/godot/templates/${{env.GODOT_VERSION}}.stable"
+          dir "$env:appdata/godot/templates/${{env.GODOT_VERSION}}.stable"
+      
+      - name: Create Build Folders
         run: |
-          mkdir -v -p build/windows
-          cd src
-          godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+          mkdir build/windows
+          mkdir build/windows-debug
+
+      # Export for Windows Release
+
+      - name: Export Windows Release
+        shell: bash
+        run: ../Godot_v${{env.GODOT_VERSION}}-stable_win64.exe src/project.godot -v --export "Windows Desktop" ../build/windows/${EXPORT_NAME}.exe
+      
+      - name: Upload Windows Release
+        uses: actions/upload-artifact@v3
         with:
           name: windows
           path: build/windows
-  
-  export-windows-debug:
-    name: Windows Export (Debug)
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Load Cache
-        uses: actions/cache@v2
-        with:
-          path: src/.import
-          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-          restore-keys: |
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.BASE_BRANCH}}
-        continue-on-error: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Windows Build
-        run: |
-          mkdir -v -p build/windows-debug
-          cd src
-          godot -v --export-debug "Windows Desktop" ../build/windows-debug/${EXPORT_NAME}_debug.exe
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+      
+      # Export for Windows Debug
+
+      - name: Export Windows Debug
+        run: Start-Process ../Godot_v${{env.GODOT_VERSION}}-stable_win64.exe -ArgumentList 'src/project.godot -v --export-debug "Windows Desktop" ../build/windows-debug/${EXPORT_NAME}_debug.exe' -Wait -NoNewWindow -PassThru
+      
+      - name: Upload Windows Debug
+        uses: actions/upload-artifact@v3
         with:
           name: windows-debug
-          path: build/windows-debug
-
-  export-linux:
-    name: Linux Export (Release)
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Load Cache
-        uses: actions/cache@v2
+          path: build/linux-windows
+      
+      - name: Store Import Folder
+        uses: actions/cache/save@v3
         with:
           path: src/.import
-          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          enableCrossOsArchive: true
+          key: Import-Windows-${{hashFiles('src/.import')}}
+
+  export-linux:
+    # On Linux the import cache is just partially loaded for some weird reason. Probably due the headless build.
+    name: Linux Exports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Load Import Folder
+        uses: actions/cache/restore@v3
+        with:
+          path: src/.import
+          enableCrossOsArchive: true
+          key: Import-Linux-${{hashFiles('src/.import')}}
           restore-keys: |
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.BASE_BRANCH}}
-        continue-on-error: true
-      - name: Setup
+            Import-Linux-${{hashFiles('src/.import')}}
+            Import-Linux-
+            Import-
+      
+      - name: Download Godot
+        run: curl -L -o ../Godot_v${{env.GODOT_VERSION}}-stable_linux_headless.64.zip https://github.com/godotengine/godot/releases/download/${{env.GODOT_VERSION}}-stable/Godot_v${{env.GODOT_VERSION}}-stable_linux_headless.64.zip
+      
+      - name: Extract Godot
         run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Linux Build
+          unzip -d .. ../Godot_v${{env.GODOT_VERSION}}-stable_linux_headless.64.zip
+          ls -la ..
+      
+      - name: Create Export Template Directory
+        run: mkdir -v -p "${HOME}/.local/share/godot/templates/${{env.GODOT_VERSION}}.stable"
+
+      - name: Download Godot Release Templates
+        run: curl -L -o ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz https://github.com/godotengine/godot/releases/download/${{env.GODOT_VERSION}}-stable/Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+
+      - name: Extract and Install Templates
+        run: |
+
+          unzip -j -d "${HOME}/.local/share/godot/templates/${{env.GODOT_VERSION}}.stable" ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+          ls -la "${HOME}/.local/share/godot/templates/${{env.GODOT_VERSION}}.stable"
+      
+      - name: Create Build Folders
         run: |
           mkdir -v -p build/linux
-          cd src
-          godot -v --export "Linux64" ../build/linux/$EXPORT_NAME.x86_64
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+          mkdir -v -p build/linux-debug
+
+      - name: Export Linux Release
+        run: ../Godot_v${{env.GODOT_VERSION}}-stable_linux_headless.64 src/project.godot -v --export "Linux64" ../build/linux/${EXPORT_NAME}.x86_64
+      
+      - name: Upload Linux Release
+        uses: actions/upload-artifact@v3
         with:
           name: linux
           path: build/linux
 
-  export-linux-debug:
-    name: Linux Export (Debug)
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Load Cache
-        uses: actions/cache@v2
-        with:
-          path: src/.import
-          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-          restore-keys: |
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.BASE_BRANCH}}
-        continue-on-error: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Linux Build
-        run: |
-          mkdir -v -p build/linux-debug
-          cd src
-          godot -v --export-debug "Linux64" ../build/linux-debug/${EXPORT_NAME}_debug.x86_64
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+      - name: Export Linux Debug
+        run: ../Godot_v${{env.GODOT_VERSION}}-stable_linux_headless.64 src/project.godot -v --export-debug "Linux64" ../build/linux-debug/${EXPORT_NAME}_debug.x86_64
+      
+      - name: Upload Linux Debug
+        uses: actions/upload-artifact@v3
         with:
           name: linux-debug
           path: build/linux-debug
-
-  export-mac:
-    name: Mac Export (Release)
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Load Cache
-        uses: actions/cache@v2
+      
+      - name: Store Import Folder
+        uses: actions/cache/save@v3
         with:
           path: src/.import
-          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
+          enableCrossOsArchive: true
+          key: Import-Linux-${{hashFiles('src/.import')}}
+
+  export-mac:
+    # Yes, macOS has the most stable support... Contrary to linux, the caching works, we can do adhoc-notarisation, and it's faster
+    name: Mac and Windows Exports
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Load Import Folder
+        uses: actions/cache/restore@v3
+        with:
+          path: src/.import
+          enableCrossOsArchive: true
+          key: Import-Mac-${{hashFiles('src/.import')}}
           restore-keys: |
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.BASE_BRANCH}}
-        continue-on-error: true
-      - name: Setup
+            Import-Mac-${{hashFiles('src/.import')}}
+            Import-Mac-
+            Import-
+      
+      - name: Download Godot
+        run: curl -L -o ../Godot_v${{env.GODOT_VERSION}}-stable_osx.universal.zip https://github.com/godotengine/godot/releases/download/${{env.GODOT_VERSION}}-stable/Godot_v${{env.GODOT_VERSION}}-stable_osx.universal.zip
+      
+      - name: Extract Godot
+        run: unzip -d .. ../Godot_v${{env.GODOT_VERSION}}-stable_osx.universal.zip
+      
+      - name: Create Export Template Directory
+        run: mkdir -v -p "${HOME}/Library/Application Support/Godot/templates/${{env.GODOT_VERSION}}.stable"
+      
+      - name: Get Export Templates from Cache
+        id: export-templates-cache
+        uses: actions/cache@v3
+        with:
+          path: ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+          key: Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+
+      - name: Download Godot Release Templates
+        if: steps.export-templates-cache.outputs.cache-hit != 'true'
+        run: curl -L -o ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz https://github.com/godotengine/godot/releases/download/${{env.GODOT_VERSION}}-stable/Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+
+      - name: Extract and Install Templates
         run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Mac Build
+
+          unzip -j -d "${HOME}/Library/Application Support/Godot/templates/${{env.GODOT_VERSION}}.stable" ../Godot_v${{env.GODOT_VERSION}}-stable_export_templates.tpz
+          ls -la "${HOME}/Library/Application Support/Godot/templates/${{env.GODOT_VERSION}}.stable"
+      
+      - name: Create Build Folders
         run: |
           mkdir -v -p build/mac
-          cd src
-          godot -v --export "Mac OSX" ../build/mac/$EXPORT_NAME.zip
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+          mkdir -v -p build/mac-debug
+          mkdir -v -p build/windows
+          mkdir -v -p build/windows-debug
+
+      - name: Export MacOS Release
+        run: ../Godot.app/Contents/MacOS/Godot src/project.godot -v --export "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+      
+      - name: Upload MacOS Release
+        uses: actions/upload-artifact@v3
         with:
           name: mac
           path: build/mac
   
-  export-mac-debug:
-    name: Mac Export (Debug)
-    runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:3.5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Load Cache
-        uses: actions/cache@v2
-        with:
-          path: src/.import
-          key: ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-          restore-keys: |
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}-${{github.sha}}
-            ${{github.job}}-${{env.BASE_BRANCH}}-${{github.ref}}
-            ${{github.job}}-${{env.BASE_BRANCH}}
-        continue-on-error: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-      - name: Mac Build
-        run: |
-          mkdir -v -p build/mac-debug
-          cd src
-          godot -v --export-debug "Mac OSX" ../build/mac-debug/${EXPORT_NAME}_debug.zip
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+      - name: Export MacOS Debug
+        run: ../Godot.app/Contents/MacOS/Godot src/project.godot -v --export-debug "Mac OSX" ../build/mac-debug/${EXPORT_NAME}_debug.zip
+      
+      - name: Upload MacOS Debug
+        uses: actions/upload-artifact@v3
         with:
           name: mac-debug
           path: build/mac-debug
+      
+      - name: Export Windows Release
+        run: ../Godot.app/Contents/MacOS/Godot src/project.godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+      
+      - name: Upload Windows Release
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: build/windows
+  
+      - name: Export Windows Debug
+        run: ../Godot.app/Contents/MacOS/Godot src/project.godot -v --export-debug "Windows Desktop" ../build/windows-debug/${EXPORT_NAME}_debug.exe
+      
+      - name: Upload Windows Debug
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-debug
+          path: build/windows-debug
+
+      - name: Store Import Folder
+        uses: actions/cache/save@v3
+        with:
+          path: src/.import
+          enableCrossOsArchive: true
+          key: Import-Mac-${{hashFiles('src/.import')}}
 
 # Add Android (https://github.com/abarichello/godot-ci/blob/master/.gitlab-ci.yml#L63-L99)
-# Add automatic versioning

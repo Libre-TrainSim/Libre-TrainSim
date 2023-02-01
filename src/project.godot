@@ -139,6 +139,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/jean28518.jTools/jSettings/input_map_resource.gd"
 }, {
+"base": "RichTextLabel",
+"class": "InputRichTextLabel",
+"language": "GDScript",
+"path": "res://Data/UI/input_rich_text_label.gd"
+}, {
 "base": "PanelContainer",
 "class": "InputSettings",
 "language": "GDScript",
@@ -386,6 +391,7 @@ _global_script_class_icons={
 "InputButton": "",
 "InputLabel": "",
 "InputMapResource": "",
+"InputRichTextLabel": "",
 "InputSettings": "",
 "LTSPlayer": "",
 "LTSWorld": "",

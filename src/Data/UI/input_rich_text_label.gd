@@ -31,7 +31,7 @@ func update_text(var _x = null) -> void:
 		for action in ControllerIcons.get_action_paths(possible_action):
 			combinations += "[font=res://Data/Fonts/image_offset_pseudo.tres][img=36]%s[/img][/font]" % action
 		replaces.push_back(combinations)
-	bbcode_text = ""
 	if centered:
-		bbcode_text = "[center]"
-	append_bbcode(tr(translation_id) % replaces)
+		bbcode_text = "[center]%s[/center]" % (tr(translation_id) % replaces)
+		return
+	bbcode_text = tr(translation_id) % replaces

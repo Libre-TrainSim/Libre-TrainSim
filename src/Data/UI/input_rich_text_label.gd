@@ -3,7 +3,7 @@ extends RichTextLabel
 
 
 export(Array, String) var actions := []
-export(bool) var centered := false
+export var centered := false
 
 
 onready var translation_id := text

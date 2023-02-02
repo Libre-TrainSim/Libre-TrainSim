@@ -38,7 +38,7 @@ func _unhandled_input(_event) -> void:
 
 var messages: int = 0
 func send_message(text: String, actions := []) -> void:
-	var Message: RichTextLabel = $PanelContainer/MessageLabel as RichTextLabel
+	var Message := $PanelContainer/MessageLabel as InputRichTextLabel
 	Message.translation_id = text
 	Message.actions = actions
 	Message.update_text()

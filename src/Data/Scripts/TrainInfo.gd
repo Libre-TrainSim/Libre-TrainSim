@@ -29,15 +29,27 @@ func update_info(player: LTSPlayer) -> void:
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = orange
 		else:
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = red
-			
+
+	## Control Type:
+	if player.control_type == player.ControlType.COMBINED:
+		$"ScrollContainer/VBoxContainer/Brakes-1".hide()
+		$"ScrollContainer/VBoxContainer/Acceleration-1".hide()
+	else:
+		$"ScrollContainer/VBoxContainer/Brakes-0".hide()
+		$"ScrollContainer/VBoxContainer/Acceleration-0".hide()
+
+
 	## Brakes:
 	if player.technicalSoll < 0:
-		$"ScrollContainer/VBoxContainer/Brakes/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = red
 	else:
 		if player.command < 0:
-			$"ScrollContainer/VBoxContainer/Brakes/dot".texture = orange
+			$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = orange
+			$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = orange
 		else:
-			$"ScrollContainer/VBoxContainer/Brakes/dot".texture = green
+			$"ScrollContainer/VBoxContainer/Brakes-0/dot".texture = green
+			$"ScrollContainer/VBoxContainer/Brakes-1/dot".texture = green
 
 	## Reverser:
 	if player.reverser == ReverserState.NEUTRAL:
@@ -48,9 +60,11 @@ func update_info(player: LTSPlayer) -> void:
 
 	## Acceleration:
 	if player.blockedAcceleration:
-		$"ScrollContainer/VBoxContainer/Acceleration/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Acceleration-0/dot".texture = red
+		$"ScrollContainer/VBoxContainer/Acceleration-1/dot".texture = red
 	else:
-		$"ScrollContainer/VBoxContainer/Acceleration/dot".texture = green
+		$"ScrollContainer/VBoxContainer/Acceleration-0/dot".texture = green
+		$"ScrollContainer/VBoxContainer/Acceleration-1/dot".texture = green
 
 	## EnforcedBreake
 	if player.enforced_braking:

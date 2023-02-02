@@ -150,33 +150,56 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Brakes" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Brakes-0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 153.0
 margin_right = 753.0
 margin_bottom = 184.0
 rect_clip_content = true
 
-[node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Brakes"]
+[node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Brakes-0"]
 margin_right = 30.0
 margin_bottom = 31.0
 texture = ExtResource( 3 )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Brakes"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Brakes-0"]
 margin_left = 34.0
 margin_right = 753.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 custom_fonts/normal_font = ExtResource( 2 )
-text = "TRAIN_INFO_BRAKES"
+text = "TRAIN_INFO_BRAKES_1"
+fit_content_height = true
+scroll_active = false
+script = ExtResource( 8 )
+actions = [ "brake-", "brake+" ]
+
+[node name="Brakes-1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 188.0
+margin_right = 753.0
+margin_bottom = 219.0
+rect_clip_content = true
+
+[node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Brakes-1"]
+margin_right = 30.0
+margin_bottom = 31.0
+texture = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Brakes-1"]
+margin_left = 34.0
+margin_right = 753.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+custom_fonts/normal_font = ExtResource( 2 )
+text = "TRAIN_INFO_BRAKES_2"
 fit_content_height = true
 scroll_active = false
 script = ExtResource( 8 )
 actions = [ "brake-", "brake+" ]
 
 [node name="Doors" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 188.0
+margin_top = 223.0
 margin_right = 753.0
-margin_bottom = 219.0
+margin_bottom = 254.0
 
 [node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Doors"]
 margin_right = 30.0
@@ -196,9 +219,9 @@ script = ExtResource( 8 )
 actions = [ "doorClose", "doorRight", "doorLeft" ]
 
 [node name="Reverser" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 223.0
+margin_top = 258.0
 margin_right = 753.0
-margin_bottom = 254.0
+margin_bottom = 289.0
 
 [node name="Dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Reverser"]
 margin_right = 30.0
@@ -217,42 +240,65 @@ scroll_active = false
 script = ExtResource( 8 )
 actions = [ "reverser-", "reverser+" ]
 
-[node name="Acceleration" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 258.0
+[node name="Acceleration-0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 293.0
 margin_right = 753.0
-margin_bottom = 289.0
+margin_bottom = 324.0
 
-[node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Acceleration"]
+[node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Acceleration-0"]
 margin_right = 30.0
 margin_bottom = 31.0
 texture = ExtResource( 3 )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Acceleration"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Acceleration-0"]
 margin_left = 34.0
 margin_right = 753.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 2 )
-text = "TRAIN_INFO_ACCELERATION"
+text = "TRAIN_INFO_ACCELERATION_1"
+fit_content_height = true
+scroll_active = false
+script = ExtResource( 8 )
+actions = [ "acc+", "acc-" ]
+
+[node name="Acceleration-1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 328.0
+margin_right = 753.0
+margin_bottom = 359.0
+
+[node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Acceleration-1"]
+margin_right = 30.0
+margin_bottom = 31.0
+texture = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Acceleration-1"]
+margin_left = 34.0
+margin_right = 753.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 2 )
+text = "TRAIN_INFO_ACCELERATION_2"
 fit_content_height = true
 scroll_active = false
 script = ExtResource( 8 )
 actions = [ "acc+", "acc-" ]
 
 [node name="ColorRect2" type="ColorRect" parent="ScrollContainer/VBoxContainer"]
-margin_top = 293.0
+margin_top = 363.0
 margin_right = 753.0
-margin_bottom = 296.0
+margin_bottom = 366.0
 rect_min_size = Vector2( 0, 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Horn" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 300.0
+margin_top = 370.0
 margin_right = 753.0
-margin_bottom = 331.0
+margin_bottom = 401.0
 
 [node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Horn"]
 margin_right = 30.0
@@ -272,9 +318,9 @@ script = ExtResource( 8 )
 actions = [ "Horn" ]
 
 [node name="FrontLight" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 335.0
+margin_top = 405.0
 margin_right = 753.0
-margin_bottom = 366.0
+margin_bottom = 436.0
 
 [node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/FrontLight"]
 margin_right = 30.0
@@ -294,9 +340,9 @@ script = ExtResource( 8 )
 actions = [ "FrontLight" ]
 
 [node name="InsideLight" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 370.0
+margin_top = 440.0
 margin_right = 753.0
-margin_bottom = 401.0
+margin_bottom = 471.0
 
 [node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/InsideLight"]
 margin_right = 30.0
@@ -316,9 +362,9 @@ script = ExtResource( 8 )
 actions = [ "InsideLight" ]
 
 [node name="Autopilot" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 405.0
+margin_top = 475.0
 margin_right = 753.0
-margin_bottom = 436.0
+margin_bottom = 506.0
 
 [node name="dot" type="TextureRect" parent="ScrollContainer/VBoxContainer/Autopilot"]
 margin_right = 30.0

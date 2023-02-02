@@ -489,7 +489,7 @@ scene_naming=2
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
 
 [game]
 
@@ -813,10 +813,6 @@ translation_remaps={
 }
 overwritten_language=""
 overwritten_language.editor="en"
-
-[mono]
-
-project/assembly_name="Libre Train Sim"
 
 [network]
 

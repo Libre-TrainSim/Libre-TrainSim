@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Data/UI/Pause.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Data/UI/MobileHUD.tscn" type="PackedScene" id=2]
@@ -18,7 +18,6 @@
 [ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=16]
 [ext_resource path="res://Data/Scripts/InputLabel.gd" type="Script" id=17]
 [ext_resource path="res://Data/UI/blur.tres" type="Material" id=18]
-[ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=19]
 [ext_resource path="res://Data/UI/input_rich_text_label.gd" type="Script" id=20]
 
 [sub_resource type="Animation" id=1]
@@ -287,10 +286,10 @@ margin_top = -45.0
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 38.0
+margin_bottom = 53.0
 size_flags_horizontal = 13
 size_flags_vertical = 4
-custom_fonts/normal_font = ExtResource( 19 )
+custom_fonts/normal_font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
 fit_content_height = true
 scroll_active = false

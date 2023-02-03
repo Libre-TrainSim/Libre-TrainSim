@@ -29,9 +29,15 @@ func update_text(var _x = null) -> void:
 	for possible_action in actions:
 		var combinations := ""
 		for action in ControllerIcons.get_action_paths(possible_action):
-			combinations += "[font=res://Data/Fonts/image_offset_pseudo.tres][img=36]%s[/img][/font]" % action
+			combinations += "[font=res://Data/Fonts/image_offset_pseudo_%s.tres][img=36]%s[/img][/font]" % [get_font_specifier(), action]
 		replaces.push_back(combinations)
 	if centered:
 		bbcode_text = "[center]%s[/center]" % (tr(translation_id) % replaces)
 		return
 	bbcode_text = tr(translation_id) % replaces
+
+func get_font_specifier() -> String:
+	var font = get("custom_fonts/normal_font").resource_path.get_file()
+	if font == "FontMedium.tres":
+		return "medium"
+	return "ingame"

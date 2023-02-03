@@ -35,6 +35,8 @@ material/2 = SubResource( 2 )
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 176, 319 )
 transparent_bg = true
+handle_input_locally = false
+hdr = false
 disable_3d = true
 usage = 0
 render_target_v_flip = true

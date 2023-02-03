@@ -64,6 +64,36 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/Scripts/Enums/control_type.gd"
 }, {
+"base": "Button",
+"class": "ControllerButton",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/Button.gd"
+}, {
+"base": "Node",
+"class": "ControllerMapper",
+"language": "GDScript",
+"path": "res://addons/controller_icons/Mapper.gd"
+}, {
+"base": "Resource",
+"class": "ControllerSettings",
+"language": "GDScript",
+"path": "res://addons/controller_icons/Settings.gd"
+}, {
+"base": "Sprite",
+"class": "ControllerSprite",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/Sprite.gd"
+}, {
+"base": "Sprite3D",
+"class": "ControllerSprite3D",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/Sprite3D.gd"
+}, {
+"base": "TextureRect",
+"class": "ControllerTextureRect",
+"language": "GDScript",
+"path": "res://addons/controller_icons/objects/TextureRect.gd"
+}, {
 "base": "CameraBase",
 "class": "DebugCamera",
 "language": "GDScript",
@@ -108,6 +138,11 @@ _global_script_classes=[ {
 "class": "InputMapResource",
 "language": "GDScript",
 "path": "res://addons/jean28518.jTools/jSettings/input_map_resource.gd"
+}, {
+"base": "RichTextLabel",
+"class": "InputRichTextLabel",
+"language": "GDScript",
+"path": "res://Data/UI/input_rich_text_label.gd"
 }, {
 "base": "PanelContainer",
 "class": "InputSettings",
@@ -341,6 +376,12 @@ _global_script_class_icons={
 "ContactPoint": "",
 "ContactPointSettings": "",
 "ControlType": "",
+"ControllerButton": "",
+"ControllerMapper": "",
+"ControllerSettings": "",
+"ControllerSprite": "",
+"ControllerSprite3D": "",
+"ControllerTextureRect": "",
 "DebugCamera": "",
 "DistanceMonitor": "",
 "EditorCamera": "",
@@ -350,6 +391,7 @@ _global_script_class_icons={
 "InputButton": "",
 "InputLabel": "",
 "InputMapResource": "",
+"InputRichTextLabel": "",
 "InputSettings": "",
 "LTSPlayer": "",
 "LTSWorld": "",
@@ -430,6 +472,7 @@ LoadingScreen="*res://Data/UI/loading_screen.tscn"
 InputHelper="*res://Data/Scripts/Singletons/input_helper.gd"
 DebugDraw="*res://addons/zylann.debug_draw/debug_draw.gd"
 DebugUi="*res://Data/UI/debug_ui.tscn"
+ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 
 [debug]
 

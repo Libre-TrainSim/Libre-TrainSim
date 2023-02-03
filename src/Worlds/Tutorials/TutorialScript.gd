@@ -1,41 +1,44 @@
 extends Node
 
-var scenario: String = Root.current_scenario
-var world: Node = find_parent("World")
+onready var world: LTSWorld = get_parent()
 var step: int = 0
 var player: LTSPlayer
 var message_sent: bool = false
 
-const THE_BASICS: String = "res://Worlds/Tutorials/scenarios/The Basics.scenario"
-const THE_BASICS_MOBILE: String = "res://Worlds/Tutorials/scenarios/The Basics - Mobile Version.scenario"
-const ADVANCED_TUTORIAL: String = "res://Worlds/Tutorials/scenarios/Advanced Train Driving.scenario"
+const THE_BASICS := preload("res://Worlds/Tutorials/scenarios/The Basics.tres")
+const ADVANCED_TUTORIAL := preload("res://Worlds/Tutorials/scenarios/Advanced Train Driving.tres")
 
 func _ready() -> void:
 	if Root.Editor:
 		queue_free()
 		return
 
-	if scenario == THE_BASICS or scenario == THE_BASICS_MOBILE:
+	yield(get_tree(), "idle_frame")
+	player = world.get_node("Players/Player")
+	assert(player)
+	if world.current_scenario == THE_BASICS:
 		Root.EasyMode = true
-	if scenario == ADVANCED_TUTORIAL:
-		Root.EasyMode = false
+		player.control_type = player.ControlType.COMBINED
+	elif world.current_scenario == ADVANCED_TUTORIAL:
+			Root.EasyMode = false
+			if player.get_node_or_null("SafetySystems/SifaModule") != null:
+				player.get_node_or_null("SafetySystems/SifaModule")._force_enabled(true)
+			player.control_type = player.ControlType.SEPARATE
+			if player.get_node_or_null("SafetySystems/PZBModule") != null:
+				player.get_node_or_null("SafetySystems/PZBModule")._force_enabled(false)
 
 
 func _process(delta: float) -> void:
-	if world == null:
-		world = find_parent("World")
-	if player == null:
-		player = world.get_node("Players/Player")
 	send_message(delta)
-	if scenario == THE_BASICS:
+	if world.current_scenario == THE_BASICS:
 		basics()
 		return
-	if scenario == ADVANCED_TUTORIAL:
+	if world.current_scenario == ADVANCED_TUTORIAL:
 		advanced()
 		return
-	if scenario == THE_BASICS_MOBILE:
-		basics_mobile_version()
-		return
+#	if scenario == THE_BASICS_MOBILE:
+#		basics_mobile_version()
+#		return
 	message_sent = true
 
 
@@ -61,6 +64,7 @@ func basics() -> void:
 			message = TranslationServer.translate("TUTORIAL_0_2")
 			if not player.is_in_station:
 				next_step()
+				world.get_node("Signals/Signal2").set_status(SignalStatus.RED)
 		4:
 #			message = "Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."
 			message = TranslationServer.translate("TUTORIAL_0_3")
@@ -90,7 +94,8 @@ func basics() -> void:
 		9:
 			# message: Hint: If you don't know further on at any time or you just want to enjoy the ride, press 'ctr' + 'a' to activate the autopilot.
 			message = TranslationServer.translate("TUTORIAL_0_11")
-			if player.speed == 0 and player.current_station_table_entry.station_name == "Tutorialbach" and not player.whole_train_in_station:
+			print(player.whole_train_in_station)
+			if is_zero_approx(player.speed) and player.current_station_table_entry.station_name == "Tutorialbach" and player.whole_train_in_station:
 				next_step()
 		10:
 #			message = "Great, you arrived securly!\nNow you have to open the doors.\nWith 'i' you can open the left one, with 'p' the right one.\nIn our case we have to open the left one with 'i'."
@@ -105,9 +110,6 @@ func basics() -> void:
 func advanced() -> void:
 	match step:
 		0:
-			Root.EasyMode = false
-			if player.get_node_or_null("SafetySystems/SifaModule") != null:
-				player.get_node_or_null("SafetySystems/SifaModule")._force_enabled(true)
 			message = TranslationServer.translate("TUTORIAL_1_0")
 			if player.engine:
 				next_step()

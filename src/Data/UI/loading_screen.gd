@@ -139,7 +139,8 @@ func _clear() -> void:
 
 
 func update_progress_bar() -> void:
-	$ProgressBar/Bar.value = loader.get_stage()
+	var stage := min(loader.get_stage(), loader.get_stage_count() - 1)
+	$ProgressBar/Bar.value = stage
 	$ProgressBar/Description.text = descriptions[\
-			int(round(loader.get_stage() * (descriptions.size() - 1) \
+			int(round(stage * (descriptions.size() - 1) \
 					/ float(loader.get_stage_count() - 1)))]

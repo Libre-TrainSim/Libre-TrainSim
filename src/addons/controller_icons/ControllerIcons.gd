@@ -12,6 +12,7 @@ var _cached_icons := {}
 var _custom_input_actions := {}
 
 var _last_input_type
+var _last_controller := -1
 var _settings
 var _file := File.new()
 
@@ -68,6 +69,7 @@ func _on_joy_connection_changed(device, connected):
 
 func _input(event: InputEvent):
 	var input_type = _last_input_type
+	var controller = _last_controller
 	match event.get_class():
 		"InputEventKey", "InputEventMouseButton":
 			input_type = InputType.KEYBOARD_MOUSE
@@ -76,10 +78,14 @@ func _input(event: InputEvent):
 				input_type = InputType.KEYBOARD_MOUSE
 		"InputEventJoypadButton":
 			input_type = InputType.CONTROLLER
+			controller = event.device
 		"InputEventJoypadMotion":
 			if abs(event.axis_value) > _settings.joypad_deadzone:
 				input_type = InputType.CONTROLLER
-	if input_type != _last_input_type:
+				controller = event.device
+	if input_type != _last_input_type or \
+			(input_type == InputType.CONTROLLER and _last_controller != controller):
+		_last_controller = controller
 		_set_last_input_type(input_type)
 
 func _add_custom_input_action(input_action: String, data: Dictionary):
@@ -124,13 +130,16 @@ func get_action_paths(path: String, input_type: int = _last_input_type) -> Array
 			if _load_icon(root_path):
 				continue
 		var combination := [root_path]
-		if event.control:
+		var mk := event as InputEventWithModifiers
+		if mk == null:
+			return combination
+		if mk.control:
 			combination.push_front(fake_event(KEY_CONTROL))
-		if event.alt:
+		if mk.alt:
 			combination.push_front(fake_event(KEY_ALT))
-		if event.shift:
+		if mk.shift:
 			combination.push_front(fake_event(KEY_SHIFT))
-		if event.meta:
+		if mk.meta:
 			combination.push_front(fake_event(KEY_META))
 		return combination
 
@@ -192,7 +201,7 @@ func _expand_path(path: String, input_type: int) -> Array:
 			if event:
 				base_path += _convert_event_to_path(event)
 		elif path.substr(0, path.find("/")) == "joypad":
-			base_path += Mapper._convert_joypad_path(path, _settings.joypad_fallback)
+			base_path += Mapper._convert_joypad_path(path, _settings.joypad_fallback, _last_controller)
 		else:
 			base_path += path
 
@@ -466,7 +475,7 @@ func _convert_joypad_button_to_path(button_index: int):
 			path = "joypad/share"
 		_:
 			return ""
-	return Mapper._convert_joypad_path(path, _settings.joypad_fallback)
+	return Mapper._convert_joypad_path(path, _settings.joypad_fallback, _last_controller)
 
 func _convert_joypad_motion_to_path(axis: int):
 	var path : String
@@ -481,7 +490,7 @@ func _convert_joypad_motion_to_path(axis: int):
 			path = "joypad/rt"
 		_:
 			return ""
-	return Mapper._convert_joypad_path(path, _settings.joypad_fallback)
+	return Mapper._convert_joypad_path(path, _settings.joypad_fallback, _last_controller)
 
 func _get_matching_event(path: String, input_type: int):
 	var events : Array

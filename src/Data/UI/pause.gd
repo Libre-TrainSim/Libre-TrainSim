@@ -11,9 +11,9 @@ var player: LTSPlayer
 
 
 func _unhandled_input(_event) -> void:
-	if Input.is_action_just_pressed("Escape"):
+	if Input.is_action_just_pressed("Escape") and !get_parent().get_node("TextBox").opened:
 		get_tree().paused = !get_tree().paused
-		visible = !visible
+		visible = get_tree().paused
 		if visible:
 			_saved_ingame_pause = Root.ingame_pause
 			Root.ingame_pause = false

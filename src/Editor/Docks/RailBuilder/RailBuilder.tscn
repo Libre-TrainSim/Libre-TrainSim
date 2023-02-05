@@ -652,7 +652,7 @@ scroll_horizontal_enabled = false
 script = ExtResource( 2 )
 
 [node name="Items" type="VBoxContainer" parent="ConntectedRails"]
-margin_right = 1024.0
+margin_right = 1012.0
 size_flags_horizontal = 3
 
 [connection signal="text_entered" from="CurrentRail/Name" to="." method="_on_RenameLine_text_entered"]

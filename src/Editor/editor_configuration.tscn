@@ -121,14 +121,14 @@ align = 0
 
 [node name="LineEdit" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="1"]
 margin_left = 103.0
-margin_right = 763.0
+margin_right = 747.0
 margin_bottom = 49.0
 theme = ExtResource( 11 )
 custom_fonts/font = ExtResource( 3 )
 
 [node name="Add" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="2"]
-margin_left = 767.0
-margin_right = 817.0
+margin_left = 751.0
+margin_right = 809.0
 margin_bottom = 49.0
 theme = ExtResource( 9 )
 custom_fonts/font = ExtResource( 3 )
@@ -142,7 +142,7 @@ text = "REMOVE"
 
 [node name="Rename" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="4"]
 visible = true
-margin_left = 821.0
+margin_left = 813.0
 margin_right = 912.0
 margin_bottom = 49.0
 theme = ExtResource( 9 )

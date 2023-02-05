@@ -79,6 +79,15 @@ func save_settings():
 		return
 	file.erase_section_key("", "_global_script_classes")
 	file.erase_section_key("", "_global_script_class_icons")
+
+	# We forcefully delete a good chunk of things that may get into our way
+	file.erase_section("network")
+	file.erase_section("editor_plugins")
+	file.erase_section("editor")
+	file.erase_section("autoload")
+	file.erase_section("audio")
+	file.erase_section("application")
+
 	err = file.save("user://override.cfg")
 	if err != OK:
 		Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \

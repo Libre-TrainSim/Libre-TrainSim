@@ -22,10 +22,6 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-version = "0.9.beta1"
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -52,21 +48,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -76.0
 margin_top = -26.0
+margin_right = -8.0
+margin_bottom = -8.0
 grow_horizontal = 0
 grow_vertical = 0
 custom_fonts/font = ExtResource( 10 )
 text = "Version: 0.0"
 align = 2
 valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LabelMusic" type="Label" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
+margin_left = 8.0
 margin_top = -26.0
 margin_right = 86.0
+margin_bottom = -8.0
 grow_vertical = 0
 custom_fonts/font = ExtResource( 10 )
 text = "MENU_MUSIC:"
@@ -83,9 +80,6 @@ margin_right = 323.0
 margin_bottom = -1.05945
 theme = ExtResource( 5 )
 alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextureRect" type="TextureRect" parent="Buttons"]
 margin_top = 34.0

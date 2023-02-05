@@ -25,11 +25,13 @@ func set_text(text: String) -> void:
 
 
 func update_text(var _x = null) -> void:
+	var font := get_font("normal_font")
+	var icon_size := font.get_height() + font.get_descent()
 	var replaces := []
 	for possible_action in actions:
 		var combinations := ""
 		for action in ControllerIcons.get_action_paths(possible_action):
-			combinations += "[font=res://Data/Fonts/image_offset_pseudo_%s.tres][img=36]%s[/img][/font]" % [get_font_specifier(), action]
+			combinations += "[font=res://Data/Fonts/image_offset_pseudo_%s.tres][img=%d]%s[/img][/font]" % [get_font_specifier(), icon_size, action]
 		replaces.push_back(combinations)
 	if centered:
 		bbcode_text = "[center]%s[/center]" % (tr(translation_id) % replaces)

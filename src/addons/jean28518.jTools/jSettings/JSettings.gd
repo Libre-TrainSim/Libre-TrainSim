@@ -6,6 +6,7 @@ func popup():
 	update_and_prepare_language_handling()
 	update_settings_window()
 	$JSettings.show()
+	$JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_GENERAL_SETTINGS/GridContainer/Language.grab_focus()
 
 ################################################################################
 

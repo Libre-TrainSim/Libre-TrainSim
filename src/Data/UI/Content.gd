@@ -10,6 +10,7 @@ func _ready() -> void:
 
 func show() -> void:
 	update_content_list()
+	$VBoxContainer/Buttons/Back.grab_focus()
 	.show()
 
 

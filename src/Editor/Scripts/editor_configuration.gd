@@ -10,6 +10,15 @@ func _ready() -> void:
 	_initialize_editor_directory()
 	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
 	_find_content()
+	$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.select(0)
+
+
+func show() -> void:
+	if tracks.empty():
+		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer/Back.grab_focus()
+	else:
+		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.grab_focus()
+	.show()
 
 
 func to_file_name(track_name: String) -> String:

@@ -10,8 +10,18 @@ var world_config: WorldConfig # config of selected world
 var loaded_scenario: TrackScenario = null
 var loaded_route: ScenarioRoute = null
 
+
+func _ready() -> void:
+	$V/Tracks.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	$V/Scenarios.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	$V/Routes.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	$V/Times.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	$V/Trains.connect("visibility_changed", self, "_on_menu_visibility_changed")
+
+
 func show() -> void:
 	update_tracks()
+	$V/Tracks/H/ItemList.grab_focus()
 	.show()
 
 
@@ -52,6 +62,7 @@ func update_tracks() -> void:
 		update_scenarios()
 	for track in ContentLoader.repo.worlds:
 		$V/Tracks/H/ItemList.add_item(track.get_file().get_basename())
+	$V/Tracks/H/ItemList.select(0)
 
 
 func update_scenarios() -> void:
@@ -67,6 +78,7 @@ func update_scenarios() -> void:
 
 	for scenario in scenarios:
 		$V/Scenarios/ItemList.add_item(scenario.get_file().get_basename())
+	$V/Scenarios/ItemList.select(0)
 
 
 func update_routes():
@@ -77,6 +89,7 @@ func update_routes():
 	for route_name in routes:
 		if loaded_scenario.is_route_playable(route_name):
 			$V/Routes/ItemList.add_item(route_name)
+	$V/Routes/ItemList.select(0)
 
 	if $V/Routes/ItemList.get_item_count() == 1:
 		selected_route = $V/Routes/ItemList.get_item_text(0)
@@ -99,6 +112,7 @@ func update_times():
 
 	for time in times:
 		$V/Times/ItemList.add_item(Math.seconds_to_string(time))
+	$V/Times/ItemList.select(0)
 	pass
 
 
@@ -286,3 +300,16 @@ func _on_Trains_Play_pressed():
 
 func _on_Trains_item_activated(_index):
 	_on_Trains_Play_pressed()
+
+
+func _on_menu_visibility_changed() -> void:
+	if $V/Trains.visible:
+		$V/Trains/H/ItemList.grab_focus()
+	elif $V/Times.visible:
+		$V/Times/ItemList.grab_focus()
+	elif $V/Routes.visible:
+		$V/Routes/ItemList.grab_focus()
+	elif $V/Scenarios.visible:
+		$V/Scenarios/ItemList.grab_focus()
+	elif visible:
+		$V/Tracks/H/ItemList.grab_focus()

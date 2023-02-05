@@ -43,7 +43,6 @@ margin_top = 49.0
 margin_right = 1004.0
 margin_bottom = 527.0
 size_flags_vertical = 3
-select_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TrackList"]
 margin_top = 531.0

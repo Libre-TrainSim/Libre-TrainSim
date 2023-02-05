@@ -2,6 +2,16 @@ extends Panel
 
 var selected_track: String = ""
 
+
+func _ready() -> void:
+	$ScenarioList.connect("visibility_changed", self, "_on_ScenarioList_visibility_changed")
+
+
+func show() -> void:
+	$TrackList/ItemList.grab_focus()
+	.show()
+
+
 func update_track_list():
 	$TrackList/ItemList.clear()
 	for track in ContentLoader.repo.worlds:
@@ -10,6 +20,7 @@ func update_track_list():
 	var tracks = ContentLoader.get_editor_tracks()
 	for track in tracks.keys():
 		$TrackList/ItemList.add_item("Track-Editor: " + track.get_file().get_basename())
+	$TrackList/ItemList.select(0)
 
 
 func _on_Back_TrackList_pressed():
@@ -46,6 +57,9 @@ func update_scenario_list():
 		available_scenarios_names.append(scenario.get_file().get_basename())
 
 	$ScenarioList/scenarioList.set_data(available_scenarios_names)
+	
+	$ScenarioList/scenarioList.item_list.select(0)
+	$ScenarioList/scenarioList._on_ItemList_item_selected(0)
 
 
 func _on_Back_ScenarioList_pressed():
@@ -84,6 +98,13 @@ func _on_scenarioList_user_pressed_action(entry_names):
 	Root.Editor = true
 	Root.scenario_editor = true
 	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+
+
+func _on_ScenarioList_visibility_changed() -> void:
+	if $ScenarioList.visible:
+		$ScenarioList/scenarioList.item_list.grab_focus()
+	else:
+		$TrackList/ItemList.grab_focus()
 
 
 # TrackList:

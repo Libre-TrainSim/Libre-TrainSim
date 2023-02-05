@@ -21,6 +21,9 @@ func _ready():
 	if openTimes > 3 and not feedbackPressed and not Root.mobile_version:
 		$Feedback/VBoxContainer/RichTextLabel.text = tr("MENU_FEEDBACK_QUESTION")
 		$Feedback.popup()
+		$Feedback/VBoxContainer/HBoxContainer/OpenWebBrowser.grab_focus()
+	else:
+		$Buttons/Play.grab_focus()
 
 	if Root.start_menu_in_play_menu:
 		Root.start_menu_in_play_menu = false
@@ -30,6 +33,22 @@ func _ready():
 	updateBottmLabels()
 	Logger.log("Using version: %s" % ProjectSettings["application/version/label"])
 	Logger.vlog("Main menu loaded")
+
+
+	# Signal connections for UI focus
+
+	$CreateMenu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed")
+
+	$Feedback.connect("popup_hide", $Buttons/Play, "grab_focus")
+	
+	$Play.connect("hide", $Buttons/Play, "grab_focus")
+	$Content.connect("hide", $Buttons/Content, "grab_focus")
+	$CreateMenu.connect("hide", $Buttons/Create, "grab_focus")
+	jSettings.get_node("JSettings").connect("hide", $Buttons/Settings, "grab_focus")
+	$About.connect("hide", $Buttons/About, "grab_focus")
+	
+	$TrackEditorSelection.connect("hide", $CreateMenu/TrackEditor, "grab_focus")
+	$ScenarioEditorSelection.connect("hide", $CreateMenu/ScenarioEditor, "grab_focus")
 
 
 func _on_Quit_pressed():
@@ -83,6 +102,11 @@ func _on_TrackEditor_pressed():
 func _on_CreateMenu_Back_pressed():
 	$CreateMenu.hide()
 	$Buttons.show()
+
+
+func _on_CreateMenu_visibility_changed() -> void:
+	if $CreateMenu.visible:
+		$CreateMenu/Back.grab_focus()
 
 
 func _on_ScenarioEditor_pressed():

@@ -19,6 +19,11 @@ func _ready() -> void:
 	show_translators()
 
 
+func show() -> void:
+	$Control/Back.grab_focus()
+	.show()
+
+
 func _clear_box(box_path: Control) -> void:
 	for node in box_path.get_children():
 		node.queue_free()

@@ -142,6 +142,7 @@ margin_top = 505.0
 margin_right = 980.0
 margin_bottom = 554.0
 rect_min_size = Vector2( 200, 0 )
+focus_neighbour_top = NodePath(".")
 theme = ExtResource( 2 )
 custom_fonts/font = ExtResource( 7 )
 text = "MENU_BACK"

@@ -42,13 +42,13 @@ func _ready():
 	create_menu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed")
 
 	$Feedback.connect("popup_hide", $Buttons/Play, "grab_focus")
-	
+
 	$Play.connect("hide", $Buttons/Play, "grab_focus")
 	$Content.connect("hide", $Buttons/Content, "grab_focus")
 	create_menu.connect("hide", $Buttons/Create, "grab_focus")
 	jSettings.get_node("JSettings").connect("hide", $Buttons/Settings, "grab_focus")
 	$About.connect("hide", $Buttons/About, "grab_focus")
-	
+
 	$TrackEditorSelection.connect("hide", $CreateMenu/TrackEditor, "grab_focus")
 	$ScenarioEditorSelection.connect("hide", $CreateMenu/ScenarioEditor, "grab_focus")
 

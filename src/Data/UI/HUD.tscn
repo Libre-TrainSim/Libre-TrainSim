@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Data/UI/Pause.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Data/UI/MobileHUD.tscn" type="PackedScene" id=2]
@@ -16,7 +16,6 @@
 [ext_resource path="res://Data/Misc/SpeedLimit.png" type="Texture" id=14]
 [ext_resource path="res://Data/Misc/NextTable.png" type="Texture" id=15]
 [ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=16]
-[ext_resource path="res://Data/Scripts/InputLabel.gd" type="Script" id=17]
 [ext_resource path="res://Data/UI/blur.tres" type="Material" id=18]
 [ext_resource path="res://Data/UI/input_rich_text_label.gd" type="Script" id=20]
 
@@ -332,36 +331,6 @@ visible = false
 [node name="Pause" parent="." instance=ExtResource( 1 )]
 visible = false
 focus_mode = 2
-
-[node name="MarginContainer" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -76.0
-margin_top = -40.0
-margin_right = 76.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Message" type="Label" parent="MarginContainer"]
-modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -933.701
-margin_top = -40.0
-margin_right = 930.299
-margin_bottom = 5.0
-custom_fonts/font = ExtResource( 16 )
-text = "Welcome in Hainfurt"
-align = 1
-script = ExtResource( 17 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="closed" from="TextBox" to="." method="_on_TextBox_closed"]
 [connection signal="paused" from="Pause" to="." method="_on_paused"]

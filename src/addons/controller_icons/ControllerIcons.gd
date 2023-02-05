@@ -1,4 +1,3 @@
-tool
 extends Node
 
 signal input_type_changed(input_type)

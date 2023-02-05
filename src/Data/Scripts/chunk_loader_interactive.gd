@@ -151,6 +151,7 @@ func _force_load_chunk_immediately(chunk_name):
 
 	var file = _get_chunk_file_path(chunk_name)
 	var chunk = null
+	_currently_loading_chunk = chunk_name
 	if _dir.file_exists(file):
 		var resource = load(file)
 		chunk = _spawn_chunk_from_res(resource)

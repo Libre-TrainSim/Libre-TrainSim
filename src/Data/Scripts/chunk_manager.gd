@@ -18,7 +18,7 @@ var _dir: Directory = null
 
 func position_to_chunk(position: Vector3) -> Vector3:
 	position = position - world_origin
-	return Vector3(int(position.x / chunk_size), 0, int(position.z / chunk_size))
+	return Vector3(round(position.x / chunk_size), 0, round(position.z / chunk_size))
 
 
 func chunk_to_position(chunk: Vector3) -> Vector3:
@@ -40,18 +40,22 @@ static func string_to_chunk(chunk: String) -> Vector3:
 	return Vector3(x, 0, z)
 
 
-func get_3x3_chunks(around: Vector3):
-	return [
-		chunk_to_string(Vector3(around.x - 1, 0, around.z)),
-		chunk_to_string(Vector3(around.x - 1, 0, around.z - 1)),
-		chunk_to_string(Vector3(around.x - 1, 0, around.z + 1)),
-		chunk_to_string(Vector3(around.x + 1, 0, around.z)),
-		chunk_to_string(Vector3(around.x + 1, 0, around.z - 1)),
-		chunk_to_string(Vector3(around.x + 1, 0, around.z + 1)),
+func get_chunks(around: Vector3, distance: int):
+	var chunks := [
 		chunk_to_string(Vector3(around.x, 0, around.z)),
-		chunk_to_string(Vector3(around.x, 0, around.z - 1)),
-		chunk_to_string(Vector3(around.x, 0, around.z + 1)),
 	]
+	for i in range(1, distance + 1):
+		chunks.append_array([
+			chunk_to_string(Vector3(around.x - i, 0, around.z)),
+			chunk_to_string(Vector3(around.x - i, 0, around.z - i)),
+			chunk_to_string(Vector3(around.x - i, 0, around.z + i)),
+			chunk_to_string(Vector3(around.x + i, 0, around.z)),
+			chunk_to_string(Vector3(around.x + i, 0, around.z - i)),
+			chunk_to_string(Vector3(around.x + i, 0, around.z + i)),
+			chunk_to_string(Vector3(around.x, 0, around.z - i)),
+			chunk_to_string(Vector3(around.x, 0, around.z + i)),
+		])
+	return chunks
 
 
 func is_position_in_loaded_chunk(position: Vector3):
@@ -65,6 +69,7 @@ func _ready():
 	if Root.Editor:
 		editor = find_parent("Editor")
 		assert(editor != null)
+		_test_position_calc()
 
 	_dir = Directory.new()
 	if _dir.open("res://") != OK:
@@ -82,6 +87,18 @@ func _ready():
 		chunks_node.name = "Chunks"
 		world.add_child(chunks_node)
 		chunks_node.owner = world
+
+	yield(get_tree(), "idle_frame")
+	# get position of active camera
+	var position_provider = get_viewport().get_camera()
+	if position_provider == null:
+		Logger.err("Failed to perform initial move", self)
+		return
+
+	# handle world origin
+	var position = position_provider.global_transform.origin
+	var chunk_position = position_to_chunk(position)
+	_shift_world_origin_to(-chunk_position * chunk_size)
 
 
 func _order_rails_by_chunk():
@@ -110,8 +127,8 @@ func _process(_delta: float):
 
 	# handle chunks
 	if chunk_position != active_chunk:
+		loader.load_chunks(get_chunks(chunk_position, ProjectSettings["game/gameplay/chunk_load_distance"]))
 		active_chunk = chunk_position
-		loader.load_chunks(get_3x3_chunks(active_chunk))
 		_unload_old_chunks()
 
 	if ProjectSettings["game/debug/display_chunk"]:
@@ -189,6 +206,11 @@ func _force_load_chunk_immediately(chunk_pos: Vector3):
 	return loader._force_load_chunk_immediately(chunk_name)
 
 
+func _force_load_chunk_name_immediately(chunk_name: String):
+	assert(Root.Editor)
+	return loader._force_load_chunk_immediately(chunk_name)
+
+
 # TODO: Godot Export "TrackObject is not a valid type"
 func add_track_object(track_object: TrackObject):
 	var rail_name = track_object.attached_rail
@@ -243,7 +265,8 @@ func resume_chunking():
 
 	set_process(true)
 	loader.set_process(true)
-	loader.load_chunks(get_3x3_chunks(active_chunk))
+	if active_chunk:
+		loader.load_chunks(get_chunks(active_chunk, ProjectSettings["game/gameplay/chunk_load_distance"]))
 
 
 func _save_chunk(chunk_name: String, saving: bool = false):
@@ -328,3 +351,22 @@ func cleanup():
 
 	_dir.change_dir("res://")
 
+
+func _test_position_calc() -> void:
+	var cases := PoolVector3Array([
+		Vector3(0, 0, 0),
+		Vector3(500, 0, 0),
+		Vector3(-499, 0, 152),
+		Vector3(-501, 0, 0),
+		Vector3(1000, 0, -1000),
+		Vector3(499, 0, 1000),
+		Vector3(600, 0, 300),
+		Vector3(-700, 0, -700),
+	])
+
+	Logger.warn("Running position test", self)
+
+	for case in cases:
+		printt(case, position_to_chunk(case))
+
+	print(Vector3() == position_to_chunk(Vector3(-499, 0, 152)))

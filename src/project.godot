@@ -504,6 +504,7 @@ gameplay/enable_persons=true
 gameplay/view_distance=1000
 gameplay/sifa_enabled=true
 gameplay/pzb_enabled=true
+gameplay/chunk_load_distance=2
 gameplay/chunk_unload_distance=2
 gameplay/load_all_chunks=false
 graphics/enable_dynamic_lights=false

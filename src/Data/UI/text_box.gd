@@ -17,12 +17,12 @@ func message(text: String) -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$MarginContainer/VBoxContainer/Message.text = text
 	visible = true
-	get_tree().paused = true
+	Root.set_game_pause("message", true)
 	$MarginContainer/VBoxContainer/Ok.grab_click_focus()
 
 
 func _on_Ok_pressed():
 	visible = false
-	get_tree().paused = false
+	Root.set_game_pause("message", false)
 	Input.set_mouse_mode(_previous_mouse_mode)
 	emit_signal("closed")

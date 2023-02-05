@@ -326,6 +326,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextBox" parent="." instance=ExtResource( 3 )]
+visible = false
+
 [node name="Pause" parent="." instance=ExtResource( 1 )]
 visible = false
 focus_mode = 2
@@ -360,9 +363,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextBox" parent="." instance=ExtResource( 3 )]
-visible = false
-
+[connection signal="closed" from="TextBox" to="." method="_on_TextBox_closed"]
 [connection signal="paused" from="Pause" to="." method="_on_paused"]
 [connection signal="unpaused" from="Pause" to="." method="_on_unpaused"]
-[connection signal="closed" from="TextBox" to="." method="_on_TextBox_closed"]

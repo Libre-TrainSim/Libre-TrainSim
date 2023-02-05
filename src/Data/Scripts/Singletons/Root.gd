@@ -12,7 +12,7 @@ var mobile_version: bool = OS.has_feature("mobile")
 
 var start_menu_in_play_menu: bool = false
 
-var ingame_pause: bool = false
+var game_pause = {"pause_menu": false, "ingame_pause": false, "message": false}
 
 var world: Node  ## Reference to world
 
@@ -32,17 +32,24 @@ func _ready() -> void:
 func _unhandled_key_input(_event) -> void:
 	if Engine.is_editor_hint():
 		return
-	if Input.is_action_just_pressed("ingame_pause"):
-		if not Root.Editor and not Engine.is_editor_hint():
-			if ingame_pause:
-				get_tree().paused = false
-				ingame_pause = false
-			else:
-				get_tree().paused = true
-				ingame_pause = true
-				jEssentials.show_message(tr("PAUSE_MODE_ENABLED"))
 	if Input.is_action_just_released("fullscreen"):
 		jSettings.set_fullscreen(!OS.window_fullscreen)
+
+
+func set_game_pause(type, value) -> void:
+	game_pause[type] = value
+	update_pause()
+
+func reset_game_pause() -> void:
+	for key in game_pause.keys():
+		game_pause[key] = false
+	update_pause()
+
+func update_pause() -> void:
+	if game_pause.values().has(true):
+		get_tree().paused = true
+	else:
+		get_tree().paused = false
 
 
 ## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor, also for train spawn

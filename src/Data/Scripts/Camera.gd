@@ -67,7 +67,7 @@ func _input(event) -> void:
 
 
 func _process(delta: float) -> void:
-	if get_tree().paused and not Root.ingame_pause:
+	if get_tree().paused and not (Root.game_pause["ingame_pause"] and Root.game_pause.values().count(true) == 1):
 		return
 	if not current:
 		pass

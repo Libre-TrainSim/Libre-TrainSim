@@ -15,6 +15,7 @@ export (bool) var manual_moving: bool = true
 var track_objects: Array = []
 
 const MAX_LENGTH: float = 1000.0
+const POSITION_TOLERANCE: float = 0.25
 
 export (float) var start_rot: float  # Radians
 export (float) var end_rot: float  # Radians
@@ -622,14 +623,14 @@ func update_connections() -> void:
 		if rail == self or start_pos.distance_to(rail.start_pos) > 1500:
 			continue
 		# Check for beginning
-		if start_pos.distance_to(rail.start_pos) < 0.1 and Math.angle_distance_rad(start_rot, rail.start_rot + PI) < deg2rad(1):
+		if start_pos.distance_to(rail.start_pos) < POSITION_TOLERANCE and Math.angle_distance_rad(start_rot, rail.start_rot + PI) < deg2rad(1):
 			_connected_rails_at_beginning.append(rail)
-		elif start_pos.distance_to(rail.end_pos) < 0.1 and Math.angle_distance_rad(start_rot, rail.end_rot) < deg2rad(1):
+		elif start_pos.distance_to(rail.end_pos) < POSITION_TOLERANCE and Math.angle_distance_rad(start_rot, rail.end_rot) < deg2rad(1):
 			_connected_rails_at_beginning.append(rail)
 		#check for ending
-		if end_pos.distance_to(rail.start_pos) < 0.1 and Math.angle_distance_rad(end_rot, rail.start_rot) < deg2rad(1):
+		if end_pos.distance_to(rail.start_pos) < POSITION_TOLERANCE and Math.angle_distance_rad(end_rot, rail.start_rot) < deg2rad(1):
 			_connected_rails_at_ending.append(rail)
-		elif end_pos.distance_to(rail.end_pos) < 0.1 and Math.angle_distance_rad(end_rot, rail.end_rot + PI) < deg2rad(1):
+		elif end_pos.distance_to(rail.end_pos) < POSITION_TOLERANCE and Math.angle_distance_rad(end_rot, rail.end_rot + PI) < deg2rad(1):
 			_connected_rails_at_ending.append(rail)
 
 

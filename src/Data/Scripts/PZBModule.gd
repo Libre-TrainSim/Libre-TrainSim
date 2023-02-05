@@ -234,6 +234,9 @@ func _on_reverser_changed(state: int) -> void:
 
 
 func restrictive_mode() -> void:
+	if pzb_mode & PZBMode.EMERGENCY:
+		return
+
 	pzb_mode &= ~PZBMode.MASK_MODE   # disable current mode
 	pzb_mode |= PZBMode.RESTRICTIVE  # enable restrictive
 

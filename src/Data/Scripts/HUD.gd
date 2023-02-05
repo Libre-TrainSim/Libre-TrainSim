@@ -9,6 +9,8 @@ signal textbox_closed
 
 onready var player: LTSPlayer = get_parent()
 
+onready var message_label := $PanelContainer/MessageLabel as InputRichTextLabel
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -38,10 +40,7 @@ func _unhandled_input(_event) -> void:
 
 var messages: int = 0
 func send_message(text: String, actions := []) -> void:
-	var Message := $PanelContainer/MessageLabel as InputRichTextLabel
-	Message.translation_id = text
-	Message.actions = actions
-	Message.update_text()
+	message_label.set_text(text, actions)
 	$Bling.play()
 	if messages == 0:
 		$Message.play("fade")

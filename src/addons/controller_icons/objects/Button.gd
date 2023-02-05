@@ -1,4 +1,3 @@
-tool
 extends Button
 class_name ControllerButton
 

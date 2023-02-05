@@ -1,4 +1,3 @@
-tool
 extends TextureRect
 class_name ControllerTextureRect
 

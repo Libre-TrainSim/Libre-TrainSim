@@ -1,4 +1,3 @@
-tool
 extends Sprite
 class_name ControllerSprite
 

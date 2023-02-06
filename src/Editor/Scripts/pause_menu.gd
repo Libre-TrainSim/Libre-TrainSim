@@ -3,6 +3,11 @@ extends Control
 signal save_requested
 
 
+func show() -> void:
+	$VBoxContainer/Back.grab_focus()
+	.show()
+
+
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if visible and Input.is_action_just_released("ui_cancel", true):
 		# There seems to be an issue with event propagation

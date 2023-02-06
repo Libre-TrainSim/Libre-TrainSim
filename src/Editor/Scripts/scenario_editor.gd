@@ -22,6 +22,8 @@ func _ready():
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")
 
+	$CanvasLayer/Pause.connect("visibility_changed", self, "_on_Pause_visibility_changed")
+
 
 func _exit_tree() -> void:
 	Root.Editor = false
@@ -67,6 +69,11 @@ func _on_Pause_QuitWithoutSaving_pressed():
 func _on_Pause_SaveAndQuit_pressed():
 	$CanvasLayer/ScenarioConfiguration.save()
 	LoadingScreen.load_main_menu()
+
+
+func _on_Pause_visibility_changed() -> void:
+	if $CanvasLayer/Pause.visible:
+		$CanvasLayer/Pause/VBoxContainer/Back.grab_focus()
 
 
 func _on_LayoutSetting_pressed():

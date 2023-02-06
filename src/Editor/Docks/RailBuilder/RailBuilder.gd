@@ -7,6 +7,11 @@ var editor_selection # Editor Selection
 
 
 onready var conntected_rails: CustomItemList = $ConntectedRails
+onready var start_position: LineEdit = $RotationHeight/StartPosition
+onready var end_position: LineEdit = $RotationHeight/EndPosition
+
+
+
 func _process(_delta: float) -> void:
 	if editor:
 		visible = is_instance_valid(currentRail) and get_parent().current_tab == 0
@@ -33,6 +38,10 @@ func update_selected_rail(node: Node) -> void:
 		$S/Settings/Radius/LineEdit.text = String(node.radius)
 		$S/Settings/Angle/LineEdit.text =  String(rad2deg(currentRail.end_rot - currentRail.start_rot))
 		self.set_tendSlopeData(currentRail.get_tendSlopeData())
+		for rail in currentRail.get_connected_rails(true):
+			conntected_rails.add_item(rail.name)
+		for rail in currentRail.get_connected_rails(false):
+			conntected_rails.add_item(rail.name)
 	else:
 		currentRail = null
 		$CurrentRail/Name.text = ""
@@ -352,6 +361,8 @@ func set_tendSlopeData(data: Dictionary) -> void:
 
 
 func update_RotationHeightData() -> void:
+	start_position.text = String(currentRail.start_pos)
+	end_position.text = String(currentRail.end_pos)
 	$RotationHeight/StartRotation.text = String(rad2deg(currentRail.start_rot))
 	$RotationHeight/EndRotation.text = String(rad2deg(currentRail.end_rot))
 	$RotationHeight/StartHeight.text = String(currentRail.start_pos.y)

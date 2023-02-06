@@ -82,28 +82,61 @@ margin_bottom = 100.0
 [node name="RotationHeight" type="GridContainer" parent="."]
 margin_top = 104.0
 margin_right = 1024.0
-margin_bottom = 156.0
+margin_bottom = 184.0
 columns = 4
 
-[node name="LabelStart" type="Label" parent="RotationHeight"]
+[node name="LabelStartPosition" type="Label" parent="RotationHeight"]
 margin_top = 5.0
 margin_right = 90.0
 margin_bottom = 19.0
 size_flags_horizontal = 9
-text = "Start Rotation:"
+text = "Start Position:"
 
-[node name="StartRotation" type="LineEdit" parent="RotationHeight"]
+[node name="StartPosition" type="LineEdit" parent="RotationHeight"]
 margin_left = 94.0
 margin_right = 513.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
-[node name="LabelEnd" type="Label" parent="RotationHeight"]
+[node name="LabelEndPosition" type="Label" parent="RotationHeight"]
 margin_left = 517.0
 margin_top = 5.0
 margin_right = 601.0
 margin_bottom = 19.0
+size_flags_horizontal = 9
+text = "End Position:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndPosition" type="LineEdit" parent="RotationHeight"]
+margin_left = 605.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="LabelStart" type="Label" parent="RotationHeight"]
+margin_top = 33.0
+margin_right = 90.0
+margin_bottom = 47.0
+size_flags_horizontal = 9
+text = "Start Rotation:"
+
+[node name="StartRotation" type="LineEdit" parent="RotationHeight"]
+margin_left = 94.0
+margin_top = 28.0
+margin_right = 513.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="LabelEnd" type="Label" parent="RotationHeight"]
+margin_left = 517.0
+margin_top = 33.0
+margin_right = 601.0
+margin_bottom = 47.0
 size_flags_horizontal = 9
 text = "End Rotation:"
 __meta__ = {
@@ -112,8 +145,9 @@ __meta__ = {
 
 [node name="EndRotation" type="LineEdit" parent="RotationHeight"]
 margin_left = 605.0
+margin_top = 28.0
 margin_right = 1024.0
-margin_bottom = 24.0
+margin_bottom = 52.0
 size_flags_horizontal = 3
 editable = false
 __meta__ = {
@@ -121,25 +155,25 @@ __meta__ = {
 }
 
 [node name="LabelStart2" type="Label" parent="RotationHeight"]
-margin_top = 33.0
+margin_top = 61.0
 margin_right = 90.0
-margin_bottom = 47.0
+margin_bottom = 75.0
 size_flags_horizontal = 9
 text = "Start Height:"
 
 [node name="StartHeight" type="LineEdit" parent="RotationHeight"]
 margin_left = 94.0
-margin_top = 28.0
+margin_top = 56.0
 margin_right = 513.0
-margin_bottom = 52.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="LabelEnd2" type="Label" parent="RotationHeight"]
 margin_left = 517.0
-margin_top = 33.0
+margin_top = 61.0
 margin_right = 601.0
-margin_bottom = 47.0
+margin_bottom = 75.0
 size_flags_horizontal = 9
 text = "End Height:"
 __meta__ = {
@@ -148,9 +182,9 @@ __meta__ = {
 
 [node name="EndHeight" type="LineEdit" parent="RotationHeight"]
 margin_left = 605.0
-margin_top = 28.0
+margin_top = 56.0
 margin_right = 1024.0
-margin_bottom = 52.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 editable = false
 __meta__ = {
@@ -158,14 +192,14 @@ __meta__ = {
 }
 
 [node name="HSeparator3" type="HSeparator" parent="."]
-margin_top = 160.0
+margin_top = 188.0
 margin_right = 1024.0
-margin_bottom = 164.0
+margin_bottom = 192.0
 
 [node name="S" type="VBoxContainer" parent="."]
-margin_top = 168.0
+margin_top = 196.0
 margin_right = 1024.0
-margin_bottom = 416.0
+margin_bottom = 444.0
 
 [node name="General" type="VBoxContainer" parent="S"]
 margin_right = 1024.0

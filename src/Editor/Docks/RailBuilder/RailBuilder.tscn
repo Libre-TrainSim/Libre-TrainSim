@@ -1,14 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Editor/Docks/RailBuilder/RailBuilder.gd" type="Script" id=1]
+[ext_resource path="res://Data/UI/custom_item_list.gd" type="Script" id=2]
 
 [node name="Rail Builder" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="CurrentRail" type="HBoxContainer" parent="."]
 margin_right = 1024.0
@@ -603,6 +601,25 @@ margin_right = 541.0
 margin_bottom = 248.0
 size_flags_horizontal = 4
 text = "Update"
+
+[node name="Label" type="Label" parent="."]
+margin_top = 448.0
+margin_right = 1024.0
+margin_bottom = 462.0
+text = "Connected Rails:"
+
+[node name="ConntectedRails" type="ScrollContainer" parent="."]
+margin_top = 466.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 0, 80 )
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+script = ExtResource( 2 )
+
+[node name="Items" type="VBoxContainer" parent="ConntectedRails"]
+margin_right = 1024.0
+size_flags_horizontal = 3
 
 [connection signal="text_entered" from="CurrentRail/Name" to="." method="_on_RenameLine_text_entered"]
 [connection signal="pressed" from="CurrentRail/Rename" to="." method="_on_Rename_pressed"]

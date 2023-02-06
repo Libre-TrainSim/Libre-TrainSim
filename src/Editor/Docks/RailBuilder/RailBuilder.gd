@@ -6,12 +6,14 @@ var currentRail: Node
 var editor_selection # Editor Selection
 
 
+onready var conntected_rails: CustomItemList = $ConntectedRails
 func _process(_delta: float) -> void:
 	if editor:
 		visible = is_instance_valid(currentRail) and get_parent().current_tab == 0
 
 
 func update_selected_rail(node: Node) -> void:
+	conntected_rails.clear_items()
 	if is_instance_valid(node) and node.is_in_group("Rail"):
 		currentRail = node
 		$CurrentRail/Name.text = node.name

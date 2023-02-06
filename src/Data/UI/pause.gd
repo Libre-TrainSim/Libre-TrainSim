@@ -21,7 +21,7 @@ func show() -> void:
 
 
 func _unhandled_input(_event) -> void:
-	if Input.is_action_just_pressed("Escape"):
+	if not jSettings.get_node("JSettings").visible and Input.is_action_just_pressed("Escape"):
 		if visible:
 			unpause()
 		else:

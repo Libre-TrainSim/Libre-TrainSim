@@ -19,6 +19,12 @@ func show() -> void:
 	.show()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_Cancel_pressed()
+		accept_event()
+
+
 func update_list(player: Spatial) -> void:
 	$StationJumper/ItemList.clear()
 	current_station_indices.clear()

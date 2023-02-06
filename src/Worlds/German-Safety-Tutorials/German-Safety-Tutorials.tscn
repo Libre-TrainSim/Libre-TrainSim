@@ -14,6 +14,9 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
+__meta__ = {
+"chunk_version": 2
+}
 FileName = "German-Safety-Tutorials"
 world_origin_on_last_save = Vector3( 0, 0, 0 )
 
@@ -40,107 +43,107 @@ environment = ExtResource( 7 )
 [node name="Signal" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2883, 0, -11.4469 )
 script = ExtResource( 3 )
+attached_rail = "Rail"
+on_rail_position = 2.0
+forward = true
 signal_type = 2
 status = 1
 signal_free_time = -1
 speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
-attached_rail = "Rail"
-forward = true
-on_rail_position = 2
 operation_mode = 0
 
 [node name="PZBMagnet" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
 script = ExtResource( 4 )
-hz = 1000
+attached_rail = "Rail"
 on_rail_position = 0.0
 forward = true
-attached_rail = "Rail"
+hz = 1000
 attached_signal = NodePath("../Signal")
 
 [node name="PZBMagnet2" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 966.288, 0, -11.4469 )
 script = ExtResource( 4 )
-hz = 500
+attached_rail = "Rail2"
 on_rail_position = 750.0
 forward = true
-attached_rail = "Rail2"
+hz = 500
 attached_signal = NodePath("../Signal2")
 
 [node name="Signal2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
 script = ExtResource( 3 )
+attached_rail = "Rail2"
+on_rail_position = 1000.0
+forward = true
 signal_type = 1
 status = 1
 signal_free_time = -1
 speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
-attached_rail = "Rail2"
-forward = true
-on_rail_position = 1000
 operation_mode = 0
 
 [node name="PZBMagnet3" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1214.29, 0, -11.4469 )
 script = ExtResource( 4 )
-hz = 2000
+attached_rail = "Rail2"
 on_rail_position = 998.0
 forward = true
-attached_rail = "Rail2"
+hz = 2000
 attached_signal = NodePath("../Signal2")
 
 [node name="Signal3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1716.29, 0, -11.4469 )
 script = ExtResource( 3 )
+attached_rail = "Rail3"
+on_rail_position = 500.0
+forward = true
 signal_type = 2
 status = 1
 signal_free_time = -1
 speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
-attached_rail = "Rail3"
-forward = true
-on_rail_position = 500
 operation_mode = 0
 
 [node name="PZBMagnet4" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1714.29, 0, -11.4469 )
 script = ExtResource( 4 )
-hz = 1000
+attached_rail = "Rail3"
 on_rail_position = 498.0
 forward = true
-attached_rail = "Rail3"
+hz = 1000
 attached_signal = NodePath("../Signal3")
 
 [node name="PZBMagnet5" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2676.29, 0, -11.4469 )
 script = ExtResource( 4 )
-hz = 500
+attached_rail = "Rail5"
 on_rail_position = 460.0
 forward = true
-attached_rail = "Rail5"
+hz = 500
 attached_signal = NodePath("../Signal4")
 
 [node name="Signal4" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2916.29, 0, -11.4469 )
 script = ExtResource( 3 )
+attached_rail = "Rail5"
+on_rail_position = 700.0
+forward = true
 signal_type = 1
 status = 1
 signal_free_time = -1
 speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
-attached_rail = "Rail5"
-forward = true
-on_rail_position = 700
 operation_mode = 0
 
 [node name="PZBMagnet6" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2914.29, 0, -11.4469 )
 script = ExtResource( 4 )
-hz = 2000
+attached_rail = "Rail5"
 on_rail_position = 698.0
 forward = true
-attached_rail = "Rail5"
+hz = 2000
 attached_signal = NodePath("../Signal4")
 
 [node name="Rails" type="Spatial" parent="."]
@@ -207,7 +210,6 @@ switch_part = [ "", "" ]
 
 [node name="Rail3" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
-visible = false
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 1, 0, 0 )
@@ -268,7 +270,6 @@ switch_part = [ "", "" ]
 
 [node name="Rail5" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2216.29, 0, -11.4469 )
-visible = false
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 2, 0, 0 )
@@ -299,7 +300,6 @@ switch_part = [ "", "" ]
 
 [node name="Rail6" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
-visible = false
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 3, 0, 0 )

@@ -21,6 +21,12 @@ func show() -> void:
 	.show()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_Back_pressed()
+		accept_event()
+
+
 func to_file_name(track_name: String) -> String:
 	track_name = track_name.replace("/", "")
 	track_name = track_name.replace('\\' , "")

@@ -109,6 +109,12 @@ func _unhandled_key_input(_event: InputEventKey) -> void:
 		_on_Add_pressed()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if $ConfirmationDialog.visible and Input.is_action_just_pressed("ui_cancel"):
+		_on_RemoveConfirmation_Cancel_pressed()
+		accept_event()
+
+
 func is_entry_name_unique(entry : String):
 	for i in range(get_size()):
 		if item_list.get_item_text(i) == entry:

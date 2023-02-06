@@ -25,6 +25,23 @@ func show() -> void:
 	.show()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		if $V/Tracks.visible:
+			_on_Tracks_Back_pressed()
+		elif $V/Scenarios.visible:
+			_on_Scenarios_Back_pressed()
+		elif $V/Routes.visible:
+			_on_Routes_Back_pressed()
+		elif $V/Times.visible:
+			_on_Times_Back_pressed()
+		elif $V/Trains.visible:
+			_on_Trains_Back_pressed()
+		else:
+			return
+		accept_event()
+
+
 func update_breadcrumb():
 	var text = ""
 	if selected_track != "":

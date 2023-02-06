@@ -12,6 +12,15 @@ func show() -> void:
 	.show()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		if $ScenarioList.visible:
+			_on_Back_ScenarioList_pressed()
+		else:
+			_on_Back_TrackList_pressed()
+		accept_event()
+
+
 func update_track_list():
 	$TrackList/ItemList.clear()
 	for track in ContentLoader.repo.worlds:

@@ -294,8 +294,8 @@ func show_fps_limit_selector(val: bool):
 
 ## Other Signals ###############################################################
 
-func _unhandled_key_input(event: InputEventKey) -> void:
-	if event.is_action("Escape"):
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action("ui_cancel"):
 		hide()
 
 

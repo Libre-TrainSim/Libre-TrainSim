@@ -51,6 +51,12 @@ func _ready():
 	$ScenarioEditorSelection.connect("hide", $CreateMenu/ScenarioEditor, "grab_focus")
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if $CreateMenu.visible and event.is_action_pressed("ui_cancel"):
+		_on_CreateMenu_Back_pressed()
+		accept_event()
+
+
 func _on_Quit_pressed():
 	get_tree().quit()
 

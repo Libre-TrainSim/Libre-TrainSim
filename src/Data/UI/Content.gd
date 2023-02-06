@@ -14,6 +14,12 @@ func show() -> void:
 	.show()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_Back_pressed()
+		accept_event()
+
+
 func update_content_list() -> void:
 	$VBoxContainer/Packlist.clear_items()
 	for mod in ContentLoader.loaded_mods:

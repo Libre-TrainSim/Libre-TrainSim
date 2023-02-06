@@ -10,6 +10,16 @@ var _saved_mouse_mode: int = 0
 var player: LTSPlayer
 
 
+func _ready() -> void:
+	$StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus")
+	jSettings.get_node("JSettings").connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
+
+
+func show() -> void:
+	$CenterContainer/HBox/Back.grab_focus()
+	.show()
+
+
 func _unhandled_input(_event) -> void:
 	if Input.is_action_just_pressed("Escape"):
 		if visible:
@@ -26,14 +36,14 @@ func _unhandled_input(_event) -> void:
 
 func pause():
 	Root.set_game_pause("pause_menu", true)
-	visible = true
+	show()
 	_saved_mouse_mode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	emit_signal("paused")
 
 func unpause():
 	Root.set_game_pause("pause_menu", false)
-	visible = false
+	hide()
 	Input.set_mouse_mode(_saved_mouse_mode)
 	emit_signal("unpaused")
 

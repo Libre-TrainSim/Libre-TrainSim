@@ -63,7 +63,7 @@ func _on_StationJumper_station_index_selected(station_index: int) -> void:
 
 
 func _on_RestartScenario_pressed() -> void:
-	_on_Back_pressed()
+	Root.reset_game_pause()
 	jEssentials.remove_all_pending_delayed_calls()
 	jAudioManager.clear_all_sounds()
 	var _unused = get_tree().reload_current_scene()

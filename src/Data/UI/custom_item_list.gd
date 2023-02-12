@@ -1,3 +1,4 @@
+class_name CustomItemList
 extends ScrollContainer
 
 

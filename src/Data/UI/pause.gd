@@ -32,6 +32,9 @@ func _unhandled_input(_event) -> void:
 		elif not get_tree().paused:
 			Root.set_game_pause("ingame_pause", true)
 			jEssentials.show_message(tr("PAUSE_MODE_ENABLED"))
+	if visible and Input.is_action_just_released("ui_accept"):
+		# Prevent "ui_accept" event from closing a potential message behind the menu
+		accept_event()
 
 
 func pause():
@@ -50,6 +53,8 @@ func unpause():
 
 func _on_Back_pressed() -> void:
 	unpause()
+	# The pause menu is already closed, so the "ui_accept" event would not be caught when it reaches _unhandled_input
+	accept_event()
 
 
 func _on_Quit_pressed() -> void:

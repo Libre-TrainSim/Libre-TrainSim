@@ -9,7 +9,7 @@ func show() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if visible and Input.is_action_just_released("pause", true):
+	if visible and (Input.is_action_just_released("pause", true) or Input.is_action_just_released("ui_cancel", true)):
 		# There seems to be an issue with event propagation
 		# Hence we wait for the frame to end before we actually hide it
 		# because otherwise we immediately open the menu again.

@@ -21,11 +21,12 @@ func show() -> void:
 
 
 func _unhandled_input(_event) -> void:
-	if not jSettings.get_node("JSettings").visible and Input.is_action_just_pressed("pause"):
-		if visible:
-			unpause()
-		else:
-			pause()
+	if visible and not jSettings.get_node("JSettings").visible and \
+			(Input.is_action_just_pressed("pause") \
+			or Input.is_action_just_pressed("ui_cancel")):
+		unpause()
+	elif not visible and Input.is_action_just_pressed("pause"):
+		pause()
 	if Input.is_action_just_pressed("ingame_pause"):
 		if Root.game_pause["ingame_pause"] and Root.game_pause.values().count(true) == 1:
 			Root.set_game_pause("ingame_pause", false)

@@ -48,8 +48,11 @@ func _unhandled_input(event):
 		$CanvasLayer/Message.hide()
 		get_tree().set_input_as_handled()
 
-	if event.is_action_pressed("pause"):
-		$CanvasLayer/Pause.visible = !$CanvasLayer/Pause.visible
+	if $CanvasLayer/Pause.visible and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
+		$CanvasLayer/Pause.visible = false
+		get_tree().set_input_as_handled()
+	elif event.is_action_pressed("pause"):
+		$CanvasLayer/Pause.visible = true
 		get_tree().set_input_as_handled()
 
 

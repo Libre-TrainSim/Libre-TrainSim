@@ -43,7 +43,7 @@ func _on_Message_Ok_pressed():
 	$CanvasLayer/Message.hide()
 
 
-func _unhandled_key_input(event):
+func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $CanvasLayer/Message.visible:
 		$CanvasLayer/Message.hide()
 		get_tree().set_input_as_handled()

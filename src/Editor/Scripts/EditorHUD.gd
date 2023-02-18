@@ -20,9 +20,6 @@ func handle_object_transform_field():
 
 func _unhandled_input(_event: InputEvent) -> void:
 	handle_object_transform_field()
-
-
-func _unhandled_key_input(_event: InputEventKey) -> void:
 	if Input.is_action_just_released("pause", true):
 		get_tree().paused = true
 		$Pause.show()

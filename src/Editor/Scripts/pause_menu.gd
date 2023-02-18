@@ -8,7 +8,7 @@ func show() -> void:
 	.show()
 
 
-func _unhandled_key_input(event: InputEventKey) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if visible and Input.is_action_just_released("pause", true):
 		# There seems to be an issue with event propagation
 		# Hence we wait for the frame to end before we actually hide it

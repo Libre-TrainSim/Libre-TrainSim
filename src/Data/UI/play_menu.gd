@@ -10,13 +10,19 @@ var world_config: WorldConfig # config of selected world
 var loaded_scenario: TrackScenario = null
 var loaded_route: ScenarioRoute = null
 
+onready var track_selector: BoxContainer = $V/Tracks
+onready var scenario_selector: BoxContainer = $V/Scenarios
+onready var route_selector: BoxContainer = $V/Routes
+onready var time_selector: BoxContainer = $V/Times
+onready var train_selector: BoxContainer = $V/Trains
+
 
 func _ready() -> void:
-	$V/Tracks.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	$V/Scenarios.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	$V/Routes.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	$V/Times.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	$V/Trains.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	track_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	scenario_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	route_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	time_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	train_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
 
 
 func show() -> void:
@@ -27,15 +33,15 @@ func show() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed("ui_cancel"):
-		if $V/Tracks.visible:
+		if track_selector.visible:
 			_on_Tracks_Back_pressed()
-		elif $V/Scenarios.visible:
+		elif scenario_selector.visible:
 			_on_Scenarios_Back_pressed()
-		elif $V/Routes.visible:
+		elif route_selector.visible:
 			_on_Routes_Back_pressed()
-		elif $V/Times.visible:
+		elif time_selector.visible:
 			_on_Times_Back_pressed()
-		elif $V/Trains.visible:
+		elif train_selector.visible:
 			_on_Trains_Back_pressed()
 		else:
 			return
@@ -74,8 +80,8 @@ func update_tracks() -> void:
 	$V/Tracks/H/ItemList.clear()
 	if ContentLoader.repo.worlds.size() == 1:
 		selected_track = ContentLoader.repo.worlds[0]
-		$V/Tracks.hide()
-		$V/Scenarios.show()
+		track_selector.hide()
+		scenario_selector.show()
 		update_scenarios()
 	for track in ContentLoader.repo.worlds:
 		$V/Tracks/H/ItemList.add_item(track.get_file().get_basename())
@@ -89,8 +95,8 @@ func update_scenarios() -> void:
 	if scenarios.size() == 1:
 		selected_scenario = scenarios[0]
 		loaded_scenario = TrackScenario.load_scenario(selected_scenario)
-		$V/Scenarios.hide()
-		$V/Routes.show()
+		scenario_selector.hide()
+		route_selector.show()
 		update_routes()
 
 	for scenario in scenarios:
@@ -111,8 +117,8 @@ func update_routes():
 	if $V/Routes/ItemList.get_item_count() == 1:
 		selected_route = $V/Routes/ItemList.get_item_text(0)
 		loaded_route = loaded_scenario.routes[selected_route]
-		$V/Routes.hide()
-		$V/Times.show()
+		route_selector.hide()
+		time_selector.show()
 		update_times()
 
 
@@ -123,8 +129,8 @@ func update_times():
 	var times = loaded_route.get_start_times()
 	if times.size() == 1:
 		selected_time = times[0]
-		$V/Times.hide()
-		$V/Trains.show()
+		time_selector.hide()
+		train_selector.show()
 		update_trains()
 
 	for time in times:
@@ -188,8 +194,8 @@ func _on_Tracks_Select_pressed() -> void:
 	if $V/Tracks/H/ItemList.get_selected_items().size() != 1:
 		return
 	selected_track = ContentLoader.repo.worlds[$V/Tracks/H/ItemList.get_selected_items()[0]]
-	$V/Tracks.hide()
-	$V/Scenarios.show()
+	track_selector.hide()
+	scenario_selector.show()
 	update_scenarios()
 
 
@@ -203,8 +209,8 @@ func _on_Scenarios_Back_pressed():
 	selected_scenario = ""
 	loaded_scenario = null
 	update_breadcrumb()
-	$V/Scenarios.hide()
-	$V/Tracks.show()
+	scenario_selector.hide()
+	track_selector.show()
 
 	if $V/Tracks/H/ItemList.get_item_count() == 1:
 		_on_Tracks_Back_pressed()
@@ -216,8 +222,8 @@ func _on_Scenarios_Select_pressed():
 	var scenarios = ContentLoader.get_scenarios_for_track(selected_track.get_base_dir())
 	selected_scenario = scenarios[$V/Scenarios/ItemList.get_selected_items()[0]]
 	loaded_scenario = TrackScenario.load_scenario(selected_scenario)
-	$V/Scenarios.hide()
-	$V/Routes.show()
+	scenario_selector.hide()
+	route_selector.show()
 	update_routes()
 
 
@@ -228,8 +234,8 @@ func _on_Scenarios_item_activated(_index):
 func _on_Routes_Back_pressed():
 	selected_route = ""
 	update_breadcrumb()
-	$V/Routes.hide()
-	$V/Scenarios.show()
+	route_selector.hide()
+	scenario_selector.show()
 
 	if $V/Scenarios/ItemList.get_item_count() == 1:
 		_on_Scenarios_Back_pressed()
@@ -241,8 +247,8 @@ func _on_Routes_Select_pressed():
 	var routes = loaded_scenario.routes.keys()
 	selected_route = routes[$V/Routes/ItemList.get_selected_items()[0]]
 	loaded_route = loaded_scenario.routes[selected_route]
-	$V/Routes.hide()
-	$V/Times.show()
+	route_selector.hide()
+	time_selector.show()
 	update_times()
 
 
@@ -255,8 +261,8 @@ func _on_Times_Select_pressed():
 		return
 	var times = loaded_route.get_start_times()
 	selected_time = times[$V/Times/ItemList.get_selected_items()[0]]
-	$V/Times.hide()
-	$V/Trains.show()
+	time_selector.hide()
+	train_selector.show()
 	update_trains()
 
 
@@ -267,8 +273,8 @@ func _on_Times_ItemList_item_activated(_index):
 func _on_Times_Back_pressed():
 	selected_time = -1
 	update_breadcrumb()
-	$V/Times.hide()
-	$V/Routes.show()
+	time_selector.hide()
+	route_selector.show()
 
 	if $V/Routes/ItemList.get_item_count() == 1:
 		_on_Routes_Back_pressed()
@@ -304,8 +310,8 @@ func _on_Trains_item_selected(index):
 func _on_Trains_Back_pressed():
 	selected_train = ""
 	update_breadcrumb()
-	$V/Trains.hide()
-	$V/Times.show()
+	train_selector.hide()
+	time_selector.show()
 
 	if $V/Times/ItemList.get_item_count() == 1:
 		_on_Times_Back_pressed()
@@ -320,13 +326,13 @@ func _on_Trains_item_activated(_index):
 
 
 func _on_menu_visibility_changed() -> void:
-	if $V/Trains.visible:
+	if train_selector.visible:
 		$V/Trains/H/ItemList.grab_focus()
-	elif $V/Times.visible:
+	elif time_selector.visible:
 		$V/Times/ItemList.grab_focus()
-	elif $V/Routes.visible:
+	elif route_selector.visible:
 		$V/Routes/ItemList.grab_focus()
-	elif $V/Scenarios.visible:
+	elif scenario_selector.visible:
 		$V/Scenarios/ItemList.grab_focus()
 	elif visible:
 		$V/Tracks/H/ItemList.grab_focus()

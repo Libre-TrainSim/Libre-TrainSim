@@ -8,6 +8,8 @@ var content: ModContentDefinition
 
 var scenario_info: TrackScenario = null
 
+onready var pause_menu: Control = $CanvasLayer/Pause
+
 func _ready():
 	# For now we retrieve the variables from Root. Later these should be filled by the LoadingScreenManager.
 	scenario_info = load(Root.current_scenario) as TrackScenario
@@ -22,7 +24,7 @@ func _ready():
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")
 
-	$CanvasLayer/Pause.connect("visibility_changed", self, "_on_Pause_visibility_changed")
+	pause_menu.connect("visibility_changed", self, "_on_Pause_visibility_changed")
 
 
 func _exit_tree() -> void:
@@ -48,20 +50,20 @@ func _unhandled_input(event):
 		$CanvasLayer/Message.hide()
 		get_tree().set_input_as_handled()
 
-	if $CanvasLayer/Pause.visible and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
-		$CanvasLayer/Pause.visible = false
+	if pause_menu.visible and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
+		pause_menu.visible = false
 		get_tree().set_input_as_handled()
 	elif event.is_action_pressed("pause"):
-		$CanvasLayer/Pause.visible = true
+		pause_menu.visible = true
 		get_tree().set_input_as_handled()
 
 
 func _on_Pause_Back_pressed():
-	$CanvasLayer/Pause.hide()
+	pause_menu.hide()
 
 
 func _on_Save_pressed():
-	$CanvasLayer/Pause.hide()
+	pause_menu.hide()
 	$CanvasLayer/ScenarioConfiguration.save()
 
 
@@ -75,7 +77,7 @@ func _on_Pause_SaveAndQuit_pressed():
 
 
 func _on_Pause_visibility_changed() -> void:
-	if $CanvasLayer/Pause.visible:
+	if pause_menu.visible:
 		$CanvasLayer/Pause/VBoxContainer/Back.grab_focus()
 
 
@@ -102,12 +104,12 @@ func run_map_updater(delta: float):
 
 
 func _on_TestTrack_pressed():
-	$CanvasLayer/Pause.hide()
+	pause_menu.hide()
 	test_track_pck()
 
 
 func _on_ExportTrack_pressed():
-	$CanvasLayer/Pause.hide()
+	pause_menu.hide()
 	export_mod()
 
 

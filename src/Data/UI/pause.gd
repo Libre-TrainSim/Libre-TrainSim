@@ -9,10 +9,12 @@ var _saved_ingame_pause: bool = false
 var _saved_mouse_mode: int = 0
 var player: LTSPlayer
 
+onready var settings: Node = jSettings.get_node("JSettings")
+
 
 func _ready() -> void:
 	$StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus")
-	jSettings.get_node("JSettings").connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
+	settings.connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
 
 
 func show() -> void:
@@ -21,7 +23,7 @@ func show() -> void:
 
 
 func _unhandled_input(_event) -> void:
-	if visible and not jSettings.get_node("JSettings").visible and \
+	if visible and not settings.visible and \
 			(Input.is_action_just_pressed("pause") \
 			or Input.is_action_just_pressed("ui_cancel")):
 		unpause()

@@ -2,6 +2,8 @@ extends Control
 
 var save_path := "user://config.cfg"
 
+onready var create_menu: BoxContainer = $CreateMenu
+
 
 func _ready():
 	# Update GUI language directly at launch
@@ -37,13 +39,13 @@ func _ready():
 
 	# Signal connections for UI focus
 
-	$CreateMenu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed")
+	create_menu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed")
 
 	$Feedback.connect("popup_hide", $Buttons/Play, "grab_focus")
 	
 	$Play.connect("hide", $Buttons/Play, "grab_focus")
 	$Content.connect("hide", $Buttons/Content, "grab_focus")
-	$CreateMenu.connect("hide", $Buttons/Create, "grab_focus")
+	create_menu.connect("hide", $Buttons/Create, "grab_focus")
 	jSettings.get_node("JSettings").connect("hide", $Buttons/Settings, "grab_focus")
 	$About.connect("hide", $Buttons/About, "grab_focus")
 	
@@ -52,7 +54,7 @@ func _ready():
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if $CreateMenu.visible and event.is_action_pressed("ui_cancel"):
+	if create_menu.visible and event.is_action_pressed("ui_cancel"):
 		_on_CreateMenu_Back_pressed()
 		accept_event()
 
@@ -98,7 +100,7 @@ func _on_Later_pressed():
 
 func _on_FrontCreate_pressed():
 	$Buttons.hide()
-	$CreateMenu.show()
+	create_menu.show()
 
 
 func _on_TrackEditor_pressed():
@@ -106,12 +108,12 @@ func _on_TrackEditor_pressed():
 
 
 func _on_CreateMenu_Back_pressed():
-	$CreateMenu.hide()
+	create_menu.hide()
 	$Buttons.show()
 
 
 func _on_CreateMenu_visibility_changed() -> void:
-	if $CreateMenu.visible:
+	if create_menu.visible:
 		$CreateMenu/Back.grab_focus()
 
 

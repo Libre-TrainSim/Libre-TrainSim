@@ -1,6 +1,7 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Trains/JFR1/Door.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Data/Scripts/Camera.gd" type="Script" id=2]
 [ext_resource path="res://Resources/Materials/Black_Plastic.tres" type="Material" id=3]
 [ext_resource path="res://Trains/JFR1/Wagon_Grey.tres" type="Material" id=4]
 [ext_resource path="res://Resources/Materials/LEDLamp_Bright.tres" type="Material" id=5]
@@ -851,6 +852,11 @@ visible = false
 script = ExtResource( 33 )
 length = 14.0
 
+[node name="PassengerCamera1" type="Camera" parent="Wagon1" groups=["PlayerCameras"]]
+transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.09673, 2.40611, 1.18214 )
+script = ExtResource( 2 )
+accel = true
+
 [node name="MeshInstance" type="MeshInstance" parent="Wagon1"]
 cast_shadow = 2
 mesh = ExtResource( 27 )
@@ -1172,6 +1178,11 @@ spot_angle = 77.4
 visible = false
 script = ExtResource( 33 )
 length = 14.0
+
+[node name="PassengerCamera2" type="Camera" parent="DriverCabinF" groups=["PlayerCameras"]]
+transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182 )
+script = ExtResource( 2 )
+accel = true
 
 [node name="MeshInstance" type="MeshInstance" parent="DriverCabinF"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
@@ -1567,6 +1578,11 @@ visible = false
 script = ExtResource( 33 )
 length = 15.0
 pantographEnabled = true
+
+[node name="PassengerCamera3" type="Camera" parent="DriverCabinB" groups=["PlayerCameras"]]
+transform = Transform( -0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182 )
+script = ExtResource( 2 )
+accel = true
 
 [node name="MeshInstance" type="MeshInstance" parent="DriverCabinB"]
 cast_shadow = 2

@@ -144,9 +144,9 @@ func set_scenario_to_world() -> void:
 		if not route.is_playable and route.activate_only_at_specific_routes and not route.specific_routes.has(Root.selected_route):
 			continue
 
-		var train_path: String = ContentLoader.find_train_path(route.train_name)
-		if train_path == "":
-			train_path = Root.selected_train
+		var train_path := Root.selected_train
+		if train_path.empty():
+			train_path = ContentLoader.find_train_path(route.train_name)
 
 		var minimal_platform_length: int = route.get_minimal_platform_length(self)
 		var train_rail_route: Array = route.get_calculated_rail_route(self)

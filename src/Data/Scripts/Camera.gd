@@ -21,6 +21,9 @@ export var fixed: bool = true
 # whether to apply or not acceleration effect on camera
 export var accel: bool = false
 
+# whether to handle world origin shifts - enable if camera has no parent that handles this!
+export var handleWorldOriginShifts: bool = false
+
 # Saves the camera position at the beginning. The Camera Position will be changed, when the train is accelerating, or braking
 onready var cameraZeroTransform: Transform = transform
 
@@ -42,7 +45,8 @@ func _ready() -> void:
 
 
 func _on_world_origin_shifted(delta: Vector3):
-	translation += delta
+	if handleWorldOriginShifts:
+		translation += delta
 
 
 func _input(event) -> void:

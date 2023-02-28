@@ -40,12 +40,10 @@ margin_bottom = 493.0
 [node name="Message" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 margin_right = 681.0
 margin_bottom = 445.0
-focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 1 )
 text = "Test Test meine Freunde"
-selection_enabled = true
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

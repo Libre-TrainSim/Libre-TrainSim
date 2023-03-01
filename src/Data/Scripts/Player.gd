@@ -76,6 +76,7 @@ var camera_state: int = CameraState.CABIN_VIEW
 var camera_mid_point: Vector3 = Vector3(0,2,0)
 var cameraY: float = 90
 var cameraX: float = 0
+var passengerCameras := []
 
 var mouseSensitivity: float = 10
 
@@ -252,6 +253,14 @@ func ready() -> void:
 		soll_command = 0
 
 	spawnWagons()
+
+	# HACK: Register player passenger cameras. Refactor in future train refactor!
+	passengerCameras.clear()
+	if name == "Player":
+		for wagon in wagonsI:
+			for node in wagon.get_children():
+				if node.is_in_group("PlayerCameras"):
+					passengerCameras.append(node)
 
 	## Prepare Signals:
 	if not ai:
@@ -677,12 +686,11 @@ func handleCamera(delta: float) -> void:
 		cam.owner = world
 		cam.transform = transform.translated(camera_mid_point)
 
-	var playerCameras: Array = get_tree().get_nodes_in_group("PlayerCameras")
 	for i in range(3, 9):
-		if Input.is_action_just_pressed("player_camera_" + str(i)) and playerCameras.size() >= i - 2:
+		if Input.is_action_just_pressed("player_camera_" + str(i)) and passengerCameras.size() >= i - 2:
 			wagonsVisible = true
 			camera_state = i
-			playerCameras[i -3].current = true
+			passengerCameras[i-3].current = true
 			$Cabin.hide()
 			remove_free_camera()
 

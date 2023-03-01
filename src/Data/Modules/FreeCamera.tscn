@@ -7,3 +7,4 @@ pause_mode = 2
 far = 1000.0
 script = ExtResource( 1 )
 fixed = false
+handleWorldOriginShifts = true

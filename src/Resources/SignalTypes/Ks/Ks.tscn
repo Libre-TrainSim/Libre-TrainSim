@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Resources/SignalTypes/KsTafel.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://Resources/SignalTypes/Ks/KS-Sig.obj" type="ArrayMesh" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Resources/SignalTypes/vo_tafel.tres" type="Material" id=6]
 [ext_resource path="res://Resources/SignalTypes/ks_tafel.tres" type="Material" id=7]
 [ext_resource path="res://Resources/SignalTypes/hp_tafel.tres" type="Material" id=8]
-[ext_resource path="res://Resources/Textures/Black.png" type="Texture" id=9]
 [ext_resource path="res://Resources/SignalTypes/LightSignalMaterial.tres" type="Material" id=10]
 [ext_resource path="res://Resources/SignalTypes/Ks/Zs3.obj" type="ArrayMesh" id=11]
 [ext_resource path="res://Resources/SignalTypes/Ks/Zs3v.obj" type="ArrayMesh" id=12]
@@ -80,39 +79,12 @@ distance_fade_mode = 1
 distance_fade_min_distance = 70.0
 distance_fade_max_distance = 200.0
 
-[sub_resource type="DynamicFontData" id=9]
+[sub_resource type="DynamicFontData" id=17]
 font_path = "res://Data/Fonts/Oswald-Regular.ttf"
 
 [sub_resource type="DynamicFont" id=10]
 size = 500
-font_data = SubResource( 9 )
-
-[sub_resource type="ViewportTexture" id=11]
-
-[sub_resource type="SpatialMaterial" id=12]
-params_cull_mode = 2
-albedo_color = Color( 0, 0, 0, 1 )
-emission_enabled = true
-emission = Color( 0, 0, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
-emission_texture = SubResource( 11 )
-
-[sub_resource type="QuadMesh" id=13]
-size = Vector2( 0.5, 0.6 )
-
-[sub_resource type="ViewportTexture" id=14]
-
-[sub_resource type="SpatialMaterial" id=15]
-params_cull_mode = 2
-albedo_color = Color( 0, 0, 0, 1 )
-emission_enabled = true
-emission = Color( 0, 0, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
-emission_texture = SubResource( 14 )
+font_data = SubResource( 17 )
 
 [sub_resource type="BoxShape" id=16]
 extents = Vector3( 0.723062, 3.19305, 0.495782 )
@@ -188,62 +160,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 8 )
 mesh = SubResource( 4 )
 
-[node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 500, 600 )
-render_target_clear_mode = 2
+[node name="Screen1" type="Label3D" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.448, 3.405, 1.719 )
+cast_shadow = 0
+generate_lightmap = false
+pixel_size = 0.0007
+double_sided = false
+modulate = Color( 0.968627, 0.811765, 0.227451, 1 )
+text = "20"
+font = SubResource( 10 )
 
-[node name="Node2D" type="Node2D" parent="Viewport"]
-z_as_relative = false
-
-[node name="Sprite" type="Sprite" parent="Viewport/Node2D"]
-position = Vector2( 327.093, 387.386 )
-texture = ExtResource( 9 )
-
-[node name="Label" type="Label" parent="Viewport/Node2D"]
-modulate = Color( 1, 0.470588, 0, 1 )
-margin_top = -124.614
-margin_right = 498.0
-margin_bottom = 617.386
-custom_fonts/font = SubResource( 10 )
-text = "50"
-max_lines_visible = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Viewport2" type="Viewport" parent="."]
-size = Vector2( 500, 600 )
-render_target_clear_mode = 2
-
-[node name="Node2D" type="Node2D" parent="Viewport2"]
-z_as_relative = false
-
-[node name="Sprite" type="Sprite" parent="Viewport2/Node2D"]
-position = Vector2( 327.093, 387.386 )
-texture = ExtResource( 9 )
-
-[node name="Label" type="Label" parent="Viewport2/Node2D"]
-margin_top = -124.614
-margin_right = 498.0
-margin_bottom = 617.386
-custom_fonts/font = SubResource( 10 )
-text = "50"
-max_lines_visible = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Screen1" type="MeshInstance" parent="."]
-transform = Transform( -1.62921e-07, 3.25841e-07, 1, 0, -0.641995, 2.09188e-07, 0.641995, 3.40811e-14, 1.04594e-07, -0.448292, 3.36503, 1.71943 )
-visible = false
-material_override = SubResource( 12 )
-mesh = SubResource( 13 )
-
-[node name="Screen2" type="MeshInstance" parent="."]
-transform = Transform( -1.62921e-07, 3.25841e-07, 1, 0, -0.641995, 2.09188e-07, 0.641995, 3.40811e-14, 1.04594e-07, -0.0808081, 4.76666, 1.71943 )
-visible = false
-material_override = SubResource( 15 )
-mesh = SubResource( 13 )
+[node name="Screen2" type="Label3D" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.081, 4.807, 1.719 )
+cast_shadow = 0
+generate_lightmap = false
+pixel_size = 0.0007
+double_sided = false
+text = "20"
+font = SubResource( 10 )
 
 [node name="SelectCollider" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.622193, -1.33251, 1.46355 )

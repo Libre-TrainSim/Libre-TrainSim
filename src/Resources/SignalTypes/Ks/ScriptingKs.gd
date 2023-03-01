@@ -11,16 +11,6 @@ func _ready() -> void:
 	var _unused = blink_timer.connect("timeout", self, "blink")
 	self.add_child(blink_timer)
 
-	$Viewport.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	var texture: Texture = $Viewport.get_texture()
-	$Screen1.material_override = $Screen1.material_override.duplicate(true)
-	$Screen1.material_override.emission_texture = texture
-
-	$Viewport2.set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
-	texture = $Viewport2.get_texture()
-	$Screen2.material_override = $Screen2.material_override.duplicate(true)
-	$Screen2.material_override.emission_texture = texture
-
 	match signal_logic.signal_type:
 		signal_logic.SignalType.MAIN:
 			$HpTafel.visible = true
@@ -43,8 +33,8 @@ func _ready() -> void:
 
 	# initialize signal
 	update_visual_instance(signal_logic)
-	$Viewport2/Node2D/Label.text = make_speed_str(signal_logic.speed)
-	$Viewport/Node2D/Label.text = make_speed_str(signal_logic.warn_speed)
+	$Screen2.text = make_speed_str(signal_logic.speed)
+	$Screen1.text = make_speed_str(signal_logic.warn_speed)
 
 
 func blink() -> void:
@@ -52,8 +42,8 @@ func blink() -> void:
 
 
 func update_visual_instance(instance: Node) -> void:
-	$Viewport2/Node2D/Label.text = make_speed_str(instance.speed)
-	$Viewport/Node2D/Label.text = make_speed_str(instance.warn_speed)
+	$Screen2.text = make_speed_str(instance.speed)
+	$Screen1.text = make_speed_str(instance.warn_speed)
 
 	match instance.status:
 		SignalStatus.RED: red()
@@ -100,12 +90,6 @@ func off() -> void:
 
 
 func make_speed_str(speed: float) -> String:
-	var string: String
-	if speed - 100 >= 0:
-		var outputSpeed: int = int(speed / 10)
-		string = str(outputSpeed)
-	else:
-		var outputSpeed: int = int(speed / 10)
-		string = " " + str(outputSpeed)
-	return string
+	var outputSpeed: int = int(speed / 10)
+	return str(outputSpeed)
 

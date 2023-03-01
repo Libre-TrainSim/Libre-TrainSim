@@ -1,22 +1,20 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
-[ext_resource path="res://Data/Fonts/Oswald-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Data/Scripts/SpeedLimitSignal.gd" type="Script" id=3]
 [ext_resource path="res://Resources/Objects/zs3.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://Resources/Materials/Zs3_sign.tres" type="Material" id=5]
 
-[sub_resource type="SpatialMaterial" id=1]
-params_use_alpha_scissor = true
-params_alpha_scissor_threshold = 0.98
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://Data/Fonts/Oswald-Bold.ttf"
 
-[sub_resource type="DynamicFont" id=2]
-size = 160
+[sub_resource type="DynamicFont" id=4]
+size = 190
 extra_spacing_top = -30
 extra_spacing_bottom = -30
-font_data = ExtResource( 2 )
+font_data = SubResource( 3 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=5]
 extents = Vector3( 0.0652475, 1.54335, 0.380664 )
 
 [node name="SpeedLimit_Zs3" type="Spatial" groups=["Signal"]]
@@ -27,36 +25,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667 )
 mesh = ExtResource( 4 )
 material/0 = ExtResource( 1 )
 material/1 = ExtResource( 5 )
-material/2 = SubResource( 1 )
 
-[node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 256, 256 )
-transparent_bg = true
-disable_3d = true
-usage = 0
-render_target_v_flip = true
-
-[node name="Node2D" type="CenterContainer" parent="Viewport"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Viewport/Node2D"]
-margin_left = 54.0
-margin_top = 39.0
-margin_right = 202.0
-margin_bottom = 217.0
-custom_fonts/font = SubResource( 2 )
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.0812835, 1.8069, 1.96265 )
+cast_shadow = 0
+generate_lightmap = false
+pixel_size = 0.0015
+double_sided = false
 text = "16"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+font = SubResource( 4 )
 
 [node name="SelectCollider" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.080495, -1, 1.5822 )
 
 [node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0652475, 1.54335, 0.380664 )
-shape = SubResource( 3 )
+shape = SubResource( 5 )

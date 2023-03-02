@@ -22,48 +22,22 @@ mesh = ExtResource( 3 )
 material/0 = ExtResource( 2 )
 material/1 = SubResource( 1 )
 
-[node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 586, 878 )
-disable_3d = true
-usage = 0
-render_target_v_flip = true
-
-[node name="Control" type="Control" parent="Viewport"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="Viewport/Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Viewport/Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="km" type="Label" parent="Viewport/Control/VBoxContainer"]
-margin_right = 586.0
-margin_bottom = 445.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+[node name="LabelTop" type="Label3D" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.111734, 1.78168, 1.96706 )
+cast_shadow = 0
+generate_lightmap = false
+pixel_size = 0.001
+double_sided = false
+modulate = Color( 0, 0, 0, 1 )
 text = "0"
-align = 1
-valign = 1
+font = SubResource( 2 )
 
-[node name="m" type="Label" parent="Viewport/Control/VBoxContainer"]
-margin_top = 449.0
-margin_right = 586.0
-margin_bottom = 894.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+[node name="LabelBottom" type="Label3D" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.111734, 1.3323, 1.96706 )
+cast_shadow = 0
+generate_lightmap = false
+pixel_size = 0.001
+double_sided = false
+modulate = Color( 0, 0, 0, 1 )
 text = "0"
-align = 1
-valign = 1
+font = SubResource( 2 )

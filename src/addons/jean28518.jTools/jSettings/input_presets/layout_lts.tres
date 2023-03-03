@@ -309,7 +309,7 @@ scancode = 16777255
 script = ExtResource( 1 )
 input_map = {
 "Cabin View": [ SubResource( 52 ) ],
-"Escape": [ SubResource( 34 ), SubResource( 35 ) ],
+"pause": [ SubResource( 34 ), SubResource( 35 ) ],
 "FreeCamera": [ SubResource( 59 ) ],
 "FrontLight": [ SubResource( 55 ), SubResource( 56 ) ],
 "Horn": [ SubResource( 48 ), SubResource( 49 ) ],

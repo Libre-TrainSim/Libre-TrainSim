@@ -3,8 +3,13 @@ extends Control
 signal save_requested
 
 
-func _unhandled_key_input(event: InputEventKey) -> void:
-	if visible and Input.is_action_just_released("ui_cancel", true):
+func show() -> void:
+	$VBoxContainer/Back.grab_focus()
+	.show()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and (Input.is_action_just_released("pause", true) or Input.is_action_just_released("ui_cancel", true)):
 		# There seems to be an issue with event propagation
 		# Hence we wait for the frame to end before we actually hide it
 		# because otherwise we immediately open the menu again.

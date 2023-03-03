@@ -2,10 +2,13 @@ extends CanvasLayer
 
 var language_selector_prepared = false
 
+onready var tab_container = $JSettings/MarginContainer/VBoxContainer/TabContainer
+
 func popup():
 	update_and_prepare_language_handling()
 	update_settings_window()
 	$JSettings.show()
+	_grab_focus_in_current_tab()
 
 ################################################################################
 
@@ -19,6 +22,8 @@ func _ready():
 
 	first_run_check()
 	apply_saved_settings()
+
+	tab_container.connect("tab_changed", self, "_on_tab_changed")
 
 
 func first_run_check():
@@ -291,11 +296,29 @@ func show_fps_limit_selector(val: bool):
 	$"%LabelFpsLimit".visible = val
 	$"%FpsLimit".visible = val
 
+
+func _grab_focus_in_current_tab():
+	if tab_container.get_node("MENU_GENERAL_SETTINGS").visible:
+		tab_container.get_node("MENU_GENERAL_SETTINGS/GridContainer/Language").grab_focus()
+	elif tab_container.get_node("MENU_VISUAL_SETTINGS").visible:
+		tab_container.get_node("MENU_VISUAL_SETTINGS/GridContainer/Fullscreen").grab_focus()
+	elif tab_container.get_node("MENU_AUDIO_SETTINGS").visible:
+		tab_container.get_node("MENU_AUDIO_SETTINGS/GridContainer/MainVolume").grab_focus()
+	elif tab_container.get_node("MENU_INPUT_SETTINGS").visible:
+		tab_container.get_node("MENU_INPUT_SETTINGS/ScrollContainer/VBoxContainer/GridContainer/LayoutImport").grab_focus()
+		tab_container.get_node("MENU_INPUT_SETTINGS/ScrollContainer").scroll_vertical = 0
+
+
 ## Other Signals ###############################################################
 
-func _unhandled_key_input(event: InputEventKey) -> void:
-	if event.is_action("Escape"):
-		hide()
+func _unhandled_input(event: InputEvent) -> void:
+	if $JSettings.visible:
+		if event.is_action("ui_cancel"):
+			hide()
+		elif event.is_action_pressed("ui_next_tab"):
+			tab_container.current_tab += 1
+		elif event.is_action_pressed("ui_prev_tab"):
+			tab_container.current_tab -= 1
 
 
 func _on_Back_pressed():
@@ -355,3 +378,7 @@ func _on_ResetConfirmationDialog_confirmed():
 
 func _on_MENU_INPUT_SETTINGS_save():
 	save_settings()
+
+
+func _on_tab_changed(tab):
+	_grab_focus_in_current_tab()

@@ -10,6 +10,21 @@ func _ready() -> void:
 	_initialize_editor_directory()
 	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
 	_find_content()
+	$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.select(0)
+
+
+func show() -> void:
+	if tracks.empty():
+		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer/Back.grab_focus()
+	else:
+		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.grab_focus()
+	.show()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_Back_pressed()
+		accept_event()
 
 
 func to_file_name(track_name: String) -> String:

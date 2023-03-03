@@ -19,6 +19,17 @@ func _ready() -> void:
 	show_translators()
 
 
+func show() -> void:
+	$Control/Back.grab_focus()
+	.show()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_Back_pressed()
+		accept_event()
+
+
 func _clear_box(box_path: Control) -> void:
 	for node in box_path.get_children():
 		node.queue_free()

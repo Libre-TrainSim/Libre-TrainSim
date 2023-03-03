@@ -9,37 +9,55 @@ var _saved_ingame_pause: bool = false
 var _saved_mouse_mode: int = 0
 var player: LTSPlayer
 
+onready var settings: Node = jSettings.get_node("JSettings")
+
+
+func _ready() -> void:
+	$StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus")
+	settings.connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
+
+
+func show() -> void:
+	$CenterContainer/HBox/Back.grab_focus()
+	.show()
+
 
 func _unhandled_input(_event) -> void:
-	if Input.is_action_just_pressed("Escape"):
-		if visible:
-			unpause()
-		else:
-			pause()
+	if visible and not settings.visible and \
+			(Input.is_action_just_pressed("pause") \
+			or Input.is_action_just_pressed("ui_cancel")):
+		unpause()
+	elif not visible and Input.is_action_just_pressed("pause"):
+		pause()
 	if Input.is_action_just_pressed("ingame_pause"):
 		if Root.game_pause["ingame_pause"] and Root.game_pause.values().count(true) == 1:
 			Root.set_game_pause("ingame_pause", false)
 		elif not get_tree().paused:
 			Root.set_game_pause("ingame_pause", true)
 			jEssentials.show_message(tr("PAUSE_MODE_ENABLED"))
+	if visible and Input.is_action_just_released("ui_accept"):
+		# Prevent "ui_accept" event from closing a potential message behind the menu
+		accept_event()
 
 
 func pause():
 	Root.set_game_pause("pause_menu", true)
-	visible = true
+	show()
 	_saved_mouse_mode = Input.get_mouse_mode()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	emit_signal("paused")
 
 func unpause():
 	Root.set_game_pause("pause_menu", false)
-	visible = false
+	hide()
 	Input.set_mouse_mode(_saved_mouse_mode)
 	emit_signal("unpaused")
 
 
 func _on_Back_pressed() -> void:
 	unpause()
+	# The pause menu is already closed, so the "ui_accept" event would not be caught when it reaches _unhandled_input
+	accept_event()
 
 
 func _on_Quit_pressed() -> void:

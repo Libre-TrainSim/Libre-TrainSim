@@ -10,7 +10,14 @@ func _ready() -> void:
 
 func show() -> void:
 	update_content_list()
+	$VBoxContainer/Buttons/Back.grab_focus()
 	.show()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_Back_pressed()
+		accept_event()
 
 
 func update_content_list() -> void:

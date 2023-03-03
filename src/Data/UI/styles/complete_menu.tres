@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=2]
+[gd_resource type="Theme" load_steps=30 format=2]
 
 [ext_resource path="res://Data/UI/styles/line_edit_read_only.tres" type="StyleBox" id=1]
 [ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=2]
@@ -27,6 +27,14 @@
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.913725, 0.94902, 0.92549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.117647, 0.423529, 0.576471, 1 )
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 10.0
@@ -68,7 +76,7 @@ Button/styles/pressed = ExtResource( 13 )
 CheckButton/icons/off = ExtResource( 15 )
 CheckButton/icons/on = ExtResource( 4 )
 CheckButton/styles/disabled = SubResource( 5 )
-CheckButton/styles/focus = SubResource( 5 )
+CheckButton/styles/focus = SubResource( 6 )
 CheckButton/styles/hover = SubResource( 5 )
 CheckButton/styles/hover_pressed = SubResource( 5 )
 CheckButton/styles/normal = SubResource( 5 )

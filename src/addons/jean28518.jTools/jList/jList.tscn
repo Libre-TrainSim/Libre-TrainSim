@@ -157,6 +157,7 @@ margin_left = 299.0
 margin_top = -42.0
 margin_right = -81.0
 margin_bottom = -22.0
+focus_neighbour_left = NodePath("../Cancel")
 text = "Remove"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -170,6 +171,7 @@ margin_left = 83.0
 margin_top = -42.0
 margin_right = -297.0
 margin_bottom = -22.0
+focus_neighbour_right = NodePath("../Remove")
 text = "Cancel"
 __meta__ = {
 "_edit_use_anchors_": false

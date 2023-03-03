@@ -40,6 +40,8 @@ export (String) var action_button_text = "Custom Action"
 
 export (bool) var update setget update_visible_buttons
 
+onready var confirmation_dialog: Popup = $ConfirmationDialog
+
 
 func get_data():
 	var entry_names = []
@@ -107,6 +109,12 @@ func _unhandled_key_input(_event: InputEventKey) -> void:
 	if $VBoxContainer/HBoxContainer/LineEdit.has_focus() and enable_add_button \
 			and Input.is_action_just_pressed("ui_accept"):
 		_on_Add_pressed()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if confirmation_dialog.visible and Input.is_action_just_pressed("ui_cancel"):
+		_on_RemoveConfirmation_Cancel_pressed()
+		accept_event()
 
 
 func is_entry_name_unique(entry : String):
@@ -227,13 +235,13 @@ func _on_Remove_pressed():
 		$ConfirmationDialog/Label.text = tr(remove_confirmation_text)
 		for index in item_list.get_selected_items():
 			$ConfirmationDialog/Label.text += "\n\t" + item_list.get_item_text(index)
-		$ConfirmationDialog.popup_centered_minsize()
+		confirmation_dialog.popup_centered_minsize()
 	else:
 		_on_RemoveConfirmation_Remove_pressed()
 
 
 func _on_RemoveConfirmation_Remove_pressed():
-	$ConfirmationDialog.hide()
+	confirmation_dialog.hide()
 	var removed_entries = []
 	while item_list.get_selected_items().size() != 0:
 		removed_entries.append(item_list.get_item_text(item_list.get_selected_items()[0]))
@@ -242,7 +250,7 @@ func _on_RemoveConfirmation_Remove_pressed():
 
 
 func _on_RemoveConfirmation_Cancel_pressed():
-	$ConfirmationDialog.hide()
+	confirmation_dialog.hide()
 
 
 func _on_Rename_pressed():

@@ -6,10 +6,6 @@ signal closed
 
 var _previous_mouse_mode: int
 
-func _unhandled_key_input(_event) -> void:
-	if Input.is_action_just_released("ui_accept"):
-		_on_Ok_pressed()
-
 
 func message(text: String) -> void:
 	_previous_mouse_mode = Input.get_mouse_mode()
@@ -18,6 +14,7 @@ func message(text: String) -> void:
 	$MarginContainer/VBoxContainer/Message.text = text
 	visible = true
 	Root.set_game_pause("message", true)
+	$MarginContainer/VBoxContainer/Ok.grab_focus()
 	$MarginContainer/VBoxContainer/Ok.grab_click_focus()
 
 
@@ -26,3 +23,8 @@ func _on_Ok_pressed():
 	Root.set_game_pause("message", false)
 	Input.set_mouse_mode(_previous_mouse_mode)
 	emit_signal("closed")
+
+
+func _on_unpaused():
+	if visible:
+		$MarginContainer/VBoxContainer/Ok.grab_focus()

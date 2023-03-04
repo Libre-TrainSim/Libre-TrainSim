@@ -23,6 +23,7 @@ size = 45
 font_data = ExtResource( 9 )
 
 [node name="Screen1" type="Node2D"]
+pause_mode = 1
 script = ExtResource( 1 )
 SpeedPointerRotationAt100 = 40.0
 SollSpeedPointerRotationAt100 = -50.0

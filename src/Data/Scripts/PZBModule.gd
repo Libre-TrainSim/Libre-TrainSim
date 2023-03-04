@@ -130,7 +130,7 @@ func _calc_pzb_speed_limit():
 
 
 func _check_restrictive_mode():
-	if player.speed <= 0:
+	if player.speed <= 0 and player.currentRealAcceleration != 0: # If the speed just reached zero
 		restrictive_mode()
 		return
 

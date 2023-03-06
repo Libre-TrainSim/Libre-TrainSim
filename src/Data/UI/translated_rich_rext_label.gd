@@ -15,7 +15,8 @@ func _notification(what: int) -> void:
 
 
 func set_text(text: String) -> void:
-	.set_text(tr(text))
+	translation_id = text
+	update_text()
 
 
 func update_text() -> void:

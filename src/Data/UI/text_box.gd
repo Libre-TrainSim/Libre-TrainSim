@@ -11,7 +11,7 @@ func message(text: String) -> void:
 	_previous_mouse_mode = Input.get_mouse_mode()
 	assert(_previous_mouse_mode != null)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	$MarginContainer/VBoxContainer/Message.text = text
+	$MarginContainer/VBoxContainer/Message.set_text(text)
 	visible = true
 	Root.set_game_pause("message", true)
 	$MarginContainer/VBoxContainer/Ok.grab_focus()

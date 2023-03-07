@@ -30,9 +30,10 @@ func _ready():
 
 func _add_entry(action: String):
 	# Add label
-	var label := Label.new()
-	label.text = action
+	var label := TranslatedRichTextLabel.new()
+	label.text = "INPUT_" + action.to_upper()
 	label.size_flags_horizontal = SIZE_EXPAND_FILL
+	label.set("custom_fonts/normal_font", load("res://Data/Fonts/FontMedium.tres"))
 	_input_grid.add_child(label)
 	
 	# Add InputButton

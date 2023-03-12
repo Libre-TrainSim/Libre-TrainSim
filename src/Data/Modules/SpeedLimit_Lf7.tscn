@@ -6,7 +6,7 @@
 
 [sub_resource type="SpatialMaterial" id=1]
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=6]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.98
 
@@ -30,35 +30,17 @@ transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 1.667 )
 mesh = ExtResource( 2 )
 material/0 = ExtResource( 1 )
 material/1 = SubResource( 1 )
-material/2 = SubResource( 2 )
+material/2 = SubResource( 6 )
 
-[node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 176, 319 )
-transparent_bg = true
-handle_input_locally = false
-hdr = false
-disable_3d = true
-usage = 0
-render_target_v_flip = true
-
-[node name="Node2D" type="CenterContainer" parent="Viewport"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_min_size = Vector2( 176, 319 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Viewport/Node2D"]
-margin_top = 48.0
-margin_right = 176.0
-margin_bottom = 270.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.111734, 1.70307, 2.11173 )
+cast_shadow = 0
+generate_lightmap = false
+pixel_size = 0.0015
+double_sided = false
+modulate = Color( 0, 0, 0, 1 )
 text = "16"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+font = SubResource( 4 )
 
 [node name="SelectCollider" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111217, -0.747544, 1.96941 )

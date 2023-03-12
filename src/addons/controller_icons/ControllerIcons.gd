@@ -123,7 +123,7 @@ func get_action_paths(path: String, input_type: int = _last_input_type) -> Array
 		return []
 	var root_paths := _expand_path(path, input_type)
 	var event = _get_matching_event(path, input_type)
-	
+
 	for root_path in root_paths:
 		if not _cached_icons.has(root_path):
 			if _load_icon(root_path):

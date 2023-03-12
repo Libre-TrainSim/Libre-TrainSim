@@ -2,111 +2,8 @@
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/input_map_resource.gd" type="Script" id=1]
 
-[sub_resource type="InputEventKey" id=1]
-scancode = 65
-
-[sub_resource type="InputEventKey" id=2]
-scancode = 68
-
-[sub_resource type="InputEventKey" id=3]
-control = true
-command = true
-scancode = 68
-
-[sub_resource type="InputEventKey" id=4]
-scancode = 69
-
-[sub_resource type="InputEventKey" id=5]
-scancode = 16777237
-
-[sub_resource type="InputEventKey" id=6]
-control = true
-command = true
-scancode = 83
-
-[sub_resource type="InputEventKey" id=7]
-scancode = 16777221
-
-[sub_resource type="InputEventKey" id=8]
-scancode = 16777222
-
-[sub_resource type="InputEventJoypadButton" id=9]
-
-[sub_resource type="InputEventJoypadButton" id=10]
-button_index = 3
-
-[sub_resource type="InputEventKey" id=11]
-scancode = 16777217
-
-[sub_resource type="InputEventJoypadButton" id=12]
-button_index = 1
-
-[sub_resource type="InputEventKey" id=13]
-scancode = 16777218
-
-[sub_resource type="InputEventKey" id=14]
-shift = true
-scancode = 16777218
-
-[sub_resource type="InputEventKey" id=15]
-scancode = 16777231
-
-[sub_resource type="InputEventJoypadButton" id=16]
-button_index = 14
-
-[sub_resource type="InputEventKey" id=17]
-scancode = 16777233
-
-[sub_resource type="InputEventJoypadButton" id=18]
-button_index = 15
-
-[sub_resource type="InputEventKey" id=19]
-scancode = 16777232
-
-[sub_resource type="InputEventJoypadButton" id=20]
-button_index = 12
-
-[sub_resource type="InputEventKey" id=21]
-scancode = 16777234
-
-[sub_resource type="InputEventJoypadButton" id=22]
-button_index = 13
-
-[sub_resource type="InputEventKey" id=23]
-scancode = 16777235
-
-[sub_resource type="InputEventKey" id=24]
-scancode = 16777236
-
-[sub_resource type="InputEventKey" id=25]
-scancode = 16777229
-
-[sub_resource type="InputEventKey" id=26]
-scancode = 16777230
-
-[sub_resource type="InputEventKey" id=27]
-scancode = 66
-
-[sub_resource type="InputEventJoypadButton" id=28]
-device = -1
-button_index = 3
-
-[sub_resource type="InputEventKey" id=29]
-scancode = 80
-
-[sub_resource type="InputEventJoypadButton" id=30]
-device = -1
-button_index = 15
-
-[sub_resource type="InputEventKey" id=31]
-scancode = 73
-
-[sub_resource type="InputEventJoypadButton" id=32]
-device = -1
-button_index = 14
-
-[sub_resource type="InputEventKey" id=33]
-scancode = 79
+[sub_resource type="InputEventKey" id=52]
+scancode = 49
 
 [sub_resource type="InputEventKey" id=34]
 scancode = 16777217
@@ -115,12 +12,43 @@ scancode = 16777217
 device = -1
 button_index = 11
 
-[sub_resource type="InputEventKey" id=36]
-scancode = 16777244
+[sub_resource type="InputEventKey" id=59]
+scancode = 48
 
-[sub_resource type="InputEventJoypadButton" id=37]
+[sub_resource type="InputEventKey" id=55]
+scancode = 76
+
+[sub_resource type="InputEventJoypadButton" id=56]
 device = -1
-button_index = 4
+button_index = 8
+
+[sub_resource type="InputEventKey" id=48]
+scancode = 72
+
+[sub_resource type="InputEventJoypadMotion" id=49]
+device = -1
+axis = 6
+axis_value = 1.0
+
+[sub_resource type="InputEventKey" id=57]
+control = true
+command = true
+scancode = 76
+
+[sub_resource type="InputEventJoypadButton" id=58]
+device = -1
+button_index = 9
+
+[sub_resource type="InputEventKey" id=53]
+scancode = 50
+
+[sub_resource type="InputEventKey" id=50]
+scancode = 32
+
+[sub_resource type="InputEventJoypadMotion" id=51]
+device = -1
+axis = 7
+axis_value = 1.0
 
 [sub_resource type="InputEventJoypadMotion" id=38]
 device = -1
@@ -138,6 +66,14 @@ axis_value = 1.0
 [sub_resource type="InputEventKey" id=41]
 scancode = 16777234
 
+[sub_resource type="InputEventKey" id=54]
+control = true
+command = true
+scancode = 65
+
+[sub_resource type="InputEventKey" id=83]
+scancode = 83
+
 [sub_resource type="InputEventJoypadMotion" id=42]
 device = -1
 axis = 3
@@ -154,61 +90,83 @@ axis_value = 1.0
 [sub_resource type="InputEventKey" id=45]
 scancode = 16777231
 
-[sub_resource type="InputEventKey" id=46]
-scancode = 16777245
-
-[sub_resource type="InputEventJoypadButton" id=47]
-device = -1
-button_index = 5
-
-[sub_resource type="InputEventKey" id=48]
-scancode = 72
-
-[sub_resource type="InputEventJoypadMotion" id=49]
-device = -1
-axis = 6
-axis_value = 1.0
-
-[sub_resource type="InputEventKey" id=50]
-scancode = 32
-
-[sub_resource type="InputEventJoypadMotion" id=51]
-device = -1
-axis = 7
-axis_value = 1.0
-
-[sub_resource type="InputEventKey" id=52]
-scancode = 49
-
-[sub_resource type="InputEventKey" id=53]
-scancode = 50
-
-[sub_resource type="InputEventKey" id=54]
+[sub_resource type="InputEventKey" id=69]
 control = true
 command = true
+scancode = 89
+
+[sub_resource type="InputEventKey" id=70]
+control = true
+command = true
+scancode = 16777224
+
+[sub_resource type="InputEventKey" id=33]
+scancode = 79
+
+[sub_resource type="InputEventKey" id=31]
+scancode = 73
+
+[sub_resource type="InputEventJoypadButton" id=32]
+device = -1
+button_index = 14
+
+[sub_resource type="InputEventKey" id=29]
+scancode = 80
+
+[sub_resource type="InputEventJoypadButton" id=30]
+device = -1
+button_index = 15
+
+[sub_resource type="InputEventKey" id=84]
+scancode = 81
+
+[sub_resource type="InputEventKey" id=3]
+control = true
+command = true
+scancode = 68
+
+[sub_resource type="InputEventKey" id=67]
+scancode = 69
+
+[sub_resource type="InputEventJoypadButton" id=68]
+device = -1
+button_index = 2
+
+[sub_resource type="InputEventKey" id=82]
+scancode = 87
+
+[sub_resource type="InputEventKey" id=81]
+alt = true
+scancode = 16777221
+
+[sub_resource type="InputEventKey" id=76]
+scancode = 16777225
+
+[sub_resource type="InputEventKey" id=1]
 scancode = 65
 
-[sub_resource type="InputEventKey" id=55]
-scancode = 76
+[sub_resource type="InputEventKey" id=75]
+scancode = 32
 
-[sub_resource type="InputEventJoypadButton" id=56]
+[sub_resource type="InputEventKey" id=73]
+scancode = 77
+
+[sub_resource type="InputEventJoypadButton" id=74]
 device = -1
-button_index = 8
-
-[sub_resource type="InputEventKey" id=57]
-control = true
-command = true
-scancode = 76
-
-[sub_resource type="InputEventJoypadButton" id=58]
-device = -1
-button_index = 9
-
-[sub_resource type="InputEventKey" id=59]
-scancode = 48
+button_index = 10
 
 [sub_resource type="InputEventKey" id=60]
 scancode = 16777246
+
+[sub_resource type="InputEventKey" id=88]
+scancode = 16777255
+
+[sub_resource type="InputEventKey" id=27]
+scancode = 66
+
+[sub_resource type="InputEventJoypadButton" id=28]
+device = -1
+button_index = 3
 
 [sub_resource type="InputEventKey" id=61]
 scancode = 51
@@ -228,43 +186,14 @@ scancode = 55
 [sub_resource type="InputEventKey" id=66]
 scancode = 56
 
-[sub_resource type="InputEventKey" id=67]
-scancode = 69
+[sub_resource type="InputEventKey" id=85]
+scancode = 16777236
 
-[sub_resource type="InputEventJoypadButton" id=68]
-device = -1
-button_index = 2
-
-[sub_resource type="InputEventKey" id=69]
-control = true
-command = true
-scancode = 89
-
-[sub_resource type="InputEventKey" id=70]
-control = true
-command = true
+[sub_resource type="InputEventKey" id=87]
 scancode = 16777224
 
-[sub_resource type="InputEventMouseButton" id=71]
-device = -1
-button_index = 4
-
-[sub_resource type="InputEventMouseButton" id=72]
-device = -1
-button_index = 5
-
-[sub_resource type="InputEventKey" id=73]
-scancode = 77
-
-[sub_resource type="InputEventJoypadButton" id=74]
-device = -1
-button_index = 10
-
-[sub_resource type="InputEventKey" id=75]
-scancode = 32
-
-[sub_resource type="InputEventKey" id=76]
-scancode = 16777225
+[sub_resource type="InputEventKey" id=86]
+scancode = 16777230
 
 [sub_resource type="InputEventKey" id=77]
 scancode = 70
@@ -280,30 +209,101 @@ scancode = 82
 device = -1
 button_index = 13
 
-[sub_resource type="InputEventKey" id=81]
-alt = true
-scancode = 16777221
+[sub_resource type="InputEventKey" id=2]
+scancode = 68
 
-[sub_resource type="InputEventKey" id=82]
-scancode = 87
-
-[sub_resource type="InputEventKey" id=83]
+[sub_resource type="InputEventKey" id=6]
+control = true
+command = true
 scancode = 83
 
-[sub_resource type="InputEventKey" id=84]
-scancode = 81
+[sub_resource type="InputEventKey" id=5]
+scancode = 16777237
 
-[sub_resource type="InputEventKey" id=85]
-scancode = 16777236
+[sub_resource type="InputEventKey" id=36]
+scancode = 16777244
 
-[sub_resource type="InputEventKey" id=86]
+[sub_resource type="InputEventJoypadButton" id=37]
+device = -1
+button_index = 4
+
+[sub_resource type="InputEventKey" id=46]
+scancode = 16777245
+
+[sub_resource type="InputEventJoypadButton" id=47]
+device = -1
+button_index = 5
+
+[sub_resource type="InputEventKey" id=7]
+scancode = 16777221
+
+[sub_resource type="InputEventKey" id=8]
+scancode = 16777222
+
+[sub_resource type="InputEventJoypadButton" id=9]
+
+[sub_resource type="InputEventKey" id=11]
+scancode = 16777217
+
+[sub_resource type="InputEventJoypadButton" id=12]
+button_index = 1
+
+[sub_resource type="InputEventKey" id=21]
+scancode = 16777234
+
+[sub_resource type="InputEventJoypadButton" id=22]
+button_index = 13
+
+[sub_resource type="InputEventKey" id=26]
 scancode = 16777230
 
-[sub_resource type="InputEventKey" id=87]
-scancode = 16777224
+[sub_resource type="InputEventKey" id=13]
+scancode = 16777218
 
-[sub_resource type="InputEventKey" id=88]
-scancode = 16777255
+[sub_resource type="InputEventKey" id=14]
+shift = true
+scancode = 16777218
+
+[sub_resource type="InputEventKey" id=25]
+scancode = 16777229
+
+[sub_resource type="InputEventKey" id=15]
+scancode = 16777231
+
+[sub_resource type="InputEventJoypadButton" id=16]
+button_index = 14
+
+[sub_resource type="InputEventKey" id=24]
+scancode = 16777236
+
+[sub_resource type="InputEventKey" id=23]
+scancode = 16777235
+
+[sub_resource type="InputEventKey" id=17]
+scancode = 16777233
+
+[sub_resource type="InputEventJoypadButton" id=18]
+button_index = 15
+
+[sub_resource type="InputEventJoypadButton" id=10]
+button_index = 3
+
+[sub_resource type="InputEventKey" id=19]
+scancode = 16777232
+
+[sub_resource type="InputEventJoypadButton" id=20]
+button_index = 12
+
+[sub_resource type="InputEventKey" id=4]
+scancode = 69
+
+[sub_resource type="InputEventMouseButton" id=71]
+device = -1
+button_index = 4
+
+[sub_resource type="InputEventMouseButton" id=72]
+device = -1
+button_index = 5
 
 [resource]
 script = ExtResource( 1 )

@@ -16,6 +16,9 @@ src/android/*
 
 *.blend1
 
+# Ignore build folder used by CI
+build
+
 # ignore Dolphin file manager files
 *.directory
 

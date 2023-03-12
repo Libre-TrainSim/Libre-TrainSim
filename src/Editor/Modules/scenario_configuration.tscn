@@ -49,7 +49,6 @@ margin_bottom = 554.0
 size_flags_vertical = 3
 
 [node name="GeneralSettings" type="VBoxContainer" parent="TabContainer/Routes/RouteConfiguration"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -178,6 +177,7 @@ margin_bottom = 406.0
 size_flags_vertical = 3
 
 [node name="RoutePoints" type="VBoxContainer" parent="TabContainer/Routes/RouteConfiguration"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -270,7 +270,7 @@ __meta__ = {
 }
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station"]
-margin_right = 371.0
+margin_right = 383.0
 margin_bottom = 411.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

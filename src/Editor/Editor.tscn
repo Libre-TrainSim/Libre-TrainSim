@@ -381,8 +381,7 @@ follow_focus = true
 scroll_horizontal_enabled = false
 
 [node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer/Content/ScrollContainer"]
-margin_right = 185.0
-margin_bottom = 343.0
+margin_right = 173.0
 hint_tooltip = "- Use shift to select multiple objects.
 - Right-click deselects all selected objects.
 - Shift+scroll wheel chooses a random object of the selected objects."

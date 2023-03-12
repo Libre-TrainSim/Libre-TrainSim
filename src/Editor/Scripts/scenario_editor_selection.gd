@@ -66,7 +66,7 @@ func update_scenario_list():
 		available_scenarios_names.append(scenario.get_file().get_basename())
 
 	$ScenarioList/scenarioList.set_data(available_scenarios_names)
-	
+
 	$ScenarioList/scenarioList.item_list.select(0)
 	$ScenarioList/scenarioList._on_ItemList_item_selected(0)
 

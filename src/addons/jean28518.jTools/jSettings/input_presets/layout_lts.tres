@@ -309,7 +309,6 @@ button_index = 5
 script = ExtResource( 1 )
 input_map = {
 "Cabin View": [ SubResource( 52 ) ],
-"pause": [ SubResource( 34 ), SubResource( 35 ) ],
 "FreeCamera": [ SubResource( 59 ) ],
 "FrontLight": [ SubResource( 55 ), SubResource( 56 ) ],
 "Horn": [ SubResource( 48 ), SubResource( 49 ) ],
@@ -339,6 +338,7 @@ input_map = {
 "nextTable": [ SubResource( 60 ) ],
 "open_debug_ui": [ SubResource( 88 ) ],
 "pantograph": [ SubResource( 27 ), SubResource( 28 ) ],
+"pause": [ SubResource( 34 ), SubResource( 35 ) ],
 "player_camera_3": [ SubResource( 61 ) ],
 "player_camera_4": [ SubResource( 62 ) ],
 "player_camera_5": [ SubResource( 63 ) ],

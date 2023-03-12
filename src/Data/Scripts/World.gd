@@ -6,8 +6,6 @@ var time: int = 0 # Unit: seconds (from 00:00:00)
 
 var default_persons_at_station: int = 20
 
-var globalDict := {} ## Used, if some nodes need to communicate globally. Modders could use it. Please make sure, that you pick an unique key_name
-
 var current_scenario: TrackScenario = null
 var current_world_config: WorldConfig = null
 

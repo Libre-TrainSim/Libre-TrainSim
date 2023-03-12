@@ -635,10 +635,7 @@ func change_to_next_rail() -> void:
 		new_radius = 1000000000
 	var radius_difference_factor = abs(1/new_radius - 1/old_radius)*2000
 
-	Logger.vlog(new_radius)
-	Logger.vlog(old_radius)
-
-	Logger.vlog(radius_difference_factor)
+	Logger.vlog("New Radius = %s, Old Radius = %s, Difference Factor = %s" % [new_radius, old_radius, radius_difference_factor])
 	curve_shaking_factor = radius_difference_factor * Math.speed_to_kmh(speed) / 100.0 * camera_shaking_factor
 
 
@@ -778,7 +775,7 @@ func handle_signal(signal_name: String) -> void:
 
 	Logger.log(name + ": SIGNAL: " + signal_passed.name)
 
-	if signal_passed.type == "Signal": ## Signal
+	if signal_passed.type == RailLogicTypes.SIGNAL: ## Signal
 		if speed == 0: # Train is standing, and a signal get's activated that only happens at beginning or after jumping
 			Logger.log("Ignoring signal " + signal_name)
 			return
@@ -805,7 +802,7 @@ func handle_signal(signal_name: String) -> void:
 				last_driven_signal = world.get_node("Signals/"+prev[0])
 				last_driven_signal.set_status(SignalStatus.RED)
 
-	elif signal_passed.type == "Station": ## Station
+	elif signal_passed.type == RailLogicTypes.STATION: ## Station
 		if current_station_node != null: # Then the player didn't depart from the last station properly. That happens normally when player jumps between stations
 			return
 		var station_table_index: int = get_station_table_index_of_station_node_name(signal_passed.name)
@@ -832,15 +829,21 @@ func handle_signal(signal_name: String) -> void:
 			for wagonI in wagonsI:
 				wagonI.sendPersonsToDoor(current_station_node.platform_side, current_station_table_entry.leaving_persons/100.0)
 
-	elif signal_passed.type == "Speed":
+	elif signal_passed.type == RailLogicTypes.SPEED_LIMIT:
 		if reverser == ReverserState.REVERSE:
 			currentSpeedLimit = find_previous_speed_limit()
 		else:
 			currentSpeedLimit = signal_passed.speed
-	elif signal_passed.type == "WarnSpeed":
+	elif signal_passed.type == RailLogicTypes.SPEED_LIMIT_WARNING:
 		Logger.log(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
-	elif signal_passed.type == "ContactPoint":
+	elif signal_passed.type == RailLogicTypes.CONTACT_POINT:
 		signal_passed.activateContactPoint(name)
+	elif signal_passed.type == RailLogicTypes.LOGIC:
+		# this elif block is only here to prevent the error message
+		pass
+	elif signal_passed.type == RailLogicTypes.PZB_MAGNET:
+		# this elif block is only here to prevent the error message
+		pass
 	else:
 		Logger.err("Unrecognised signal type %s passed" % signal_passed.type, self)
 

@@ -348,3 +348,8 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BlinkTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.8
+autostart = true

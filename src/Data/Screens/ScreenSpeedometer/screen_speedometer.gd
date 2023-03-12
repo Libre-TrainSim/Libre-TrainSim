@@ -10,21 +10,19 @@ var SollSpeedPerKmH: float
 onready var world: Node = find_parent("World")
 
 export (float) var CommandPointerRotationAt100: float
-export (float) var blinkingTime: float = 0.8
 var CommandPointerZero: float
 var CommandPerPercent: float
 
-var syncronizingScreen: bool = false
+var SollCommandPointer: float = 0
+var SollSpeedLimitPointer: float = 0
+
+var blink_status: bool = false
 
 
 func _ready():
 	SpeedPointerRotationAt100 = deg2rad(SpeedPointerRotationAt100)
 	SollSpeedPointerRotationAt100 = deg2rad(SollSpeedPointerRotationAt100)
 	CommandPointerRotationAt100 = deg2rad(CommandPointerRotationAt100)
-
-	if not  world.globalDict.has("Screen1.BlinkingStatus"):
-		syncronizingScreen = true
-		world.globalDict["Screen1.BlinkingStatus"] = false
 
 	SpeedPointerZero = $SpeedPointer.rotation
 	SpeedPerKmH = (SpeedPointerRotationAt100 - SpeedPointerZero)/100.0
@@ -36,26 +34,22 @@ func _ready():
 	CommandPerPercent = (CommandPointerRotationAt100 - CommandPointerZero)/100.0
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
 
+	$BlinkTimer.connect("timeout", self, "_toggle_blink_status")
+
 	var player = find_parent("Player")
 	if is_instance_valid(player):
 		player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint")
 	$Info/Sifa.visible = false
 
 
-var SollCommandPointer: float = 0
-var SollSpeedLimitPointer: float = 0
-var blinkingTimer: float = 0
-var blinkStatus: bool = false
+
+func _toggle_blink_status():
+	blink_status = !blink_status
+
+
 func _process(delta: float) -> void:
 	$CommandPointer.rotation = (SollCommandPointer - $CommandPointer.rotation)*delta*4.0 + $CommandPointer.rotation
 	$SpeedLimitPointer.rotation = (SollSpeedLimitPointer - $SpeedLimitPointer.rotation)*delta*4.0 + $SpeedLimitPointer.rotation
-	if syncronizingScreen:
-		blinkingTimer += delta
-		if blinkingTimer > blinkingTime:
-			blinkStatus = !blinkStatus
-			world.globalDict["Screen1.BlinkingStatus"] = blinkStatus
-			blinkingTimer = 0
-	blinkStatus = world.globalDict["Screen1.BlinkingStatus"]
 
 
 var lastAutoPilot: bool = false
@@ -75,13 +69,13 @@ func update_display(speed: float, command: float, doorLeft: bool, doorRight: boo
 
 	## Enforced Breaking
 	if enforced_braking:
-		$Info/EnforcedBraking.visible = blinkStatus
+		$Info/EnforcedBraking.visible = blink_status
 	else:
 		$Info/EnforcedBraking.visible = false
 
 	## Doors:
 	if doorsClosing:
-		$Doors.visible = blinkStatus
+		$Doors.visible = blink_status
 	else:
 		$Doors.visible = true
 	$Doors/Right.visible = doorRight
@@ -94,7 +88,7 @@ func update_display(speed: float, command: float, doorLeft: bool, doorRight: boo
 
 #	if not lastAutoPilot and autopilot:
 #		$AnimationPlayerAutoPilot.play("autopilot")
-	$Info/Autopilot.visible = autopilot and blinkStatus
+	$Info/Autopilot.visible = autopilot and blink_status
 #	lastAutoPilot = autopilot
 
 

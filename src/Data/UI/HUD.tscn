@@ -128,9 +128,6 @@ margin_top = 11.0
 margin_right = -8.0
 margin_bottom = 147.0
 columns = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="IngameInformation/Next/GridContainer"]
 margin_right = 71.0

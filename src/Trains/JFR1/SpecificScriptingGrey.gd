@@ -10,7 +10,6 @@ func ready() -> void:
 	get_node("../Cabin/DisplayMiddle").set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	var texture: Texture = get_node("../Cabin/DisplayMiddle").get_texture()
 	get_node("../Cabin/ScreenMiddle").material_override.emission_texture = texture
-	get_node("../Cabin/DisplayMiddle/Display").blinkingTimer = player.get_node("HUD").get_node("IngameInformation/TrainInfo/Screen1").blinkingTimer
 
 	get_node("../Cabin/DisplayLeft").set_clear_mode(Viewport.CLEAR_MODE_ONLY_NEXT_FRAME)
 	texture = get_node("../Cabin/DisplayLeft").get_texture()

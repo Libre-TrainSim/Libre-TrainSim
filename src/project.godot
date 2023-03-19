@@ -463,6 +463,7 @@ version/broken=false
 version/custom=false
 version/commit=""
 version/label="v0.9.beta1"
+version/diff_ignore="../.github/workflows/project.godot.ignores"
 
 [audio]
 

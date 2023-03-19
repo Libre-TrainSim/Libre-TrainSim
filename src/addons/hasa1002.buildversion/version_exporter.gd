@@ -60,6 +60,18 @@ func build() -> void:
 			printt(exit, output)
 			push_warning("Failed to determine diff.")
 		else:
+			if ProjectSettings.has_setting("application/version/diff_ignore") and \
+					!ProjectSettings["application/version/diff_ignore"].empty():
+				var ignores := File.new()
+				var err := ignores.open(ProjectSettings.globalize_path( \
+						ProjectSettings["application/version/diff_ignore"]), \
+						File.READ)
+				var regex := RegEx.new()
+				regex.compile(ignores.get_as_text())
+				var res := regex.search(output[0])
+				if err == OK and res and res.get_start() == 0 and res.get_end() == len(output[0]) - 1:
+					dirty = ""
+					output[0] = "Ignored diff was found. Behaving as if being clean build."
 			print(output[0])
 
 	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], true, output, true)

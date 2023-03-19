@@ -41,7 +41,7 @@ func build() -> void:
 		return
 
 	var custom_build := "" if ("master" in output[0] or "main" in output[0] or "release" in output[0]) else ".custom.%s"
-	
+
 	exit = OS.execute("git", ["status", "-s"], true, output, true)
 	if exit != 0:
 		printt(exit, output)
@@ -52,6 +52,15 @@ func build() -> void:
 		return
 
 	var dirty := " DIRTY BRANCH" if !output[0].empty() else ""
+	if dirty:
+		print("Modified files:")
+		print(output[0])
+		exit = OS.execute("git", ["diff"], true, output, true)
+		if exit != 0:
+			printt(exit, output)
+			push_warning("Failed to determine diff.")
+		else:
+			print(output[0])
 
 	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], true, output, true)
 	if exit != 0:

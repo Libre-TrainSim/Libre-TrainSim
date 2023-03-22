@@ -158,6 +158,8 @@ func get_calculated_rail_route(world: Node, force_recalc := false) -> Array:
 	for i in range(size()-1):
 		var start = _get_rail(world, route_points[i])
 		var end = _get_rail(world, route_points[i+1])
+		if not is_instance_valid(start) or not is_instance_valid(end):
+			continue
 		var path: Array
 
 		# first time, have to check both directions, we don't know where to go!

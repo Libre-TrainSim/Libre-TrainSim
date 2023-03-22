@@ -229,64 +229,67 @@ func update_rail_connections() -> void:
 		rail_node.update_connections()
 
 
-# Ensure you called update_rail_connections() before.
-# pathfinding from a start rail to an end rail. returns an array of dicts with rail nodes and direction
-func get_path_from_to(start_rail: Node, forward: bool, destination_rail: Node) -> Array:
-	var visited_rails = {start_rail: {forward = forward, from = null}}
-	visited_rails = _get_path_from_to_helper(start_rail, forward, visited_rails, destination_rail)
-	if visited_rails.size() == 0:
-		return []
-	return _backtrack_path(visited_rails, destination_rail)
+func get_path_from_to(start_node: Rail, end_rail: Rail, forward: bool) -> Array:
+	var reachable := { start_node: [0, null, forward] }
+	var explored := {}
+
+	while not reachable.empty():
+		# Choose some node we know how to reach.
+		var rail := _choose_node(reachable, end_rail)
+
+		# Don't repeat ourselves.
+		explored[rail] = reachable[rail]
+		reachable.erase(rail)
+
+		# If we just got to the goal node, build and return the path.
+		if rail == end_rail:
+			return _build_path(end_rail, explored)
+
+		for adjacent in rail.get_connected_rails(explored[rail][2]):
+			# Where can we get from here that we haven't explored before?
+			if adjacent in explored:
+				continue
+
+			var fwd = adjacent.get_connection_direction(rail)
+
+			# First time we see this node?
+			if not adjacent in reachable:
+				reachable[adjacent] = [explored[rail][0] + adjacent.length, rail, fwd]
+				continue
+
+			# If this is a new path, or a shorter path than what we have, keep it.
+			if explored[rail][0] + adjacent.length < reachable[adjacent][0]:
+				reachable[adjacent][0] = explored[rail][0] + adjacent.length
+				reachable[adjacent][1] = rail
+				reachable[adjacent][2] = fwd
+
+	# If we get here, no path was found :(
+	return []
 
 
-# Recursive Function
-func _get_path_from_to_helper(start_rail: Node, forward: bool, visited_rails: Dictionary, destination_rail: Node) -> Dictionary:
-	if start_rail == destination_rail:
-		return visited_rails
+func _choose_node(reachable: Dictionary, destination: Rail) -> Rail:
+	var min_cost := INF
+	var best_rail: Rail = null
+	for rail in reachable:
+		var cost: float = reachable[rail][0]
+		cost += destination.translation.distance_squared_to(rail.translation)
 
-	var possbile_rails: Array = start_rail.get_connected_rails(forward)
-	var paths := []
-
-	for rail_node in possbile_rails:
-		forward = rail_node.get_connection_direction(start_rail)
-
-		var loop_detected: bool = false
-		for entry in visited_rails:
-			if rail_node == entry and forward == visited_rails[entry].forward:
-				loop_detected = true
-				break
-
-		if not loop_detected:
-			var visits := visited_rails.duplicate()
-			visits[rail_node] = {forward = forward, from = start_rail}
-			var outcome = _get_path_from_to_helper(rail_node, forward, visits, destination_rail)
-			if outcome.size() > 0:
-				paths.append(outcome)
-
-	if paths.size() == 0:
-		return {}
-
-	var min_length: int = paths[0].size()
-	var shortest_index := 0
-	for i in range(paths.size()):
-		if paths[i].size() < min_length:
-			min_length = paths[i].size()
-			shortest_index = i
-
-	visited_rails.merge(paths[shortest_index])
-	return paths[shortest_index]
+		if cost < min_cost:
+			min_cost = cost
+			best_rail = rail
+	assert(best_rail)
+	return best_rail
 
 
-func _backtrack_path(visited_rails: Dictionary, destination_rail: Node) -> Array:
-	var route = []
-	var current_rail = destination_rail
+func _build_path(rail: Rail, explored: Dictionary) -> Array:
+	var path := []
+	assert(rail in explored)
+	while rail:
+		path.append({"rail": rail, "forward": explored[rail][2]})
+		rail = explored[rail][1]
 
-	while current_rail != null:
-		route.append({rail = current_rail, forward = visited_rails[current_rail].forward})
-		current_rail = visited_rails[current_rail].from
-
-	route.invert()
-	return route
+	path.invert()
+	return path
 
 
 # Not called automaticly. From any instance or button, but very helpful.
@@ -309,7 +312,7 @@ func jump_player_to_station(station_table_index: int) -> void:
 
 	# Delete npcs with are crossing rails with player route to station
 	update_rail_connections()
-	var route_player_to_station: Array = get_path_from_to(player.currentRail, player.forward, new_station_node.rail)
+	var route_player_to_station: Array = get_path_from_to(player.currentRail, new_station_node.rail, player.forward)
 	for player_node in $Players.get_children():
 		if player_node == player or not player_node.is_in_group("Player"):
 			continue

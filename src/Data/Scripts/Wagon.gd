@@ -216,9 +216,11 @@ func registerDoors() -> void:
 		if child.is_in_group("PassengerDoor"):
 			if child.translation[2] > 0:
 				child.translation += Vector3(0,0,0.5)
+				child.side = DoorSide.RIGHT
 				rightDoors.append(child)
 			else:
 				child.translation -= Vector3(0,0,0.5)
+				child.side = DoorSide.LEFT
 				leftDoors.append(child)
 
 

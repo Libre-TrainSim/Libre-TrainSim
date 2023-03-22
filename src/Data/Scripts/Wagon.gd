@@ -216,9 +216,11 @@ func registerDoors() -> void:
 		if child.is_in_group("PassengerDoor"):
 			if child.translation[2] > 0:
 				child.translation += Vector3(0,0,0.5)
+				child.side = DoorSide.RIGHT
 				rightDoors.append(child)
 			else:
 				child.translation -= Vector3(0,0,0.5)
+				child.side = DoorSide.LEFT
 				leftDoors.append(child)
 
 
@@ -298,11 +300,10 @@ var leavingPassengerNodes := []
 ## on the given side, sends the routeInformation for that to the persons.
 func sendPersonsToDoor(doorDirection: int, proportion: float = 0.5) -> void:
 	leavingPassengerNodes.clear()
-	 #0: No platform, 1: at left side, 2: at right side, 3: at both sides
 	var possibleDoors := []
-	if doorDirection == 1 or doorDirection == 3: # Left
+	if doorDirection == PlatformSide.LEFT or doorDirection == PlatformSide.BOTH:
 		possibleDoors.append_array(leftDoors)
-	if doorDirection == 2 or doorDirection == 3: # Right
+	if doorDirection == PlatformSide.RIGHT or doorDirection == PlatformSide.BOTH:
 		possibleDoors.append_array(rightDoors)
 
 	if possibleDoors.empty():

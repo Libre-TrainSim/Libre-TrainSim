@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 var leave_wagon_timer: float = 0
 func handleWalk(delta: float) -> void:
 	# If Doors where closed to early, and the person is at the station..
-	if transitionToWagon == true and not (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
+	if transitionToWagon and not is_assigned_door_open():
 		if attachedWagon.player.current_station_node != attachedStation:
 			transitionToWagon = false
 			destinationPos.clear()
@@ -100,6 +100,11 @@ func handleWalk(delta: float) -> void:
 			rotation.y = atan(vector_delta.x/vector_delta.z)
 		else:
 			rotation.y = atan(vector_delta.x / vector_delta.z) + PI
+
+
+func is_assigned_door_open() -> bool:
+	assert(transitionToWagon)
+	return (attachedWagon.lastDoorRight and assignedDoor.side == DoorSide.RIGHT) or (attachedWagon.lastDoorLeft and assignedDoor.side == DoorSide.LEFT)
 
 
 func leave_current_wagon()-> void:

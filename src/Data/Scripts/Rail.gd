@@ -1,9 +1,9 @@
+class_name Rail
 extends WorldObject
 
 ## Documentation Notes:
 # Please be aware of the parallel Mode:
 # If 'parallel_rail_name != ""' All local train Settings apart from 'railType' and 'distance_to_parallel_rail' are deprecated. The Rail gets the rest information from parallel rail.
-
 
 export (String, FILE, "*.tscn,*.scn") var rail_type_path: String = "res://Resources/RailTypes/Default.tscn"
 export (float) var length: float

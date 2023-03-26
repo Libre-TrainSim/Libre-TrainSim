@@ -251,6 +251,8 @@ func update_map():
 		var sprite: Sprite
 		if despawn_point is RoutePointStation:
 			var station = world.get_signal(despawn_point.station_node_name)
+			if !station:
+				return
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
 		elif despawn_point is RoutePointDespawnPoint:
 			sprite = generate_rail_icon_at(despawn_point.rail_name, despawn_point.distance_on_rail, baked_route.back().forward)

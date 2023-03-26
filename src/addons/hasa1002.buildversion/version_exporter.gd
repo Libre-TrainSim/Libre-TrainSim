@@ -41,7 +41,7 @@ func build() -> void:
 		return
 
 	var custom_build := "" if ("master" in output[0] or "main" in output[0] or "release" in output[0]) else ".custom.%s"
-	
+
 	exit = OS.execute("git", ["status", "-s"], true, output, true)
 	if exit != 0:
 		printt(exit, output)
@@ -52,6 +52,27 @@ func build() -> void:
 		return
 
 	var dirty := " DIRTY BRANCH" if !output[0].empty() else ""
+	if dirty:
+		print("Modified files:")
+		print(output[0])
+		exit = OS.execute("git", ["diff"], true, output, true)
+		if exit != 0:
+			printt(exit, output)
+			push_warning("Failed to determine diff.")
+		else:
+			if ProjectSettings.has_setting("application/version/diff_ignore") and \
+					!ProjectSettings["application/version/diff_ignore"].empty():
+				var ignores := File.new()
+				var err := ignores.open(ProjectSettings.globalize_path( \
+						ProjectSettings["application/version/diff_ignore"]), \
+						File.READ)
+				var regex := RegEx.new()
+				regex.compile(ignores.get_as_text())
+				var res := regex.search(output[0])
+				if err == OK and res and res.get_start() == 0 and res.get_end() == len(output[0]) - 1:
+					dirty = ""
+					output[0] = "Ignored diff was found. Behaving as if being clean build."
+			print(output[0])
 
 	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], true, output, true)
 	if exit != 0:

@@ -2,7 +2,8 @@
 
 [ext_resource path="res://addons/libre_trainsim_modding_tools/new_mod_popup.gd" type="Script" id=1]
 
-[node name="Popup" type="WindowDialog"]
+[node name="Popup" type="AcceptDialog"]
+visible = true
 margin_left = 200.0
 margin_top = 220.0
 margin_right = 600.0
@@ -12,9 +13,6 @@ input_pass_on_modal_close_click = false
 popup_exclusive = true
 window_title = "Create a new mod..."
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -36,9 +34,9 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="Grid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 8.0
+margin_top = 28.0
 margin_right = 384.0
-margin_bottom = 96.0
+margin_bottom = 116.0
 custom_constants/vseparation = 8
 custom_constants/hseparation = 8
 columns = 2
@@ -61,6 +59,8 @@ rect_min_size = Vector2( 0, 24 )
 size_flags_horizontal = 3
 expand_to_text_length = true
 placeholder_text = "your_name_your_mod"
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="Label_Name" type="Label" parent="MarginContainer/VBoxContainer/Grid"]
 margin_top = 32.0
@@ -79,6 +79,8 @@ rect_min_size = Vector2( 0, 24 )
 size_flags_horizontal = 3
 expand_to_text_length = true
 placeholder_text = "Your Mod"
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="Label_Author" type="Label" parent="MarginContainer/VBoxContainer/Grid"]
 margin_top = 64.0
@@ -96,12 +98,7 @@ margin_bottom = 88.0
 size_flags_horizontal = 3
 expand_to_text_length = true
 placeholder_text = "Your Name"
+caret_blink = true
+caret_blink_speed = 0.5
 
-[node name="OK" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 112.0
-margin_right = 384.0
-margin_bottom = 136.0
-rect_min_size = Vector2( 0, 24 )
-text = "OK"
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/OK" to="." method="validate"]
+[connection signal="confirmed" from="." to="." method="validate"]

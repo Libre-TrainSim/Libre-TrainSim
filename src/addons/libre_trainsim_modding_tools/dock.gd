@@ -23,8 +23,6 @@ func _on_open_addons_dir_pressed() -> void:
 
 func _on_export_mod_pressed() -> void:
 	dir_select_dialog = FileDialog.new()
-	dir_select_dialog.rect_min_size = Vector2(500, 300)
-	dir_select_dialog.rect_size = Vector2(500, 300)
 	dir_select_dialog.resizable = true
 	dir_select_dialog.window_title = "Select Mod to Export"
 	dir_select_dialog.mode = FileDialog.MODE_OPEN_DIR
@@ -32,7 +30,7 @@ func _on_export_mod_pressed() -> void:
 	dir_select_dialog.current_dir = "res://Mods"
 	dir_select_dialog.connect("dir_selected", self, "_on_export_dir_selected")
 	base.add_child(dir_select_dialog)
-	dir_select_dialog.popup_centered()
+	dir_select_dialog.popup_centered_ratio()
 
 
 func _on_export_dir_selected(dir: String) -> void:
@@ -75,6 +73,12 @@ func _on_export_dir_selected(dir: String) -> void:
 	err = directory.copy(dir.plus_file("content.tres"), mod_path.plus_file("content.tres"))
 	if err != OK:
 		Logger.err("Unable to copy content.tres to mod folder! (Reason: %s)" % err, self)
+
+	var done_popup = AcceptDialog.new()
+	done_popup.window_title = "Success!"
+	done_popup.dialog_text = "Mod successfully exported to %s" % ProjectSettings.globalize_path(mod_path)
+	base.add_child(done_popup)
+	done_popup.popup_centered()
 
 
 func _get_imported_paths(file):

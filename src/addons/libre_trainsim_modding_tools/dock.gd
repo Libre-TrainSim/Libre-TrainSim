@@ -74,6 +74,12 @@ func _on_export_dir_selected(dir: String) -> void:
 	if err != OK:
 		Logger.err("Unable to copy content.tres to mod folder! (Reason: %s)" % err, self)
 
+	var done_popup = AcceptDialog.new()
+	done_popup.window_title = "Success!"
+	done_popup.dialog_text = "Mod successfully exported to %s" % ProjectSettings.globalize_path(mod_path)
+	base.add_child(done_popup)
+	done_popup.popup_centered()
+
 
 func _get_imported_paths(file):
 	var cfg = ConfigFile.new()

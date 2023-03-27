@@ -4,7 +4,7 @@ MENU_BACK,Back,Zurück,Indietro,戻る,Wroć,Назад,Atrás,Назад,Retour
 MENU_CONTENT,Content,Inhalt,Contenuti,コンテンツ,zawartość,Вміст,Contenido,Модули,Contenu
 MENU_CREATE,Create,Erstellen,Crea,作成,Utworz,Створити,Crear,Създаване,Créer
 MENU_SETTINGS,Settings,Einstellungen,Impostazioni,設定,Ustawienia,Налаштування,Configuración,Настройки,Paramètres
-MENU_ABOUT,About Libre TrainSim,Über Libre TrainSim,,,,,Acerca de,Относно,À propos de Libre TrainSim
+MENU_ABOUT,About Libre TrainSim,Über Libre TrainSim,Informazioni su Libre TrainSim,,,,Acerca de,Относно,À propos de Libre TrainSim
 MENU_QUIT,Quit,Beenden,Esci,終了,Wyjdź,Вийти,Salir,Изход,Quitter
 MENU_FEEDBACK_WANTED,We want your feedback!,Dein Feedback ist gefragt!,Dicci la tua opinione!,あなたのフェードバックが必要です,,Ваш відгук важливий!,¡Se busca tu opinión!,Обратна връзка,Nous voulons votre Avis !
 MENU_RELOAD,Reload,Aktualisieren,Ricarica,リロード,Odśwież,Перезавантажити,Recargar,Презареждане,Recharger
@@ -13,10 +13,10 @@ MENU_TRACKS:,Tracks:,Strecken:,Tracciati:,路線:,Tory,Траси:,Vías:,Лин
 MENU_SCENARIOS:,Scenarios:,Szenarien:,Scenari:,シナリオ:,Scenariusze,Сценарії:,Escenarios,Направления:,Scénarios :
 MENU_TRAIN:,Train:,Zug:,Treno:,列車:,Pociąg,Поїзди:,Tren:,Влакове:,Train :
 ,,,,,,,,,
-ABOUT_DEVELOPERS,Developers,Programmierer,,,,,Desarrolladores,Разработчици,Développeur⋅euse⋅s
-ABOUT_CONTRIBUTORS,Contributors,Unterstützer,,,,,Contribuidores,Сътрудници,Contributeur⋅trice⋅s
-ABOUT_TRANSLATORS,Translators,Übersetzer,,,,,Traductores,Преводачи,Traducteur⋅trice⋅s
-ABOUT_BIGTHANKYOU,Big thank you,Einen Großen Dank an,,,,,Muchas gracias a ti,Благодарим ви,Gros Merci
+ABOUT_DEVELOPERS,Developers,Programmierer,Sviluppatori,,,,Desarrolladores,Разработчици,Développeur⋅euse⋅s
+ABOUT_CONTRIBUTORS,Contributors,Unterstützer,Collaboratori,,,,Contribuidores,Сътрудници,Contributeur⋅trice⋅s
+ABOUT_TRANSLATORS,Translators,Übersetzer,Traduttori,,,,Traductores,Преводачи,Traducteur⋅trice⋅s
+ABOUT_BIGTHANKYOU,Big thank you,Einen Großen Dank an,Un grande ringraziamento a,,,,Muchas gracias a ti,Благодарим ви,Gros Merci
 MENU_TO_ADD_CONTENT,To add content you have to place .pck files at,"Um Inhalte hinzuzufügen, müssen Sie .pck Dateien hier platzieren:","Per aggiungere contenuti, copia il file .pck nella cartella",コンテンツを追加する場合は次の場所に.pckファイルを置いてください  ,Aby dodać zawartość musisz  umieścić pliki .Pck w,"Щоб додати вміст, вам потрібно вставити .pck файл сюди:",Para añadir contenido tienes que poner los ficheros .pck en,"За добавяне на модул, трябва да поставите файла с разширение .pck в:","Pour ajouter du contenu, vous devez placer les fichier .pck dans"
 MENU_CURRENT_LOADED_PACKS,Currently loaded Content Packs:,Momentan geladene Pakete,Pacchetti contenuti caricati:,現在ロードされているコンテンツパック:,Załadowane paczki zawartości,Зараз завантажені такі файли:,Paquetes de contenido cargados actualmente:,Текущи модули:,Packs de contenu (Content Pack) actuellement chargés :
 MENU_HINT_UPDATED_CONTENT_PACK,"Hint: If you updated a Content Pack, you have to restart the simulator.","Hinweis: Wenn Sie ein Paket aktualisieren, müssen Sie Libre TrainSim neustarten.","Suggerimento: se hai aggiornato un contenuto, devi riavviare il gioco.",ヒント:コンテンツをアップデートした場合は、シミュレーターを再起動してください,Jeżeli Załadowałeś zawartość musisz zrestartować gre,"Порада: Якщо ви оновили вміст пакунків, вам потрібно перезапустити гру","Sugerencia: Si actualizaste un Paquete de Contenido, debes reiniciar el simulador.","Съвет: При промяна в модулите, трябва да рестартирате симулатора.","Conseil : Si vous avez mis à jour un Pack de contenu (Content Pack), vous devez redémarrer le simulateur."
@@ -25,40 +25,40 @@ MENU_MUSIC:,Music: Follow That Dream by Luca Fraula,Musik: Follow That Dream von
 ,,,,,,,,,
 MENU_SETTINGS:,Settings:,Einstellungen:,Impostazioni:,設定:,Ustawienia,Налаштування:,Configuración:,Настройки:,Paramètres :
 MENU_FULLSCREEN,Fullscreen,Vollbild,Schermo intero,フルスクリーン,Pełny ekran,Повноекранний режим,Pantalla completa,На цял екран,Plein écran
-MENU_VSYNC,Enable Vertical Synchronisation,Vertikale Synchronisation aktivieren,,,,,,Вертикална синхронизация,
-MENU_FPS_LIMIT_TOGGLE,Enable FPS Limit,FPS-Limit aktivieren,,,,,,Ограничение на ЧКС,
-MENU_FPS_LIMIT,FPS Limit,FPS-Limit,,,,,,ЧКС,
+MENU_VSYNC,Enable Vertical Synchronisation,Vertikale Synchronisation aktivieren,Abilita Sincronia Verticale,,,,,Вертикална синхронизация,
+MENU_FPS_LIMIT_TOGGLE,Enable FPS Limit,FPS-Limit aktivieren,Abilita limitazione FPS,,,,,Ограничение на ЧКС,
+MENU_FPS_LIMIT,FPS Limit,FPS-Limit,Limitazione FPS,,,,,ЧКС,
 MENU_MAIN_VOLUME,Main Volume,Lautstärke,Volume,音量,Głośność,Гучність ,Volumen Principal,Основен звук,Volume principal
 MENU_GAME_VOLUME,Game Volume,Spiellautstärke,Volume di gioco,ゲームの音量,Głośność gry,Гучність гри,Volumen del Juego,Звук на играта,Volume du jeu
 MENU_MUSIC_VOLUME,Music Volume,Musiklautstärke,Volume di musica,音楽の音量,Głośność muzyki,Гучність музики,Volumen de la Música,Звук на музиката,Volume de la musique
 MENU_SHADOWS,Shadows,Schatten,Ombre,影,cienie,Тіні,Sombras,Сенки,Ombres
 MENU_VIEW_DISTANCE,View Distance,Sichtweite,Visibilità,描画距離,Dystans rysowania,Дальність огляду,Distancia de visión,Видимост,Distance de vue
-MENU_CHUNK_LOAD_ALL,Load all map chunks,Strecke komplett laden,,,,,,Зареждане на всички участъци на картата,Chargement de tous les morceaux de carte
-MENU_CHUNK_UNLOAD_DISTANCE,Chunk unloading distance,Streckenabschnittsentladedistanz,,,,,,Разстояние за изчезване на участъците на картата,Distance des morceaux non chargés
-MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Antialiasing,アンチエイリアス,Anti-aliasing,Екранне згладжування,Anti-Aliasing,Изглаждане,Anti-crénelage
+MENU_CHUNK_LOAD_ALL,Load all map chunks,Strecke komplett laden,Carica tutti i pezzi del tracciato,,,,,Зареждане на всички участъци на картата,Chargement de tous les morceaux de carte
+MENU_CHUNK_UNLOAD_DISTANCE,Chunk unloading distance,Streckenabschnittsentladedistanz,Distanza di scaricamento pezzi del tracciato,,,,,Разстояние за изчезване на участъците на картата,Distance des morceaux non chargés
+MENU_ANTI_ALIASING,Anti-Aliasing,Anti-Aliasing,Anti-aliasing,アンチエイリアス,Anti-aliasing,Екранне згладжування,Anti-Aliasing,Изглаждане,Anti-crénelage
 MENU_DISABLED,Disabled,Deaktiviert,Disabilitato,無効,Dezaktywowane,Туман,Desactivado,Изключено,Désactivé
 MENU_FOG,Fog,Nebel,Nebbia,霧 ,Mgła,Мова,Niebla,Мъгла,Brouillard
 MENU_LANGUAGE,Language,Sprache,Lingua,言語,Język,,Idioma,Език,Langue
-MENU_AUTOMATIC_FRAMEDROP_FIX,Automatic Framedrop Fix,Automatischer Framedrop Fix,,,,,Corrección automática de caída de fotogramas,Автоматично коригиране на честотата на кадрите,Correction automatique de l'effet de cadre
-MENU_PERSONS,Enable Passengers,Passagiere,,,,,Activar pasajeros,Пътници,Activer les passagers
-MENU_DYNAMIC_LIGHTS,Dynamic Lights,dynamische Lichter,,,,,Luces dinámicas,Динамични светлини,Lumières dynamiques
-MENU_GENERAL_SETTINGS,General,Allgemein,,,,,,,
-MENU_VISUAL_SETTINGS,Visuals,Grafik,,,,,Visuales,Графика,Visuels
-MENU_AUDIO_SETTINGS,Audio,Audio,,,,,Audio,Звук,Audio
-MENU_INPUT_SETTINGS,Controls,Steuerung,,,,,,,
-MENU_DIFFICULTY_SETTINGS,Difficulty,Schwierigkeit,,,,,Dificultad,Трудност,Difficulté
-MENU_DIFFICULTY_PZB,Enable PZB,PZB einschalten,,,,,Activar PZB,Включване на PZB,Activer PZB
-MENU_DIFFICULTY_SIFA,Enable SIFA,SiFa einschalten,,,,,Activar Dispositivo HM,Включване на SIFA,Activer SIFA
-MENU_ACCESSIBILITY_SETTINGS,Accessibility,Barrierefreiheit,,,,,,,
-MENU_GAMEPLAY_SETTINGS,Gameplay,,,,,,,,
-MENU_DISPLAY_SETTINGS,Display,Anzeige,,,,,,,
-MENU_DETAIL_SETTINGS,Details,Details,,,,,,,
-MENU_SETTINGS_RESET,Reset to default,Einstellungen zurücksetzen,,,,,,,
-MENU_SETTINGS_RESET_CONFIRM_TEXT,Are you sure you want to reset all of your settings to their defaults?\nWarning: This is not reversible!,Wollen Sie wirklich alle Einstellungen zurücksetzen?\nAchtung: Dies ist unumkehrbar!,,,,,,,
-MENU_LAYOUTS_FILE_IO,Save or load layouts,Zuweisungen speichern oder laden,,,,,,,
-MENU_LAYOUT_IMPORT,Import Layout,Zuweisungen importieren,,,,,,,
-MENU_LAYOUT_EXPORT,Export Layout,Zuweisungen exportieren,,,,,,,
-MENU_LAYOUTS,Input presets,Eingabe-Voreinstellungen,,,,,,,
+MENU_AUTOMATIC_FRAMEDROP_FIX,Automatic Framedrop Fix,Automatischer Framedrop Fix,Fix automatico Framedrop,,,,Corrección automática de caída de fotogramas,Автоматично коригиране на честотата на кадрите,Correction automatique de l'effet de cadre
+MENU_PERSONS,Enable Passengers,Passagiere,Abilita passeggeri,,,,Activar pasajeros,Пътници,Activer les passagers
+MENU_DYNAMIC_LIGHTS,Dynamic Lights,dynamische Lichter,Luci dinamiche,,,,Luces dinámicas,Динамични светлини,Lumières dynamiques
+MENU_GENERAL_SETTINGS,General,Allgemein,Generali,,,,,,
+MENU_VISUAL_SETTINGS,Visuals,Grafik,Grafica,,,,Visuales,Графика,Visuels
+MENU_AUDIO_SETTINGS,Audio,Audio,Sonoro,,,,Audio,Звук,Audio
+MENU_INPUT_SETTINGS,Controls,Steuerung,Controlli,,,,,,
+MENU_DIFFICULTY_SETTINGS,Difficulty,Schwierigkeit,Difficoltà,,,,Dificultad,Трудност,Difficulté
+MENU_DIFFICULTY_PZB,Enable PZB,PZB einschalten,Abilita PZB,,,,Activar PZB,Включване на PZB,Activer PZB
+MENU_DIFFICULTY_SIFA,Enable SIFA,SiFa einschalten,Abilita dispositivo vigilante,,,,Activar Dispositivo HM,Включване на SIFA,Activer SIFA
+MENU_ACCESSIBILITY_SETTINGS,Accessibility,Barrierefreiheit,Accessibilità,,,,,,
+MENU_GAMEPLAY_SETTINGS,Gameplay,,Dinamiche di gioco,,,,,,
+MENU_DISPLAY_SETTINGS,Display,Anzeige,Visualizzazione,,,,,,
+MENU_DETAIL_SETTINGS,Details,Details,Dettagli,,,,,,
+MENU_SETTINGS_RESET,Reset to default,Einstellungen zurücksetzen,Ripristina predefiniti,,,,,,
+MENU_SETTINGS_RESET_CONFIRM_TEXT,Are you sure you want to reset all of your settings to their defaults?\nWarning: This is not reversible!,Wollen Sie wirklich alle Einstellungen zurücksetzen?\nAchtung: Dies ist unumkehrbar!,Si è sicuri di voler ripristinare le impostazioni predefinite?\nAttenzione: operazione non reversibile!,,,,,,
+MENU_LAYOUTS_FILE_IO,Save or load layouts,Zuweisungen speichern oder laden,Salva o carica layout,,,,,,
+MENU_LAYOUT_IMPORT,Import Layout,Zuweisungen importieren,Importa Layout,,,,,,
+MENU_LAYOUT_EXPORT,Export Layout,Zuweisungen exportieren,Esporta Layout,,,,,,
+MENU_LAYOUTS,Input presets,Eingabe-Voreinstellungen,Importa presets,,,,,,
 MENU_LAYOUT_LTS,Use Libre Train Sim layout,Zuweisungen von Libre Train Sim verwenden,,,,,,,
 MENU_LAYOUT_LTS_BUTTON,Libre Train Sim,,,,,,,,
 MENU_LAYOUT_LTS_CONFIRM_TITLE,Layout: Libre Train Sim,,,,,,,,
@@ -69,15 +69,15 @@ MENU_LAYOUT_OPENBVE_CONFIRM_TITLE,Layout: OpenBVE,,,,,,,,
 MENU_LAYOUT_OPENBVE_CONFIRM_TEXT,Are you sure you want to change your input map to the OpenBVE preset?\nWarning: This is not reversible!,Wollen Sie wirklich Ihre Zuweisungen durch die OpenBVE-Vorgaben ersetzen?\nAchtung: Dies ist unumkehrbar!,,,,,,,
 MENU_INPUT_MAP,Input map,Zuweisungen,,,,,,,
 ,,,,,,,,,
-INPUT_UI_ACCEPT,Ok,Ok,,,,,,,
-INPUT_UI_SELECT,Select,Auswählen,,,,,,,
-INPUT_UI_CANCEL,Back,Zurück,,,,,,,
-INPUT_UI_FOCUS_NEXT,Menu: Next element,Menü: Nächstes Element,,,,,,,
-INPUT_UI_FOCUS_PREV,Menu: Previous element,Menü: Vorheriges Element,,,,,,,
-INPUT_UI_LEFT,Menu: Left,Menü: Links,,,,,,,
-INPUT_UI_RIGHT,Menu: Right,Menü: Rechts,,,,,,,
-INPUT_UI_UP,Menu: Up,Menü: Hoch,,,,,,,
-INPUT_UI_DOWN,Menu: Down,Menü: Runter,,,,,,,
+INPUT_UI_ACCEPT,Ok,Ok,Ok,,,,,,
+INPUT_UI_SELECT,Select,Auswählen,Seleziona,,,,,,
+INPUT_UI_CANCEL,Back,Zurück,Indietro,,,,,,
+INPUT_UI_FOCUS_NEXT,Menu: Next element,Menü: Nächstes Element,Menu: elemento successivo,,,,,,
+INPUT_UI_FOCUS_PREV,Menu: Previous element,Menü: Vorheriges Element,Menu: elemento precedente,,,,,,
+INPUT_UI_LEFT,Menu: Left,Menü: Links,Menu: sinistra,,,,,,
+INPUT_UI_RIGHT,Menu: Right,Menü: Rechts,Menu: destra,,,,,,
+INPUT_UI_UP,Menu: Up,Menü: Hoch,Menu: sopra,,,,,,
+INPUT_UI_DOWN,Menu: Down,Menü: Runter,Menu: sotto,,,,,,
 INPUT_UI_PAGE_UP,Page up,Bild hoch,,,,,,,
 INPUT_UI_PAGE_DOWN,Page down,Bild runter,,,,,,,
 INPUT_UI_HOME,Home menu,Hauptmenü,,,,,,,
@@ -165,21 +165,21 @@ DOWNLOAD_RESOURCE_IMPORTER,Download Resource Importer,Ressourcen-Importierer her
 MENU_IMPORT,Import…,Importieren…,,,,,Importar…,Внасяне…,Importer…
 MENU_OPEN_ADDONS,Show Addon Folder,Addonordner anzeigen,,,,,Mostrar la carpeta de los Complementos,Показване на папката с добавки,Afficher le dossier de contenu addictionnel (addon)
 ,,,,,,,,,
-SAVE_AND_EXIT,Save and exit,Speichern und beenden,,,,,Guardar y salir,Записване и излизане,Sauvegarder et quitter
-EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,,,,,Salir sin guardar,Излизане без записване,Quitter sans sauvegarder
-SAVE,Save,Speichern,,,,,,Записване,Sauvegarder
+SAVE_AND_EXIT,Save and exit,Speichern und beenden,Salva ed esci,,,,Guardar y salir,Записване и излизане,Sauvegarder et quitter
+EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,Esci senza salvare,,,,Salir sin guardar,Излизане без записване,Quitter sans sauvegarder
+SAVE,Save,Speichern,Salva,,,,,Записване,Sauvegarder
 ,,,,,,,,,
-TRACK_EDITOR,Track Editor,Strecken-Editor,,,,,Editor de vías,Редактор на линиите,Éditeur de parcours
-SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,,,,,Editor de escenarios,Редактор на направленията,Éditeur de scénario
-SELECT,Select,Auswählen,,,,,Seleccionar,Избиране,Sélectionner
-PLAY,Play,Spielen,,,,,Jugar,Начало,Jouer
-CREATE,Create,Erstellen,,,,,Crear,Създаване,Créer
-DUPLICATE,Duplicate,Duplizieren,,,,,Duplicar,Дублиране,Dupliquer
-EDIT,Edit,Bearbeiten,,,,,Editar,Редактиране,Éditer
-DELETE,Delete,Löschen,,,,,Eliminar,Изтриване,Supprimer
+TRACK_EDITOR,Track Editor,Strecken-Editor,Editor tracciato,,,,Editor de vías,Редактор на линиите,Éditeur de parcours
+SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,Editor scenario,,,,Editor de escenarios,Редактор на направленията,Éditeur de scénario
+SELECT,Select,Auswählen,Seleziona,,,,Seleccionar,Избиране,Sélectionner
+PLAY,Play,Spielen,Gioca,,,,Jugar,Начало,Jouer
+CREATE,Create,Erstellen,Crea,,,,Crear,Създаване,Créer
+DUPLICATE,Duplicate,Duplizieren,Duplica,,,,Duplicar,Дублиране,Dupliquer
+EDIT,Edit,Bearbeiten,Modifica,,,,Editar,Редактиране,Éditer
+DELETE,Delete,Löschen,Cancella,,,,Eliminar,Изтриване,Supprimer
 ,,,,,,,,,
-SCENARIOS:,Scenarios:,Szenarien:,,,,,Escenarios:,Направления:,Scénarios :
+SCENARIOS:,Scenarios:,Szenarien:,Scenari:,,,,Escenarios:,Направления:,Scénarios :
 ,,,,,,,,,
 DELETE_CONFIRMATION_TRACK,Do you really want to remove these files? The track itself with all associated scenarios will be deleted!,Möchten Sie wirklich die Strecke mit allen ihren Szenarien löschen?,,,,,¿Está seguro de que desea eliminar estos archivos? ¡La vía y todos los escenarios asociados serán eliminados!,Искате ли да изтриете тези файлове? Линията и нейните направления ще бъдат изтрити!,Voulez-vous vraiment supprimer ces fichiers ? Le parcours lui-même avec tous les scénarios associés seront supprimés !
-CANCEL,Cancel,Abbrechen,,,,,Cancelar,Отказ,Annuler
+CANCEL,Cancel,Abbrechen,Cancella,,,,Cancelar,Отказ,Annuler
 DELETE_CONFIRMATION_SCENARIO,Do you really want to delete these scenarios?,Möchten Sie wirklich folgende Szenarien löschen?,,,,,¿Está seguro de que desea eliminar estos escenarios?,Искате ли да изтриете тези направления?,Voulez-vous vraiment supprimer ces scénarios ?

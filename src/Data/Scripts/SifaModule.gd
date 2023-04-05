@@ -21,7 +21,7 @@ func _on_settings_changed() -> void:
 
 	is_sifa_enabled = (not Root.EasyMode) and jSettings.get_sifa()
 	set_process(is_sifa_enabled)
-	set_process_unhandled_key_input(is_sifa_enabled)
+	set_process_unhandled_input(is_sifa_enabled)
 
 
 # _force_enabled(true) = enabled
@@ -29,7 +29,7 @@ func _on_settings_changed() -> void:
 func _force_enabled(is_enabled: bool) -> void:
 	is_sifa_enabled = is_enabled
 	set_process(is_enabled)
-	set_process_unhandled_key_input(is_enabled)
+	set_process_unhandled_input(is_enabled)
 
 
 func _process(_delta: float) -> void:
@@ -39,7 +39,7 @@ func _process(_delta: float) -> void:
 		$SifaTimer.start()
 
 
-func _unhandled_key_input(_event: InputEventKey) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("SiFa"):
 		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
 		$SifaTimer.start()

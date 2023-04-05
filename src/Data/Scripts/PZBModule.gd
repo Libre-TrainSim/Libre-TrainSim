@@ -72,7 +72,7 @@ func _on_settings_changed() -> void:
 	else:
 		pzb_mode = PZBMode.DISABLED
 	set_process(is_pzb_enabled)
-	set_process_unhandled_key_input(is_pzb_enabled)
+	set_process_unhandled_input(is_pzb_enabled)
 	emit_signal("pzb_changed", self)
 
 
@@ -80,7 +80,7 @@ func _on_settings_changed() -> void:
 # _force_enabled(false) = disabled
 func _force_enabled(is_enabled: bool) -> void:
 	set_process(is_enabled)
-	set_process_unhandled_key_input(is_enabled)
+	set_process_unhandled_input(is_enabled)
 
 	if not is_enabled:
 		pzb_mode = PZBMode.DISABLED
@@ -158,7 +158,7 @@ func _process(_delta: float) -> void:
 	_check_restrictive_mode()
 
 
-func _unhandled_key_input(_event: InputEventKey) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pzb_ack"):
 		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
 

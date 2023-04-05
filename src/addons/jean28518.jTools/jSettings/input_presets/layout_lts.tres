@@ -1,16 +1,9 @@
-[gd_resource type="Resource" load_steps=90 format=2]
+[gd_resource type="Resource" load_steps=88 format=2]
 
 [ext_resource path="res://addons/jean28518.jTools/jSettings/input_map_resource.gd" type="Script" id=1]
 
 [sub_resource type="InputEventKey" id=52]
 scancode = 49
-
-[sub_resource type="InputEventKey" id=34]
-scancode = 16777217
-
-[sub_resource type="InputEventJoypadButton" id=35]
-device = -1
-button_index = 11
 
 [sub_resource type="InputEventKey" id=59]
 scancode = 48
@@ -25,10 +18,9 @@ button_index = 8
 [sub_resource type="InputEventKey" id=48]
 scancode = 72
 
-[sub_resource type="InputEventJoypadMotion" id=49]
+[sub_resource type="InputEventJoypadButton" id=89]
 device = -1
-axis = 6
-axis_value = 1.0
+button_index = 13
 
 [sub_resource type="InputEventKey" id=57]
 control = true
@@ -45,26 +37,22 @@ scancode = 50
 [sub_resource type="InputEventKey" id=50]
 scancode = 32
 
-[sub_resource type="InputEventJoypadMotion" id=51]
+[sub_resource type="InputEventJoypadButton" id=90]
 device = -1
-axis = 7
-axis_value = 1.0
-
-[sub_resource type="InputEventJoypadMotion" id=38]
-device = -1
-axis = 1
-axis_value = -1.0
 
 [sub_resource type="InputEventKey" id=39]
 scancode = 16777232
 
-[sub_resource type="InputEventJoypadMotion" id=40]
+[sub_resource type="InputEventJoypadButton" id=91]
 device = -1
-axis = 1
-axis_value = 1.0
+button_index = 6
 
 [sub_resource type="InputEventKey" id=41]
 scancode = 16777234
+
+[sub_resource type="InputEventJoypadButton" id=92]
+device = -1
+button_index = 4
 
 [sub_resource type="InputEventKey" id=54]
 control = true
@@ -74,21 +62,19 @@ scancode = 65
 [sub_resource type="InputEventKey" id=83]
 scancode = 83
 
-[sub_resource type="InputEventJoypadMotion" id=42]
-device = -1
-axis = 3
-axis_value = -1.0
-
 [sub_resource type="InputEventKey" id=43]
 scancode = 16777233
 
-[sub_resource type="InputEventJoypadMotion" id=44]
+[sub_resource type="InputEventJoypadButton" id=93]
 device = -1
-axis = 3
-axis_value = 1.0
+button_index = 7
 
 [sub_resource type="InputEventKey" id=45]
 scancode = 16777231
+
+[sub_resource type="InputEventJoypadButton" id=94]
+device = -1
+button_index = 5
 
 [sub_resource type="InputEventKey" id=69]
 control = true
@@ -102,6 +88,10 @@ scancode = 16777224
 
 [sub_resource type="InputEventKey" id=33]
 scancode = 79
+
+[sub_resource type="InputEventJoypadButton" id=95]
+device = -1
+button_index = 12
 
 [sub_resource type="InputEventKey" id=31]
 scancode = 73
@@ -127,10 +117,6 @@ scancode = 68
 
 [sub_resource type="InputEventKey" id=67]
 scancode = 69
-
-[sub_resource type="InputEventJoypadButton" id=68]
-device = -1
-button_index = 2
 
 [sub_resource type="InputEventKey" id=82]
 scancode = 87
@@ -164,9 +150,12 @@ scancode = 16777255
 [sub_resource type="InputEventKey" id=27]
 scancode = 66
 
-[sub_resource type="InputEventJoypadButton" id=28]
+[sub_resource type="InputEventKey" id=34]
+scancode = 16777217
+
+[sub_resource type="InputEventJoypadButton" id=35]
 device = -1
-button_index = 3
+button_index = 11
 
 [sub_resource type="InputEventKey" id=61]
 scancode = 51
@@ -189,25 +178,29 @@ scancode = 56
 [sub_resource type="InputEventKey" id=85]
 scancode = 16777236
 
+[sub_resource type="InputEventJoypadButton" id=96]
+device = -1
+button_index = 1
+
 [sub_resource type="InputEventKey" id=87]
 scancode = 16777224
+
+[sub_resource type="InputEventJoypadButton" id=97]
+device = -1
+button_index = 2
 
 [sub_resource type="InputEventKey" id=86]
 scancode = 16777230
 
+[sub_resource type="InputEventJoypadButton" id=98]
+device = -1
+button_index = 3
+
 [sub_resource type="InputEventKey" id=77]
 scancode = 70
 
-[sub_resource type="InputEventJoypadButton" id=78]
-device = -1
-button_index = 12
-
 [sub_resource type="InputEventKey" id=79]
 scancode = 82
-
-[sub_resource type="InputEventJoypadButton" id=80]
-device = -1
-button_index = 13
 
 [sub_resource type="InputEventKey" id=2]
 scancode = 68
@@ -223,16 +216,8 @@ scancode = 16777237
 [sub_resource type="InputEventKey" id=36]
 scancode = 16777244
 
-[sub_resource type="InputEventJoypadButton" id=37]
-device = -1
-button_index = 4
-
 [sub_resource type="InputEventKey" id=46]
 scancode = 16777245
-
-[sub_resource type="InputEventJoypadButton" id=47]
-device = -1
-button_index = 5
 
 [sub_resource type="InputEventKey" id=7]
 scancode = 16777221
@@ -311,24 +296,24 @@ input_map = {
 "Cabin View": [ SubResource( 52 ) ],
 "FreeCamera": [ SubResource( 59 ) ],
 "FrontLight": [ SubResource( 55 ), SubResource( 56 ) ],
-"Horn": [ SubResource( 48 ), SubResource( 49 ) ],
+"Horn": [ SubResource( 48 ), SubResource( 89 ) ],
 "InsideLight": [ SubResource( 57 ), SubResource( 58 ) ],
 "Outer View": [ SubResource( 53 ) ],
-"SiFa": [ SubResource( 50 ), SubResource( 51 ) ],
-"acc+": [ SubResource( 38 ), SubResource( 39 ) ],
-"acc-": [ SubResource( 40 ), SubResource( 41 ) ],
+"SiFa": [ SubResource( 50 ), SubResource( 90 ) ],
+"acc+": [ SubResource( 39 ), SubResource( 91 ) ],
+"acc-": [ SubResource( 41 ), SubResource( 92 ) ],
 "autopilot": [ SubResource( 54 ) ],
 "backward": [ SubResource( 83 ) ],
-"brake+": [ SubResource( 42 ), SubResource( 43 ) ],
-"brake-": [ SubResource( 44 ), SubResource( 45 ) ],
+"brake+": [ SubResource( 43 ), SubResource( 93 ) ],
+"brake-": [ SubResource( 45 ), SubResource( 94 ) ],
 "debug": [ SubResource( 69 ) ],
 "delete": [ SubResource( 70 ) ],
-"doorClose": [ SubResource( 33 ) ],
+"doorClose": [ SubResource( 33 ), SubResource( 95 ) ],
 "doorLeft": [ SubResource( 31 ), SubResource( 32 ) ],
 "doorRight": [ SubResource( 29 ), SubResource( 30 ) ],
 "down": [ SubResource( 84 ) ],
 "duplicate": [ SubResource( 3 ) ],
-"engine": [ SubResource( 67 ), SubResource( 68 ) ],
+"engine": [ SubResource( 67 ) ],
 "forward": [ SubResource( 82 ) ],
 "fullscreen": [ SubResource( 81 ) ],
 "ingame_pause": [ SubResource( 76 ) ],
@@ -337,7 +322,7 @@ input_map = {
 "map_open": [ SubResource( 73 ), SubResource( 74 ) ],
 "nextTable": [ SubResource( 60 ) ],
 "open_debug_ui": [ SubResource( 88 ) ],
-"pantograph": [ SubResource( 27 ), SubResource( 28 ) ],
+"pantograph": [ SubResource( 27 ) ],
 "pause": [ SubResource( 34 ), SubResource( 35 ) ],
 "player_camera_3": [ SubResource( 61 ) ],
 "player_camera_4": [ SubResource( 62 ) ],
@@ -345,16 +330,16 @@ input_map = {
 "player_camera_6": [ SubResource( 64 ) ],
 "player_camera_7": [ SubResource( 65 ) ],
 "player_camera_8": [ SubResource( 66 ) ],
-"pzb_ack": [ SubResource( 85 ) ],
-"pzb_command": [ SubResource( 87 ) ],
-"pzb_free": [ SubResource( 86 ) ],
-"reverser+": [ SubResource( 77 ), SubResource( 78 ) ],
-"reverser-": [ SubResource( 79 ), SubResource( 80 ) ],
+"pzb_ack": [ SubResource( 85 ), SubResource( 96 ) ],
+"pzb_command": [ SubResource( 87 ), SubResource( 97 ) ],
+"pzb_free": [ SubResource( 86 ), SubResource( 98 ) ],
+"reverser+": [ SubResource( 77 ) ],
+"reverser-": [ SubResource( 79 ) ],
 "right": [ SubResource( 2 ) ],
 "save": [ SubResource( 6 ) ],
 "shift": [ SubResource( 5 ) ],
-"trainInfo": [ SubResource( 36 ), SubResource( 37 ) ],
-"trainInfoAbove": [ SubResource( 46 ), SubResource( 47 ) ],
+"trainInfo": [ SubResource( 36 ) ],
+"trainInfoAbove": [ SubResource( 46 ) ],
 "ui_accept": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "ui_cancel": [ SubResource( 11 ), SubResource( 12 ) ],
 "ui_down": [ SubResource( 21 ), SubResource( 22 ) ],

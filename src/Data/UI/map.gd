@@ -9,7 +9,7 @@ enum MapStatus {
 var map_status: int = MapStatus.CLOSED
 
 
-func _unhandled_key_input(_event):
+func _unhandled_input(_event):
 	if Input.is_action_just_pressed("map_open"):
 		map_status = (map_status + 1) % MapStatus.size()
 		match map_status:

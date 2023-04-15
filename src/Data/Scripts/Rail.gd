@@ -116,7 +116,7 @@ func update_parallel_rail_settings() -> void:
 	if parallel_rail_name == "":
 		return
 	parallel_rail = get_parent().get_node(parallel_rail_name)
-	if parallel_rail == null:
+	if !is_instance_valid(parallel_rail):
 		Logger.err("Cant find parallel rail. Updating Rail canceled..", self)
 		return
 
@@ -238,7 +238,7 @@ func get_global_transform_at_distance(distance: float) -> Transform:
 
 # local to this rail
 func get_local_transform_at_distance(distance: float) -> Transform:
-	if parallel_rail_name == "":
+	if !is_instance_valid(parallel_rail):
 		return Transform( \
 			Basis() \
 				.rotated(Vector3(1,0,0), get_tend_at_distance(distance)) \
@@ -246,18 +246,16 @@ func get_local_transform_at_distance(distance: float) -> Transform:
 				.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)), \
 			 get_local_pos_at_distance(distance) \
 		)
-	else:
-		if parallel_rail == null:
-			update_parallel_rail_settings()
-		var parDistance: float = distance/length * parallel_rail.length
-		return Transform(\
-			Basis()\
-				.rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance))\
-				.rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance))\
-				.rotated(Vector3(0,1,0), parallel_rail.circle_get_rad(parallel_rail.radius, parDistance)),\
-			parallel_rail.get_shifted_local_pos_at_distance(parDistance, distance_to_parallel_rail)\
-			+ ((parallel_rail.start_pos-start_pos).rotated(Vector3(0,1,0), -rotation.y))\
-		)
+	update_parallel_rail_settings()
+	var parDistance: float = distance/length * parallel_rail.length
+	return Transform(\
+		Basis()\
+			.rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance))\
+			.rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance))\
+			.rotated(Vector3(0,1,0), parallel_rail.circle_get_rad(parallel_rail.radius, parDistance)),\
+		parallel_rail.get_shifted_local_pos_at_distance(parDistance, distance_to_parallel_rail)\
+		+ ((parallel_rail.start_pos-start_pos).rotated(Vector3(0,1,0), -rotation.y))\
+	)
 
 
 func register_signal(name: String, distance: float) -> void:

@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  GODOT_VERSION: 3.5.1
+  GODOT_VERSION: 3.5.2
   EXPORT_NAME: Libre_TrainSim
 
 jobs:

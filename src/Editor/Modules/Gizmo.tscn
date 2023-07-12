@@ -95,7 +95,7 @@ mesh = SubResource( 12 )
 material/0 = SubResource( 5 )
 
 [node name="z-axis" type="StaticBody" parent="."]
-transform = Transform( 4.37114e-08, -3.82137e-15, -1, -8.74228e-08, -1, 0, -1, 8.74228e-08, -4.37114e-08, 0, 0, -4 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="z-axis"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
@@ -117,10 +117,13 @@ material/0 = SubResource( 9 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
 shape = SubResource( 10 )
 
+[connection signal="input_event" from="x-axis" to="." method="_on_axis_input_event"]
 [connection signal="mouse_entered" from="x-axis" to="." method="_on_xaxis_mouse_entered"]
 [connection signal="mouse_exited" from="x-axis" to="." method="_on_xaxis_mouse_exited"]
+[connection signal="input_event" from="y-axis" to="." method="_on_axis_input_event"]
 [connection signal="mouse_entered" from="y-axis" to="." method="_on_yaxis_mouse_entered"]
 [connection signal="mouse_exited" from="y-axis" to="." method="_on_yaxis_mouse_exited"]
+[connection signal="input_event" from="z-axis" to="." method="_on_axis_input_event"]
 [connection signal="mouse_entered" from="z-axis" to="." method="_on_zaxis_mouse_entered"]
 [connection signal="mouse_exited" from="z-axis" to="." method="_on_zaxis_mouse_exited"]
 [connection signal="mouse_entered" from="x_rot" to="." method="_on_x_rot_mouse_entered"]

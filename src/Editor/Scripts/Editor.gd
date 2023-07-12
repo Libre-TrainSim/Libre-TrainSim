@@ -843,7 +843,7 @@ func object_has_active_gizmo(object: Node) -> bool:
 	# Iterate over children and return true if an ACTIVE gizmo is found
 	for node in object.get_children():
 		if node.is_in_group("Gizmo"):
-			if node.any_axis_active():
+			if node.any_movement_axis_active() or node.x_rot_active:
 				return true
 	return false
 

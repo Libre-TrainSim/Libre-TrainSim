@@ -1,6 +1,13 @@
 extends Spatial
 
 
+export var x_axis_color: Color
+export var y_axis_color: Color
+export var z_axis_color: Color
+export var x_axis_color_hover: Color
+export var y_axis_color_hover: Color
+export var z_axis_color_hover: Color
+
 var x_active := false
 var y_active := false
 var z_active := false
@@ -80,6 +87,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			y_active = false
 			z_active = false
 			x_rot_active = false
+			
+			$"x-axis/MeshInstance".get_surface_material(0).emission  = x_axis_color
+			$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color
+			$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color
+
+
+func _process(delta: float) -> void:
+	# Make the gizmo always have the same size on screen
+	scale = Vector3(0.005, 0.005, 0.005) * (get_viewport().get_camera().global_translation - global_translation).length()
 
 
 func any_movement_axis_active() -> bool:
@@ -88,23 +104,35 @@ func any_movement_axis_active() -> bool:
 
 func _on_xaxis_mouse_entered() -> void:
 	x_hovered = true
+	if not any_movement_axis_active():
+		$"x-axis/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
 
 func _on_xaxis_mouse_exited() -> void:
 	x_hovered = false
+	if not x_active:
+		$"x-axis/MeshInstance".get_surface_material(0).emission = x_axis_color
 
 
 func _on_yaxis_mouse_entered() -> void:
 	y_hovered = true
+	if not any_movement_axis_active():
+		$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
 
 func _on_yaxis_mouse_exited() -> void:
 	y_hovered = false
+	if not y_active:
+		$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color
 
 
 func _on_zaxis_mouse_entered() -> void:
 	z_hovered = true
+	if not any_movement_axis_active():
+		$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
 
 func _on_zaxis_mouse_exited() -> void:
 	z_hovered = false
+	if not z_active:
+		$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color
 
 
 func _on_x_rot_mouse_entered() -> void:

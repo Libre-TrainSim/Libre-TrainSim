@@ -1,11 +1,15 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Editor/Scripts/Gizmo.gd" type="Script" id=1]
 
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 4.5, 0.5, 0.5 )
+[sub_resource type="CylinderShape" id=15]
+height = 26.0
+radius = 4.0
 
 [sub_resource type="CylinderMesh" id=11]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 20.0
 
 [sub_resource type="SpatialMaterial" id=3]
 flags_no_depth_test = true
@@ -17,10 +21,9 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 4.5, 0.5, 0.5 )
-
-[sub_resource type="CylinderMesh" id=12]
+[sub_resource type="CylinderMesh" id=14]
+top_radius = 0.0
+height = 4.0
 
 [sub_resource type="SpatialMaterial" id=5]
 flags_no_depth_test = true
@@ -31,11 +34,6 @@ emission = Color( 0, 1, 0, 1 )
 emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
-
-[sub_resource type="BoxShape" id=6]
-extents = Vector3( 4.5, 0.5, 0.5 )
-
-[sub_resource type="CylinderMesh" id=13]
 
 [sub_resource type="SpatialMaterial" id=7]
 flags_no_depth_test = true
@@ -69,52 +67,72 @@ radius = 7.0
 
 [node name="Gizmo" type="Spatial" groups=["Gizmo"]]
 script = ExtResource( 1 )
+x_axis_color = Color( 1, 0, 0, 1 )
+y_axis_color = Color( 0, 1, 0, 1 )
+z_axis_color = Color( 0, 0, 1, 1 )
+x_axis_color_hover = Color( 1, 0.5, 0.5, 1 )
+y_axis_color_hover = Color( 0.5, 1, 0.5, 1 )
+z_axis_color_hover = Color( 0.5, 0.5, 1, 1 )
 
 [node name="x-axis" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="x-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+shape = SubResource( 15 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="x-axis"]
-transform = Transform( -2.18557e-08, -4.5, 0, 0.5, -1.96701e-07, 0, 0, 0, 0.5, 1, 0, 0 )
+[node name="MeshInstance" type="MeshInstance" parent="x-axis"]
 mesh = SubResource( 11 )
 material/0 = SubResource( 3 )
 
+[node name="MeshInstance" type="MeshInstance" parent="x-axis/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 3 )
+
 [node name="y-axis" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="y-axis"]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 4 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+shape = SubResource( 15 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="y-axis"]
-transform = Transform( 0.5, 0, 0, 0, 4.5, 0, 0, 0, 0.5, 0, 1, 0 )
-mesh = SubResource( 12 )
+[node name="MeshInstance" type="MeshInstance" parent="y-axis"]
+mesh = SubResource( 11 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="y-axis/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
 material/0 = SubResource( 5 )
 
 [node name="z-axis" type="StaticBody" parent="."]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 4 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="z-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 6 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+shape = SubResource( 15 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="z-axis"]
-transform = Transform( -2.18557e-08, -4.5, 0, 0.5, -1.96701e-07, 0, -4.23516e-22, 0, 0.5, 1, 0, 0 )
-mesh = SubResource( 13 )
+[node name="MeshInstance" type="MeshInstance" parent="z-axis"]
+mesh = SubResource( 11 )
+material/0 = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="z-axis/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
 material/0 = SubResource( 7 )
 
 [node name="x_rot" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="x_rot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.0726, 0 )
 mesh = SubResource( 8 )
 material/0 = SubResource( 9 )
 
 [node name="CollisionShape" type="CollisionShape" parent="x_rot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
 shape = SubResource( 10 )
 
 [connection signal="input_event" from="x-axis" to="." method="_on_axis_input_event"]

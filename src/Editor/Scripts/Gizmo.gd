@@ -91,23 +91,46 @@ func _unhandled_input(event: InputEvent) -> void:
 			var diff: float = (intersection_old - get_parent().translation).signed_angle_to(intersection_new - get_parent().translation, axis)
 			get_parent().rotate(axis, diff)
 
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+	elif mm != null and not any_axis_active():
+		_reset_colors()
+		
+		var result = _raycast_on_gizmo_layer()
+		
+		if result.has("collider"):
+			match result["collider"].name:
+				"x-axis":
+					$"x-axis/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
+				"y-axis":
+					$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
+				"z-axis":
+					$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
+				"x-rot":
+					$"x-rot/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
+				"y-rot":
+					$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
+				"z-rot":
+					$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
+
+	elif event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if event.pressed:
-			start_position = get_parent().global_transform.origin
+			var result = _raycast_on_gizmo_layer()
 			
-			# Ensure only one axis is active at a time
-			if x_hovered:
-				x_active = true
-			elif y_hovered:
-				y_active = true
-			elif z_hovered:
-				z_active = true
-			elif x_rot_hovered:
-				x_rot_active = true
-			elif y_rot_hovered:
-				y_rot_active = true
-			elif z_rot_hovered:
-				z_rot_active = true
+			if result.has("collider"):
+				start_position = get_parent().global_transform.origin
+				grab_position = result["position"]
+				match result["collider"].name:
+					"x-axis":
+						x_active = true
+					"y-axis":
+						y_active = true
+					"z-axis":
+						z_active = true
+					"x-rot":
+						x_rot_active = true
+					"y-rot":
+						y_rot_active = true
+					"z-rot":
+						z_rot_active = true
 		
 		elif any_axis_active():
 			# Deactivate all axes
@@ -118,12 +141,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			y_rot_active = false
 			z_rot_active = false
 			
-			$"x-axis/MeshInstance".get_surface_material(0).emission  = x_axis_color
-			$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color
-			$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color
-			$"x-rot/MeshInstance".get_surface_material(0).emission  = x_axis_color
-			$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color
-			$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color
+			_reset_colors()
 
 
 func _process(delta: float) -> void:
@@ -137,73 +155,22 @@ func any_axis_active() -> bool:
 	return x_active or y_active or z_active or x_rot_active or y_rot_active or z_rot_active
 
 
-func _on_xaxis_mouse_entered() -> void:
-	x_hovered = true
-	if not any_axis_active():
-		$"x-axis/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
-
-func _on_xaxis_mouse_exited() -> void:
-	x_hovered = false
-	if not x_active:
-		$"x-axis/MeshInstance".get_surface_material(0).emission = x_axis_color
-
-
-func _on_yaxis_mouse_entered() -> void:
-	y_hovered = true
-	if not any_axis_active():
-		$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
-
-func _on_yaxis_mouse_exited() -> void:
-	y_hovered = false
-	if not y_active:
-		$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color
+func _raycast_on_gizmo_layer() -> Dictionary:
+	var camera := get_viewport().get_camera()
+	
+	var ray_length := 1000
+	var mouse_pos := get_viewport().get_mouse_position()
+	var from := camera.project_ray_origin(mouse_pos)
+	var to := from + camera.project_ray_normal(mouse_pos) * ray_length
+	
+	var space_state := get_world().get_direct_space_state()
+	return space_state.intersect_ray(from, to, [  ], 0b10)
 
 
-func _on_zaxis_mouse_entered() -> void:
-	z_hovered = true
-	if not any_axis_active():
-		$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
-
-func _on_zaxis_mouse_exited() -> void:
-	z_hovered = false
-	if not z_active:
-		$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color
-
-
-func _on_xrot_mouse_entered() -> void:
-	x_rot_hovered = true
-	if not any_axis_active():
-		$"x-rot/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
-
-func _on_xrot_mouse_exited() -> void:
-	x_rot_hovered = false
-	if not x_rot_active:
-		$"x-rot/MeshInstance".get_surface_material(0).emission = x_axis_color
-
-
-func _on_yrot_mouse_entered() -> void:
-	y_rot_hovered = true
-	if not any_axis_active():
-		$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
-
-func _on_yrot_mouse_exited() -> void:
-	y_rot_hovered = false
-	if not y_rot_active:
-		$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color
-
-
-func _on_zrot_mouse_entered() -> void:
-	z_rot_hovered = true
-	if not any_axis_active():
-		$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
-
-func _on_zrot_mouse_exited() -> void:
-	z_rot_hovered = false
-	if not z_rot_active:
-		$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color
-
-
-func _on_axis_input_event(_camera: Node, _event: InputEvent, position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if not any_axis_active():
-		grab_position = position
-
+func _reset_colors():
+	$"x-axis/MeshInstance".get_surface_material(0).emission  = x_axis_color
+	$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color
+	$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color
+	$"x-rot/MeshInstance".get_surface_material(0).emission  = x_axis_color
+	$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color
+	$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color

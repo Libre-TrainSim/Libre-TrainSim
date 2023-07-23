@@ -88,6 +88,8 @@ z_axis_color_hover = Color( 0.5, 0.5, 1, 1 )
 
 [node name="x-axis" type="StaticBody" parent="."]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0 )
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="x-axis"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
@@ -105,6 +107,8 @@ material/0 = SubResource( 3 )
 
 [node name="y-axis" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="y-axis"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
@@ -122,6 +126,8 @@ material/0 = SubResource( 5 )
 
 [node name="z-axis" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 10 )
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="z-axis"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
@@ -139,6 +145,8 @@ material/0 = SubResource( 7 )
 
 [node name="x-rot" type="StaticBody" parent="."]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+collision_layer = 2
+collision_mask = 2
 
 [node name="MeshInstance" type="MeshInstance" parent="x-rot"]
 mesh = ExtResource( 2 )
@@ -148,6 +156,8 @@ material/0 = SubResource( 24 )
 shape = ExtResource( 3 )
 
 [node name="y-rot" type="StaticBody" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="MeshInstance" type="MeshInstance" parent="y-rot"]
 mesh = ExtResource( 2 )
@@ -158,6 +168,8 @@ shape = ExtResource( 3 )
 
 [node name="z-rot" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+collision_layer = 2
+collision_mask = 2
 
 [node name="MeshInstance" type="MeshInstance" parent="z-rot"]
 mesh = ExtResource( 2 )
@@ -165,19 +177,3 @@ material/0 = SubResource( 26 )
 
 [node name="CollisionShape" type="CollisionShape" parent="z-rot"]
 shape = ExtResource( 3 )
-
-[connection signal="input_event" from="x-axis" to="." method="_on_axis_input_event"]
-[connection signal="mouse_entered" from="x-axis" to="." method="_on_xaxis_mouse_entered"]
-[connection signal="mouse_exited" from="x-axis" to="." method="_on_xaxis_mouse_exited"]
-[connection signal="input_event" from="y-axis" to="." method="_on_axis_input_event"]
-[connection signal="mouse_entered" from="y-axis" to="." method="_on_yaxis_mouse_entered"]
-[connection signal="mouse_exited" from="y-axis" to="." method="_on_yaxis_mouse_exited"]
-[connection signal="input_event" from="z-axis" to="." method="_on_axis_input_event"]
-[connection signal="mouse_entered" from="z-axis" to="." method="_on_zaxis_mouse_entered"]
-[connection signal="mouse_exited" from="z-axis" to="." method="_on_zaxis_mouse_exited"]
-[connection signal="mouse_entered" from="x-rot" to="." method="_on_xrot_mouse_entered"]
-[connection signal="mouse_exited" from="x-rot" to="." method="_on_xrot_mouse_exited"]
-[connection signal="mouse_entered" from="y-rot" to="." method="_on_yrot_mouse_entered"]
-[connection signal="mouse_exited" from="y-rot" to="." method="_on_yrot_mouse_exited"]
-[connection signal="mouse_entered" from="z-rot" to="." method="_on_zrot_mouse_entered"]
-[connection signal="mouse_exited" from="z-rot" to="." method="_on_zrot_mouse_exited"]

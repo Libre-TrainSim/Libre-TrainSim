@@ -1,6 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Editor/Scripts/Gizmo.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Objects/RotationGizmo.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Editor/Modules/gizmo_rot_collider.tres" type="Shape" id=3]
 
 [sub_resource type="CylinderShape" id=15]
 height = 26.0
@@ -45,25 +47,35 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="CylinderMesh" id=8]
-top_radius = 7.0
-bottom_radius = 7.0
-height = 1.0
-
-[sub_resource type="SpatialMaterial" id=9]
-flags_transparent = true
+[sub_resource type="SpatialMaterial" id=24]
 flags_no_depth_test = true
 flags_disable_ambient_light = true
-albedo_color = Color( 0.670588, 0.670588, 0.670588, 0.392157 )
+albedo_color = Color( 1, 0, 0, 1 )
 emission_enabled = true
-emission = Color( 0.670588, 0.670588, 0.670588, 1 )
+emission = Color( 1, 0, 0, 1 )
 emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="CylinderShape" id=10]
-height = 1.0
-radius = 7.0
+[sub_resource type="SpatialMaterial" id=25]
+flags_no_depth_test = true
+flags_disable_ambient_light = true
+albedo_color = Color( 0, 1, 0, 1 )
+emission_enabled = true
+emission = Color( 0, 1, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SpatialMaterial" id=26]
+flags_no_depth_test = true
+flags_disable_ambient_light = true
+albedo_color = Color( 0, 0, 1, 1 )
+emission_enabled = true
+emission = Color( 0, 0, 1, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
 
 [node name="Gizmo" type="Spatial" groups=["Gizmo"]]
 script = ExtResource( 1 )
@@ -120,20 +132,39 @@ mesh = SubResource( 11 )
 material/0 = SubResource( 7 )
 
 [node name="MeshInstance" type="MeshInstance" parent="z-axis/MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -8.52651e-14 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 7 )
 
-[node name="x_rot" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
+[node name="x-rot" type="StaticBody" parent="."]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="x_rot"]
-mesh = SubResource( 8 )
-material/0 = SubResource( 9 )
+[node name="MeshInstance" type="MeshInstance" parent="x-rot"]
+mesh = ExtResource( 2 )
+material/0 = SubResource( 24 )
 
-[node name="CollisionShape" type="CollisionShape" parent="x_rot"]
-shape = SubResource( 10 )
+[node name="CollisionShape" type="CollisionShape" parent="x-rot"]
+shape = ExtResource( 3 )
+
+[node name="y-rot" type="StaticBody" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="y-rot"]
+mesh = ExtResource( 2 )
+material/0 = SubResource( 25 )
+
+[node name="CollisionShape" type="CollisionShape" parent="y-rot"]
+shape = ExtResource( 3 )
+
+[node name="z-rot" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="z-rot"]
+mesh = ExtResource( 2 )
+material/0 = SubResource( 26 )
+
+[node name="CollisionShape" type="CollisionShape" parent="z-rot"]
+shape = ExtResource( 3 )
 
 [connection signal="input_event" from="x-axis" to="." method="_on_axis_input_event"]
 [connection signal="mouse_entered" from="x-axis" to="." method="_on_xaxis_mouse_entered"]
@@ -144,5 +175,9 @@ shape = SubResource( 10 )
 [connection signal="input_event" from="z-axis" to="." method="_on_axis_input_event"]
 [connection signal="mouse_entered" from="z-axis" to="." method="_on_zaxis_mouse_entered"]
 [connection signal="mouse_exited" from="z-axis" to="." method="_on_zaxis_mouse_exited"]
-[connection signal="mouse_entered" from="x_rot" to="." method="_on_x_rot_mouse_entered"]
-[connection signal="mouse_exited" from="x_rot" to="." method="_on_x_rot_mouse_exited"]
+[connection signal="mouse_entered" from="x-rot" to="." method="_on_xrot_mouse_entered"]
+[connection signal="mouse_exited" from="x-rot" to="." method="_on_xrot_mouse_exited"]
+[connection signal="mouse_entered" from="y-rot" to="." method="_on_yrot_mouse_entered"]
+[connection signal="mouse_exited" from="y-rot" to="." method="_on_yrot_mouse_exited"]
+[connection signal="mouse_entered" from="z-rot" to="." method="_on_zrot_mouse_entered"]
+[connection signal="mouse_exited" from="z-rot" to="." method="_on_zrot_mouse_exited"]

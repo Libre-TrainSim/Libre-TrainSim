@@ -162,20 +162,14 @@ target_path = NodePath("..")
 [node name="ObjectName" type="Control" parent="EditorHUD"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -265.0
-margin_right = 265.0
+margin_left = -375.0
+margin_right = 375.0
 margin_bottom = 30.0
 grow_horizontal = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="Panel" parent="EditorHUD/ObjectName"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Name" type="HBoxContainer" parent="EditorHUD/ObjectName"]
 anchor_right = 1.0
@@ -202,31 +196,31 @@ __meta__ = {
 
 [node name="LineEdit" type="LineEdit" parent="EditorHUD/ObjectName/Name"]
 margin_left = 106.0
-margin_right = 267.0
+margin_right = 487.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Clear" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 271.0
-margin_right = 315.0
+margin_left = 491.0
+margin_right = 535.0
 margin_bottom = 24.0
 text = "Clear"
 
 [node name="Rename" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 319.0
-margin_right = 383.0
+margin_left = 539.0
+margin_right = 603.0
 margin_bottom = 24.0
 text = "Rename"
 
 [node name="Delete" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 387.0
-margin_right = 442.0
+margin_left = 607.0
+margin_right = 662.0
 margin_bottom = 24.0
 text = "Delete"
 
 [node name="Duplicate" type="Button" parent="EditorHUD/ObjectName/Name"]
-margin_left = 446.0
-margin_right = 519.0
+margin_left = 666.0
+margin_right = 739.0
 margin_bottom = 24.0
 text = "Duplicate"
 
@@ -241,21 +235,15 @@ __meta__ = {
 visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -264.0
+margin_left = -375.0
 margin_top = 30.0
-margin_right = 265.0
+margin_right = 375.0
 margin_bottom = 64.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="Panel" parent="EditorHUD/ObjectTransform"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/ObjectTransform"]
 anchor_right = 1.0
@@ -264,9 +252,6 @@ margin_left = 6.0
 margin_top = 7.0
 margin_right = -5.0
 margin_bottom = -3.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
 margin_top = 5.0
@@ -276,7 +261,7 @@ text = "x: "
 
 [node name="x" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
 margin_left = 19.0
-margin_right = 121.0
+margin_right = 108.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -286,15 +271,15 @@ allow_greater = true
 allow_lesser = true
 
 [node name="Label2" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 125.0
+margin_left = 112.0
 margin_top = 5.0
-margin_right = 140.0
+margin_right = 127.0
 margin_bottom = 19.0
 text = "y: "
 
 [node name="y" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 144.0
-margin_right = 246.0
+margin_left = 131.0
+margin_right = 221.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -304,15 +289,15 @@ allow_greater = true
 allow_lesser = true
 
 [node name="Label3" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 250.0
+margin_left = 225.0
 margin_top = 5.0
-margin_right = 265.0
+margin_right = 240.0
 margin_bottom = 19.0
 text = "z: "
 
 [node name="z" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 269.0
-margin_right = 371.0
+margin_left = 244.0
+margin_right = 334.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -322,15 +307,51 @@ allow_greater = true
 allow_lesser = true
 
 [node name="Label4" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 375.0
+margin_left = 338.0
 margin_top = 5.0
-margin_right = 412.0
+margin_right = 375.0
 margin_bottom = 19.0
 text = "x rot: "
 
+[node name="x_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
+margin_left = 379.0
+margin_right = 469.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+step = 0.0
+allow_greater = true
+allow_lesser = true
+
+[node name="Label5" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
+margin_left = 473.0
+margin_top = 5.0
+margin_right = 510.0
+margin_bottom = 19.0
+text = "y rot: "
+
 [node name="y_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 416.0
-margin_right = 518.0
+margin_left = 514.0
+margin_right = 604.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+min_value = -1000.0
+max_value = 1000.0
+step = 0.0
+allow_greater = true
+allow_lesser = true
+
+[node name="Label6" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
+margin_left = 608.0
+margin_top = 5.0
+margin_right = 645.0
+margin_bottom = 19.0
+text = "z rot: "
+
+[node name="z_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
+margin_left = 649.0
+margin_right = 739.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = -1000.0
@@ -381,7 +402,8 @@ follow_focus = true
 scroll_horizontal_enabled = false
 
 [node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer/Content/ScrollContainer"]
-margin_right = 173.0
+margin_right = 185.0
+margin_bottom = 343.0
 hint_tooltip = "- Use shift to select multiple objects.
 - Right-click deselects all selected objects.
 - Shift+scroll wheel chooses a random object of the selected objects."
@@ -700,7 +722,9 @@ script = ExtResource( 21 )
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x" to="EditorHUD" method="_on_x_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y" to="EditorHUD" method="_on_y_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z" to="EditorHUD" method="_on_z_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x_rot" to="EditorHUD" method="_on_x_rot_value_changed"]
 [connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y_rot" to="EditorHUD" method="_on_y_rot_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z_rot" to="EditorHUD" method="_on_z_rot_value_changed"]
 [connection signal="object_added" from="EditorHUD/Objects" to="." method="_on_object_added"]
 [connection signal="text_changed" from="EditorHUD/Objects/MarginContainer/Content/Search" to="EditorHUD/Objects" method="_on_search_text_changed"]
 [connection signal="mouse_entered" from="EditorHUD/Objects/Overlay/Filters" to="EditorHUD/Objects/Overlay/Filters" method="_on_mouse_entered"]

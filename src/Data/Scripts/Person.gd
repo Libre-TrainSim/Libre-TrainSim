@@ -104,7 +104,9 @@ func handleWalk(delta: float) -> void:
 
 func is_assigned_door_open() -> bool:
 	assert(transitionToWagon)
-	return (attachedWagon.lastDoorRight and assignedDoor.side == DoorSide.RIGHT) or (attachedWagon.lastDoorLeft and assignedDoor.side == DoorSide.LEFT)
+	return not attachedWagon.lastDoorsClosing and (
+				(attachedWagon.lastDoorRight and assignedDoor.side == DoorSide.RIGHT) or 
+				(attachedWagon.lastDoorLeft and assignedDoor.side == DoorSide.LEFT))
 
 
 func leave_current_wagon()-> void:

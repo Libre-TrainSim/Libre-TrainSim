@@ -79,6 +79,7 @@ func _process(delta: float) -> void:
 			_spawn_chunk_from_res(_loader.get_resource())
 			_loader = null
 			_currently_loading_chunk = ""
+			break
 		elif err != OK:
 			Logger.err("Cannot load chunk %s (Reason %s)" % [_currently_loading_chunk, err], self)
 			_loader = null

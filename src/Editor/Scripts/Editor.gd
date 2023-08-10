@@ -1028,7 +1028,8 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 
 	rail.track_objects.append(track_object)
 
-	var chunk_pos = $World.chunk_manager.position_to_chunk(rail.global_transform.origin)
+	var camera_position = $Camera.global_transform.origin
+	var chunk_pos = $World.chunk_manager.position_to_chunk(camera_position)
 	var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
 	var chunk = $World/Chunks.get_node(chunk_name)
 

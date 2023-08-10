@@ -41,20 +41,12 @@ static func string_to_chunk(chunk: String) -> Vector3:
 
 
 func get_chunks(around: Vector3, distance: int):
-	var chunks := [
-		chunk_to_string(Vector3(around.x, 0, around.z)),
-	]
-	for i in range(1, distance + 1):
-		chunks.append_array([
-			chunk_to_string(Vector3(around.x - i, 0, around.z)),
-			chunk_to_string(Vector3(around.x - i, 0, around.z - i)),
-			chunk_to_string(Vector3(around.x - i, 0, around.z + i)),
-			chunk_to_string(Vector3(around.x + i, 0, around.z)),
-			chunk_to_string(Vector3(around.x + i, 0, around.z - i)),
-			chunk_to_string(Vector3(around.x + i, 0, around.z + i)),
-			chunk_to_string(Vector3(around.x, 0, around.z - i)),
-			chunk_to_string(Vector3(around.x, 0, around.z + i)),
-		])
+	var chunks := []
+	for i in range(-distance, distance + 1):
+		for j in range(-distance, distance + 1):
+			var offset := Vector3(i, 0, j)
+			if ceil(offset.length()) <= distance:
+				chunks.append(chunk_to_string(around + offset))
 	return chunks
 
 
@@ -150,10 +142,11 @@ func _unload_old_chunks(saving: bool = false):
 	var chunks_to_unload = loader._loaded_chunks.duplicate()
 
 	# chunks_to_unload = all chunks further away than treshold
+	var unload_distance: float = ProjectSettings["game/gameplay/chunk_unload_distance"]
 	if not saving:
 		for chunk_name in loader._loaded_chunks:
 			var chunk_pos = string_to_chunk(chunk_name)
-			if active_chunk.distance_to(chunk_pos) <= ProjectSettings["game/gameplay/chunk_unload_distance"]:
+			if active_chunk.distance_to(chunk_pos) <= unload_distance:
 				chunks_to_unload.erase(chunk_name)
 
 	if Root.Editor:

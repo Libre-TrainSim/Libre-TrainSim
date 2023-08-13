@@ -53,8 +53,8 @@ func _process(delta: float) -> void:
 
 
 var lastAutoPilot: bool = false
-func update_display(speed: float, command: float, doorLeft: bool, doorRight: bool,
-					doorsClosing: float, enforced_braking: bool, autopilot: bool,
+func update_display(speed: float, command: float, door_left: bool, door_right: bool,
+					doors_closing: bool, enforced_braking: bool, autopilot: bool,
 					speedLimit: float, engine: bool, reverser: int):
 	## Tachos:
 	$SpeedPointer.rotation = SpeedPointerZero + (SpeedPerKmH * speed)
@@ -74,13 +74,13 @@ func update_display(speed: float, command: float, doorLeft: bool, doorRight: boo
 		$Info/EnforcedBraking.visible = false
 
 	## Doors:
-	if doorsClosing:
+	if doors_closing:
 		$Doors.visible = blink_status
 	else:
 		$Doors.visible = true
-	$Doors/Right.visible = doorRight
-	$Doors/Left.visible = doorLeft
-	$Doors/Door.visible = doorLeft or doorRight
+	$Doors/Right.visible = door_right
+	$Doors/Left.visible = door_left
+	$Doors/Door.visible = door_left or door_right
 
 	$Reverser/Forward.visible = reverser == ReverserState.FORWARD
 	$Reverser/Backward.visible = reverser == ReverserState.REVERSE

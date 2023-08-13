@@ -51,7 +51,7 @@ func handleWalk(delta: float) -> void:
 			attachedWagon.registerPerson(self, assignedDoor)
 			assignedDoor = null
 		if transitionToStation and attachedWagon.player.whole_train_in_station \
-				and (attachedWagon.lastDoorRight or attachedWagon.lastDoorLeft):
+				and attachedWagon.is_any_doors_opened():
 			leave_wagon_timer += delta
 			if leave_wagon_timer > 1.8:
 				leave_wagon_timer = 0
@@ -104,9 +104,12 @@ func handleWalk(delta: float) -> void:
 
 func is_assigned_door_open() -> bool:
 	assert(transitionToWagon)
-	return not attachedWagon.lastDoorsClosing and (
-				(attachedWagon.lastDoorRight and assignedDoor.side == DoorSide.RIGHT) or 
-				(attachedWagon.lastDoorLeft and assignedDoor.side == DoorSide.LEFT))
+	match assignedDoor.side:
+		DoorSide.RIGHT:
+			return attachedWagon.door_right.is_opened()
+		DoorSide.LEFT:
+			return attachedWagon.door_left.is_opened()		
+	return false
 
 
 func leave_current_wagon()-> void:

@@ -12,6 +12,9 @@ var distance_on_rail: float = 0
 var distance_on_route: float = 0
 var speed: float = 0
 
+var door_left := DoorState.new()
+var door_right := DoorState.new()
+
 var leftDoors := []
 var rightDoors := []
 
@@ -93,7 +96,6 @@ func _process(delta: float) -> void:
 	if speed != 0:
 		drive(delta)
 	set_transform_on_rail()
-	check_doors()
 
 	if pantographEnabled:
 		check_pantograph()
@@ -174,25 +176,6 @@ func change_to_next_rail() -> void:
 		distance_on_rail += currentRail.length
 
 
-var lastDoorRight: bool = false
-var lastDoorLeft: bool = false
-var lastDoorsClosing: bool = false
-func check_doors() -> void:
-	if player.doorRight and not lastDoorRight:
-		$Doors/DoorRight.play("open")
-	if player.doorRight and not lastDoorsClosing and player.doorsClosing:
-		$Doors/DoorRight.play_backwards("open")
-	if player.doorLeft and not lastDoorLeft:
-		$Doors/DoorLeft.play("open")
-	if player.doorLeft and not lastDoorsClosing and player.doorsClosing:
-		$Doors/DoorLeft.play_backwards("open")
-
-
-	lastDoorRight = player.doorRight
-	lastDoorLeft = player.doorLeft
-	lastDoorsClosing = player.doorsClosing
-
-
 var lastPantograph: bool = false
 var lastPantographUp: bool = false
 func check_pantograph() -> void:
@@ -214,14 +197,79 @@ func despawn() -> void:
 func registerDoors() -> void:
 	for child in $Doors.get_children():
 		if child.is_in_group("PassengerDoor"):
-			if child.translation[2] > 0:
-				child.translation += Vector3(0,0,0.5)
-				child.side = DoorSide.RIGHT
-				rightDoors.append(child)
-			else:
-				child.translation -= Vector3(0,0,0.5)
-				child.side = DoorSide.LEFT
-				leftDoors.append(child)
+			if child.side == DoorSide.UNASSIGNED:
+				# If Door side is not set explicitly, fallback to translation
+				if child.translation[2] > 0:
+					child.side = DoorSide.RIGHT
+				else:
+					child.side = DoorSide.LEFT
+			
+			match child.side:
+				DoorSide.RIGHT:
+					child.translation += Vector3(0,0,0.5)
+					rightDoors.append(child)	
+				DoorSide.LEFT:
+					child.translation -= Vector3(0,0,0.5)
+					leftDoors.append(child)
+				_:
+					assert(true, "Unsupported DoorSide. DoorSide.BOTH is not yet supported")
+
+	# Connect door state to animations
+	var _res = $Doors/DoorLeft.connect("animation_finished", door_left, "_on_animation_transition_finished")
+	_res = $Doors/DoorRight.connect("animation_finished", door_right, "_on_animation_transition_finished")
+
+
+func _animate_side_door(animation: AnimationPlayer, sound: AudioStreamPlayer3D, backwards := false) -> bool:
+	if not animation.is_playing():
+		if backwards:
+			animation.play_backwards("open")
+		else:
+			animation.play("open")
+		# TODO: We should be able to blend left and right door opening sound
+		if sound and not sound.playing:
+			sound.play()
+		return true
+	assert(false, "Animations should be requested only when appropriate")
+	return false
+
+
+func _open_side_doors(doorState: DoorState, animation: AnimationPlayer) -> void:
+	if doorState.is_closed():
+		if _animate_side_door(animation, player.get_node("Sound/DoorsOpen")):
+			doorState.open()
+
+
+func _close_side_doors(doorState: DoorState, animation: AnimationPlayer) -> void:
+	if doorState.is_opened():
+		if _animate_side_door(animation, player.get_node("Sound/DoorsClose"), true):
+			doorState.close()
+
+
+func open_left_doors() -> void:
+	_open_side_doors(door_left, $Doors/DoorLeft)
+
+
+func open_right_doors() -> void:
+	_open_side_doors(door_right,  $Doors/DoorRight)
+
+
+func close_left_doors() -> void:
+	_close_side_doors(door_left, $Doors/DoorLeft)
+
+
+func close_right_doors() -> void:
+	_close_side_doors(door_right, $Doors/DoorRight)
+
+
+# TODO: Refactor/remove force set_state. As it might cause desync between state and visuals
+# Scenarios should utilize close_doors + 
+func force_close_doors() -> void:
+	door_left._set_state(DoorState.State.CLOSED)
+	door_right._set_state(DoorState.State.CLOSED)
+
+
+func is_any_doors_opened() -> bool:
+	return door_left.is_opened() or door_right.is_opened()
 
 
 func registerPerson(person: Spatial, door: Spatial):

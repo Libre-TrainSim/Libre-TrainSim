@@ -1030,12 +1030,14 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.7627
 
 [node name="PassengerDoor" parent="Wagon1/Doors" instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181 )
+side = 2
 
 [node name="PassengerDoor3" parent="Wagon1/Doors" instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0161424, 1.1985, 1.48181 )
 
 [node name="PassengerDoor2" parent="Wagon1/Doors" instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64143, 1.1985, -1.46619 )
+side = 1
 
 [node name="PassengerDoor4" parent="Wagon1/Doors" instance=ExtResource( 43 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00276282, 1.1985, -1.4819 )

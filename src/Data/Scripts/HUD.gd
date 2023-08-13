@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 	$FPS.text = String(Engine.get_frames_per_second())
 	update_nextTable()
 	$IngameInformation/TrainInfo/Screen1.update_display(Math.speed_to_kmh(player.speed), \
-			player.technicalSoll, player.doorLeft, player.doorRight, player.doorsClosing,\
+			player.technicalSoll, player.door_left.is_opened(), player.door_right.is_opened(), player.are_doors_closing(),\
 			player.enforced_braking, player.automaticDriving,\
 			player.currentSpeedLimit, player.engine, player.reverser)
 

@@ -21,7 +21,7 @@ func scenario1():
 				next_step() # move on to next step
 		1:
 			message = "Great! To close the Doors, press 'o'.\n\nWhith 'i' you can open the left one,\nwith 'p' you open the right door."
-			if  not (player.doorRight or player.doorLeft):
+			if player.are_doors_closed():
 				next_step()
 		2:
 			message = "Last message of custom scenario. Thanks for playing!"

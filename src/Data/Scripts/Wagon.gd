@@ -58,12 +58,27 @@ func initalize() -> void:
 	drive(0)
 	set_transform_on_rail()
 
+	# TODO: FIXME: Make Wagon child of Player/Train.
+	# Player/Train is a WorldObject. RailLogin is a WorldObject.
+	# Wagon is Spatial and not directly bound to Train and relies only on set_transform_on_rail() to set transform.
+	# set_transform_on_rail() is only called during process()
+	#
+	# If there is an world shift happening, all world objects might be shifted, but Wagon will not be notified about it.
+	# This might result in Wagon being in wrong world position, which affect all the calculations relying or global_transform.
+	# This is a temporary fix to make sure that Wagon is always in correct position.
+	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+
 	# TODO: this is a performance hotfix, we should do a better implementation in 0.10
 	if not ProjectSettings["game/graphics/enable_dynamic_lights"]:
 		if get_node_or_null("Lights") != null:
 			$Lights.queue_free()
 		if get_node_or_null("InteriorLights") != null:
 			$InteriorLights.queue_free()
+
+
+# Temporary fix for Wagon not being notified about world origin shift
+func _on_world_origin_shifted(new_origin: Vector3) -> void:
+	set_transform_on_rail()
 
 
 var initialSwitchCheck: bool = false

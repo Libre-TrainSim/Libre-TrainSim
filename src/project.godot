@@ -219,6 +219,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/UI/pause.gd"
 }, {
+"base": "Spatial",
+"class": "Person",
+"language": "GDScript",
+"path": "res://Data/Scripts/Person.gd"
+}, {
 "base": "Reference",
 "class": "PlatformSide",
 "language": "GDScript",
@@ -432,6 +437,7 @@ _global_script_class_icons={
 "PZBMagnet": "",
 "PassengerPathNode": "",
 "Pause": "",
+"Person": "",
 "PlatformSide": "",
 "Rail": "",
 "Rail2DCollider": "",
@@ -549,6 +555,9 @@ debug/editor_save_thumbnails=true
 debug/editor_save_thumbnails.release=false
 debug/display_chunk=true
 debug/display_chunk.release=false
+debug/draw_labels/passenger=false
+debug/draw_labels/wagon=false
+debug/draw_labels/station=false
 
 [global]
 

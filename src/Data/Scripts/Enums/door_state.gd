@@ -2,23 +2,23 @@ class_name DoorState
 
 # Description
 #
-# CLOSED: 
+# CLOSED:
 #	Door is fully closed.
 #	New Person transition is forbidden.
-# OPENED: 
+# OPENED:
 #	Door is fully opened.
 #	New Person transition is allowed.
-# OPENING: 
+# OPENING:
 #	Door is trasiting to OPENED state.
 #	No pathfinding allowed.
-# CLOSING: 
-#	Door is trasiting to CLOSED state. 
-#	New Person transition is forbidden. 
+# CLOSING:
+#	Door is trasiting to CLOSED state.
+#	New Person transition is forbidden.
 #	Person already is transition is allowed to continue.
-# HALTED: 
-#	Door is not transitining. 
-#	New Person transition is forbidden. 
-#	Animations/SFX should stop. 
+# HALTED:
+#	Door is not transitining.
+#	New Person transition is forbidden.
+#	Animations/SFX should stop.
 #	Special state for power cut-off (pantograf).
 
 # Door state transitions:
@@ -81,7 +81,7 @@ func _init() -> void:
 func _set_state(newState: int) -> void:
 	state = newState
 	emit_signal("state_changed", state)
-	
+
 
 func _on_animation_transition_finished(animation: String) -> void:
 	if animation == "open":

@@ -57,7 +57,7 @@ func basics() -> void:
 		2:
 #			message = "Great! To close the Doors, press 'o'.\n\nWhith 'i' you can open the left one,\nwith 'p' you open the right door."
 			message = TranslationServer.translate("TUTORIAL_0_1")
-			if not (player.doorRight or player.doorLeft):
+			if player.are_doors_closed():
 				next_step()
 		3:
 #			message = "Now we are able to drive.\nOur departure is at 12:00. Let's wait for the depart message in the bottom left corner."
@@ -115,7 +115,7 @@ func advanced() -> void:
 				next_step()
 		1:
 			message = TranslationServer.translate("TUTORIAL_1_6")
-			if player.current_station_node == null and not (player.doorRight or player.doorLeft):
+			if player.current_station_node == null and player.are_doors_closed():
 				next_step()
 		2:
 			message = TranslationServer.translate("TUTORIAL_1_1")
@@ -166,7 +166,7 @@ func basics_mobile_version() -> void:
 			message = TranslationServer.translate("TUTORIAL_4_3")
 			player.get_node("HUD/MobileHUD/Camera").modulate = Color(1, 1, 1, 1)
 			player.get_node("HUD/MobileHUD/DoorClose").modulate = Color(1, 0.5, 0, 1)
-			if not (player.doorRight or player.doorLeft):
+			if player.are_doors_closed():
 				next_step()
 		4:
 #			message = "Let’s abort! Use the arrow keys to drive. \n\n\tPress the up arrow key to accelerate / release the brakes.\n\tPress the down arrow key to release acceleration / apply the brakes. \n\nHint: You can see your current command at the right tachometer."

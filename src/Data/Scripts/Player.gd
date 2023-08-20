@@ -49,11 +49,13 @@ var real_arrival_time: int # Time is set if train successfully arrived
 var route_distance_at_station_begin: float = 0 # distance of the station begin on route
 const GOODWILL_DISTANCE: float = 10.0 # distance the player can overdrive a station, or it's train end isn't in the station.
 
+## Doors: 
+# We assume that all doors behave the same way
+# So there is no need to track individual wagons door states
+# Wagons will share doorState state
 export var doors := true # Defines, if this train has doors.
-export var doorsClosingTime: float = 7
-var doorRight: bool = false # If Door is Open, then its true
-var doorLeft: bool = false
-var doorsClosing: bool = false
+var door_left: DoorState = null
+var door_right: DoorState = null
 
 export var brakingSpeed: float = 0.3
 export var brakeReleaseSpeed: float = 0.2
@@ -197,17 +199,6 @@ func ready() -> void:
 		currentSpeedLimit = spawn_point.initial_speed_limit
 	else:
 		currentSpeedLimit = speedLimit
-	if station_table.size() > 0 and station_table[0].stop_type == StopType.BEGINNING:
-		match world.get_signal(station_table[0].station_node_name).platform_side:
-			PlatformSide.NONE:
-				pass
-			PlatformSide.LEFT:
-				open_left_doors()
-			PlatformSide.RIGHT:
-				open_right_doors()
-			PlatformSide.BOTH:
-				open_left_doors()
-				open_right_doors()
 
 	if station_table.size() > 0:
 		current_station_table_entry = station_table[current_station_table_index]
@@ -220,11 +211,6 @@ func ready() -> void:
 		pantograph = true
 		control_type = ControlType.COMBINED
 		reverser = ReverserState.FORWARD
-
-	if not doors:
-		doorLeft = false
-		doorRight = false
-		doorsClosing = false
 
 	if not electric:
 		pantograph = true
@@ -262,6 +248,10 @@ func ready() -> void:
 				if node.is_in_group("PlayerCameras"):
 					passengerCameras.append(node)
 
+	# Open doors at the beginning
+	if station_table.size() > 0 and station_table[0].stop_type == StopType.BEGINNING:
+		auto_open_doors_at_station()
+		
 	## Prepare Signals:
 	if not ai:
 		set_signalWarnLimits()
@@ -346,7 +336,7 @@ func _process(delta: float):
 		check_security()
 
 	if doors:
-		check_doors(delta)
+		check_doors()
 
 	check_signals()
 
@@ -495,7 +485,7 @@ func getCommand(delta: float) -> void:
 		blockedAcceleration = false
 	if command < 0 and not Root.EasyMode and not ai:
 		blockedAcceleration = true
-	if (doorRight or doorLeft):
+	if not are_doors_closed():
 		blockedAcceleration = true
 	if reverser == ReverserState.NEUTRAL:
 		blockedAcceleration = true
@@ -872,7 +862,8 @@ func check_station(delta: float) -> void:
 
 	# If the player is in station and starts driving very early
 	if speed != 0:
-		if is_in_station and not (doorLeft or doorRight):
+		# TODO: confirm that we don't actually need to check the doors as brake is forced when doors are open
+		if is_in_station and are_doors_closed():
 			score -= SCORE_PENALTY_DEPART_EARLY
 			send_message("YOU_DEPARTED_EARLIER")
 			leave_current_station()
@@ -887,7 +878,7 @@ func check_station(delta: float) -> void:
 			send_message("FRONT_OF_YOUR_TRAIN_NOT_IN_STATION", ["reverser+", "reverser-"])
 
 	# train in station but doors closed
-	if not is_in_station and whole_train_in_station and not (doorLeft or doorRight):
+	if not is_in_station and whole_train_in_station and are_doors_closed():
 		_door_open_message_timer += delta
 		if _door_open_message_timer > 5 and not _door_open_message_sent:
 			_door_open_message_timer = 0
@@ -895,12 +886,8 @@ func check_station(delta: float) -> void:
 			_door_open_message_sent = true
 
 	# train just now fully in station and doors opened, or first station -> welcome him
-	if (not is_in_station and whole_train_in_station and \
-			((doorLeft and current_station_node.platform_side == PlatformSide.LEFT) \
-			or (doorRight and current_station_node.platform_side == PlatformSide.RIGHT)\
-			or (doorLeft and doorRight and current_station_node.platform_side == PlatformSide.BOTH)\
-			or current_station_node.platform_side == PlatformSide.NONE)\
-			or (current_station_table_entry.stop_type == StopType.BEGINNING and not is_in_station)):
+	if (not is_in_station and (current_station_table_entry.stop_type == StopType.BEGINNING \
+			or (whole_train_in_station and are_doors_opened_for_platform(current_station_node.platform_side)))):
 #		if current_station_table_entry.stop_type == StopType.BEGINNING:
 #			nextStationNodeOnTrack = current_station_node
 		is_in_station = true
@@ -921,19 +908,7 @@ func check_station(delta: float) -> void:
 				lateMessage += tr("YOU_ARE_LATE_1") + " %d %s" % [int(secondsLater/60), tr("YOU_ARE_LATE_2")]
 
 		# send "welcome to station" message
-		if current_station_table_entry.stop_type == StopType.BEGINNING:
-			current_station_node.set_waiting_persons(current_station_table_entry.waiting_persons/100.0 * world.default_persons_at_station)
-			match current_station_node.platform_side:
-				PlatformSide.LEFT:
-					open_left_doors()
-				PlatformSide.RIGHT:
-					open_right_doors()
-				PlatformSide.BOTH:
-					open_right_doors()
-					open_left_doors()
-			jEssentials.call_delayed(1.2, self, "send_message", [tr("WELCOME_TO") + " " + current_station_table_entry.station_name])
-		else:
-			send_message(tr("WELCOME_TO") + " " + current_station_table_entry.station_name + lateMessage)
+		send_message(tr("WELCOME_TO") + " " + current_station_table_entry.station_name + lateMessage)
 
 		# play station announcement
 		if !current_station_table_entry.arrival_sound_path.empty():
@@ -955,7 +930,6 @@ func check_station(delta: float) -> void:
 			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)
 			connect("_textbox_closed", LoadingScreen, "load_main_menu", [], CONNECT_ONESHOT)
 			leave_current_station()
-			update_waiting_persons_on_next_station()
 			return
 		# else, send "you can depart" message once the time is up
 		else:
@@ -983,12 +957,11 @@ func leave_current_station() -> void:
 	nextStation = ""
 
 
-
 func update_waiting_persons_on_next_station() -> void:
-	var station_nodes = get_all_upcoming_signals_of_types(["Station"])
-	if station_nodes.size() != 0:
-		var station_node = world.get_node("Signals/"+station_nodes[0])
-		station_node.set_waiting_persons(current_station_table_entry.waiting_persons/100.0 * world.default_persons_at_station)
+	if current_station_table_entry == null:
+		return
+	var station_node = world.get_signal(current_station_table_entry.station_node_name)
+	station_node.set_waiting_persons(current_station_table_entry.waiting_persons/100.0 * world.default_persons_at_station)
 
 
 ## Pantograph
@@ -1036,58 +1009,120 @@ func send_message(string : String, actions := []) -> void:
 		$HUD.send_message(string, actions)
 
 
-## Doors:
-var doorsClosingTimer: float = 0
+### Doors: ###
+func _call_wagon_doors(fn_side_action: String) -> void:
+	for wagon in wagonsI:
+		wagon.call(fn_side_action)
+
+
+func _open_side_doors(fn_side_action: String) -> void:
+	if doors and speed == 0:
+		_call_wagon_doors(fn_side_action)		
+
+
+func _close_side_doors(fn_side_action: String) -> void:
+	if doors:
+		_call_wagon_doors(fn_side_action)
+
 func open_left_doors() -> void:
-	if not doorLeft and speed == 0 and not doorsClosing and doors:
-		if not $Sound/DoorsOpen.playing:
-			$Sound/DoorsOpen.play()
-		doorLeft = true
+	_open_side_doors("open_left_doors")
 
 
 func open_right_doors() -> void:
-	if not doorRight and speed == 0 and not doorsClosing and doors:
-		if not $Sound/DoorsOpen.playing:
-			$Sound/DoorsOpen.play()
-		doorRight = true
+	_open_side_doors("open_right_doors")
+
+
+func close_left_doors() -> void:
+	_close_side_doors("close_left_doors")
+
+
+func close_right_doors() -> void:
+	_close_side_doors("close_right_doors")
+
+
+func _are_doors_in_state(door_side: int, fn_action: String) -> bool:
+	match door_side:
+		DoorSide.LEFT:
+			return door_left.call(fn_action)
+		DoorSide.RIGHT:
+			return door_right.call(fn_action)
+	return door_right.call(fn_action) or door_left.call(fn_action)
+
+# TODO: review all requests to are_doors_closing - 
+# Most likely we need are_doors_transiting for UI: should be checking is_open and is_opening
+func are_doors_closing(door_side: int = DoorSide.UNASSIGNED) -> bool:
+	return _are_doors_in_state(door_side, "is_closing")
+
+
+func are_doors_opened(door_side: int = DoorSide.UNASSIGNED) -> bool:
+	return _are_doors_in_state(door_side, "is_opened")
+
+
+func are_doors_closed(door_side: int = DoorSide.UNASSIGNED) -> bool:
+	return _are_doors_in_state(door_side, "is_closed")
+
+
+func are_doors_opened_for_platform(platform_side: int = PlatformSide.BOTH) -> bool:
+	match platform_side:
+		PlatformSide.LEFT:
+			return are_doors_opened(DoorSide.LEFT)
+		PlatformSide.RIGHT:
+			return are_doors_opened(DoorSide.RIGHT)
+		PlatformSide.BOTH:
+			return are_doors_opened()
+	# Platform requires no doors to operate
+	return true
 
 
 func close_doors() -> void:
-	if not doorsClosing and (doorLeft or doorRight) and doors:
-		doorsClosing = true
-		$Sound/DoorsClose.play()
+	close_right_doors()
+	close_left_doors()
 
 
 func force_close_doors() -> void:
-	doorsClosing = true
-	doorsClosingTimer = doorsClosingTime - 0.1
+	_call_wagon_doors("force_close_doors")
 
 
-func check_doors(delta: float) -> void:
-	if Input.is_action_just_pressed("doorClose") and not ai:
+func _toggle_door_side(door_state: DoorState, fn_open: String, fn_close: String) -> void:
+	if door_state.is_closed() or door_state.is_opened():
+		# TODO: extract UI sounds from non-ui entities
+		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
+		if door_state.is_opened():
+			call(fn_close)
+		else:
+			call(fn_open)
+
+
+func check_doors() -> void:
+	if ai:
+		return
+	
+	if Input.is_action_just_pressed("doorClose"):
+		# TODO: extract UI sounds from non-ui entities
 		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
 		close_doors()
-	if Input.is_action_just_pressed("doorLeft") and not ai:
-		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
-		if doorLeft:
-			close_doors()
-		else:
+
+	if Input.is_action_just_pressed("doorLeft"):
+		_toggle_door_side(door_left, "open_left_doors", "close_left_doors")
+
+	if Input.is_action_just_pressed("doorRight"):
+		_toggle_door_side(door_right, "open_right_doors", "close_right_doors")
+
+
+func auto_open_doors_at_station() -> void:
+	if not current_station_table_entry:
+		return
+	var station_node = world.get_signal(current_station_table_entry.station_node_name)
+	match station_node.platform_side:
+		PlatformSide.NONE:
+			pass
+		PlatformSide.LEFT:
 			open_left_doors()
-	if Input.is_action_just_pressed("doorRight") and not ai:
-		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
-		if doorRight:
-			close_doors()
-		else:
+		PlatformSide.RIGHT:
 			open_right_doors()
-
-	if doorsClosing:
-		doorsClosingTimer += delta
-
-	if doorsClosingTimer > doorsClosingTime:
-		doorsClosing = false
-		doorRight = false
-		doorLeft = false
-		doorsClosingTimer = 0
+		PlatformSide.BOTH:
+			open_left_doors()
+			open_right_doors()
 
 
 func show_textbox_message(string: String) -> void:
@@ -1186,7 +1221,7 @@ func check_for_player_help(delta: float) -> void:
 		check_for_player_helpTimer = 0
 
 	check_for_player_helpTimer2 += delta
-	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and not (doorRight or doorLeft) and check_for_player_helpTimer2 > 10 and not is_in_station:
+	if blockedAcceleration and accRoll > 0 and brakeRoll == 0 and are_doors_closed() and check_for_player_helpTimer2 > 10 and not is_in_station:
 		send_message("HINT_ADVANCED_DRIVING", ["acc-", "acc+"])
 		check_for_player_helpTimer2 = 0
 
@@ -1246,6 +1281,12 @@ func spawnWagons() -> void:
 		newWagon.owner = self.owner
 		wagonsI.append(newWagon)
 		newWagon.initalize()
+	
+	# Right now we are assuming that all doors works same way, so we track only first wagon
+	# Connect to first
+	assert(not wagonsI.empty())
+	door_left = wagonsI[0].door_left
+	door_right = wagonsI[0].door_right
 
 	# Handle Cabin:
 	if ai:
@@ -1353,6 +1394,7 @@ func get_next_station_name_on_track() -> String:
 		return all[0]
 	return ""
 
+
 func autopilot() -> void:
 	debugLights(self)
 	if not pantographUp:
@@ -1362,8 +1404,12 @@ func autopilot() -> void:
 	if is_in_station:
 		sollSpeed = 0
 		return
-	if (doorLeft or doorRight) and not doorsClosing:
-		close_doors()
+	if (door_left.is_opened()):
+		close_left_doors()
+		return
+	if (door_right.is_opened()):
+		close_right_doors()
+		return
 	var sollSpeedArr: Dictionary = {}
 
 	## Red Signal:
@@ -1387,16 +1433,9 @@ func autopilot() -> void:
 			if sollSpeedArr[2] < 10:
 				sollSpeedArr[2] = 0
 
-
 	## Open Doors:
 	if (current_station_node != null and speed == 0 and not is_in_station and distance_on_route - route_distance_at_station_begin >= length):
-		if current_station_node.platform_side == PlatformSide.LEFT:
-			open_left_doors()
-		elif current_station_node.platform_side == PlatformSide.RIGHT:
-			open_right_doors()
-		elif current_station_node.platform_side == PlatformSide.BOTH:
-			open_left_doors()
-			open_right_doors()
+		auto_open_doors_at_station()
 
 	sollSpeedArr[3] = currentSpeedLimit
 
@@ -1656,6 +1695,7 @@ func jump_to_station(station_table_index : int) -> void:
 
 
 func force_to_be_in_station(station_table_index: int) -> void:
+	force_close_doors()
 	current_station_node = world.get_signal(station_table[station_table_index].station_node_name)
 	current_station_table_index = station_table_index
 	current_station_table_entry = station_table[current_station_table_index]
@@ -1665,10 +1705,7 @@ func force_to_be_in_station(station_table_index: int) -> void:
 	_door_open_message_timer = 0
 	_door_open_message_sent = false
 	whole_train_in_station = true
-	if current_station_node.platform_side == PlatformSide.LEFT:
-		open_left_doors()
-	if current_station_node.platform_side == PlatformSide.RIGHT:
-		open_right_doors()
+	auto_open_doors_at_station()	
 
 
 # Returns -1, if station node not found in station_table

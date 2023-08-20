@@ -7,6 +7,7 @@ onready var objects_menu := $"../Objects"
 
 func _on_RailLogicMenu_item_selected(index):
 	$RailLogicMenu.hide()
+	$RailLogicMenu.unselect_all()
 	if editor.selected_object_type != "Rail":
 		editor.send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
 		return

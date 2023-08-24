@@ -60,6 +60,59 @@ step = 0.25
 value = 1.0
 prefix = "Time Scale x"
 
+[node name="PassengerDebugContainer" type="GridContainer" parent="DebugContainer"]
+margin_left = -1.0
+margin_top = 404.0
+margin_right = 166.0
+margin_bottom = 552.0
+
+[node name="Label" type="Label" parent="DebugContainer/PassengerDebugContainer"]
+margin_right = 167.0
+margin_bottom = 14.0
+text = "Passenger Debug Controls"
+
+[node name="SpawnPassengers" type="Button" parent="DebugContainer/PassengerDebugContainer"]
+margin_top = 18.0
+margin_right = 167.0
+margin_bottom = 38.0
+text = "Spawn Passengers"
+
+[node name="BoardToTrain" type="Button" parent="DebugContainer/PassengerDebugContainer"]
+margin_top = 42.0
+margin_right = 167.0
+margin_bottom = 62.0
+text = "Board to Train"
+
+[node name="ExitToStation" type="Button" parent="DebugContainer/PassengerDebugContainer"]
+margin_top = 66.0
+margin_right = 167.0
+margin_bottom = 86.0
+text = "Exit to Station"
+
+[node name="DrawPassengerLabel" type="CheckBox" parent="DebugContainer/PassengerDebugContainer"]
+margin_top = 90.0
+margin_right = 167.0
+margin_bottom = 114.0
+text = "Passenger label"
+
+[node name="DrawWagonLabel" type="CheckBox" parent="DebugContainer/PassengerDebugContainer"]
+margin_top = 118.0
+margin_right = 167.0
+margin_bottom = 142.0
+text = "Wagon label"
+
+[node name="DrawStationLabel" type="CheckBox" parent="DebugContainer/PassengerDebugContainer"]
+margin_top = 146.0
+margin_right = 167.0
+margin_bottom = 170.0
+text = "Station label"
+
 [connection signal="item_selected" from="DebugContainer/DebugCameraTargets" to="." method="_on_DebugCameraTargets_item_selected"]
 [connection signal="pressed" from="DebugContainer/DeactivateDebugCamera" to="." method="_on_DeactivateDebugCamera_pressed"]
 [connection signal="value_changed" from="DebugContainer/TimeScale" to="." method="_on_TimeScale_value_changed"]
+[connection signal="pressed" from="DebugContainer/PassengerDebugContainer/SpawnPassengers" to="." method="_on_SpawnPassengers_pressed"]
+[connection signal="pressed" from="DebugContainer/PassengerDebugContainer/BoardToTrain" to="." method="_on_BoardToTrain_pressed"]
+[connection signal="pressed" from="DebugContainer/PassengerDebugContainer/ExitToStation" to="." method="_on_ExitToStation_pressed"]
+[connection signal="pressed" from="DebugContainer/PassengerDebugContainer/DrawPassengerLabel" to="." method="_on_DrawPassengerLabel_pressed"]
+[connection signal="pressed" from="DebugContainer/PassengerDebugContainer/DrawWagonLabel" to="." method="_on_DrawWagonLabel_pressed"]
+[connection signal="pressed" from="DebugContainer/PassengerDebugContainer/DrawStationLabel" to="." method="_on_DrawStationLabel_pressed"]

@@ -7,9 +7,16 @@ var debug_camera: DebugCamera
 onready var fps_label := $DebugContainer/FPSContainer/FPSLabel as Label
 onready var camera_target_list := $DebugContainer/DebugCameraTargets as ColoredItemList
 
+onready var draw_passenger_label := $DebugContainer/PassengerDebugContainer/DrawPassengerLabel as CheckBox
+onready var draw_station_label := $DebugContainer/PassengerDebugContainer/DrawStationLabel as CheckBox
+onready var draw_wagon_label := $DebugContainer/PassengerDebugContainer/DrawWagonLabel as CheckBox
+
 
 func _ready() -> void:
 	$DebugContainer.hide()
+	draw_passenger_label.pressed = ProjectSettings.get_setting("game/debug/draw_labels/passenger")
+	draw_station_label.pressed = ProjectSettings.get_setting("game/debug/draw_labels/station")
+	draw_wagon_label.pressed = ProjectSettings.get_setting("game/debug/draw_labels/wagon")
 
 
 func _process(_delta: float) -> void:
@@ -60,3 +67,42 @@ func _on_DeactivateDebugCamera_pressed() -> void:
 
 func _on_TimeScale_value_changed(value: float) -> void:
 	Engine.time_scale = value
+
+
+func _get_player_train() -> LTSPlayer:
+	for player in get_tree().get_nodes_in_group("Player"):
+		if not (player is LTSPlayer) or player.ai:
+			continue
+		if player.current_station_node != null:
+			return player
+	return null
+
+
+func _on_SpawnPassengers_pressed():
+	var player := _get_player_train()
+	if player:
+		player.update_waiting_persons_on_next_station()
+
+
+func _on_BoardToTrain_pressed():
+	var player := _get_player_train()
+	if player:
+		player.arrived_to_current_station()
+
+
+func _on_ExitToStation_pressed():
+	var player := _get_player_train()
+	if player:
+		player.send_persons_to_station()
+
+
+func _on_DrawPassengerLabel_pressed():
+	ProjectSettings.set_setting("game/debug/draw_labels/passenger", draw_passenger_label.pressed)
+
+
+func _on_DrawWagonLabel_pressed():
+	ProjectSettings.set_setting("game/debug/draw_labels/wagon", draw_wagon_label.pressed)
+
+
+func _on_DrawStationLabel_pressed():
+	ProjectSettings.set_setting("game/debug/draw_labels/station", draw_station_label.pressed)

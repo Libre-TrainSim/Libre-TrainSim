@@ -48,14 +48,19 @@ var is_in_station := false # true if the train speed = 0, the train is fully in 
 var real_arrival_time: int # Time is set if train successfully arrived
 var route_distance_at_station_begin: float = 0 # distance of the station begin on route
 const GOODWILL_DISTANCE: float = 10.0 # distance the player can overdrive a station, or it's train end isn't in the station.
+var leave_current_station_announced: bool = false # to prevent depature re-announcement till train is refactored with a state
 
-## Doors: 
+## Doors:
 # We assume that all doors behave the same way
 # So there is no need to track individual wagons door states
 # Wagons will share doorState state
 export var doors := true # Defines, if this train has doors.
 var door_left: DoorState = null
 var door_right: DoorState = null
+# Doors cache to be used within current station
+var _station_doors := []
+var _station_doors_wagons := []
+
 
 export var brakingSpeed: float = 0.3
 export var brakeReleaseSpeed: float = 0.2
@@ -248,10 +253,12 @@ func ready() -> void:
 				if node.is_in_group("PlayerCameras"):
 					passengerCameras.append(node)
 
-	# Open doors at the beginning
-	if station_table.size() > 0 and station_table[0].stop_type == StopType.BEGINNING:
+	# TODO: properly set intial station (i.e. set flags like is_in_station, signal prior to the station as Red, etc
+	# Basically we need to do handle_signal for initial station
+	if current_station_table_entry and current_station_table_entry.stop_type == StopType.BEGINNING:
+		current_station_node = world.get_signal(current_station_table_entry.station_node_name)
 		auto_open_doors_at_station()
-		
+
 	## Prepare Signals:
 	if not ai:
 		set_signalWarnLimits()
@@ -814,10 +821,8 @@ func handle_signal(signal_name: String) -> void:
 		current_station_node = signal_passed
 		is_in_station = false
 		route_distance_at_station_begin = baked_route_signal_positions[current_station_node.name]
-
-		if current_station_table_entry.stop_type != StopType.BEGINNING:
-			for wagonI in wagonsI:
-				wagonI.sendPersonsToDoor(current_station_node.platform_side, current_station_table_entry.leaving_persons/100.0)
+		# We are arriving to the station, people can start preparing to get off the train
+		send_persons_to_station()
 
 	elif signal_passed.type == RailLogicTypes.SPEED_LIMIT:
 		if reverser == ReverserState.REVERSE:
@@ -862,10 +867,10 @@ func check_station(delta: float) -> void:
 
 	# If the player is in station and starts driving very early
 	if speed != 0:
-		# TODO: confirm that we don't actually need to check the doors as brake is forced when doors are open
 		if is_in_station and are_doors_closed():
-			score -= SCORE_PENALTY_DEPART_EARLY
-			send_message("YOU_DEPARTED_EARLIER")
+			if not is_departure_allowed():
+				score -= SCORE_PENALTY_DEPART_EARLY
+				send_message("YOU_DEPARTED_EARLIER")
 			leave_current_station()
 		return
 
@@ -918,13 +923,11 @@ func check_station(delta: float) -> void:
 			elif not ai:
 				jTools.call_delayed(1, jAudioManager, "play_game_sound", [current_station_table_entry.arrival_sound_path])
 
-		# send door position, so persons can get in
-		if current_station_table_entry.stop_type != StopType.END:
-			sendDoorPositionsToCurrentStation()
+		# notify station train arrived
+		arrived_to_current_station()
 
 	# train waited long enough in station
-	elif is_in_station and world.time >= current_station_table_entry.departure_time and \
-			world.time >= real_arrival_time + current_station_table_entry.minimum_halt_time:
+	elif is_in_station and is_departure_allowed():
 		# scenario finished if last station
 		if current_station_table_entry.stop_type == StopType.END:
 			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)
@@ -933,18 +936,27 @@ func check_station(delta: float) -> void:
 			return
 		# else, send "you can depart" message once the time is up
 		else:
-			send_message("YOU_CAN_DEPART")
-			if current_station_table_entry.departure_sound_path != "":
+			if current_station_table_entry.departure_sound_path != "" and not leave_current_station_announced:
+				send_message("YOU_CAN_DEPART")
+				leave_current_station_announced = true
 				if camera_state != CameraState.CABIN_VIEW:
 					for wagon in wagonsI:
 						wagon.play_outside_announcement(current_station_table_entry.departure_sound_path)
 				elif not ai:
 					jAudioManager.play_game_sound(current_station_table_entry.departure_sound_path)
-			leave_current_station()
+			# Allow autopilot to exit staton
+			if ai or automaticDriving:
+				leave_current_station()
 
+
+func is_departure_allowed() -> bool:
+	return world.time >= current_station_table_entry.departure_time \
+		and world.time >= real_arrival_time + current_station_table_entry.minimum_halt_time
 
 
 func leave_current_station() -> void:
+	current_station_node.train_departured(self)
+	leave_current_station_announced = false
 	is_in_station = false
 	current_station_table_index += 1
 	if current_station_table_index < station_table.size():
@@ -1017,7 +1029,7 @@ func _call_wagon_doors(fn_side_action: String) -> void:
 
 func _open_side_doors(fn_side_action: String) -> void:
 	if doors and speed == 0:
-		_call_wagon_doors(fn_side_action)		
+		_call_wagon_doors(fn_side_action)
 
 
 func _close_side_doors(fn_side_action: String) -> void:
@@ -1046,9 +1058,9 @@ func _are_doors_in_state(door_side: int, fn_action: String) -> bool:
 			return door_left.call(fn_action)
 		DoorSide.RIGHT:
 			return door_right.call(fn_action)
-	return door_right.call(fn_action) or door_left.call(fn_action)
+	return door_right.call(fn_action) and door_left.call(fn_action)
 
-# TODO: review all requests to are_doors_closing - 
+# TODO: review all requests to are_doors_closing -
 # Most likely we need are_doors_transiting for UI: should be checking is_open and is_opening
 func are_doors_closing(door_side: int = DoorSide.UNASSIGNED) -> bool:
 	return _are_doors_in_state(door_side, "is_closing")
@@ -1096,7 +1108,7 @@ func _toggle_door_side(door_state: DoorState, fn_open: String, fn_close: String)
 func check_doors() -> void:
 	if ai:
 		return
-	
+
 	if Input.is_action_just_pressed("doorClose"):
 		# TODO: extract UI sounds from non-ui entities
 		jAudioManager.play_game_sound("res://Resources/Sounds/click.ogg")
@@ -1109,11 +1121,29 @@ func check_doors() -> void:
 		_toggle_door_side(door_right, "open_right_doors", "close_right_doors")
 
 
+func get_route_to_free_wagon(person_position: Vector3) -> Array:
+	if _station_doors.empty():
+		return []
+	var index := get_closest_door_to_position(person_position, _station_doors)
+	var assigned_door: Spatial = _station_doors[index]
+	return [_station_doors_wagons[index], assigned_door, [assigned_door.global_transform.origin]]
+
+
+func get_closest_door_to_position(position: Vector3, doors_array: Array) -> int:
+	var nearestDoorIndex := 0
+	for index in range(doors_array.size()):
+		if doors_array[index].global_transform.origin.distance_to(position) \
+				< doors_array[nearestDoorIndex].global_transform.origin \
+				.distance_to(position):
+			nearestDoorIndex = index
+	return nearestDoorIndex
+
+
 func auto_open_doors_at_station() -> void:
-	if not current_station_table_entry:
+	if not current_station_node:
 		return
-	var station_node = world.get_signal(current_station_table_entry.station_node_name)
-	match station_node.platform_side:
+	assert(is_instance_valid(current_station_node))
+	match current_station_node.platform_side:
 		PlatformSide.NONE:
 			pass
 		PlatformSide.LEFT:
@@ -1281,7 +1311,7 @@ func spawnWagons() -> void:
 		newWagon.owner = self.owner
 		wagonsI.append(newWagon)
 		newWagon.initalize()
-	
+
 	# Right now we are assuming that all doors works same way, so we track only first wagon
 	# Connect to first
 	assert(not wagonsI.empty())
@@ -1386,6 +1416,13 @@ func handle_station_signal():
 		signal_node.set_status(1)
 		_signal_was_freed_for_station_index += 1
 
+
+func send_persons_to_station() -> void:
+	# Do not unboard persons at station with no platforms
+	if current_station_node.platform_side == PlatformSide.NONE:
+		return
+	for wagonI in wagonsI:
+		wagonI.send_persons_to_station(current_station_table_entry.leaving_persons/100.0)
 
 
 func get_next_station_name_on_track() -> String:
@@ -1552,20 +1589,26 @@ func updateTrainAudioBus() -> void:
 		AudioServer.set_bus_volume_db(2,soundIsolation)
 
 
-func sendDoorPositionsToCurrentStation() -> void:
-	Logger.log("Sending Door Postions...")
-	var doorsArray := []
-	var doorsWagon := []
+func arrived_to_current_station() -> void:
+	update_vacant_wagons_doors()
+	if current_station_table_entry.stop_type != StopType.END:
+		current_station_node.train_arrived(self)
+
+
+func update_vacant_wagons_doors() -> void:
+	_station_doors.clear()
+	_station_doors_wagons.clear()
 	for wagon in wagonsI:
+		if wagon.vacant_seats_count() == 0:
+			continue
 		if (current_station_node.platform_side == PlatformSide.LEFT):
 			for door in wagon.leftDoors:
-				doorsArray.append(door)
-				doorsWagon.append(wagon)
+				_station_doors.append(door)
+				_station_doors_wagons.append(wagon)
 		if (current_station_node.platform_side == PlatformSide.RIGHT):
 			for door in wagon.rightDoors:
-				doorsArray.append(door)
-				doorsWagon.append(wagon)
-	current_station_node.setDoorPositions(doorsArray, doorsWagon)
+				_station_doors.append(door)
+				_station_doors_wagons.append(wagon)
 
 
 var curve_shaking_factor: float = 0.0
@@ -1683,6 +1726,7 @@ func jump_to_rail(rail: Spatial, distance: float, fwd: bool = true) -> void:
 		wagon.drive(0)
 
 
+# TODO: Verify jump to station works with custom scenarios
 func jump_to_station(station_table_index : int) -> void:
 	set_speed_to_zero()
 
@@ -1691,7 +1735,7 @@ func jump_to_station(station_table_index : int) -> void:
 	var local_distance_on_rail: float = station_node.get_perfect_halt_distance_on_rail(length)
 	jump_to_rail(station_node.rail, local_distance_on_rail, local_forward)
 	force_to_be_in_station(station_table_index)
-	sendDoorPositionsToCurrentStation()
+	arrived_to_current_station()
 
 
 func force_to_be_in_station(station_table_index: int) -> void:
@@ -1705,7 +1749,7 @@ func force_to_be_in_station(station_table_index: int) -> void:
 	_door_open_message_timer = 0
 	_door_open_message_sent = false
 	whole_train_in_station = true
-	auto_open_doors_at_station()	
+	auto_open_doors_at_station()
 
 
 # Returns -1, if station node not found in station_table

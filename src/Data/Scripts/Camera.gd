@@ -53,7 +53,8 @@ func _input(event) -> void:
 	if Root.Editor and get_parent().get_node("EditorHUD").mouse_over_ui:
 		return
 
-	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
+	if current and event is InputEventMouseMotion and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)) \
+			and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		mouseMotion = mouseMotion + event.relative
 		mouse_moved = (event.relative != Vector2(0,0))
 
@@ -84,7 +85,7 @@ func _process(delta: float) -> void:
 	cameraX = -rotation.x
 
 	if not Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and not Root.mobile_version and not Root.Editor and not Root.pause_mode:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	if mouseMotion.length() > 0 and (not Root.Editor or Input.is_mouse_button_pressed(BUTTON_RIGHT)):
 		var motionFactor: float = (refDelta / delta * refDelta) * mouseSensitivity * deg2rad(1)

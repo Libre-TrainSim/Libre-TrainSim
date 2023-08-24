@@ -19,7 +19,8 @@ var pending_train_spawns := []
 
 var player: LTSPlayer
 
-var personVisualInstances := [
+var _person_template: PackedScene = preload("res://Data/Modules/Person.tscn")
+var _person_visual_instances := [
 	preload("res://Resources/Persons/Man_Young_01.tscn"),
 	preload("res://Resources/Persons/Man_Middleaged_01.tscn"),
 	preload("res://Resources/Persons/Woman_Young_01.tscn"),
@@ -68,19 +69,29 @@ func _ready() -> void:
 	set_scenario_to_world()
 
 	## Create Persons-Node:
-	var personsNode := WorldObject.new()
+	var personsNode := Spatial.new()
 	personsNode.name = "Persons"
 	add_child(personsNode)
 	personsNode.owner = self
 
 	for signalN in $Signals.get_children():
 		if signalN.type == "Station":
-			signalN.personsNode = personsNode
-			signalN.spawnPersonsAtBeginning()
+			signalN.spawn_persons_at_beginning()
 
 	player = $Players/Player
 	assert(player)
 	apply_user_settings()
+
+	player.update_waiting_persons_on_next_station()
+
+
+func get_new_person_instance() -> Person:
+	randomize()
+	var person: Person = _person_template.instance()
+	var person_visual: PackedScene = _person_visual_instances[int(rand_range(0, _person_visual_instances.size()))]
+	person.add_child(person_visual.instance())
+	$Persons.add_child(person)
+	return person
 
 
 func apply_user_settings() -> void:
@@ -306,7 +317,7 @@ func get_terrain_height_at(_position: Vector2) -> float:
 
 func jump_player_to_station(station_table_index: int) -> void:
 	Logger.log("Jumping player to station " + player.station_table[station_table_index].station_name)
-	var new_station_node: Spatial = get_signal(player.station_table[station_table_index].node_name)
+	var new_station_node: Spatial = get_signal(player.station_table[station_table_index].station_node_name)
 
 	time = player.station_table[station_table_index].arrival_time
 

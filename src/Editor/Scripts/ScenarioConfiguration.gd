@@ -41,8 +41,6 @@ func _input(_event):
 
 
 func save():
-	if is_instance_valid(loaded_route):
-		routes[current_route] = loaded_route.duplicate(true)
 	scenario_editor.scenario_info.routes = routes.duplicate(true)
 	scenario_editor.scenario_info.rail_logic_settings = rail_logic_settings.duplicate(true)
 	scenario_editor.scenario_info.save_scenario()  # write to disk
@@ -99,11 +97,9 @@ func _on_Routes_user_selected_entry(entry_name):
 
 
 func set_current_route(route_name : String) -> void:
-	if is_instance_valid(loaded_route):
-		routes[current_route] = loaded_route.duplicate(true)
 	current_route = route_name
 	if current_route != "":
-		loaded_route = routes[current_route].duplicate(true)
+		loaded_route = routes[current_route]
 		loaded_route.connect_points()
 	update_ui_for_current_route()
 	update_scenario_map()

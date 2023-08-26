@@ -37,7 +37,9 @@ static func export_editor_track(track_name: String, export_path: String) -> Stri
 static func get_files_in_directory(path: String) -> Array:
 	var files = []
 	var dir = Directory.new()
-	dir.open(path)
+	if dir.open(path) != OK:
+		return []
+
 	dir.list_dir_begin(true, true)
 	var file_name = dir.get_next()
 	while file_name != "":

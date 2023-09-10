@@ -14,9 +14,8 @@ var instance_thread := Thread.new()
 var thread_done := false
 var thread_done_mutex := Mutex.new()
 var is_instancing := false
-var editor_content : ModContentDefinition = null
 var editor_world_path := ""
-var editor_mod_path := ""
+var game_start_context := -1
 
 func _ready() -> void:
 	assert(descriptions.size() > 0)
@@ -29,7 +28,6 @@ func load_main_menu():
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
-	Root.reset_game_pause();
 	jAudioManager.clear_all_sounds()
 	jEssentials.remove_all_pending_delayed_calls()
 	$ProgressBar/Bar.max_value = loader.get_stage_count()
@@ -39,7 +37,7 @@ func load_main_menu():
 	show()
 
 
-func load_world(world: String, bg_img: Texture) -> void:
+func load_world(world: String, bg_img: Texture, start_context: int) -> void:
 	loader = ResourceLoader.load_interactive(world)
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
@@ -48,10 +46,11 @@ func load_world(world: String, bg_img: Texture) -> void:
 	$ProgressBar/Bar.value = 0
 	$ProgressBar/Description.text = descriptions[0]
 	$Screenshot.texture = bg_img
+	game_start_context = start_context
 	show()
 
 
-func load_editor(world_path: String, content: ModContentDefinition, mod_path: String, bg_img: Texture) -> void:
+func load_editor(world_path: String, bg_img: Texture) -> void:
 	loader = ResourceLoader.load_interactive("res://Editor/Editor.tscn")
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
@@ -60,9 +59,7 @@ func load_editor(world_path: String, content: ModContentDefinition, mod_path: St
 	$ProgressBar/Bar.value = 0
 	$ProgressBar/Description.text = descriptions[0]
 	$Screenshot.texture = bg_img
-	editor_content = content
 	editor_world_path = world_path
-	editor_mod_path = mod_path
 	show()
 
 
@@ -105,7 +102,8 @@ func _clean_up_and_switch() -> void:
 	set_process(false)
 	_clear()
 	hide()
-	editor_content = null
+	editor_world_path = ""
+	game_start_context = -1
 
 
 func _instanciate_scenes(_args = null) -> void:
@@ -120,12 +118,16 @@ func _instanciate_scenes(_args = null) -> void:
 func _add_to_tree() -> void:
 	for i in range(1, scenes.size()):
 		scenes[0].add_child(scenes[i])
-	if editor_content:
-		scenes[0].content = editor_content
+	if editor_world_path != "":
 		scenes[0].current_track_path = editor_world_path
-		scenes[0].mod_path = editor_mod_path
 	get_tree().root.add_child(scenes[0])
 	get_tree().current_scene = scenes[0]
+	if game_start_context != -1:
+		var world = scenes[0]
+		var gsc := game_start_context
+		# Skip one frame so that world.player is initialized
+		yield(get_tree(), "idle_frame")
+		world.player.game_start_context = gsc
 
 
 func _clear() -> void:

@@ -10,8 +10,6 @@ var selected_time: int = -1 # start time of scenario in seconds
 var EasyMode: bool = true
 var mobile_version: bool = OS.has_feature("mobile")
 
-var start_menu_in_play_menu: bool = false
-
 var game_pause = {"pause_menu": false, "ingame_pause": false, "message": false}
 
 var world: Node  ## Reference to world

@@ -4,6 +4,8 @@ BACK,Back,Zurück,Indietro,戻る,Wróć,Назад,Volver,Назад,Retour
 QUIT_TO_MENU,Quit to Menu,Beenden und zum Hauptmenü,Torna al menu,終了してメニューに戻る,Wyjdź do Menu,Вийти в меню,Salir al Menú,Главно меню,Quitter vers le Menu
 EXIT_GAME,Exit game,Spiel beenden,Esci dal gioco,終了してOSに戻る,Wyjdź do Systemu,Вийти з гри,Salir al SO,Изход,Quitter vers le bureau
 RESTART_SCENARIO,Restart scenario,Szenario neustarten,Riavvia scenario,,,,Reiniciar escenario,Рестартиране на направлението,Redémarrer le scénario
+BACK_TO_TRACK_EDITOR,Back to the track editor,Zurück zum Streckeneditor,,,,,,,Retour à l’éditeur de parcours
+BACK_TO_SCENARIO_EDITOR,Back to the scenario editor,Zurück zum Szenarioeditor,,,,,,,Retour à l’éditeur de scénario
 OK,OK,Okay,OK,了解,OK,Добре,OK,ОК,OK
 STARTING_SIMULATION,Starting Simulation…,Starte Simulation…,Avvio simulazione…,,,,Comenzando Simulación,Стартиране на симулацията…,Démarrer la simulation
 ,,,,,,,,,

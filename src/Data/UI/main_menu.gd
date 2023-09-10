@@ -9,8 +9,6 @@ func _ready():
 	# Update GUI language directly at launch
 	jSettings.update_and_prepare_language_handling()
 
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 	$Version.text = "Version: %s" % ProjectSettings["application/version/label"]
 	if ProjectSettings["application/version/broken"]:
 		$Version.add_color_override("font_color", Color.webmaroon)
@@ -26,11 +24,6 @@ func _ready():
 		$Feedback/VBoxContainer/HBoxContainer/OpenWebBrowser.grab_focus()
 	else:
 		$Buttons/Play.grab_focus()
-
-	if Root.start_menu_in_play_menu:
-		Root.start_menu_in_play_menu = false
-		$Feedback.hide()
-		_on_PlayFront_pressed()
 
 	updateBottmLabels()
 	Logger.log("Using version: %s" % ProjectSettings["application/version/label"])

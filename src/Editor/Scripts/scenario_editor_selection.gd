@@ -23,12 +23,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func update_track_list():
 	$TrackList/ItemList.clear()
-	for track in ContentLoader.repo.worlds:
-		$TrackList/ItemList.add_item(track.get_file().get_basename())
-
 	var tracks = ContentLoader.get_editor_tracks()
 	for track in tracks.keys():
-		$TrackList/ItemList.add_item("Track-Editor: " + track.get_file().get_basename())
+		$TrackList/ItemList.add_item(track.get_file().get_basename())
 	$TrackList/ItemList.select(0)
 
 
@@ -41,10 +38,7 @@ func _on_Select_TrackList_pressed():
 	if selected_items.size() == 0:
 		return
 	var index = selected_items[0]
-	if index < ContentLoader.repo.worlds.size():
-		selected_track = ContentLoader.repo.worlds[selected_items[0]]
-	else:
-		selected_track = ContentLoader.get_editor_tracks().keys()[index- ContentLoader.repo.worlds.size()]
+	selected_track = ContentLoader.get_editor_tracks().keys()[index]
 
 	Root.current_editor_track_path = selected_track.get_base_dir()
 	Root.current_editor_track = selected_track.get_file().get_basename()

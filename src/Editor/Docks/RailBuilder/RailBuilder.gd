@@ -391,11 +391,7 @@ func _on_automaticTendency_pressed() -> void:
 func _on_OverheadLine_pressed() -> void:
 	currentRail.has_overhead_line = $S/General/OverheadLine.pressed
 	if not $S/General/OverheadLine.pressed:
-		currentRail.update_overhead_line(null)
-		if world.get_node("TrackObjects").has_node(currentRail.name + " Poles"):
-			world.get_node("TrackObjects") \
-				.get_node(currentRail.name + " Poles") \
-				.queue_free()
+		editor._remove_poles_for_rail(currentRail)
 	else:
 		editor._spawn_poles_for_rail(currentRail)
 	currentRail.update()

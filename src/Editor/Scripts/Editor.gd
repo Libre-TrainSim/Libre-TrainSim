@@ -1039,6 +1039,19 @@ func _spawn_poles_for_rail(rail: Node) -> void:
 	rail.update()
 
 
+func _remove_poles_for_rail(rail: Node) -> void:
+	rail.update_overhead_line(null)
+
+	var chunk_pos = $World.chunk_manager.position_to_chunk(rail.global_transform.origin)
+	var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
+	var to = $World/Chunks.get_node(chunk_name).get_node("TrackObjects")
+
+	var node_name = rail.name + " Poles"
+
+	if to.has_node(node_name):
+		to.get_node(node_name).queue_free()
+
+
 func add_rail() -> void:
 	var rail_instance: Node = _spawn_rail()
 	rail_instance.translation = get_current_ground_position()

@@ -257,8 +257,7 @@ func resume_chunking():
 	assert(Root.Editor)
 
 	set_process(true)
-	loader.set_process(true)
-	if active_chunk:
+	if active_chunk != null:
 		loader.load_chunks(get_chunks(active_chunk, ProjectSettings["game/gameplay/chunk_load_distance"]))
 
 

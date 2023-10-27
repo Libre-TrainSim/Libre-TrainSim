@@ -941,6 +941,7 @@ func save_world(send_message: bool = true) -> void:
 	if ResourceSaver.save(current_track_path.plus_file("editor_info.tres"), editor_info) != OK:
 		Logger.warn("Failed to save editor info meta data.", self)
 
+	$World.chunk_manager.active_chunk = $World.chunk_manager.position_to_chunk(camera.global_transform.origin)
 	$World.chunk_manager.resume_chunking()
 
 	if send_message:

@@ -27,6 +27,11 @@ func _ready():
 	pause_menu.connect("visibility_changed", self, "_on_Pause_visibility_changed")
 
 
+func _enter_tree() -> void:
+	Root.Editor = true
+	Root.scenario_editor = true
+
+
 func _exit_tree() -> void:
 	Root.Editor = false
 	Root.scenario_editor = false
@@ -50,10 +55,10 @@ func _unhandled_input(event):
 		$CanvasLayer/Message.hide()
 		get_tree().set_input_as_handled()
 
-	if pause_menu.visible and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
+	if pause_menu.visible and (event.is_action_released("pause") or event.is_action_released("ui_cancel")):
 		pause_menu.visible = false
 		get_tree().set_input_as_handled()
-	elif event.is_action_pressed("pause"):
+	elif event.is_action_released("pause"):
 		pause_menu.visible = true
 		get_tree().set_input_as_handled()
 
@@ -105,7 +110,8 @@ func run_map_updater(delta: float):
 
 func _on_TestTrack_pressed():
 	pause_menu.hide()
-	test_track_pck()
+	save_scenario()
+	test_track()
 
 
 func _on_ExportTrack_pressed():
@@ -117,25 +123,11 @@ func save_scenario():
 	$CanvasLayer/ScenarioConfiguration.save()
 
 
-func test_track_pck() -> void:
-	#if OS.has_feature("editor"):
-	#	show_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
-	#			+ "Please use a build of Libre TrainSim to test tracks. ")
-	#	return
-
-	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
-		show_message("Cannot test the track! Please create a scenario.")
-		return
-
-	export_mod()
-
-	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
-		Logger.warn("Can't load content pack!", self)
-		show_message("Can't load content pack!")
-		return
-	ContentLoader.append_content_to_global_repo(content)
-	Root.start_menu_in_play_menu = true
-	LoadingScreen.load_main_menu()
+func test_track() -> void:
+	$CanvasLayer/PlayMenu.show_route_selector( \
+		current_track_path.plus_file(current_track_name + ".tscn"), \
+		scenario_info.resource_path \
+	)
 
 
 func export_mod() -> void:

@@ -18,6 +18,11 @@ func _ready() -> void:
 
 
 func show() -> void:
+	if player.game_start_context == LTSPlayer.GameStartContext.ScenarioEditor:
+		$CenterContainer/HBox/BackToScenarioEditor.show()
+	elif player.game_start_context == LTSPlayer.GameStartContext.TrackEditor:
+		$CenterContainer/HBox/BackToTrackEditor.show()
+
 	$CenterContainer/HBox/Back.grab_focus()
 	.show()
 
@@ -81,7 +86,6 @@ func _on_StationJumper_station_index_selected(station_index: int) -> void:
 
 
 func _on_RestartScenario_pressed() -> void:
-	Root.reset_game_pause()
 	jEssentials.remove_all_pending_delayed_calls()
 	jAudioManager.clear_all_sounds()
 	var _unused = get_tree().reload_current_scene()
@@ -89,3 +93,12 @@ func _on_RestartScenario_pressed() -> void:
 
 func _on_Settings_pressed() -> void:
 	jSettings.popup()
+
+
+func _on_BackToTrackEditor_pressed() -> void:
+	var screenshot = Image.new().load(Root.current_track.get_base_dir().plus_file("screenshot.png"))
+	LoadingScreen.load_editor(Root.current_track.get_basename(), screenshot)
+
+
+func _on_BackToScenarioEditor_pressed() -> void:
+	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))

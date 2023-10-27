@@ -162,6 +162,13 @@ var despawn_point: RoutePoint # Calculated by ScenarioRoute, delivered by world.
 var baked_route_signal_names: Array = [] # sorted array of all signal names along the route
 var baked_route_signal_positions: Dictionary = {} # dictionary of all signal positions along the route (key = signal name)
 
+enum GameStartContext {
+	MainMenu,
+	TrackEditor,
+	ScenarioEditor,
+}
+var game_start_context: int
+
 # Reference delta at 60fps
 const refDelta: float = 0.0167 # 1.0 / 60
 
@@ -454,6 +461,13 @@ func _unhandled_input(event) -> void:
 		camera_distance = clamp(camera_distance, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
 
 
+
+func _exit_tree() -> void:
+	if not ai:
+		Root.reset_game_pause()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
 func getCommand(delta: float) -> void:
 	if control_type == ControlType.COMBINED and not automaticDriving:
 		if Input.is_action_pressed("acc+"):
@@ -610,7 +624,7 @@ func change_to_next_rail() -> void:
 			return
 		else:
 			fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_LAST_RAIL"))
-			connect("_textbox_closed", LoadingScreen, "load_main_menu", [], CONNECT_ONESHOT)
+			connect("_textbox_closed", self, "_on_scenario_ended", [], CONNECT_ONESHOT)
 			return
 
 	currentRail = route_information[route_index].rail
@@ -931,7 +945,7 @@ func check_station(delta: float) -> void:
 		# scenario finished if last station
 		if current_station_table_entry.stop_type == StopType.END:
 			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)
-			connect("_textbox_closed", LoadingScreen, "load_main_menu", [], CONNECT_ONESHOT)
+			connect("_textbox_closed", self, "_on_scenario_ended", [], CONNECT_ONESHOT)
 			leave_current_station()
 			return
 		# else, send "you can depart" message once the time is up
@@ -1690,6 +1704,18 @@ func change_reverser(change: int) -> void:
 func fail_scenario(text: String) -> void:
 	failed_scenario = true
 	show_textbox_message(text)
+
+
+func _on_scenario_ended() -> void:
+	match game_start_context:
+		GameStartContext.MainMenu:
+			LoadingScreen.load_main_menu()
+		GameStartContext.TrackEditor:
+			var screenshot = Image.new().load(Root.current_track.get_base_dir().plus_file("screenshot.png"))
+			LoadingScreen.load_editor(Root.current_track.get_basename(), screenshot)
+		GameStartContext.ScenarioEditor:
+			Root.Editor = true
+			get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
 
 
 # rail has to be in baked_route

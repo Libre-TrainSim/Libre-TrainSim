@@ -5,15 +5,12 @@ signal selected_object_changed(new_object, type_string)
 
 
 var editor_directory: String = ""
-var content: ModContentDefinition
 var authors: Authors
 var editor_info: EditorInfo = null
 ## Track path without file extension
 var current_track_path := "" setget set_current_track_path
 ## Track name is the string after the last /
 var current_track_name := ""
-## Base path of the mod that contains the world
-var mod_path := ""
 
 var selected_object: Node = null
 var selected_object_type: String = ""
@@ -1054,25 +1051,16 @@ func get_current_ground_position() -> Vector3:
 	return position
 
 
-func test_track_pck() -> void:
-	if OS.has_feature("editor"):
-		send_message("Can't test tracks if runs Libre TrainSim using the Godot Editor. " \
-				+ "Please use a build of Libre TrainSim to test tracks. ")
-		return
-
+func test_track() -> void:
 	if ContentLoader.get_scenarios_for_track(current_track_path).size() == 0:
 		send_message("Cannot test the track! Please create a scenario using the scenario editor.")
 		return
 
-	export_mod()
+	save_world(false)
 
-	if !ProjectSettings.load_resource_pack("user://addons/%s/%s.pck" % [content.unique_name, content.unique_name]):
-		Logger.warn("Can't load content pack!", self)
-		send_message("Can't load content pack!")
-		return
-	ContentLoader.append_content_to_global_repo(content)
-	Root.start_menu_in_play_menu = true
-	LoadingScreen.load_main_menu()
+	$EditorHUD/PlayMenu.show_scenario_selector( \
+		current_track_path.plus_file(current_track_name + ".tscn")
+	)
 
 
 func export_mod() -> void:
@@ -1092,7 +1080,7 @@ func _on_ExportTrack_pressed() -> void:
 
 
 func _on_TestTrack_pressed() -> void:
-	test_track_pck()
+	test_track()
 
 
 func send_message(message: String) -> void:

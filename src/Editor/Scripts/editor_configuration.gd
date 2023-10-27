@@ -121,8 +121,7 @@ func _on_TracksList_user_pressed_action(entry_names):
 		texture = null
 
 	Root.current_track = entry_names[0]
-	LoadingScreen.load_editor(entry_names[0], tracks[entry_names[0]][0], \
-			tracks[entry_names[0]][1], texture)
+	LoadingScreen.load_editor(entry_names[0], texture)
 
 
 func _on_TracksList_user_removed_entries(entry_names):

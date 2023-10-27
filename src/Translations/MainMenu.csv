@@ -169,8 +169,8 @@ SAVE_AND_EXIT,Save and exit,Speichern und beenden,Salva ed esci,,,,Guardar y sal
 EXIT_WITHOUT_SAVING,Exit without saving,Beenden ohne zu speichern,Esci senza salvare,,,,Salir sin guardar,Излизане без записване,Quitter sans sauvegarder
 SAVE,Save,Speichern,Salva,,,,,Записване,Sauvegarder
 ,,,,,,,,,
-TRACK_EDITOR,Track Editor,Strecken-Editor,Editor tracciato,,,,Editor de vías,Редактор на линиите,Éditeur de parcours
-SCENARIO_EDITOR,Scenario Editor,Szenario-Editor,Editor scenario,,,,Editor de escenarios,Редактор на направленията,Éditeur de scénario
+TRACK_EDITOR,Track Editor,Streckeneditor,Editor tracciato,,,,Editor de vías,Редактор на линиите,Éditeur de parcours
+SCENARIO_EDITOR,Scenario Editor,Szenarioeditor,Editor scenario,,,,Editor de escenarios,Редактор на направленията,Éditeur de scénario
 SELECT,Select,Auswählen,Seleziona,,,,Seleccionar,Избиране,Sélectionner
 PLAY,Play,Spielen,Gioca,,,,Jugar,Начало,Jouer
 CREATE,Create,Erstellen,Crea,,,,Crear,Създаване,Créer

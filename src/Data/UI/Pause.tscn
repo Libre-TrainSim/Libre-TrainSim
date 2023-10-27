@@ -73,6 +73,20 @@ margin_right = 294.0
 margin_bottom = 257.0
 text = "MENU_SETTINGS"
 
+[node name="BackToTrackEditor" type="Button" parent="CenterContainer/HBox"]
+visible = false
+margin_top = 367.0
+margin_right = 347.0
+margin_bottom = 416.0
+text = "BACK_TO_TRACK_EDITOR"
+
+[node name="BackToScenarioEditor" type="Button" parent="CenterContainer/HBox"]
+visible = false
+margin_top = 367.0
+margin_right = 385.0
+margin_bottom = 416.0
+text = "BACK_TO_SCENARIO_EDITOR"
+
 [node name="QuitMenu" type="Button" parent="CenterContainer/HBox"]
 margin_top = 261.0
 margin_right = 294.0
@@ -96,6 +110,8 @@ margin_bottom = -12.0
 [connection signal="pressed" from="CenterContainer/HBox/RestartScenario" to="." method="_on_RestartScenario_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/JumpToStation" to="." method="_on_JumpToStation_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/BackToTrackEditor" to="." method="_on_BackToTrackEditor_pressed"]
+[connection signal="pressed" from="CenterContainer/HBox/BackToScenarioEditor" to="." method="_on_BackToScenarioEditor_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/QuitMenu" to="." method="_on_QuitMenu_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/QuitOS" to="." method="_on_Quit_pressed"]
 [connection signal="station_index_selected" from="StationJumper" to="." method="_on_StationJumper_station_index_selected"]

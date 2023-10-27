@@ -1,5 +1,7 @@
 extends Panel
 
+export(int, "Main Menu", "Track Editor", "Scenario Editor") var context: int
+
 var selected_track: String = ""
 var selected_scenario: String = ""
 var selected_route: String = ""
@@ -30,9 +32,33 @@ func show() -> void:
 	$V/Tracks/H/ItemList.grab_focus()
 	.show()
 
+# Directly show the scenario selector for the given track.
+# Used by the "test track" feature in the track editor
+func show_scenario_selector(track: String) -> void:
+	selected_track = track
+
+	update_scenarios()
+	track_selector.hide()
+	scenario_selector.show()
+	$V/Scenarios/ItemList.grab_focus()
+	.show()
+
+# Directly show the route selector for the given track and scenario.
+# Used by the "test track" feature in the scenario editor
+func show_route_selector(track: String, scenario: String) -> void:
+	selected_track = track
+	selected_scenario = scenario
+	loaded_scenario = load(scenario)
+
+	update_routes()
+	track_selector.hide()
+	route_selector.show()
+	$V/Routes/ItemList.grab_focus()
+	.show()
+
 
 func _unhandled_input(event: InputEvent) -> void:
-	if visible and event.is_action_pressed("ui_cancel"):
+	if visible and event.is_action_released("ui_cancel"):
 		if track_selector.visible:
 			_on_Tracks_Back_pressed()
 		elif scenario_selector.visible:
@@ -71,7 +97,7 @@ func load_game():
 	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.pressed
 	hide()
 
-	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture)
+	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture, context)
 
 
 func update_tracks() -> void:
@@ -208,12 +234,16 @@ func _on_Tracks_Back_pressed() -> void:
 func _on_Scenarios_Back_pressed():
 	selected_scenario = ""
 	loaded_scenario = null
-	update_breadcrumb()
-	scenario_selector.hide()
-	track_selector.show()
 
-	if $V/Tracks/H/ItemList.get_item_count() == 1:
-		_on_Tracks_Back_pressed()
+	if context == LTSPlayer.GameStartContext.TrackEditor:
+		hide()
+	else:
+		update_breadcrumb()
+		scenario_selector.hide()
+		track_selector.show()
+
+		if $V/Tracks/H/ItemList.get_item_count() == 1:
+			_on_Tracks_Back_pressed()
 
 
 func _on_Scenarios_Select_pressed():
@@ -234,11 +264,15 @@ func _on_Scenarios_item_activated(_index):
 func _on_Routes_Back_pressed():
 	selected_route = ""
 	update_breadcrumb()
-	route_selector.hide()
-	scenario_selector.show()
 
-	if $V/Scenarios/ItemList.get_item_count() == 1:
-		_on_Scenarios_Back_pressed()
+	if context == LTSPlayer.GameStartContext.ScenarioEditor:
+		hide()
+	else:
+		route_selector.hide()
+		scenario_selector.show()
+
+		if $V/Scenarios/ItemList.get_item_count() == 1:
+			_on_Scenarios_Back_pressed()
 
 
 func _on_Routes_Select_pressed():

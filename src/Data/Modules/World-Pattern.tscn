@@ -8,6 +8,9 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
+__meta__ = {
+"chunk_version": 2
+}
 
 [node name="DirectionalLight" parent="." instance=ExtResource( 2 )]
 

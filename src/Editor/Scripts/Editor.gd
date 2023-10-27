@@ -154,6 +154,8 @@ func _port_v1_to_v2_chunks() -> void:
 	# Merge possible duplicates
 	for chunk_position in chunks:
 		if chunks[chunk_position].size() == 1:
+			chunks[chunk_position][0].name = ChunkManager.chunk_to_string(chunk_position)
+			chunk_manager.loader._loaded_chunks.append(chunks[chunk_position][0].name)
 			continue
 
 		var best_fit: int = 0

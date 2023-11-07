@@ -39,7 +39,7 @@ export (bool) var automatic_tend: bool = false
 export (String) var parallel_rail_name: String = ""
 export (float) var distance_to_parallel_rail: float = 0
 
-export (bool) var has_overhead_line: bool = true
+export (bool) var has_overhead_line: bool = false
 var overhead_line_height1: float = 5.3
 var overhead_line_height2: float = 6.85
 var overhead_line_thickness: float = 0.02

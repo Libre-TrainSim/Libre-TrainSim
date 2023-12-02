@@ -1,3 +1,4 @@
+class_name jList
 extends Control
 
 signal user_added_entry(entry_name) # string

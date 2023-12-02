@@ -1,6 +1,11 @@
 extends Control
 
+
+# TODO: move into project settings?
 onready var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
+onready var track_list := $PanelContainer/VBoxContainer/TracksList as jList
+onready var editor_path := $PanelContainer/VBoxContainer/HBoxContainer/EditorPath as LineEdit
+
 
 var dir := Directory.new()
 var tracks := {}
@@ -8,7 +13,7 @@ var tracks := {}
 
 func _ready() -> void:
 	_initialize_editor_directory()
-	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
+	editor_path.text = editor_directory
 	_find_content()
 	$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.select(0)
 
@@ -43,7 +48,7 @@ func _initialize_editor_directory():
 
 func _find_content():
 	tracks = ContentLoader.get_editor_tracks()
-	$PanelContainer/VBoxContainer/TracksList.set_data(tracks.keys())
+	track_list.set_data(tracks.keys())
 
 
 func _initialize_mod_directory(entry_name: String) -> bool:
@@ -93,23 +98,24 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 
 
 func _on_UpdateEditorPathButton_pressed():
-	editor_directory = $PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text
+	editor_directory = editor_path.text
 	if !editor_directory.ends_with("/"):
 		editor_directory += "/"
-	$PanelContainer/VBoxContainer/HBoxContainer/EditorPath.text = editor_directory
+	editor_path.text = editor_directory
 	jSaveManager.save_setting("editor_directory_path", editor_directory)
+	_initialize_editor_directory()
+	track_list.clear()
+	_find_content()
 
 
 func _on_TracksList_user_added_entry(entry_name):
-	$PanelContainer/VBoxContainer/TracksList.remove_entry(entry_name)
+	track_list.remove_entry(entry_name)
 	entry_name = to_file_name(entry_name)
 	if !_initialize_mod_directory(entry_name):
 		var msg: String = "Directory " + editor_directory + entry_name + " already exists.\nPlease choose a different name!"
-		$PanelContainer/VBoxContainer/TracksList.show_error(msg)
+		track_list.show_error(msg)
 		Logger.warn(msg, self)
 		return
-	$PanelContainer/VBoxContainer/TracksList.clear()
-	_find_content()
 
 
 func _on_TracksList_user_pressed_action(entry_names):

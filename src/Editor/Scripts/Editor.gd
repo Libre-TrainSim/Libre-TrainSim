@@ -889,7 +889,8 @@ func save_world(send_message: bool = true) -> void:
 
 	# move newly created buildings from world to chunks
 	for building in $World/Buildings.get_children():
-		var chunk_pos = $World.chunk_manager.position_to_chunk(building.global_transform.origin)
+		var position := building.global_transform.origin as Vector3
+		var chunk_pos = $World.chunk_manager.position_to_chunk(position)
 		var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
 
 		var chunk = $World/Chunks.find_node(chunk_name)
@@ -899,6 +900,7 @@ func save_world(send_message: bool = true) -> void:
 		$World/Buildings.remove_child(building)
 		chunk.get_node("Buildings").add_child(building)
 		building.owner = chunk
+		building.global_translation = position
 
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)

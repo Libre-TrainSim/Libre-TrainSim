@@ -1,46 +1,36 @@
 extends Node2D
 
-export (float) var SpeedPointerRotationAt100: float
-export (float) var SollSpeedPointerRotationAt100: float
-var SpeedPointerZero: float
-var SpeedPerKmH: float
-var SollSpeedPointerZero: float
-var SollSpeedPerKmH: float
+export var speed_rotation_100kmh: float
+export var command_rotation_100percent: float
 
 onready var world: Node = find_parent("World")
+onready var speed_rotation_0kmh: float = $SpeedPointer.rotation
+onready var command_rotation_0percent: float = $CommandPointer.rotation
 
-export (float) var CommandPointerRotationAt100: float
-var CommandPointerZero: float
-var CommandPerPercent: float
+var speed_rotation_per_kmh: float
+var command_rotation_per_percent: float
 
-var SollCommandPointer: float = 0
-var SollSpeedLimitPointer: float = 0
-
-var blink_status: bool = false
+var command_target := 0.0
+var blink_status := false
 
 
 func _ready():
-	SpeedPointerRotationAt100 = deg2rad(SpeedPointerRotationAt100)
-	SollSpeedPointerRotationAt100 = deg2rad(SollSpeedPointerRotationAt100)
-	CommandPointerRotationAt100 = deg2rad(CommandPointerRotationAt100)
+	# convert export vars to radians
+	speed_rotation_100kmh = deg2rad(speed_rotation_100kmh)
+	command_rotation_100percent = deg2rad(command_rotation_100percent)
 
-	SpeedPointerZero = $SpeedPointer.rotation
-	SpeedPerKmH = (SpeedPointerRotationAt100 - SpeedPointerZero)/100.0
-
-	SollSpeedPointerZero = $SpeedLimitPointer.rotation
-	SollSpeedPerKmH = (SollSpeedPointerRotationAt100 - SollSpeedPointerZero)/100.0
-
-	CommandPointerZero = $CommandPointer.rotation
-	CommandPerPercent = (CommandPointerRotationAt100 - CommandPointerZero)/100.0
+	# calculate step sizes
+	speed_rotation_per_kmh = (speed_rotation_100kmh - speed_rotation_0kmh)/100.0
+	command_rotation_per_percent = (command_rotation_100percent - command_rotation_0percent)
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
 
 	$BlinkTimer.connect("timeout", self, "_toggle_blink_status")
 
+	# SIFA
 	var player = find_parent("Player")
 	if is_instance_valid(player):
 		player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint")
 	$Info/Sifa.visible = false
-
 
 
 func _toggle_blink_status():
@@ -48,8 +38,7 @@ func _toggle_blink_status():
 
 
 func _process(delta: float) -> void:
-	$CommandPointer.rotation = (SollCommandPointer - $CommandPointer.rotation)*delta*4.0 + $CommandPointer.rotation
-	$SpeedLimitPointer.rotation = (SollSpeedLimitPointer - $SpeedLimitPointer.rotation)*delta*4.0 + $SpeedLimitPointer.rotation
+	$CommandPointer.rotation = move_toward($CommandPointer.rotation, command_target, delta*4.0)
 
 
 var lastAutoPilot: bool = false
@@ -57,9 +46,8 @@ func update_display(speed: float, command: float, door_left: bool, door_right: b
 					doors_closing: bool, enforced_braking: bool, autopilot: bool,
 					speedLimit: float, engine: bool, reverser: int):
 	## Tachos:
-	$SpeedPointer.rotation = SpeedPointerZero + (SpeedPerKmH * speed)
-	SollCommandPointer = CommandPointerZero + (CommandPerPercent * command * 100)
-	SollSpeedLimitPointer = SollSpeedPointerZero + (SollSpeedPerKmH * speedLimit)
+	$SpeedPointer.rotation = speed_rotation_0kmh + (speed_rotation_per_kmh * speed)
+	command_target = command_rotation_0percent + (command_rotation_per_percent * command)
 
 	$Speed.text = String(int(speed))
 	$Time.text = Math.seconds_to_string(world.time)

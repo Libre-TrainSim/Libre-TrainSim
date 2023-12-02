@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			/ sin(PI - angle_grab_cam_new - angle_cam_object_new) \
 			* sin(angle_grab_cam_new)
 		
-		get_parent().translation = start_position + diff * direction
+		get_parent().global_translation = start_position + diff * direction
 	
 	elif mm != null and (x_rot_active or y_rot_active or z_rot_active):
 		

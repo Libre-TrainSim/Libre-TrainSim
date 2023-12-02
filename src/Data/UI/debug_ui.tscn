@@ -8,6 +8,121 @@
 layer = 128
 script = ExtResource( 2 )
 
+[node name="Stats" type="PanelContainer" parent="."]
+material = ExtResource( 1 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -54.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = 224.0
+grow_horizontal = 0
+
+[node name="Infos" type="VBoxContainer" parent="Stats"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 31.0
+margin_bottom = 201.0
+grow_horizontal = 0
+
+[node name="FPSLabel" type="Label" parent="Stats/Infos"]
+margin_right = 24.0
+margin_bottom = 14.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="Objects" type="Label" parent="Stats/Infos"]
+margin_top = 18.0
+margin_right = 24.0
+margin_bottom = 32.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="Verts" type="Label" parent="Stats/Infos"]
+margin_top = 36.0
+margin_right = 24.0
+margin_bottom = 50.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="DrawCalls" type="Label" parent="Stats/Infos"]
+margin_top = 54.0
+margin_right = 24.0
+margin_bottom = 68.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="MatChanges" type="Label" parent="Stats/Infos"]
+margin_top = 72.0
+margin_right = 24.0
+margin_bottom = 86.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="ShaderChanges" type="Label" parent="Stats/Infos"]
+margin_top = 90.0
+margin_right = 24.0
+margin_bottom = 104.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="SurfaceChanges" type="Label" parent="Stats/Infos"]
+margin_top = 108.0
+margin_right = 24.0
+margin_bottom = 122.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="ShaderCompiles" type="Label" parent="Stats/Infos"]
+margin_top = 126.0
+margin_right = 24.0
+margin_bottom = 140.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="VideoMem" type="Label" parent="Stats/Infos"]
+margin_top = 144.0
+margin_right = 24.0
+margin_bottom = 158.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="TextureMem" type="Label" parent="Stats/Infos"]
+margin_top = 162.0
+margin_right = 24.0
+margin_bottom = 176.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
+[node name="VertexMem" type="Label" parent="Stats/Infos"]
+margin_top = 180.0
+margin_right = 24.0
+margin_bottom = 194.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.0352941, 0.913725, 0.854902, 1 )
+text = "999"
+valign = 1
+
 [node name="DebugContainer" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,37 +132,16 @@ margin_right = -16.0
 margin_bottom = -16.0
 mouse_filter = 2
 
-[node name="FPSContainer" type="ColorRect" parent="DebugContainer"]
-material = ExtResource( 1 )
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -38.0
-margin_bottom = 28.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FPSLabel" type="Label" parent="DebugContainer/FPSContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_colors/font_color = Color( 0, 1, 0, 1 )
-text = "999"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="DebugCameraTargets" type="ItemList" parent="DebugContainer"]
 margin_top = 26.0
-margin_right = 166.0
+margin_right = 177.0
 margin_bottom = 388.0
 script = ExtResource( 3 )
 
 [node name="DeactivateDebugCamera" type="Button" parent="DebugContainer"]
 margin_right = 165.0
 margin_bottom = 20.0
-text = "Deactive Debug Camera"
+text = "Deactivate Debug Camera"
 
 [node name="TimeScale" type="SpinBox" parent="DebugContainer"]
 anchor_left = 0.5
@@ -60,56 +154,75 @@ step = 0.25
 value = 1.0
 prefix = "Time Scale x"
 
+[node name="ShowStats" type="CheckBox" parent="DebugContainer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -144.0
+margin_top = -24.0
+size_flags_horizontal = 3
+text = "Always show stats"
+align = 2
+
 [node name="PassengerDebugContainer" type="GridContainer" parent="DebugContainer"]
 margin_left = -1.0
 margin_top = 404.0
-margin_right = 166.0
-margin_bottom = 552.0
+margin_right = 177.0
+margin_bottom = 574.0
 
 [node name="Label" type="Label" parent="DebugContainer/PassengerDebugContainer"]
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 14.0
+size_flags_horizontal = 3
 text = "Passenger Debug Controls"
 
 [node name="SpawnPassengers" type="Button" parent="DebugContainer/PassengerDebugContainer"]
 margin_top = 18.0
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 38.0
+size_flags_horizontal = 3
 text = "Spawn Passengers"
 
 [node name="BoardToTrain" type="Button" parent="DebugContainer/PassengerDebugContainer"]
 margin_top = 42.0
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 62.0
+size_flags_horizontal = 3
 text = "Board to Train"
 
 [node name="ExitToStation" type="Button" parent="DebugContainer/PassengerDebugContainer"]
 margin_top = 66.0
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 86.0
+size_flags_horizontal = 3
 text = "Exit to Station"
 
 [node name="DrawPassengerLabel" type="CheckBox" parent="DebugContainer/PassengerDebugContainer"]
 margin_top = 90.0
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 114.0
+size_flags_horizontal = 3
 text = "Passenger label"
 
 [node name="DrawWagonLabel" type="CheckBox" parent="DebugContainer/PassengerDebugContainer"]
 margin_top = 118.0
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 142.0
+size_flags_horizontal = 3
 text = "Wagon label"
 
 [node name="DrawStationLabel" type="CheckBox" parent="DebugContainer/PassengerDebugContainer"]
 margin_top = 146.0
-margin_right = 167.0
+margin_right = 178.0
 margin_bottom = 170.0
+size_flags_horizontal = 3
 text = "Station label"
 
 [connection signal="item_selected" from="DebugContainer/DebugCameraTargets" to="." method="_on_DebugCameraTargets_item_selected"]
 [connection signal="pressed" from="DebugContainer/DeactivateDebugCamera" to="." method="_on_DeactivateDebugCamera_pressed"]
 [connection signal="value_changed" from="DebugContainer/TimeScale" to="." method="_on_TimeScale_value_changed"]
+[connection signal="pressed" from="DebugContainer/ShowStats" to="." method="_on_ShowStats_pressed"]
 [connection signal="pressed" from="DebugContainer/PassengerDebugContainer/SpawnPassengers" to="." method="_on_SpawnPassengers_pressed"]
 [connection signal="pressed" from="DebugContainer/PassengerDebugContainer/BoardToTrain" to="." method="_on_BoardToTrain_pressed"]
 [connection signal="pressed" from="DebugContainer/PassengerDebugContainer/ExitToStation" to="." method="_on_ExitToStation_pressed"]

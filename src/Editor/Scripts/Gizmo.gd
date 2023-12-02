@@ -1,3 +1,4 @@
+class_name Gizmo
 extends Spatial
 
 
@@ -25,6 +26,8 @@ var z_rot_hovered := false
 var start_position: Vector3
 var grab_position: Vector3
 
+var local_mode := false setget set_local_mode
+
 func _unhandled_input(event: InputEvent) -> void:
 	var mm := event as InputEventMouseMotion
 	if mm != null and (x_active or y_active or z_active):
@@ -34,7 +37,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		# and the position where the grabbed point is moved to
 		
 		var direction := Vector3(x_active, y_active, z_active)
-		
+
+		if local_mode:
+			direction = (global_transform.basis * direction).normalized()
+
 		var camera := get_viewport().get_camera()
 		
 		var grab_position_on_screen := camera.unproject_position(grab_position)
@@ -146,13 +152,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	# Keep the gizmo unrotated while his parent rotates
-	global_rotation = Vector3(0, 0, 0)
+	if local_mode:
+		rotation = Vector3(0, 0, 0)
+	else:
+		global_rotation = Vector3(0, 0, 0)
 	# Make the gizmo always have the same size on screen
 	scale = Vector3(0.005, 0.005, 0.005) * (get_viewport().get_camera().global_translation - global_translation).length()
 
 
 func any_axis_active() -> bool:
 	return x_active or y_active or z_active or x_rot_active or y_rot_active or z_rot_active
+
+
+func set_local_mode(is_local: bool) -> void:
+	local_mode = is_local
+
 
 
 func _raycast_on_gizmo_layer() -> Dictionary:

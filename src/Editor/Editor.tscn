@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Editor/Scripts/editor_camera.gd" type="Script" id=1]
 [ext_resource path="res://Editor/Scripts/Editor.gd" type="Script" id=2]
@@ -29,6 +29,7 @@
 [ext_resource path="res://Editor/ui/objects_menu/add_rail_object_button.gd" type="Script" id=27]
 [ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=28]
 [ext_resource path="res://Data/UI/play_menu.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Editor/ui/object_transform.gd" type="Script" id=30]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 8.0
@@ -49,6 +50,13 @@ expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 shadow_size = 1
 anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 7.0
+content_margin_right = 7.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
 
 [node name="Editor" type="Spatial"]
 script = ExtResource( 2 )
@@ -181,9 +189,6 @@ margin_right = -6.0
 margin_bottom = -1.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="EditorHUD/ObjectName/Name"]
 margin_top = 5.0
@@ -232,134 +237,104 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ObjectTransform" type="Control" parent="EditorHUD"]
+[node name="ObjectTransform" type="PanelContainer" parent="EditorHUD"]
 visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -375.0
 margin_top = 30.0
 margin_right = 375.0
-margin_bottom = 64.0
-
-[node name="Panel" type="Panel" parent="EditorHUD/ObjectTransform"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1.0
+margin_bottom = 84.0
+custom_styles/panel = SubResource( 2 )
+script = ExtResource( 30 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/ObjectTransform"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 6.0
+margin_left = 7.0
 margin_top = 7.0
-margin_right = -5.0
-margin_bottom = -3.0
-
-[node name="Label" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_top = 5.0
-margin_right = 15.0
-margin_bottom = 19.0
-text = "x: "
+margin_right = 743.0
+margin_bottom = 47.0
 
 [node name="x" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 19.0
-margin_right = 108.0
-margin_bottom = 24.0
+margin_right = 87.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 min_value = -1000.0
 max_value = 1000.0
-step = 0.0
+step = 0.1
 allow_greater = true
 allow_lesser = true
-
-[node name="Label2" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 112.0
-margin_top = 5.0
-margin_right = 127.0
-margin_bottom = 19.0
-text = "y: "
+prefix = "x:"
+suffix = "m"
 
 [node name="y" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 131.0
-margin_right = 221.0
-margin_bottom = 24.0
+margin_left = 91.0
+margin_right = 178.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
-min_value = -1000.0
-max_value = 1000.0
-step = 0.0
+min_value = -10.0
+step = 0.1
 allow_greater = true
 allow_lesser = true
-
-[node name="Label3" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 225.0
-margin_top = 5.0
-margin_right = 240.0
-margin_bottom = 19.0
-text = "z: "
+prefix = "y:"
+suffix = "m"
 
 [node name="z" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 244.0
-margin_right = 334.0
-margin_bottom = 24.0
+margin_left = 182.0
+margin_right = 270.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 min_value = -1000.0
 max_value = 1000.0
-step = 0.0
+step = 0.1
 allow_greater = true
 allow_lesser = true
-
-[node name="Label4" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 338.0
-margin_top = 5.0
-margin_right = 375.0
-margin_bottom = 19.0
-text = "x rot: "
+prefix = "z:"
+suffix = "m"
 
 [node name="x_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 379.0
-margin_right = 469.0
-margin_bottom = 24.0
+margin_left = 274.0
+margin_right = 361.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
-min_value = -1000.0
-max_value = 1000.0
-step = 0.0
+min_value = -360.0
+max_value = 360.0
+step = 0.1
 allow_greater = true
 allow_lesser = true
-
-[node name="Label5" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 473.0
-margin_top = 5.0
-margin_right = 510.0
-margin_bottom = 19.0
-text = "y rot: "
+prefix = "rX"
+suffix = "°"
 
 [node name="y_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 514.0
-margin_right = 604.0
-margin_bottom = 24.0
+margin_left = 365.0
+margin_right = 452.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
-min_value = -1000.0
-max_value = 1000.0
-step = 0.0
+min_value = -360.0
+max_value = 360.0
+step = 0.1
 allow_greater = true
 allow_lesser = true
-
-[node name="Label6" type="Label" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 608.0
-margin_top = 5.0
-margin_right = 645.0
-margin_bottom = 19.0
-text = "z rot: "
+prefix = "rY:"
+suffix = "°"
 
 [node name="z_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-margin_left = 649.0
-margin_right = 739.0
-margin_bottom = 24.0
+margin_left = 456.0
+margin_right = 544.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
-min_value = -1000.0
-max_value = 1000.0
-step = 0.0
+min_value = -360.0
+max_value = 360.0
+step = 0.1
 allow_greater = true
 allow_lesser = true
+prefix = "rZ:"
+suffix = "°"
+
+[node name="Local" type="CheckButton" parent="EditorHUD/ObjectTransform/HBoxContainer"]
+margin_left = 548.0
+margin_right = 736.0
+margin_bottom = 40.0
+text = "Local Transforms"
 
 [node name="Objects" type="PanelContainer" parent="EditorHUD"]
 anchor_bottom = 1.0
@@ -403,8 +378,7 @@ follow_focus = true
 scroll_horizontal_enabled = false
 
 [node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer/Content/ScrollContainer"]
-margin_right = 185.0
-margin_bottom = 343.0
+margin_right = 173.0
 hint_tooltip = "- Use shift to select multiple objects.
 - Right-click deselects all selected objects.
 - Shift+scroll wheel chooses a random object of the selected objects."
@@ -715,6 +689,8 @@ highlight_color = Color( 1, 1, 0, 1 )
 [node name="WorldCusor" type="Spatial" parent="."]
 script = ExtResource( 21 )
 
+[connection signal="selected_object_changed" from="." to="EditorHUD" method="_on_selected_object_changed"]
+[connection signal="selected_object_changed" from="." to="EditorHUD/ObjectTransform" method="_on_selected_object_changed"]
 [connection signal="selected_object_changed" from="." to="EditorHUD/AddObjects" method="_on_selected_object_changed"]
 [connection signal="selected_object_changed" from="." to="EditorHUD/AddObjects/HBoxContainer/AddRailObject" method="_on_selected_object_changed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
@@ -728,12 +704,13 @@ script = ExtResource( 21 )
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Rename" to="EditorHUD" method="_on_CurrentObjectRename_pressed"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Delete" to="EditorHUD" method="_on_DeleteCurrentObject_pressed"]
 [connection signal="pressed" from="EditorHUD/ObjectName/Name/Duplicate" to="EditorHUD" method="_on_DuplicateObject_pressed"]
-[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x" to="EditorHUD" method="_on_x_value_changed"]
-[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y" to="EditorHUD" method="_on_y_value_changed"]
-[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z" to="EditorHUD" method="_on_z_value_changed"]
-[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x_rot" to="EditorHUD" method="_on_x_rot_value_changed"]
-[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y_rot" to="EditorHUD" method="_on_y_rot_value_changed"]
-[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z_rot" to="EditorHUD" method="_on_z_rot_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x" to="EditorHUD/ObjectTransform" method="_on_x_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y" to="EditorHUD/ObjectTransform" method="_on_y_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z" to="EditorHUD/ObjectTransform" method="_on_z_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/x_rot" to="EditorHUD/ObjectTransform" method="_on_x_rot_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/y_rot" to="EditorHUD/ObjectTransform" method="_on_y_rot_value_changed"]
+[connection signal="value_changed" from="EditorHUD/ObjectTransform/HBoxContainer/z_rot" to="EditorHUD/ObjectTransform" method="_on_z_rot_value_changed"]
+[connection signal="toggled" from="EditorHUD/ObjectTransform/HBoxContainer/Local" to="EditorHUD/ObjectTransform" method="_on_local_toggled"]
 [connection signal="object_added" from="EditorHUD/Objects" to="." method="_on_object_added"]
 [connection signal="text_changed" from="EditorHUD/Objects/MarginContainer/Content/Search" to="EditorHUD/Objects" method="_on_search_text_changed"]
 [connection signal="mouse_entered" from="EditorHUD/Objects/Overlay/Filters" to="EditorHUD/Objects/Overlay/Filters" method="_on_mouse_entered"]

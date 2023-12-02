@@ -564,6 +564,8 @@ debug/display_chunk.release=false
 debug/draw_labels/passenger=false
 debug/draw_labels/wagon=false
 debug/draw_labels/station=false
+debug/show_stats=true
+debug/show_stats.release=false
 
 [global]
 

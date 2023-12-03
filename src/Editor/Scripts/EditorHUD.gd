@@ -1,71 +1,54 @@
 extends CanvasLayer
 
 
+var selected_object: Node
+var selected_object_type := ""
+
+
 func _ready() -> void:
 	var station_popup: PopupMenu = $GlobalMenu/JumpToStation.get_popup()
 	station_popup.connect("index_pressed", self, "_on_jump_station_pressed")
 
 
-func handle_object_transform_field():
-	$ObjectName/Name/Duplicate.visible = get_parent().selected_object_type == "Building"
-	if not $ObjectTransform.visible:
-		return
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		$ObjectTransform/HBoxContainer/x.value = selected_object.translation.x
-		$ObjectTransform/HBoxContainer/y.value = selected_object.translation.y
-		$ObjectTransform/HBoxContainer/z.value = selected_object.translation.z
-		$ObjectTransform/HBoxContainer/x_rot.value = rad2deg(selected_object.rotation.x)
-		$ObjectTransform/HBoxContainer/y_rot.value = rad2deg(selected_object.rotation.y)
-		$ObjectTransform/HBoxContainer/z_rot.value = rad2deg(selected_object.rotation.z)
-
-
-func _unhandled_input(_event: InputEvent) -> void:
-	handle_object_transform_field()
-	if Input.is_action_just_released("pause", true):
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("pause", true):
 		get_tree().paused = true
 		$Pause.show()
 
 
-func update_ShowSettingsButton():
-	if not $Settings.visible:
-		$GlobalMenu/ShowSettingsButton.text = "Show Settings"
-	else:
-		$GlobalMenu/ShowSettingsButton.text = "Hide Settings"
+func provide_settings_for_selected_object() -> void:
+	match selected_object_type:
+		"Rail":
+			$Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
+			$Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
+			_show_rail_settings()
+		"Building":
+			var children: Array = get_parent().get_children_of_type_recursive(selected_object, MeshInstance)
+			var mesh: ArrayMesh = children[0].mesh as ArrayMesh if children.size() > 0 else null
+			$Settings/TabContainer/BuildingSettings.set_mesh(mesh, children[0])
+			$Settings/TabContainer.current_tab = 3
+		"Signal":
+			$Settings/TabContainer/RailLogic.set_rail_logic(selected_object)
+			$Settings/TabContainer.current_tab = 1
+		_:
+			$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(null)
+			$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(null)
+	_update_settings_button_label()
+
+
+func _update_settings_button_label():
+	var descriptions := {false: "Show Settings", true: "Hide Settings"}
+	$GlobalMenu/ShowSettingsButton.text = descriptions[$Settings.visible]
+
+
+func _show_rail_settings():
+	if not $Settings/TabContainer.current_tab == 0 and not $Settings/TabContainer.current_tab == 2:
+		$Settings/TabContainer.current_tab = 0
 
 
 func _on_ShowSettings_pressed():
-	if $Settings.visible:
-		hide_settings()
-	else:
-		show_settings()
-	update_ShowSettingsButton()
-
-
-func hide_settings():
-	$Settings.hide()
-
-
-func show_settings():
-	$Settings.show()
-
-
-func set_current_object_name(object_name : String):
-	$ObjectName/Name/LineEdit.text = object_name
-	$ObjectName.show()
-
-
-func clear_current_object_name():
-	$ObjectName.hide()
-
-
-func hide_current_object_transform():
-	$ObjectTransform.hide()
-
-
-func show_current_object_transform():
-	$ObjectTransform.show()
-	handle_object_transform_field()
+	$Settings.visible = not $Settings.visible
+	_update_settings_button_label()
 
 
 func _on_ClearCurrentObject_pressed():
@@ -73,64 +56,18 @@ func _on_ClearCurrentObject_pressed():
 
 
 func _on_CurrentObjectRename_pressed():
-	get_parent().rename_selected_object($ObjectName/Name/LineEdit.text)
+	Root.name_node_appropriate(selected_object, $ObjectName/Name/LineEdit.text, \
+			selected_object.get_parent())
+	$ObjectName/Name/LineEdit.text = selected_object.name
+	provide_settings_for_selected_object()
 
 
 func _on_DeleteCurrentObject_pressed():
 	get_parent().delete_selected_object()
 
 
-func _on_x_value_changed(value):
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		selected_object.translation.x = value
-
-
-func _on_y_value_changed(value):
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		selected_object.translation.y = value
-
-
-func _on_z_value_changed(value):
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		selected_object.translation.z = value
-
-
-func _on_x_rot_value_changed(value: float):
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		selected_object.rotation.x = deg2rad(value)
-
-
-func _on_y_rot_value_changed(value: float):
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		selected_object.rotation.y = deg2rad(value)
-
-
-func _on_z_rot_value_changed(value: float):
-	var selected_object = get_parent().selected_object
-	if is_instance_valid(selected_object):
-		selected_object.rotation.z = deg2rad(value)
-
-
 func _onObjectName_text_entered(_new_text):
 	_on_CurrentObjectRename_pressed()
-
-
-func show_building_settings():
-	$Settings/TabContainer.current_tab = 3
-
-
-func show_signal_settings():
-	$Settings/TabContainer.current_tab = 1
-
-
-func show_rail_settings():
-	if not $Settings/TabContainer.current_tab == 0 and not $Settings/TabContainer.current_tab == 2:
-		$Settings/TabContainer.current_tab = 0
 
 
 func  _on_DuplicateObject_pressed():
@@ -155,3 +92,15 @@ func _on_ShowConfig_pressed() -> void:
 	var config: WindowDialog = preload("res://Editor/Docks/Configuration/Configuration.tscn").instance()
 	add_child(config)
 	config.popup_centered()
+
+
+func _on_selected_object_changed(new_object, type_string) -> void:
+	selected_object = new_object
+	selected_object_type = type_string
+	if is_instance_valid(new_object):
+		$ObjectName/Name/LineEdit.text = new_object.name
+		$ObjectName/Name/Duplicate.visible = type_string == "Building"
+		$ObjectName.show()
+		provide_settings_for_selected_object()
+	else:
+		$ObjectName.hide()

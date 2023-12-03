@@ -622,7 +622,7 @@ func handle_drag_mode() -> void:
 	var mouse_pos_3d := plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
 	if mouse_pos_3d != null:
 		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
-		provide_settings_for_selected_object()  # update ui
+		$EditorHUD.provide_settings_for_selected_object()  # update ui, but why?
 
 	# wait for update of overlapping areas, else we can never un-snap
 	# yes, this really needs idle_frame, won't work otherwise
@@ -808,7 +808,6 @@ func clear_selected_object() -> void:
 		if selected_object_type == "Building":
 			$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(null)
 		if selected_object_type in ["Building", "Rail"]:
-			$EditorHUD.hide_current_object_transform()
 			for child in selected_object.get_children():
 				if child.is_in_group("Gizmo"):
 					child.queue_free()
@@ -819,7 +818,6 @@ func clear_selected_object() -> void:
 
 	selected_object = null
 	selected_object_type = ""
-	$EditorHUD.clear_current_object_name()
 
 
 func get_type_of_object(object: Node) -> String:
@@ -845,26 +843,6 @@ func object_has_active_gizmo(object: Node) -> bool:
 			if node.any_axis_active():
 				return true
 	return false
-
-
-func provide_settings_for_selected_object() -> void:
-	match selected_object_type:
-		"Rail":
-			$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(selected_object)
-			$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
-			$EditorHUD.show_rail_settings()
-		"Building":
-			var children := get_children_of_type_recursive(selected_object, MeshInstance)
-			var mesh: ArrayMesh = children[0].mesh as ArrayMesh if children.size() > 0 else null
-			$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(mesh, children[0])
-			$EditorHUD.show_building_settings()
-		"Signal":
-			$EditorHUD/Settings/TabContainer/RailLogic.set_rail_logic(selected_object)
-			$EditorHUD.show_signal_settings()
-		_:
-			$EditorHUD/Settings/TabContainer/RailAttachments.update_selected_rail(null)
-			$EditorHUD/Settings/TabContainer/RailBuilder.update_selected_rail(null)
-	$EditorHUD.update_ShowSettingsButton()
 
 
 ## Should be used, if world is loaded into scene.
@@ -911,7 +889,8 @@ func save_world(send_message: bool = true) -> void:
 
 	# move newly created buildings from world to chunks
 	for building in $World/Buildings.get_children():
-		var chunk_pos = $World.chunk_manager.position_to_chunk(building.global_transform.origin)
+		var position := building.global_transform.origin as Vector3
+		var chunk_pos = $World.chunk_manager.position_to_chunk(position)
 		var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
 
 		var chunk = $World/Chunks.find_node(chunk_name)
@@ -921,6 +900,7 @@ func save_world(send_message: bool = true) -> void:
 		$World/Buildings.remove_child(building)
 		chunk.get_node("Buildings").add_child(building)
 		building.owner = chunk
+		building.global_translation = position
 
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)
@@ -952,12 +932,6 @@ func _on_SaveWorldButton_pressed() -> void:
 	save_world()
 
 
-func rename_selected_object(new_name: String) -> void:
-	Root.name_node_appropriate(selected_object, new_name, selected_object.get_parent())
-	$EditorHUD.set_current_object_name(selected_object.name)
-	provide_settings_for_selected_object()
-
-
 func delete_selected_object() -> void:
 	if selected_object_type == "Rail":
 		$World.chunk_manager.remove_rail(selected_object)
@@ -978,18 +952,13 @@ func set_selected_object(object: Node) -> void:
 		vi.set_layer_mask_bit(1, true)
 
 	selected_object = object
-	$EditorHUD.set_current_object_name(selected_object.name)
 	selected_object_type = get_type_of_object(selected_object)
 
 	if selected_object_type == "Building":
 		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
-		$EditorHUD.show_current_object_transform()
-	if selected_object_type == "Rail":
-		if selected_object.manual_moving:
-			selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
-			$EditorHUD.show_current_object_transform()
+	if selected_object_type == "Rail" and selected_object.manual_moving:
+		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
 
-	provide_settings_for_selected_object()
 	emit_signal("selected_object_changed", object, selected_object_type)
 
 

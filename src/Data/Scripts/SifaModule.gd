@@ -19,7 +19,8 @@ func _on_settings_changed() -> void:
 	#   connect "settings changed" signal, then re-check if sifa is on
 	#   in case the player toggles it in the pause-menu options menu
 
-	is_sifa_enabled = (not Root.EasyMode) and jSettings.get_sifa()
+	# If the train is an ai train, the "Player" node can't be found and player is null => disable Sifa
+	is_sifa_enabled = (not Root.EasyMode) and jSettings.get_sifa() and player != null
 	set_process(is_sifa_enabled)
 	set_process_unhandled_input(is_sifa_enabled)
 

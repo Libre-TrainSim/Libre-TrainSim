@@ -65,7 +65,8 @@ func _on_settings_changed() -> void:
 	#   connect "settings changed" signal, then re-check if pzb is on
 	#   in case the player toggles it in the pause-menu options menu
 
-	var is_pzb_enabled: bool = (not Root.EasyMode) and jSettings.get_pzb()
+	# If the train is an ai train, the "Player" node can't be found and player is null => disable PZB
+	var is_pzb_enabled: bool = (not Root.EasyMode) and jSettings.get_pzb() and player != null
 
 	if is_pzb_enabled:
 		pzb_reset()

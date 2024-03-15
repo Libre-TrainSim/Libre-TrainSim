@@ -31,4 +31,4 @@ func _on_Back_pressed() -> void:
 
 
 func _on_Open_pressed() -> void:
-	var _unused = OS.shell_open(ProjectSettings.globalize_path("user://addons/"))
+	var _unused = OS.shell_open("file://" + ProjectSettings.globalize_path("user://addons/"))

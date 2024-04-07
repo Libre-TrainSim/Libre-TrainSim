@@ -915,8 +915,8 @@ free_cursor={
 
 [locale]
 
-translations=PoolStringArray( "res://Translations/Ingame.bg.translation", "res://Translations/Ingame.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.it.translation", "res://Translations/MainMenu.bg.translation", "res://Translations/MainMenu.de.translation", "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.it.translation", "res://Translations/MainMenu.pl.translation", "res://Translations/Ingame.pl.translation", "res://Translations/Ingame.uk.translation", "res://Translations/MainMenu.uk.translation", "res://Translations/Ingame.es.translation", "res://Translations/MainMenu.es.translation", "res://Translations/Ingame.fr.translation", "res://Translations/MainMenu.fr.translation" )
-locale_filter=[ 0, [ "bg", "de", "en", "es", "fr", "it", "ja", "uk" ] ]
+translations=PoolStringArray( "res://Translations/Ingame.bg.translation", "res://Translations/Ingame.de.translation", "res://Translations/Ingame.en.translation", "res://Translations/Ingame.it.translation", "res://Translations/MainMenu.bg.translation", "res://Translations/MainMenu.de.translation", "res://Translations/MainMenu.en.translation", "res://Translations/MainMenu.it.translation", "res://Translations/MainMenu.pl.translation", "res://Translations/Ingame.pl.translation", "res://Translations/Ingame.uk.translation", "res://Translations/MainMenu.uk.translation", "res://Translations/Ingame.es.translation", "res://Translations/MainMenu.es.translation", "res://Translations/Ingame.fr.translation", "res://Translations/MainMenu.fr.translation", "res://Translations/German-Safety-Tutorials.pt_BR.translation", "res://Translations/Ingame.pt_BR.translation", "res://Translations/MainMenu.pt_BR.translation", "res://Translations/Signal-Tutorial.pt_BR.translation", "res://Translations/Tutorials.pt_BR.translation", "res://Trains/JFR1/JFR1.pt_BR.translation" )
+locale_filter=[ 0, [ "bg", "de", "en", "es", "fr", "it", "ja", "pt_BR", "uk" ] ]
 translation_remaps={
 }
 overwritten_language=""

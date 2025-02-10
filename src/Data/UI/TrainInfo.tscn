@@ -171,7 +171,7 @@ text = "TRAIN_INFO_BRAKES_1"
 fit_content_height = true
 scroll_active = false
 script = ExtResource( 8 )
-actions = [ "brake-", "brake+" ]
+actions = [ "brake-", "acc-" ]
 
 [node name="Brakes-1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 188.0

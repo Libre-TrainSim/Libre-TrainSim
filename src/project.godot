@@ -510,7 +510,7 @@ version/dirty=false
 version/broken=false
 version/custom=false
 version/commit=""
-version/label="v0.9.beta1"
+version/label="v0.9.beta1.358 DIRTY BRANCH"
 version/diff_ignore="../.github/workflows/project.godot.ignores"
 
 [audio]
@@ -549,7 +549,7 @@ scene_naming=2
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/HaSa1002.light-tools/plugin.cfg", "res://addons/hasa1002.buildversion/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/hasa1002.buildversion/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/libre_trainsim_modding_tools/plugin.cfg" )
 
 [game]
 
@@ -582,6 +582,7 @@ debug/show_stats.release=false
 [global]
 
 back=false
+translat=false
 
 [input]
 

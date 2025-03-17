@@ -6,7 +6,7 @@ We won't do a step by step tutorial, because every train works differntly, and h
 ## General:
 A train is handled in a normal single .tscn file (=a single scene). It cointains 3D Models an lights of every wagon, the basic funtionality, and specific scripting. Because of its 'raw' implementation it is possible to add e.g. complete new security systems, and much more. So modding is 'very easy'.
 
-All files can be stored in a single folder. It is very important to download and set up the Editor. -> You can look in [this article](https://github.com/Jean28518/Libre-TrainSim/wiki/Getting-Started,-Preparing-your-World) if you don't know how to do. Under "Trains" you can then create a new folder. In there create a new scene, which save name is equal to the name, how the Train-Name is displayed in LibreTrainSim Menu. For example: `ICE4.tscn`.
+All files can be stored in a single folder. It is very important to download and set up the Editor. -> You can look in [this article](https://github.com/Libre-TrainSim/Libre-TrainSim/wiki/Getting-Started,-Preparing-your-World) if you don't know how to do. Under "Trains" you can then create a new folder. In there create a new scene, which save name is equal to the name, how the Train-Name is displayed in LibreTrainSim Menu. For example: `ICE4.tscn`.
 
 If you don't understand something feel free to explore, and modify the example above. Of course it's okay to reuse some files of the exxample for your own train!
 
@@ -78,7 +78,7 @@ The Train has two main parts:
 - To loop a Sound it should be in .ogg format.
 - The sound is not good implemented in 0.7. In 0.8 that will gonna be better..
 - Feel free to read the code of player.gd or the specific script in the example. They could help a lot
-- If you have questions, feel free to ask here: https://libre-trainsim.de/community
+- If you have questions, feel free to ask on our Discord or on Github: https://www.libretrainsim.org/links
 
 ## Helpful articles:
 - Animation: https://www.youtube.com/watch?v=18Em80Bfjp4

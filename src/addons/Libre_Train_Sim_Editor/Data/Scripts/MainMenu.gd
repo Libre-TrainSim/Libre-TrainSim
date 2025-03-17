@@ -257,7 +257,7 @@ func _on_ItemList_Train_selected(index):
 
 func _on_ButtonFeedback_pressed():
 	jSaveManager.save_value("feedback_pressed", true)
-	OS.shell_open("https://www.libre-trainsim.de/feedback")
+	OS.shell_open("https://www.libretrainsim.org/feedback")
 
 
 
@@ -285,7 +285,7 @@ func _on_Later_pressed():
 
 
 func _on_FrontCreate_pressed():
-	OS.shell_open("https://www.libre-trainsim.de/contribute")
+	OS.shell_open("https://www.libretrainsim.org/contribute")
 
 
 

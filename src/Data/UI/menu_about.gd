@@ -2,8 +2,8 @@ extends Control
 
 
 @export var authors: Resource = authors as Authors
-@export var label: PackedScene := preload("res://Data/UI/AboutAuthorLabel.tscn")
-@export var language_label: PackedScene := preload("res://Data/UI/AboutLanguageLabel.tscn")
+@export var label: PackedScene = preload("res://Data/UI/AboutAuthorLabel.tscn")
+@export var language_label: PackedScene = preload("res://Data/UI/AboutLanguageLabel.tscn")
 
 
 @onready var developers_vbox := $Control/ScrollContainer/VBoxAbout/Developers/Developers

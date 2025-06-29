@@ -7,7 +7,7 @@ enum SignalType {
 	PRESIGNAL = 2,
 	COMBINED = 3
 }
-@export var signal_type: SignalType: int = SignalType.COMBINED
+@export var signal_type: SignalType = SignalType.COMBINED
 
 @export var status: int = SignalStatus.RED: set = set_status
 signal signal_changed(signal_instance)

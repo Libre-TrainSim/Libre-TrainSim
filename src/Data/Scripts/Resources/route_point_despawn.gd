@@ -2,7 +2,7 @@ class_name RoutePointDespawnPoint
 extends RoutePoint
 
 @export (String) var rail_name := "": set = _set_rail_name
-@export (float) var distance_on_rail := 0.0
+@export var distance_on_rail: Float = 0.0
 
 
 func get_description() -> String:

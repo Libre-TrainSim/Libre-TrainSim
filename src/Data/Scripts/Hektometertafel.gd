@@ -1,6 +1,6 @@
 extends Node3D
 
-@export (int) var distance: int = 0
+@export var distance: int = 0
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():

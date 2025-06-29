@@ -6,10 +6,10 @@ var player: LTSPlayer
 var sollCurveSound: float = -50
 var sollDriveSound: float = -50
 
-@export (AudioStream) var drive_sound: AudioStream = preload("res://Resources/Sounds/Drive.ogg")
-@export (AudioStream) var curve_sound: AudioStream = preload("res://Resources/Sounds/Curve.ogg")
-@export (AudioStream) var switch_sound: AudioStream = preload("res://Resources/Sounds/DriveOverSwitch.ogg")
-@export (AudioStream) var brake_sound: AudioStream = preload("res://Resources/Sounds/Brakes.ogg")
+@export var drive_sound: AudioStream = preload("res://Resources/Sounds/Drive.ogg")
+@export var curve_sound: AudioStream = preload("res://Resources/Sounds/Curve.ogg")
+@export var switch_sound: AudioStream = preload("res://Resources/Sounds/DriveOverSwitch.ogg")
+@export var brake_sound: AudioStream = preload("res://Resources/Sounds/Brakes.ogg")
 
 
 func _process(delta: float) -> void:

@@ -1,7 +1,7 @@
 class_name Person
 extends Node3D
 
-@export (float) var walking_speed: float = 1.5
+@export var walking_speed: float = 1.5
 
 var _attached_station: Node3D = null
 var _attached_wagon: Node3D = null

@@ -1,7 +1,7 @@
 class_name PassengerPathNode
 extends Node3D
 
-@export (Array, NodePath) var connections: Array = []  # array of node paths
+@export var connections: Array[NodePath] = []  # array of node paths
 var connection_nodes := []  # array of nodes
 
 enum Type {

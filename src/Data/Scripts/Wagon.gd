@@ -1,7 +1,7 @@
 extends Node3D
 
-@export (float) var length: float = 17.5
-@export (bool) var cabinMode: bool = false
+@export var length: float = 17.5
+@export var cabinMode: bool = false
 
 var baked_route: Array
 var complete_route_length: float = 0

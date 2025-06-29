@@ -3,15 +3,15 @@ extends Node3D
 var player: LTSPlayer
 @onready var wagon: Node3D = get_parent()
 
-@export (AudioStream) var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
-@export (AudioStream) var acceleration_1: AudioStream = preload("res://Resources/Sounds/Acceleration5.ogg")
-@export (AudioStream) var acceleration_2: AudioStream = preload("res://Resources/Sounds/Acceleration6.ogg")
-@export (AudioStream) var acceleration_transition: AudioStream = preload("res://Resources/Sounds/AccelerationTransition2.ogg")
+@export var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
+@export var acceleration_1: AudioStream = preload("res://Resources/Sounds/Acceleration5.ogg")
+@export var acceleration_2: AudioStream = preload("res://Resources/Sounds/Acceleration6.ogg")
+@export var acceleration_transition: AudioStream = preload("res://Resources/Sounds/AccelerationTransition2.ogg")
 
-@export (float) var acceleration_transititon_at_speed: float = 10
-@export (float) var acceleration_transition_length_in_ms: float = 1200
-@export (float) var acceleration_transition_1_delta_length_in_ms: float = 400
-@export (float) var acceleration_transition_2_delta_length_in_ms: float = 400
+@export var acceleration_transititon_at_speed: float = 10
+@export var acceleration_transition_length_in_ms: float = 1200
+@export var acceleration_transition_1_delta_length_in_ms: float = 400
+@export var acceleration_transition_2_delta_length_in_ms: float = 400
 
 var acceleration_sound_index = 1 # 0: Transistion from 1 to 2. 1: accleration1. 2: acceleration2
 

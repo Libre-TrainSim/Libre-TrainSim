@@ -1,32 +1,32 @@
 class_name TrackObject
 extends MultiMeshInstance3D
 
-@export (String) var description: String = ""
-@export (String) var attached_rail: String
-@export (float) var on_rail_position: float
-@export (float) var length: float
+@export var description: String = ""
+@export var attached_rail: String
+@export var on_rail_position: float
+@export var length: float
 
-@export (Mesh) var mesh: Mesh = null
-@export (Array, Material) var materials := []
+@export var mesh: Mesh = null
+@export var materials: Array[Material]= []
 @export (PlatformSide.TypeHint) var sides: int = 0 # 0: No Side, 1: Left, 2: Right 4: Both
-@export (float) var spawnRate: float = 1
-@export (int) var rows: int
-@export (float) var distanceLength: float = 10
-@export (float) var distanceRows: float
-@export (float) var shift: float
-@export (float) var height: float
-@export (float) var rotationObjects: float = 0
-@export (bool) var randomLocation: bool
-@export (float) var randomLocationFactor: float = 0.3
-@export (bool) var randomRotation: bool
-@export (bool) var randomScale: bool
-@export (float) var randomScaleFactor: float = 0.2
-@export (bool) var placeLast: bool = false
-@export (bool) var applySlopeRotation: bool = false
+@export var spawnRate: float = 1
+@export var rows: int
+@export var distanceLength: float = 10
+@export var distanceRows: float
+@export var shift: float
+@export var height: float
+@export var rotationObjects: float = 0
+@export var randomLocation: bool
+@export var randomLocationFactor: float = 0.3
+@export var randomRotation: bool
+@export var randomScale: bool
+@export var randomScaleFactor: float = 0.2
+@export var placeLast: bool = false
+@export var applySlopeRotation: bool = false
 
-@export (int) var randomSeed: int = 0
+@export var randomSeed: int = 0
 
-@export (bool) var wholeRail: bool = false
+@export var wholeRail: bool = false
 
 var material_updated: bool = false
 

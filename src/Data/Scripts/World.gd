@@ -9,7 +9,7 @@ var default_persons_at_station: int = 20
 var current_scenario: TrackScenario = null
 var current_world_config: WorldConfig = null
 
-@export (String) var FileName := "Name Me!"
+@export var FileName: String = "Name Me!"
 @onready var trackName: String = FileName.rsplit("/")[0]
 
 @export var world_origin_on_last_save = Vector3(0,0,0) # Used for chunk manager.

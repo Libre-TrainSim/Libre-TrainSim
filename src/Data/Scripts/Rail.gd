@@ -6,11 +6,11 @@ extends WorldObject
 # If 'parallel_rail_name != ""' All local train Settings apart from 'railType' and 'distance_to_parallel_rail' are deprecated. The Rail gets the rest information from parallel rail.
 
 @export (String, FILE, "*.tscn,*.scn") var rail_type_path: String = "res://Resources/RailTypes/Default.tscn"
-@export (float) var length: float
-@export (float) var radius: float
-@export (float) var build_distance: float = 1
-@export (int) var visible_segments: int
-@export (bool) var manual_moving: bool = true
+@export var length: float
+@export var radius: float
+@export var build_distance: float = 1
+@export var visible_segments: int
+@export var manual_moving: bool = true
 
 var track_objects: Array = []
 
@@ -18,28 +18,28 @@ const MAX_LENGTH: float = 1000.0
 const POSITION_TOLERANCE: float = 0.25
 const ROTATION_TOLERANCE: float = deg_to_rad(1)
 
-@export (float) var start_rot: float  # Radians
-@export (float) var end_rot: float  # Radians
-@export (Vector3) var start_pos: Vector3
-@export (Vector3) var end_pos: Vector3
+@export var start_rot: float  # Radians
+@export var end_rot: float  # Radians
+@export var start_pos: Vector3
+@export var end_pos: Vector3
 
 
 ## Steep
-@export (float) var start_slope: float = 0  # % (meters / 100 meters)
-@export (float) var end_slope: float = 0  # % (meters / 100 meters)
+@export var start_slope: float = 0  # % (meters / 100 meters)
+@export var end_slope: float = 0  # % (meters / 100 meters)
 
-@export (float) var start_tend: float = 0
-@export (float) var tend1_pos: float = -1
-@export (float) var tend1: float = 0
-@export (float) var tend2_pos: float = 0
-@export (float) var tend2: float = 0
-@export (float) var end_tend: float
-@export (bool) var automatic_tend: bool = false
+@export var start_tend: float = 0
+@export var tend1_pos: float = -1
+@export var tend1: float = 0
+@export var tend2_pos: float = 0
+@export var tend2: float = 0
+@export var end_tend: float
+@export var automatic_tend: bool = false
 
-@export (String) var parallel_rail_name: String = ""
-@export (float) var distance_to_parallel_rail: float = 0
+@export var parallel_rail_name: String = ""
+@export var distance_to_parallel_rail: float = 0
 
-@export (bool) var has_overhead_line: bool = false
+@export var has_overhead_line: bool = false
 var overhead_line_height1: float = 5.3
 var overhead_line_height2: float = 6.85
 var overhead_line_thickness: float = 0.02

@@ -41,7 +41,7 @@ func reset() -> void:
 
 func activateContactPoint(trainName: String) -> void:
 	if disabled:
-		 return
+		return
 	if affectedSignal == "":
 		return
 	if enable_for_all_trains or trainName == bySpecificTrain:

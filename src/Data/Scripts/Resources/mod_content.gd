@@ -2,15 +2,15 @@ class_name ModContentDefinition
 extends Resource
 
 
-@export (String) var unique_name: String = ""
-@export (String) var display_name: String = ""
+@export var unique_name: String = ""
+@export var display_name: String = ""
 
-@export (int) var version_major: int = 1
-@export (int) var version_minor: int = 0
-@export (int) var version_patch: int = 0
+@export var version_major: int = 1
+@export var version_minor: int = 0
+@export var version_patch: int = 0
 
 # example: { "unique_name": "example_mod", "version": ">=1.0.0" }
-@export (Array, Dictionary) var depends_on: Array = []
+@export var depends_on: Array[Dictionary] = []
 
 @export (Array, String, DIR) var environment_folders: Array = []
 @export (Array, String, DIR) var material_folders: Array = []

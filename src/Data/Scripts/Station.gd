@@ -3,14 +3,14 @@ extends RailLogic
 
 var personsNode: Node3D
 
-@export (int) var length: int # Length of platform
+@export var length: int # Length of platform
 
 
 @export (PlatformSide.TypeHint) var platform_side: int = PlatformSide.NONE
-@export (bool) var personSystem: bool = true
-@export (float) var platformHeight: float = 1.2
-@export (float) var platformStart: float = 2.5
-@export (float) var platformEnd: float = 4.5
+@export var personSystem: bool = true
+@export var platformHeight: float = 1.2
+@export var platformStart: float = 2.5
+@export var platformEnd: float = 4.5
 
 @export var assigned_signal: String = ""
 

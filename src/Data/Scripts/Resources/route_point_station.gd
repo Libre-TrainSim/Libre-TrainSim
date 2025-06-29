@@ -4,25 +4,25 @@ extends RoutePoint
 # the RailLogic node of the station
 @export (String) var station_node_name := "": set = _set_station_node_name
 # the name of the station displayed in GUI
-@export (String) var station_name := ""
+@export var station_name: String = ""
 
-@export (String) var approach_sound_path := ""
-@export (String) var arrival_sound_path := ""
-@export (String) var departure_sound_path := ""
+@export var approach_sound_path: String= ""
+@export var arrival_sound_path: String = ""
+@export var departure_sound_path: String = ""
 
 # times in seconds (integer)
-@export (int) var duration_since_last_station := 0
-@export (int) var minimum_halt_time := 0
-@export (int) var planned_halt_time := 0
-@export (int) var signal_time := 0
+@export var duration_since_last_station: int= 0
+@export var minimum_halt_time: int = 0
+@export var planned_halt_time: int = 0
+@export var signal_time: int = 0
 
 var arrival_time := 0  # calculated
 var departure_time := 0  # calculated
 
-@export (int) var stop_type := StopType.REGULAR
+@export var stop_type: int = StopType.REGULAR
 
-@export (int) var leaving_persons := 0
-@export (int) var waiting_persons := 0
+@export var leaving_persons: int = 0
+@export var waiting_persons: int= 0
 
 
 func get_description() -> String:

@@ -3,27 +3,27 @@ extends Resource
 
 # to overwrite default rail logic, I guess?
 # Dict[String, RailLogicSettings] ; RailLogicNodeName -> Settings
-@export (Dictionary) var rail_logic_settings := {}
+@export var rail_logic_settings: Dictionary = {}
 
 # Array[RoutePoint]
-@export (Array, Resource) var route_points := []
+@export var route_points: Array[Resource]= []
 
-@export (bool) var activate_only_at_specific_routes := false  # ?????
-@export (Array, String) var specific_routes := []  # ???
+@export var activate_only_at_specific_routes: bool = false  # ?????
+@export var specific_routes: Array[String]= []  # ???
 
-@export (bool) var is_playable := true  # for AI trains set to false, I guess
-@export (String) var train_name := "JFR1_Red"  # which train drives here
+@export var is_playable: bool = true  # for AI trains set to false, I guess
+@export var train_name: String = "JFR1_Red"  # which train drives here
 
-@export (String) var description := ""
+@export var description: String = ""
 
 # example:
 # route begins at 6:00, goes every 15 minutes, ends at 21:00
 # interval_start = 21600
 # interval_end = 75600
 # interval = 900
-@export (int) var interval := 0  # how frequently this route drives, in minutes
-@export (int) var interval_end := 0  # last time of day this route drives, in seconds
-@export (int) var interval_start := 0  # first time of day this route drives, in seconds
+@export var interval: int = 0  # how frequently this route drives, in minutes
+@export var interval_end: int = 0  # last time of day this route drives, in seconds
+@export var interval_start: int = 0  # first time of day this route drives, in seconds
 
 # calculated data
 var calculated_rail_route := []

@@ -7,7 +7,7 @@ extends Node3D
 @export var chunk_position: Vector3
 
 # array of node names
-@export (Array, String) var rails := []
+@export var rails: Array[String]= []
 
 var default_grass_prefab = preload("res://Data/Modules/chunk_prefab_default_grass.tscn")
 

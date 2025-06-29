@@ -2,7 +2,7 @@ class_name SpeedLimit
 extends RailLogic
 
 
-@export (float) var speed: float: set = set_velocity
+@export var speed: float: set = set_velocity
 
 
 func set_velocity(val: float) -> void:

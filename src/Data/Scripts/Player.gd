@@ -9,23 +9,23 @@ extends WorldObject
 ################################################################################
 ## Interesting Variables for addOn Creators, which could be read out, (or set).
 var soll_command: float = -1 # The input by the player. (0: Nothing, 1: Full acceleration, -1: Full Break). |soll_command| should be lesser than 1.
-@export (float) var acceleration: float # Unit: m/(s*s)
-@export (float) var brakeAcceleration: float # Unit: m/(s*s)
-@export (float) var friction: float # (-> Speed = Speed - Speed * fritction (*delta) )
-@export (float) var length: float # Train length. # Used in Train Stations for example
-@export (float) var speedLimit: float # Maximum Speed, the train can drive. (Unit: km/h)
+@export var acceleration: float # Unit: m/(s*s)
+@export var brakeAcceleration: float # Unit: m/(s*s)
+@export var friction: float # (-> Speed = Speed - Speed * fritction (*delta) )
+@export var length: float # Train length. # Used in Train Stations for example
+@export var speedLimit: float # Maximum Speed, the train can drive. (Unit: km/h)
 
 enum ControlType {
 	COMBINED = 0,  # Arrow Keys (Combined Control)
 	SEPARATE = 1   # WASD (Separate Brake and Speed)
 }
-@export (ControlType) var control_type: int = ControlType.COMBINED
-@export (bool) var electric: bool = true
+@export var control_type: ControlType = ControlType.COMBINED
+@export var electric: bool = true
 var pantograph: bool = false   ## Please just use this variable, if to check, if pantograph is up or down. true: up
 var pantographUp: bool = false ## is true, if pantograph is rising.
 var engine: bool = false ## Describes wether the engine of the train is running or not.
 var voltage: float = 0 # If this value = 0, the train wont drive unless you press ingame "B". If voltage is "up", then its at 15 by default. Unit (kV)
-@export (float) var pantographTime: float = 5
+@export var pantographTime: float = 5
 var speed: float = 0 # Initiats the speed. (Unit: m/s) ## You can convert it with var kmhSpeed = Math.speed2kmh(speed)
 @onready var currentSpeedLimit: float = speedLimit # Unit: km/h # holds the current speedlimit
 var command: float = -1 # If Command is < 0 the train will brake, if command > 0 the train will accelerate. Set by the player with Arrow Keys.
@@ -67,10 +67,10 @@ var _station_doors_wagons := []
 @export var accelerationSpeed: float = 0.2
 @export var accerationReleaseSpeed: float = 0.5
 
-@export (String) var description: String = ""
-@export (String) var author: String = ""
-@export (String) var releaseDate: String = ""
-@export (String) var screenshotPath: String = ""
+@export var description: String = ""
+@export var author: String = ""
+@export var releaseDate: String = ""
+@export var screenshotPath: String = ""
 
 ## 0: Free View 1: Cabin View, 2: Outer View
 enum CameraState {
@@ -101,7 +101,7 @@ const CAMERA_FOV_MAX: float = 90.0
 var soundMode: int = 0 # 0: Interior, 1: Outer   ## Not currently used
 
 
-@export (Array, NodePath) var wagons: Array
+@export var wagons: Array[NodePath]
 @export var wagonDistance: float = 0.5 ## Distance between the wagons
 var wagonsVisible: bool = false
 var wagonsI: Array = [] # Over this the wagons can be accessed
@@ -129,7 +129,7 @@ var last_driven_signal: Node3D = null ## In here the reference of the last drive
 ## For Sound:
 var currentRailRadius: float = 0
 
-@export (float) var soundIsolation: float = -8
+@export var soundIsolation: float = -8
 
 var failed_scenario: bool = false # True, if player drive beyond last rail or drove over a red signal
 

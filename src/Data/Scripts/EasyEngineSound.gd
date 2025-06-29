@@ -3,8 +3,8 @@ extends Node3D
 var player: LTSPlayer
 @onready var wagon: Node3D = get_parent()
 
-@export (AudioStream) var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
-@export (AudioStream) var acceleration: AudioStream = preload("res://Resources/Sounds/Acceleration3.ogg")
+@export var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
+@export var acceleration: AudioStream = preload("res://Resources/Sounds/Acceleration3.ogg")
 
 
 func _ready() -> void:

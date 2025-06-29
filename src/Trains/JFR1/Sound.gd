@@ -2,8 +2,8 @@ extends Node3D
 
 #onready var drivePitchShift = AudioServer.get_bus_effect(2, 0)
 
-@export (float) var AccelerationTransitionTime: float
-@export (float) var AccelerationTransitionSpeed: float
+@export var AccelerationTransitionTime: float
+@export var AccelerationTransitionSpeed: float
 
 var sollAccelerationVolume1: float = -50
 var sollAccelerationVolume2: float = -50

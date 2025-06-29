@@ -1,13 +1,13 @@
 extends MultiMeshInstance3D
 
-@export (float) var x: float = 100
-@export (float) var z: float = 50
-@export (float) var spacing: float = 4
-@export (bool) var randomLocation: bool
-@export (float) var randomLocationFactor: float = 0.3
-@export (bool) var randomRotation: bool
-@export (bool) var randomScale: bool
-@export (float) var randomScaleFactor: float = 0.2
+@export var x: float = 100
+@export var z: float = 50
+@export var spacing: float = 4
+@export var randomLocation: bool
+@export var randomLocationFactor: float = 0.3
+@export var randomRotation: bool
+@export var randomScale: bool
+@export var randomScaleFactor: float = 0.2
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():

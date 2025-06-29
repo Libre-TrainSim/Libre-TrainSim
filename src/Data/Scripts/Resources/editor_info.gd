@@ -5,9 +5,9 @@ extends Resource
 const RECENT_QUEUE_SIZE := 20
 
 
-export var favourites := {} # scene: null
-export var common := {} # scene: count
-export var recent := [] # queue
+@export var favourites := {} # scene: null
+@export var common := {} # scene: count
+@export var recent := [] # queue
 
 
 func push_object(scene: PackedScene) -> void:

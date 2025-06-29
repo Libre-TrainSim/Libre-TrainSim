@@ -21,13 +21,13 @@ func filter(regex: RegEx, favourites: Dictionary,
 	var visible_count := 0
 	for object in get_objects():
 		object.visible = regex.search(object.get_text()) and \
-				(favourites.empty() and common.empty() and recent.empty()) \
+				(favourites.is_empty() and common.is_empty() and recent.is_empty()) \
 				or object.scene in favourites \
 				or object.scene in common \
 				or object.scene in recent
 		if !object.visible and object.pressed:
 			object.multiselectable = true
-			object.pressed = false
+			object.button_pressed = false
 		visible_count += 1 if object.visible else 0
 	visible = visible_count != 0
 
@@ -46,7 +46,7 @@ func set_objects(value: ObjectGroup, toggle_target: Object, toggle_target_name: 
 	$Header/Description.text = object_group.group_name
 	var objects := $Objects
 	for scene in object_group.scenes:
-		var object := preload("res://Editor/ui/objects_menu/object.tscn").instance() as Button
+		var object := preload("res://Editor/ui/objects_menu/object.tscn").instantiate() as Button
 		object.scene = scene
 		object.multiselectable = false
 		object.set_favourite(scene in favourites)
@@ -56,9 +56,9 @@ func set_objects(value: ObjectGroup, toggle_target: Object, toggle_target_name: 
 			# Register thumbnail update ???
 			pass
 		objects.add_child(object)
-		object.connect("toggled", toggle_target, toggle_target_name, [scene])
-		object.connect("favourite_toggled", toggle_target, favourite_toggle_name, [scene])
-		object.connect("toggled", self, "_on_object_toggled")
+		object.connect("toggled", Callable(toggle_target, toggle_target_name).bind(scene))
+		object.connect("favourite_toggled", Callable(toggle_target, favourite_toggle_name).bind(scene))
+		object.connect("toggled", Callable(self, "_on_object_toggled"))
 
 
 func set_thumbnails() -> void:
@@ -69,7 +69,7 @@ func set_thumbnails() -> void:
 # See object button for more info why we use _input
 func _input(event: InputEvent) -> void:
 	var m := event as InputEventMouse
-	if !m or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or m.button_mask != BUTTON_LEFT || using_multiselect == m.shift:
+	if !m or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or m.button_mask != MOUSE_BUTTON_LEFT || using_multiselect == m.shift:
 		return
 	using_multiselect = m.shift
 	for child in get_objects():
@@ -79,7 +79,7 @@ func _input(event: InputEvent) -> void:
 func _on_select_all(toggled: bool) -> void:
 	for child in get_objects():
 		child.multiselectable = true
-		child.pressed = toggled
+		child.button_pressed = toggled
 
 
 func _on_object_toggled(toggled: bool) -> void:

@@ -1,7 +1,7 @@
 class_name RoutePointWayPoint
 extends RoutePoint
 
-export (String) var rail_name := "" setget _set_rail_name
+@export (String) var rail_name := "": set = _set_rail_name
 
 
 func get_description() -> String:

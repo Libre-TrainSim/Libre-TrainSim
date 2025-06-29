@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh"
+uid="uid://cuq0g3mq4siln"
+path="res://.godot/imported/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh"
 
 [deps]
 
-files=[ "res://.import/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh" ]
+files=["res://.godot/imported/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh"]
 
 source_file="res://Resources/Objects/GrassHalms.obj"
-dest_files=[ "res://.import/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh", "res://.import/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh" ]
+dest_files=["res://.godot/imported/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh", "res://.godot/imported/GrassHalms.obj-2638b515b6996171e3c787dcedde37bb.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

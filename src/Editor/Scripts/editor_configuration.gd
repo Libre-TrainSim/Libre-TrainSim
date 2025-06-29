@@ -2,12 +2,12 @@ extends Control
 
 
 # TODO: move into project settings?
-onready var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
-onready var track_list := $PanelContainer/VBoxContainer/TracksList as jList
-onready var editor_path := $PanelContainer/VBoxContainer/HBoxContainer/EditorPath as LineEdit
+@onready var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
+@onready var track_list := $PanelContainer/VBoxContainer/TracksList as jList
+@onready var editor_path := $PanelContainer/VBoxContainer/HBoxContainer/EditorPath as LineEdit
 
 
-var dir := Directory.new()
+var dir := DirAccess.new()
 var tracks := {}
 
 
@@ -19,11 +19,11 @@ func _ready() -> void:
 
 
 func show() -> void:
-	if tracks.empty():
+	if tracks.is_empty():
 		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer/Back.grab_focus()
 	else:
 		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.grab_focus()
-	.show()
+	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -64,7 +64,7 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	dir.copy("res://Data/Modules/World-Pattern.tscn", \
 			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name))
 
-	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instance() as Chunk
+	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instantiate() as Chunk
 	chunk_0_0.name = "chunk_0_0"
 	chunk_0_0.rails = ["Rail"]
 	var packed_chunk := PackedScene.new()
@@ -112,7 +112,7 @@ func _on_TracksList_user_added_entry(entry_name):
 	track_list.remove_entry(entry_name)
 	entry_name = to_file_name(entry_name)
 	if !_initialize_mod_directory(entry_name):
-		var msg: String = "Directory " + editor_directory + entry_name + " already exists.\nPlease choose a different name!"
+		var msg: String = "DirAccess " + editor_directory + entry_name + " already exists.\nPlease choose a different name!"
 		track_list.show_error(msg)
 		Logger.warn(msg, self)
 		return

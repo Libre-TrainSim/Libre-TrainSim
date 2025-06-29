@@ -1,19 +1,19 @@
 extends Control
 
-export (Array, String) var headings
-export (Array, String) var keys
+@export (Array, String) var headings
+@export (Array, String) var keys
 
-export (int) var minimum_column_size = 100
+@export (int) var minimum_column_size = 100
 
-export (bool) var show_save_button = false
-export (bool) var show_clear_button = true
+@export (bool) var show_save_button = false
+@export (bool) var show_clear_button = true
 
 signal remove_entry_pressed
 signal clear_table_pressed
 signal add_entry_pressed
 signal saved_pressed(tableData) # Gives a Dictionary
 
-export (bool) var _update_table setget update_table_in_editor
+@export (bool) var _update_table : set = update_table_in_editor
 
 var columns = 0
 var current_entries = 0
@@ -65,24 +65,24 @@ func initialize():
 	grid_node.columns = columns + 1 # +1 because of our line control
 
 	var labelI = Label.new()
-	labelI.align = Label.ALIGN_CENTER
+	labelI.align = Label.ALIGNMENT_CENTER
 	labelI.name = "Space"
 	labelI.text = ""
 	labelI.size_flags_horizontal = Label.SIZE_EXPAND_FILL
 	if minimum_column_size < 175:
-		labelI.rect_min_size.x = 175
+		labelI.custom_minimum_size.x = 175
 	else:
-		labelI.rect_min_size.x = minimum_column_size
+		labelI.custom_minimum_size.x = minimum_column_size
 	headings_node.add_child(labelI)
 	labelI.owner = self
 
 	for heading in headings:
 		labelI = Label.new()
-		labelI.align = Label.ALIGN_CENTER
+		labelI.align = Label.ALIGNMENT_CENTER
 		labelI.name = heading
 		labelI.text = heading
 		labelI.size_flags_horizontal = Label.SIZE_EXPAND_FILL
-		labelI.rect_min_size.x = minimum_column_size
+		labelI.custom_minimum_size.x = minimum_column_size
 		headings_node.add_child(labelI)
 		labelI.owner = self
 
@@ -103,10 +103,10 @@ func new_line():
 		return
 	current_entries += 1
 
-	var line_control_instance = LineControlResource.instance()
-	line_control_instance.connect("line_up", self, "move_line_up")
-	line_control_instance.connect("line_down", self, "move_line_down")
-	line_control_instance.connect("line_delete", self, "delete_line")
+	var line_control_instance = LineControlResource.instantiate()
+	line_control_instance.connect("line_up", Callable(self, "move_line_up"))
+	line_control_instance.connect("line_down", Callable(self, "move_line_down"))
+	line_control_instance.connect("line_delete", Callable(self, "delete_line"))
 	line_control_instance.update_line(current_entries)
 	grid_node.add_child(line_control_instance)
 	line_control_instance.owner = self
@@ -204,7 +204,7 @@ func set_value_to(grid_address : int, value):
 		node.selected = value
 		return
 	if node is CheckBox or node is CheckButton:
-		node.pressed = value
+		node.button_pressed = value
 		return
 
 	jConfig.set_value_to(node, value)

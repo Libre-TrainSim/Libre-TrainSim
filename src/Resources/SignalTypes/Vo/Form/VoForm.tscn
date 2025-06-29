@@ -5,7 +5,7 @@
 [ext_resource path="res://Resources/SignalTypes/VoTafel.obj" type="ArrayMesh" id=7]
 [ext_resource path="res://Resources/SignalTypes/vo_tafel.tres" type="Material" id=8]
 
-[sub_resource type="SpatialMaterial" id=1]
+[sub_resource type="StandardMaterial3D" id=1]
 albedo_color = Color( 1, 0.658824, 0.00392157, 1 )
 emission_enabled = true
 emission = Color( 1, 0.513726, 0, 1 )
@@ -17,7 +17,7 @@ emission_on_uv2 = false
 radius = 0.05
 height = 0.1
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="StandardMaterial3D" id=3]
 albedo_color = Color( 0.992157, 0.658824, 0.027451, 1 )
 emission_enabled = true
 emission = Color( 1, 0.843137, 0, 1 )
@@ -34,7 +34,7 @@ height = 0.6
 radial_segments = 6
 rings = 3
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="StandardMaterial3D" id=5]
 albedo_color = Color( 0.00392157, 1, 0.0196078, 1 )
 emission_enabled = true
 emission = Color( 0.196078, 1, 0, 1 )
@@ -42,7 +42,7 @@ emission_energy = 1.87
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="StandardMaterial3D" id=6]
 albedo_color = Color( 0.0588235, 0.992157, 0.027451, 1 )
 emission_enabled = true
 emission = Color( 0, 1, 0.0392157, 1 )
@@ -93,68 +93,68 @@ graph_offset = Vector2( 4, -30 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
-[sub_resource type="BoxShape" id=18]
-extents = Vector3( 0.318245, 2.31898, 0.395843 )
+[sub_resource type="BoxShape3D" id=18]
+size = Vector3( 0.318245, 2.31898, 0.395843 )
 
-[node name="VisualInstance" type="Spatial"]
+[node name="VisualInstance3D" type="Node3D"]
 script = ExtResource( 6 )
 
 [node name="formsignal_vo" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667 )
 
-[node name="Skeleton" parent="formsignal_vo/Armature" index="0"]
+[node name="Skeleton3D" parent="formsignal_vo/Armature" index="0"]
 bones/0/bound_children = [ NodePath("lowerLight") ]
 bones/1/bound_children = [ NodePath("upperLight") ]
 
-[node name="lowerLight" type="BoneAttachment" parent="formsignal_vo/Armature/Skeleton" index="1"]
-transform = Transform( 1, 8.24355e-16, 0, 0, 0, 1, 8.24355e-16, -1, 0, -4.00696e-16, 1.79601, 0.278533 )
+[node name="lowerLight" type="BoneAttachment3D" parent="formsignal_vo/Armature/Skeleton3D" index="1"]
+transform = Transform3D( 1, 8.24355e-16, 0, 0, 0, 1, 8.24355e-16, -1, 0, -4.00696e-16, 1.79601, 0.278533 )
 bone_name = "lowerLight"
 
-[node name="Orange" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight"]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0503279, 0.126566, -0.0945429 )
+[node name="Orange" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/lowerLight"]
+transform = Transform3D( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0503279, 0.126566, -0.0945429 )
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight/Orange"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
+[node name="MeshInstance2" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/lowerLight/Orange"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
 
-[node name="Green" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight"]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0503279, 0.126597, 0.097876 )
+[node name="Green" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/lowerLight"]
+transform = Transform3D( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0503279, 0.126597, 0.097876 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
 
-[node name="MeshInstance3" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/lowerLight/Green"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
+[node name="MeshInstance3" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/lowerLight/Green"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
 
-[node name="upperLight" type="BoneAttachment" parent="formsignal_vo/Armature/Skeleton" index="2"]
-transform = Transform( 1, 0, 2.05834e-06, 2.05834e-06, 0, -1, 0, 1, 0, -4.99553e-16, 2.26869, 0.356953 )
+[node name="upperLight" type="BoneAttachment3D" parent="formsignal_vo/Armature/Skeleton3D" index="2"]
+transform = Transform3D( 1, 0, 2.05834e-06, 2.05834e-06, 0, -1, 0, 1, 0, -4.99553e-16, 2.26869, 0.356953 )
 bone_name = "upperLight"
 
-[node name="Orange" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight"]
-transform = Transform( 1.5, -4.33681e-19, -3.12978e-20, 0, 1.5, -7.10543e-15, -1.65171e-20, 7.10543e-15, 1.5, -0.0503267, 0.119757, -0.103139 )
+[node name="Orange" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/upperLight"]
+transform = Transform3D( 1.5, -4.33681e-19, -3.12978e-20, 0, 1.5, -7.10543e-15, -1.65171e-20, 7.10543e-15, 1.5, -0.0503267, 0.119757, -0.103139 )
 material_override = SubResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 2 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight/Orange"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
+[node name="MeshInstance2" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/upperLight/Orange"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 3 )
 mesh = SubResource( 4 )
 
-[node name="Green" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight"]
-transform = Transform( 1.5, -2.1684e-19, -3.12978e-20, 0, 1.5, -7.10543e-15, -1.65171e-20, 7.10543e-15, 1.5, -0.0503272, 0.121912, 0.0897388 )
+[node name="Green" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/upperLight"]
+transform = Transform3D( 1.5, -2.1684e-19, -3.12978e-20, 0, 1.5, -7.10543e-15, -1.65171e-20, 7.10543e-15, 1.5, -0.0503272, 0.121912, 0.0897388 )
 material_override = SubResource( 5 )
 cast_shadow = 0
 mesh = SubResource( 2 )
 
-[node name="MeshInstance3" type="MeshInstance" parent="formsignal_vo/Armature/Skeleton/upperLight/Green"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
+[node name="MeshInstance3" type="MeshInstance3D" parent="formsignal_vo/Armature/Skeleton3D/upperLight/Green"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 material_override = SubResource( 6 )
 mesh = SubResource( 4 )
 
@@ -164,16 +164,16 @@ anim_player = NodePath("../formsignal_vo/AnimationPlayer")
 active = true
 parameters/playback = SubResource( 17 )
 
-[node name="VoTafel" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.380224, 1.667 )
+[node name="VoTafel" type="MeshInstance3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.380224, 1.667 )
 mesh = ExtResource( 7 )
 material/0 = ExtResource( 8 )
 
-[node name="SelectCollider" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209529, -1.3301, 1.59002 )
+[node name="SelectCollider" type="StaticBody3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209529, -1.3301, 1.59002 )
 
-[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.318245, 2.31898, 0.395843 )
+[node name="AabbShape" type="CollisionShape3D" parent="SelectCollider"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.318245, 2.31898, 0.395843 )
 shape = SubResource( 18 )
 
 [editable path="formsignal_vo"]

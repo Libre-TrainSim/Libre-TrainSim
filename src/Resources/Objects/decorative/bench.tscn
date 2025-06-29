@@ -4,7 +4,7 @@
 [ext_resource path="res://Resources/Materials/Wood.tres" type="Material" id=2]
 [ext_resource path="res://Resources/Objects/Bench.obj" type="ArrayMesh" id=3]
 
-[node name="Bench" type="MeshInstance"]
+[node name="Bench" type="MeshInstance3D"]
 mesh = ExtResource( 3 )
 material/0 = ExtResource( 2 )
 material/1 = ExtResource( 1 )

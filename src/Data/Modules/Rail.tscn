@@ -8,52 +8,52 @@
 [sub_resource type="MultiMesh" id=1]
 transform_format = 1
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape3D" id=8]
 resource_local_to_scene = true
-extents = Vector3( 1, 0.379, 2.227 )
+size = Vector3( 1, 0.379, 2.227 )
 
-[sub_resource type="BoxShape" id=7]
-extents = Vector3( 1.25213, 0.500005, 0.963791 )
+[sub_resource type="BoxShape3D" id=7]
+size = Vector3( 1.25213, 0.500005, 0.963791 )
 
 [sub_resource type="MultiMesh" id=9]
 resource_local_to_scene = true
 transform_format = 1
 mesh = ExtResource( 2 )
 
-[node name="Rail" type="Spatial" groups=["Rail"]]
+[node name="Rail" type="Node3D" groups=["Rail"]]
 script = ExtResource( 1 )
 length = 100.0
 
-[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
 multimesh = SubResource( 1 )
 
-[node name="Area" type="Area" parent="MultiMeshInstance"]
+[node name="Area3D" type="Area3D" parent="MultiMeshInstance3D"]
 
-[node name="CS1" type="CollisionShape" parent="MultiMeshInstance/Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.334, 0 )
+[node name="CS1" type="CollisionShape3D" parent="MultiMeshInstance3D/Area3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.334, 0 )
 shape = SubResource( 8 )
 
-[node name="Beginning" type="Area" parent="."]
+[node name="Beginning" type="Area3D" parent="."]
 
-[node name="Beginning" type="MeshInstance" parent="Beginning"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+[node name="Beginning" type="MeshInstance3D" parent="Beginning"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 material_override = ExtResource( 4 )
 mesh = ExtResource( 2 )
 
-[node name="AabbShape" type="CollisionShape" parent="Beginning"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.322, 0, 0 )
+[node name="AabbShape" type="CollisionShape3D" parent="Beginning"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.322, 0, 0 )
 shape = SubResource( 7 )
 
-[node name="Arrows" type="MultiMeshInstance" parent="."]
+[node name="Arrows" type="MultiMeshInstance3D" parent="."]
 multimesh = SubResource( 9 )
 
-[node name="Ending" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )
+[node name="Ending" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )
 
-[node name="Ending" type="MeshInstance" parent="Ending"]
+[node name="Ending" type="MeshInstance3D" parent="Ending"]
 material_override = ExtResource( 5 )
 mesh = ExtResource( 2 )
 
-[node name="AabbShape" type="CollisionShape" parent="Ending"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, 0, 0 )
+[node name="AabbShape" type="CollisionShape3D" parent="Ending"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, 0, 0 )
 shape = SubResource( 7 )

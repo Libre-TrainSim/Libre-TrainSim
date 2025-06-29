@@ -1,5 +1,5 @@
 class_name TrainSpawnInformation
-extends Reference
+extends RefCounted
 
 var time := 0
 var player_train := false

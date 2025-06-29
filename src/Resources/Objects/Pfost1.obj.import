@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh"
+uid="uid://b6og2he353csw"
+path="res://.godot/imported/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh"
 
 [deps]
 
-files=[ "res://.import/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh" ]
+files=["res://.godot/imported/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh"]
 
 source_file="res://Resources/Objects/Pfost1.obj"
-dest_files=[ "res://.import/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh", "res://.import/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh" ]
+dest_files=["res://.godot/imported/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh", "res://.godot/imported/Pfost1.obj-5367884425d96d98ed2e61678a68788a.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -1,4 +1,4 @@
-extends WindowDialog
+extends Window
 
 var world_config: WorldConfig
 var save_path: String

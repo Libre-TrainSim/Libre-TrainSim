@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh"
+uid="uid://bufuf882bo8mt"
+path="res://.godot/imported/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh"
 
 [deps]
 
-files=[ "res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh" ]
+files=["res://.godot/imported/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh"]
 
 source_file="res://Resources/SignalTypes/Ks/KS-Sig.obj"
-dest_files=[ "res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh", "res://.import/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh" ]
+dest_files=["res://.godot/imported/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh", "res://.godot/imported/KS-Sig.obj-782e8646911f901e45acd5d9d91e143a.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

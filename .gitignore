@@ -6,7 +6,7 @@ src/Worlds/*
 src/Trains/*
 !src/Trains/JFR1/
 
-src/.import/
+src/.godot/
 *.csv.import
 *.translation
 

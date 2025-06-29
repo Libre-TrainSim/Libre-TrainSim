@@ -2,13 +2,13 @@
 
 [ext_resource path="res://Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
 
-[node name="ConfirmationDialog" type="WindowDialog"]
-pause_mode = 2
+[node name="ConfirmationDialog" type="Window"]
+process_mode = 2
 anchor_left = 0.1
 anchor_top = 0.1
 anchor_right = 0.9
 anchor_bottom = 0.9
-popup_exclusive = true
+exclusive = true
 window_title = "Edit Configuration"
 script = ExtResource( 1 )
 
@@ -17,32 +17,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Label2" type="Label" parent="Configuration"]
-margin_right = 819.0
-margin_bottom = 14.0
+offset_right = 819.0
+offset_bottom = 14.0
 text = "World Configuration:"
 align = 1
 
 [node name="GridContainer" type="GridContainer" parent="Configuration"]
-margin_top = 18.0
-margin_right = 819.0
-margin_bottom = 174.0
+offset_top = 18.0
+offset_right = 819.0
+offset_bottom = 174.0
 columns = 2
 
 [node name="Label2" type="Label" parent="Configuration/GridContainer"]
-margin_top = 5.0
-margin_right = 115.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 115.0
+offset_bottom = 19.0
 text = "Release Date:"
 
 [node name="ReleaseDate" type="HBoxContainer" parent="Configuration/GridContainer"]
-margin_left = 119.0
-margin_right = 819.0
-margin_bottom = 24.0
+offset_left = 119.0
+offset_right = 819.0
+offset_bottom = 24.0
 
 [node name="Day" type="SpinBox" parent="Configuration/GridContainer/ReleaseDate"]
-margin_right = 230.0
-margin_bottom = 24.0
-hint_tooltip = "Day"
+offset_right = 230.0
+offset_bottom = 24.0
+tooltip_text = "Day"
 size_flags_horizontal = 3
 min_value = 1.0
 max_value = 31.0
@@ -50,10 +50,10 @@ value = 1.0
 suffix = "D"
 
 [node name="Month" type="SpinBox" parent="Configuration/GridContainer/ReleaseDate"]
-margin_left = 234.0
-margin_right = 465.0
-margin_bottom = 24.0
-hint_tooltip = "Month
+offset_left = 234.0
+offset_right = 465.0
+offset_bottom = 24.0
+tooltip_text = "Month
 "
 size_flags_horizontal = 3
 min_value = 1.0
@@ -62,10 +62,10 @@ value = 1.0
 suffix = "M"
 
 [node name="Year" type="SpinBox" parent="Configuration/GridContainer/ReleaseDate"]
-margin_left = 469.0
-margin_right = 700.0
-margin_bottom = 24.0
-hint_tooltip = "Month
+offset_left = 469.0
+offset_right = 700.0
+offset_bottom = 24.0
+tooltip_text = "Month
 "
 size_flags_horizontal = 3
 min_value = 2020.0
@@ -75,75 +75,75 @@ allow_greater = true
 suffix = "Y"
 
 [node name="Label3" type="Label" parent="Configuration/GridContainer"]
-margin_top = 33.0
-margin_right = 115.0
-margin_bottom = 47.0
+offset_top = 33.0
+offset_right = 115.0
+offset_bottom = 47.0
 text = "Author Name(s):"
 
 [node name="Author" type="LineEdit" parent="Configuration/GridContainer"]
-margin_left = 119.0
-margin_top = 28.0
-margin_right = 819.0
-margin_bottom = 52.0
+offset_left = 119.0
+offset_top = 28.0
+offset_right = 819.0
+offset_bottom = 52.0
 size_flags_horizontal = 3
 caret_blink = true
 
 [node name="Label4" type="Label" parent="Configuration/GridContainer"]
-margin_top = 99.0
-margin_right = 115.0
-margin_bottom = 113.0
+offset_top = 99.0
+offset_right = 115.0
+offset_bottom = 113.0
 text = "Track Description:"
 
 [node name="TrackDescription" type="TextEdit" parent="Configuration/GridContainer"]
-margin_left = 119.0
-margin_top = 56.0
-margin_right = 819.0
-margin_bottom = 156.0
-rect_min_size = Vector2( 0, 100 )
+offset_left = 119.0
+offset_top = 56.0
+offset_right = 819.0
+offset_bottom = 156.0
+custom_minimum_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Configuration"]
-margin_top = 178.0
-margin_right = 819.0
-margin_bottom = 192.0
+offset_top = 178.0
+offset_right = 819.0
+offset_bottom = 192.0
 text = "Notes for Authors:"
 align = 1
 
 [node name="Notes" type="TextEdit" parent="Configuration"]
-margin_top = 196.0
-margin_right = 819.0
-margin_bottom = 452.0
-rect_min_size = Vector2( 0, 100 )
+offset_top = 196.0
+offset_right = 819.0
+offset_bottom = 452.0
+custom_minimum_size = Vector2( 0, 100 )
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="Configuration"]
-margin_top = 456.0
-margin_right = 819.0
-margin_bottom = 480.0
-custom_constants/margin_right = 4
-custom_constants/margin_left = 4
-custom_constants/margin_bottom = 4
+offset_top = 456.0
+offset_right = 819.0
+offset_bottom = 480.0
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Configuration/MarginContainer"]
-margin_left = 4.0
-margin_right = 815.0
-margin_bottom = 20.0
+offset_left = 4.0
+offset_right = 815.0
+offset_bottom = 20.0
 alignment = 1
 
 [node name="Save" type="Button" parent="Configuration/MarginContainer/HBoxContainer"]
-margin_right = 403.0
-margin_bottom = 20.0
+offset_right = 403.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Save"
 
 [node name="Cancel" type="Button" parent="Configuration/MarginContainer/HBoxContainer"]
-margin_left = 407.0
-margin_right = 811.0
-margin_bottom = 20.0
+offset_left = 407.0
+offset_right = 811.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Cancel"
 
-[connection signal="about_to_show" from="." to="." method="_on_about_to_show"]
+[connection signal="about_to_popup" from="." to="." method="_on_about_to_show"]
 [connection signal="popup_hide" from="." to="." method="_on_popup_hide"]
 [connection signal="pressed" from="Configuration/MarginContainer/HBoxContainer/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="Configuration/MarginContainer/HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]

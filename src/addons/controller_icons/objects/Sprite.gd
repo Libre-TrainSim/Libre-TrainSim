@@ -1,11 +1,11 @@
-extends Sprite
+extends Sprite2D
 class_name ControllerSprite
 
-export(String) var path : String = "" setget set_path
-export(int, "Both", "Keyboard/Mouse", "Controller") var show_only : int = 0 setget set_show_only
+@export var path: String : String = "": set = set_path
+@export var show_only : int = 0: set = set_show_only
 
 func _ready():
-	ControllerIcons.connect("input_type_changed", self, "_on_input_type_changed")
+	ControllerIcons.connect("input_type_changed", Callable(self, "_on_input_type_changed"))
 	set_path(path)
 
 func _on_input_type_changed(input_type):

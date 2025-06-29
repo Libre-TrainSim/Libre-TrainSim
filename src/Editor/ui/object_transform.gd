@@ -18,67 +18,67 @@ func update_values():
 		hide()
 		return
 	if local_mode:
-		$HBoxContainer/x.value = selected_object.translation.x
-		$HBoxContainer/y.value = selected_object.translation.y
-		$HBoxContainer/z.value = selected_object.translation.z
-		$HBoxContainer/x_rot.value = rad2deg(selected_object.rotation.x)
-		$HBoxContainer/y_rot.value = rad2deg(selected_object.rotation.y)
-		$HBoxContainer/z_rot.value = rad2deg(selected_object.rotation.z)
+		$HBoxContainer/x.value = selected_object.position.x
+		$HBoxContainer/y.value = selected_object.position.y
+		$HBoxContainer/z.value = selected_object.position.z
+		$HBoxContainer/x_rot.value = rad_to_deg(selected_object.rotation.x)
+		$HBoxContainer/y_rot.value = rad_to_deg(selected_object.rotation.y)
+		$HBoxContainer/z_rot.value = rad_to_deg(selected_object.rotation.z)
 	else:
-		$HBoxContainer/x.value = selected_object.global_translation.x
-		$HBoxContainer/y.value = selected_object.global_translation.y
-		$HBoxContainer/z.value = selected_object.global_translation.z
-		$HBoxContainer/x_rot.value = rad2deg(selected_object.global_rotation.x)
-		$HBoxContainer/y_rot.value = rad2deg(selected_object.global_rotation.y)
-		$HBoxContainer/z_rot.value = rad2deg(selected_object.global_rotation.z)
+		$HBoxContainer/x.value = selected_object.global_position.x
+		$HBoxContainer/y.value = selected_object.global_position.y
+		$HBoxContainer/z.value = selected_object.global_position.z
+		$HBoxContainer/x_rot.value = rad_to_deg(selected_object.global_rotation.x)
+		$HBoxContainer/y_rot.value = rad_to_deg(selected_object.global_rotation.y)
+		$HBoxContainer/z_rot.value = rad_to_deg(selected_object.global_rotation.z)
 
 
 func _on_x_value_changed(value):
 	if is_instance_valid(selected_object):
 		if local_mode:
-			selected_object.translation.x = value
+			selected_object.position.x = value
 		else:
-			selected_object.global_translation.x = value
+			selected_object.global_position.x = value
 
 
 func _on_y_value_changed(value):
 	if is_instance_valid(selected_object):
 		if local_mode:
-			selected_object.translation.y = value
+			selected_object.position.y = value
 		else:
-			selected_object.global_translation.y = value
+			selected_object.global_position.y = value
 
 
 func _on_z_value_changed(value):
 	if is_instance_valid(selected_object):
 		if local_mode:
-			selected_object.translation.z = value
+			selected_object.position.z = value
 		else:
-			selected_object.global_translation.z = value
+			selected_object.global_position.z = value
 
 
 func _on_x_rot_value_changed(value: float):
 	if is_instance_valid(selected_object):
 		if local_mode:
-			selected_object.rotation.x = deg2rad(value)
+			selected_object.rotation.x = deg_to_rad(value)
 		else:
-			selected_object.global_rotation.x = deg2rad(value)
+			selected_object.global_rotation.x = deg_to_rad(value)
 
 
 func _on_y_rot_value_changed(value: float):
 	if is_instance_valid(selected_object):
 		if local_mode:
-			selected_object.rotation.y = deg2rad(value)
+			selected_object.rotation.y = deg_to_rad(value)
 		else:
-			selected_object.global_rotation.y = deg2rad(value)
+			selected_object.global_rotation.y = deg_to_rad(value)
 
 
 func _on_z_rot_value_changed(value: float):
 	if is_instance_valid(selected_object):
 		if local_mode:
-			selected_object.rotation.z = deg2rad(value)
+			selected_object.rotation.z = deg_to_rad(value)
 		else:
-			selected_object.global_rotation.z = deg2rad(value)
+			selected_object.global_rotation.z = deg_to_rad(value)
 
 
 func _on_local_toggled(is_local: bool) -> void:

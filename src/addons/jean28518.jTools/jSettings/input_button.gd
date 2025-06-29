@@ -8,7 +8,7 @@ var events := []
 
 func _ready():
 	# Add existing inputs
-	events.append_array(InputMap.get_action_list(action))
+	events.append_array(InputMap.action_get_events(action))
 	update_text()
 
 
@@ -26,12 +26,12 @@ func _input(event):
 		return
 	
 	# Don't allow assigning the ESC key
-	if event is InputEventKey and event.scancode == KEY_ESCAPE:
+	if event is InputEventKey and event.keycode == KEY_ESCAPE:
 		return
 	
 	# If the event is already in the list, remove it again and return
 	for e in events:
-		if event.shortcut_match(e):
+		if event.is_match(e):
 			events.remove(events.find(e))
 			update_text()
 			return

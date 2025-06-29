@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorExportPlugin
 
 
@@ -6,7 +6,7 @@ var version_label := ""
 var last_generated_label := ""
 
 
-func _export_begin(_features: PoolStringArray, _is_debug: bool, _path: String, _flags: int) -> void:
+func _export_begin(_features: PackedStringArray, _is_debug: bool, _path: String, _flags: int) -> void:
 	build()
 
 
@@ -51,7 +51,7 @@ func build() -> void:
 		ProjectSettings.save()
 		return
 
-	var dirty := " DIRTY BRANCH" if !output[0].empty() else ""
+	var dirty := " DIRTY BRANCH" if !output[0].is_empty() else ""
 	if dirty:
 		print("Modified files:")
 		print(output[0])
@@ -61,7 +61,7 @@ func build() -> void:
 			push_warning("Failed to determine diff.")
 		else:
 			if ProjectSettings.has_setting("application/version/diff_ignore") and \
-					!ProjectSettings["application/version/diff_ignore"].empty():
+					!ProjectSettings["application/version/diff_ignore"].is_empty():
 				var ignores := File.new()
 				var err := ignores.open(ProjectSettings.globalize_path( \
 						ProjectSettings["application/version/diff_ignore"]), \
@@ -83,17 +83,17 @@ func build() -> void:
 		ProjectSettings.save()
 		return
 
-	var parts: PoolStringArray = output[0].split("-", false)
+	var parts: PackedStringArray = output[0].split("-", false)
 	var broken := " BROKEN" if "?" in parts[-1] else ""
 	var commit: String = parts[-1].left(len(parts[-1]) - (2 if broken else 1))
 
-	ProjectSettings["application/version/dirty"] = !dirty.empty()
-	ProjectSettings["application/version/broken"] = !broken.empty()
-	ProjectSettings["application/version/custom"] = !custom_build.empty()
+	ProjectSettings["application/version/dirty"] = !dirty.is_empty()
+	ProjectSettings["application/version/broken"] = !broken.is_empty()
+	ProjectSettings["application/version/custom"] = !custom_build.is_empty()
 	ProjectSettings["application/version/commit"] = commit
 
 	if len(parts) < 3:
-		if !custom_build.empty():
+		if !custom_build.is_empty():
 			custom_build = custom_build % commit
 		ProjectSettings["application/version/label"] = "v %s%s%s%s" % [commit, custom_build, broken, dirty]
 		last_generated_label = ProjectSettings["application/version/label"]
@@ -102,7 +102,7 @@ func build() -> void:
 
 	commit = commit.right(1)
 	ProjectSettings["application/version/commit"] = commit
-	if !custom_build.empty():
+	if !custom_build.is_empty():
 		custom_build = custom_build % commit
 
 	if (parts[1] == "0"):

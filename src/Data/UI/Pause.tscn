@@ -33,10 +33,10 @@ __meta__ = {
 }
 
 [node name="HBox" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 365.0
-margin_top = 118.0
-margin_right = 659.0
-margin_bottom = 481.0
+offset_left = 365.0
+offset_top = 118.0
+offset_right = 659.0
+offset_bottom = 481.0
 theme = ExtResource( 1 )
 alignment = 1
 __meta__ = {
@@ -44,67 +44,67 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="CenterContainer/HBox"]
-margin_right = 294.0
-margin_bottom = 45.0
+offset_right = 294.0
+offset_bottom = 45.0
 text = "PAUSE"
 align = 1
 
 [node name="Back" type="Button" parent="CenterContainer/HBox"]
-margin_top = 49.0
-margin_right = 294.0
-margin_bottom = 98.0
+offset_top = 49.0
+offset_right = 294.0
+offset_bottom = 98.0
 text = "BACK"
 
 [node name="RestartScenario" type="Button" parent="CenterContainer/HBox"]
-margin_top = 102.0
-margin_right = 294.0
-margin_bottom = 151.0
+offset_top = 102.0
+offset_right = 294.0
+offset_bottom = 151.0
 text = "RESTART_SCENARIO"
 
 [node name="JumpToStation" type="Button" parent="CenterContainer/HBox"]
-margin_top = 155.0
-margin_right = 294.0
-margin_bottom = 204.0
+offset_top = 155.0
+offset_right = 294.0
+offset_bottom = 204.0
 text = "JUMP_TO_STATION"
 
 [node name="Settings" type="Button" parent="CenterContainer/HBox"]
-margin_top = 208.0
-margin_right = 294.0
-margin_bottom = 257.0
+offset_top = 208.0
+offset_right = 294.0
+offset_bottom = 257.0
 text = "MENU_SETTINGS"
 
 [node name="BackToTrackEditor" type="Button" parent="CenterContainer/HBox"]
 visible = false
-margin_top = 367.0
-margin_right = 347.0
-margin_bottom = 416.0
+offset_top = 367.0
+offset_right = 347.0
+offset_bottom = 416.0
 text = "BACK_TO_TRACK_EDITOR"
 
 [node name="BackToScenarioEditor" type="Button" parent="CenterContainer/HBox"]
 visible = false
-margin_top = 367.0
-margin_right = 385.0
-margin_bottom = 416.0
+offset_top = 367.0
+offset_right = 385.0
+offset_bottom = 416.0
 text = "BACK_TO_SCENARIO_EDITOR"
 
 [node name="QuitMenu" type="Button" parent="CenterContainer/HBox"]
-margin_top = 261.0
-margin_right = 294.0
-margin_bottom = 310.0
+offset_top = 261.0
+offset_right = 294.0
+offset_bottom = 310.0
 text = "QUIT_TO_MENU"
 
 [node name="QuitOS" type="Button" parent="CenterContainer/HBox"]
-margin_top = 314.0
-margin_right = 294.0
-margin_bottom = 363.0
+offset_top = 314.0
+offset_right = 294.0
+offset_bottom = 363.0
 text = "EXIT_GAME"
 
 [node name="StationJumper" parent="." instance=ExtResource( 3 )]
 visible = false
-margin_left = 12.0
-margin_top = 12.0
-margin_right = -12.0
-margin_bottom = -12.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
 
 [connection signal="pressed" from="CenterContainer/HBox/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/RestartScenario" to="." method="_on_RestartScenario_pressed"]

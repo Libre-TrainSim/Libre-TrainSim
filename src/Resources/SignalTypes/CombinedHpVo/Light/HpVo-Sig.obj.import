@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh"
+uid="uid://bnkvddaeqqnho"
+path="res://.godot/imported/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh"
 
 [deps]
 
-files=[ "res://.import/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh" ]
+files=["res://.godot/imported/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh"]
 
 source_file="res://Resources/SignalTypes/CombinedHpVo/Light/HpVo-Sig.obj"
-dest_files=[ "res://.import/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh", "res://.import/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh" ]
+dest_files=["res://.godot/imported/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh", "res://.godot/imported/HpVo-Sig.obj-263c2a7526b5a9fd301c73917dbbcff1.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

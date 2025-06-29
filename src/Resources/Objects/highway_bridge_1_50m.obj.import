@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh"
+uid="uid://du8npyumg1l6s"
+path="res://.godot/imported/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh"
 
 [deps]
 
-files=[ "res://.import/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh" ]
+files=["res://.godot/imported/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh"]
 
 source_file="res://Resources/Objects/highway_bridge_1_50m.obj"
-dest_files=[ "res://.import/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh", "res://.import/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh" ]
+dest_files=["res://.godot/imported/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh", "res://.godot/imported/highway_bridge_1_50m.obj-83294ac5c8394f407fb377cc72dc2b67.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -25,8 +25,8 @@ func init() -> void:
 	world = find_parent("World")
 	player = world.get_node("Players/Player")
 
-	player.find_node("PZBModule")._force_enabled(true)
-	player.find_node("SifaModule")._force_enabled(true)
+	player.find_child("PZBModule")._force_enabled(true)
+	player.find_child("SifaModule")._force_enabled(true)
 
 	player.force_close_doors()
 	player.force_pantograph_up()
@@ -38,15 +38,15 @@ func init() -> void:
 
 	if player != null and scenario == "SiFa":
 		Logger.log("Running Sifa Scenario!", self)
-		player.find_node("PZBModule").queue_free()
-		sifa_module = player.find_node("SifaModule")
+		player.find_child("PZBModule").queue_free()
+		sifa_module = player.find_child("SifaModule")
 		sifa_module.set_process_unhandled_key_input(false)
 	if player != null and scenario == "PZB":
 		Logger.log("Running PZB Scenario!", self)
 		player.speed = Math.kmh_to_speed(120)
 		player.currentSpeedLimit = 120
-		player.find_node("SifaModule").queue_free()
-		pzb_module = player.find_node("PZBModule")
+		player.find_child("SifaModule").queue_free()
+		pzb_module = player.find_child("PZBModule")
 
 	if scenario != null and player != null and world != null:
 		init_done = true
@@ -94,7 +94,7 @@ func sifa(delta: float) -> void:
 				next_step()
 		5:
 			message = tr("SIFA_TUTORIAL_6")
-			yield( get_tree().create_timer(1, false), "timeout" )  # required, else 5 is skipped
+			await get_tree().create_timer(1, false).timeout  # required, else 5 is skipped
 			if Input.is_action_just_released("SiFa"):
 				next_step()
 		6:

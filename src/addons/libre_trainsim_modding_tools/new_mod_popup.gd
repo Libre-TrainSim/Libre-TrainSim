@@ -1,5 +1,5 @@
-tool
-extends WindowDialog
+@tool
+extends Window
 
 var base_control
 
@@ -7,8 +7,8 @@ var base_control
 func validate():
 	var unique_name = $MarginContainer/VBoxContainer/Grid/Input_Unique.text
 	unique_name = FileTools.to_valid_filename(unique_name)
-	if unique_name.empty():
-		var notice := preload("empty_popup.tscn").instance()
+	if unique_name.is_empty():
+		var notice := preload("empty_popup.tscn").instantiate()
 		add_child(notice)
 		notice.popup_centered()
 		return
@@ -18,7 +18,7 @@ func validate():
 
 	create_mod(author_name, unique_name, display_name)
 	hide()
-	var notice = preload("notice_popup.tscn").instance()
+	var notice = preload("notice_popup.tscn").instantiate()
 	base_control.add_child(notice)
 	notice.popup_centered()
 	queue_free()
@@ -27,7 +27,7 @@ func validate():
 func create_mod(author_name: String, mod_unique_name: String, mod_display_name: String):
 	var mod_path = "res://Mods".plus_file(mod_unique_name)
 
-	var d = Directory.new()
+	var d = DirAccess.new()
 	d.open("res://")
 	d.make_dir_recursive(mod_path)
 	d.change_dir(mod_path)

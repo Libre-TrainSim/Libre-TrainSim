@@ -9,95 +9,95 @@
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -409.0
+offset_left = -409.0
 script = ExtResource( 3 )
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 5.0
-margin_right = -5.0
-margin_bottom = -5.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
 
 [node name="Routes" type="VBoxContainer" parent="TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="Routes" parent="TabContainer/Routes" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 391.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
+offset_right = 391.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 100 )
 enable_rename_button = true
 enable_duplicate_button = true
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Routes"]
-margin_top = 104.0
-margin_right = 391.0
-margin_bottom = 108.0
+offset_top = 104.0
+offset_right = 391.0
+offset_bottom = 108.0
 
 [node name="RouteConfiguration" type="TabContainer" parent="TabContainer/Routes"]
-margin_top = 112.0
-margin_right = 391.0
-margin_bottom = 554.0
+offset_top = 112.0
+offset_right = 391.0
+offset_bottom = 554.0
 size_flags_vertical = 3
 
 [node name="GeneralSettings" type="VBoxContainer" parent="TabContainer/Routes/RouteConfiguration"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="G" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings"]
-margin_right = 383.0
-margin_bottom = 156.0
+offset_right = 383.0
+offset_bottom = 156.0
 columns = 2
 
 [node name="Label" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_top = 5.0
-margin_right = 210.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 210.0
+offset_bottom = 19.0
 text = "Player can drive this route"
 
 [node name="Playable" type="CheckBox" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_left = 214.0
-margin_right = 383.0
-margin_bottom = 24.0
+offset_left = 214.0
+offset_right = 383.0
+offset_bottom = 24.0
 
 [node name="Label4" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_top = 31.0
-margin_right = 210.0
-margin_bottom = 45.0
+offset_top = 31.0
+offset_right = 210.0
+offset_bottom = 45.0
 text = "Interval Start"
 
 [node name="IntervalStart" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 214.0
-margin_top = 28.0
-margin_right = 383.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 0, 20 )
+offset_left = 214.0
+offset_top = 28.0
+offset_right = 383.0
+offset_bottom = 48.0
+custom_minimum_size = Vector2( 0, 20 )
 
 [node name="Label2" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_top = 57.0
-margin_right = 210.0
-margin_bottom = 71.0
+offset_top = 57.0
+offset_right = 210.0
+offset_bottom = 71.0
 text = "Interval (0 to deactivate)"
 
 [node name="Interval" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_left = 214.0
-margin_top = 52.0
-margin_right = 383.0
-margin_bottom = 76.0
+offset_left = 214.0
+offset_top = 52.0
+offset_right = 383.0
+offset_bottom = 76.0
 size_flags_horizontal = 3
 max_value = 100000.0
 suffix = "minutes"
@@ -106,157 +106,157 @@ __meta__ = {
 }
 
 [node name="Label5" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_top = 83.0
-margin_right = 210.0
-margin_bottom = 97.0
+offset_top = 83.0
+offset_right = 210.0
+offset_bottom = 97.0
 text = "Interval End"
 
 [node name="IntervalEnd" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 214.0
-margin_top = 80.0
-margin_right = 383.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 20 )
+offset_left = 214.0
+offset_top = 80.0
+offset_right = 383.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 20 )
 
 [node name="Label3" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_top = 109.0
-margin_right = 210.0
-margin_bottom = 123.0
+offset_top = 109.0
+offset_right = 210.0
+offset_bottom = 123.0
 text = "Train Name"
 
 [node name="TrainName" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_left = 214.0
-margin_top = 104.0
-margin_right = 383.0
-margin_bottom = 128.0
+offset_left = 214.0
+offset_top = 104.0
+offset_right = 383.0
+offset_bottom = 128.0
 size_flags_horizontal = 3
 
 [node name="Label6" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_top = 137.0
-margin_right = 210.0
-margin_bottom = 151.0
+offset_top = 137.0
+offset_right = 210.0
+offset_bottom = 151.0
 text = "Activate Only On Specific Routes"
 
 [node name="ActivateOnlyAtSpecificRoutes" type="CheckBox" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
-margin_left = 214.0
-margin_top = 132.0
-margin_right = 383.0
-margin_bottom = 156.0
+offset_left = 214.0
+offset_top = 132.0
+offset_right = 383.0
+offset_bottom = 156.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="P" type="Panel" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings"]
-margin_top = 160.0
-margin_right = 383.0
-margin_bottom = 220.0
-rect_min_size = Vector2( 0, 60 )
+offset_top = 160.0
+offset_right = 383.0
+offset_bottom = 220.0
+custom_minimum_size = Vector2( 0, 60 )
 
 [node name="SpecificRoutes" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/P"]
-margin_top = -4.0
-margin_right = 379.0
-margin_bottom = -4.0
+offset_top = -4.0
+offset_right = 379.0
+offset_bottom = -4.0
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings"]
-margin_top = 224.0
-margin_right = 383.0
-margin_bottom = 238.0
+offset_top = 224.0
+offset_right = 383.0
+offset_bottom = 238.0
 text = "Route Description"
 align = 1
 
 [node name="RouteDescription" type="TextEdit" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings"]
-margin_top = 242.0
-margin_right = 383.0
-margin_bottom = 406.0
+offset_top = 242.0
+offset_right = 383.0
+offset_bottom = 406.0
 size_flags_vertical = 3
 
 [node name="RoutePoints" type="VBoxContainer" parent="TabContainer/Routes/RouteConfiguration"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 size_flags_vertical = 3
 
 [node name="ItemList" type="ItemList" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
-margin_right = 383.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
+offset_right = 383.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 100 )
 
 [node name="ListButtons" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
-margin_top = 104.0
-margin_right = 383.0
-margin_bottom = 124.0
+offset_top = 104.0
+offset_right = 383.0
+offset_bottom = 124.0
 
 [node name="Up" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/ListButtons"]
-margin_right = 30.0
-margin_bottom = 20.0
+offset_right = 30.0
+offset_bottom = 20.0
 text = "Up"
 
 [node name="Down" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/ListButtons"]
-margin_left = 34.0
-margin_right = 82.0
-margin_bottom = 20.0
+offset_left = 34.0
+offset_right = 82.0
+offset_bottom = 20.0
 text = "Down"
 
 [node name="Remove" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/ListButtons"]
-margin_left = 86.0
-margin_right = 232.0
-margin_bottom = 20.0
+offset_left = 86.0
+offset_right = 232.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Remove"
 
 [node name="Add" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/ListButtons"]
-margin_left = 236.0
-margin_right = 383.0
-margin_bottom = 20.0
+offset_left = 236.0
+offset_right = 383.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Add"
 
 [node name="AddRoutePoint" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
-margin_top = 128.0
-margin_right = 383.0
-margin_bottom = 148.0
+offset_top = 128.0
+offset_right = 383.0
+offset_bottom = 148.0
 
 [node name="Station" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_right = 89.0
-margin_bottom = 20.0
+offset_right = 89.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Station"
 
 [node name="Waypoint" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_left = 93.0
-margin_right = 182.0
-margin_bottom = 20.0
+offset_left = 93.0
+offset_right = 182.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Waypoint"
 
 [node name="Spawnpoint" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_left = 186.0
-margin_right = 276.0
-margin_bottom = 20.0
+offset_left = 186.0
+offset_right = 276.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Spawnpoint"
 
 [node name="Despawnpoint" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/AddRoutePoint"]
-margin_left = 280.0
-margin_right = 383.0
-margin_bottom = 20.0
+offset_left = 280.0
+offset_right = 383.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Despawnpoint"
 
 [node name="Configuration" type="Control" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
-margin_top = 152.0
-margin_right = 383.0
-margin_bottom = 406.0
+offset_top = 152.0
+offset_right = 383.0
+offset_bottom = 406.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -270,8 +270,8 @@ __meta__ = {
 }
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station"]
-margin_right = 383.0
-margin_bottom = 411.0
+offset_right = 383.0
+offset_bottom = 411.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -280,61 +280,61 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 5.0
-margin_right = 135.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 135.0
+offset_bottom = 19.0
 text = "Node Name"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="StationNode" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_right = 371.0
-margin_bottom = 24.0
+offset_left = 139.0
+offset_right = 371.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StationNode"]
-margin_right = 177.0
-margin_bottom = 24.0
+offset_right = 177.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="Select" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/StationNode"]
-margin_left = 181.0
-margin_right = 232.0
-margin_bottom = 24.0
+offset_left = 181.0
+offset_right = 232.0
+offset_bottom = 24.0
 text = "Select"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label2" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 33.0
-margin_right = 135.0
-margin_bottom = 47.0
+offset_top = 33.0
+offset_right = 135.0
+offset_bottom = 47.0
 text = "Station Name"
 
 [node name="StationName" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 28.0
-margin_right = 371.0
-margin_bottom = 52.0
+offset_left = 139.0
+offset_top = 28.0
+offset_right = 371.0
+offset_bottom = 52.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label6" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 59.0
-margin_right = 135.0
-margin_bottom = 73.0
+offset_top = 59.0
+offset_right = 135.0
+offset_bottom = 73.0
 text = "Stop Type"
 
 [node name="StopType" type="OptionButton" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 56.0
-margin_right = 371.0
-margin_bottom = 76.0
+offset_left = 139.0
+offset_top = 56.0
+offset_right = 371.0
+offset_bottom = 76.0
 text = "Do not halt"
 items = [ "Do not halt", null, false, 0, null, "Regular Stop", null, false, 1, null, "Beginning Station", null, false, 2, null, "End Station", null, false, 3, null ]
 selected = 0
@@ -343,188 +343,188 @@ __meta__ = {
 }
 
 [node name="Label3" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 80.0
-margin_right = 135.0
-margin_bottom = 128.0
+offset_top = 80.0
+offset_right = 135.0
+offset_bottom = 128.0
 text = "Duration since
 departure from
 station before"
 
 [node name="DurationSinceStationBefore" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 92.0
-margin_right = 371.0
-margin_bottom = 116.0
+offset_left = 139.0
+offset_top = 92.0
+offset_right = 371.0
+offset_bottom = 116.0
 size_flags_vertical = 4
 max_value = 1e+13
 suffix = "seconds"
 
 [node name="Label4" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 137.0
-margin_right = 135.0
-margin_bottom = 151.0
+offset_top = 137.0
+offset_right = 135.0
+offset_bottom = 151.0
 text = "Planned halttime"
 
 [node name="PlannedHalttime" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 132.0
-margin_right = 371.0
-margin_bottom = 156.0
+offset_left = 139.0
+offset_top = 132.0
+offset_right = 371.0
+offset_bottom = 156.0
 size_flags_vertical = 4
 max_value = 1e+13
 suffix = "seconds"
 
 [node name="PlannedArrival" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 160.0
-margin_right = 135.0
-margin_bottom = 174.0
+offset_top = 160.0
+offset_right = 135.0
+offset_bottom = 174.0
 text = "-> (Arrival: 12:00:00)"
 
 [node name="PlannedDeparture" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 160.0
-margin_right = 371.0
-margin_bottom = 174.0
+offset_left = 139.0
+offset_top = 160.0
+offset_right = 371.0
+offset_bottom = 174.0
 text = "(Departure: 12:00:00)"
 
 [node name="Label5" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 183.0
-margin_right = 135.0
-margin_bottom = 197.0
+offset_top = 183.0
+offset_right = 135.0
+offset_bottom = 197.0
 text = "Minmal halttime"
 
 [node name="MinimalHalttime" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 178.0
-margin_right = 371.0
-margin_bottom = 202.0
+offset_left = 139.0
+offset_top = 178.0
+offset_right = 371.0
+offset_bottom = 202.0
 size_flags_vertical = 4
 max_value = 1e+13
 suffix = "seconds"
 
 [node name="Label7" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 206.0
-margin_right = 135.0
-margin_bottom = 271.0
+offset_top = 206.0
+offset_right = 135.0
+offset_bottom = 271.0
 text = "Seconds before
 planned departure
 the station signal
 will set to pass"
 
 [node name="SignalTime" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 226.0
-margin_right = 371.0
-margin_bottom = 250.0
+offset_left = 139.0
+offset_top = 226.0
+offset_right = 371.0
+offset_bottom = 250.0
 size_flags_vertical = 4
 max_value = 1e+13
 suffix = "seconds"
 
 [node name="Label13" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 280.0
-margin_right = 135.0
-margin_bottom = 294.0
+offset_top = 280.0
+offset_right = 135.0
+offset_bottom = 294.0
 text = "Waiting Persons"
 
 [node name="WaitingPersons" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 275.0
-margin_right = 371.0
-margin_bottom = 299.0
+offset_left = 139.0
+offset_top = 275.0
+offset_right = 371.0
+offset_bottom = 299.0
 size_flags_vertical = 4
 max_value = 1000.0
 suffix = "%"
 
 [node name="Label8" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 308.0
-margin_right = 135.0
-margin_bottom = 322.0
+offset_top = 308.0
+offset_right = 135.0
+offset_bottom = 322.0
 text = "Leaving Persons"
 
 [node name="LeavingPersons" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 303.0
-margin_right = 371.0
-margin_bottom = 327.0
+offset_left = 139.0
+offset_top = 303.0
+offset_right = 371.0
+offset_bottom = 327.0
 size_flags_vertical = 4
 suffix = "%"
 
 [node name="Label11" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 336.0
-margin_right = 135.0
-margin_bottom = 350.0
+offset_top = 336.0
+offset_right = 135.0
+offset_bottom = 350.0
 text = "Approach Soundpath"
 
 [node name="HApproach" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 331.0
-margin_right = 371.0
-margin_bottom = 355.0
+offset_left = 139.0
+offset_top = 331.0
+offset_right = 371.0
+offset_bottom = 355.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ApproachSoundPath" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HApproach"]
-margin_right = 177.0
-margin_bottom = 24.0
+offset_right = 177.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="SelectApporachSoundPath" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HApproach"]
-margin_left = 181.0
-margin_right = 232.0
-margin_bottom = 24.0
+offset_left = 181.0
+offset_right = 232.0
+offset_bottom = 24.0
 text = "Select"
 
 [node name="Label9" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 364.0
-margin_right = 135.0
-margin_bottom = 378.0
+offset_top = 364.0
+offset_right = 135.0
+offset_bottom = 378.0
 text = "Arrival Soundpath"
 
 [node name="HArrival" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 359.0
-margin_right = 371.0
-margin_bottom = 383.0
+offset_left = 139.0
+offset_top = 359.0
+offset_right = 371.0
+offset_bottom = 383.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ArrivalSoundPath" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HArrival"]
-margin_right = 177.0
-margin_bottom = 24.0
+offset_right = 177.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="SelectArrivalSoundPath" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HArrival"]
-margin_left = 181.0
-margin_right = 232.0
-margin_bottom = 24.0
+offset_left = 181.0
+offset_right = 232.0
+offset_bottom = 24.0
 text = "Select"
 
 [node name="Label10" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_top = 392.0
-margin_right = 135.0
-margin_bottom = 406.0
+offset_top = 392.0
+offset_right = 135.0
+offset_bottom = 406.0
 text = "Departure Soundpath"
 
 [node name="HDeparture" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid"]
-margin_left = 139.0
-margin_top = 387.0
-margin_right = 371.0
-margin_bottom = 411.0
+offset_left = 139.0
+offset_top = 387.0
+offset_right = 371.0
+offset_bottom = 411.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DepartureSoundPath" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HDeparture"]
-margin_right = 177.0
-margin_bottom = 24.0
+offset_right = 177.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="SelectDepartureSoundPath" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Station/Grid/HDeparture"]
-margin_left = 181.0
-margin_right = 232.0
-margin_bottom = 24.0
+offset_left = 181.0
+offset_right = 232.0
+offset_bottom = 24.0
 text = "Select"
 
 [node name="Waypoint" type="ScrollContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration"]
@@ -538,8 +538,8 @@ __meta__ = {
 }
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint"]
-margin_right = 383.0
-margin_bottom = 254.0
+offset_right = 383.0
+offset_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -548,30 +548,30 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint/Grid"]
-margin_top = 5.0
-margin_right = 23.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 23.0
+offset_bottom = 19.0
 text = "Rail"
 
 [node name="Rail" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint/Grid"]
-margin_left = 27.0
-margin_right = 387.0
-margin_bottom = 24.0
+offset_left = 27.0
+offset_right = 387.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint/Grid/Rail"]
-margin_right = 305.0
-margin_bottom = 24.0
+offset_right = 305.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="Select" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Waypoint/Grid/Rail"]
-margin_left = 309.0
-margin_right = 360.0
-margin_bottom = 24.0
+offset_left = 309.0
+offset_right = 360.0
+offset_bottom = 24.0
 text = "Select"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -583,8 +583,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint"]
-margin_right = 383.0
-margin_bottom = 254.0
+offset_right = 383.0
+offset_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -593,75 +593,75 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_top = 5.0
-margin_right = 90.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 90.0
+offset_bottom = 19.0
 text = "Rail"
 
 [node name="Rail" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_left = 94.0
-margin_right = 387.0
-margin_bottom = 24.0
+offset_left = 94.0
+offset_right = 387.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Rail"]
-margin_right = 238.0
-margin_bottom = 24.0
+offset_right = 238.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Select" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid/Rail"]
-margin_left = 242.0
-margin_right = 293.0
-margin_bottom = 24.0
+offset_left = 242.0
+offset_right = 293.0
+offset_bottom = 24.0
 text = "Select"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label2" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_top = 33.0
-margin_right = 90.0
-margin_bottom = 47.0
+offset_top = 33.0
+offset_right = 90.0
+offset_bottom = 47.0
 text = "Distance"
 
 [node name="Distance" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_left = 94.0
-margin_top = 28.0
-margin_right = 387.0
-margin_bottom = 52.0
+offset_left = 94.0
+offset_top = 28.0
+offset_right = 387.0
+offset_bottom = 52.0
 max_value = 1000.0
 suffix = "meters"
 
 [node name="Label3" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_top = 56.0
-margin_right = 90.0
-margin_bottom = 87.0
+offset_top = 56.0
+offset_right = 90.0
+offset_bottom = 87.0
 text = "Initial speed
 (only for npcs)"
 
 [node name="InitialSpeed" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_left = 94.0
-margin_top = 59.0
-margin_right = 387.0
-margin_bottom = 83.0
+offset_left = 94.0
+offset_top = 59.0
+offset_right = 387.0
+offset_bottom = 83.0
 size_flags_vertical = 4
 max_value = 1000.0
 suffix = "km/h"
 
 [node name="Label4" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_top = 116.0
-margin_right = 90.0
-margin_bottom = 130.0
+offset_top = 116.0
+offset_right = 90.0
+offset_bottom = 130.0
 text = "Information:"
 
 [node name="Label5" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Spawnpoint/Grid"]
-margin_left = 94.0
-margin_top = 91.0
-margin_right = 387.0
-margin_bottom = 156.0
+offset_left = 94.0
+offset_top = 91.0
+offset_right = 387.0
+offset_bottom = 156.0
 text = "You only need a spawn point, if you don't
 have a beginning station in your route.
 (Then trains will automatically spawn at the
@@ -677,8 +677,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Grid" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint"]
-margin_right = 383.0
-margin_bottom = 254.0
+offset_right = 383.0
+offset_bottom = 254.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -687,59 +687,59 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid"]
-margin_top = 5.0
-margin_right = 79.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 79.0
+offset_bottom = 19.0
 text = "Rail"
 
 [node name="Rail" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid"]
-margin_left = 83.0
-margin_right = 387.0
-margin_bottom = 24.0
+offset_left = 83.0
+offset_right = 387.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Rail"]
-margin_right = 249.0
-margin_bottom = 24.0
+offset_right = 249.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Select" type="Button" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid/Rail"]
-margin_left = 253.0
-margin_right = 304.0
-margin_bottom = 24.0
+offset_left = 253.0
+offset_right = 304.0
+offset_bottom = 24.0
 text = "Select"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label2" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid"]
-margin_top = 33.0
-margin_right = 79.0
-margin_bottom = 47.0
+offset_top = 33.0
+offset_right = 79.0
+offset_bottom = 47.0
 text = "Distance"
 
 [node name="Distance" type="SpinBox" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid"]
-margin_left = 83.0
-margin_top = 28.0
-margin_right = 387.0
-margin_bottom = 52.0
+offset_left = 83.0
+offset_top = 28.0
+offset_right = 387.0
+offset_bottom = 52.0
 max_value = 1000.0
 suffix = "meters"
 
 [node name="Label6" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid"]
-margin_top = 115.0
-margin_right = 79.0
-margin_bottom = 129.0
+offset_top = 115.0
+offset_right = 79.0
+offset_bottom = 129.0
 text = "Information:"
 
 [node name="Label7" type="Label" parent="TabContainer/Routes/RouteConfiguration/RoutePoints/Configuration/Despawnpoint/Grid"]
-margin_left = 83.0
-margin_top = 56.0
-margin_right = 387.0
-margin_bottom = 189.0
+offset_left = 83.0
+offset_top = 56.0
+offset_right = 387.0
+offset_bottom = 189.0
 text = "You only need a despawn point, if you don't
 have a ending station in your route.
 (Then trains will automatically despawn at the
@@ -757,20 +757,20 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="CheckIfRouteIsValid" type="Button" parent="TabContainer/Routes/RouteConfiguration/IsRouteValid"]
-margin_right = 379.0
-margin_bottom = 20.0
+offset_right = 379.0
+offset_bottom = 20.0
 text = "Check"
 
 [node name="Messages" type="RichTextLabel" parent="TabContainer/Routes/RouteConfiguration/IsRouteValid"]
-margin_top = 24.0
-margin_right = 379.0
-margin_bottom = 402.0
+offset_top = 24.0
+offset_right = 379.0
+offset_bottom = 402.0
 focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -780,38 +780,38 @@ selection_enabled = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = -4.0
+offset_bottom = -4.0
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic"]
-margin_right = 387.0
-margin_bottom = 14.0
+offset_right = 387.0
+offset_bottom = 14.0
 text = "Signal: Signal1"
 align = 1
 
 [node name="Signals" type="VBoxContainer" parent="TabContainer/RailLogic"]
 visible = false
-margin_top = 18.0
-margin_right = 387.0
-margin_bottom = 284.0
+offset_top = 18.0
+offset_right = 387.0
+offset_bottom = 284.0
 
 [node name="OperationMode" type="HBoxContainer" parent="TabContainer/RailLogic/Signals"]
-margin_right = 387.0
-margin_bottom = 20.0
+offset_right = 387.0
+offset_bottom = 20.0
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Signals/OperationMode"]
-margin_top = 3.0
-margin_right = 279.0
-margin_bottom = 17.0
+offset_top = 3.0
+offset_right = 279.0
+offset_bottom = 17.0
 size_flags_horizontal = 3
 text = "Operation Mode"
 
 [node name="OptionButton" type="OptionButton" parent="TabContainer/RailLogic/Signals/OperationMode"]
-margin_left = 283.0
-margin_right = 387.0
-margin_bottom = 20.0
+offset_left = 283.0
+offset_right = 387.0
+offset_bottom = 20.0
 text = "Block Mode"
 items = [ "Block Mode", null, false, 0, null, "Station Mode", null, true, 1, null, "Manual Mode", null, false, 2, null ]
 selected = 0
@@ -820,98 +820,98 @@ __meta__ = {
 }
 
 [node name="SpeedLimitSettings" type="VBoxContainer" parent="TabContainer/RailLogic/Signals"]
-margin_top = 24.0
-margin_right = 387.0
-margin_bottom = 76.0
+offset_top = 24.0
+offset_right = 387.0
+offset_bottom = 76.0
 
 [node name="EnableSpeedLimit" type="HBoxContainer" parent="TabContainer/RailLogic/Signals/SpeedLimitSettings"]
-margin_right = 387.0
-margin_bottom = 24.0
+offset_right = 387.0
+offset_bottom = 24.0
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Signals/SpeedLimitSettings/EnableSpeedLimit"]
-margin_top = 5.0
-margin_right = 359.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 359.0
+offset_bottom = 19.0
 size_flags_horizontal = 3
 text = "Enable Speed Limit"
 
 [node name="CheckBox" type="CheckBox" parent="TabContainer/RailLogic/Signals/SpeedLimitSettings/EnableSpeedLimit"]
-margin_left = 363.0
-margin_right = 387.0
-margin_bottom = 24.0
+offset_left = 363.0
+offset_right = 387.0
+offset_bottom = 24.0
 
 [node name="Speed" type="HBoxContainer" parent="TabContainer/RailLogic/Signals/SpeedLimitSettings"]
-margin_top = 28.0
-margin_right = 387.0
-margin_bottom = 52.0
+offset_top = 28.0
+offset_right = 387.0
+offset_bottom = 52.0
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Signals/SpeedLimitSettings/Speed"]
-margin_top = 5.0
-margin_right = 283.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 283.0
+offset_bottom = 19.0
 size_flags_horizontal = 3
 text = "Speed Limit"
 
 [node name="SpinBox" type="SpinBox" parent="TabContainer/RailLogic/Signals/SpeedLimitSettings/Speed"]
-margin_left = 287.0
-margin_right = 387.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 100, 0 )
+offset_left = 287.0
+offset_right = 387.0
+offset_bottom = 24.0
+custom_minimum_size = Vector2( 100, 0 )
 min_value = -1.0
 max_value = 1000.0
 suffix = "km/h"
 
 [node name="AttachedToStation" type="Label" parent="TabContainer/RailLogic/Signals"]
-margin_top = 80.0
-margin_right = 387.0
-margin_bottom = 94.0
+offset_top = 80.0
+offset_right = 387.0
+offset_bottom = 94.0
 text = "Attached to Station1"
 align = 1
 
 [node name="ManualSettings" type="VBoxContainer" parent="TabContainer/RailLogic/Signals"]
-margin_top = 98.0
-margin_right = 387.0
-margin_bottom = 266.0
+offset_top = 98.0
+offset_right = 387.0
+offset_bottom = 266.0
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/RailLogic/Signals/ManualSettings"]
-margin_right = 387.0
-margin_bottom = 48.0
+offset_right = 387.0
+offset_bottom = 48.0
 columns = 2
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer"]
-margin_top = 3.0
-margin_right = 328.0
-margin_bottom = 17.0
+offset_top = 3.0
+offset_right = 328.0
+offset_bottom = 17.0
 size_flags_horizontal = 3
 text = "Status"
 
 [node name="Status" type="OptionButton" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer"]
-margin_left = 332.0
-margin_right = 387.0
-margin_bottom = 20.0
+offset_left = 332.0
+offset_right = 387.0
+offset_bottom = 20.0
 text = "Halt"
 items = [ "Halt", null, false, 0, null, "Pass", null, false, 1, null ]
 selected = 0
 
 [node name="Enable Timed Free" type="CheckBox" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer"]
-margin_top = 24.0
-margin_right = 328.0
-margin_bottom = 48.0
+offset_top = 24.0
+offset_right = 328.0
+offset_bottom = 48.0
 text = "Enable timed free of signal"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TimeField" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer" instance=ExtResource( 4 )]
-margin_left = 332.0
-margin_top = 24.0
-margin_right = 387.0
-margin_bottom = 48.0
+offset_left = 332.0
+offset_top = 24.0
+offset_right = 387.0
+offset_bottom = 48.0
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Signals/ManualSettings"]
-margin_top = 52.0
-margin_right = 387.0
-margin_bottom = 168.0
+offset_top = 52.0
+offset_right = 387.0
+offset_bottom = 168.0
 text = "
 Information:
 If a train drives over this signal, the signal get's red
@@ -922,58 +922,58 @@ Normally you want to use the block mode."
 
 [node name="Stations" type="VBoxContainer" parent="TabContainer/RailLogic"]
 visible = false
-margin_top = 18.0
-margin_right = 387.0
-margin_bottom = 327.0
+offset_top = 18.0
+offset_right = 387.0
+offset_bottom = 327.0
 
 [node name="Overwrite" type="CheckBox" parent="TabContainer/RailLogic/Stations"]
-margin_left = 148.0
-margin_right = 239.0
-margin_bottom = 24.0
+offset_left = 148.0
+offset_right = 239.0
+offset_bottom = 24.0
 size_flags_horizontal = 4
 text = "Overwrite"
 align = 1
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/RailLogic/Stations"]
-margin_top = 28.0
-margin_right = 387.0
-margin_bottom = 80.0
+offset_top = 28.0
+offset_right = 387.0
+offset_bottom = 80.0
 columns = 2
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Stations/GridContainer"]
-margin_top = 5.0
-margin_right = 141.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 141.0
+offset_bottom = 19.0
 text = "Assigned Signal"
 
 [node name="AssignedSignal" type="LineEdit" parent="TabContainer/RailLogic/Stations/GridContainer"]
-margin_left = 145.0
-margin_right = 387.0
-margin_bottom = 24.0
+offset_left = 145.0
+offset_right = 387.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="TabContainer/RailLogic/Stations/GridContainer"]
-margin_top = 33.0
-margin_right = 141.0
-margin_bottom = 47.0
+offset_top = 33.0
+offset_right = 141.0
+offset_bottom = 47.0
 text = "Enable Person System"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EnablePersonSystem" type="CheckBox" parent="TabContainer/RailLogic/Stations/GridContainer"]
-margin_left = 145.0
-margin_top = 28.0
-margin_right = 387.0
-margin_bottom = 52.0
+offset_left = 145.0
+offset_top = 28.0
+offset_right = 387.0
+offset_bottom = 52.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/Stations"]
-margin_top = 84.0
-margin_right = 387.0
-margin_bottom = 285.0
+offset_top = 84.0
+offset_right = 387.0
+offset_bottom = 285.0
 text = "
 Information:
 These station settings can also be set in the track editor.
@@ -988,74 +988,74 @@ After you changed something above you have to reload the
 station settings whith the button under:"
 
 [node name="ReloadWorld" type="Button" parent="TabContainer/RailLogic/Stations"]
-margin_left = 145.0
-margin_top = 289.0
-margin_right = 242.0
-margin_bottom = 309.0
+offset_left = 145.0
+offset_top = 289.0
+offset_right = 242.0
+offset_bottom = 309.0
 size_flags_horizontal = 4
 text = "Reload World"
 
 [node name="ContactPoints" type="VBoxContainer" parent="TabContainer/RailLogic"]
 visible = false
-margin_top = 18.0
-margin_right = 387.0
-margin_bottom = 217.0
+offset_top = 18.0
+offset_right = 387.0
+offset_bottom = 217.0
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/RailLogic/ContactPoints"]
-margin_right = 387.0
-margin_bottom = 199.0
+offset_right = 387.0
+offset_bottom = 199.0
 columns = 2
 
 [node name="Label" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 5.0
-margin_right = 134.0
-margin_bottom = 19.0
+offset_top = 5.0
+offset_right = 134.0
+offset_bottom = 19.0
 text = "Enable"
 
 [node name="Enabled" type="CheckBox" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_right = 387.0
-margin_bottom = 24.0
+offset_left = 138.0
+offset_right = 387.0
+offset_bottom = 24.0
 
 [node name="Label2" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 33.0
-margin_right = 134.0
-margin_bottom = 47.0
+offset_top = 33.0
+offset_right = 134.0
+offset_bottom = 47.0
 text = "Affected signal"
 
 [node name="AffectedSignal" type="HBoxContainer" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_top = 28.0
-margin_right = 387.0
-margin_bottom = 52.0
+offset_left = 138.0
+offset_top = 28.0
+offset_right = 387.0
+offset_bottom = 52.0
 size_flags_horizontal = 3
 
 [node name="LineEdit" type="LineEdit" parent="TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal"]
-margin_right = 194.0
-margin_bottom = 24.0
+offset_right = 194.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="Select" type="Button" parent="TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal"]
-margin_left = 198.0
-margin_right = 249.0
-margin_bottom = 24.0
+offset_left = 198.0
+offset_right = 249.0
+offset_bottom = 24.0
 text = "Select"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label3" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 61.0
-margin_right = 134.0
-margin_bottom = 75.0
+offset_top = 61.0
+offset_right = 134.0
+offset_bottom = 75.0
 text = "Affect Time"
 
 [node name="AffectTime" type="SpinBox" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_top = 56.0
-margin_right = 387.0
-margin_bottom = 80.0
+offset_left = 138.0
+offset_top = 56.0
+offset_right = 387.0
+offset_bottom = 80.0
 min_value = 0.1
 max_value = 1e+12
 step = 0.1
@@ -1064,67 +1064,67 @@ allow_greater = true
 suffix = "seconds"
 
 [node name="Label4" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 89.0
-margin_right = 134.0
-margin_bottom = 103.0
+offset_top = 89.0
+offset_right = 134.0
+offset_bottom = 103.0
 text = "New speed limit"
 
 [node name="NewSpeedLimit" type="SpinBox" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_top = 84.0
-margin_right = 387.0
-margin_bottom = 108.0
+offset_left = 138.0
+offset_top = 84.0
+offset_right = 387.0
+offset_bottom = 108.0
 
 [node name="Label5" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 117.0
-margin_right = 134.0
-margin_bottom = 131.0
+offset_top = 117.0
+offset_right = 134.0
+offset_bottom = 131.0
 text = "New status"
 
 [node name="NewStatus" type="OptionButton" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_top = 112.0
-margin_right = 387.0
-margin_bottom = 136.0
+offset_left = 138.0
+offset_top = 112.0
+offset_right = 387.0
+offset_bottom = 136.0
 text = "Halt"
 items = [ "Halt", null, false, 0, null, "Pass", null, false, 1, null ]
 selected = 0
 
 [node name="Label6" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 145.0
-margin_right = 134.0
-margin_bottom = 159.0
+offset_top = 145.0
+offset_right = 134.0
+offset_bottom = 159.0
 text = "Enable for all Trains"
 
 [node name="EnableForAllTrains" type="CheckBox" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_top = 140.0
-margin_right = 387.0
-margin_bottom = 164.0
+offset_left = 138.0
+offset_top = 140.0
+offset_right = 387.0
+offset_bottom = 164.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label7" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_top = 168.0
-margin_right = 134.0
-margin_bottom = 199.0
+offset_top = 168.0
+offset_right = 134.0
+offset_bottom = 199.0
 text = "Just allow for specific
 train:"
 
 [node name="SpecificTrains" type="LineEdit" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
-margin_left = 138.0
-margin_top = 168.0
-margin_right = 387.0
-margin_bottom = 199.0
+offset_left = 138.0
+offset_top = 168.0
+offset_right = 387.0
+offset_bottom = 199.0
 size_flags_horizontal = 3
 
 [node name="VSeparator" type="VSeparator" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_top = -20.0
-margin_right = 4.0
-margin_bottom = 20.0
+offset_top = -20.0
+offset_right = 4.0
+offset_bottom = 20.0
 script = ExtResource( 1 )
 drag_side = 0
 target_path = NodePath("..")

@@ -7,7 +7,7 @@ var selected_object_type := ""
 
 func _ready() -> void:
 	var station_popup: PopupMenu = $GlobalMenu/JumpToStation.get_popup()
-	station_popup.connect("index_pressed", self, "_on_jump_station_pressed")
+	station_popup.connect("index_pressed", Callable(self, "_on_jump_station_pressed"))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -23,7 +23,7 @@ func provide_settings_for_selected_object() -> void:
 			$Settings/TabContainer/RailBuilder.update_selected_rail(selected_object)
 			_show_rail_settings()
 		"Building":
-			var children: Array = get_parent().get_children_of_type_recursive(selected_object, MeshInstance)
+			var children: Array = get_parent().get_children_of_type_recursive(selected_object, MeshInstance3D)
 			var mesh: ArrayMesh = children[0].mesh as ArrayMesh if children.size() > 0 else null
 			$Settings/TabContainer/BuildingSettings.set_mesh(mesh, children[0])
 			$Settings/TabContainer.current_tab = 3
@@ -89,7 +89,7 @@ func _on_jump_station_pressed(index: int) -> void:
 
 
 func _on_ShowConfig_pressed() -> void:
-	var config: WindowDialog = preload("res://Editor/Docks/Configuration/Configuration.tscn").instance()
+	var config: Window = preload("res://Editor/Docks/Configuration/Configuration.tscn").instantiate()
 	add_child(config)
 	config.popup_centered()
 

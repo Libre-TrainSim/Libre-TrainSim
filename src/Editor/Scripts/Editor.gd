@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 signal selected_object_changed(new_object, type_string)
@@ -8,7 +8,7 @@ var editor_directory: String = ""
 var authors: Authors
 var editor_info: EditorInfo = null
 ## Track path without file extension
-var current_track_path := "" setget set_current_track_path
+var current_track_path := "": set = set_current_track_path
 ## Track name is the string after the last /
 var current_track_name := ""
 
@@ -19,7 +19,7 @@ var rail_res: PackedScene = preload("res://Data/Modules/Rail.tscn")
 var world: LTSWorld = null
 
 
-onready var camera := $Camera as EditorCamera
+@onready var camera := $Camera3D as EditorCamera
 
 
 func _ready() -> void:
@@ -31,7 +31,7 @@ func _ready() -> void:
 	if !load_world():
 		return
 
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Root.connect("world_origin_shifted", Callable(self, "_on_world_origin_shifted"))
 
 	_port_to_new_chunk_system()
 	_port_v1_to_v2_chunks()
@@ -41,7 +41,7 @@ func _ready() -> void:
 
 func _port_to_new_trackinfo():
 	var info_file = current_track_path.plus_file(current_track_name) + ".trackinfo"
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if not dir.file_exists(info_file):
 		return
 
@@ -68,7 +68,7 @@ func _port_to_new_trackinfo():
 
 func _port_very_old_trackinfo():
 	var old_cfg = current_track_path.plus_file(current_track_name) + "-scenarios.cfg"
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if not dir.file_exists(old_cfg):
 		return
 
@@ -95,7 +95,7 @@ func _port_very_old_trackinfo():
 
 func _port_v1_to_v2_chunks() -> void:
 	var save_file := current_track_path.plus_file(current_track_name) + ".save"
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	if dir.file_exists(save_file):
 		return
 	if world.get_meta("chunk_version", 1) >= 2:
@@ -118,7 +118,7 @@ func _port_v1_to_v2_chunks() -> void:
 	var track_objects := []
 
 	var err := dir.open(current_track_path.plus_file("chunks"))
-	dir.list_dir_begin()
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name := dir.get_next()
 	while file_name != "":
 		if file_name in [".", ".."]:
@@ -174,16 +174,16 @@ func _port_v1_to_v2_chunks() -> void:
 		for i in range(1, chunks[chunk_position].size()):
 			var local_chunk: Chunk = chunks[chunk_position][i]
 
-			var local_buildings: Spatial = local_chunk.get_node("Buildings")
+			var local_buildings: Node3D = local_chunk.get_node("Buildings")
 			for building in local_buildings.get_children():
-				var xform: Transform = building.global_transform
+				var xform: Transform3D = building.global_transform
 				local_buildings.remove_child(building)
 				building_parent.add_child(building)
 				building.global_transform = xform
 
-			var local_track_objects: Spatial = local_chunk.get_node("TrackObjects")
+			var local_track_objects: Node3D = local_chunk.get_node("TrackObjects")
 			for track_object in local_track_objects.get_children():
-				var xform: Transform = track_object.global_transform
+				var xform: Transform3D = track_object.global_transform
 				local_track_objects.remove_child(track_object)
 				track_object_parent.add_child(track_object)
 				track_object.global_transform = xform
@@ -236,14 +236,14 @@ func _port_v1_to_v2_chunks() -> void:
 
 func _port_to_new_chunk_system() -> void:
 	var save_file = current_track_path.plus_file(current_track_name) + ".save"
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if not dir.file_exists(save_file):
 		return
 
 	# convert degrees to radians and fix track object positions
 	for rail in $World/Rails.get_children():
-		rail.start_rot = deg2rad(rail.start_rot)
-		rail.end_rot = deg2rad(rail.end_rot)
+		rail.start_rot = deg_to_rad(rail.start_rot)
+		rail.end_rot = deg_to_rad(rail.end_rot)
 		# fixes rail and track object positions
 		rail.visible = true
 		rail.update()
@@ -260,17 +260,17 @@ func _port_to_new_chunk_system() -> void:
 		if not "," in key:
 			continue
 		var old_chunk = jsavemodule.get_value(key, {})
-		if old_chunk.empty():
+		if old_chunk.is_empty():
 			continue
 
-		var new_chunk = preload("res://Data/Modules/chunk_prefab.tscn").instance()
+		var new_chunk = preload("res://Data/Modules/chunk_prefab.tscn").instantiate()
 		new_chunk.name = ChunkManager.chunk_to_string(old_chunk.position)
 		new_chunk.chunk_position = old_chunk.position
 		new_chunk.rails = old_chunk.Rails
 
 		var buildings_data: Dictionary = old_chunk.Buildings
 		for building_data in buildings_data:
-			var mesh_instance := MeshInstance.new()
+			var mesh_instance := MeshInstance3D.new()
 			mesh_instance.name = buildings_data[building_data].name
 			mesh_instance.set_mesh(load(buildings_data[building_data].mesh_path))
 			mesh_instance.transform = buildings_data[building_data].transform
@@ -278,7 +278,7 @@ func _port_to_new_chunk_system() -> void:
 			if surfaceArr == null:
 				surfaceArr = []
 			for i in range (surfaceArr.size()):
-				mesh_instance.set_surface_material(i, surfaceArr[i])
+				mesh_instance.set_surface_override_material(i, surfaceArr[i])
 
 			new_chunk.get_node("Buildings").add_child(mesh_instance)
 			mesh_instance.owner = new_chunk
@@ -292,7 +292,7 @@ func _port_to_new_chunk_system() -> void:
 			for path in track_obj.data.materialPaths:
 				track_obj.data.materials.append(load(path))
 
-			var to_instance = to_prefab.instance()
+			var to_instance = to_prefab.instantiate()
 			to_instance.name = track_obj.name
 			to_instance.multimesh = MultiMesh.new()
 			to_instance.multimesh.transform_format = MultiMesh.TRANSFORM_3D
@@ -330,7 +330,7 @@ func _port_to_new_chunk_system() -> void:
 
 func _port_to_new_scenario_system():
 	var path = current_track_path.plus_file("scenarios")
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if dir.open(path) != OK:
 		Logger.err("Track has no scenarios folder!", self)
 		return
@@ -338,7 +338,7 @@ func _port_to_new_scenario_system():
 	var files_to_remove := []
 
 	# convert .scenario to scenario.tscn files
-	dir.list_dir_begin(true, true)
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	filename = dir.get_next()
 	while filename != "":
 		if filename.ends_with(".scenario"):
@@ -465,7 +465,7 @@ func _convert_route_point(old_point: Dictionary) -> RoutePoint:
 
 func _port_very_old_scenarios():
 	var old_file = current_track_path.plus_file(current_track_name) + "-scenarios.cfg"
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if not dir.file_exists(old_file):
 		return
 
@@ -583,7 +583,7 @@ func _exit_tree() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	var mb := event as InputEventMouseButton
-	if mb != null and mb.button_index == BUTTON_LEFT and mb.pressed:
+	if mb != null and mb.button_index == MOUSE_BUTTON_LEFT and mb.pressed:
 		select_object_under_mouse()
 
 	if Input.is_action_just_pressed("save"):
@@ -626,7 +626,7 @@ func handle_drag_mode() -> void:
 
 	# wait for update of overlapping areas, else we can never un-snap
 	# yes, this really needs idle_frame, won't work otherwise
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 
 	if not is_instance_valid(selected_object):
 		return
@@ -635,7 +635,7 @@ func handle_drag_mode() -> void:
 	var snapped_object: Node = null
 	var snapped_start: bool = false
 	var overlaps: Array = selected_object.get_node("Ending").get_overlapping_areas()
-	if not overlaps.empty():
+	if not overlaps.is_empty():
 		for area in overlaps:
 			if get_type_of_object(area.get_parent()) == "Rail" and area.get_parent() != selected_object:
 				selected_object.calculate_from_start_end(area.global_transform.origin)
@@ -656,34 +656,34 @@ func handle_drag_mode() -> void:
 			snap_rot = snapped_object.end_rot - PI
 			snap_pos = snapped_object.end_pos
 
-		if Math.angle_distance_rad(end_rot, snap_rot) < deg2rad(1):
+		if Math.angle_distance_rad(end_rot, snap_rot) < deg_to_rad(1):
 			# angles snapped correctly, we can leave this as is :)
 			pass
-		elif Math.angle_distance_rad(start_rot, snap_rot) < deg2rad(1):
+		elif Math.angle_distance_rad(start_rot, snap_rot) < deg_to_rad(1):
 			if _local_x_distance(start_rot, selected_object.start_pos, snap_pos) < 20:
 				return
-			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_simple_connector"):
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", Callable(self, "_snap_simple_connector")):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_simple_connector"
-				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
-		elif abs(Math.angle_distance_rad(start_rot, snap_rot) - (0.5*PI)) < deg2rad(1):
+				$EditorHUD/SnapDialog.connect("confirmed", Callable(self, "_snap_simple_connector").bind(snap_pos, snap_rot), CONNECT_ONE_SHOT)
+		elif abs(Math.angle_distance_rad(start_rot, snap_rot) - (0.5*PI)) < deg_to_rad(1):
 			# right angle, can be done with straight rail + 90deg curve
-			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_90deg_connector"):
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", Callable(self, "_snap_90deg_connector")):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_90deg_connector"
-				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+				$EditorHUD/SnapDialog.connect("confirmed", Callable(self, "_snap_90deg_connector").bind(snap_pos, snap_rot), CONNECT_ONE_SHOT)
 		else:
 			# complicated snapping I don't know how to do yet
-			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_complex_connector"):
+			if not $EditorHUD/SnapDialog.is_connected("confirmed", Callable(self, "_snap_complex_connector")):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR_TODO")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_complex_connector"
-				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+				$EditorHUD/SnapDialog.connect("confirmed", Callable(self, "_snap_complex_connector").bind(snap_pos, snap_rot), CONNECT_ONE_SHOT)
 	else:
-		if _last_connected_signal != "" and $EditorHUD/SnapDialog.is_connected("confirmed", self, _last_connected_signal):
-			$EditorHUD/SnapDialog.disconnect("confirmed", self, _last_connected_signal)
+		if _last_connected_signal != "" and $EditorHUD/SnapDialog.is_connected("confirmed", Callable(self, _last_connected_signal)):
+			$EditorHUD/SnapDialog.disconnect("confirmed", Callable(self, _last_connected_signal))
 		$EditorHUD/SnapDialog.hide()
 
 
@@ -719,7 +719,7 @@ func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
 		selected_object.update()
 
 		var rail2: Node = _spawn_rail()
-		rail2.translation = selected_object.end_pos
+		rail2.position = selected_object.end_pos
 		rail2.start_pos = selected_object.end_pos
 		rail2.rotation.y = selected_object.end_rot
 		rail2.start_rot = selected_object.end_rot
@@ -731,7 +731,7 @@ func _snap_90deg_connector(snap_pos: Vector3, snap_rot: float) -> void:
 		selected_object.calculate_from_start_end(new_end)
 
 		var rail2: Node = _spawn_rail()
-		rail2.translation = selected_object.end_pos
+		rail2.position = selected_object.end_pos
 		rail2.start_pos = selected_object.end_pos
 		rail2.rotation.y = selected_object.end_rot
 		rail2.start_rot = selected_object.end_rot
@@ -747,13 +747,13 @@ func _snap_simple_connector(snap_pos: Vector3, snap_rot: float) -> void:
 	selected_object.calculate_from_start_end(rail1_end)
 
 	var rail2: Node = _spawn_rail()
-	rail2.translation = rail1_end
+	rail2.position = rail1_end
 	rail2.start_pos = rail1_end
 	rail2.rotation.y = selected_object.end_rot
 	rail2.start_rot = selected_object.end_rot
 	rail2.calculate_from_start_end(snap_pos)
 
-	assert(Math.angle_distance_rad(rail2.end_rot, snap_rot) < deg2rad(1))
+	assert(Math.angle_distance_rad(rail2.end_rot, snap_rot) < deg_to_rad(1))
 
 	drag_mode = false
 
@@ -773,19 +773,19 @@ func select_object_under_mouse() -> void:
 	var from: Vector3 = camera.project_ray_origin(mouse_pos)
 	var to: Vector3 = from + camera.project_ray_normal(mouse_pos) * ray_length
 
-	var space_state = get_world().get_direct_space_state()
+	var space_state = get_world_3d().get_direct_space_state()
 	# use global coordinates, not local to node
 	var result = space_state.intersect_ray(from, to, [  ], 0x7FFFFFFF, true, true)
-	var obj_to_select: Spatial = null
+	var obj_to_select: Node3D = null
 	if result.has("collider"):
-		obj_to_select = result["collider"].get_parent_spatial()
+		obj_to_select = result["collider"].get_parent_node_3d()
 	else:
 		clear_selected_object()
 		return
 
-	while not (obj_to_select is WorldObject or obj_to_select is MeshInstance):
+	while not (obj_to_select is WorldObject or obj_to_select is MeshInstance3D):
 		Logger.vlog("Trying to find object", obj_to_select)
-		obj_to_select = obj_to_select.get_parent_spatial()
+		obj_to_select = obj_to_select.get_parent_node_3d()
 		if obj_to_select == self or obj_to_select == null:
 			Logger.vlog("No object found", result["collider"])
 			clear_selected_object()
@@ -801,9 +801,9 @@ func select_object_under_mouse() -> void:
 func clear_selected_object() -> void:
 	Logger.vlog("Deselect object", selected_object)
 	if is_instance_valid(selected_object):
-		var vis = get_children_of_type_recursive(selected_object, VisualInstance)
+		var vis = get_children_of_type_recursive(selected_object, VisualInstance3D)
 		for vi in vis:
-			vi.set_layer_mask_bit(1, false)
+			vi.set_layer_mask_value(1, false)
 
 		if selected_object_type == "Building":
 			$EditorHUD/Settings/TabContainer/BuildingSettings.set_mesh(null)
@@ -851,10 +851,10 @@ func load_world() -> bool:
 	var path := current_track_path.plus_file(current_track_name) + ".tscn"
 	var world_resource: PackedScene = load(path)
 	if world_resource == null:
-		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
+		send_message("World data could not be loaded! Is your super.tscn file corrupt?\nIs every resource available?")
 		return false
 
-	world = world_resource.instance() as LTSWorld
+	world = world_resource.instantiate() as LTSWorld
 	if !world:
 		send_message("Failed to load world. World is not an LTSWorld.")
 		return false
@@ -893,14 +893,14 @@ func save_world(send_message: bool = true) -> void:
 		var chunk_pos = $World.chunk_manager.position_to_chunk(position)
 		var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
 
-		var chunk = $World/Chunks.find_node(chunk_name)
+		var chunk = $World/Chunks.find_child(chunk_name)
 		if not is_instance_valid(chunk):
 			chunk = $World.chunk_manager._force_load_chunk_immediately(chunk_pos)
 
 		$World/Buildings.remove_child(building)
 		chunk.get_node("Buildings").add_child(building)
 		building.owner = chunk
-		building.global_translation = position
+		building.global_position = position
 
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)
@@ -947,23 +947,23 @@ func get_rail(name: String) -> Node:
 func set_selected_object(object: Node) -> void:
 	clear_selected_object()
 
-	var vis = get_children_of_type_recursive(object, VisualInstance)
+	var vis = get_children_of_type_recursive(object, VisualInstance3D)
 	for vi in vis:
-		vi.set_layer_mask_bit(1, true)
+		vi.set_layer_mask_value(1, true)
 
 	selected_object = object
 	selected_object_type = get_type_of_object(selected_object)
 
 	if selected_object_type == "Building":
-		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
+		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instantiate())
 	if selected_object_type == "Rail" and selected_object.manual_moving:
-		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instance())
+		selected_object.add_child(preload("res://Editor/Modules/Gizmo.tscn").instantiate())
 
 	emit_signal("selected_object_changed", object, selected_object_type)
 
 
 func _spawn_rail() -> Node:
-	var rail_instance: Node = rail_res.instance()
+	var rail_instance: Node = rail_res.instantiate()
 	rail_instance.name = Root.name_node_appropriate(rail_instance, "Rail", $World/Rails)
 	$World/Rails.add_child(rail_instance)
 	rail_instance.set_owner($World)
@@ -976,7 +976,7 @@ func _spawn_rail() -> Node:
 
 
 func _spawn_poles_for_rail(rail: Node) -> void:
-	var track_object = preload("res://Data/Modules/TrackObjects.tscn").instance()
+	var track_object = preload("res://Data/Modules/TrackObjects.tscn").instantiate()
 	track_object.sides = 2
 	track_object.rows = 1
 	track_object.wholeRail = true
@@ -1023,7 +1023,7 @@ func _remove_poles_for_rail(rail: Node) -> void:
 
 func add_rail() -> void:
 	var rail_instance: Node = _spawn_rail()
-	rail_instance.translation = get_current_ground_position()
+	rail_instance.position = get_current_ground_position()
 
 	$World.chunk_manager.add_rail(rail_instance)
 
@@ -1031,7 +1031,7 @@ func add_rail() -> void:
 
 
 func get_current_ground_position() -> Vector3:
-	var position: Vector3 = camera.translation
+	var position: Vector3 = camera.position
 	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
 	return position
 
@@ -1069,7 +1069,7 @@ func _on_TestTrack_pressed() -> void:
 
 
 func send_message(message: String) -> void:
-	if !$EditorHUD/Message/RichTextLabel.text.empty():
+	if !$EditorHUD/Message/RichTextLabel.text.is_empty():
 		return
 	Logger.log("Editor sends message: " + message)
 	$EditorHUD/Message/RichTextLabel.text = message
@@ -1101,7 +1101,7 @@ func add_signal_to_selected_rail() -> void:
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
 	var signal_res: PackedScene = preload("res://Data/Modules/Signal.tscn")
-	var signal_ins: Node = signal_res.instance()
+	var signal_ins: Node = signal_res.instantiate()
 	Root.name_node_appropriate(signal_ins, "Signal", $World/Signals)
 	$World/Signals.add_child(signal_ins)
 	signal_ins.set_owner($World)
@@ -1115,7 +1115,7 @@ func add_station_to_selected_rail() -> void:
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
 	var station_res: PackedScene = preload("res://Data/Modules/Station.tscn")
-	var station_ins: Node = station_res.instance()
+	var station_ins: Node = station_res.instantiate()
 	Root.name_node_appropriate(station_ins, "Station", $World/Signals)
 	$World/Signals.add_child(station_ins)
 	station_ins.set_owner($World)
@@ -1129,7 +1129,7 @@ func add_speed_limit_to_selected_rail() -> void:
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
 	var speed_limit_res: PackedScene = preload("res://Data/Modules/SpeedLimit_Lf7.tscn")
-	var speed_limit_ins: Node = speed_limit_res.instance()
+	var speed_limit_ins: Node = speed_limit_res.instantiate()
 	Root.name_node_appropriate(speed_limit_ins, "SpeedLimit", $World/Signals)
 	$World/Signals.add_child(speed_limit_ins)
 	speed_limit_ins.set_owner($World)
@@ -1143,7 +1143,7 @@ func add_warn_speed_limit_to_selected_rail() -> void:
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
 	var war_speed_limit_res: PackedScene = preload("res://Data/Modules/WarnSpeedLimit_Lf6.tscn")
-	var warn_speed_limit_ins: Node = war_speed_limit_res.instance()
+	var warn_speed_limit_ins: Node = war_speed_limit_res.instantiate()
 	Root.name_node_appropriate(warn_speed_limit_ins, "SpeedLimit", $World/Signals)
 	$World/Signals.add_child(warn_speed_limit_ins)
 	warn_speed_limit_ins.set_owner($World)
@@ -1157,7 +1157,7 @@ func add_contact_point_to_selected_rail() -> void:
 		send_message("Error, you need to select a Rail first, before you add a Rail Logic element")
 		return
 	var contact_point_res: PackedScene = preload("res://Data/Modules/ContactPoint.tscn")
-	var contact_point_ins: Node = contact_point_res.instance()
+	var contact_point_ins: Node = contact_point_res.instantiate()
 	Root.name_node_appropriate(contact_point_ins, "ContactPoint", $World/Signals)
 	$World/Signals.add_child(contact_point_ins)
 	contact_point_ins.set_owner($World)
@@ -1207,7 +1207,7 @@ func get_children_of_type_recursive(node: Node, type) -> Array:
 	if node is type:
 		children.append(node)
 
-	while not stack.empty():
+	while not stack.is_empty():
 		var parent = stack.pop_front()
 		for child in parent.get_children():
 			if child is type:
@@ -1227,12 +1227,12 @@ func _on_Pause_save_requested() -> void:
 
 
 func _on_world_origin_shifted(delta: Vector3):
-	$World/Buildings.translation += delta
+	$World/Buildings.position += delta
 
 
-func _on_object_added(object: Spatial, position: Vector3) -> void:
+func _on_object_added(object: Node3D, position: Vector3) -> void:
 	world.get_node("Buildings").add_child(object)
-	object.global_translation = position
+	object.global_position = position
 	object.set_owner(world)
 
 	var old_script = object.get_script()
@@ -1241,5 +1241,5 @@ func _on_object_added(object: Spatial, position: Vector3) -> void:
 	object.generate_collider()
 	object.set_script(old_script)
 
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 	set_selected_object(object)

@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 
-export (float) var length: float = 17.5
-export (bool) var cabinMode: bool = false
+@export (float) var length: float = 17.5
+@export (bool) var cabinMode: bool = false
 
 var baked_route: Array
 var complete_route_length: float = 0
@@ -25,15 +25,15 @@ var passenger_path_nodes := []
 
 var distanceToPlayer: float= -1
 
-export var pantographEnabled: bool = false
+@export var pantographEnabled: bool = false
 
-onready var player: LTSPlayer
+@onready var player: LTSPlayer
 var world: Node
 
 
 func initalize() -> void:
 	assert(player != null)
-	pause_mode = Node.PAUSE_MODE_PROCESS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	if cabinMode:
 		length = 4
 		return
@@ -41,9 +41,9 @@ func initalize() -> void:
 	register_passenger_path_nodes()
 	register_seats()
 
-	$MeshInstance.show()
+	$MeshInstance3D.show()
 
-	var personsNode := Spatial.new()
+	var personsNode := Node3D.new()
 	personsNode.name = "Persons"
 	add_child(personsNode)
 	personsNode.owner = self
@@ -64,7 +64,7 @@ func initalize() -> void:
 	# If there is an world shift happening, all world objects might be shifted, but Wagon will not be notified about it.
 	# This might result in Wagon being in wrong world position, which affect all the calculations relying or global_transform.
 	# This is a temporary fix to make sure that Wagon is always in correct position.
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted", [], CONNECT_ONESHOT)
+	Root.connect("world_origin_shifted", Callable(self, "_on_world_origin_shifted").bind(), CONNECT_ONE_SHOT)
 
 	# TODO: this is a performance hotfix, we should do a better implementation in 0.10
 	if not ProjectSettings["game/graphics/enable_dynamic_lights"]:
@@ -214,7 +214,7 @@ func register_doors() -> void:
 		if child.is_in_group("PassengerDoor"):
 			if child.side == DoorSide.UNASSIGNED:
 				# If Door side is not set explicitly, fallback to translation
-				if child.translation[2] > 0:
+				if child.position[2] > 0:
 					child.side = DoorSide.RIGHT
 				else:
 					child.side = DoorSide.LEFT
@@ -224,17 +224,17 @@ func register_doors() -> void:
 			# - outside navigation when boarding at try_board_train() / get_route_to_free_wagon()
 			match child.side:
 				DoorSide.RIGHT:
-					child.translation += Vector3(0,0,0.5)
+					child.position += Vector3(0,0,0.5)
 					rightDoors.append(child)
 				DoorSide.LEFT:
-					child.translation -= Vector3(0,0,0.5)
+					child.position -= Vector3(0,0,0.5)
 					leftDoors.append(child)
 				_:
-					assert(true, "Unsupported DoorSide. DoorSide.BOTH is not yet supported")
+					assert(true) #,"Unsupported DoorSide. DoorSide.BOTH is not yet supported")
 
 	# Connect door state to animations
-	var _res = $Doors/DoorLeft.connect("animation_finished", door_left, "_on_animation_transition_finished")
-	_res = $Doors/DoorRight.connect("animation_finished", door_right, "_on_animation_transition_finished")
+	var _res = $Doors/DoorLeft.connect("animation_finished", Callable(door_left, "_on_animation_transition_finished"))
+	_res = $Doors/DoorRight.connect("animation_finished", Callable(door_right, "_on_animation_transition_finished"))
 
 
 func _animate_side_door(animation: AnimationPlayer, sound: AudioStreamPlayer3D, backwards := false) -> bool:
@@ -247,7 +247,7 @@ func _animate_side_door(animation: AnimationPlayer, sound: AudioStreamPlayer3D, 
 		if sound and not sound.playing:
 			sound.play()
 		return true
-	assert(false, "Animations should be requested only when appropriate")
+	assert(false) #,"Animations should be requested only when appropriate")
 	return false
 
 
@@ -291,8 +291,8 @@ func is_any_doors_opened() -> bool:
 
 
 # returns seat, and routePath to reach seat from the Door
-func register_person(person: Spatial, door: Spatial) -> Array:
-	var seat: Spatial = get_random_free_seat()
+func register_person(person: Node3D, door: Node3D) -> Array:
+	var seat: Node3D = get_random_free_seat()
 	if seat == null:
 		# Person will ask for another wagon
 		return []
@@ -300,7 +300,7 @@ func register_person(person: Spatial, door: Spatial) -> Array:
 	_attached_persons[person] = seat
 	person.get_parent().remove_child(person)
 	$Persons.add_child(person)
-	person.translation = door.translation
+	person.position = door.position
 
 	var passenger_route_path: Array = get_path_from_to(door, seat)
 	if passenger_route_path == []:
@@ -309,27 +309,27 @@ func register_person(person: Spatial, door: Spatial) -> Array:
 	seats_free.erase(seat)
 
 	# Wagon is full, notify train to update routing
-	if seats_free.empty():
+	if seats_free.is_empty():
 		player.update_vacant_wagons_doors()
 
 	return [seat, passenger_route_path]
 
 
-func get_random_free_seat() -> Spatial:
-	if seats_free.empty():
+func get_random_free_seat() -> Node3D:
+	if seats_free.is_empty():
 		return null
-	var rand_index = int(rand_range(0, seats_free.size()))
+	var rand_index = int(randf_range(0, seats_free.size()))
 	return seats_free[rand_index]
 
 
-func get_path_from_to(from: Spatial, to: Spatial) -> Array:
+func get_path_from_to(from: Node3D, to: Node3D) -> Array:
 	if from == to:
 		return []
 
 	var previous := {}
 	var visited := []
 	var stack := [from]
-	while not stack.empty():
+	while not stack.is_empty():
 		var node = stack.pop_front()
 		visited.append(node)
 		if node == to:
@@ -339,11 +339,11 @@ func get_path_from_to(from: Spatial, to: Spatial) -> Array:
 				stack.append(conn)
 				previous[conn] = node
 
-	var path := [to.translation]
+	var path := [to.position]
 	var node := to
 	while previous.has(node):
 		node = previous[node]
-		path.push_front(node.translation)
+		path.push_front(node.position)
 	return path
 
 
@@ -380,16 +380,16 @@ func _get_persons_to_unboard(proportion: float = 0.5) -> Array:
 	var persons := []
 	randomize()
 	for personNode in _attached_persons.keys():
-		if rand_range(0, 1) < proportion:
+		if randf_range(0, 1) < proportion:
 			persons.append(personNode)
 	return persons
 
 
-func get_route_from_seat_to_door(seat: Spatial) -> Array:
+func get_route_from_seat_to_door(seat: Node3D) -> Array:
 	var possible_doors := []
 	match player.current_station_node.platform_side:
 		PlatformSide.NONE:
-			assert(false, "Train should not try to unboard persons at PlatformSide.NONE station")
+			assert(false) #,"Train should not try to unboard persons at PlatformSide.NONE station")
 		PlatformSide.LEFT:
 			possible_doors.append_array(leftDoors)
 		PlatformSide.RIGHT:
@@ -399,10 +399,10 @@ func get_route_from_seat_to_door(seat: Spatial) -> Array:
 			possible_doors.append_array(rightDoors)
 
 	var closest_index := player.get_closest_door_to_position(seat.global_transform.origin, possible_doors)
-	var closest_door: Spatial = possible_doors[closest_index]
+	var closest_door: Node3D = possible_doors[closest_index]
 	var route: Array = get_path_from_to(seat, closest_door)
-	if route.empty():
-		Logger.err("Some doors are not reachable from every door! Check your Path configuration", self)
+	if route.is_empty():
+		Logger.err("Some doors are not reachable from every door! Check your Path3D configuration", self)
 		assert(false)
 		return []
 
@@ -416,12 +416,12 @@ func get_route_from_seat_to_door(seat: Spatial) -> Array:
 	return [closest_door, route]
 
 
-func is_person_registered(person: Spatial) -> bool:
+func is_person_registered(person: Node3D) -> bool:
 	return _attached_persons.has(person)
 
 
-func deregister_person(person_node: Spatial) -> void:
-	assert(_attached_persons.has(person_node), "Trying to deregister unknown Person")
+func deregister_person(person_node: Node3D) -> void:
+	assert(_attached_persons.has(person_node)) #,"Trying to deregister unknown Person")
 	seats_free.append(_attached_persons[person_node])
 	_attached_persons.erase(person_node)
 
@@ -465,7 +465,7 @@ func updateSwitchOnNextChange(): ## Exact function also in player.gd. But these 
 		return
 
 	if baked_route.size() > route_index+1:
-		var nextRail: Spatial = baked_route[route_index+1].rail
+		var nextRail: Node3D = baked_route[route_index+1].rail
 		var nextForward: bool = baked_route[route_index+1].forward
 		if nextForward and nextRail.switch_part[0] != "":
 			switch_on_next_change = true

@@ -1,14 +1,14 @@
 class_name InputLabel
 extends Label
 
-export(Array, String) var actions: Array = []
+@export var actions: Array = [] # (Array, String)
 
 var backing_text: String = ""
 
 
 func _ready() -> void:
 	backing_text = text
-	var _unused = InputHelper.connect("control_type_changed", self, "make_string")
+	var _unused = InputHelper.connect("control_type_changed", Callable(self, "make_string"))
 	make_string()
 
 

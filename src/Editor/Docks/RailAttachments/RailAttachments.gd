@@ -62,7 +62,7 @@ func _on_jListTrackObjects_user_removed_entries(entry_names: Array) -> void:
 
 func _on_jListTrackObjects_user_added_entry(entry_name: String) -> void:
 	Logger.vlog(entry_name)
-	var track_object: Node = track_object_resource.instance()
+	var track_object: Node = track_object_resource.instantiate()
 	track_object.description = entry_name
 	track_object.name = currentRail.name + " " + entry_name
 	track_object.attached_rail = currentRail.name
@@ -95,7 +95,7 @@ func copy_track_object_to_current_rail(source_track_object: Node, new_descriptio
 	if source_track_object == null:
 		return
 	# order is important
-	var new_track_object: Node = track_object_resource.instance()
+	var new_track_object: Node = track_object_resource.instantiate()
 	new_track_object.materials = []
 	new_track_object.set_data(source_track_object.get_data())
 	new_track_object.name = currentRail.name + " " + new_description
@@ -131,7 +131,7 @@ func _on_jListTrackObjects_user_selected_entry(entry_name: String):
 func update_Position() -> void:
 	if currentTO == null:
 		return
-	$Tab/TrackObjects/Settings/Tab/Position/WholeRail.pressed = currentTO.wholeRail
+	$Tab/TrackObjects/Settings/Tab/Position/WholeRail.button_pressed = currentTO.wholeRail
 
 	$Tab/TrackObjects/Settings/Tab/Position/StartPos/SpinBox.value = currentTO.on_rail_position
 	$Tab/TrackObjects/Settings/Tab/Position/EndPosition/SpinBox.value = currentTO.on_rail_position + currentTO.length
@@ -180,7 +180,7 @@ func _on_SavePositioning_pressed() -> void:
 	currentTO.randomRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".pressed
 	currentTO.randomScale = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".pressed
 	currentTO.randomScaleFactor = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomScale".value
-	currentTO.rotationObjects = deg2rad($"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value)
+	currentTO.rotationObjects = deg_to_rad($"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value)
 	currentTO.placeLast = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed
 	currentTO.applySlopeRotation = $"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed
 	Logger.log("Positioning Saved")
@@ -197,14 +197,14 @@ func update_positioning() -> void:
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/SpawnRate".value = currentTO.spawnRate
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rows".value = currentTO.rows
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Height".value = currentTO.height
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandLoc".pressed = currentTO.randomLocation
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandLoc".button_pressed = currentTO.randomLocation
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomLocation".value = currentTO.randomLocationFactor
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".pressed = currentTO.randomRotation
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".pressed = currentTO.randomScale
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRandRot".button_pressed = currentTO.randomRotation
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/CheckBoxRadScal".button_pressed = currentTO.randomScale
 	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer2/RandomScale".value = currentTO.randomScaleFactor
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".pressed = currentTO.placeLast
-	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".pressed = currentTO.applySlopeRotation
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad_to_deg(currentTO.rotationObjects)
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/PlaceLast".button_pressed = currentTO.placeLast
+	$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/applySlopeRotation".button_pressed = currentTO.applySlopeRotation
 	Logger.log("Updating...")
 
 
@@ -311,10 +311,10 @@ func _on_BuildingSettings_updated() -> void:
 func _on_OptionButton_item_selected(index: int) -> void:
 	if currentTO.sides == PlatformSide.LEFT and index == PlatformSide.RIGHT:
 		currentTO.rotationObjects += PI
-		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad_to_deg(currentTO.rotationObjects)
 	elif currentTO.sides == PlatformSide.RIGHT and index == PlatformSide.LEFT:
 		currentTO.rotationObjects -= PI
-		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad2deg(currentTO.rotationObjects)
+		$"Tab/TrackObjects/Settings/Tab/Object Positioning/GridContainer/Rotation".value = rad_to_deg(currentTO.rotationObjects)
 	currentTO.sides = index
 	update_current_rail_attachment()
 

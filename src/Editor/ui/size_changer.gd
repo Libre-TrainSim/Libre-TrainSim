@@ -10,14 +10,14 @@ enum Side {
 }
 
 
-export(Side) var drag_side := Side.RIGHT
-export(NodePath) var target_path: NodePath
+@export var drag_side: Side := Side.RIGHT
+@export var target_path: NodePath: NodePath
 
 
 var is_dragging := false
 
 
-onready var target := get_node(target_path) as Control
+@onready var target := get_node(target_path) as Control
 
 
 func _ready() -> void:
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	var mb := event as InputEventMouseButton
-	if mb and mb.pressed and mb.button_index == BUTTON_LEFT:
+	if mb and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
 		is_dragging = true
 		return
 
@@ -44,10 +44,10 @@ func _gui_input(event: InputEvent) -> void:
 	if mm and is_dragging:
 		match drag_side:
 			Side.RIGHT:
-				target.margin_right += mm.position.x
+				target.offset_right += mm.position.x
 			Side.LEFT:
-				target.margin_left += mm.position.x
+				target.offset_left += mm.position.x
 			Side.TOP:
-				target.margin_top += mm.position.y
+				target.offset_top += mm.position.y
 			Side.BOTTOM:
-				target.margin_bottom += mm.position.y
+				target.offset_bottom += mm.position.y

@@ -12,7 +12,7 @@
 [ext_resource path="res://Data/Scripts/Rail.gd" type="Script" id=10]
 [ext_resource path="res://Data/Modules/PZBMagnet.tscn" type="PackedScene" id=11]
 
-[node name="World" type="Spatial"]
+[node name="World" type="Node3D"]
 script = ExtResource( 1 )
 __meta__ = {
 "chunk_version": 2
@@ -20,8 +20,8 @@ __meta__ = {
 FileName = "German-Safety-Tutorials"
 world_origin_on_last_save = Vector3( 0, 0, 0 )
 
-[node name="DirectionalLight" type="DirectionalLight" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, -0.766044, 0.642787, 0, -0.642787, -0.766044, 0, 80.3552, 0 )
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." instance=ExtResource( 2 )]
+transform = Transform3D( 1, 0, 0, 0, -0.766044, 0.642787, 0, -0.642787, -0.766044, 0, 80.3552, 0 )
 light_color = Color( 1, 0.958731, 0.917809, 1 )
 light_bake_mode = 2
 shadow_enabled = true
@@ -36,12 +36,12 @@ __meta__ = {
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 7 )
 
-[node name="Players" type="Spatial" parent="."]
+[node name="Players" type="Node3D" parent="."]
 
-[node name="Signals" type="Spatial" parent="."]
+[node name="Signals" type="Node3D" parent="."]
 
-[node name="Signal" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2883, 0, -11.4469 )
+[node name="Signal" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2883, 0, -11.4469 )
 script = ExtResource( 3 )
 attached_rail = "Rail"
 on_rail_position = 2.0
@@ -53,8 +53,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="PZBMagnet" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
+[node name="PZBMagnet" type="Node3D" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
 script = ExtResource( 4 )
 attached_rail = "Rail"
 on_rail_position = 0.0
@@ -62,8 +62,8 @@ forward = true
 hz = 1000
 attached_signal = NodePath("../Signal")
 
-[node name="PZBMagnet2" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 966.288, 0, -11.4469 )
+[node name="PZBMagnet2" type="Node3D" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 966.288, 0, -11.4469 )
 script = ExtResource( 4 )
 attached_rail = "Rail2"
 on_rail_position = 750.0
@@ -71,8 +71,8 @@ forward = true
 hz = 500
 attached_signal = NodePath("../Signal2")
 
-[node name="Signal2" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
+[node name="Signal2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
 script = ExtResource( 3 )
 attached_rail = "Rail2"
 on_rail_position = 1000.0
@@ -84,8 +84,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="PZBMagnet3" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1214.29, 0, -11.4469 )
+[node name="PZBMagnet3" type="Node3D" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1214.29, 0, -11.4469 )
 script = ExtResource( 4 )
 attached_rail = "Rail2"
 on_rail_position = 998.0
@@ -93,8 +93,8 @@ forward = true
 hz = 2000
 attached_signal = NodePath("../Signal2")
 
-[node name="Signal3" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1716.29, 0, -11.4469 )
+[node name="Signal3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1716.29, 0, -11.4469 )
 script = ExtResource( 3 )
 attached_rail = "Rail3"
 on_rail_position = 500.0
@@ -106,8 +106,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="PZBMagnet4" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1714.29, 0, -11.4469 )
+[node name="PZBMagnet4" type="Node3D" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1714.29, 0, -11.4469 )
 script = ExtResource( 4 )
 attached_rail = "Rail3"
 on_rail_position = 498.0
@@ -115,8 +115,8 @@ forward = true
 hz = 1000
 attached_signal = NodePath("../Signal3")
 
-[node name="PZBMagnet5" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2676.29, 0, -11.4469 )
+[node name="PZBMagnet5" type="Node3D" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2676.29, 0, -11.4469 )
 script = ExtResource( 4 )
 attached_rail = "Rail5"
 on_rail_position = 460.0
@@ -124,8 +124,8 @@ forward = true
 hz = 500
 attached_signal = NodePath("../Signal4")
 
-[node name="Signal4" type="Spatial" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2916.29, 0, -11.4469 )
+[node name="Signal4" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2916.29, 0, -11.4469 )
 script = ExtResource( 3 )
 attached_rail = "Rail5"
 on_rail_position = 700.0
@@ -137,8 +137,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="PZBMagnet6" type="Spatial" parent="Signals" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2914.29, 0, -11.4469 )
+[node name="PZBMagnet6" type="Node3D" parent="Signals" instance=ExtResource( 11 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2914.29, 0, -11.4469 )
 script = ExtResource( 4 )
 attached_rail = "Rail5"
 on_rail_position = 698.0
@@ -146,10 +146,10 @@ forward = true
 hz = 2000
 attached_signal = NodePath("../Signal4")
 
-[node name="Rails" type="Spatial" parent="."]
+[node name="Rails" type="Node3D" parent="."]
 
-[node name="Rail" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
+[node name="Rail" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2883, 0, -11.4469 )
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 0, 0, 0 )
@@ -178,8 +178,8 @@ distance_to_parallel_rail = 0.0
 has_overhead_line = true
 switch_part = [ "", "" ]
 
-[node name="Rail2" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 216.288, 0, -11.4469 )
+[node name="Rail2" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 216.288, 0, -11.4469 )
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 0, 0, 0 )
@@ -208,8 +208,8 @@ distance_to_parallel_rail = 0.0
 has_overhead_line = true
 switch_part = [ "", "" ]
 
-[node name="Rail3" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
+[node name="Rail3" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1216.29, 0, -11.4469 )
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 1, 0, 0 )
@@ -238,8 +238,8 @@ distance_to_parallel_rail = 0.0
 has_overhead_line = true
 switch_part = [ "", "" ]
 
-[node name="Rail4" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -483.712, 0, -11.447 )
+[node name="Rail4" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -483.712, 0, -11.447 )
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 0, 0, 0 )
@@ -268,8 +268,8 @@ distance_to_parallel_rail = 0.0
 has_overhead_line = true
 switch_part = [ "", "" ]
 
-[node name="Rail5" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2216.29, 0, -11.4469 )
+[node name="Rail5" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2216.29, 0, -11.4469 )
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 2, 0, 0 )
@@ -298,8 +298,8 @@ distance_to_parallel_rail = 0.0
 has_overhead_line = true
 switch_part = [ "", "" ]
 
-[node name="Rail6" type="Spatial" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
+[node name="Rail6" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3216.29, 0, -11.4469 )
 script = ExtResource( 10 )
 __meta__ = {
 "chunk_pos": Vector3( 3, 0, 0 )
@@ -328,16 +328,16 @@ distance_to_parallel_rail = 0.0
 has_overhead_line = true
 switch_part = [ "", "" ]
 
-[node name="Buildings" type="Spatial" parent="."]
+[node name="Buildings" type="Node3D" parent="."]
 script = ExtResource( 9 )
 
-[node name="Flora" type="Spatial" parent="."]
+[node name="Flora" type="Node3D" parent="."]
 
-[node name="TrackObjects" type="Spatial" parent="."]
+[node name="TrackObjects" type="Node3D" parent="."]
 
 [node name="Scripting" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="Landscape" type="Spatial" parent="."]
+[node name="Landscape" type="Node3D" parent="."]
 
-[node name="Chunks" type="Spatial" parent="."]
+[node name="Chunks" type="Node3D" parent="."]

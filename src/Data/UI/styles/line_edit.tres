@@ -3,7 +3,7 @@
 [ext_resource path="res://Data/UI/styles/line_edit_read_only.tres" type="StyleBox" id=1]
 [ext_resource path="res://Data/UI/styles/line_edit_normal.tres" type="StyleBox" id=2]
 [ext_resource path="res://Data/UI/styles/line_edit_focus.tres" type="StyleBox" id=3]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=4]
 
 [resource]
 LineEdit/colors/clear_button_color = Color( 0, 0, 0, 1 )

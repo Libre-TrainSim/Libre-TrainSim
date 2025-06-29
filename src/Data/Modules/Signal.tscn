@@ -2,5 +2,5 @@
 
 [ext_resource path="res://Data/Scripts/Signal.gd" type="Script" id=1]
 
-[node name="Signal" type="Spatial" groups=["Signal"]]
+[node name="Signal" type="Node3D" groups=["Signal"]]
 script = ExtResource( 1 )

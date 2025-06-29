@@ -1,8 +1,8 @@
-extends Spatial
+extends Node3D
 
-onready var signal_logic: Node = get_parent()
-onready var world: Node = find_parent("World")
-onready var anim_fsm: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
+@onready var signal_logic: Node = get_parent()
+@onready var world: Node = find_parent("World")
+@onready var anim_fsm: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
 
 func _ready() -> void:
 	# force the signal to be a main signal
@@ -20,18 +20,18 @@ func update_visual_instance(instance: Node) -> void:
 func green() -> void:
 	if signal_logic.speed > 0 and signal_logic.speed <= 60:
 		anim_fsm.travel("Hp2") # Langsamfahrt
-		$formsignal_hp/Armature/Skeleton/upperLightAttachment/Red.visible = false
-		$formsignal_hp/Armature/Skeleton/upperLightAttachment/Green.visible = true
-		$formsignal_hp/Armature/Skeleton/lowerLightAttachment/Orange.visible = true
+		$formsignal_hp/Armature/Skeleton3D/upperLightAttachment/Red.visible = false
+		$formsignal_hp/Armature/Skeleton3D/upperLightAttachment/Green.visible = true
+		$formsignal_hp/Armature/Skeleton3D/lowerLightAttachment/Orange.visible = true
 	else:
 		anim_fsm.travel("Hp1") # Fahrt
-		$formsignal_hp/Armature/Skeleton/upperLightAttachment/Green.visible = true
-		$formsignal_hp/Armature/Skeleton/upperLightAttachment/Red.visible = false
-		$formsignal_hp/Armature/Skeleton/lowerLightAttachment/Orange.visible = false
+		$formsignal_hp/Armature/Skeleton3D/upperLightAttachment/Green.visible = true
+		$formsignal_hp/Armature/Skeleton3D/upperLightAttachment/Red.visible = false
+		$formsignal_hp/Armature/Skeleton3D/lowerLightAttachment/Orange.visible = false
 
 
 func red() -> void:
 	anim_fsm.travel("Hp0") # Halt
-	$formsignal_hp/Armature/Skeleton/upperLightAttachment/Red.visible = true
-	$formsignal_hp/Armature/Skeleton/upperLightAttachment/Green.visible = false
-	$formsignal_hp/Armature/Skeleton/lowerLightAttachment/Orange.visible = false
+	$formsignal_hp/Armature/Skeleton3D/upperLightAttachment/Red.visible = true
+	$formsignal_hp/Armature/Skeleton3D/upperLightAttachment/Green.visible = false
+	$formsignal_hp/Armature/Skeleton3D/lowerLightAttachment/Orange.visible = false

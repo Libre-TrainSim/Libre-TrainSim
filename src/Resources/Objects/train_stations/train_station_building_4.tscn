@@ -7,7 +7,7 @@
 [ext_resource path="res://Resources/Materials/Wall_Grey.tres" type="Material" id=5]
 [ext_resource path="res://Resources/Objects/TrainStationBuilding4.obj" type="ArrayMesh" id=6]
 
-[node name="TrainStationBuilding4" type="MeshInstance"]
+[node name="TrainStationBuilding4" type="MeshInstance3D"]
 mesh = ExtResource( 6 )
 material/0 = ExtResource( 2 )
 material/1 = ExtResource( 5 )

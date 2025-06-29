@@ -1,13 +1,13 @@
-tool
+@tool
 extends VBoxContainer
 
 var base: Control
 var dir_select_dialog: FileDialog
 
-var IMPORTED_RESOURCE_TYPES := ["StreamTexture", "Mesh"]
+var IMPORTED_RESOURCE_TYPES := ["CompressedTexture2D", "Mesh"]
 
 func _on_new_mod_pressed() -> void:
-	var popup = preload("new_mod_popup.tscn").instance()
+	var popup = preload("new_mod_popup.tscn").instantiate()
 	popup.base_control = base
 	base.add_child(popup)
 	popup.popup_centered()
@@ -25,10 +25,10 @@ func _on_export_mod_pressed() -> void:
 	dir_select_dialog = FileDialog.new()
 	dir_select_dialog.resizable = true
 	dir_select_dialog.window_title = "Select Mod to Export"
-	dir_select_dialog.mode = FileDialog.MODE_OPEN_DIR
+	dir_select_dialog.mode = FileDialog.FILE_MODE_OPEN_DIR
 	dir_select_dialog.access = FileDialog.ACCESS_RESOURCES
 	dir_select_dialog.current_dir = "res://Mods"
-	dir_select_dialog.connect("dir_selected", self, "_on_export_dir_selected")
+	dir_select_dialog.connect("dir_selected", Callable(self, "_on_export_dir_selected"))
 	base.add_child(dir_select_dialog)
 	dir_select_dialog.popup_centered_ratio()
 
@@ -39,7 +39,7 @@ func _on_export_dir_selected(dir: String) -> void:
 	var mod_name = dir.get_file()
 	var mod_path = "user://addons/".plus_file(mod_name)
 
-	var directory = Directory.new()
+	var directory = DirAccess.new()
 	directory.open("user://")
 	directory.make_dir_recursive(mod_path)
 	directory.change_dir(mod_path)
@@ -84,7 +84,7 @@ func _on_export_dir_selected(dir: String) -> void:
 func _get_imported_paths(file):
 	var cfg = ConfigFile.new()
 	if cfg.load(file) != OK:
-		Logger.err("cannot open .import file", self)
+		Logger.err("cannot open super.import file", self)
 	var type = cfg.get_value("remap", "type", "")
 
 	if type in IMPORTED_RESOURCE_TYPES:
@@ -94,9 +94,9 @@ func _get_imported_paths(file):
 
 func get_files_in_directory(path: String) -> Array:
 	var files = []
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	dir.open(path)
-	dir.list_dir_begin(true, true)
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name = dir.get_next()
 	while file_name != "":
 		if dir.current_is_dir():

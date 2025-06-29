@@ -1,17 +1,17 @@
-extends Spatial
+extends Node3D
 
 var player: LTSPlayer
-onready var wagon: Spatial = get_parent()
+@onready var wagon: Node3D = get_parent()
 
-export (AudioStream) var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
-export (AudioStream) var acceleration_1: AudioStream = preload("res://Resources/Sounds/Acceleration5.ogg")
-export (AudioStream) var acceleration_2: AudioStream = preload("res://Resources/Sounds/Acceleration6.ogg")
-export (AudioStream) var acceleration_transition: AudioStream = preload("res://Resources/Sounds/AccelerationTransition2.ogg")
+@export (AudioStream) var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
+@export (AudioStream) var acceleration_1: AudioStream = preload("res://Resources/Sounds/Acceleration5.ogg")
+@export (AudioStream) var acceleration_2: AudioStream = preload("res://Resources/Sounds/Acceleration6.ogg")
+@export (AudioStream) var acceleration_transition: AudioStream = preload("res://Resources/Sounds/AccelerationTransition2.ogg")
 
-export (float) var acceleration_transititon_at_speed: float = 10
-export (float) var acceleration_transition_length_in_ms: float = 1200
-export (float) var acceleration_transition_1_delta_length_in_ms: float = 400
-export (float) var acceleration_transition_2_delta_length_in_ms: float = 400
+@export (float) var acceleration_transititon_at_speed: float = 10
+@export (float) var acceleration_transition_length_in_ms: float = 1200
+@export (float) var acceleration_transition_1_delta_length_in_ms: float = 400
+@export (float) var acceleration_transition_2_delta_length_in_ms: float = 400
 
 var acceleration_sound_index = 1 # 0: Transistion from 1 to 2. 1: accleration1. 2: acceleration2
 
@@ -21,9 +21,9 @@ func _ready() -> void:
 	$Acceleration2.stream = acceleration_2
 	$AccelerationTransition.stream = acceleration_transition
 
-	$Idle.unit_db = -50
-	$Acceleration1.unit_db = -50
-	$Acceleration2.unit_db = -50
+	$Idle.volume_db = -50
+	$Acceleration1.volume_db = -50
+	$Acceleration2.volume_db = -50
 
 	$AccelerationTransition.stream.loop = false
 
@@ -39,9 +39,9 @@ func _process(delta) -> void:
 
 	## Idle Engine:
 	if player.engine:
-		$Idle.unit_db = lerp(0, $Idle.unit_db, delta*2)
+		$Idle.volume_db = lerp(0, $Idle.volume_db, delta*2)
 	else:
-		$Idle.unit_db = lerp(-50, $Idle.unit_db, delta*2)
+		$Idle.volume_db = lerp(-50, $Idle.volume_db, delta*2)
 
 	## Accleration
 	### Main Volume of accleration
@@ -64,26 +64,26 @@ func _process(delta) -> void:
 
 	### Acceleration Mixing:
 	if acceleration_sound_index == 1:
-		$Acceleration1.unit_db = lerp(0, $Acceleration1.unit_db, delta*2)
-		$Acceleration2.unit_db = lerp(-50, $Acceleration2.unit_db, delta*2)
+		$Acceleration1.volume_db = lerp(0, $Acceleration1.volume_db, delta*2)
+		$Acceleration2.volume_db = lerp(-50, $Acceleration2.volume_db, delta*2)
 	if acceleration_sound_index == 2:
-		$Acceleration1.unit_db = lerp(-50, $Acceleration1.unit_db, delta*2)
-		$Acceleration2.unit_db = lerp(0, $Acceleration2.unit_db, delta*2)
+		$Acceleration1.volume_db = lerp(-50, $Acceleration1.volume_db, delta*2)
+		$Acceleration2.volume_db = lerp(0, $Acceleration2.volume_db, delta*2)
 	if acceleration_sound_index == 0: # Transistion from 1 to 2:
 		if acceleration_timer == 0.0:
 			$AccelerationTransition.play(0)
 		if acceleration_timer > acceleration_transition_1_delta_length_in_ms/1000.0: # Set acceleration 1 down
-			$Acceleration1.unit_db = lerp(-50, $Acceleration1.unit_db, delta*4)
-			$Acceleration2.unit_db = lerp(-50, $Acceleration2.unit_db, delta*4) # just to be safe, that this is off. (normally that should be the case)
+			$Acceleration1.volume_db = lerp(-50, $Acceleration1.volume_db, delta*4)
+			$Acceleration2.volume_db = lerp(-50, $Acceleration2.volume_db, delta*4) # just to be safe, that this is off. (normally that should be the case)
 		if acceleration_timer > acceleration_transition_length_in_ms/1000.0 - acceleration_transition_2_delta_length_in_ms/1000.0: # Set acceleration 2 uo
-			$Acceleration2.unit_db = lerp(0, $Acceleration2.unit_db, delta*4)
+			$Acceleration2.volume_db = lerp(0, $Acceleration2.volume_db, delta*4)
 		if acceleration_timer > acceleration_transition_length_in_ms/1000.0 + acceleration_transition_2_delta_length_in_ms/1000.0:
 			acceleration_sound_index = 2
 		acceleration_timer += delta
 
-	$Acceleration1.unit_db = min(lerp(sollAcceleration, $Acceleration1.unit_db, delta*4), $Acceleration1.unit_db)
-	$Acceleration2.unit_db = min(sollAcceleration, $Acceleration2.unit_db)
-	$AccelerationTransition.unit_db = sollAcceleration
+	$Acceleration1.volume_db = min(lerp(sollAcceleration, $Acceleration1.volume_db, delta*4), $Acceleration1.volume_db)
+	$Acceleration2.volume_db = min(sollAcceleration, $Acceleration2.volume_db)
+	$AccelerationTransition.volume_db = sollAcceleration
 
 	### Pitching:
 	$Acceleration2.pitch_scale = 1.0 + (Math.speed_to_kmh(player.speed)-10.0)/300.0

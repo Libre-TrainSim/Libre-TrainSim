@@ -11,37 +11,37 @@ signal user_pressed_save(data) # array of strings (equal to entry_names)
 signal user_selected_entry(entry_name) # string
 signal user_pressed_action(entry_names) # array of strings (equal to entry_names)
 
-export (String) var _id = "_random"
+@export (String) var _id = "_random"
 var id
-export (String) var entry_duplicate_text = "_duplicate"
+@export (String) var entry_duplicate_text = "_duplicate"
 
-export (bool) var only_unique_entries_allowed = true
-export (bool) var multi_selection_allowed = true
-export (String) var custom_font_path = ""
-export (bool) var enable_add_button = true
-export (bool) var enable_remove_button = true
-export (bool) var display_remove_confirmation = true
-export (bool) var enable_rename_button = false
-export (bool) var enable_duplicate_button = false
-export (bool) var enable_copy_button = false
-export (bool) var enable_paste_button = false
-export (bool) var enable_save_button = false
-export (bool) var enable_action_button = false
+@export (bool) var only_unique_entries_allowed = true
+@export (bool) var multi_selection_allowed = true
+@export (String) var custom_font_path = ""
+@export (bool) var enable_add_button = true
+@export (bool) var enable_remove_button = true
+@export (bool) var display_remove_confirmation = true
+@export (bool) var enable_rename_button = false
+@export (bool) var enable_duplicate_button = false
+@export (bool) var enable_copy_button = false
+@export (bool) var enable_paste_button = false
+@export (bool) var enable_save_button = false
+@export (bool) var enable_action_button = false
 
-export (String) var add_button_text = "Add"
-export (String) var remove_button_text = "Remove"
-export (String) var remove_confirmation_text = "Do you really want to remove these entries?"
-export (String) var cancel_text = "Cancel"
-export (String) var rename_button_text = "Rename"
-export (String) var duplicate_button_text = "Duplicate"
-export (String) var copy_button_text = "Copy"
-export (String) var paste_button_text = "Paste"
-export (String) var save_button_text = "Save"
-export (String) var action_button_text = "Custom Action"
+@export (String) var add_button_text = "Add"
+@export (String) var remove_button_text = "Remove"
+@export (String) var remove_confirmation_text = "Do you really want to remove these entries?"
+@export (String) var cancel_text = "Cancel"
+@export (String) var rename_button_text = "Rename"
+@export (String) var duplicate_button_text = "Duplicate"
+@export (String) var copy_button_text = "Copy"
+@export (String) var paste_button_text = "Paste"
+@export (String) var save_button_text = "Save"
+@export (String) var action_button_text = "Custom Action"
 
-export (bool) var update setget update_visible_buttons
+@export (bool) var update : set = update_visible_buttons
 
-onready var confirmation_dialog: Popup = $ConfirmationDialog
+@onready var confirmation_dialog: Popup = $ConfirmationDialog
 
 
 func get_data():
@@ -90,8 +90,8 @@ func get_size():
 
 
 func show_error(message := "This action is not allowed!"):
-	$PopupDialog/Label.text = message
-	$PopupDialog.popup_centered_minsize()
+	$Popup/Label.text = message
+	$Popup.popup_centered_clamped()
 
 
 ## Internal Code ###############################################################
@@ -191,23 +191,23 @@ func _update_fonts():
 	if not jEssentials.does_path_exist(custom_font_path):
 		return
 	var font = load(custom_font_path)
-	$VBoxContainer/HBoxContainer/LineEdit.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Add.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Remove.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Rename.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Duplicate.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Copy.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Paste.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Save.add_font_override("font", font)
-	$VBoxContainer/HBoxContainer/Action.add_font_override("font", font)
+	$VBoxContainer/HBoxContainer/LineEdit.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Add.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Remove.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Rename.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Duplicate.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Copy.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Paste.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Save.add_theme_font_override("font", font)
+	$VBoxContainer/HBoxContainer/Action.add_theme_font_override("font", font)
 
-	$VBoxContainer/ItemList.add_font_override("font", font)
-	$PopupDialog/Label.add_font_override("font", font)
-	$PopupDialog/Okay.add_font_override("font", font)
+	$VBoxContainer/ItemList.add_theme_font_override("font", font)
+	$Popup/Label.add_theme_font_override("font", font)
+	$Popup/Okay.add_theme_font_override("font", font)
 
-	$ConfirmationDialog/Label.add_font_override("font", font)
-	$ConfirmationDialog/Remove.add_font_override("font", font)
-	$ConfirmationDialog/Cancel.add_font_override("font", font)
+	$ConfirmationDialog/Label.add_theme_font_override("font", font)
+	$ConfirmationDialog/Remove.add_theme_font_override("font", font)
+	$ConfirmationDialog/Cancel.add_theme_font_override("font", font)
 
 
 ## Button Signals ##############################################################
@@ -236,7 +236,7 @@ func _on_Remove_pressed():
 		$ConfirmationDialog/Label.text = tr(remove_confirmation_text)
 		for index in item_list.get_selected_items():
 			$ConfirmationDialog/Label.text += "\n\t" + item_list.get_item_text(index)
-		confirmation_dialog.popup_centered_minsize()
+		confirmation_dialog.popup_centered_clamped()
 	else:
 		_on_RemoveConfirmation_Remove_pressed()
 
@@ -288,12 +288,12 @@ func _on_Copy_pressed(): # stores the current entry_names into the global buffer
 	var source_entry_ids = item_list.get_selected_items()
 	for entry_id in source_entry_ids:
 		source_entry_names.append(item_list.get_item_text(entry_id))
-	OS.clipboard = var2str(source_entry_names)
+	OS.clipboard = var_to_str(source_entry_names)
 	emit_signal("user_copied_entries", source_entry_names)
 
 
 func _on_Paste_pressed(): # Adds entry_names from global buffer into jList.
-	var source_entry_names = str2var(OS.clipboard)
+	var source_entry_names = str_to_var(OS.clipboard)
 	if source_entry_names == null:
 		return
 	var pasted_entry_names = []
@@ -321,7 +321,7 @@ func _on_ItemList_item_activated(index):
 
 
 func _on_PopupDiaglog_Okay_pressed():
-	$PopupDialog.hide()
+	$Popup.hide()
 
 
 func _on_ItemList_multi_selected(index, selected):

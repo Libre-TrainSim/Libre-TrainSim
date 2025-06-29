@@ -12,13 +12,13 @@ func _ready():
 	var pzb_module = player.get_node("SafetySystems/PZBModule")
 	if pzb_module == null:
 		return
-	pzb_module.connect("pzb_changed", self, "_on_pzb_changed")
+	pzb_module.connect("pzb_changed", Callable(self, "_on_pzb_changed"))
 
 	blink_timer = Timer.new()
 	blink_timer.autostart = false
 	blink_timer.one_shot = false
 	blink_timer.wait_time = 0.5
-	blink_timer.connect("timeout", self, "blink")
+	blink_timer.connect("timeout", Callable(self, "blink"))
 	self.add_child(blink_timer)
 
 	deactivate_pzb_type()

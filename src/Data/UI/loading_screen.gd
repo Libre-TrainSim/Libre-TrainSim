@@ -4,10 +4,10 @@ extends Control
 const MAX_LOAD_TIME_STEP = 1.0
 
 
-export(Array, String) var descriptions = []
+@export var descriptions = [] # (Array, String)
 
 
-var loader: ResourceInteractiveLoader
+var loader: ResourceLoader
 var resources := []
 var scenes := []
 var instance_thread := Thread.new()
@@ -24,7 +24,7 @@ func _ready() -> void:
 
 
 func load_main_menu():
-	loader = ResourceLoader.load_interactive("res://Data/UI/main_menu.tscn")
+	loader = ResourceLoader.load_threaded_request("res://Data/UI/main_menu.tscn")
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
@@ -33,12 +33,12 @@ func load_main_menu():
 	$ProgressBar/Bar.max_value = loader.get_stage_count()
 	$ProgressBar/Bar.value = 0
 	$ProgressBar/Description.lines_skipped = 0
-	$Screenshot.texture = load("res://screenshot.png") as Texture
+	$Screenshot.texture = load("res://screenshot.png") as Texture2D
 	show()
 
 
-func load_world(world: String, bg_img: Texture, start_context: int) -> void:
-	loader = ResourceLoader.load_interactive(world)
+func load_world(world: String, bg_img: Texture2D, start_context: int) -> void:
+	loader = ResourceLoader.load_threaded_request(world)
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
@@ -50,8 +50,8 @@ func load_world(world: String, bg_img: Texture, start_context: int) -> void:
 	show()
 
 
-func load_editor(world_path: String, bg_img: Texture) -> void:
-	loader = ResourceLoader.load_interactive("res://Editor/Editor.tscn")
+func load_editor(world_path: String, bg_img: Texture2D) -> void:
+	loader = ResourceLoader.load_threaded_request("res://Editor/Editor.tscn")
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
@@ -72,15 +72,15 @@ func _process(_delta: float) -> void:
 		thread_done_mutex.unlock()
 		return
 
-	var t = OS.get_ticks_msec()
+	var t = Time.get_ticks_msec()
 	# use "time_max" to control for how long we block this thread
-	while OS.get_ticks_msec() < t + MAX_LOAD_TIME_STEP:
+	while Time.get_ticks_msec() < t + MAX_LOAD_TIME_STEP:
 		var err = loader.poll()
 		if err == ERR_FILE_EOF: # Finished loading.
 			update_progress_bar()
 			resources.push_back(loader.get_resource())
 			loader = null
-			if instance_thread.start(self, "_instanciate_scenes") != OK:
+			if instance_thread.start(Callable(self, "_instanciate_scenes")) != OK:
 				Logger.warn("Can't create instanciation thread. Loading in main thread", self)
 				_instanciate_scenes()
 				_clean_up_and_switch()
@@ -93,7 +93,7 @@ func _process(_delta: float) -> void:
 			Logger.err("An error occured during loading! (%s)" % err, self);
 			loader = null
 			var _unused = OS.shell_open(ProjectSettings.globalize_path("user://logs/"))
-			_unused = get_tree().change_scene("res://Data/UI/main_menu.tscn")
+			_unused = get_tree().change_scene_to_file("res://Data/UI/main_menu.tscn")
 			break
 
 
@@ -109,7 +109,7 @@ func _clean_up_and_switch() -> void:
 func _instanciate_scenes(_args = null) -> void:
 	for resource in resources:
 		if resource is PackedScene:
-			scenes.push_back(resource.instance())
+			scenes.push_back(resource.instantiate())
 	thread_done_mutex.lock()
 	thread_done = true
 	thread_done_mutex.unlock()
@@ -126,7 +126,7 @@ func _add_to_tree() -> void:
 		var world = scenes[0]
 		var gsc := game_start_context
 		# Skip one frame so that world.player is initialized
-		yield(get_tree(), "idle_frame")
+		await get_tree().idle_frame
 		world.player.game_start_context = gsc
 
 

@@ -2,7 +2,7 @@ extends Control
 
 var save_path := "user://config.cfg"
 
-onready var create_menu: BoxContainer = $CreateMenu
+@onready var create_menu: BoxContainer = $CreateMenu
 
 
 func _ready():
@@ -11,9 +11,9 @@ func _ready():
 
 	$Version.text = "Version: %s" % ProjectSettings["application/version/label"]
 	if ProjectSettings["application/version/broken"]:
-		$Version.add_color_override("font_color", Color.webmaroon)
+		$Version.add_theme_color_override("font_color", Color.WEB_MAROON)
 	elif ProjectSettings["application/version/dirty"]:
-		$Version.add_color_override("font_color", Color.yellow)
+		$Version.add_theme_color_override("font_color", Color.YELLOW)
 	var openTimes = jSaveManager.get_value("open_times", 0)
 	openTimes += 1
 	jSaveManager.save_value("open_times", openTimes)
@@ -32,18 +32,18 @@ func _ready():
 
 	# Signal connections for UI focus
 
-	create_menu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed")
+	create_menu.connect("visibility_changed", Callable(self, "_on_CreateMenu_visibility_changed"))
 
-	$Feedback.connect("popup_hide", $Buttons/Play, "grab_focus")
+	$Feedback.connect("popup_hide", Callable($Buttons/Play, "grab_focus"))
 
-	$Play.connect("hide", $Buttons/Play, "grab_focus")
-	$Content.connect("hide", $Buttons/Content, "grab_focus")
-	create_menu.connect("hide", $Buttons/Create, "grab_focus")
-	jSettings.get_node("JSettings").connect("hide", $Buttons/Settings, "grab_focus")
-	$About.connect("hide", $Buttons/About, "grab_focus")
+	$Play.connect("hide", Callable($Buttons/Play, "grab_focus"))
+	$Content.connect("hide", Callable($Buttons/Content, "grab_focus"))
+	create_menu.connect("hide", Callable($Buttons/Create, "grab_focus"))
+	jSettings.get_node("JSettings").connect("hide", Callable($Buttons/Settings, "grab_focus"))
+	$About.connect("hide", Callable($Buttons/About, "grab_focus"))
 
-	$TrackEditorSelection.connect("hide", $CreateMenu/TrackEditor, "grab_focus")
-	$ScenarioEditorSelection.connect("hide", $CreateMenu/ScenarioEditor, "grab_focus")
+	$TrackEditorSelection.connect("hide", Callable($CreateMenu/TrackEditor, "grab_focus"))
+	$ScenarioEditorSelection.connect("hide", Callable($CreateMenu/ScenarioEditor, "grab_focus"))
 
 
 func _unhandled_input(event: InputEvent) -> void:

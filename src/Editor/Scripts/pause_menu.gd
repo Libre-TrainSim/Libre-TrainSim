@@ -5,7 +5,7 @@ signal save_requested
 
 func show() -> void:
 	$VBoxContainer/Back.grab_focus()
-	.show()
+	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:

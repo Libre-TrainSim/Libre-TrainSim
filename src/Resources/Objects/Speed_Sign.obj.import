@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh"
+uid="uid://camliimg4cb2t"
+path="res://.godot/imported/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh"
 
 [deps]
 
-files=[ "res://.import/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh" ]
+files=["res://.godot/imported/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh"]
 
 source_file="res://Resources/Objects/Speed_Sign.obj"
-dest_files=[ "res://.import/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh", "res://.import/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh" ]
+dest_files=["res://.godot/imported/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh", "res://.godot/imported/Speed_Sign.obj-2bf694347492632a14774ba2f495f170.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

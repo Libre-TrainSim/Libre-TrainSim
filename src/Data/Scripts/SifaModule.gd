@@ -7,7 +7,7 @@ var was_sifa_reset: bool = false
 # this is a signal, so different trains can implement it differently
 signal sifa_visual_hint(is_turned_on)
 
-onready var player: LTSPlayer = find_parent("Player")
+@onready var player: LTSPlayer = find_parent("Player")
 
 
 func _ready() -> void:
@@ -60,7 +60,7 @@ func _on_SifaTimer_timeout() -> void:
 
 	stage = 1
 
-	yield( $WarningTimer, "timeout" )
+	await $WarningTimer.timeout
 	if was_sifa_reset:
 		return
 
@@ -69,7 +69,7 @@ func _on_SifaTimer_timeout() -> void:
 	$SifaSound.play()
 	$WarningTimer.start()
 
-	yield( $WarningTimer, "timeout" )
+	await $WarningTimer.timeout
 	if was_sifa_reset:
 		return
 

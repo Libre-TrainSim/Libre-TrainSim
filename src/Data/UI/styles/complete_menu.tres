@@ -1,9 +1,9 @@
 [gd_resource type="Theme" load_steps=30 format=2]
 
 [ext_resource path="res://Data/UI/styles/line_edit_read_only.tres" type="StyleBox" id=1]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Data/UI/check_button/on.png" type="Texture" id=4]
+[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=2]
+[ext_resource path="res://Data/Fonts/FontIngame.tres" type="FontFile" id=3]
+[ext_resource path="res://Data/UI/check_button/on.png" type="Texture2D" id=4]
 [ext_resource path="res://Data/UI/styles/line_edit_normal.tres" type="StyleBox" id=5]
 [ext_resource path="res://Data/UI/styles/button_center_focus.tres" type="StyleBox" id=6]
 [ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=7]
@@ -14,7 +14,7 @@
 [ext_resource path="res://Data/UI/styles/panel_section.tres" type="StyleBox" id=12]
 [ext_resource path="res://Data/UI/styles/button_right_pressed.tres" type="StyleBox" id=13]
 [ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=14]
-[ext_resource path="res://Data/UI/check_button/off.png" type="Texture" id=15]
+[ext_resource path="res://Data/UI/check_button/off.png" type="Texture2D" id=15]
 [ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=16]
 [ext_resource path="res://Data/UI/styles/button_center_disabled.tres" type="StyleBox" id=17]
 [ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=18]
@@ -170,12 +170,12 @@ TabContainer/styles/panel = ExtResource( 12 )
 TabContainer/styles/tab_bg = ExtResource( 11 )
 TabContainer/styles/tab_disabled = ExtResource( 17 )
 TabContainer/styles/tab_fg = ExtResource( 6 )
-WindowDialog/colors/title_color = Color( 0.913725, 0.94902, 0.92549, 1 )
-WindowDialog/constants/close_h_ofs = 32
-WindowDialog/constants/close_v_ofs = 18
-WindowDialog/constants/scaleborder_size = 0
-WindowDialog/constants/title_height = 19
-WindowDialog/fonts/title_font = ExtResource( 2 )
-WindowDialog/icons/close = null
-WindowDialog/icons/close_highlight = null
-WindowDialog/styles/panel = ExtResource( 24 )
+Window/colors/title_color = Color( 0.913725, 0.94902, 0.92549, 1 )
+Window/constants/close_h_ofs = 32
+Window/constants/close_v_ofs = 18
+Window/constants/scaleborder_size = 0
+Window/constants/title_height = 19
+Window/fonts/title_font = ExtResource( 2 )
+Window/icons/close = null
+Window/icons/close_highlight = null
+Window/styles/panel = ExtResource( 24 )

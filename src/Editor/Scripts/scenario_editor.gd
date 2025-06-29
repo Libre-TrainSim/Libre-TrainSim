@@ -8,7 +8,7 @@ var content: ModContentDefinition
 
 var scenario_info: TrackScenario = null
 
-onready var pause_menu: Control = $CanvasLayer/Pause
+@onready var pause_menu: Control = $CanvasLayer/Pause
 
 func _ready():
 	# For now we retrieve the variables from Root. Later these should be filled by the LoadingScreenManager.
@@ -17,14 +17,14 @@ func _ready():
 	current_track_path = Root.current_editor_track_path
 	var editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 	content = load(editor_directory.plus_file(current_track_name).plus_file("content.tres")) as ModContentDefinition
-	world = load(current_track_path.plus_file(current_track_name+".tscn")).instance()
+	world = load(current_track_path.plus_file(current_track_name+".tscn")).instantiate()
 	world.passive = true
 	add_child(world)
 	$ScenarioMap.init(world)
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")
 
-	pause_menu.connect("visibility_changed", self, "_on_Pause_visibility_changed")
+	pause_menu.connect("visibility_changed", Callable(self, "_on_Pause_visibility_changed"))
 
 
 func _enter_tree() -> void:
@@ -53,14 +53,14 @@ func _on_Message_Ok_pressed():
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $CanvasLayer/Message.visible:
 		$CanvasLayer/Message.hide()
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
 	if pause_menu.visible and (event.is_action_released("pause") or event.is_action_released("ui_cancel")):
 		pause_menu.visible = false
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 	elif event.is_action_released("pause"):
 		pause_menu.visible = true
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
 
 func _on_Pause_Back_pressed():

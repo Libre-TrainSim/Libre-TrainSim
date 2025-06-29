@@ -1,14 +1,14 @@
 extends Node
 
-onready var signal_logic: Node = get_parent()
-onready var world: Node = find_parent("World")
+@onready var signal_logic: Node = get_parent()
+@onready var world: Node = find_parent("World")
 
 var blink_timer: Timer
 
 func _ready() -> void:
 	blink_timer = Timer.new()
 	blink_timer.wait_time = 0.5 # blink twice a second
-	var _unused = blink_timer.connect("timeout", self, "blink")
+	var _unused = blink_timer.connect("timeout", Callable(self, "blink"))
 	self.add_child(blink_timer)
 
 	match signal_logic.signal_type:

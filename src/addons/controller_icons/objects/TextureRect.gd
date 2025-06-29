@@ -1,13 +1,13 @@
 extends TextureRect
 class_name ControllerTextureRect
 
-export(String) var path : String = "" setget set_path
-export(int, "Both", "Keyboard/Mouse", "Controller") var show_only : int = 0 setget set_show_only
-export(int, "None", "Keyboard/Mouse", "Controller") var force_type : int = 0 setget set_force_type
-export(int) var max_width : int = 40 setget set_max_width
+@export var path: String : String = "": set = set_path
+@export var show_only : int = 0: set = set_show_only
+@export var force_type : int = 0: set = set_force_type
+@export var max_width: int : int = 40: set = set_max_width
 
 func _ready():
-	ControllerIcons.connect("input_type_changed", self, "_on_input_type_changed")
+	ControllerIcons.connect("input_type_changed", Callable(self, "_on_input_type_changed"))
 	set_path(path)
 	set_max_width(max_width)
 
@@ -43,8 +43,8 @@ func set_max_width(_max_width: int):
 			expand = false
 		else:
 			expand = true
-			rect_min_size.x = max_width
+			custom_minimum_size.x = max_width
 			if texture:
-				rect_min_size.y = texture.get_height() * max_width / texture.get_width()
+				custom_minimum_size.y = texture.get_height() * max_width / texture.get_width()
 			else:
-				rect_min_size.y = rect_min_size.x
+				custom_minimum_size.y = custom_minimum_size.x

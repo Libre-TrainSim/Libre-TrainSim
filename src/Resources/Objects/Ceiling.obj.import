@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh"
+uid="uid://b36y808ginfj6"
+path="res://.godot/imported/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh"
 
 [deps]
 
-files=[ "res://.import/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh" ]
+files=["res://.godot/imported/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh"]
 
 source_file="res://Resources/Objects/Ceiling.obj"
-dest_files=[ "res://.import/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh", "res://.import/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh" ]
+dest_files=["res://.godot/imported/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh", "res://.godot/imported/Ceiling.obj-e906622b212238b402a17664eaec60de.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

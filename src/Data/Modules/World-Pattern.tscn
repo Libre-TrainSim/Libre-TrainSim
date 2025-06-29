@@ -6,26 +6,26 @@
 [ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=7]
 [ext_resource path="res://Data/Scripts/BuildingsNode.gd" type="Script" id=9]
 
-[node name="World" type="Spatial"]
+[node name="World" type="Node3D"]
 script = ExtResource( 1 )
 __meta__ = {
 "chunk_version": 2
 }
 
-[node name="DirectionalLight" parent="." instance=ExtResource( 2 )]
+[node name="DirectionalLight3D" parent="." instance=ExtResource( 2 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 7 )
 
-[node name="Players" type="Spatial" parent="."]
+[node name="Players" type="Node3D" parent="."]
 
-[node name="Signals" type="Spatial" parent="."]
+[node name="Signals" type="Node3D" parent="."]
 
-[node name="Rails" type="Spatial" parent="."]
+[node name="Rails" type="Node3D" parent="."]
 
 [node name="Rail" parent="Rails" instance=ExtResource( 3 )]
 
-[node name="Buildings" type="Spatial" parent="."]
+[node name="Buildings" type="Node3D" parent="."]
 script = ExtResource( 9 )
 
-[node name="Chunks" type="Spatial" parent="."]
+[node name="Chunks" type="Node3D" parent="."]

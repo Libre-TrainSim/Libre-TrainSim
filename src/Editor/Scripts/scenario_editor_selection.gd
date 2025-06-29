@@ -4,12 +4,12 @@ var selected_track: String = ""
 
 
 func _ready() -> void:
-	$ScenarioList.connect("visibility_changed", self, "_on_ScenarioList_visibility_changed")
+	$ScenarioList.connect("visibility_changed", Callable(self, "_on_ScenarioList_visibility_changed"))
 
 
 func show() -> void:
 	$TrackList/ItemList.grab_focus()
-	.show()
+	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -98,7 +98,7 @@ func _on_scenarioList_user_pressed_action(entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
 	var entry_name = entry_names[0]
 	Root.current_scenario = scenarios_folder.plus_file(entry_name + ".tres")
-	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+	get_tree().change_scene_to_packed(load("res://Editor/Modules/scenario_editor.tscn"))
 
 
 func _on_ScenarioList_visibility_changed() -> void:
@@ -115,7 +115,7 @@ func _on_ItemList_item_activated(_index):
 
 func _on_scenarioList_user_removed_entries(entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	dir.remove(scenarios_folder.plus_file(entry_names[0] + ".tres"))
 
 

@@ -1,11 +1,11 @@
 extends Node2D
 
-export var speed_rotation_100kmh: float
-export var command_rotation_100percent: float
+@export var speed_rotation_100kmh: float
+@export var command_rotation_100percent: float
 
-onready var world: Node = find_parent("World")
-onready var speed_rotation_0kmh: float = $SpeedPointer.rotation
-onready var command_rotation_0percent: float = $CommandPointer.rotation
+@onready var world: Node = find_parent("World")
+@onready var speed_rotation_0kmh: float = $SpeedPointer.rotation
+@onready var command_rotation_0percent: float = $CommandPointer.rotation
 
 var speed_rotation_per_kmh: float
 var command_rotation_per_percent: float
@@ -16,20 +16,20 @@ var blink_status := false
 
 func _ready():
 	# convert export vars to radians
-	speed_rotation_100kmh = deg2rad(speed_rotation_100kmh)
-	command_rotation_100percent = deg2rad(command_rotation_100percent)
+	speed_rotation_100kmh = deg_to_rad(speed_rotation_100kmh)
+	command_rotation_100percent = deg_to_rad(command_rotation_100percent)
 
 	# calculate step sizes
 	speed_rotation_per_kmh = (speed_rotation_100kmh - speed_rotation_0kmh)/100.0
 	command_rotation_per_percent = (command_rotation_100percent - command_rotation_0percent)
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
 
-	$BlinkTimer.connect("timeout", self, "_toggle_blink_status")
+	$BlinkTimer.connect("timeout", Callable(self, "_toggle_blink_status"))
 
 	# SIFA
 	var player = find_parent("Player")
 	if is_instance_valid(player):
-		player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint")
+		player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", Callable(self, "_on_sifa_visual_hint"))
 	$Info/Sifa.visible = false
 
 

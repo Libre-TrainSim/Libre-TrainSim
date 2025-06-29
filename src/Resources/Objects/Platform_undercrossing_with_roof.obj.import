@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh"
+uid="uid://cfmke3fcg6qwe"
+path="res://.godot/imported/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh"
 
 [deps]
 
-files=[ "res://.import/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh" ]
+files=["res://.godot/imported/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh"]
 
 source_file="res://Resources/Objects/Platform_undercrossing_with_roof.obj"
-dest_files=[ "res://.import/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh", "res://.import/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh" ]
+dest_files=["res://.godot/imported/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh", "res://.godot/imported/Platform_undercrossing_with_roof.obj-7f4d530dc517a395d0a5c82603956e4b.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

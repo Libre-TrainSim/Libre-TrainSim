@@ -1,37 +1,37 @@
 class_name TrackObject
-extends MultiMeshInstance
+extends MultiMeshInstance3D
 
-export (String) var description: String = ""
-export (String) var attached_rail: String
-export (float) var on_rail_position: float
-export (float) var length: float
+@export (String) var description: String = ""
+@export (String) var attached_rail: String
+@export (float) var on_rail_position: float
+@export (float) var length: float
 
-export (Mesh) var mesh: Mesh = null
-export (Array, Material) var materials := []
-export (PlatformSide.TypeHint) var sides: int = 0 # 0: No Side, 1: Left, 2: Right 4: Both
-export (float) var spawnRate: float = 1
-export (int) var rows: int
-export (float) var distanceLength: float = 10
-export (float) var distanceRows: float
-export (float) var shift: float
-export (float) var height: float
-export (float) var rotationObjects: float = 0
-export (bool) var randomLocation: bool
-export (float) var randomLocationFactor: float = 0.3
-export (bool) var randomRotation: bool
-export (bool) var randomScale: bool
-export (float) var randomScaleFactor: float = 0.2
-export (bool) var placeLast: bool = false
-export (bool) var applySlopeRotation: bool = false
+@export (Mesh) var mesh: Mesh = null
+@export (Array, Material) var materials := []
+@export (PlatformSide.TypeHint) var sides: int = 0 # 0: No Side, 1: Left, 2: Right 4: Both
+@export (float) var spawnRate: float = 1
+@export (int) var rows: int
+@export (float) var distanceLength: float = 10
+@export (float) var distanceRows: float
+@export (float) var shift: float
+@export (float) var height: float
+@export (float) var rotationObjects: float = 0
+@export (bool) var randomLocation: bool
+@export (float) var randomLocationFactor: float = 0.3
+@export (bool) var randomRotation: bool
+@export (bool) var randomScale: bool
+@export (float) var randomScaleFactor: float = 0.2
+@export (bool) var placeLast: bool = false
+@export (bool) var applySlopeRotation: bool = false
 
-export (int) var randomSeed: int = 0
+@export (int) var randomSeed: int = 0
 
-export (bool) var wholeRail: bool = false
+@export (bool) var wholeRail: bool = false
 
 var material_updated: bool = false
 
-onready var world: Node = find_parent("World")
-var rail_node: Spatial
+@onready var world: Node = find_parent("World")
+var rail_node: Node3D
 var updated: bool = false
 
 
@@ -84,7 +84,7 @@ func set_data(d: Dictionary, convert_deg_rad = false) -> void:
 	mesh = d.mesh
 	materials = d.materials
 	if convert_deg_rad:
-		rotationObjects = deg2rad(d.rotationObjects)
+		rotationObjects = deg_to_rad(d.rotationObjects)
 	else:
 		rotationObjects = d.rotationObjects
 	placeLast = d.placeLast
@@ -95,7 +95,7 @@ func set_data(d: Dictionary, convert_deg_rad = false) -> void:
 	make_mesh_unique()  # update multimesh
 
 
-func attach_to_rail(_rail_node: Spatial) -> void:
+func attach_to_rail(_rail_node: Node3D) -> void:
 	rail_node = _rail_node
 	if not rail_node.track_objects.has(self):
 		rail_node.track_objects.append(self)
@@ -113,7 +113,7 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	make_mesh_unique()
-	Root.connect("world_origin_shifted", self, "update")
+	Root.connect("world_origin_shifted", Callable(self, "update"))
 
 
 func make_mesh_unique():
@@ -142,7 +142,7 @@ func update(_delta := Vector3()) -> void:
 		on_rail_position = 0
 		length = rail_node.length
 
-	translation = rail_node.get_pos_at_distance(on_rail_position)
+	position = rail_node.get_pos_at_distance(on_rail_position)
 
 	var straightCount: int = int(length / distanceLength)
 	if placeLast:
@@ -171,15 +171,15 @@ func update_multimesh_positions() -> void:
 	for _a in range(straightCount):
 		for b in range(rows):
 			if sides == 1 or sides == 3: ## Left Side
-				if rand_range(0,1) < spawnRate:
-					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, -(shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+				if randf_range(0,1) < spawnRate:
+					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, -(shift+(b)*distanceRows)) - self.position + Vector3(0,height,0)
 					if randomLocation:
-						var shiftx: float = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
-						var shiftz: float = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
+						var shiftx: float = randf_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
+						var shiftz: float = randf_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
 						position += Vector3(shiftx, 0, shiftz)
 					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
-						rot = rand_range(0, TAU)
+						rot = randf_range(0, TAU)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0
@@ -187,20 +187,20 @@ func update_multimesh_positions() -> void:
 						slopeRot = rail_node.get_height_rot(railpos)
 					var scale := Vector3(1,1,1)
 					if randomScale:
-						var scaleval: float = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
+						var scaleval: float = randf_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
+					self.multimesh.set_instance_transform(idx, Transform3D(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
 					idx += 1
 			if sides == 2 or sides == 3: ## Right Side
-				if rand_range(0,1) < spawnRate:
-					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, (shift+(b)*distanceRows)) - self.translation + Vector3(0,height,0)
+				if randf_range(0,1) < spawnRate:
+					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, (shift+(b)*distanceRows)) - self.position + Vector3(0,height,0)
 					if randomLocation:
-						var shiftx: float = rand_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
-						var shiftz: float = rand_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
+						var shiftx: float = randf_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
+						var shiftz: float = randf_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
 						position += Vector3(shiftx, 0, shiftz)
 					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
-						rot = rand_range(0,360)
+						rot = randf_range(0,360)
 					else:
 						rot += rotationObjects
 					var slopeRot = 0
@@ -208,9 +208,9 @@ func update_multimesh_positions() -> void:
 						slopeRot = rail_node.get_height_rot(railpos)
 					var scale := Vector3(1,1,1)
 					if randomScale:
-						var scaleval: float = rand_range(1 - randomScaleFactor, 1 + randomScaleFactor)
+						var scaleval: float = randf_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
+					self.multimesh.set_instance_transform(idx, Transform3D(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
 					idx += 1
 		railpos += distanceLength
 	self.multimesh.visible_instance_count = idx
@@ -218,7 +218,7 @@ func update_multimesh_positions() -> void:
 
 func newSeed() -> void:
 	randomize()
-	randomSeed = int(rand_range(-1000000,1000000))
+	randomSeed = int(randf_range(-1000000,1000000))
 
 
 func set_mesh(new_mesh: ArrayMesh):

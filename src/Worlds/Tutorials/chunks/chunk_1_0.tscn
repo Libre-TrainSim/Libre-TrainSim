@@ -20,17 +20,17 @@
 [ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=18]
 [ext_resource path="res://Resources/Materials/Metal_Brown.tres" type="Material" id=19]
 
-[node name="chunk_1_0" type="Spatial"]
+[node name="chunk_1_0" type="Node3D"]
 script = ExtResource( 6 )
 is_empty = false
 generate_grass = true
 chunk_position = Vector3( 1, 0, 0 )
 rails = [ "Rail2" ]
 
-[node name="TrackObjects" type="Spatial" parent="."]
+[node name="TrackObjects" type="Node3D" parent="."]
 
-[node name="Rail2 Poles" type="MultiMeshInstance" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
+[node name="Rail2 Poles" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
 lod_max_distance = 100.0
 script = ExtResource( 1 )
 description = "Poles"
@@ -57,8 +57,8 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = true
 
-[node name="Rail2 Tree" type="MultiMeshInstance" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
+[node name="Rail2 Tree" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 993.347, 0, 99.667 )
 lod_max_distance = 100.0
 script = ExtResource( 1 )
 description = "Tree"
@@ -85,8 +85,8 @@ applySlopeRotation = false
 randomSeed = 820355
 wholeRail = true
 
-[node name="Rail2 Bumper" type="MultiMeshInstance" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1983.21, 0, 133.501 )
+[node name="Rail2 Bumper" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1983.21, 0, 133.501 )
 lod_max_distance = 100.0
 script = ExtResource( 1 )
 description = "Bumper"
@@ -113,8 +113,8 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = false
 
-[node name="Rail2 Platform" type="MultiMeshInstance" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1589.35, 0, 159.467 )
+[node name="Rail2 Platform" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1589.35, 0, 159.467 )
 lod_max_distance = 100.0
 script = ExtResource( 1 )
 description = "Platform"
@@ -141,6 +141,6 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = false
 
-[node name="Buildings" type="Spatial" parent="."]
+[node name="Buildings" type="Node3D" parent="."]
 
-[node name="DefaultGrass" type="Spatial" parent="." instance=ExtResource( 3 )]
+[node name="DefaultGrass" type="Node3D" parent="." instance=ExtResource( 3 )]

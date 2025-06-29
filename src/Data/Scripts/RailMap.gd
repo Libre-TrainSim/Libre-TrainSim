@@ -1,13 +1,13 @@
-extends Viewport
+extends SubViewport
 
 const LINE_POINT_INTERVAL: float = 15.0 # 1 line point for every 15 meters of track
 
-onready var train_world: Spatial = find_parent("World")
-onready var camera: Camera2D = $Camera2D
+@onready var train_world: Node3D = find_parent("World")
+@onready var camera: Camera2D = $Camera2D
 
-onready var signal_green: Texture = preload("res://Data/Misc/GreenSignalArrow.svg")
-onready var signal_red: Texture = preload("res://Data/Misc/RedSignalArrow.svg")
-onready var signal_orange: Texture = preload("res://Data/Misc/OrangeSignalArrow.svg")
+@onready var signal_green: Texture2D = preload("res://Data/Misc/GreenSignalArrow.svg")
+@onready var signal_red: Texture2D = preload("res://Data/Misc/RedSignalArrow.svg")
+@onready var signal_orange: Texture2D = preload("res://Data/Misc/OrangeSignalArrow.svg")
 
 var follow_player: bool = true
 var overlay: bool = false
@@ -18,8 +18,8 @@ var chunk_origin: Vector2 = Vector2()
 
 
 func _ready() -> void:
-	render_target_update_mode = Viewport.UPDATE_ALWAYS
-	yield(get_tree(), "idle_frame")
+	render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	await get_tree().idle_frame
 	init_map()
 
 
@@ -30,7 +30,7 @@ func init_map() -> void:
 		return
 
 # warning-ignore:return_value_discarded
-	Root.connect("world_origin_shifted", self, "_on_world_origin_update")
+	Root.connect("world_origin_shifted", Callable(self, "_on_world_origin_update"))
 
 	var rails: Array = train_world.get_node("Rails").get_children()
 	for rail in rails:
@@ -51,7 +51,7 @@ func open_full_map() -> void:
 	set_process(true)
 	set_process_unhandled_input(true)
 
-	self.size = OS.window_size
+	self.size = get_window().size
 	overlay = false
 
 	$RouteLines.show()
@@ -70,7 +70,7 @@ func open_overlay_map() -> void:
 	set_process(true)
 	set_process_unhandled_input(false)
 
-	var os_size = OS.window_size
+	var os_size = get_window().size
 	self.size = Vector2(os_size.x*0.33,os_size.y)
 
 	overlay = true
@@ -111,31 +111,31 @@ func _unhandled_input(event: InputEvent) -> void:
 		zoom.x = clamp(zoom.x*0.8, 0.01, 2.5)
 		zoom.y = clamp(zoom.y*0.8, 0.01, 2.5)
 		$Camera2D.zoom = zoom
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
 	if event.is_action("zoom_out"):
 		var zoom: Vector2 = $Camera2D.zoom
 		zoom.x = clamp(zoom.x*1.25, 0.01, 3)
 		zoom.y = clamp(zoom.y*1.25, 0.01, 3)
 		$Camera2D.zoom = zoom
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
 	if not overlay:
 		if event.is_action_pressed("map_center_player"):
 			follow_player = true
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 		if event is InputEventMouseButton:
-			if event.button_index == BUTTON_MIDDLE:
+			if event.button_index == MOUSE_BUTTON_MIDDLE:
 				follow_player = false
-				get_tree().set_input_as_handled()
-		if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
+				get_viewport().set_input_as_handled()
+		if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
 			mouse_motion -= event.relative
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 
 # warning-ignore:unused_argument
 func _process(delta: float) -> void:
-	var player_pos: Vector3 = train_world.player.translation
+	var player_pos: Vector3 = train_world.player.position
 	var player_pos_2d = Vector2(player_pos.x, player_pos.z)
 
 	# subtracting chunk origin is necessary!
@@ -159,7 +159,7 @@ func update_labels() -> void:
 		if overlay:
 			node.scale = camera.zoom * 0.25
 		else:
-			node.scale = camera.zoom.clamped(1)*0.25
+			node.scale = camera.zoom.limit_length(1)*0.25
 
 
 func update_active_lines_width(width: float) -> void:
@@ -167,7 +167,7 @@ func update_active_lines_width(width: float) -> void:
 		line.width = width
 
 
-func create_station(signal_instance: Spatial) -> void:
+func create_station(signal_instance: Node3D) -> void:
 	var index: int = -1
 	for i in range(train_world.player.station_table.size()):
 		if train_world.player.station_table[i].station_node_name == signal_instance.name:
@@ -177,9 +177,9 @@ func create_station(signal_instance: Spatial) -> void:
 		return
 
 	var node: Node2D = Node2D.new()
-	node.rotation = deg2rad(-30)
+	node.rotation = deg_to_rad(-30)
 	#node.scale = Vector2(0.1, 0.1)
-	node.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
+	node.position = Vector2(signal_instance.position.x, signal_instance.position.z)
 	node.name = signal_instance.name
 	$Stations.add_child(node)
 	node.owner = $Stations
@@ -188,25 +188,25 @@ func create_station(signal_instance: Spatial) -> void:
 	node.add_child(label)
 	label.owner = node
 	label.show()
-	label.rect_position.y = -140
+	label.position.y = -140
 	label.text = train_world.player.station_table[index].station_name
 
 
-func create_signal(signal_instance: Spatial) -> void:
-	var sprite: Sprite = Sprite.new()
-	sprite.position = Vector2(signal_instance.translation.x, signal_instance.translation.z)
+func create_signal(signal_instance: Node3D) -> void:
+	var sprite: Sprite2D = Sprite2D.new()
+	sprite.position = Vector2(signal_instance.position.x, signal_instance.position.z)
 	sprite.scale = Vector2(0.1, 0.1)
 	sprite.rotation = -signal_instance.rotation.y + (0.5*PI)
 	sprite.name = signal_instance.name
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
 # warning-ignore:return_value_discarded
-	signal_instance.connect("signal_changed", self, "_on_signal_changed")
+	signal_instance.connect("signal_changed", Callable(self, "_on_signal_changed"))
 	_on_signal_changed(signal_instance) # call once to init
 
 
-func _on_signal_changed(signal_instance: Spatial) -> void:
-	var sprite: Sprite = $Signals.get_node(signal_instance.name)
+func _on_signal_changed(signal_instance: Node3D) -> void:
+	var sprite: Sprite2D = $Signals.get_node(signal_instance.name)
 	match signal_instance.status:
 		SignalStatus.RED: sprite.texture = signal_red
 		SignalStatus.ORANGE: sprite.texture = signal_orange
@@ -218,7 +218,7 @@ func _on_world_origin_update(delta: Vector3):
 	chunk_origin += Vector2(delta.x, delta.z)
 
 
-func create_line2d_from_rail(rail: Spatial):
+func create_line2d_from_rail(rail: Node3D):
 	var line: Line2D = Line2D.new()
 
 	# Note: we do not need a "map scale"
@@ -269,7 +269,7 @@ func find_max_coords(points: Array):
 		active_route_rect.size.y = max_y - active_route_rect.position.y
 
 
-func build_rail(rail: Spatial) -> Array:
+func build_rail(rail: Node3D) -> Array:
 	var points := []
 
 	var length: float
@@ -283,15 +283,15 @@ func build_rail(rail: Spatial) -> Array:
 		var point_count: int = int(length / LINE_POINT_INTERVAL) + 1
 		# add point count many points along track
 		for i in range(0,point_count):
-			var rail_transform: Transform = rail.get_global_transform_at_distance(i*LINE_POINT_INTERVAL)
+			var rail_transform: Transform3D = rail.get_global_transform_at_distance(i*LINE_POINT_INTERVAL)
 			points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# add end point
-		var rail_transform: Transform = rail.get_global_transform_at_distance(rail.length)
+		var rail_transform: Transform3D = rail.get_global_transform_at_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 	# only 2 points for straight rails
 	else:
 		# Start Point
-		var rail_transform: Transform = rail.get_global_transform_at_distance(0)
+		var rail_transform: Transform3D = rail.get_global_transform_at_distance(0)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
 		# End Point
 		rail_transform = rail.get_global_transform_at_distance(rail.length)

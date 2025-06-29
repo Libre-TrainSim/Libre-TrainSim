@@ -8,18 +8,18 @@ const preset_lts = preload("res://addons/jean28518.jTools/jSettings/input_preset
 const preset_openbve = preload("res://addons/jean28518.jTools/jSettings/input_presets/layout_openbve.tres")
 var _input_buttons := []
 
-onready var _input_grid := $"%InputGrid"
-onready var _layout_confirmation_lts := $"%LayoutConfirmationLTS"
-onready var _layout_confirmation_open_bve := $"%LayoutConfirmationOpenBVE"
-onready var _layout_export_dialog := $"%LayoutExportDialog"
-onready var _layout_import_dialog := $"%LayoutImportDialog"
+@onready var _input_grid := $"%InputGrid"
+@onready var _layout_confirmation_lts := $"%LayoutConfirmationLTS"
+@onready var _layout_confirmation_open_bve := $"%LayoutConfirmationOpenBVE"
+@onready var _layout_export_dialog := $"%LayoutExportDialog"
+@onready var _layout_import_dialog := $"%LayoutImportDialog"
 
 func _ready():
 	# Localize the Reset Dialog
-	_layout_confirmation_lts.get_cancel().text = "NO"
-	_layout_confirmation_lts.get_ok().text = "YES"
-	_layout_confirmation_open_bve.get_cancel().text = "NO"
-	_layout_confirmation_open_bve.get_ok().text = "YES"
+	_layout_confirmation_lts.get_cancel_button().text = "NO"
+	_layout_confirmation_lts.get_ok_button().text = "YES"
+	_layout_confirmation_open_bve.get_cancel_button().text = "NO"
+	_layout_confirmation_open_bve.get_ok_button().text = "YES"
 	
 	# Load all available inputs into a list
 	var actions := InputMap.get_actions()
@@ -33,14 +33,14 @@ func _add_entry(action: String):
 	var label := TranslatedRichTextLabel.new()
 	label.text = "INPUT_" + action.to_upper()
 	label.size_flags_horizontal = SIZE_EXPAND_FILL
-	label.set("custom_fonts/normal_font", load("res://Data/Fonts/FontMedium.tres"))
+	label.set("theme_override_fonts/normal_font", load("res://Data/Fonts/FontMedium.tres"))
 	_input_grid.add_child(label)
 	
 	# Add InputButton
-	var input_button := input_button_scene.instance() as InputButton
+	var input_button := input_button_scene.instantiate() as InputButton
 	input_button.size_flags_horizontal = SIZE_EXPAND_FILL
 	input_button.action = action
-	input_button.connect("toggled", self, "_on_any_button_toggled", [input_button])
+	input_button.connect("toggled", Callable(self, "_on_any_button_toggled").bind(input_button))
 	_input_buttons.append(input_button)
 	_input_grid.add_child(input_button)
 
@@ -53,7 +53,7 @@ func finish():
 func _unpress_all_buttons_except(that_button: InputButton):
 	for button in _input_buttons:
 		if button != that_button:
-			button.pressed = false
+			button.button_pressed = false
 
 
 func _on_any_button_toggled(button_pressed: bool, button: InputButton):
@@ -73,7 +73,7 @@ func _on_any_button_toggled(button_pressed: bool, button: InputButton):
 func _update_all_buttons():
 	# Update the text of all InputButtons
 	for button in _input_buttons:
-		button.events = InputMap.get_action_list(button.action)
+		button.events = InputMap.action_get_events(button.action)
 		button.update_text()
 
 

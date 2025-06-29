@@ -2,7 +2,7 @@ extends PanelContainer
 
 
 func _ready() -> void:
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	dir.open("user://")
 	if not dir.dir_exists("user://addons/"):
 		dir.make_dir("user://addons/")
@@ -11,7 +11,7 @@ func _ready() -> void:
 func show() -> void:
 	update_content_list()
 	$VBoxContainer/Buttons/Back.grab_focus()
-	.show()
+	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:

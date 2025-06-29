@@ -9,12 +9,12 @@ var _saved_ingame_pause: bool = false
 var _saved_mouse_mode: int = 0
 var player: LTSPlayer
 
-onready var settings: Node = jSettings.get_node("JSettings")
+@onready var settings: Node = jSettings.get_node("JSettings")
 
 
 func _ready() -> void:
-	$StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus")
-	settings.connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
+	$StationJumper.connect("hide", Callable($CenterContainer/HBox/JumpToStation, "grab_focus"))
+	settings.connect("hide", Callable($CenterContainer/HBox/Settings, "grab_focus"))
 
 
 func show() -> void:
@@ -24,7 +24,7 @@ func show() -> void:
 		$CenterContainer/HBox/BackToTrackEditor.show()
 
 	$CenterContainer/HBox/Back.grab_focus()
-	.show()
+	super.show()
 
 
 func _unhandled_input(_event) -> void:
@@ -101,4 +101,4 @@ func _on_BackToTrackEditor_pressed() -> void:
 
 
 func _on_BackToScenarioEditor_pressed() -> void:
-	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+	get_tree().change_scene_to_packed(load("res://Editor/Modules/scenario_editor.tscn"))

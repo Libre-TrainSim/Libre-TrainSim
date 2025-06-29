@@ -1,5 +1,5 @@
 class_name LTSWorld  # you can probably never use this, because it just causes cyclic dependency :^)
-extends Spatial
+extends Node3D
 
 var timeMSeconds: float = 0 # Just used for counting every second
 var time: int = 0 # Unit: seconds (from 00:00:00)
@@ -9,10 +9,10 @@ var default_persons_at_station: int = 20
 var current_scenario: TrackScenario = null
 var current_world_config: WorldConfig = null
 
-export (String) var FileName := "Name Me!"
-onready var trackName: String = FileName.rsplit("/")[0]
+@export (String) var FileName := "Name Me!"
+@onready var trackName: String = FileName.rsplit("/")[0]
 
-export var world_origin_on_last_save = Vector3(0,0,0) # Used for chunk manager.
+@export var world_origin_on_last_save = Vector3(0,0,0) # Used for chunk manager.
 
 
 var pending_train_spawns := []
@@ -61,7 +61,7 @@ func _ready() -> void:
 
 	if Root.Editor:
 		$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
-		$DirectionalLight.shadow_enabled = ProjectSettings["game/graphics/shadows"]
+		$DirectionalLight3D.shadow_enabled = ProjectSettings["game/graphics/shadows"]
 		return
 
 	Root.world = self
@@ -69,7 +69,7 @@ func _ready() -> void:
 	set_scenario_to_world()
 
 	## Create Persons-Node:
-	var personsNode := Spatial.new()
+	var personsNode := Node3D.new()
 	personsNode.name = "Persons"
 	add_child(personsNode)
 	personsNode.owner = self
@@ -87,23 +87,23 @@ func _ready() -> void:
 
 func get_new_person_instance() -> Person:
 	randomize()
-	var person: Person = _person_template.instance()
-	var person_visual: PackedScene = _person_visual_instances[int(rand_range(0, _person_visual_instances.size()))]
-	person.add_child(person_visual.instance())
+	var person: Person = _person_template.instantiate()
+	var person_visual: PackedScene = _person_visual_instances[int(randf_range(0, _person_visual_instances.size()))]
+	person.add_child(person_visual.instantiate())
 	$Persons.add_child(person)
 	return person
 
 
 func apply_user_settings() -> void:
 	if Root.mobile_version:
-		$DirectionalLight.shadow_enabled = false
-		player.get_node("Camera").far = 400
+		$DirectionalLight3D.shadow_enabled = false
+		player.get_node("Camera3D").far = 400
 		get_viewport().set_msaa(0)
 		$WorldEnvironment.environment.fog_enabled = false
 		return
-	if get_node("DirectionalLight") != null:
-		$DirectionalLight.shadow_enabled = ProjectSettings["game/graphics/shadows"]
-	player.get_node("Camera").far = ProjectSettings["game/gameplay/view_distance"]
+	if get_node("DirectionalLight3D") != null:
+		$DirectionalLight3D.shadow_enabled = ProjectSettings["game/graphics/shadows"]
+	player.get_node("Camera3D").far = ProjectSettings["game/gameplay/view_distance"]
 	get_viewport().set_msaa(ProjectSettings["rendering/quality/filters/msaa"])
 	$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
 
@@ -154,7 +154,7 @@ func set_scenario_to_world() -> void:
 			continue
 
 		var train_path := Root.selected_train
-		if train_path.empty():
+		if train_path.is_empty():
 			train_path = ContentLoader.find_train_path(route.train_name)
 
 		var minimal_platform_length: int = route.get_minimal_platform_length(self)
@@ -186,13 +186,13 @@ func set_scenario_to_world() -> void:
 
 	check_train_spawn(1)
 	var description := tr(current_scenario.description) if \
-			routes[Root.selected_route].description.empty() \
+			routes[Root.selected_route].description.is_empty() \
 			else tr(routes[Root.selected_route].description)
 	jEssentials.call_delayed(1, $Players/Player, "show_textbox_message", [description])
 
 
 func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:
-	var new_train: Node = load(train_spawn_information.train_path).instance()
+	var new_train: Node = load(train_spawn_information.train_path).instantiate()
 	if train_spawn_information.player_train:
 		new_train.name = "Player"
 		player = new_train
@@ -244,7 +244,7 @@ func get_path_from_to(start_node: Rail, end_rail: Rail, forward: bool) -> Array:
 	var reachable := { start_node: [0, null, forward] }
 	var explored := {}
 
-	while not reachable.empty():
+	while not reachable.is_empty():
 		# Choose some node we know how to reach.
 		var rail := _choose_node(reachable, end_rail)
 
@@ -283,7 +283,7 @@ func _choose_node(reachable: Dictionary, destination: Rail) -> Rail:
 	var best_rail: Rail = null
 	for rail in reachable:
 		var cost: float = reachable[rail][0]
-		cost += destination.translation.distance_squared_to(rail.translation)
+		cost += destination.position.distance_squared_to(rail.position)
 
 		if cost < min_cost:
 			min_cost = cost
@@ -317,7 +317,7 @@ func get_terrain_height_at(_position: Vector2) -> float:
 
 func jump_player_to_station(station_table_index: int) -> void:
 	Logger.log("Jumping player to station " + player.station_table[station_table_index].station_name)
-	var new_station_node: Spatial = get_signal(player.station_table[station_table_index].station_node_name)
+	var new_station_node: Node3D = get_signal(player.station_table[station_table_index].station_node_name)
 
 	time = player.station_table[station_table_index].arrival_time
 

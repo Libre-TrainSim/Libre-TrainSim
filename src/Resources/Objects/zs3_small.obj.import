@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh"
+uid="uid://vdfdq2qrao68"
+path="res://.godot/imported/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh"
 
 [deps]
 
-files=[ "res://.import/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh" ]
+files=["res://.godot/imported/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh"]
 
 source_file="res://Resources/Objects/zs3_small.obj"
-dest_files=[ "res://.import/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh", "res://.import/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh" ]
+dest_files=["res://.godot/imported/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh", "res://.godot/imported/zs3_small.obj-d0fa72133ffb29ff3fbc8484e5c3fa11.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

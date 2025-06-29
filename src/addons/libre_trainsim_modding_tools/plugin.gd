@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 var dock: Control
@@ -7,7 +7,7 @@ var base: Control
 func _enter_tree():
 	base = get_editor_interface().get_base_control()
 
-	dock = preload("dock.tscn").instance()
+	dock = preload("dock.tscn").instantiate()
 	dock.base = base
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, dock)
 

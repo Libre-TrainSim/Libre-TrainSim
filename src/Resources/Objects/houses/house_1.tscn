@@ -7,7 +7,7 @@
 [ext_resource path="res://Resources/Materials/Wall_Grey.tres" type="Material" id=5]
 [ext_resource path="res://Resources/Objects/house1.obj" type="ArrayMesh" id=6]
 
-[node name="House1" type="MeshInstance"]
+[node name="House1" type="MeshInstance3D"]
 mesh = ExtResource( 6 )
 material/0 = ExtResource( 3 )
 material/1 = ExtResource( 2 )

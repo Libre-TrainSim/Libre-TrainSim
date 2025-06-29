@@ -1,7 +1,7 @@
-[gd_resource type="SpatialMaterial" load_steps=3 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=2]
 
-[ext_resource path="res://Resources/SignalTypes/Hp/Form/FormHpSignal.png" type="Texture" id=1]
-[ext_resource path="res://Resources/SignalTypes/Hp/Form/FormHpSignal_metallic.png" type="Texture" id=2]
+[ext_resource path="res://Resources/SignalTypes/Hp/Form/FormHpSignal.png" type="Texture2D" id=1]
+[ext_resource path="res://Resources/SignalTypes/Hp/Form/FormHpSignal_metallic.png" type="Texture2D" id=2]
 
 [resource]
 resource_name = "CombinedMat"

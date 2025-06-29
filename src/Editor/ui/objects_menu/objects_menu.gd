@@ -4,7 +4,7 @@ extends PanelContainer
 signal object_added(node, global_position)
 
 
-export var cursor_path: NodePath
+@export var cursor_path: NodePath
 
 
 var entries := {} # group_name: GroupEntry
@@ -13,7 +13,7 @@ var editor_info: EditorInfo = null
 
 var selected_objects := {} # Scene
 var current_object: PackedScene = null
-var preview_object: Spatial = null
+var preview_object: Node3D = null
 var moving_camera := false
 var select_random := false
 
@@ -25,17 +25,17 @@ var filter_favourites := false
 var filter_common := false
 var filter_recent := false
 
-var header_only := false setget set_header_only
+var header_only := false: set = set_header_only
 
 
-onready var content := $MarginContainer/Content/ScrollContainer/Content as VBoxContainer
-onready var thumbnail_generator := $ThumbnailGenerator
-onready var cursor := get_node(cursor_path) as WorldCursor
-onready var search := $MarginContainer/Content/Search as LineEdit
+@onready var content := $MarginContainer/Content/ScrollContainer/Content as VBoxContainer
+@onready var thumbnail_generator := $ThumbnailGenerator
+@onready var cursor := get_node(cursor_path) as WorldCursor
+@onready var search := $MarginContainer/Content/Search as LineEdit
 
 
 func _ready() -> void:
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 	assert(editor_info)
 
 	find_groups()
@@ -50,16 +50,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# Only release events
 
-	if mb.button_index == BUTTON_LEFT:
+	if mb.button_index == MOUSE_BUTTON_LEFT:
 		if moving_camera:
 			return
-		var position := preview_object.global_translation
+		var position := preview_object.global_position
 		cursor.remove_child(preview_object)
 		editor_info.push_object(current_object)
 		emit_signal("object_added", preview_object, position)
 		preview_object = null
 		select_object()
-	elif mb.button_index == BUTTON_RIGHT:
+	elif mb.button_index == MOUSE_BUTTON_RIGHT:
 		if moving_camera:
 			preview_object.show()
 			moving_camera = false
@@ -70,11 +70,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		for entry in entries:
 			entries[entry].deselect_all()
 		select_object_scene(null)
-	elif mb.button_index == BUTTON_WHEEL_UP and mb.shift:
+	elif mb.button_index == MOUSE_BUTTON_WHEEL_UP and mb.shift:
 		if moving_camera:
 			return
 		select_object(1)
-	elif mb.button_index == BUTTON_WHEEL_DOWN and mb.shift:
+	elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.shift:
 		if moving_camera:
 			return
 		select_object(-1)
@@ -127,17 +127,17 @@ func find_groups() -> void:
 func generate_thumbnails() -> void:
 	for group in groups:
 		thumbnail_generator.generate_thumbnails(group)
-		yield(thumbnail_generator, "group_finished")
+		await thumbnail_generator.group_finished
 		# Load the thumbnails here? or use the texture created callback
 		entries[group.group_name].set_thumbnails()
 
 
 func populate_content() -> void:
 	for group in groups:
-		var entry := preload("res://Editor/ui/objects_menu/group_entry.tscn").instance()
+		var entry := preload("res://Editor/ui/objects_menu/group_entry.tscn").instantiate()
 		entry.set_objects(group, self, "_on_object_scene_changed", \
 				"_on_favourite_changed", editor_info.favourites)
-		entry.connect("header_pressed", self, "_on_header_pressed")
+		entry.connect("header_pressed", Callable(self, "_on_header_pressed"))
 		entries[group.group_name] = entry
 		content.add_child(entry)
 
@@ -165,7 +165,7 @@ func select_object_scene(scene: PackedScene) -> void:
 		return
 
 	current_object = scene
-	preview_object = current_object.instance()
+	preview_object = current_object.instantiate()
 	cursor.add_child(preview_object)
 
 

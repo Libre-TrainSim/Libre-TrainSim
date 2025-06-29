@@ -28,7 +28,7 @@ static func warn(message, context) -> void:
 
 
 static func get_time_string() -> String:
-	var dt: Dictionary = OS.get_datetime()
+	var dt: Dictionary = Time.get_datetime_dict_from_system()
 	return "%s-%02d-%02d %02d:%02d:%02d" % [dt["year"], dt["month"], dt["day"], \
 			dt["hour"], dt["minute"], dt["second"]]
 

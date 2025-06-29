@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=7 format=2]
 
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=1]
 [ext_resource path="res://Data/UI/styles/button_both_disabled.tres" type="StyleBox" id=2]
 [ext_resource path="res://Data/UI/styles/button_both_hover.tres" type="StyleBox" id=3]
 [ext_resource path="res://Data/UI/styles/button_both_focus.tres" type="StyleBox" id=4]

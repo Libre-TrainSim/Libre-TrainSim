@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh"
+uid="uid://c1wmjalsr17i4"
+path="res://.godot/imported/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh"
 
 [deps]
 
-files=[ "res://.import/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh" ]
+files=["res://.godot/imported/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh"]
 
 source_file="res://Resources/Objects/house2.obj"
-dest_files=[ "res://.import/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh", "res://.import/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh" ]
+dest_files=["res://.godot/imported/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh", "res://.godot/imported/house2.obj-cbf463d6584ac9dc5871e11b6c548a24.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

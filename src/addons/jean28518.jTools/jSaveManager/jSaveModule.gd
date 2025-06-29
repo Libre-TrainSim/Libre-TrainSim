@@ -1,12 +1,12 @@
 class_name jSaveModule
-extends Reference
+extends RefCounted
 
 # Example: "res://Levels/Level1/Level1.save"
-export (String) var save_path = ""
+@export (String) var save_path = ""
 
 
 func set_save_path(save_path : String):
-	print("Save Path set.")
+	print("Save Path3D set.")
 	self.save_path = save_path
 	reload()
 
@@ -71,7 +71,7 @@ func _load_current_config():
 		return
 	_config = ConfigFile.new()
 
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	dir.open(save_path.get_base_dir())
 
 	if not dir.file_exists(save_path):

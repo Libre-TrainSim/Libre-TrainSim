@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec4 highlight_color: hint_color = vec4(1.0, 0.0, 0.0, 0.25);
+uniform vec4 highlight_color: source_color = vec4(1.0, 0.0, 0.0, 0.25);
 
 // converts the texture to a binary texture
 // which means only black or white, depending on if a pixel contains information

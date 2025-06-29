@@ -7,20 +7,20 @@ extends CanvasLayer
 
 signal textbox_closed
 
-onready var player: LTSPlayer = get_parent()
+@onready var player: LTSPlayer = get_parent()
 
-onready var message_label := $PanelContainer/MessageLabel as InputRichTextLabel
+@onready var message_label := $PanelContainer/MessageLabel as InputRichTextLabel
 
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$MobileHUD.visible = Root.mobile_version
 	if Root.mobile_version:
-		$IngameInformation/Next.rect_position.y += 100
+		$IngameInformation/Next.position.y += 100
 	$Pause.player = player
 	$Black.show()
 
-	$Pause.connect("unpaused", $TextBox, "_on_unpaused")
+	$Pause.connect("unpaused", Callable($TextBox, "_on_unpaused"))
 
 
 func _process(_delta: float) -> void:
@@ -47,7 +47,7 @@ func send_message(text: String, actions := []) -> void:
 	if messages == 0:
 		$Message.play("fade")
 	messages += 1
-	yield(get_tree().create_timer(4, false), "timeout")
+	await get_tree().create_timer(4, false).timeout
 	messages -= 1
 	if messages == 0:
 		$Message.play_backwards("fade")
@@ -73,9 +73,9 @@ func check_trainInfoAbove() -> void:
 		$IngameInformation/TrainInfoAbove.update_info(get_parent())
 
 
-var redSignal: Texture = preload("res://Data/Misc/RedSignal.png")
-var greenSignal: Texture = preload("res://Data/Misc/GreenSignal.png")
-var orangeSignal: Texture = preload("res://Data/Misc/OrangeSignal.png")
+var redSignal: Texture2D = preload("res://Data/Misc/RedSignal.png")
+var greenSignal: Texture2D = preload("res://Data/Misc/GreenSignal.png")
+var orangeSignal: Texture2D = preload("res://Data/Misc/OrangeSignal.png")
 func update_nextTable() -> void:
 	## Update Next Signal:
 	$IngameInformation/Next/GridContainer/DistanceToSignal.text = Math.distance_to_string(player.distanceToNextSignal)

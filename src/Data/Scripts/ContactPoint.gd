@@ -1,13 +1,13 @@
 class_name ContactPoint
 extends RailLogic
 
-export var affectedSignal: String = ""
-export var disabled: bool = false
-export var newStatus: int = 1
-export var newSpeed: float = -1
-export var enable_for_all_trains: bool = true
-export var bySpecificTrain: String = ""
-export var affectTime: float = 0.1
+@export var affectedSignal: String = ""
+@export var disabled: bool = false
+@export var newStatus: int = 1
+@export var newSpeed: float = -1
+@export var enable_for_all_trains: bool = true
+@export var bySpecificTrain: String = ""
+@export var affectTime: float = 0.1
 
 
 func _get_type() -> String:
@@ -49,7 +49,7 @@ func activateContactPoint(trainName: String) -> void:
 
 
 func _on_Timer_timeout() -> void:
-	var signalN: Spatial = get_parent().get_node(affectedSignal)
+	var signalN: Node3D = get_parent().get_node(affectedSignal)
 	if signalN == null:
 		Logger.err("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...", self)
 		return
@@ -57,4 +57,4 @@ func _on_Timer_timeout() -> void:
 		Logger.err("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...", self)
 		return
 	signalN.set_status(newStatus)
-	signalN.set_speed(newSpeed)
+	signalN.set_velocity(newSpeed)

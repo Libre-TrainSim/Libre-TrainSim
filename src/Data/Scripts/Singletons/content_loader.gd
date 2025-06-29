@@ -34,7 +34,7 @@ func load_content_packs() -> void:
 	# build dependency tree
 	var mods_to_load = build_dependency_tree()  # return leaf nodes
 
-	while not mods_to_load.empty():
+	while not mods_to_load.is_empty():
 		var node: Node = mods_to_load.pop_front()
 		if node == null:
 			continue
@@ -83,7 +83,7 @@ func build_dependency_tree() -> Array:
 	while i < len(found_mods["unique_name"]):
 		# make sure mods are unique
 		var unique_name = found_mods["unique_name"][i]
-		if dependency_tree_root.find_node(unique_name, true, false):
+		if dependency_tree_root.find_child(unique_name, true, false):
 			Logger.err("Multiple mods with the same unique name '%s' found! Removing duplicate!" % unique_name, self)
 			found_mods["unique_name"].remove(i)
 			found_mods["content.tres"].remove(i)
@@ -96,7 +96,7 @@ func build_dependency_tree() -> Array:
 
 	# reparent mods to what they are required by
 	for mod in found_mods["content.tres"]:
-		var mod_node = dependency_tree_root.find_node(mod.unique_name, true, false)
+		var mod_node = dependency_tree_root.find_child(mod.unique_name, true, false)
 		if mod_node == null:
 			continue
 
@@ -106,7 +106,7 @@ func build_dependency_tree() -> Array:
 				_remove_top_most_mod_except_siblings(mod_node)
 				break
 
-			var dep_node = dependency_tree_root.find_node(dep.unique_name, true, false)
+			var dep_node = dependency_tree_root.find_child(dep.unique_name, true, false)
 			if dep_node == null:
 				Logger.warn("Dependency %s not found for mod %s !" % [dep.unique_name, mod.unique_name], self)
 				_remove_top_most_mod_except_siblings(mod_node)
@@ -124,7 +124,7 @@ func build_dependency_tree() -> Array:
 
 	var stack := dependency_tree_root.get_children()
 	var load_order := []
-	while not stack.empty():
+	while not stack.is_empty():
 		var child = stack.pop_front()
 		load_order.push_front(child)
 		stack.append_array(child.get_children())
@@ -147,9 +147,9 @@ func _remove_top_most_mod_except_siblings(node: Node) -> void:
 
 	var top_most := _get_top_most_mod(node)
 	var stack := [top_most]
-	while not stack.empty():
+	while not stack.is_empty():
 		var n: Node = stack.pop_front()
-		if n == node or n.find_node(node.name, true, false):
+		if n == node or n.find_child(node.name, true, false):
 			# this mod depends on the broken one, can't load anymore
 			# its children may not depend on it, and be loadable, check them
 			stack.append_array(n.get_children())

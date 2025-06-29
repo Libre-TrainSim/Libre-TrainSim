@@ -12,7 +12,7 @@ var mobile_version: bool = OS.has_feature("mobile")
 
 var game_pause = {"pause_menu": false, "ingame_pause": false, "message": false}
 
-var world: Node  ## Reference to world
+var world: Node  ## RefCounted to world
 
 
 # If scenario editor is running, then Editor and scenario_editor are true
@@ -23,7 +23,7 @@ var current_editor_track: String = ""
 var current_editor_track_path: String = ""
 
 func _ready() -> void:
-	pause_mode = Node.PAUSE_MODE_PROCESS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_low_resolution(mobile_version)
 
 
@@ -31,7 +31,7 @@ func _unhandled_key_input(_event) -> void:
 	if Engine.is_editor_hint():
 		return
 	if Input.is_action_just_released("fullscreen"):
-		jSettings.set_fullscreen(!OS.window_fullscreen)
+		jSettings.set_fullscreen(!((get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN) or (get_window().mode == Window.MODE_FULLSCREEN)))
 
 
 func set_game_pause(type, value) -> void:
@@ -53,7 +53,7 @@ func update_pause() -> void:
 ## Get appropriate name for new object. Used for adding and renaming nodes at ingame editor, also for train spawn
 func name_node_appropriate(node: Node, wanted_name: String, parent_node: Node) -> String:
 	# Remove last Numbers from wanted name
-	while(wanted_name[-1].is_valid_integer()):
+	while(wanted_name[-1].is_valid_int()):
 		wanted_name.erase(wanted_name.length() -1, 1)
 
 	wanted_name = wanted_name.replace(" " , "")
@@ -79,14 +79,14 @@ func name_node_appropriate(node: Node, wanted_name: String, parent_node: Node) -
 func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 	Logger.vlog(trackName.get_file().get_basename())
 	var trackTranslations := []
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	var _unused = dir.open("res://Translations")
-	_unused = dir.list_dir_begin()
+	_unused = dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = dir.get_next()
 		if file == "":
 				break
-		if file.get_extension() == "translation":
+		if file.get_extension() == "position":
 			if file.get_file().begins_with(trackName):
 				trackTranslations.append("res://Translations/" + file.get_file())
 				Logger.vlog("Track Translation Found " + "res://Translations/" + file.get_file())
@@ -101,14 +101,14 @@ func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 	Logger.vlog(trainDirPath)
 	var trainTranslations := []
-	var dir := Directory.new()
+	var dir := DirAccess.new()
 	var _unused = dir.open(trainDirPath)
-	_unused = dir.list_dir_begin()
+	_unused = dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = dir.get_next()
 		if file == "":
 				break
-		if file.get_extension() == "translation":
+		if file.get_extension() == "position":
 			trainTranslations.append(trainDirPath+"/"+file)
 			Logger.vlog("Track Translation Found " + "res://Translations/" + file.get_file())
 	for trainTranslationPath in trainTranslations:
@@ -120,13 +120,13 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 # recursion_depth = -1 -> unlimited recursion
 # the result is saved to the 'found_files' variable
 func crawl_directory(found_files: Array, directory_path: String, file_extensions: Array, recursion_depth: int = -1) -> void:
-	var dir := Directory.new()
-	if dir.open(directory_path) != OK or dir.list_dir_begin(true, true) != OK:
+	var dir := DirAccess.new()
+	if dir.open(directory_path) != OK or dir.list_dir_begin()  != OK:# TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		return
 
 	while true:
 		var file: String = dir.get_next()
-		if file.empty():
+		if file.is_empty():
 			break
 		elif dir.current_is_dir() and recursion_depth != 0:
 			crawl_directory(found_files, directory_path.plus_file(file), file_extensions, recursion_depth - 1)
@@ -141,8 +141,8 @@ func crawl_directory(found_files: Array, directory_path: String, file_extensions
 
 
 func get_subfolders_of(directory_path: String) -> Array:
-	var dir := Directory.new()
-	if dir.open(directory_path) != OK or dir.list_dir_begin(true, true) != OK:
+	var dir := DirAccess.new()
+	if dir.open(directory_path) != OK or dir.list_dir_begin()  != OK:# TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		return []
 	var folder_names: Array = []
 	while(true):
@@ -161,13 +161,13 @@ func set_low_resolution(value: bool) -> void:
 			return
 		ProjectSettings.set_setting("display/window/stretch/mode", "viewport")
 		ProjectSettings.set_setting("display/window/stretch/aspect", "keep")
-		ProjectSettings.set_setting("display/window/size/width", "1280")
-		ProjectSettings.set_setting("display/window/size/height", "720")
+		ProjectSettings.set_setting("display/window/size/viewport_width", "1280")
+		ProjectSettings.set_setting("display/window/size/viewport_height", "720")
 	else:
 		ProjectSettings.set_setting("display/window/stretch/mode", "disabled")
 		ProjectSettings.set_setting("display/window/stretch/aspect", "ignore")
-		ProjectSettings.set_setting("display/window/size/width", "1024")
-		ProjectSettings.set_setting("display/window/size/height", "600")
+		ProjectSettings.set_setting("display/window/size/viewport_width", "1024")
+		ProjectSettings.set_setting("display/window/size/viewport_height", "600")
 
 
 func world_origin_shifted(delta) -> void:

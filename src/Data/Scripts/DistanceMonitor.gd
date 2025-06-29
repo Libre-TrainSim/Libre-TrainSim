@@ -3,8 +3,8 @@ class_name DistanceMonitor
 
 signal reached()
 
-export var _distance: int = 0
-var _player: Spatial = null
+@export var _distance: int = 0
+var _player: Node3D = null
 var _start_dist: float = 0
 
 var is_stopped: bool = true
@@ -14,7 +14,7 @@ func set_distance(val: int) -> void:
 	self._distance = val
 
 
-func set_player(player: Spatial) -> void:
+func set_player(player: Node3D) -> void:
 	self._player = player
 
 

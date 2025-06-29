@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Data/Fonts/message_font.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Data/Fonts/button_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Data/Fonts/message_font.tres" type="FontFile" id=1]
+[ext_resource path="res://Data/Fonts/button_font.tres" type="FontFile" id=2]
 [ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=3]
 [ext_resource path="res://Data/UI/text_box.gd" type="Script" id=4]
 [ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=5]
@@ -13,36 +13,36 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -348.0
-margin_top = -249.0
-margin_right = 361.0
-margin_bottom = 266.0
+offset_left = -348.0
+offset_top = -249.0
+offset_right = 361.0
+offset_bottom = 266.0
 theme = ExtResource( 7 )
-custom_styles/panel = ExtResource( 3 )
+theme_override_styles/panel = ExtResource( 3 )
 script = ExtResource( 4 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_left = 6.0
-margin_top = 10.0
-margin_right = 703.0
-margin_bottom = 511.0
-custom_constants/margin_right = 8
-custom_constants/margin_top = 8
-custom_constants/margin_left = 8
-custom_constants/margin_bottom = 8
+offset_left = 6.0
+offset_top = 10.0
+offset_right = 703.0
+offset_bottom = 511.0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 689.0
-margin_bottom = 493.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 689.0
+offset_bottom = 493.0
 
 [node name="Message" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-margin_right = 681.0
-margin_bottom = 445.0
+offset_right = 681.0
+offset_bottom = 445.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/normal_font = ExtResource( 1 )
+theme_override_fonts/normal_font = ExtResource( 1 )
 text = "Test Test meine Freunde"
 script = ExtResource( 5 )
 __meta__ = {
@@ -50,14 +50,14 @@ __meta__ = {
 }
 
 [node name="Ok" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 449.0
-margin_right = 681.0
-margin_bottom = 485.0
+offset_top = 449.0
+offset_right = 681.0
+offset_bottom = 485.0
 grow_horizontal = 2
 grow_vertical = 0
-rect_min_size = Vector2( 100, 36 )
+custom_minimum_size = Vector2( 100, 36 )
 theme = ExtResource( 6 )
-custom_fonts/font = ExtResource( 2 )
+theme_override_fonts/font = ExtResource( 2 )
 text = "OK"
 __meta__ = {
 "_edit_use_anchors_": false

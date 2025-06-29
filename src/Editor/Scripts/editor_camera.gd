@@ -6,11 +6,11 @@ signal first_person_movement_started
 signal first_person_was_moved
 
 
-export var mouse_sensitivity: float = 0.003
-export var normal_speed: float = 1
-export var fast_speed: float = 3
-export var pan_move_sensitivity: float = 0.25
-export var control_path: NodePath
+@export var mouse_sensitivity: float = 0.003
+@export var normal_speed: float = 1
+@export var fast_speed: float = 3
+@export var pan_move_sensitivity: float = 0.25
+@export var control_path: NodePath
 
 
 var velocity := Vector3.ZERO
@@ -19,12 +19,12 @@ var is_panning := false
 var in_movement_time: float = 0
 var focus_owner: Control = null
 var significantly_moved := false
-var start_rotation := Quat()
+var start_rotation := Quaternion()
 
-onready var control: Control = get_node(control_path)
+@onready var control: Control = get_node(control_path)
 
 
-func load_from_transform(new_transform: Transform) -> void:
+func load_from_transform(new_transform: Transform3D) -> void:
 	transform = new_transform
 	rot = Vector2(rotation.y, rotation.x)
 
@@ -36,7 +36,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var mm := event as InputEventMouseMotion
 	if mm != null and is_moving_first_person:
 		_rotate_local(mm.relative * mouse_sensitivity)
-		if !significantly_moved and start_rotation.angle_to(transform.basis.get_rotation_quat()) > 0.01:
+		if !significantly_moved and start_rotation.angle_to(transform.basis.get_rotation_quaternion()) > 0.01:
 			significantly_moved = true
 			emit_signal("first_person_was_moved")
 	elif mm != null and is_panning:
@@ -52,17 +52,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			_rotate_orbit(mm.relative * mouse_sensitivity)
 
 	var mb := event as InputEventMouseButton
-	if mb != null and mb.button_index == BUTTON_RIGHT:
+	if mb != null and mb.button_index == MOUSE_BUTTON_RIGHT:
 		if mb.pressed and !is_moving_first_person:
 			_capture_mouse()
 			significantly_moved = false
-			start_rotation = transform.basis.get_rotation_quat()
+			start_rotation = transform.basis.get_rotation_quaternion()
 			emit_signal("first_person_movement_started")
 		elif !mb.pressed and is_moving_first_person:
 			_free_mouse()
 			velocity = Vector3()
 		is_moving_first_person = mb.pressed
-	elif mb != null and mb.button_index == BUTTON_MIDDLE:
+	elif mb != null and mb.button_index == MOUSE_BUTTON_MIDDLE:
 		if mb.pressed and !is_panning:
 			_capture_mouse()
 			if mb.shift:
@@ -72,9 +72,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			if get_parent() == orbit_rotation_helper:
 				_remove_orbit()
 		is_panning = mb.pressed
-	elif mb != null and mb.button_index == BUTTON_WHEEL_DOWN and _no_modifier(mb):
+	elif mb != null and mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and _no_modifier(mb):
 		_zoom(10 * max(mb.factor, 1))
-	elif mb != null and mb.button_index == BUTTON_WHEEL_UP and _no_modifier(mb):
+	elif mb != null and mb.button_index == MOUSE_BUTTON_WHEEL_UP and _no_modifier(mb):
 		_zoom(-10 * max(mb.factor, 1))
 
 
@@ -99,14 +99,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _capture_mouse() -> void:
-	._capture_mouse()
-	focus_owner = control.get_focus_owner()
+	super._capture_mouse()
+	focus_owner = control.get_viewport().gui_get_focus_owner()
 	if focus_owner:
 		focus_owner.release_focus()
 
 
 func _free_mouse() -> void:
-	._free_mouse()
+	super._free_mouse()
 	if is_instance_valid(focus_owner):
 		focus_owner.grab_focus()
 

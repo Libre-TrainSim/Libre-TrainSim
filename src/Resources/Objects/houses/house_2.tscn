@@ -8,7 +8,7 @@
 [ext_resource path="res://Resources/Materials/Roof.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Materials/Wall_Beige.tres" type="Material" id=7]
 
-[node name="House2" type="MeshInstance"]
+[node name="House2" type="MeshInstance3D"]
 mesh = ExtResource( 4 )
 material/0 = ExtResource( 6 )
 material/1 = ExtResource( 7 )

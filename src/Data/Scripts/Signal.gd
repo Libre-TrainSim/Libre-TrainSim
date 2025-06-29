@@ -7,22 +7,22 @@ enum SignalType {
 	PRESIGNAL = 2,
 	COMBINED = 3
 }
-export(SignalType) var signal_type: int = SignalType.COMBINED
+@export var signal_type: SignalType: int = SignalType.COMBINED
 
-export(SignalStatus.TypeHint) var status: int = SignalStatus.RED setget set_status
+@export var status: int = SignalStatus.RED: set = set_status
 signal signal_changed(signal_instance)
 
-var signal_after: String = "" setget set_signal_after # SignalName of the following signal. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
-var signal_after_node: Node # Reference to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
+var signal_after: String = "": set = set_signal_after
+var signal_after_node: Node # RefCounted to the signal after it. Set by the route manager from the players train. Just works for the players route. Should only be used for visuals!!
 
-export var signal_free_time: int = -1 # the signal will be turned to status = 1 at this specified time. Set to -1 to deactivate. Only available in manual mode.
+@export var signal_free_time: int = -1 # the signal will be turned to status = 1 at this specified time. Set to -1 to deactivate. Only available in manual mode.
 var did_set_pass: bool = false
 
-export var speed: float = -1 setget set_speed # SpeedLimit, which will be applied to the train. If -1: Speed Limit won't be changed by overdriving.
-var warn_speed: float = -1 setget set_warn_speed # Displays the speed of the following speedlimit. Just used for the player train. It doesn't affect any train..
+@export var speed: float = -1: set = set_velocity
+var warn_speed: float = -1: set = set_warn_speed
 
-export (String, FILE, "*.tscn,*.scn") var visual_instance_path: String = "res://Resources/SignalTypes/Ks/Ks.tscn"
-export (SignalOperationMode.TypeHint) var operation_mode: int = SignalOperationMode.BLOCK
+@export (String, FILE, "*.tscn,*.scn") var visual_instance_path: String = "res://Resources/SignalTypes/Ks/Ks.tscn"
+@export (SignalOperationMode.TypeHint) var operation_mode: int = SignalOperationMode.BLOCK
 
 
 func _get_type() -> String:
@@ -40,15 +40,15 @@ func update_visual_instance() -> void:
 
 	visible = rail.visible
 	if not rail.visible:
-		if get_node_or_null("VisualInstance") != null:
-			self.disconnect("signal_changed", $VisualInstance, "update_visual_instance")
-			$VisualInstance.queue_free()
+		if get_node_or_null("VisualInstance3D") != null:
+			self.disconnect("signal_changed", Callable($VisualInstance3D, "update_visual_instance"))
+			$VisualInstance3D.queue_free()
 			if get_node_or_null("SelectCollider") != null:
 				$SelectCollider.queue_free()
 
 		return
 
-	if get_node_or_null("VisualInstance") == null:
+	if get_node_or_null("VisualInstance3D") == null:
 		create_visual_instance()
 
 
@@ -56,16 +56,16 @@ func update_visual_instance() -> void:
 func create_visual_instance() -> void:
 	if visual_instance_path == "":
 		visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
-	var visual_instance = load(visual_instance_path).instance()
+	var visual_instance = load(visual_instance_path).instantiate()
 	add_child(visual_instance)
-	visual_instance.name = "VisualInstance"
+	visual_instance.name = "VisualInstance3D"
 	visual_instance.owner = self
 	connect_visual_instance()
 
 
 func connect_visual_instance() -> void:
-	var visual_instance = get_node_or_null("VisualInstance")
-	var _unused = self.connect("signal_changed", visual_instance, "update_visual_instance")
+	var visual_instance = get_node_or_null("VisualInstance3D")
+	var _unused = self.connect("signal_changed", Callable(visual_instance, "update_visual_instance"))
 
 
 func update() -> void:
@@ -93,7 +93,7 @@ func update() -> void:
 func _ready() -> void:
 	# This is f****** hack and the whole deferred init is causing a lot of issues.
 	timer = Timer.new()
-	timer.connect("timeout", self, "update_visual_instance")
+	timer.connect("timeout", Callable(self, "update_visual_instance"))
 	self.add_child(timer)
 	timer.start()
 
@@ -127,7 +127,7 @@ func set_status(new_val: int) -> void:
 		emit_signal("signal_changed", self)
 
 
-func set_speed(new_speed: float) -> void:
+func set_velocity(new_speed: float) -> void:
 	speed = new_speed
 	emit_signal("signal_changed", self)
 
@@ -145,14 +145,14 @@ func give_signal_free() -> void:
 func set_data(d: SignalSettings) -> void:
 	set_status(d.status)
 	signal_free_time = d.signal_free_time
-	set_speed(d.speed)
+	set_velocity(d.speed)
 	set_operation_mode(d.operation_mode)
 
 
 func reset() -> void:
 	set_status(SignalStatus.RED)
 	signal_free_time = -1
-	set_speed(-1)
+	set_velocity(-1)
 	operation_mode = SignalOperationMode.BLOCK
 
 

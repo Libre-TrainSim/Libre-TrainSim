@@ -1,13 +1,13 @@
 class_name WorldObject
-extends Spatial
+extends Node3D
 
 
 func _ready() -> void:
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Root.connect("world_origin_shifted", Callable(self, "_on_world_origin_shifted"))
 
 
 func _on_world_origin_shifted(delta: Vector3):
-	translation += delta
+	position += delta
 	self.update()
 
 

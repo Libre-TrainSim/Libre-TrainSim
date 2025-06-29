@@ -7,7 +7,7 @@
 [ext_resource path="res://Resources/Materials/RoofDark.tres" type="Material" id=5]
 [ext_resource path="res://Resources/Objects/office5.obj" type="ArrayMesh" id=6]
 
-[node name="Office5" type="MeshInstance"]
+[node name="Office5" type="MeshInstance3D"]
 mesh = ExtResource( 6 )
 material/0 = ExtResource( 2 )
 material/1 = ExtResource( 4 )

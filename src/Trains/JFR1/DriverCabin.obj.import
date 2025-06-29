@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh"
+uid="uid://dxp7wn0sgbj5l"
+path="res://.godot/imported/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh"
 
 [deps]
 
-files=[ "res://.import/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh" ]
+files=["res://.godot/imported/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh"]
 
 source_file="res://Trains/JFR1/DriverCabin.obj"
-dest_files=[ "res://.import/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh", "res://.import/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh" ]
+dest_files=["res://.godot/imported/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh", "res://.godot/imported/DriverCabin.obj-2d9fa777c6faf03d10664329443fa43f.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

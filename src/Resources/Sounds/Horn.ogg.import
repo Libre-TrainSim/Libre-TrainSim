@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/Horn.ogg-f665c28c3e5467f6882df66804055389.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://djm132inn5n5e"
+path="res://.godot/imported/Horn.ogg-f665c28c3e5467f6882df66804055389.oggvorbisstr"
 
 [deps]
 
 source_file="res://Resources/Sounds/Horn.ogg"
-dest_files=[ "res://.import/Horn.ogg-f665c28c3e5467f6882df66804055389.oggstr" ]
+dest_files=["res://.godot/imported/Horn.ogg-f665c28c3e5467f6882df66804055389.oggvorbisstr"]
 
 [params]
 
 loop=false
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

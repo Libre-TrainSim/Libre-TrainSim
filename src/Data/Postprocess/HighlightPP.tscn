@@ -10,7 +10,7 @@ shader_param/highlight_color = Color( 1, 0.913725, 0, 0.231373 )
 [node name="HighlightPP" type="Node"]
 script = ExtResource( 2 )
 
-[node name="HighlightShader" type="ViewportContainer" parent="."]
+[node name="HighlightShader" type="SubViewportContainer" parent="."]
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,7 +20,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="HighlightShader"]
+[node name="SubViewport" type="SubViewport" parent="HighlightShader"]
 size = Vector2( 1024, 600 )
 transparent_bg = true
 handle_input_locally = false
@@ -28,6 +28,6 @@ keep_3d_linear = true
 debug_draw = 1
 render_target_update_mode = 3
 
-[node name="Camera" type="Camera" parent="HighlightShader/Viewport"]
+[node name="Camera3D" type="Camera3D" parent="HighlightShader/SubViewport"]
 cull_mask = 2
 far = 1000.0

@@ -13,7 +13,7 @@ var active_chunk = null  # chunk the player is currently in (Vector3)
 
 var rails_by_chunk := {}
 
-var _dir: Directory = null
+var _dir: DirAccess = null
 
 
 func position_to_chunk(position: Vector3) -> Vector3:
@@ -63,7 +63,7 @@ func _ready():
 		assert(editor != null)
 		_test_position_calc()
 
-	_dir = Directory.new()
+	_dir = DirAccess.new()
 	if _dir.open("res://") != OK:
 		Logger.err("Dir cannot open res://", self)
 
@@ -75,14 +75,14 @@ func _ready():
 
 	# backwards compat.
 	if not world.has_node("Chunks"):
-		var chunks_node := Spatial.new()
+		var chunks_node := Node3D.new()
 		chunks_node.name = "Chunks"
 		world.add_child(chunks_node)
 		chunks_node.owner = world
 
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 	# get position of active camera
-	var position_provider = get_viewport().get_camera()
+	var position_provider = get_viewport().get_camera_3d()
 	if position_provider == null:
 		Logger.err("Failed to perform initial move", self)
 		return
@@ -107,7 +107,7 @@ func _process(_delta: float):
 	assert(world != null)
 
 	# get position of active camera
-	var position_provider = get_viewport().get_camera()
+	var position_provider = get_viewport().get_camera_3d()
 	if position_provider == null:
 		return
 
@@ -172,7 +172,7 @@ func save_and_unload_all_chunks():
 	var files_to_save := []
 	var chunk_path = editor.current_track_path.plus_file("chunks")
 	_dir.change_dir(chunk_path)
-	_dir.list_dir_begin(true, true)
+	_dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = _dir.get_next()
 		if file == "":
@@ -329,7 +329,7 @@ func cleanup():
 	var chunk_path = editor.current_track_path.plus_file("chunks")
 	_dir.open(chunk_path)
 	_dir.change_dir(chunk_path)
-	_dir.list_dir_begin(true, true)
+	_dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = _dir.get_next()
 		if file == "":
@@ -345,7 +345,7 @@ func cleanup():
 
 
 func _test_position_calc() -> void:
-	var cases := PoolVector3Array([
+	var cases := PackedVector3Array([
 		Vector3(0, 0, 0),
 		Vector3(500, 0, 0),
 		Vector3(-499, 0, 152),

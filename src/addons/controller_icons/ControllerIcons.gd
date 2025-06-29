@@ -22,7 +22,7 @@ func _set_last_input_type(__last_input_type):
 	emit_signal("input_type_changed", _last_input_type)
 
 func _enter_tree():
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		_parse_input_actions()
 
 func _parse_input_actions():
@@ -40,7 +40,7 @@ func _parse_input_actions():
 			_add_custom_input_action(input_action, data)
 
 func _ready():
-	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
+	Input.connect("joy_connection_changed", Callable(self, "_on_joy_connection_changed"))
 	_settings = load("res://addons/controller_icons/settings.tres")
 	if not _settings:
 		_settings = ControllerSettings.new()
@@ -48,9 +48,9 @@ func _ready():
 		Mapper = _settings.custom_mapper.new()
 
 	# Wait a frame to give a chance for the app to initialize
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 	# Set input type to what's likely being used currently
-	if Input.get_connected_joypads().empty():
+	if Input.get_connected_joypads().is_empty():
 		_set_last_input_type(InputType.KEYBOARD_MOUSE)
 	else:
 		_set_last_input_type(InputType.CONTROLLER)
@@ -59,11 +59,11 @@ func _on_joy_connection_changed(device, connected):
 	if device == 0:
 		if connected:
 			# A yield is required, otherwise a deadlock happens
-			yield(get_tree(), "idle_frame")
+			await get_tree().idle_frame
 			_set_last_input_type(InputType.CONTROLLER)
 		else:
 			# A yield is required, otherwise a deadlock happens
-			yield(get_tree(), "idle_frame")
+			await get_tree().idle_frame
 			_set_last_input_type(InputType.KEYBOARD_MOUSE)
 
 func _input(event: InputEvent):
@@ -94,7 +94,7 @@ func refresh():
 	# All it takes is to signal icons to refresh paths
 	emit_signal("input_type_changed", _last_input_type)
 
-func parse_path(path: String, input_type: int = _last_input_type) -> Texture:
+func parse_path(path: String, input_type: int = _last_input_type) -> Texture2D:
 	if input_type == null:
 		return null
 	var root_paths := _expand_path(path, input_type)
@@ -133,7 +133,7 @@ func get_action_paths(path: String, input_type: int = _last_input_type) -> Array
 		if mk == null:
 			return combination
 		if mk.control:
-			combination.push_front(fake_event(KEY_CONTROL))
+			combination.push_front(fake_event(KEY_CTRL))
 		if mk.alt:
 			combination.push_front(fake_event(KEY_ALT))
 		if mk.shift:
@@ -146,7 +146,7 @@ func get_action_paths(path: String, input_type: int = _last_input_type) -> Array
 
 func fake_event(key_code: int) -> String:
 	var fake_input = InputEventKey.new()
-	fake_input.set_scancode(key_code)
+	fake_input.set_keycode(key_code)
 	var paths := event_to_global_paths(fake_input)
 	for path in paths:
 		if not _cached_icons.has(path):
@@ -162,14 +162,14 @@ func event_to_global_paths(event: InputEvent) -> Array:
 		"res://addons/controller_icons/assets/"
 	]
 	for base_path in base_paths:
-		if base_path.empty():
+		if base_path.is_empty():
 			continue
 		paths.push_back(base_path + _convert_event_to_path(event) + ".png")
 	return paths
 
-func parse_event(event: InputEvent) -> Texture:
+func parse_event(event: InputEvent) -> Texture2D:
 	var path = _convert_event_to_path(event)
-	if path.empty():
+	if path.is_empty():
 		return null
 
 	var base_paths := [
@@ -177,7 +177,7 @@ func parse_event(event: InputEvent) -> Texture:
 		"res://addons/controller_icons/assets/"
 	]
 	for base_path in base_paths:
-		if base_path.empty():
+		if base_path.is_empty():
 			continue
 		base_path += path + ".png"
 		if not _cached_icons.has(base_path):
@@ -193,7 +193,7 @@ func _expand_path(path: String, input_type: int) -> Array:
 		"res://addons/controller_icons/assets/"
 	]
 	for base_path in base_paths:
-		if base_path.empty():
+		if base_path.is_empty():
 			continue
 		if _is_path_action(path):
 			var event = _get_matching_event(path, input_type)
@@ -213,9 +213,9 @@ func _is_path_action(path):
 func _convert_event_to_path(event: InputEvent):
 	if event is InputEventKey:
 		# If this is a physical key, convert to localized scancode
-		if event.scancode == 0:
-			return _convert_key_to_path(OS.keyboard_get_scancode_from_physical(event.physical_scancode))
-		return _convert_key_to_path(event.scancode)
+		if event.keycode == 0:
+			return _convert_key_to_path(OS.keyboard_get_scancode_from_physical(event.physical_keycode))
+		return _convert_key_to_path(event.keycode)
 	elif event is InputEventMouseButton:
 		return _convert_mouse_button_to_path(event.button_index)
 	elif event is InputEventJoypadButton:
@@ -223,8 +223,8 @@ func _convert_event_to_path(event: InputEvent):
 	elif event is InputEventJoypadMotion:
 		return _convert_joypad_motion_to_path(event.axis)
 
-func _convert_key_to_path(scancode: int):
-	match scancode:
+func _convert_key_to_path(keycode: int):
+	match keycode:
 		KEY_ESCAPE:
 			return "key/esc"
 		KEY_TAB:
@@ -259,7 +259,7 @@ func _convert_key_to_path(scancode: int):
 			return "key/page_down"
 		KEY_SHIFT:
 			return "key/shift_alt"
-		KEY_CONTROL:
+		KEY_CTRL:
 			return "key/ctrl"
 		KEY_META, KEY_SUPER_L, KEY_SUPER_R:
 			match OS.get_name():
@@ -424,11 +424,11 @@ func _convert_key_to_path(scancode: int):
 
 func _convert_mouse_button_to_path(button_index: int):
 	match button_index:
-		BUTTON_LEFT:
+		MOUSE_BUTTON_LEFT:
 			return "mouse/left"
-		BUTTON_RIGHT:
+		MOUSE_BUTTON_RIGHT:
 			return "mouse/right"
-		BUTTON_MIDDLE:
+		MOUSE_BUTTON_MIDDLE:
 			return "mouse/middle"
 		_:
 			return "mouse/sample"
@@ -496,7 +496,7 @@ func _get_matching_event(path: String, input_type: int):
 	if _custom_input_actions.has(path):
 		events = _custom_input_actions[path]
 	else:
-		events = InputMap.get_action_list(path)
+		events = InputMap.action_get_events(path)
 
 	for event in events:
 		match event.get_class():

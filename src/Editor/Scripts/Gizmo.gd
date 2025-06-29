@@ -1,13 +1,13 @@
 class_name Gizmo
-extends Spatial
+extends Node3D
 
 
-export var x_axis_color: Color
-export var y_axis_color: Color
-export var z_axis_color: Color
-export var x_axis_color_hover: Color
-export var y_axis_color_hover: Color
-export var z_axis_color_hover: Color
+@export var x_axis_color: Color
+@export var y_axis_color: Color
+@export var z_axis_color: Color
+@export var x_axis_color_hover: Color
+@export var y_axis_color_hover: Color
+@export var z_axis_color_hover: Color
 
 var x_active := false
 var y_active := false
@@ -26,7 +26,7 @@ var z_rot_hovered := false
 var start_position: Vector3
 var grab_position: Vector3
 
-var local_mode := false setget set_local_mode
+var local_mode := false: set = set_local_mode
 
 func _unhandled_input(event: InputEvent) -> void:
 	var mm := event as InputEventMouseMotion
@@ -41,7 +41,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if local_mode:
 			direction = (global_transform.basis * direction).normalized()
 
-		var camera := get_viewport().get_camera()
+		var camera := get_viewport().get_camera_3d()
 
 		var grab_position_on_screen := camera.unproject_position(grab_position)
 		var direction_on_screen := (camera.unproject_position(grab_position + direction) - grab_position_on_screen).normalized()
@@ -71,30 +71,30 @@ func _unhandled_input(event: InputEvent) -> void:
 			/ sin(PI - angle_grab_cam_new - angle_cam_object_new) \
 			* sin(angle_grab_cam_new)
 
-		get_parent().global_translation = start_position + diff * direction
+		get_parent().global_position = start_position + diff * direction
 
 	elif mm != null and (x_rot_active or y_rot_active or z_rot_active):
 
 		# The player rotates the object by circeling his mouse pointer around the gizmo
 
-		var camera := get_viewport().get_camera()
+		var camera := get_viewport().get_camera_3d()
 
 		var axis := \
 			Vector3(1, 0, 0) if x_rot_active else \
 			Vector3(0, 1, 0) if y_rot_active else \
 			Vector3(0, 0, 1)
 
-		var plane := Plane(axis, get_parent().translation.dot(axis))
+		var plane := Plane(axis, get_parent().position.dot(axis))
 
 		var ray_old_mouse_position := camera.project_ray_normal(mm.position - event.relative)
 		var ray_new_mouse_position := camera.project_ray_normal(mm.position)
 
-		var intersection_old := plane.intersects_ray(camera.translation, ray_old_mouse_position)
-		var intersection_new := plane.intersects_ray(camera.translation, ray_new_mouse_position)
+		var intersection_old := plane.intersects_ray(camera.position, ray_old_mouse_position)
+		var intersection_new := plane.intersects_ray(camera.position, ray_new_mouse_position)
 
 		# Do nothing when the mouse pointer doesn't hover over the plane
 		if intersection_old != null and intersection_new != null:
-			var diff: float = (intersection_old - get_parent().translation).signed_angle_to(intersection_new - get_parent().translation, axis)
+			var diff: float = (intersection_old - get_parent().position).signed_angle_to(intersection_new - get_parent().position, axis)
 			get_parent().rotate(axis, diff)
 
 	elif mm != null and not any_axis_active():
@@ -105,19 +105,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		if result.has("collider"):
 			match result["collider"].name:
 				"x-axis":
-					$"x-axis/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
+					$"x-axis/MeshInstance3D".get_surface_override_material(0).emission = x_axis_color_hover
 				"y-axis":
-					$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
+					$"y-axis/MeshInstance3D".get_surface_override_material(0).emission = y_axis_color_hover
 				"z-axis":
-					$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
+					$"z-axis/MeshInstance3D".get_surface_override_material(0).emission = z_axis_color_hover
 				"x-rot":
-					$"x-rot/MeshInstance".get_surface_material(0).emission = x_axis_color_hover
+					$"x-rot/MeshInstance3D".get_surface_override_material(0).emission = x_axis_color_hover
 				"y-rot":
-					$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color_hover
+					$"y-rot/MeshInstance3D".get_surface_override_material(0).emission = y_axis_color_hover
 				"z-rot":
-					$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color_hover
+					$"z-rot/MeshInstance3D".get_surface_override_material(0).emission = z_axis_color_hover
 
-	elif event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			var result = _raycast_on_gizmo_layer()
 
@@ -157,7 +157,7 @@ func _process(delta: float) -> void:
 	else:
 		global_rotation = Vector3(0, 0, 0)
 	# Make the gizmo always have the same size on screen
-	scale = Vector3(0.005, 0.005, 0.005) * (get_viewport().get_camera().global_translation - global_translation).length()
+	scale = Vector3(0.005, 0.005, 0.005) * (get_viewport().get_camera_3d().global_position - global_position).length()
 
 
 func any_axis_active() -> bool:
@@ -170,21 +170,21 @@ func set_local_mode(is_local: bool) -> void:
 
 
 func _raycast_on_gizmo_layer() -> Dictionary:
-	var camera := get_viewport().get_camera()
+	var camera := get_viewport().get_camera_3d()
 
 	var ray_length := 1000
 	var mouse_pos := get_viewport().get_mouse_position()
 	var from := camera.project_ray_origin(mouse_pos)
 	var to := from + camera.project_ray_normal(mouse_pos) * ray_length
 
-	var space_state := get_world().get_direct_space_state()
+	var space_state := get_world_3d().get_direct_space_state()
 	return space_state.intersect_ray(from, to, [  ], 0b10)
 
 
 func _reset_colors():
-	$"x-axis/MeshInstance".get_surface_material(0).emission  = x_axis_color
-	$"y-axis/MeshInstance".get_surface_material(0).emission = y_axis_color
-	$"z-axis/MeshInstance".get_surface_material(0).emission = z_axis_color
-	$"x-rot/MeshInstance".get_surface_material(0).emission  = x_axis_color
-	$"y-rot/MeshInstance".get_surface_material(0).emission = y_axis_color
-	$"z-rot/MeshInstance".get_surface_material(0).emission = z_axis_color
+	$"x-axis/MeshInstance3D".get_surface_override_material(0).emission  = x_axis_color
+	$"y-axis/MeshInstance3D".get_surface_override_material(0).emission = y_axis_color
+	$"z-axis/MeshInstance3D".get_surface_override_material(0).emission = z_axis_color
+	$"x-rot/MeshInstance3D".get_surface_override_material(0).emission  = x_axis_color
+	$"y-rot/MeshInstance3D".get_surface_override_material(0).emission = y_axis_color
+	$"z-rot/MeshInstance3D".get_surface_override_material(0).emission = z_axis_color

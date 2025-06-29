@@ -1,10 +1,10 @@
-tool
+@tool
 class_name AutoDynamicFont
-extends DynamicFont
+extends FontFile
 
-export var desktop_size := 20
-export var mobile_size := 60
-export var debug_test_size := false setget set_debug_test_size
+@export var desktop_size := 20
+@export var mobile_size := 60
+@export var debug_test_size := false: set = set_debug_test_size
 
 
 func _init():

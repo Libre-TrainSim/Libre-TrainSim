@@ -1,6 +1,6 @@
 extends Control
 
-onready var sifa: Node = get_parent()
+@onready var sifa: Node = get_parent()
 
 
 func _ready() -> void:

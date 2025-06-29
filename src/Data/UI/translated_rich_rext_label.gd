@@ -2,7 +2,7 @@ class_name TranslatedRichTextLabel
 extends RichTextLabel
 
 
-onready var translation_id := text
+@onready var translation_id := text
 
 
 func _ready() -> void:
@@ -21,6 +21,6 @@ func set_text(text: String) -> void:
 
 func update_text() -> void:
 	if bbcode_enabled:
-		bbcode_text = tr(translation_id)
+		text = tr(translation_id)
 	else:
 		text = tr(translation_id)

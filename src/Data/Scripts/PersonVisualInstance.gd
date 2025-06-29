@@ -1,2 +1,2 @@
-extends Spatial
+extends Node3D
 

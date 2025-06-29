@@ -1,7 +1,7 @@
 class_name PassengerPathNode
-extends Spatial
+extends Node3D
 
-export (Array, NodePath) var connections: Array = []  # array of node paths
+@export (Array, NodePath) var connections: Array = []  # array of node paths
 var connection_nodes := []  # array of nodes
 
 enum Type {
@@ -12,7 +12,7 @@ enum Type {
 var type: int = Type.PATH_NODE
 
 func _ready():
-	$MeshInstance.queue_free()
+	$MeshInstance3D.queue_free()
 	for connection in connections:
 		var conn = get_node(connection)
 		if conn == null:

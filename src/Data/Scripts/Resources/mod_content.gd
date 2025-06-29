@@ -2,28 +2,28 @@ class_name ModContentDefinition
 extends Resource
 
 
-export (String) var unique_name: String = ""
-export (String) var display_name: String = ""
+@export (String) var unique_name: String = ""
+@export (String) var display_name: String = ""
 
-export (int) var version_major: int = 1
-export (int) var version_minor: int = 0
-export (int) var version_patch: int = 0
+@export (int) var version_major: int = 1
+@export (int) var version_minor: int = 0
+@export (int) var version_patch: int = 0
 
 # example: { "unique_name": "example_mod", "version": ">=1.0.0" }
-export (Array, Dictionary) var depends_on: Array = []
+@export (Array, Dictionary) var depends_on: Array = []
 
-export (Array, String, DIR) var environment_folders: Array = []
-export (Array, String, DIR) var material_folders: Array = []
-export (Array, String, DIR) var music_folders: Array = []
-export (Array, String, DIR) var object_folders: Array = []
-export (Array, String, DIR) var persons_folders: Array = []
-export (Array, String, DIR) var rail_type_folders: Array = []
-export (Array, String, DIR) var signal_type_folders: Array = []
-export (Array, String, DIR) var sound_folders: Array = []
-export (Array, String, DIR) var texture_folders: Array = []
+@export (Array, String, DIR) var environment_folders: Array = []
+@export (Array, String, DIR) var material_folders: Array = []
+@export (Array, String, DIR) var music_folders: Array = []
+@export (Array, String, DIR) var object_folders: Array = []
+@export (Array, String, DIR) var persons_folders: Array = []
+@export (Array, String, DIR) var rail_type_folders: Array = []
+@export (Array, String, DIR) var signal_type_folders: Array = []
+@export (Array, String, DIR) var sound_folders: Array = []
+@export (Array, String, DIR) var texture_folders: Array = []
 
-export (Array, String, FILE, "*.tscn,*.scn") var trains: Array = []
-export (Array, String, FILE, "*.tscn,*.scn") var worlds: Array = []
+@export (Array, String, FILE, "*.tscn,*.scn") var trains: Array = []
+@export (Array, String, FILE, "*.tscn,*.scn") var worlds: Array = []
 
 
 func _init() -> void:

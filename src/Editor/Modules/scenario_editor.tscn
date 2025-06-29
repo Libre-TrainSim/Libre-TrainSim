@@ -33,9 +33,9 @@ __meta__ = {
 visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -150.0
-margin_right = 150.0
-margin_bottom = 30.0
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 30.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -43,17 +43,17 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SelectMessage"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 3.0
-margin_right = -5.0
-margin_bottom = -3.0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = -5.0
+offset_bottom = -3.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="CanvasLayer/SelectMessage/HBoxContainer"]
-margin_right = 232.0
-margin_bottom = 24.0
+offset_right = 232.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 align = 1
@@ -63,10 +63,10 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="CanvasLayer/SelectMessage/HBoxContainer"]
-margin_left = 236.0
-margin_top = 2.0
-margin_right = 290.0
-margin_bottom = 22.0
+offset_left = 236.0
+offset_top = 2.0
+offset_right = 290.0
+offset_bottom = 22.0
 size_flags_vertical = 4
 text = "Cancel"
 
@@ -76,10 +76,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -200.0
-margin_top = -100.0
-margin_right = 200.0
-margin_bottom = 100.0
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -87,24 +87,24 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Message"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="RichTextLabel" parent="CanvasLayer/Message/VBoxContainer"]
-margin_right = 380.0
-margin_bottom = 156.0
+offset_right = 380.0
+offset_bottom = 156.0
 size_flags_vertical = 7
 
 [node name="Ok" type="Button" parent="CanvasLayer/Message/VBoxContainer"]
-margin_left = 166.0
-margin_top = 160.0
-margin_right = 214.0
-margin_bottom = 180.0
+offset_left = 166.0
+offset_top = 160.0
+offset_right = 214.0
+offset_bottom = 180.0
 size_flags_horizontal = 4
 text = "Okay!"
 
@@ -112,10 +112,10 @@ text = "Okay!"
 visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = -172.0
-margin_right = 134.0
-margin_bottom = -29.0
+offset_left = 4.0
+offset_top = -172.0
+offset_right = 134.0
+offset_bottom = -29.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -123,10 +123,10 @@ __meta__ = {
 [node name="V" type="VBoxContainer" parent="CanvasLayer/LabelSettings"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -134,46 +134,46 @@ __meta__ = {
 }
 
 [node name="Rails" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
-margin_right = 122.0
-margin_bottom = 24.0
+offset_right = 122.0
+offset_bottom = 24.0
 pressed = true
 text = "Rails"
 
 [node name="Signals" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
-margin_top = 28.0
-margin_right = 122.0
-margin_bottom = 52.0
+offset_top = 28.0
+offset_right = 122.0
+offset_bottom = 52.0
 pressed = true
 text = "Signals"
 
 [node name="Stations" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
-margin_top = 56.0
-margin_right = 122.0
-margin_bottom = 80.0
+offset_top = 56.0
+offset_right = 122.0
+offset_bottom = 80.0
 pressed = true
 text = "Stations"
 
 [node name="ContactPoints" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
-margin_top = 84.0
-margin_right = 122.0
-margin_bottom = 108.0
+offset_top = 84.0
+offset_right = 122.0
+offset_bottom = 108.0
 pressed = true
 text = "Contact Points"
 
 [node name="Other" type="CheckBox" parent="CanvasLayer/LabelSettings/V"]
-margin_top = 112.0
-margin_right = 122.0
-margin_bottom = 136.0
+offset_top = 112.0
+offset_right = 122.0
+offset_bottom = 136.0
 pressed = true
 text = "Other"
 
 [node name="Labels" type="Button" parent="CanvasLayer"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = -23.0
-margin_right = 59.0
-margin_bottom = -3.0
+offset_left = 5.0
+offset_top = -23.0
+offset_right = 59.0
+offset_bottom = -3.0
 text = "Labels"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -200,53 +200,53 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -163.0
-margin_top = -157.0
-margin_right = 163.0
-margin_bottom = 157.0
+offset_left = -163.0
+offset_top = -157.0
+offset_right = 163.0
+offset_bottom = 157.0
 theme = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Back" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
-margin_right = 326.0
-margin_bottom = 49.0
+offset_right = 326.0
+offset_bottom = 49.0
 theme = ExtResource( 10 )
 text = "BACK"
 
 [node name="TestTrack" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
-margin_top = 53.0
-margin_right = 326.0
-margin_bottom = 102.0
+offset_top = 53.0
+offset_right = 326.0
+offset_bottom = 102.0
 theme = ExtResource( 10 )
 text = "TEST_TRACK"
 
 [node name="ExportTrack" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
-margin_top = 106.0
-margin_right = 326.0
-margin_bottom = 155.0
+offset_top = 106.0
+offset_right = 326.0
+offset_bottom = 155.0
 theme = ExtResource( 10 )
 text = "EXPORT_TRACK"
 
 [node name="Save" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
-margin_top = 159.0
-margin_right = 326.0
-margin_bottom = 208.0
+offset_top = 159.0
+offset_right = 326.0
+offset_bottom = 208.0
 theme = ExtResource( 10 )
 text = "SAVE"
 
 [node name="QuitWithoutSaving" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
-margin_top = 212.0
-margin_right = 326.0
-margin_bottom = 261.0
+offset_top = 212.0
+offset_right = 326.0
+offset_bottom = 261.0
 theme = ExtResource( 10 )
 text = "EXIT_WITHOUT_SAVING"
 
 [node name="SaveAndQuit" type="Button" parent="CanvasLayer/Pause/VBoxContainer"]
-margin_top = 265.0
-margin_right = 326.0
-margin_bottom = 314.0
+offset_top = 265.0
+offset_right = 326.0
+offset_bottom = 314.0
 theme = ExtResource( 10 )
 text = "SAVE_AND_EXIT"
 
@@ -256,40 +256,40 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -238.5
-margin_top = -151.5
-margin_right = 238.5
-margin_bottom = 151.5
+offset_left = -238.5
+offset_top = -151.5
+offset_right = 238.5
+offset_bottom = 151.5
 
 [node name="UpdateMode" type="PanelContainer" parent="CanvasLayer"]
-margin_right = 14.0
-margin_bottom = 14.0
+offset_right = 14.0
+offset_bottom = 14.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UpdateMode"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 208.0
-margin_bottom = 47.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 208.0
+offset_bottom = 47.0
 
 [node name="AutoUpdating" type="CheckButton" parent="CanvasLayer/UpdateMode/VBoxContainer"]
-margin_right = 201.0
-margin_bottom = 40.0
+offset_right = 201.0
+offset_bottom = 40.0
 pressed = true
 text = "Auto Update Route"
 
 [node name="UpdateNow" type="Button" parent="CanvasLayer/UpdateMode/VBoxContainer"]
 visible = false
-margin_top = 44.0
-margin_right = 201.0
-margin_bottom = 64.0
+offset_top = 44.0
+offset_right = 201.0
+offset_bottom = 64.0
 text = "Update"
 
 [node name="PlayMenu" parent="CanvasLayer" instance=ExtResource( 5 )]
 visible = false
-margin_left = 12.0
-margin_top = 12.0
-margin_right = -12.0
-margin_bottom = -12.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
 context = 2
 
 [node name="ScenarioMap" parent="." instance=ExtResource( 3 )]

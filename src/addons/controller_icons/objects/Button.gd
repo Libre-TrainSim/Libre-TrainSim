@@ -1,12 +1,12 @@
 extends Button
 class_name ControllerButton
 
-export(String) var path : String = "" setget set_path
-export(int, "Both", "Keyboard/Mouse", "Controller") var show_only : int = 0 setget set_show_only
-export(int, "None", "Keyboard/Mouse", "Controller") var force_type : int = 0 setget set_force_type
+@export var path: String : String = "": set = set_path
+@export var show_only : int = 0: set = set_show_only
+@export var force_type : int = 0: set = set_force_type
 
 func _ready():
-	ControllerIcons.connect("input_type_changed", self, "_on_input_type_changed")
+	ControllerIcons.connect("input_type_changed", Callable(self, "_on_input_type_changed"))
 	set_path(path)
 
 func _on_input_type_changed(input_type):

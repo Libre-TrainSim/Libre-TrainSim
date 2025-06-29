@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 
-onready var signal_logic: Node = get_parent()
-onready var world: Node = find_parent("World")
+@onready var signal_logic: Node = get_parent()
+@onready var world: Node = find_parent("World")
 
 
 func _ready() -> void:

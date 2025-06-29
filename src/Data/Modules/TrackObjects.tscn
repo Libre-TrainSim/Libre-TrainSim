@@ -6,7 +6,7 @@
 resource_local_to_scene = true
 transform_format = 1
 
-[node name="TO" type="MultiMeshInstance" groups=["TrackObject"]]
+[node name="TO" type="MultiMeshInstance3D" groups=["TrackObject"]]
 lod_max_distance = 100.0
 multimesh = SubResource( 1 )
 script = ExtResource( 3 )

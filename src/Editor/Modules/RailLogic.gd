@@ -34,7 +34,7 @@ func set_rail_logic(rail_logic):
 
 func update_general_settings_ui():
 	$GeneralSettings/Distance.value = current_rail_logic.on_rail_position
-	$GeneralSettings/Forwad.pressed = current_rail_logic.forward
+	$GeneralSettings/Forwad.button_pressed = current_rail_logic.forward
 
 
 func _on_Distance_value_changed(value):
@@ -86,7 +86,7 @@ func update_station_settings_ui():
 	$StationSettings/Length.value = current_rail_logic.length
 	$StationSettings/AssignedSignal.text = current_rail_logic.assigned_signal
 	$StationSettings/PlatformSide.selected = current_rail_logic.platform_side
-	$StationSettings/EnablePersonSystem.pressed = current_rail_logic.personSystem
+	$StationSettings/EnablePersonSystem.button_pressed = current_rail_logic.personSystem
 	$StationSettings/PlatformHeight.visible = current_rail_logic.personSystem
 	$StationSettings/Label4.visible = current_rail_logic.personSystem
 	$StationSettings/PlatformHeight.value = current_rail_logic.platformHeight

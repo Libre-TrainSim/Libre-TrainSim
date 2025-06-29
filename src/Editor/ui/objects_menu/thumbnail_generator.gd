@@ -1,4 +1,4 @@
-extends Viewport
+extends SubViewport
 
 
 signal texture_finished(path)
@@ -8,19 +8,19 @@ signal group_finished
 var scene_root: Node = null
 
 
-onready var camera := $Camera as Camera
-onready var bounds := AABB()
+@onready var camera := $Camera3D as Camera3D
+@onready var bounds := AABB()
 
 
 func _ready() -> void:
 	if ProjectSettings["game/debug/editor_save_thumbnails"]:
-		var dir := Directory.new()
+		var dir := DirAccess.new()
 		if !dir.dir_exists("user://debug/"):
 			var _err := dir.make_dir_recursive("user://debug/")
 
 
 func position_camera() -> void:
-	camera.translation = bounds.grow(2).end
+	camera.position = bounds.grow(2).end
 	camera.look_at(bounds.get_center(), Vector3.UP)
 
 
@@ -36,10 +36,10 @@ func create_texture(scene_path: String, objects: ObjectGroup) -> void:
 
 
 func setup_scene(scene: PackedScene) -> bool:
-	if !scene.can_instance():
+	if !scene.can_instantiate():
 		Logger.err("Can't instantiate scene", scene)
 		return false
-	scene_root = scene.instance()
+	scene_root = scene.instantiate()
 	add_child(scene_root)
 	bounds = calculate_bounds(scene_root)
 	return true
@@ -47,8 +47,8 @@ func setup_scene(scene: PackedScene) -> bool:
 
 func calculate_bounds(node: Node) -> AABB:
 	var aabb := AABB()
-	if node is VisualInstance:
-		aabb = (node as VisualInstance).get_transformed_aabb()
+	if node is VisualInstance3D:
+		aabb = (node as VisualInstance3D).get_transformed_aabb()
 
 	for child in node.get_children():
 		aabb = aabb.merge(calculate_bounds(child))
@@ -61,8 +61,8 @@ func generate_thumbnails(objects: ObjectGroup) -> void:
 		if !setup_scene(scene):
 			continue
 		position_camera()
-		yield(VisualServer, "frame_post_draw")
+		await RenderingServer.frame_post_draw
 		create_texture(scene.resource_path, objects)
 		scene_root.queue_free()
-		yield(VisualServer, "frame_post_draw")
+		await RenderingServer.frame_post_draw
 	emit_signal("group_finished")

@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh"
+uid="uid://bswi1loosb72c"
+path="res://.godot/imported/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh"
 
 [deps]
 
-files=[ "res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh" ]
+files=["res://.godot/imported/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh"]
 
 source_file="res://Resources/Objects/Pfost_long.obj"
-dest_files=[ "res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh", "res://.import/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh" ]
+dest_files=["res://.godot/imported/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh", "res://.godot/imported/Pfost_long.obj-c1fa3688b780c822a5d998b77f3261ab.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

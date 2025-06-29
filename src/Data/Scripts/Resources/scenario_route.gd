@@ -3,27 +3,27 @@ extends Resource
 
 # to overwrite default rail logic, I guess?
 # Dict[String, RailLogicSettings] ; RailLogicNodeName -> Settings
-export (Dictionary) var rail_logic_settings := {}
+@export (Dictionary) var rail_logic_settings := {}
 
 # Array[RoutePoint]
-export (Array, Resource) var route_points := []
+@export (Array, Resource) var route_points := []
 
-export (bool) var activate_only_at_specific_routes := false  # ?????
-export (Array, String) var specific_routes := []  # ???
+@export (bool) var activate_only_at_specific_routes := false  # ?????
+@export (Array, String) var specific_routes := []  # ???
 
-export (bool) var is_playable := true  # for AI trains set to false, I guess
-export (String) var train_name := "JFR1_Red"  # which train drives here
+@export (bool) var is_playable := true  # for AI trains set to false, I guess
+@export (String) var train_name := "JFR1_Red"  # which train drives here
 
-export (String) var description := ""
+@export (String) var description := ""
 
 # example:
 # route begins at 6:00, goes every 15 minutes, ends at 21:00
 # interval_start = 21600
 # interval_end = 75600
 # interval = 900
-export (int) var interval := 0  # how frequently this route drives, in minutes
-export (int) var interval_end := 0  # last time of day this route drives, in seconds
-export (int) var interval_start := 0  # first time of day this route drives, in seconds
+@export (int) var interval := 0  # how frequently this route drives, in minutes
+@export (int) var interval_end := 0  # last time of day this route drives, in seconds
+@export (int) var interval_start := 0  # first time of day this route drives, in seconds
 
 # calculated data
 var calculated_rail_route := []
@@ -240,14 +240,14 @@ func get_minimal_platform_length(world: Node) -> int:
 
 
 func remove_point(index: int):
-	route_points[index].disconnect("route_rebuild_required", self, "_on_route_changed")
+	route_points[index].disconnect("route_rebuild_required", Callable(self, "_on_route_changed"))
 	route_points.remove(index)
 	dirty = true
 
 
 func add_point(point: RoutePoint) -> void:
 	route_points.append(point)
-	point.connect("route_rebuild_required", self, "_on_route_changed")
+	point.connect("route_rebuild_required", Callable(self, "_on_route_changed"))
 	dirty = true
 
 
@@ -276,7 +276,7 @@ func move_point_down(index: int) -> void:
 
 func connect_points() -> void:
 	for point in route_points:
-		point.connect("route_rebuild_required", self, "_on_route_changed")
+		point.connect("route_rebuild_required", Callable(self, "_on_route_changed"))
 
 
 func _on_route_changed(changed_point: RoutePoint) -> void:
@@ -285,4 +285,4 @@ func _on_route_changed(changed_point: RoutePoint) -> void:
 		return
 	dirty = route_points.has(changed_point)
 	if !dirty:
-		changed_point.disconnect("route_rebuild_required", self, "_on_route_changed")
+		changed_point.disconnect("route_rebuild_required", Callable(self, "_on_route_changed"))

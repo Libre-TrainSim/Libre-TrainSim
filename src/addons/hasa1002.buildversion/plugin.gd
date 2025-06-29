@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 
@@ -11,14 +11,14 @@ func _enter_tree() -> void:
 	var interface := get_editor_interface()
 	var was_playing := false
 	while running:
-		yield(interface.get_tree(), "idle_frame")
+		await interface.get_tree().idle_frame
 		if was_playing and !interface.is_playing_scene():
 			version_exporter.reset()
 		was_playing = interface.is_playing_scene()
 
 
 func _exit_tree() -> void:
-	disable_plugin()
+	_disable_plugin()
 
 
 func enable_plugin() -> void:
@@ -26,7 +26,7 @@ func enable_plugin() -> void:
 	add_export_plugin(version_exporter)
 
 
-func disable_plugin() -> void:
+func _disable_plugin() -> void:
 	running = false
 	version_exporter.reset()
 	remove_export_plugin(version_exporter)

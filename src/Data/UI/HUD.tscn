@@ -8,14 +8,14 @@
 [ext_resource path="res://Data/Scripts/HUD.gd" type="Script" id=6]
 [ext_resource path="res://Data/UI/TrainInfo.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Data/Fonts/FontIngame_Small.tres" type="DynamicFont" id=9]
-[ext_resource path="res://Data/Misc/GreenSignal.png" type="Texture" id=10]
-[ext_resource path="res://Data/Misc/Signal.png" type="Texture" id=11]
-[ext_resource path="res://Data/Misc/Station.png" type="Texture" id=12]
-[ext_resource path="res://Data/Fonts/FontIngame_Small_Bold.tres" type="DynamicFont" id=13]
-[ext_resource path="res://Data/Misc/SpeedLimit.png" type="Texture" id=14]
-[ext_resource path="res://Data/Misc/NextTable.png" type="Texture" id=15]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Data/Fonts/FontIngame_Small.tres" type="FontFile" id=9]
+[ext_resource path="res://Data/Misc/GreenSignal.png" type="Texture2D" id=10]
+[ext_resource path="res://Data/Misc/Signal.png" type="Texture2D" id=11]
+[ext_resource path="res://Data/Misc/Station.png" type="Texture2D" id=12]
+[ext_resource path="res://Data/Fonts/FontIngame_Small_Bold.tres" type="FontFile" id=13]
+[ext_resource path="res://Data/Misc/SpeedLimit.png" type="Texture2D" id=14]
+[ext_resource path="res://Data/Misc/NextTable.png" type="Texture2D" id=15]
+[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=16]
 [ext_resource path="res://Data/UI/blur.tres" type="Material" id=18]
 [ext_resource path="res://Data/UI/input_rich_text_label.gd" type="Script" id=20]
 
@@ -28,8 +28,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 1 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
@@ -40,8 +40,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 1 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.967 ]
 }
@@ -52,8 +52,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = false
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 1 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.967 ]
 }
@@ -66,8 +66,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 1 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
 }
@@ -78,14 +78,14 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array( 0, 0.9 ),
+"transitions": PackedFloat32Array( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="HUD" type="CanvasLayer"]
-pause_mode = 2
+process_mode = 2
 script = ExtResource( 6 )
 
 [node name="IngameInformation" type="Control" parent="."]
@@ -99,10 +99,10 @@ __meta__ = {
 [node name="Next" type="Control" parent="IngameInformation"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -250.0
-margin_top = 40.0
-margin_right = 1.0
-margin_bottom = 229.0
+offset_left = -250.0
+offset_top = 40.0
+offset_right = 1.0
+offset_bottom = 229.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -110,9 +110,9 @@ __meta__ = {
 [node name="TextureRect" type="TextureRect" parent="IngameInformation/Next"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -261.0
-margin_top = 1.0
-margin_bottom = 190.0
+offset_left = -261.0
+offset_top = 1.0
+offset_bottom = 190.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource( 15 )
@@ -123,117 +123,117 @@ __meta__ = {
 [node name="GridContainer" type="GridContainer" parent="IngameInformation/Next"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -234.0
-margin_top = 11.0
-margin_right = -8.0
-margin_bottom = 147.0
+offset_left = -234.0
+offset_top = 11.0
+offset_right = -8.0
+offset_bottom = 147.0
 columns = 3
 
 [node name="Label" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_right = 71.0
-margin_bottom = 28.0
+offset_right = 71.0
+offset_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 13 )
+theme_override_fonts/font = ExtResource( 13 )
 text = "DISTANCE"
 align = 1
 
 [node name="Label3" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 75.0
-margin_right = 120.0
-margin_bottom = 28.0
+offset_left = 75.0
+offset_right = 120.0
+offset_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 13 )
+theme_override_fonts/font = ExtResource( 13 )
 text = "TYPE"
 align = 1
 
 [node name="Label2" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 124.0
-margin_right = 226.0
-margin_bottom = 28.0
+offset_left = 124.0
+offset_right = 226.0
+offset_bottom = 28.0
 size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 13 )
+theme_override_fonts/font = ExtResource( 13 )
 text = "INFORMATION"
 align = 1
 
 [node name="DistanceToSignal" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_top = 32.0
-margin_right = 71.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 0, 32 )
-custom_fonts/font = ExtResource( 9 )
+offset_top = 32.0
+offset_right = 71.0
+offset_bottom = 64.0
+custom_minimum_size = Vector2( 0, 32 )
+theme_override_fonts/font = ExtResource( 9 )
 text = "-"
 align = 1
 valign = 1
 
 [node name="TextureRect" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 75.0
-margin_top = 32.0
-margin_right = 120.0
-margin_bottom = 64.0
+offset_left = 75.0
+offset_top = 32.0
+offset_right = 120.0
+offset_bottom = 64.0
 texture = ExtResource( 11 )
 stretch_mode = 4
 
 [node name="Signal" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 124.0
-margin_top = 32.0
-margin_right = 226.0
-margin_bottom = 64.0
+offset_left = 124.0
+offset_top = 32.0
+offset_right = 226.0
+offset_bottom = 64.0
 texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="DistanceToSpeedLimit" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_top = 68.0
-margin_right = 71.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 32 )
-custom_fonts/font = ExtResource( 9 )
+offset_top = 68.0
+offset_right = 71.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 32 )
+theme_override_fonts/font = ExtResource( 9 )
 text = "-"
 align = 1
 valign = 1
 
 [node name="TextureRect2" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 75.0
-margin_top = 68.0
-margin_right = 120.0
-margin_bottom = 100.0
+offset_left = 75.0
+offset_top = 68.0
+offset_right = 120.0
+offset_bottom = 100.0
 texture = ExtResource( 14 )
 stretch_mode = 4
 
 [node name="SpeedLimit" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 124.0
-margin_top = 68.0
-margin_right = 226.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 32 )
-custom_fonts/font = ExtResource( 9 )
+offset_left = 124.0
+offset_top = 68.0
+offset_right = 226.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 32 )
+theme_override_fonts/font = ExtResource( 9 )
 text = "-"
 align = 1
 valign = 1
 
 [node name="DistanceToStation" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_top = 104.0
-margin_right = 71.0
-margin_bottom = 136.0
-rect_min_size = Vector2( 0, 32 )
-custom_fonts/font = ExtResource( 9 )
+offset_top = 104.0
+offset_right = 71.0
+offset_bottom = 136.0
+custom_minimum_size = Vector2( 0, 32 )
+theme_override_fonts/font = ExtResource( 9 )
 text = "-"
 align = 1
 valign = 1
 
 [node name="TextureRect3" type="TextureRect" parent="IngameInformation/Next/GridContainer"]
-margin_left = 75.0
-margin_top = 104.0
-margin_right = 120.0
-margin_bottom = 136.0
+offset_left = 75.0
+offset_top = 104.0
+offset_right = 120.0
+offset_bottom = 136.0
 texture = ExtResource( 12 )
 stretch_mode = 4
 
 [node name="Arrival" type="Label" parent="IngameInformation/Next/GridContainer"]
-margin_left = 124.0
-margin_top = 107.0
-margin_right = 226.0
-margin_bottom = 133.0
-custom_fonts/font = ExtResource( 9 )
+offset_left = 124.0
+offset_top = 107.0
+offset_right = 226.0
+offset_bottom = 133.0
+theme_override_fonts/font = ExtResource( 9 )
 text = "-"
 align = 1
 
@@ -243,8 +243,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -800.0
-margin_top = -600.0
+offset_left = -800.0
+offset_top = -600.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -264,8 +264,8 @@ visible = false
 
 [node name="FPS" type="Label" parent="."]
 visible = false
-margin_right = 40.0
-margin_bottom = 14.0
+offset_right = 40.0
+offset_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -276,16 +276,16 @@ material = ExtResource( 18 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -45.0
+offset_top = -45.0
 
 [node name="MessageLabel" type="RichTextLabel" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 53.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 1017.0
+offset_bottom = 53.0
 size_flags_horizontal = 13
 size_flags_vertical = 4
-custom_fonts/normal_font = ExtResource( 16 )
+theme_override_fonts/normal_font = ExtResource( 16 )
 text = "Welcome in Hainfurt"
 fit_content_height = true
 scroll_active = false
@@ -293,7 +293,7 @@ script = ExtResource( 20 )
 centered = true
 
 [node name="Message" type="AnimationPlayer" parent="."]
-pause_mode = 1
+process_mode = 1
 anims/fade = SubResource( 1 )
 
 [node name="Bling" type="AudioStreamPlayer2D" parent="."]
@@ -312,11 +312,11 @@ __meta__ = {
 anims/FadeOut = SubResource( 2 )
 
 [node name="Label" type="Label" parent="Black"]
-margin_left = 39.2001
-margin_top = 34.9623
-margin_right = 308.2
-margin_bottom = 79.9623
-custom_fonts/font = ExtResource( 16 )
+offset_left = 39.2001
+offset_top = 34.9623
+offset_right = 308.2
+offset_bottom = 79.9623
+theme_override_fonts/font = ExtResource( 16 )
 text = "STARTING_SIMULATION"
 __meta__ = {
 "_edit_use_anchors_": false

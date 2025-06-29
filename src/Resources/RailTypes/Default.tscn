@@ -7,10 +7,10 @@
 [ext_resource path="res://Resources/Materials/Gravel.tres" type="Material" id=5]
 [ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=6]
 
-[node name="RailType" type="Spatial"]
+[node name="RailType" type="Node3D"]
 script = ExtResource( 4 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource( 3 )
 material/0 = ExtResource( 6 )
 material/1 = ExtResource( 2 )

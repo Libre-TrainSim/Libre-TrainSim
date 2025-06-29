@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorProperty
 class_name LightColorEditor
 
@@ -20,7 +20,7 @@ var updating := false
 func _init():
 	label = "Use Color Temperature"
 	enable_cb.align = Button.ALIGN_LEFT
-	enable_cb.connect("toggled", self, "_on_enable_cb_toggled")
+	enable_cb.connect("toggled", Callable(self, "_on_enable_cb_toggled"))
 	add_child(enable_cb)
 	add_focusable(enable_cb)
 	add_focusable(color)
@@ -30,13 +30,13 @@ func _init():
 	temperature.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	temperature.min_value = 1000
 	temperature.max_value = 40_000
-	temperature.connect("value_changed", self, "_on_temperature_changed")
+	temperature.connect("value_changed", Callable(self, "_on_temperature_changed"))
 	temperature_hbox.add_child(temperature)
 
-	color_filter.connect("color_changed", self, "_on_color_filter_changed")
+	color_filter.connect("color_changed", Callable(self, "_on_color_filter_changed"))
 	color_filter_hbox.add_child(color_filter)
 
-	color.connect("color_changed", self, "_on_color_changed")
+	color.connect("color_changed", Callable(self, "_on_color_changed"))
 	color_hbox.add_child(color)
 
 	vbox.size_flags_horizontal = VBoxContainer.SIZE_EXPAND_FILL
@@ -54,7 +54,7 @@ func update_property():
 	var obj := get_edited_object()
 	if !obj.has_meta("use_color_temperature"):
 		obj.set_meta("use_color_temperature", true)
-	enable_cb.pressed = obj.get_meta("use_color_temperature")
+	enable_cb.button_pressed = obj.get_meta("use_color_temperature")
 	_on_enable_cb_toggled(enable_cb.pressed)
 
 	if !obj.has_meta("color_temperature"):
@@ -79,7 +79,7 @@ func _on_enable_cb_toggled(state: bool):
 	if enable_cb.pressed:
 		var cfilter := color_filter.color
 		obj[get_edited_property()] = calculate_color(temperature.value) \
-				.blend(cfilter * cfilter.a)
+				super.blend(cfilter * cfilter.a)
 	else:
 		obj[get_edited_property()] = color.color
 	emit_changed(get_edited_property(), obj[get_edited_property()])
@@ -91,7 +91,7 @@ func _on_color_filter_changed(filter_color: Color):
 	var obj := get_edited_object()
 	obj.set_meta("color_filter", filter_color)
 	obj[get_edited_property()] = calculate_color(temperature.value) \
-			.blend(filter_color * filter_color.a)
+			super.blend(filter_color * filter_color.a)
 	emit_changed(get_edited_property(), obj[get_edited_property()])
 
 
@@ -138,7 +138,7 @@ static func make_color_button() -> ColorPickerButton:
 
 
 static func calculate_color(temperature: int) -> Color:
-	var light_color := Color.white
+	var light_color := Color.WHITE
 	var t = temperature / 100.0
 	if t <= 66:
 		light_color.r = 1.0

@@ -9,7 +9,7 @@
 [ext_resource path="res://Resources/Materials/Metal_White.tres" type="Material" id=7]
 [ext_resource path="res://Resources/Objects/TrainStationBuilding2.obj" type="ArrayMesh" id=8]
 
-[node name="TrainStationBuilding2" type="MeshInstance"]
+[node name="TrainStationBuilding2" type="MeshInstance3D"]
 mesh = ExtResource( 8 )
 material/0 = ExtResource( 1 )
 material/1 = ExtResource( 5 )

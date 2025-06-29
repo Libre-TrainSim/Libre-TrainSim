@@ -5,7 +5,7 @@
 [ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=3]
 [ext_resource path="res://Resources/Objects/office3.obj" type="ArrayMesh" id=4]
 
-[node name="Office3" type="MeshInstance"]
+[node name="Office3" type="MeshInstance3D"]
 mesh = ExtResource( 4 )
 material/0 = ExtResource( 1 )
 material/1 = ExtResource( 3 )

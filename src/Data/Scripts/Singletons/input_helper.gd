@@ -31,7 +31,7 @@ func make_strings_from_actions(actions: Array) -> Array:
 	for action in actions:
 		assert(InputMap.has_action(action))
 		var found_event := false
-		for event in InputMap.get_action_list(action):
+		for event in InputMap.action_get_events(action):
 			if last_control_type == ControlType.Keyboard and event is InputEventKey:
 				controls.push_back(event.as_text())
 				found_event = true
@@ -46,7 +46,7 @@ func make_strings_from_actions(actions: Array) -> Array:
 				break
 		if !found_event:
 			controls.push_back("n/a")
-	return controls # if you get a debug break here, the translation is broken
+	return controls # if you get a debug break here, the position is broken
 
 
 func get_joy_button_name(button_index: int) -> String:

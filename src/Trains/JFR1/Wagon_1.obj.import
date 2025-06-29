@@ -1,20 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh"
+uid="uid://btw4qtdca8wng"
+path="res://.godot/imported/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh"
 
 [deps]
 
-files=[ "res://.import/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh" ]
+files=["res://.godot/imported/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh"]
 
 source_file="res://Trains/JFR1/Wagon_1.obj"
-dest_files=[ "res://.import/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh", "res://.import/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh" ]
+dest_files=["res://.godot/imported/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh", "res://.godot/imported/Wagon_1.obj-cabbb5543b1f443eafdcca4d1ccbc79e.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

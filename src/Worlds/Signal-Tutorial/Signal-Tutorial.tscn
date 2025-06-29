@@ -1,50 +1,34 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://csnvtpb1ltd6a"]
 
-[ext_resource path="res://Data/Scripts/World.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Environments/BasicSun.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Data/Scripts/Signal.gd" type="Script" id=3]
-[ext_resource path="res://Data/Scripts/SpeedLimitWarnSignal.gd" type="Script" id=4]
-[ext_resource path="res://Worlds/Signal-Tutorial/SignalTutorialScript.gd" type="Script" id=5]
-[ext_resource path="res://Data/Modules/Rail.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Resources/Environments/BasicWorldEnvironment.tres" type="Environment" id=7]
-[ext_resource path="res://Data/Modules/SpeedLimit_Lf7.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Data/Scripts/BuildingsNode.gd" type="Script" id=9]
-[ext_resource path="res://Data/Scripts/Rail.gd" type="Script" id=10]
-[ext_resource path="res://Data/Modules/Signal.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Data/Modules/WarnSpeedLimit_Lf6.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Data/Scripts/SpeedLimitSignal.gd" type="Script" id=13]
+[ext_resource type="Script" path="res://Data/Scripts/World.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Resources/Environments/BasicSun.tscn" id="2"]
+[ext_resource type="Script" path="res://Worlds/Signal-Tutorial/SignalTutorialScript.gd" id="5"]
+[ext_resource type="PackedScene" path="res://Data/Modules/Rail.tscn" id="6"]
+[ext_resource type="Environment" uid="uid://curw6tgn0x7xq" path="res://Resources/Environments/BasicWorldEnvironment.tres" id="7"]
+[ext_resource type="PackedScene" path="res://Data/Modules/SpeedLimit_Lf7.tscn" id="8"]
+[ext_resource type="Script" path="res://Data/Scripts/BuildingsNode.gd" id="9"]
+[ext_resource type="PackedScene" path="res://Data/Modules/Signal.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://Data/Modules/WarnSpeedLimit_Lf6.tscn" id="12"]
 
 [node name="World" type="Node3D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 __meta__ = {
 "chunk_version": 2
 }
 FileName = "Signal-Tutorial"
-world_origin_on_last_save = Vector3( 0, 0, 0 )
+world_origin_on_last_save = Vector3(0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." instance=ExtResource( 2 )]
-transform = Transform3D( 1, 0, 0, 0, -0.766044, 0.642787, 0, -0.642787, -0.766044, 0, 80.3552, 0 )
-light_color = Color( 1, 0.958731, 0.917809, 1 )
-light_bake_mode = 2
-shadow_enabled = true
-directional_shadow_depth_range = 1
-directional_shadow_max_distance = 120.0
-__meta__ = {
-"color_filter": Color( 1, 1, 1, 0 ),
-"color_temperature": 5900,
-"use_color_temperature": true
-}
+[node name="DirectionalLight3D" parent="." instance=ExtResource("2")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 7 )
+environment = ExtResource("7")
 
 [node name="Players" type="Node3D" parent="."]
 
 [node name="Signals" type="Node3D" parent="."]
 
-[node name="KS_Signal_1" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 0 )
-script = ExtResource( 3 )
+[node name="KS_Signal_1" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 0)
 attached_rail = "KS_Rail"
 on_rail_position = 200.0
 forward = true
@@ -55,9 +39,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="KS_Signal_2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0 )
-script = ExtResource( 3 )
+[node name="KS_Signal_2" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0)
 attached_rail = "KS_Rail"
 on_rail_position = 500.0
 forward = true
@@ -68,9 +51,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="KS_Signal_5" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 900, 0, 0 )
-script = ExtResource( 3 )
+[node name="KS_Signal_5" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 900, 0, 0)
 attached_rail = "KS_Rail"
 on_rail_position = 900.0
 forward = true
@@ -81,9 +63,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="KS_Signal_3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 2.3319e-05, 0, 1, 0, -2.3319e-05, 0, 1, 1150, 0, 0 )
-script = ExtResource( 3 )
+[node name="KS_Signal_3" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 2.3319e-05, 0, 1, 0, -2.3319e-05, 0, 1, 1150, 0, 0)
 attached_rail = "KS_Rail2"
 on_rail_position = 150.0
 forward = true
@@ -94,9 +75,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="KS_Signal_6" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 7.77299e-05, 0, 1, 0, -7.77299e-05, 0, 1, 1500, 0, 0 )
-script = ExtResource( 3 )
+[node name="KS_Signal_6" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 7.77299e-05, 0, 1, 0, -7.77299e-05, 0, 1, 1500, 0, 0)
 attached_rail = "KS_Rail2"
 on_rail_position = 500.0
 forward = true
@@ -107,9 +87,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="KS_Signal_4" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0.000153905, 0, 1, 0, -0.000153905, 0, 1, 1990, 0, 0 )
-script = ExtResource( 3 )
+[node name="KS_Signal_4" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0.000153905, 0, 1, 0, -0.000153905, 0, 1, 1990, 0, 0)
 attached_rail = "KS_Rail2"
 on_rail_position = 990.0
 forward = true
@@ -120,9 +99,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Ks/Ks.tscn"
 operation_mode = 0
 
-[node name="HPF_Signal_1" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 50 )
-script = ExtResource( 3 )
+[node name="HPF_Signal_1" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 50)
 attached_rail = "HV_Form_Rail"
 on_rail_position = 200.0
 forward = true
@@ -133,9 +111,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 operation_mode = 0
 
-[node name="VOF_Signal_1" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 450, 0, 50 )
-script = ExtResource( 3 )
+[node name="VOF_Signal_1" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 450, 0, 50)
 attached_rail = "HV_Form_Rail"
 on_rail_position = 450.0
 forward = true
@@ -146,9 +123,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Vo/Form/VoForm.tscn"
 operation_mode = 0
 
-[node name="HPF_Signal_2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 550, 0, 50 )
-script = ExtResource( 3 )
+[node name="HPF_Signal_2" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 550, 0, 50)
 attached_rail = "HV_Form_Rail"
 on_rail_position = 550.0
 forward = true
@@ -159,9 +135,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 operation_mode = 0
 
-[node name="VOF_Signal_2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 700, 0, 50 )
-script = ExtResource( 3 )
+[node name="VOF_Signal_2" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 700, 0, 50)
 attached_rail = "HV_Form_Rail"
 on_rail_position = 700.0
 forward = true
@@ -172,9 +147,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Vo/Form/VoForm.tscn"
 operation_mode = 0
 
-[node name="HPF_Signal_3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 990, 0, 50 )
-script = ExtResource( 3 )
+[node name="HPF_Signal_3" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 990, 0, 50)
 attached_rail = "HV_Form_Rail"
 on_rail_position = 990.0
 forward = true
@@ -185,25 +159,22 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 operation_mode = 0
 
-[node name="WarnSpeed_HPF" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 12 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1300, 0, 50 )
-script = ExtResource( 4 )
+[node name="WarnSpeed_HPF" parent="Signals" instance=ExtResource("12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1300, 0, 50)
 attached_rail = "HV_Form_Rail2"
 on_rail_position = 300.0
 forward = true
 warn_speed = 30.0
 
-[node name="Speed_HPF" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1500, 0, 50 )
-script = ExtResource( 13 )
+[node name="Speed_HPF" parent="Signals" instance=ExtResource("8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1500, 0, 50)
 attached_rail = "HV_Form_Rail2"
 on_rail_position = 500.0
 forward = true
 speed = 30.0
 
-[node name="VOF_Signal_3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1700, 0, 50 )
-script = ExtResource( 3 )
+[node name="VOF_Signal_3" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1700, 0, 50)
 attached_rail = "HV_Form_Rail2"
 on_rail_position = 700.0
 forward = true
@@ -214,9 +185,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Vo/Form/VoForm.tscn"
 operation_mode = 0
 
-[node name="HPF_Signal_4" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1990, 0, 50 )
-script = ExtResource( 3 )
+[node name="HPF_Signal_4" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1990, 0, 50)
 attached_rail = "HV_Form_Rail2"
 on_rail_position = 990.0
 forward = true
@@ -227,9 +197,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Form/HpForm.tscn"
 operation_mode = 0
 
-[node name="HPL_Signal_1" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 100 )
-script = ExtResource( 3 )
+[node name="HPL_Signal_1" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 100)
 attached_rail = "HV_Light_Rail"
 on_rail_position = 200.0
 forward = true
@@ -240,9 +209,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Light3D/HpLight.tscn"
 operation_mode = 0
 
-[node name="VOL_Signal_1" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 450, 0, 100 )
-script = ExtResource( 3 )
+[node name="VOL_Signal_1" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 450, 0, 100)
 attached_rail = "HV_Light_Rail"
 on_rail_position = 450.0
 forward = true
@@ -253,9 +221,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Vo/Light3D/VoLight.tscn"
 operation_mode = 0
 
-[node name="HPL_Signal_2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 550, 0, 100 )
-script = ExtResource( 3 )
+[node name="HPL_Signal_2" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 550, 0, 100)
 attached_rail = "HV_Light_Rail"
 on_rail_position = 550.0
 forward = true
@@ -266,9 +233,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Light3D/HpLight.tscn"
 operation_mode = 0
 
-[node name="VOL_Signal_2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 700, 0, 100 )
-script = ExtResource( 3 )
+[node name="VOL_Signal_2" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 700, 0, 100)
 attached_rail = "HV_Light_Rail"
 on_rail_position = 700.0
 forward = true
@@ -279,9 +245,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Vo/Light3D/VoLight.tscn"
 operation_mode = 0
 
-[node name="HPL_Signal_3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 990, 0, 100 )
-script = ExtResource( 3 )
+[node name="HPL_Signal_3" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 990, 0, 100)
 attached_rail = "HV_Light_Rail"
 on_rail_position = 990.0
 forward = true
@@ -292,25 +257,22 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Light3D/HpLight.tscn"
 operation_mode = 0
 
-[node name="WarnSpeed_HPL" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 12 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1300, 0, 100 )
-script = ExtResource( 4 )
+[node name="WarnSpeed_HPL" parent="Signals" instance=ExtResource("12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1300, 0, 100)
 attached_rail = "HV_Light_Rail2"
 on_rail_position = 300.0
 forward = true
 warn_speed = 30.0
 
-[node name="Speed_HPL" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 8 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1500, 0, 100 )
-script = ExtResource( 13 )
+[node name="Speed_HPL" parent="Signals" instance=ExtResource("8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1500, 0, 100)
 attached_rail = "HV_Light_Rail2"
 on_rail_position = 500.0
 forward = true
 speed = 30.0
 
-[node name="VOL_Signal_3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1700, 0, 100 )
-script = ExtResource( 3 )
+[node name="VOL_Signal_3" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1700, 0, 100)
 attached_rail = "HV_Light_Rail2"
 on_rail_position = 700.0
 forward = true
@@ -321,9 +283,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Vo/Light3D/VoLight.tscn"
 operation_mode = 0
 
-[node name="HPL_Signal_4" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1990, 0, 100 )
-script = ExtResource( 3 )
+[node name="HPL_Signal_4" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1990, 0, 100)
 attached_rail = "HV_Light_Rail2"
 on_rail_position = 990.0
 forward = true
@@ -334,9 +295,8 @@ speed = -1.0
 visual_instance_path = "res://Resources/SignalTypes/Hp/Light3D/HpLight.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_1" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_1" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 0, 150)
 attached_rail = "HL_Rail"
 on_rail_position = 200.0
 forward = true
@@ -347,9 +307,8 @@ speed = 160.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_2" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 400, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_2" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 400, 0, 150)
 attached_rail = "HL_Rail"
 on_rail_position = 400.0
 forward = true
@@ -360,9 +319,8 @@ speed = 160.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_3" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 700, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_3" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 700, 0, 150)
 attached_rail = "HL_Rail"
 on_rail_position = 700.0
 forward = true
@@ -373,9 +331,8 @@ speed = 100.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_4" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 990, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_4" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 990, 0, 150)
 attached_rail = "HL_Rail"
 on_rail_position = 990.0
 forward = true
@@ -386,9 +343,8 @@ speed = 100.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_5" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1200, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_5" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1200, 0, 150)
 attached_rail = "HL_Rail2"
 on_rail_position = 200.0
 forward = true
@@ -399,9 +355,8 @@ speed = 60.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_6" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1400, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_6" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1400, 0, 150)
 attached_rail = "HL_Rail2"
 on_rail_position = 400.0
 forward = true
@@ -412,9 +367,8 @@ speed = 40.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_7" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1700, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_7" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1700, 0, 150)
 attached_rail = "HL_Rail2"
 on_rail_position = 700.0
 forward = true
@@ -425,9 +379,8 @@ speed = 160.0
 visual_instance_path = "res://Resources/SignalTypes/Hl/Hl.tscn"
 operation_mode = 0
 
-[node name="HL_Signal_8" type="Node3D" parent="Signals" groups=["Signal"] instance=ExtResource( 11 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1990, 0, 150 )
-script = ExtResource( 3 )
+[node name="HL_Signal_8" parent="Signals" instance=ExtResource("11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1990, 0, 150)
 attached_rail = "HL_Rail2"
 on_rail_position = 990.0
 forward = true
@@ -440,22 +393,21 @@ operation_mode = 0
 
 [node name="Rails" type="Node3D" parent="."]
 
-[node name="HV_Form_Rail" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
-script = ExtResource( 10 )
+[node name="HV_Form_Rail" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 0, 0, 0 )
+"chunk_pos": Vector3(0, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 0, 0, 50 )
-end_pos = Vector3( 1000, 0, 50 )
+start_pos = Vector3(0, 0, 50)
+end_pos = Vector3(1000, 0, 50)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -468,23 +420,22 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="KS_Rail" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-script = ExtResource( 10 )
+[node name="KS_Rail" parent="Rails" instance=ExtResource("6")]
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 0, 0, 0 )
+"chunk_pos": Vector3(0, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 0, 0, 0 )
-end_pos = Vector3( 1000, 0, 0 )
+start_pos = Vector3(0, 0, 0)
+end_pos = Vector3(1000, 0, 0)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -497,24 +448,23 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="HV_Light_Rail" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
-script = ExtResource( 10 )
+[node name="HV_Light_Rail" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 0, 0, 0 )
+"chunk_pos": Vector3(0, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 0, 0, 100 )
-end_pos = Vector3( 1000, 0, 100 )
+start_pos = Vector3(0, 0, 100)
+end_pos = Vector3(1000, 0, 100)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -527,24 +477,23 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="HL_Rail" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
-script = ExtResource( 10 )
+[node name="HL_Rail" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150)
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 0, 0, 0 )
+"chunk_pos": Vector3(0, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 0, 0, 150 )
-end_pos = Vector3( 1000, 0, 150 )
+start_pos = Vector3(0, 0, 150)
+end_pos = Vector3(1000, 0, 150)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -557,24 +506,23 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="KS_Rail2" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0 )
-script = ExtResource( 10 )
-__meta__ = {
-"chunk_pos": Vector3( 1, 0, 0 )
-}
-rail_type_path = "res://Resources/RailTypes/Default.tscn"
+[node name="KS_Rail2" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 0)
 length = 998.798
+__meta__ = {
+"chunk_pos": Vector3(1, 0, 0)
+}
+rail_type_path = "res://Resources/RailTypes/Default.tscn"
 radius = 6.43253e+06
 build_distance = 0.9
 visible_segments = 1110
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.000155273
-start_pos = Vector3( 1000, 0, 0 )
-end_pos = Vector3( 1998.8, 0, 0 )
+start_pos = Vector3(1000, 0, 0)
+end_pos = Vector3(1998.8, 0, 0)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -587,24 +535,23 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="HV_Form_Rail2" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 50 )
-script = ExtResource( 10 )
+[node name="HV_Form_Rail2" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 50)
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 1, 0, 0 )
+"chunk_pos": Vector3(1, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 1000, 0, 50 )
-end_pos = Vector3( 2000, 0, 50 )
+start_pos = Vector3(1000, 0, 50)
+end_pos = Vector3(2000, 0, 50)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -617,24 +564,23 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="HV_Light_Rail2" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 100 )
-script = ExtResource( 10 )
+[node name="HV_Light_Rail2" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 100)
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 1, 0, 0 )
+"chunk_pos": Vector3(1, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 1000, 0, 100 )
-end_pos = Vector3( 2000, 0, 100 )
+start_pos = Vector3(1000, 0, 100)
+end_pos = Vector3(2000, 0, 100)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -647,24 +593,23 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
-[node name="HL_Rail2" type="Node3D" parent="Rails" groups=["Rail"] instance=ExtResource( 6 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 150 )
-script = ExtResource( 10 )
+[node name="HL_Rail2" parent="Rails" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1000, 0, 150)
+length = 1000.0
 __meta__ = {
-"chunk_pos": Vector3( 1, 0, 0 )
+"chunk_pos": Vector3(1, 0, 0)
 }
 rail_type_path = "res://Resources/RailTypes/Default.tscn"
-length = 1000.0
 radius = 0.0
 build_distance = 0.9
 visible_segments = 1112
 manual_moving = false
 start_rot = 0.0
 end_rot = 0.0
-start_pos = Vector3( 1000, 0, 150 )
-end_pos = Vector3( 2000, 0, 150 )
+start_pos = Vector3(1000, 0, 150)
+end_pos = Vector3(2000, 0, 150)
 start_slope = 0.0
 end_slope = 0.0
 start_tend = 0.0
@@ -677,17 +622,17 @@ automatic_tend = false
 parallel_rail_name = ""
 distance_to_parallel_rail = 0.0
 has_overhead_line = true
-switch_part = [ "", "" ]
+switch_part = ["", ""]
 
 [node name="Buildings" type="Node3D" parent="."]
-script = ExtResource( 9 )
+script = ExtResource("9")
 
 [node name="Flora" type="Node3D" parent="."]
 
 [node name="TrackObjects" type="Node3D" parent="."]
 
 [node name="Scripting" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource("5")
 
 [node name="Landscape" type="Node3D" parent="."]
 

@@ -1,40 +1,66 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=3 uid="uid://didn5dkbotbio"]
 
-[ext_resource path="res://Resources/Materials/Grass_new.tres" type="Material" id=1]
-[ext_resource path="res://Data/Modules/TrackObjects.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Data/Scripts/TrackObjects.gd" type="Script" id=3]
-[ext_resource path="res://Data/Scripts/chunk.gd" type="Script" id=4]
-[ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=5]
-[ext_resource path="res://Resources/Objects/Pole1.obj" type="ArrayMesh" id=6]
-[ext_resource path="res://Resources/Materials/EasyTree.tres" type="Material" id=7]
-[ext_resource path="res://Resources/Materials/Metal_Brown.tres" type="Material" id=8]
-[ext_resource path="res://Resources/Objects/EasyTree.obj" type="ArrayMesh" id=9]
-[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=10]
-[ext_resource path="res://Resources/Materials/Metal_Green.tres" type="Material" id=11]
+[ext_resource type="Material" uid="uid://i03ypcoq4i7g" path="res://Resources/Materials/Grass_new.tres" id="1"]
+[ext_resource type="PackedScene" path="res://Data/Modules/TrackObjects.tscn" id="2"]
+[ext_resource type="Script" path="res://Data/Scripts/chunk.gd" id="4"]
+[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="5"]
+[ext_resource type="ArrayMesh" uid="uid://dvr7cfavnoe5x" path="res://Resources/Objects/Pole1.obj" id="6"]
+[ext_resource type="Material" path="res://Resources/Materials/EasyTree.tres" id="7"]
+[ext_resource type="Material" path="res://Resources/Materials/Metal_Brown.tres" id="8"]
+[ext_resource type="ArrayMesh" uid="uid://bj8tajp5rvmxq" path="res://Resources/Objects/EasyTree.obj" id="9"]
+[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="10"]
+[ext_resource type="Material" path="res://Resources/Materials/Metal_Green.tres" id="11"]
 
-[sub_resource type="PlaneMesh" id=1]
-material = ExtResource( 1 )
-size = Vector2( 500, 500 )
+[sub_resource type="MultiMesh" id="MultiMesh_62dwy"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="MultiMesh" id="MultiMesh_rbf7f"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="MultiMesh" id="MultiMesh_4ufkx"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="MultiMesh" id="MultiMesh_rxgi2"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="MultiMesh" id="MultiMesh_k7c4g"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="MultiMesh" id="MultiMesh_waa20"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="MultiMesh" id="MultiMesh_3eyf0"]
+resource_local_to_scene = true
+transform_format = 1
+
+[sub_resource type="PlaneMesh" id="1"]
+material = ExtResource("1")
+size = Vector2(500, 500)
 
 [node name="chunk_0_0" type="Node3D"]
-script = ExtResource( 4 )
+script = ExtResource("4")
 is_empty = false
 generate_grass = true
-chunk_position = Vector3( 0, 0, 0 )
-rails = [ "HV_Form_Rail", "KS_Rail", "HV_Light_Rail", "HL_Rail" ]
+chunk_position = Vector3(0, 0, 0)
+rails = ["HV_Form_Rail", "KS_Rail", "HV_Light_Rail", "HL_Rail"]
 
 [node name="TrackObjects" type="Node3D" parent="."]
 
-[node name="HL_Rail Poles" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="HL_Rail Poles" parent="TrackObjects" instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150)
+multimesh = SubResource("MultiMesh_62dwy")
 description = "Poles"
 attached_rail = "HL_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 6 )
-materials = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 8 ) ]
+mesh = ExtResource("6")
+materials = [ExtResource("10"), ExtResource("11"), ExtResource("5"), ExtResource("8")]
 sides = 1
 spawnRate = 1.0
 rows = 1
@@ -53,16 +79,15 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = true
 
-[node name="HL_Rail trees" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150 )
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="HL_Rail trees" parent="TrackObjects" instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150)
+multimesh = SubResource("MultiMesh_rbf7f")
 description = "trees"
 attached_rail = "HL_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 9 )
-materials = [ ExtResource( 7 ), ExtResource( 7 ) ]
+mesh = ExtResource("9")
+materials = [ExtResource("7"), ExtResource("7")]
 sides = 2
 spawnRate = 1.0
 rows = 3
@@ -81,16 +106,15 @@ applySlopeRotation = false
 randomSeed = 358210
 wholeRail = true
 
-[node name="HV_Form_Rail Poles" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="HV_Form_Rail Poles" parent="TrackObjects" instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+multimesh = SubResource("MultiMesh_4ufkx")
 description = "Poles"
 attached_rail = "HV_Form_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 6 )
-materials = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 8 ) ]
+mesh = ExtResource("6")
+materials = [ExtResource("10"), ExtResource("11"), ExtResource("5"), ExtResource("8")]
 sides = 1
 spawnRate = 1.0
 rows = 1
@@ -109,16 +133,15 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = true
 
-[node name="HV_Light_Rail Poles" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="HV_Light_Rail Poles" parent="TrackObjects" instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+multimesh = SubResource("MultiMesh_rxgi2")
 description = "Poles"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 6 )
-materials = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 8 ) ]
+mesh = ExtResource("6")
+materials = [ExtResource("10"), ExtResource("11"), ExtResource("5"), ExtResource("8")]
 sides = 1
 spawnRate = 1.0
 rows = 1
@@ -137,16 +160,15 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = true
 
-[node name="HV_Light_Rail trees" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="HV_Light_Rail trees" parent="TrackObjects" instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+multimesh = SubResource("MultiMesh_k7c4g")
 description = "trees"
 attached_rail = "HV_Light_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 9 )
-materials = [ ExtResource( 7 ), ExtResource( 7 ) ]
+mesh = ExtResource("9")
+materials = [ExtResource("7"), ExtResource("7")]
 sides = 3
 spawnRate = 1.0
 rows = 3
@@ -165,15 +187,14 @@ applySlopeRotation = false
 randomSeed = -313081
 wholeRail = true
 
-[node name="KS_Rail Poles" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="KS_Rail Poles" parent="TrackObjects" instance=ExtResource("2")]
+multimesh = SubResource("MultiMesh_waa20")
 description = "Poles"
 attached_rail = "KS_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 6 )
-materials = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 5 ), ExtResource( 8 ) ]
+mesh = ExtResource("6")
+materials = [ExtResource("10"), ExtResource("11"), ExtResource("5"), ExtResource("8")]
 sides = 1
 spawnRate = 1.0
 rows = 1
@@ -192,15 +213,14 @@ applySlopeRotation = false
 randomSeed = 0
 wholeRail = true
 
-[node name="KS_Rail trees" type="MultiMeshInstance3D" parent="TrackObjects" groups=["TrackObject"] instance=ExtResource( 2 )]
-lod_max_distance = 100.0
-script = ExtResource( 3 )
+[node name="KS_Rail trees" parent="TrackObjects" instance=ExtResource("2")]
+multimesh = SubResource("MultiMesh_3eyf0")
 description = "trees"
 attached_rail = "KS_Rail"
 on_rail_position = 0.0
 length = 1000.0
-mesh = ExtResource( 9 )
-materials = [ ExtResource( 7 ), ExtResource( 7 ) ]
+mesh = ExtResource("9")
+materials = [ExtResource("7"), ExtResource("7")]
 sides = 3
 spawnRate = 1.0
 rows = 3
@@ -224,21 +244,17 @@ wholeRail = true
 [node name="DefaultGrass" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="DefaultGrass"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, 250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, 250)
+mesh = SubResource("1")
 
 [node name="MeshInstance2" type="MeshInstance3D" parent="DefaultGrass"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, -250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, -250)
+mesh = SubResource("1")
 
 [node name="MeshInstance3" type="MeshInstance3D" parent="DefaultGrass"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, -250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, -250)
+mesh = SubResource("1")
 
 [node name="MeshInstance4" type="MeshInstance3D" parent="DefaultGrass"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, 250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, 250)
+mesh = SubResource("1")

@@ -21,8 +21,8 @@ var did_set_pass: bool = false
 @export var speed: float = -1: set = set_velocity
 var warn_speed: float = -1: set = set_warn_speed
 
-@export (String, FILE, "*.tscn,*.scn") var visual_instance_path: String = "res://Resources/SignalTypes/Ks/Ks.tscn"
-@export (SignalOperationMode.TypeHint) var operation_mode: int = SignalOperationMode.BLOCK
+@export_file ("*.tscn","*.scn") var visual_instance_path: String = "res://Resources/SignalTypes/Ks/Ks.tscn"
+@export var operation_mode: SignalOperationMode.TypeHint = SignalOperationMode.TypeHint.BLOCK
 
 
 func _get_type() -> String:
@@ -153,7 +153,7 @@ func reset() -> void:
 	set_status(SignalStatus.RED)
 	signal_free_time = -1
 	set_velocity(-1)
-	operation_mode = SignalOperationMode.BLOCK
+	operation_mode = SignalOperationMode.TypeHint.BLOCK
 
 
 func set_operation_mode(mode: int):

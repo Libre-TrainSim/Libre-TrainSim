@@ -42,6 +42,6 @@ func save_scenario(path = null):
 	if path == null:
 		path = Root.current_scenario
 
-	var err = ResourceSaver.save(path, self)
+	var err = ResourceSaver.save(self, path)
 	if err != OK:
 		Logger.err("Failed saving scenario at %s. Reason: %s" % [path, err], self)

@@ -8,7 +8,7 @@ extends MultiMeshInstance3D
 
 @export var mesh: Mesh = null
 @export var materials: Array[Material]= []
-@export (PlatformSide.TypeHint) var sides: int = 0 # 0: No Side, 1: Left, 2: Right 4: Both
+@export var sides: PlatformSide.TypeHint = 0 # 0: No Side, 1: Left, 2: Right 4: Both
 @export var spawnRate: float = 1
 @export var rows: int
 @export var distanceLength: float = 10

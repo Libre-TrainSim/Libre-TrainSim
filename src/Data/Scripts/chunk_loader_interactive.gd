@@ -49,8 +49,7 @@ func unload_chunks(old_chunks: Array):
 
 
 func _ready() -> void:
-	_dir = DirAccess.new()
-	if _dir.open("res://") != OK:
+	if DirAccess.open("res://") == null:
 		Logger.err("Cannot open resource directory.", self)
 		return
 
@@ -136,11 +135,11 @@ func _get_chunk_file_path(chunk: String):
 	if Root.Editor:
 		chunk_path = chunk_manager.editor.current_track_path.plus_file("chunks")
 	else:
-		chunk_path = Root.current_track.get_base_dir().plus_file("chunks")
-	var chunk_file = chunk_path.plus_file(chunk) + ".tscn"
+		chunk_path = Root.current_track.get_base_dir() + "/" + "chunks"
+	var chunk_file = chunk_path + "/" + chunk + ".tscn"
 
 	if Root.Editor:
-		var temp_file = chunk_path.plus_file(chunk) + "_temp.tscn"
+		var temp_file = chunk_path + "/" + chunk + "_temp.tscn"
 		if _dir.file_exists(temp_file):
 			chunk_file = temp_file
 

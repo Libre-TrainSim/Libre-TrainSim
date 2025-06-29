@@ -67,7 +67,7 @@ func name_node_appropriate(node: Node, wanted_name: String, parent_node: Node) -
 	var base_name: String = wanted_name
 
 	while(true):
-		var new_name: String = base_name + String(counter)
+		var new_name: String = base_name + str(counter)
 		if not parent_node.has_node(new_name):
 			node.name = new_name
 			return new_name
@@ -170,5 +170,5 @@ func set_low_resolution(value: bool) -> void:
 		ProjectSettings.set_setting("display/window/size/viewport_height", "600")
 
 
-func world_origin_shifted(delta) -> void:
+func world_origin_has_shifted(delta) -> void:
 	emit_signal("world_origin_shifted", delta)

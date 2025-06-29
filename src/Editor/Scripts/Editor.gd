@@ -40,7 +40,7 @@ func _ready() -> void:
 
 
 func _port_to_new_trackinfo():
-	var info_file = current_track_path.plus_file(current_track_name) + ".trackinfo"
+	var info_file = current_track_path + "/" + current_track_name + ".trackinfo"
 	var dir = DirAccess.new()
 	if not dir.file_exists(info_file):
 		return
@@ -48,7 +48,7 @@ func _port_to_new_trackinfo():
 	var jsavemodule = jSaveModule.new()
 	jsavemodule.set_save_path(info_file)
 
-	var new_file = current_track_path.plus_file(current_track_name) + "_config.tres"
+	var new_file = current_track_path + "/" + current_track_name + "_config.tres"
 	var world_config = WorldConfig.new()
 	world_config.author = jsavemodule.get_value("author", "Unknown")
 	world_config.track_description = jsavemodule.get_value("description")
@@ -67,7 +67,7 @@ func _port_to_new_trackinfo():
 
 
 func _port_very_old_trackinfo():
-	var old_cfg = current_track_path.plus_file(current_track_name) + "-scenarios.cfg"
+	var old_cfg = current_track_path + "/" + current_track_name + "-scenarios.cfg"
 	var dir = DirAccess.new()
 	if not dir.file_exists(old_cfg):
 		return
@@ -88,13 +88,13 @@ func _port_very_old_trackinfo():
 		"year": release_date[2]
 	}
 
-	var new_file = current_track_path.plus_file(current_track_name) + "_config.tres"
+	var new_file = current_track_path + "/" + current_track_name + "_config.tres"
 	if ResourceSaver.save(new_file, world_config) != OK:
 		Logger.err("Failed to save world config %s" % new_file, self)
 
 
 func _port_v1_to_v2_chunks() -> void:
-	var save_file := current_track_path.plus_file(current_track_name) + ".save"
+	var save_file := current_track_path + "/" + current_track_name + ".save"
 	var dir := DirAccess.new()
 	if dir.file_exists(save_file):
 		return
@@ -117,7 +117,7 @@ func _port_v1_to_v2_chunks() -> void:
 	var buildings := []
 	var track_objects := []
 
-	var err := dir.open(current_track_path.plus_file("chunks"))
+	var err := dir.open(current_track_path + "/" + "chunks")
 	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name := dir.get_next()
 	while file_name != "":
@@ -235,7 +235,7 @@ func _port_v1_to_v2_chunks() -> void:
 
 
 func _port_to_new_chunk_system() -> void:
-	var save_file = current_track_path.plus_file(current_track_name) + ".save"
+	var save_file = current_track_path + "/" + current_track_name + ".save"
 	var dir = DirAccess.new()
 	if not dir.file_exists(save_file):
 		return
@@ -250,7 +250,7 @@ func _port_to_new_chunk_system() -> void:
 	for logic in $World/Signals.get_children():
 		logic.set_to_rail()
 
-	dir.make_dir_recursive(current_track_path.plus_file("chunks"))
+	dir.make_dir_recursive(current_track_path + "/" + "chunks")
 
 	var jsavemodule = jSaveModule.new()
 	jsavemodule.set_save_path(save_file)
@@ -315,7 +315,7 @@ func _port_to_new_chunk_system() -> void:
 			new_chunk._prepare_saving()
 			var packed_chunk := PackedScene.new()
 			packed_chunk.pack(new_chunk)
-			var path: String = current_track_path.plus_file("chunks").plus_file(ChunkManager.chunk_to_string(old_chunk.position)) + ".tscn"
+			var path: String = current_track_path + "/" + "chunks" + "/" + ChunkManager.chunk_to_string(old_chunk.position) + ".tscn"
 			ResourceSaver.save(path, packed_chunk)
 
 		dir.remove(save_file)
@@ -329,7 +329,7 @@ func _port_to_new_chunk_system() -> void:
 
 
 func _port_to_new_scenario_system():
-	var path = current_track_path.plus_file("scenarios")
+	var path = current_track_path + "/" + "scenarios"
 	var dir = DirAccess.new()
 	if dir.open(path) != OK:
 		Logger.err("Track has no scenarios folder!", self)
@@ -464,13 +464,13 @@ func _convert_route_point(old_point: Dictionary) -> RoutePoint:
 
 
 func _port_very_old_scenarios():
-	var old_file = current_track_path.plus_file(current_track_name) + "-scenarios.cfg"
+	var old_file = current_track_path + "/" + current_track_name + "-scenarios.cfg"
 	var dir = DirAccess.new()
 	if not dir.file_exists(old_file):
 		return
 
-	if not dir.dir_exists(current_track_path.plus_file("scenarios")):
-		dir.make_dir_recursive(current_track_path.plus_file("scenarios"))
+	if not dir.dir_exists(current_track_path + "/" + "scenarios"):
+		dir.make_dir_recursive(current_track_path + "/" + "scenarios")
 
 	var jsavemodule = jSaveModule.new()
 	jsavemodule.set_save_path(old_file)
@@ -561,7 +561,7 @@ func _port_very_old_scenarios():
 
 			new_scenario.routes[train_name] = route
 
-		var path = current_track_path.plus_file("scenarios")
+		var path = current_track_path + "/" + "scenarios"
 		var new_file = path.plus_file(scenario) + ".tres"
 		var err = ResourceSaver.save(new_file, new_scenario)
 		if err != OK:
@@ -848,7 +848,7 @@ func object_has_active_gizmo(object: Node) -> bool:
 ## Should be used, if world is loaded into scene.
 func load_world() -> bool:
 	editor_directory = jSaveManager.get_setting("editor_directory_path", "user://editor/")
-	var path := current_track_path.plus_file(current_track_name) + ".tscn"
+	var path := current_track_path + "/" + current_track_name + ".tscn"
 	var world_resource: PackedScene = load(path)
 	if world_resource == null:
 		send_message("World data could not be loaded! Is your super.tscn file corrupt?\nIs every resource available?")
@@ -859,7 +859,7 @@ func load_world() -> bool:
 		send_message("Failed to load world. World is not an LTSWorld.")
 		return false
 
-	editor_info = load(current_track_path.plus_file("editor_info.tres"))
+	editor_info = load(current_track_path + "/" + "editor_info.tres")
 	if !editor_info:
 		editor_info = EditorInfo.new()
 	$EditorHUD/Objects.editor_info = editor_info
@@ -912,13 +912,13 @@ func save_world(send_message: bool = true) -> void:
 	var packed_scene = PackedScene.new()
 	var result = packed_scene.pack($World)
 	if result == OK:
-		var error = ResourceSaver.save(current_track_path.plus_file(current_track_name) + ".tscn", packed_scene)
+		var error = ResourceSaver.save(packed_scene, current_track_path + "/" + current_track_name + ".tscn")
 		if error != OK:
 			send_message("An error occurred while saving the scene to disk.")
 			return
 
 
-	if ResourceSaver.save(current_track_path.plus_file("editor_info.tres"), editor_info) != OK:
+	if ResourceSaver.save(editor_info, current_track_path + "/" + "editor_info.tres") != OK:
 		Logger.warn("Failed to save editor info meta data.", self)
 
 	$World.chunk_manager.active_chunk = $World.chunk_manager.position_to_chunk(camera.global_transform.origin)
@@ -1044,7 +1044,7 @@ func test_track() -> void:
 	save_world(false)
 
 	$EditorHUD/PlayMenu.show_scenario_selector( \
-		current_track_path.plus_file(current_track_name + ".tscn")
+		current_track_path + "/" + current_track_name + ".tscn"
 	)
 
 

@@ -299,7 +299,7 @@ func _build_path(rail: Rail, explored: Dictionary) -> Array:
 		path.append({"rail": rail, "forward": explored[rail][2]})
 		rail = explored[rail][1]
 
-	path.invert()
+	path.reverse()
 	return path
 
 

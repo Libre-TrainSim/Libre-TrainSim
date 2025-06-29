@@ -17,4 +17,4 @@ func push_object(scene: PackedScene) -> void:
 	recent.erase(scene)
 	recent.push_back(scene)
 	while recent.size() > RECENT_QUEUE_SIZE:
-		recent.remove(0)
+		recent.remove_at(0)

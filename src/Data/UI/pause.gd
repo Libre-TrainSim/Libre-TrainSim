@@ -96,7 +96,7 @@ func _on_Settings_pressed() -> void:
 
 
 func _on_BackToTrackEditor_pressed() -> void:
-	var screenshot = Image.new().load(Root.current_track.get_base_dir().plus_file("screenshot.png"))
+	var screenshot = Image.new().load(Root.current_track.get_base_dir() + "/" + "screenshot.png")
 	LoadingScreen.load_editor(Root.current_track.get_basename(), screenshot)
 
 

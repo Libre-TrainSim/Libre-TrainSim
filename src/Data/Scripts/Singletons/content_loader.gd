@@ -201,7 +201,7 @@ func get_editor_tracks() -> Dictionary:
 
 
 func get_scenarios_for_track(track_folder: String) -> Array:
-	var scenario_dir: String = track_folder.plus_file("scenarios")
+	var scenario_dir: String = track_folder + "/scenarios"
 	var result: Array = []
 	Root.crawl_directory(result, scenario_dir, ["tres"], 2)
 	return result

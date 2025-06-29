@@ -71,7 +71,7 @@ func sort_signals(signal_table: Dictionary, forward: bool = true) -> Array:
 	if forward:
 		return export_t
 	else:
-		export_t.invert()
+		export_t.reverse()
 		return export_t
 
 
@@ -95,13 +95,13 @@ func seconds_to_string(time_seconds: int) -> String:
 
 func distance_to_string(distance: float) -> String:
 	if distance > 10000:
-		return String(int(distance/1000)) + " km"
+		return str(int(distance/1000)) + " km"
 	if distance > 1000:
-		return String(int(distance/100)/10.0) + " km"
+		return str(int(distance/100)/10.0) + " km"
 	if distance > 100:
-		return String((int(distance/100))*100) + " m"
+		return str((int(distance/100))*100) + " m"
 	else:
-		return String(int(int(distance-10)/10.0)*10) + " m"
+		return str(int(int(distance-10)/10.0)*10) + " m"
 
 func time_to_seconds(time: Array) -> int:
 	return time[2] + time[1] * 60 + time[0] * 3600

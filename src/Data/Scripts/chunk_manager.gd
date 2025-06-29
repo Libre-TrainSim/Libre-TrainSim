@@ -132,7 +132,7 @@ func _process(_delta: float):
 func _shift_world_origin_to(position: Vector3):
 	var delta: Vector3 = position - world_origin
 	world_origin = position
-	Root.world_origin_shifted(delta)
+	Root.world_origin_has_shifted(delta)
 
 
 func _unload_old_chunks(saving: bool = false):

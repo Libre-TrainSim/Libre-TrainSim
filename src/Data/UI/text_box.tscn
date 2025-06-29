@@ -1,14 +1,15 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://ck30jmjmp2430"]
 
-[ext_resource path="res://Data/Fonts/message_font.tres" type="FontFile" id=1]
-[ext_resource path="res://Data/Fonts/button_font.tres" type="FontFile" id=2]
-[ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=3]
-[ext_resource path="res://Data/UI/text_box.gd" type="Script" id=4]
-[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=5]
-[ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=6]
-[ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=7]
+[ext_resource type="FontFile" path="res://Data/Fonts/message_font.tres" id="1"]
+[ext_resource type="FontFile" path="res://Data/Fonts/button_font.tres" id="2"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="3"]
+[ext_resource type="Script" path="res://Data/UI/text_box.gd" id="4"]
+[ext_resource type="Script" path="res://Data/UI/translated_rich_rext_label.gd" id="5"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="6"]
+[ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="7"]
 
 [node name="TextBox" type="PanelContainer"]
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -17,50 +18,36 @@ offset_left = -348.0
 offset_top = -249.0
 offset_right = 361.0
 offset_bottom = 266.0
-theme = ExtResource( 7 )
-theme_override_styles/panel = ExtResource( 3 )
-script = ExtResource( 4 )
+theme = ExtResource("7")
+theme_override_styles/panel = ExtResource("3")
+script = ExtResource("4")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_left = 6.0
-offset_top = 10.0
-offset_right = 703.0
-offset_bottom = 511.0
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_top = 8
+layout_mode = 2
 theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 689.0
-offset_bottom = 493.0
+layout_mode = 2
 
 [node name="Message" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-offset_right = 681.0
-offset_bottom = 445.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource( 1 )
+theme_override_fonts/normal_font = ExtResource("1")
 text = "Test Test meine Freunde"
-script = ExtResource( 5 )
+script = ExtResource("5")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Ok" type="Button" parent="MarginContainer/VBoxContainer"]
-offset_top = 449.0
-offset_right = 681.0
-offset_bottom = 485.0
-grow_horizontal = 2
-grow_vertical = 0
-custom_minimum_size = Vector2( 100, 36 )
-theme = ExtResource( 6 )
-theme_override_fonts/font = ExtResource( 2 )
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+theme = ExtResource("6")
+theme_override_fonts/font = ExtResource("2")
 text = "OK"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Ok" to="." method="_on_Ok_pressed"]

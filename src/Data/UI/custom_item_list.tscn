@@ -1,22 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://1gfnlu5tvllv"]
 
-[ext_resource path="res://Data/UI/custom_item_list.gd" type="Script" id=3]
+[ext_resource type="Script" path="res://Data/UI/custom_item_list.gd" id="3"]
 
 [node name="Packlist" type="ScrollContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_vertical = 3
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource("3")
 
 [node name="Items" type="VBoxContainer" parent="."]
-offset_right = 1024.0
-offset_bottom = 600.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}

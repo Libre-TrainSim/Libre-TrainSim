@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=17 format=3 uid="uid://jho43a00it27"]
 
 [ext_resource type="Script" path="res://Data/UI/main_menu.gd" id="1"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="2"]
@@ -11,37 +11,35 @@
 [ext_resource type="PackedScene" path="res://Data/UI/about.tscn" id="9"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame_Small.tres" id="10"]
 [ext_resource type="AudioStream" uid="uid://cglype78xbawr" path="res://Resources/Music/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" id="11"]
-[ext_resource type="Texture2D" path="res://screenshot.png" id="12"]
-[ext_resource type="StyleBox" path="res://Data/UI/styles/panel_popup.tres" id="13"]
+[ext_resource type="Texture2D" uid="uid://b17cnvy6aj0tl" path="res://screenshot.png" id="12"]
 [ext_resource type="PackedScene" path="res://Editor/Modules/scenario_editor_selection.tscn" id="14"]
 [ext_resource type="Script" path="res://Data/UI/translated_rich_rext_label.gd" id="15"]
-[ext_resource type="Texture2D" path="res://Data/Misc/banner/lts_banner_version.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://b8hrhle3w3obh" path="res://Data/Misc/banner/lts_banner_version.png" id="16"]
 [ext_resource type="Material" path="res://Data/UI/blur_less.tres" id="17"]
 
 [node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 12 )
-expand = true
+texture = ExtResource("12")
+expand_mode = 1
 stretch_mode = 7
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = ExtResource( 17 )
+material = ExtResource("17")
+layout_mode = 0
 anchor_bottom = 1.0
 offset_right = 363.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Version" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -52,12 +50,11 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource( 10 )
+theme_override_fonts/font = ExtResource("10")
 text = "Version: 0.0"
-align = 2
-valign = 2
 
 [node name="LabelMusic" type="Label" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
@@ -65,217 +62,165 @@ offset_top = -26.0
 offset_right = 86.0
 offset_bottom = -8.0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource( 10 )
+theme_override_fonts/font = ExtResource("10")
 text = "MENU_MUSIC:"
-valign = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_bottom = 1.0
 offset_left = 21.0
 offset_top = -1.05945
 offset_right = 323.0
 offset_bottom = -1.05945
-theme = ExtResource( 5 )
+theme = ExtResource("5")
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Buttons"]
-offset_top = 34.0
-offset_right = 328.0
-offset_bottom = 194.0
-custom_minimum_size = Vector2( 0, 160 )
-texture = ExtResource( 16 )
-expand = true
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+texture = ExtResource("16")
+expand_mode = 1
 stretch_mode = 6
 
 [node name="Play" type="Button" parent="Buttons"]
-offset_top = 198.0
-offset_right = 328.0
-offset_bottom = 247.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_PLAY"
 
 [node name="Content" type="Button" parent="Buttons"]
-offset_top = 251.0
-offset_right = 328.0
-offset_bottom = 300.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_CONTENT"
 
 [node name="Create" type="Button" parent="Buttons"]
-offset_top = 304.0
-offset_right = 328.0
-offset_bottom = 353.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_CREATE"
 
 [node name="Settings" type="Button" parent="Buttons"]
-offset_top = 357.0
-offset_right = 328.0
-offset_bottom = 406.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_SETTINGS"
 
 [node name="About" type="Button" parent="Buttons"]
-offset_top = 410.0
-offset_right = 328.0
-offset_bottom = 459.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_ABOUT"
 
 [node name="Feedback" type="Button" parent="Buttons"]
-offset_top = 463.0
-offset_right = 328.0
-offset_bottom = 512.0
-grow_horizontal = 0
+layout_mode = 2
 text = "MENU_FEEDBACK_WANTED"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Quit" type="Button" parent="Buttons"]
-offset_top = 516.0
-offset_right = 328.0
-offset_bottom = 565.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_QUIT"
 
 [node name="CreateMenu" type="VBoxContainer" parent="."]
 visible = false
+layout_mode = 0
 anchor_bottom = 1.0
 offset_left = 21.0
 offset_top = -1.0
 offset_right = 349.0
 offset_bottom = -1.0
-theme = ExtResource( 5 )
+theme = ExtResource("5")
 alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Back" type="Button" parent="CreateMenu"]
-offset_top = 222.0
-offset_right = 328.0
-offset_bottom = 271.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "MENU_BACK"
 
 [node name="TrackEditor" type="Button" parent="CreateMenu"]
-offset_top = 275.0
-offset_right = 328.0
-offset_bottom = 324.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "TRACK_EDITOR"
 
 [node name="ScenarioEditor" type="Button" parent="CreateMenu"]
-offset_top = 328.0
-offset_right = 328.0
-offset_bottom = 377.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SCENARIO_EDITOR"
 
-[node name="Play" parent="." instance=ExtResource( 6 )]
+[node name="Play" parent="." instance=ExtResource("6")]
 visible = false
+layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = -12.0
 
-[node name="About" parent="." instance=ExtResource( 9 )]
+[node name="About" parent="." instance=ExtResource("9")]
 visible = false
+layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = -12.0
 
-[node name="Content" parent="." instance=ExtResource( 7 )]
+[node name="Content" parent="." instance=ExtResource("7")]
 visible = false
+layout_mode = 0
 
-[node name="TrackEditorSelection" parent="." instance=ExtResource( 8 )]
+[node name="TrackEditorSelection" parent="." instance=ExtResource("8")]
 visible = false
+anchors_preset = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = -12.0
 
-[node name="ScenarioEditorSelection" parent="." instance=ExtResource( 14 )]
+[node name="ScenarioEditorSelection" parent="." instance=ExtResource("14")]
 visible = false
+layout_mode = 0
 offset_left = 12.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = -12.0
 
 [node name="Feedback" type="Window" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -227.5
-offset_top = -80.5
-offset_right = 227.5
-offset_bottom = 80.5
 theme_override_constants/close_h_offset = 28
-theme_override_constants/scaleborder_size = 41
-theme_override_fonts/title_font = ExtResource( 3 )
-theme_override_styles/panel = ExtResource( 13 )
-window_title = "Feedback"
-resizable = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme_override_fonts/title_font = ExtResource("3")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Feedback"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
 offset_top = 8.0
 offset_right = -6.0
 offset_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Feedback/VBoxContainer"]
-offset_right = 443.0
-offset_bottom = 111.0
+layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/default_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/normal_font = ExtResource( 2 )
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2")
 text = "MENU_FEEDBACK_QUESTION"
-script = ExtResource( 15 )
+script = ExtResource("15")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Feedback/VBoxContainer"]
-offset_top = 115.0
-offset_right = 443.0
-offset_bottom = 149.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Later" type="Button" parent="Feedback/VBoxContainer/HBoxContainer"]
-offset_right = 208.0
-offset_bottom = 34.0
+layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource( 4 )
-theme_override_fonts/font = ExtResource( 2 )
+theme = ExtResource("4")
+theme_override_fonts/font = ExtResource("2")
 text = "MENU_LATER"
-align = 0
 
 [node name="OpenWebBrowser" type="Button" parent="Feedback/VBoxContainer/HBoxContainer"]
-offset_left = 212.0
-offset_right = 443.0
-offset_bottom = 34.0
+layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource( 5 )
-theme_override_fonts/font = ExtResource( 2 )
+theme = ExtResource("5")
+theme_override_fonts/font = ExtResource("2")
 text = "MENU_OPEN_IN_BROWSER"
-align = 2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
+stream = ExtResource("11")
 volume_db = -25.384
 autoplay = true
-bus = "Music"
 
 [connection signal="pressed" from="Buttons/Play" to="." method="_on_PlayFront_pressed"]
 [connection signal="pressed" from="Buttons/Content" to="." method="_on_Content_pressed"]

@@ -1,29 +1,16 @@
-[gd_resource type="Environment" load_steps=2 format=2]
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://curw6tgn0x7xq"]
 
-[sub_resource type="Sky" id=1]
-sky_top_color = Color( 0.513726, 0.682353, 0.815686, 1 )
-sky_horizon_color = Color( 0.8, 0.870588, 0.905882, 1 )
-sky_curve = 0.127279
-ground_bottom_color = Color( 0.807843, 0.858824, 0.929412, 1 )
-ground_horizon_color = Color( 0.807843, 0.858824, 0.929412, 1 )
-sun_latitude = 33.38
-sun_angle_max = 10.0
-sun_curve = 0.193187
-sun_energy = 3.61
+[sub_resource type="Sky" id="1"]
 
 [resource]
 background_mode = 2
-background_sky = SubResource( 1 )
-fog_enabled = true
-fog_sun_color = Color( 1, 1, 1, 1 )
-fog_depth_begin = 156.3
-fog_depth_end = 766.7
+sky = SubResource("1")
 tonemap_mode = 4
 tonemap_white = 16.0
 glow_enabled = true
-glow_levels/4 = true
-glow_levels/5 = false
+glow_levels/4 = 1.0
+glow_levels/5 = 0.0
 glow_intensity = 2.13
-glow_bicubic_upscale = true
+fog_enabled = true
 adjustment_enabled = true
 adjustment_saturation = 1.2

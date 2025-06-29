@@ -1,139 +1,126 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=16 format=3 uid="uid://bishcea0hrpjb"]
 
-[ext_resource path="res://Data/Fonts/FontMenu.tres" type="FontFile" id=1]
-[ext_resource path="res://Data/UI/MobileHUD.gd" type="Script" id=2]
-[ext_resource path="res://Data/Fonts/FontIngame.tres" type="FontFile" id=3]
-[ext_resource path="res://Resources/Textures/pantograph_button.png" type="Texture2D" id=5]
-[ext_resource path="res://Resources/Textures/light_button.png" type="Texture2D" id=6]
-[ext_resource path="res://Resources/Textures/engine_button.png" type="Texture2D" id=7]
-[ext_resource path="res://Resources/Textures/pause_button.png" type="Texture2D" id=8]
-[ext_resource path="res://Resources/Textures/camera_button.png" type="Texture2D" id=9]
-[ext_resource path="res://Resources/Textures/arrow_up_button.png" type="Texture2D" id=10]
-[ext_resource path="res://Resources/Textures/arrow_down_button.png" type="Texture2D" id=11]
-[ext_resource path="res://Resources/Textures/arrow_right_button.png" type="Texture2D" id=12]
-[ext_resource path="res://Resources/Textures/arrow_left_button.png" type="Texture2D" id=13]
-[ext_resource path="res://Resources/Textures/autopilot_button.png" type="Texture2D" id=14]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/Doors.png" type="Texture2D" id=15]
-[ext_resource path="res://Resources/Textures/horn_button.png" type="Texture2D" id=16]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMenu.tres" id="1"]
+[ext_resource type="Script" path="res://Data/UI/MobileHUD.gd" id="2"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="3"]
+[ext_resource type="Texture2D" uid="uid://cu0l2d5bwbglw" path="res://Resources/Textures/pantograph_button.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://u4bqdhy6anao" path="res://Resources/Textures/light_button.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://b4h6l8jfcqx2f" path="res://Resources/Textures/engine_button.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://cx0vwokk7ao1s" path="res://Resources/Textures/pause_button.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://ddtqlt56718po" path="res://Resources/Textures/camera_button.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://icehqaxatf1l" path="res://Resources/Textures/arrow_up_button.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://dnqt0braqspnm" path="res://Resources/Textures/arrow_down_button.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://db7f8xwkdi2cq" path="res://Resources/Textures/arrow_right_button.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://blhek8p4tuaxs" path="res://Resources/Textures/arrow_left_button.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://cxq8tey6bhblo" path="res://Resources/Textures/autopilot_button.png" id="14"]
+[ext_resource type="Texture2D" uid="uid://prkc21qigjh4" path="res://Data/Screens/ScreenSpeedometer/Doors.png" id="15"]
+[ext_resource type="Texture2D" uid="uid://iuundlbq3cti" path="res://Resources/Textures/horn_button.png" id="16"]
 
 [node name="MobileHUD" type="Control"]
 process_mode = 2
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 2 )
+script = ExtResource("2")
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Up" type="Button" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 47.3109
 offset_top = -224.147
 offset_right = 143.311
 offset_bottom = -128.147
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 10 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("10")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Down" type="Button" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 47.8406
 offset_top = -113.877
 offset_right = 143.841
 offset_bottom = -17.8773
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 11 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("11")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Camera3D" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -224.213
 offset_top = 14.7015
 offset_right = -128.213
 offset_bottom = 110.701
-pivot_offset = Vector2( 155.017, 351.277 )
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 9 )
+pivot_offset = Vector2(155.017, 351.277)
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("9")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Autopilot" type="Button" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 159.115
 offset_top = -114.022
 offset_right = 255.115
 offset_bottom = -18.0222
-pivot_offset = Vector2( 155.517, 249.329 )
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 14 )
+pivot_offset = Vector2(155.517, 249.329)
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("14")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Pantograph" type="Button" parent="."]
+layout_mode = 0
 offset_left = 280.296
 offset_top = 15.0462
 offset_right = 376.296
 offset_bottom = 111.046
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 5 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("5")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Engine" type="Button" parent="."]
+layout_mode = 0
 offset_left = 164.074
 offset_top = 15.0462
 offset_right = 260.074
 offset_bottom = 111.046
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 7 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("7")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Lights" type="Button" parent="."]
+layout_mode = 0
 offset_left = 50.8602
 offset_top = 14.3384
 offset_right = 146.86
 offset_bottom = 110.338
-pivot_offset = Vector2( 155.017, 351.277 )
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 6 )
+pivot_offset = Vector2(155.017, 351.277)
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("6")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Horn" type="Button" parent="."]
+layout_mode = 0
 offset_left = 50.8602
 offset_top = 126.034
 offset_right = 146.86
 offset_bottom = 222.034
-pivot_offset = Vector2( 155.017, 351.277 )
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 16 )
+pivot_offset = Vector2(155.017, 351.277)
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("16")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DoorLeft" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -142,14 +129,12 @@ offset_left = -331.295
 offset_top = -111.401
 offset_right = -235.295
 offset_bottom = -15.4009
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 13 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("13")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DoorClose" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -158,14 +143,12 @@ offset_left = -222.07
 offset_top = -111.133
 offset_right = -126.07
 offset_bottom = -15.1326
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 15 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("15")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DoorRight" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -174,54 +157,43 @@ offset_left = -110.051
 offset_top = -111.23
 offset_right = -14.0511
 offset_bottom = -15.2303
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 12 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("12")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PauseButton" type="Button" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -111.629
 offset_top = 14.5004
 offset_right = -15.6289
 offset_bottom = 110.5
-theme_override_fonts/font = ExtResource( 1 )
-icon = ExtResource( 8 )
+theme_override_fonts/font = ExtResource("1")
+icon = ExtResource("8")
 expand_icon = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_bottom = 1.0
 offset_right = 33.0
-color = Color( 0, 0, 0, 0.4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+color = Color(0, 0, 0, 0.4)
 
 [node name="ProgressBar" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_bottom = 1.0
 offset_right = 30.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Debug" type="Label" parent="."]
 visible = false
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
 offset_right = 43.0
 offset_bottom = 30.0
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 text = "Test Test"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="pressed" from="Up" to="." method="_on_Up_pressed"]
 [connection signal="pressed" from="Down" to="." method="_on_Down_pressed"]

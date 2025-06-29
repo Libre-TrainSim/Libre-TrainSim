@@ -1,117 +1,72 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://b0h70qm2s8vnj"]
 
-[ext_resource path="res://Data/Fonts/FontIngame.tres" type="FontFile" id=1]
-[ext_resource path="res://Data/Fonts/FontMediumBold.tres" type="FontFile" id=2]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=3]
-[ext_resource path="res://Data/UI/loading_screen.gd" type="Script" id=4]
-[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=5]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.929412, 0.929412, 0.929412, 0.956863 )
-border_width_top = 4
-border_width_right = 4
-border_color = Color( 0.117647, 0.423529, 0.576471, 1 )
-corner_radius_top_right = 66
-corner_radius_bottom_right = 20
-corner_detail = 1
-shadow_color = Color( 0, 0, 0, 0.501961 )
-shadow_size = 1
-shadow_offset = Vector2( -1, 2 )
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 0.956863 )
-border_width_top = 4
-border_width_right = 4
-border_color = Color( 0.0823529, 0.0352941, 0.533333, 1 )
-corner_radius_top_right = 66
-corner_radius_bottom_right = 20
-corner_detail = 1
-shadow_color = Color( 0, 0, 0, 0.501961 )
-shadow_size = 1
-shadow_offset = Vector2( -1, 2 )
-anti_aliasing = false
+[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="1"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMediumBold.tres" id="2"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="3"]
+[ext_resource type="Script" path="res://Data/UI/loading_screen.gd" id="4"]
+[ext_resource type="Script" path="res://Data/UI/translated_rich_rext_label.gd" id="5"]
 
 [node name="LoadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 4 )
-descriptions = [ "Loading world...", "Building tracks", "Placing stations", "Measuring distances", "Adding timetables", "Spawning trains", "Creating traffic jams", "Spawning people", "Making trees", "Moving signals", "Cleaning train", "Joining world..." ]
+script = ExtResource("4")
+descriptions = ["Loading world...", "Building tracks", "Placing stations", "Measuring distances", "Adding timetables", "Spawning trains", "Creating traffic jams", "Spawning people", "Making trees", "Moving signals", "Cleaning train", "Joining world..."]
 
 [node name="Screenshot" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(356, 0)
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_minimum_size = Vector2( 356, 0 )
-expand = true
+expand_mode = 1
 stretch_mode = 7
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Info" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 0
 offset_top = 311.0
 offset_right = 764.0
 offset_bottom = 511.0
-custom_minimum_size = Vector2( 0, 200 )
 
 [node name="Description" type="RichTextLabel" parent="Info"]
-offset_right = 760.0
-offset_bottom = 200.0
+layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/default_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/normal_font = ExtResource( 1 )
-script = ExtResource( 5 )
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1")
+script = ExtResource("5")
 
 [node name="Info" type="VBoxContainer" parent="Info"]
-offset_left = 764.0
-offset_right = 764.0
-offset_bottom = 200.0
+layout_mode = 2
 
 [node name="Author" type="Label" parent="Info/Info"]
-offset_bottom = 30.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1")
 
 [node name="ReleaseDate" type="Label" parent="Info/Info"]
-offset_top = 34.0
-offset_bottom = 64.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1")
 
 [node name="Duration" type="Label" parent="Info/Info"]
-offset_top = 68.0
-offset_bottom = 98.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 1 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1")
 
 [node name="ProgressBar" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -98.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Description" type="Label" parent="ProgressBar"]
-offset_right = 1024.0
-offset_bottom = 45.0
-pivot_offset = Vector2( -477.088, -120.927 )
-theme_override_fonts/font = ExtResource( 3 )
-align = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3")
 max_lines_visible = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Bar" type="ProgressBar" parent="ProgressBar"]
-offset_top = 49.0
-offset_right = 1024.0
-offset_bottom = 98.0
-theme_override_colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
-theme_override_fonts/font = ExtResource( 2 )
-theme_override_styles/fg = SubResource( 1 )
-theme_override_styles/bg = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+layout_mode = 2
+theme_override_colors/font_color = Color(0.117647, 0.423529, 0.576471, 1)
+theme_override_fonts/font = ExtResource("2")

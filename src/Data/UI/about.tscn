@@ -1,150 +1,102 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://dfv88eluonevd"]
 
-[ext_resource path="res://Data/UI/menu_about.gd" type="Script" id=1]
-[ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=2]
-[ext_resource path="res://authors.tres" type="Resource" id=3]
-[ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=4]
-[ext_resource path="res://Data/UI/styles/v_scrollbar.tres" type="Theme" id=5]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=7]
-[ext_resource path="res://Data/Fonts/FontMenu.tres" type="FontFile" id=8]
+[ext_resource type="Script" path="res://Data/UI/menu_about.gd" id="1"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="2"]
+[ext_resource type="Resource" path="res://authors.tres" id="3"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="4"]
+[ext_resource type="Theme" uid="uid://cm747u3js8c7p" path="res://Data/UI/styles/v_scrollbar.tres" id="5"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="7"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMenu.tres" id="8"]
 
 [node name="About" type="PanelContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = -16.0
 offset_bottom = -16.0
-theme_override_styles/panel = ExtResource( 4 )
-script = ExtResource( 1 )
-authors = ExtResource( 3 )
+theme_override_styles/panel = ExtResource("4")
+script = ExtResource("1")
+authors = ExtResource("3")
 
 [node name="Control" type="VBoxContainer" parent="."]
-offset_left = 6.0
-offset_top = 10.0
-offset_right = 986.0
-offset_bottom = 564.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+layout_mode = 2
 
 [node name="LabelAbout" type="Label" parent="Control"]
-offset_right = 980.0
-offset_bottom = 90.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 8 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8")
 text = "MENU_ABOUT"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control"]
-offset_top = 94.0
-offset_right = 980.0
-offset_bottom = 501.0
+layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme = ExtResource("5")
 
 [node name="VBoxAbout" type="VBoxContainer" parent="Control/ScrollContainer"]
-offset_right = 980.0
-offset_bottom = 186.0
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 alignment = 1
 
 [node name="Developers" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout"]
-offset_right = 980.0
-offset_bottom = 52.0
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 7
 alignment = 1
 
 [node name="DevelopersLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Developers"]
-offset_right = 980.0
-offset_bottom = 45.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "ABOUT_DEVELOPERS"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Developers" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Developers"]
-offset_top = 52.0
-offset_right = 980.0
-offset_bottom = 52.0
+layout_mode = 2
 theme_override_constants/separation = 4
 alignment = 1
 
 [node name="Contributors" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout"]
-offset_top = 67.0
-offset_right = 980.0
-offset_bottom = 119.0
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 7
 alignment = 1
 
 [node name="ContributorsLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Contributors"]
-offset_right = 980.0
-offset_bottom = 45.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "ABOUT_CONTRIBUTORS"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Contributors" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Contributors"]
-offset_top = 52.0
-offset_right = 980.0
-offset_bottom = 52.0
+layout_mode = 2
 theme_override_constants/separation = 4
 alignment = 1
 
 [node name="Translators" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout"]
-offset_top = 134.0
-offset_right = 980.0
-offset_bottom = 186.0
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 7
 alignment = 1
 
 [node name="TranslatorsLabel" type="Label" parent="Control/ScrollContainer/VBoxAbout/Translators"]
-offset_right = 980.0
-offset_bottom = 45.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "ABOUT_TRANSLATORS"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Translators" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Translators"]
-offset_top = 52.0
-offset_right = 980.0
-offset_bottom = 52.0
+layout_mode = 2
 theme_override_constants/separation = 4
 alignment = 1
 
 [node name="Back" type="Button" parent="Control"]
-offset_top = 505.0
-offset_right = 980.0
-offset_bottom = 554.0
-custom_minimum_size = Vector2( 200, 0 )
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 focus_neighbor_top = NodePath(".")
-theme = ExtResource( 2 )
-theme_override_fonts/font = ExtResource( 7 )
+theme = ExtResource("2")
+theme_override_fonts/font = ExtResource("7")
 text = "MENU_BACK"
 
 [connection signal="pressed" from="Control/Back" to="." method="_on_Back_pressed"]

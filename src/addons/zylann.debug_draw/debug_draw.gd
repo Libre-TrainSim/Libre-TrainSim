@@ -6,51 +6,71 @@
 # TODO Thread-safety
 # TODO 2D functions
 
-extends Node
+extends CanvasLayer
+
+const DebugDrawFont = preload("res://addons/zylann.debug_draw/Hack-Regular.ttf")
 
 ## @brief How many frames HUD text lines remain shown after being invoked.
 const TEXT_LINGER_FRAMES = 5
 ## @brief How many frames lines remain shown after being drawn.
 const LINES_LINGER_FRAMES = 1
-## @brief How many frames boxes remain shown after being drawn.
-const BOXES_LINGER_FRAMES = 60*10
 ## @brief Color of the text drawn as HUD
-const TEXT_COLOR = Color(1,1,1)
+const TEXT_COLOR = Color.WHITE
 ## @brief Background color of the text drawn as HUD
 const TEXT_BG_COLOR = Color(0.3, 0.3, 0.3, 0.8)
+## @brief font size used for debug text
+const TEXT_SIZE = 12
+
+# Can't use `Engine.get_frames_drawn` because it is always zero in headless mode.
+var _frame_counter := 0
 
 # 2D
 
 var _canvas_item : CanvasItem = null
-var _canvas_layer := CanvasLayer.new()
 var _texts := {}
-var _font : Font = null
 
 # 3D
 
 var _boxes := []
 var _box_pool := []
 var _box_mesh : Mesh = null
-var _lines := []
 var _line_material_pool := []
+
+var _lines := []
+var _line_immediate_mesh : ImmediateMesh
+
+var _mesh_instances := []
+var _mesh_instance_pool := []
+var _mesh_material_pool := []
 
 
 func _ready():
-	# Get default font
-	# Meh
-	var c := Control.new()
-	add_child(c)
-	_font = c.get_font("font")
-	c.queue_free()
-	_canvas_layer.layer = 100
-	add_child(_canvas_layer)
+	# Always process even if the game is paused
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	# Draw 2D on top of every other CanvasLayer
+	layer = 100
+	_line_immediate_mesh = ImmediateMesh.new()
+	var immediate_mesh_instance = MeshInstance3D.new()
+	immediate_mesh_instance.material_override = _get_line_material()
+	immediate_mesh_instance.mesh = _line_immediate_mesh
+	add_child(immediate_mesh_instance)
+
+
+## @brief Draws the unshaded outline of a 3D cube.
+## @param position: world-space position of the center of the cube
+## @param size: size of the cube in world units
+## @param color
+## @param linger_frames: optionally makes the box remain drawn for longer
+func draw_cube(position: Vector3, size: float, color: Color = Color.WHITE, linger := 0):
+	draw_box(position, Vector3(size, size, size), color, linger)
 
 
 ## @brief Draws the unshaded outline of a 3D box.
 ## @param position: world-space position of the center of the box
 ## @param size: size of the box in world units
 ## @param color
-func draw_box(position: Vector3, size: Vector3, color: Color = Color(1,1,1)):
+## @param linger_frames: optionally makes the box remain drawn for longer
+func draw_box(position: Vector3, size: Vector3, color: Color = Color.WHITE, linger_frames = 0):
 	var mi := _get_box()
 	var mat := _get_line_material()
 	mat.albedo_color = color
@@ -59,7 +79,82 @@ func draw_box(position: Vector3, size: Vector3, color: Color = Color(1,1,1)):
 	mi.scale = size
 	_boxes.append({
 		"node": mi,
-		"frame": Engine.get_frames_drawn() + BOXES_LINGER_FRAMES
+		"frame": _frame_counter + LINES_LINGER_FRAMES + linger_frames
+	})
+
+
+## @brief Draws the unshaded outline of a 3D transformed cube.
+## @param trans: transform of the cube. The basis defines its size.
+## @param color
+func draw_transformed_cube(trans: Transform3D, color: Color = Color.WHITE):
+	var mi := _get_box()
+	var mat := _get_line_material()
+	mat.albedo_color = color
+	mi.material_override = mat
+	mi.transform = Transform3D(trans.basis, trans.origin)
+	_boxes.append({
+		"node": mi,
+		"frame": _frame_counter + LINES_LINGER_FRAMES
+	})
+
+
+## @brief Draws the basis of the given transform using 3 lines
+##        of color red for X, green for Y, and blue for Z.
+## @param transform_
+## @param scale_: extra scale applied on top of the transform
+func draw_axes(transform_: Transform3D, scale_ = 1.0):
+	draw_ray_3d(transform_.origin, transform_.basis.x, scale_, Color(1,0,0))
+	draw_ray_3d(transform_.origin, transform_.basis.y, scale_, Color(0,1,0))
+	draw_ray_3d(transform_.origin, transform_.basis.z, scale_, Color(0,0,1))
+
+
+## @brief Draws a mesh at the specified transform.
+##        If the mesh's first surface uses line or point primitive,
+##        it is drawn using an unshaded material.
+## @param transform_
+## @param color: tint of the mesh.
+func draw_mesh(mesh: Mesh, transform_: Transform3D, color := Color.WHITE):
+	var mi := _get_mesh_instance()
+	# TODO How do I get the primitive type used by the mesh?
+	# Why can Mesh have virtual methods to implement that,
+	# but no callable method to actually GET that?
+	var mat : Material
+	var uses_lines = false
+	if mesh is ArrayMesh:
+		var pt : int = mesh.surface_get_primitive_type(0)
+		if pt == Mesh.PRIMITIVE_LINES or pt == Mesh.PRIMITIVE_LINE_STRIP or \
+		pt == Mesh.PRIMITIVE_POINTS:
+			mat = _get_line_material()
+			uses_lines = true
+		else:
+			mat = _get_mesh_material()
+	else:
+		mat = _get_mesh_material()
+	mat.albedo_color = color
+	mi.material_override = mat
+	mi.transform = transform_
+	mi.mesh = mesh
+	_mesh_instances.append({
+		"node": mi,
+		"uses_lines": uses_lines,
+		"frame": _frame_counter + LINES_LINGER_FRAMES
+	})
+
+
+## @brief Draws the unshaded outline of a 3D box.
+## @param aabb: world-space box to draw as an AABB
+## @param color
+## @param linger_frames: optionally makes the box remain drawn for longer
+func draw_box_aabb(aabb: AABB, color = Color.WHITE, linger_frames = 0):
+	var mi := _get_box()
+	var mat := _get_line_material()
+	mat.albedo_color = color
+	mi.material_override = mat
+	mi.position = aabb.get_center()
+	mi.scale = aabb.size
+	_boxes.append({
+		"node": mi,
+		"frame": _frame_counter + LINES_LINGER_FRAMES + linger_frames
 	})
 
 
@@ -68,18 +163,10 @@ func draw_box(position: Vector3, size: Vector3, color: Color = Color(1,1,1)):
 ## @param b: end position in world units
 ## @param color
 func draw_line_3d(a: Vector3, b: Vector3, color: Color):
-	var g = ImmediateMesh.new()
-	g.material_override = _get_line_material()
-	g.begin(Mesh.PRIMITIVE_LINES)
-	g.set_color(color)
-	g.add_vertex(a)
-	g.add_vertex(b)
-	g.end()
-	add_child(g)
-	_lines.append({
-		"node": g,
-		"frame": Engine.get_frames_drawn() + LINES_LINGER_FRAMES,
-	})
+	_lines.append([
+		a, b, color,
+		_frame_counter + LINES_LINGER_FRAMES,
+	])
 
 
 ## @brief Draws an unshaded 3D line defined as a ray.
@@ -96,10 +183,10 @@ func draw_ray_3d(origin: Vector3, direction: Vector3, length: float, color : Col
 ## Multiple calls with the same `key` will override previous text.
 ## @param key: identifier of the line
 ## @param text: text to show next to the key
-func set_text(key: String, value):
+func set_text(key: String, value=""):
 	_texts[key] = {
 		"text": value if typeof(value) == TYPE_STRING else str(value),
-		"frame": Engine.get_frames_drawn() + TEXT_LINGER_FRAMES
+		"frame": _frame_counter + TEXT_LINGER_FRAMES
 	}
 
 
@@ -108,7 +195,7 @@ func _get_box() -> MeshInstance3D:
 	if len(_box_pool) == 0:
 		mi = MeshInstance3D.new()
 		if _box_mesh == null:
-			_box_mesh = _create_wirecube_mesh(Color(1, 1, 1))
+			_box_mesh = _create_wirecube_mesh(Color.WHITE)
 		mi.mesh = _box_mesh
 		add_child(mi)
 	else:
@@ -138,79 +225,170 @@ func _recycle_line_material(mat: StandardMaterial3D):
 	_line_material_pool.append(mat)
 
 
-func _process_3d_lines_delayed_free(items: Array):
+func _get_mesh_instance() -> MeshInstance3D:
+	var mi : MeshInstance3D
+	if len(_mesh_instance_pool) == 0:
+		mi = MeshInstance3D.new()
+		add_child(mi)
+	else:
+		mi = _mesh_instance_pool[-1]
+		_mesh_instance_pool.pop_back()
+	return mi
+
+
+func _recycle_mesh_instance(mi: MeshInstance3D):
+	mi.hide()
+	_mesh_instance_pool.append(mi)
+
+
+func _get_mesh_material() -> StandardMaterial3D:
+	var mat : StandardMaterial3D
+	if len(_mesh_material_pool) == 0:
+		mat = StandardMaterial3D.new()
+	else:
+		mat = _mesh_material_pool[-1]
+		_mesh_material_pool.pop_back()
+	return mat
+
+
+func _recycle_mesh_material(mat: StandardMaterial3D):
+	_mesh_material_pool.append(mat)
+
+
+func _process(_unused_delta: float):
+	_frame_counter += 1
+	
+	_process_boxes()
+	_process_lines()
+	_process_canvas()
+	_process_meshes()
+
+
+func _process_3d_boxes_delayed_free(items: Array):
 	var i := 0
 	while i < len(items):
 		var d = items[i]
-		if d.frame <= Engine.get_frames_drawn():
+		if d.frame <= _frame_counter:
 			_recycle_line_material(d.node.material_override)
 			d.node.queue_free()
-			items[i] = items[i - 1]
+			items[i] = items[len(items) - 1]
 			items.pop_back()
 		else:
 			i += 1
 
 
-func _process(delta: float):
-	_process_3d_lines_delayed_free(_lines)
-	_process_3d_lines_delayed_free(_boxes)
+func _process_boxes():
+	_process_3d_boxes_delayed_free(_boxes)
 
-	# Progressively delete boxes
+	# Progressively delete boxes in pool
 	if len(_box_pool) > 0:
 		var last = _box_pool[-1]
 		_box_pool.pop_back()
 		last.queue_free()
 
+
+func _process_mesh_instance_delayed_free(items: Array):
+	var i := 0
+	while i < len(items):
+		var d = items[i]
+		if d.frame <= _frame_counter:
+			if d.uses_lines:
+				_recycle_line_material(d.node.material_override)
+			else:
+				_recycle_mesh_material(d.node.material_override)
+			d.node.queue_free()
+			items[i] = items[len(items) - 1]
+			items.pop_back()
+		else:
+			i += 1
+
+
+func _process_meshes():
+	_process_mesh_instance_delayed_free(_mesh_instances)
+
+
+func _process_lines():
+	var im := _line_immediate_mesh
+	im.clear_surfaces()
+
+	if len(_lines) == 0:
+		return
+
+	im.surface_begin(Mesh.PRIMITIVE_LINES)
+	
+	for line in _lines:
+		var p1 : Vector3 = line[0]
+		var p2 : Vector3 = line[1]
+		var color : Color = line[2]
+		
+		im.surface_set_color(color)
+		im.surface_add_vertex(p1)
+		im.surface_add_vertex(p2)
+	
+	im.surface_end()
+	
+	# Delayed removal
+	var i := 0
+	while i < len(_lines):
+		var item = _lines[i]
+		var frame = item[3]
+		if frame <= _frame_counter:
+			_lines[i] = _lines[len(_lines) - 1]
+			_lines.pop_back()
+		else:
+			i += 1
+
+
+func _process_canvas():
 	# Remove text lines after some time
 	for key in _texts.keys():
 		var t = _texts[key]
-		if t.frame <= Engine.get_frames_drawn():
+		if t.frame <= _frame_counter:
 			_texts.erase(key)
 
 	# Update canvas
 	if _canvas_item == null:
-		_canvas_item = Control.new()
-		_canvas_item.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-		_canvas_item.offset_top = 8
-		_canvas_item.connect("draw", Callable(self, "_on_CanvasItem_draw"))
-		_canvas_layer.add_child(_canvas_item)
-	_canvas_item.update()
+		_canvas_item = Node2D.new()
+		_canvas_item.position = Vector2(8, 8)
+		_canvas_item.draw.connect(_on_CanvasItem_draw)
+		add_child(_canvas_item)
+	_canvas_item.queue_redraw()
 
 
 func _on_CanvasItem_draw():
 	var ci := _canvas_item
+	
+	var font := DebugDrawFont
 
-	var ascent := Vector2(0, _font.get_ascent())
+	var ascent := Vector2(0, font.get_ascent())
 	var pos := Vector2()
 	var xpad := 2
 	var ypad := 1
 	var font_offset := ascent + Vector2(xpad, ypad)
-	var line_height := _font.get_height() + 2 * ypad
-	var max_width := 0
+	var line_height := font.get_height() + 2 * ypad
 
 	for key in _texts.keys():
 		var t = _texts[key]
-		var text := str(key, ": ", t.text, "\n")
-		var ss := _font.get_string_size(text)
-		var width := ss.x + xpad * 2
-		max_width = max(max_width, width)
-		ci.draw_rect(Rect2(pos, Vector2(width, line_height)), TEXT_BG_COLOR)
-		ci.draw_string(_font, pos + font_offset, text, TEXT_COLOR)
+		var text := str(key, ": ", t.text)
+		var ss := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE)
+		ci.draw_rect(Rect2(pos, Vector2(ss.x + xpad * 2, line_height)), TEXT_BG_COLOR)
+		ci.draw_string(font, pos + font_offset, text, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE,
+			TEXT_COLOR)
 		pos.y += line_height
 
-	_canvas_item.offset_left = -max_width - 8
 
-
-static func _create_wirecube_mesh(color := Color(1,1,1)) -> ArrayMesh:
+static func _create_wirecube_mesh(color := Color.WHITE) -> ArrayMesh:
+	var n = -0.5
+	var p = 0.5
 	var positions := PackedVector3Array([
-		Vector3(0, 0, 0),
-		Vector3(1, 0, 0),
-		Vector3(1, 0, 1),
-		Vector3(0, 0, 1),
-		Vector3(0, 1, 0),
-		Vector3(1, 1, 0),
-		Vector3(1, 1, 1),
-		Vector3(0, 1, 1)
+		Vector3(n, n, n),
+		Vector3(p, n, n),
+		Vector3(p, n, p),
+		Vector3(n, n, p),
+		Vector3(n, p, n),
+		Vector3(p, p, n),
+		Vector3(p, p, p),
+		Vector3(n, p, p)
 	])
 	var colors := PackedColorArray([
 		color, color, color, color,

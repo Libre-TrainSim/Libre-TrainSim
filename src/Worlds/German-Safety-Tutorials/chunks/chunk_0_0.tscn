@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=3 uid="uid://d14hdncguw62h"]
 
 [ext_resource type="Material" uid="uid://i03ypcoq4i7g" path="res://Resources/Materials/Grass_new.tres" id="1"]
-[ext_resource type="PackedScene" path="res://Data/Modules/TrackObjects.tscn" id="2"]
-[ext_resource type="Script" path="res://Data/Scripts/chunk.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://b6i46dhjqu248" path="res://Data/Modules/TrackObjects.tscn" id="2"]
+[ext_resource type="Script" uid="uid://by8u6asivvep5" path="res://Data/Scripts/chunk.gd" id="4"]
 [ext_resource type="Material" path="res://Resources/Materials/EasyTree.tres" id="5"]
 [ext_resource type="Material" path="res://Resources/Materials/EasyTree2.tres" id="6"]
 [ext_resource type="ArrayMesh" uid="uid://bj8tajp5rvmxq" path="res://Resources/Objects/EasyTree.obj" id="7"]

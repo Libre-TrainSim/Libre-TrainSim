@@ -1,15 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://cdiom4na4uutx"]
 
-[ext_resource path="res://addons/jean28518.jTools/jSettings/JSettings.gd" type="Script" id=1]
-[ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=2]
-[ext_resource path="res://addons/jean28518.jTools/jSettings/input_settings.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=4]
-[ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
+[ext_resource type="Script" uid="uid://dq8ydiyxysvuw" path="res://addons/jean28518.jTools/jSettings/JSettings.gd" id="1"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_right.tres" id="2"]
+[ext_resource type="PackedScene" uid="uid://dl3ipfqs1dswo" path="res://addons/jean28518.jTools/jSettings/input_settings.tscn" id="3"]
+[ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="4"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_left.tres" id="5"]
 
 [node name="JSettings" type="CanvasLayer"]
 process_mode = 2
 layer = 2
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="JSettings" type="PanelContainer" parent="."]
 anchor_right = 1.0
@@ -18,7 +18,7 @@ offset_left = 12.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = -12.0
-theme = ExtResource( 4 )
+theme = ExtResource("4")
 
 [node name="MarginContainer" type="MarginContainer" parent="JSettings"]
 offset_left = 6.0
@@ -70,7 +70,7 @@ __meta__ = {
 offset_right = 468.0
 offset_bottom = 45.0
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
+theme_override_colors/font_color = Color(0.0392157, 0.145098, 0.2, 1)
 text = "MENU_ACCESSIBILITY_SETTINGS"
 valign = 1
 
@@ -113,7 +113,7 @@ offset_top = 128.0
 offset_right = 468.0
 offset_bottom = 173.0
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
+theme_override_colors/font_color = Color(0.0392157, 0.145098, 0.2, 1)
 text = "MENU_GAMEPLAY_SETTINGS"
 valign = 1
 
@@ -217,7 +217,7 @@ offset_top = 407.0
 offset_right = 468.0
 offset_bottom = 452.0
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
+theme_override_colors/font_color = Color(0.0392157, 0.145098, 0.2, 1)
 text = "MENU_DIFFICULTY_SETTINGS"
 valign = 1
 
@@ -282,7 +282,7 @@ columns = 2
 offset_right = 468.0
 offset_bottom = 45.0
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
+theme_override_colors/font_color = Color(0.0392157, 0.145098, 0.2, 1)
 text = "MENU_DISPLAY_SETTINGS"
 valign = 1
 
@@ -375,7 +375,7 @@ offset_top = 275.0
 offset_right = 468.0
 offset_bottom = 320.0
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color( 0.0392157, 0.145098, 0.2, 1 )
+theme_override_colors/font_color = Color(0.0392157, 0.145098, 0.2, 1)
 text = "MENU_DETAIL_SETTINGS"
 valign = 1
 
@@ -402,7 +402,7 @@ offset_bottom = 373.0
 size_flags_horizontal = 3
 text = "Disabled"
 align = 1
-items = [ "Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null, "8x", null, false, 3, null, "16x", null, false, 4, null ]
+items = ["Disabled", null, false, 0, null, "2x", null, false, 1, null, "4x", null, false, 2, null, "8x", null, false, 3, null, "16x", null, false, 4, null]
 selected = 0
 
 [node name="Label2" type="Label" parent="JSettings/MarginContainer/VBoxContainer/TabContainer/MENU_VISUAL_SETTINGS/GridContainer"]
@@ -482,7 +482,7 @@ unique_name_in_owner = true
 offset_left = 478.0
 offset_right = 952.0
 offset_bottom = 45.0
-custom_minimum_size = Vector2( 150, 0 )
+custom_minimum_size = Vector2(150, 0)
 size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 1.0
@@ -505,7 +505,7 @@ offset_left = 478.0
 offset_top = 49.0
 offset_right = 952.0
 offset_bottom = 94.0
-custom_minimum_size = Vector2( 150, 0 )
+custom_minimum_size = Vector2(150, 0)
 size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 1.0
@@ -528,7 +528,7 @@ offset_left = 478.0
 offset_top = 98.0
 offset_right = 952.0
 offset_bottom = 143.0
-custom_minimum_size = Vector2( 150, 0 )
+custom_minimum_size = Vector2(150, 0)
 size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 1.0
@@ -538,7 +538,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MENU_INPUT_SETTINGS" parent="JSettings/MarginContainer/VBoxContainer/TabContainer" instance=ExtResource( 3 )]
+[node name="MENU_INPUT_SETTINGS" parent="JSettings/MarginContainer/VBoxContainer/TabContainer" instance=ExtResource("3")]
 unique_name_in_owner = true
 visible = false
 offset_left = 10.0
@@ -555,9 +555,9 @@ offset_bottom = 546.0
 unique_name_in_owner = true
 offset_right = 677.0
 offset_bottom = 49.0
-custom_minimum_size = Vector2( 150, 0 )
+custom_minimum_size = Vector2(150, 0)
 size_flags_horizontal = 3
-theme = ExtResource( 5 )
+theme = ExtResource("5")
 text = "MENU_BACK"
 align = 0
 __meta__ = {
@@ -569,8 +569,8 @@ unique_name_in_owner = true
 offset_left = 681.0
 offset_right = 972.0
 offset_bottom = 49.0
-custom_minimum_size = Vector2( 150, 0 )
-theme = ExtResource( 2 )
+custom_minimum_size = Vector2(150, 0)
+theme = ExtResource("2")
 text = "MENU_SETTINGS_RESET"
 align = 0
 __meta__ = {

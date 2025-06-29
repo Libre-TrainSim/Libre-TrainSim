@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://ye17017qftit"]
 
-[ext_resource type="Script" path="res://Data/Scripts/StationJumper.gd" id="1"]
+[ext_resource type="Script" uid="uid://d0htnllq6omrt" path="res://Data/Scripts/StationJumper.gd" id="1"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="2"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame_Small_Bold.tres" id="3"]
 [ext_resource type="Theme" uid="uid://bbk158o7ogkdi" path="res://Data/UI/styles/item_list.tres" id="4"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_left.tres" id="5"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_right.tres" id="6"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="7"]
-[ext_resource type="Script" path="res://Data/UI/colored_item_list.gd" id="8"]
-[ext_resource type="Script" path="res://Data/UI/translated_rich_rext_label.gd" id="9"]
+[ext_resource type="Script" uid="uid://xyyv6snnnrge" path="res://Data/UI/colored_item_list.gd" id="8"]
+[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="9"]
 
 [node name="StationJumper" type="PanelContainer"]
 anchors_preset = 15

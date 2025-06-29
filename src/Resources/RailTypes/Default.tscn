@@ -1,18 +1,18 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://c61ygw24ig6ti"]
 
-[ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
-[ext_resource path="res://Resources/Materials/Metal-Rail.tres" type="Material" id=2]
-[ext_resource path="res://Resources/RailTypes/Rail_Beton_1.obj" type="ArrayMesh" id=3]
-[ext_resource path="res://Data/Scripts/RailType.gd" type="Script" id=4]
-[ext_resource path="res://Resources/Materials/Gravel.tres" type="Material" id=5]
-[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=6]
+[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="1"]
+[ext_resource type="Material" path="res://Resources/Materials/Metal-Rail.tres" id="2"]
+[ext_resource type="ArrayMesh" uid="uid://bfb11nql3t3mc" path="res://Resources/RailTypes/Rail_Beton_1.obj" id="3"]
+[ext_resource type="Script" uid="uid://coywt7p1igk7t" path="res://Data/Scripts/RailType.gd" id="4"]
+[ext_resource type="Material" path="res://Resources/Materials/Gravel.tres" id="5"]
+[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="6"]
 
 [node name="RailType" type="Node3D"]
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource( 3 )
-material/0 = ExtResource( 6 )
-material/1 = ExtResource( 2 )
-material/2 = ExtResource( 1 )
-material/3 = ExtResource( 5 )
+mesh = ExtResource("3")
+material/0 = ExtResource("6")
+material/1 = ExtResource("2")
+material/2 = ExtResource("1")
+material/3 = ExtResource("5")

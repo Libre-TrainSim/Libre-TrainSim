@@ -1,20 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://c1qp4h18taulw"]
 
-[ext_resource path="res://Data/Fonts/FontMenu.tres" type="FontFile" id=1]
-[ext_resource path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" type="Texture2D" id=2]
-[ext_resource path="res://Data/Screens/ScreenTimeTable/screen_time_table.gd" type="Script" id=3]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMenu.tres" id="1"]
+[ext_resource type="Texture2D" uid="uid://dlocmht05b377" path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" id="2"]
+[ext_resource type="Script" uid="uid://bfrsba8t6a6c0" path="res://Data/Screens/ScreenTimeTable/screen_time_table.gd" id="3"]
 
 [node name="ScreenRight" type="Node2D"]
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color( 0, 0, 0, 1 )
-texture = ExtResource( 2 )
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("2")
 centered = false
 
 [node name="CurrentStation" type="ColorRect" parent="."]
 visible = false
-modulate = Color( 0, 0.356863, 0.482353, 1 )
+modulate = Color(0, 0.356863, 0.482353, 1)
 offset_left = -56.6533
 offset_top = 100.173
 offset_right = 1245.35
@@ -42,7 +42,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Table/Arrival"]
 offset_right = 203.0
 offset_bottom = 90.0
-theme_override_fonts/font = ExtResource( 1 )
+theme_override_fonts/font = ExtResource("1")
 text = "ARRIVAL:"
 align = 1
 
@@ -50,7 +50,7 @@ align = 1
 offset_top = 94.0
 offset_right = 203.0
 offset_bottom = 184.0
-theme_override_fonts/font = ExtResource( 1 )
+theme_override_fonts/font = ExtResource("1")
 align = 1
 
 [node name="Departure" type="VBoxContainer" parent="Table"]
@@ -64,7 +64,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Table/Departure"]
 offset_right = 271.0
 offset_bottom = 90.0
-theme_override_fonts/font = ExtResource( 1 )
+theme_override_fonts/font = ExtResource("1")
 text = "DEPARTURE:"
 align = 1
 
@@ -72,7 +72,7 @@ align = 1
 offset_top = 94.0
 offset_right = 271.0
 offset_bottom = 184.0
-theme_override_fonts/font = ExtResource( 1 )
+theme_override_fonts/font = ExtResource("1")
 align = 1
 
 [node name="Station" type="VBoxContainer" parent="Table"]
@@ -88,7 +88,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Table/Station"]
 offset_right = 523.0
 offset_bottom = 90.0
-theme_override_fonts/font = ExtResource( 1 )
+theme_override_fonts/font = ExtResource("1")
 text = "STATION:"
 align = 1
 
@@ -96,5 +96,5 @@ align = 1
 offset_top = 94.0
 offset_right = 523.0
 offset_bottom = 184.0
-theme_override_fonts/font = ExtResource( 1 )
+theme_override_fonts/font = ExtResource("1")
 align = 1

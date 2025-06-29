@@ -1,38 +1,38 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://f75asncvh278"]
 
-[ext_resource path="res://Resources/Sounds/Acceleration6.ogg" type="AudioStream" id=1]
-[ext_resource path="res://Resources/Sounds/EngineIdle.ogg" type="AudioStream" id=2]
-[ext_resource path="res://Data/Scripts/AdvancedEngineSound.gd" type="Script" id=3]
-[ext_resource path="res://Resources/Sounds/Acceleration5.ogg" type="AudioStream" id=4]
-[ext_resource path="res://Resources/Sounds/AccelerationTransition2.ogg" type="AudioStream" id=5]
+[ext_resource type="AudioStream" uid="uid://cq2yac254l7b5" path="res://Resources/Sounds/Acceleration6.ogg" id="1"]
+[ext_resource type="AudioStream" uid="uid://ch475p8d4bouw" path="res://Resources/Sounds/EngineIdle.ogg" id="2"]
+[ext_resource type="Script" uid="uid://bt6055te7rian" path="res://Data/Scripts/AdvancedEngineSound.gd" id="3"]
+[ext_resource type="AudioStream" uid="uid://gb3n7fdyiy12" path="res://Resources/Sounds/Acceleration5.ogg" id="4"]
+[ext_resource type="AudioStream" uid="uid://dl5kycf504vaj" path="res://Resources/Sounds/AccelerationTransition2.ogg" id="5"]
 
 [node name="AdvancedEngineSound" type="Node3D"]
 process_mode = 2
-script = ExtResource( 3 )
+script = ExtResource("3")
 acceleration_transition_length_in_ms = 200.0
 acceleration_transition_1_delta_length_in_ms = 200.0
 acceleration_transition_2_delta_length_in_ms = 200.0
 
 [node name="Idle" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 2 )
+stream = ExtResource("2")
 unit_size = 3.0
 autoplay = true
 bus = "Game"
 
 [node name="Acceleration1" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource("4")
 unit_size = 3.0
 autoplay = true
 bus = "Game"
 
 [node name="Acceleration2" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 1 )
+stream = ExtResource("1")
 unit_size = 3.0
 autoplay = true
 bus = "Game"
 
 [node name="AccelerationTransition" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 volume_db = -10.0
 unit_size = 3.0
 bus = "Game"

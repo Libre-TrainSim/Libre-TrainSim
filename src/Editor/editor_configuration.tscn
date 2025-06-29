@@ -1,27 +1,27 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=13 format=3 uid="uid://dw1yq1j1uh5a4"]
 
-[ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Editor/Scripts/editor_configuration.gd" type="Script" id=2]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=3]
-[ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=4]
-[ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=5]
-[ext_resource path="res://Data/UI/colored_item_list.gd" type="Script" id=6]
-[ext_resource path="res://Data/UI/styles/item_list.tres" type="Theme" id=7]
-[ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=8]
-[ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=9]
-[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=10]
-[ext_resource path="res://Data/UI/styles/line_edit.tres" type="Theme" id=11]
-[ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=12]
+[ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="1"]
+[ext_resource type="Script" uid="uid://ba0y1bimxbaj3" path="res://Editor/Scripts/editor_configuration.gd" id="2"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="3"]
+[ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="4"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="5"]
+[ext_resource type="Script" uid="uid://xyyv6snnnrge" path="res://Data/UI/colored_item_list.gd" id="6"]
+[ext_resource type="Theme" uid="uid://bbk158o7ogkdi" path="res://Data/UI/styles/item_list.tres" id="7"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_right.tres" id="8"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_center.tres" id="9"]
+[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="10"]
+[ext_resource type="Theme" path="res://Data/UI/styles/line_edit.tres" id="11"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_left.tres" id="12"]
 
 [node name="Editor_Configuration" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_styles/panel = ExtResource( 5 )
+theme_override_styles/panel = ExtResource("5")
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -45,8 +45,8 @@ size_flags_horizontal = 3
 offset_top = 2.0
 offset_right = 283.0
 offset_bottom = 47.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3")
 text = "ABSOLUTE_EDITOR_PATH: "
 
 [node name="EditorPath" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer"]
@@ -54,12 +54,12 @@ offset_left = 287.0
 offset_right = 885.0
 offset_bottom = 49.0
 size_flags_horizontal = 3
-theme = ExtResource( 11 )
-theme_override_colors/selection_color = Color( 0.45098, 0.843137, 0.819608, 1 )
-theme_override_colors/cursor_color = Color( 0, 0, 0, 1 )
-theme_override_colors/font_color_selected = Color( 0.27451, 0.286275, 0.360784, 1 )
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_colors/font_color_uneditable = Color( 0.219608, 0.219608, 0.219608, 1 )
+theme = ExtResource("11")
+theme_override_colors/selection_color = Color(0.45098, 0.843137, 0.819608, 1)
+theme_override_colors/cursor_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color_selected = Color(0.27451, 0.286275, 0.360784, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color_uneditable = Color(0.219608, 0.219608, 0.219608, 1)
 text = "Hallo Welt"
 caret_blink = true
 caret_blink_interval = 0.5
@@ -68,20 +68,20 @@ caret_blink_interval = 0.5
 offset_left = 889.0
 offset_right = 1012.0
 offset_bottom = 49.0
-theme = ExtResource( 8 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("8")
+theme_override_fonts/font = ExtResource("3")
 text = "UPDATE"
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
 offset_top = 53.0
 offset_right = 1012.0
 offset_bottom = 58.0
-custom_minimum_size = Vector2( 0, 5 )
+custom_minimum_size = Vector2(0, 5)
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TracksList" parent="PanelContainer/VBoxContainer" instance=ExtResource( 1 )]
+[node name="TracksList" parent="PanelContainer/VBoxContainer" instance=ExtResource("1")]
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_top = 62.0
@@ -102,10 +102,10 @@ action_button_text = "OPEN"
 [node name="ItemList" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer" index="0"]
 offset_right = 1012.0
 offset_bottom = 471.0
-theme = ExtResource( 7 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("7")
+theme_override_fonts/font = ExtResource("3")
 select_mode = 0
-script = ExtResource( 6 )
+script = ExtResource("6")
 
 [node name="HBoxContainer" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer" index="1"]
 offset_top = 475.0
@@ -115,7 +115,7 @@ offset_bottom = 524.0
 [node name="Back" type="Button" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="0"]
 offset_right = 99.0
 offset_bottom = 49.0
-theme = ExtResource( 12 )
+theme = ExtResource("12")
 text = "BACK"
 align = 0
 
@@ -123,21 +123,21 @@ align = 0
 offset_left = 103.0
 offset_right = 747.0
 offset_bottom = 49.0
-theme = ExtResource( 11 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("11")
+theme_override_fonts/font = ExtResource("3")
 
 [node name="Add" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="2"]
 offset_left = 751.0
 offset_right = 809.0
 offset_bottom = 49.0
-theme = ExtResource( 9 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("9")
+theme_override_fonts/font = ExtResource("3")
 text = "NEW"
 
 [node name="Remove" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="3"]
 visible = false
-theme = ExtResource( 9 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("9")
+theme_override_fonts/font = ExtResource("3")
 text = "REMOVE"
 
 [node name="Rename" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="4"]
@@ -145,51 +145,51 @@ visible = true
 offset_left = 813.0
 offset_right = 912.0
 offset_bottom = 49.0
-theme = ExtResource( 9 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("9")
+theme_override_fonts/font = ExtResource("3")
 text = "RENAME"
 
 [node name="Duplicate" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="5"]
 offset_left = 557.0
 offset_right = 688.0
 offset_bottom = 51.0
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 text = "DUPLICATE"
 
 [node name="Copy" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="6"]
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 
 [node name="Paste" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="7"]
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 
 [node name="Save" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="8"]
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 
 [node name="Action" parent="PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer" index="9"]
 visible = true
 offset_left = 916.0
 offset_right = 1012.0
 offset_bottom = 49.0
-theme = ExtResource( 8 )
-theme_override_fonts/font = ExtResource( 3 )
+theme = ExtResource("8")
+theme_override_fonts/font = ExtResource("3")
 text = "OPEN"
 
 [node name="Label" parent="PanelContainer/VBoxContainer/TracksList/Popup" index="0"]
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 
 [node name="Okay" parent="PanelContainer/VBoxContainer/TracksList/Popup" index="1"]
-theme_override_fonts/font = ExtResource( 3 )
+theme_override_fonts/font = ExtResource("3")
 
 [node name="ConfirmationDialog" parent="PanelContainer/VBoxContainer/TracksList" index="2"]
 offset_left = -255.0
 offset_top = -128.0
 offset_right = 255.0
 offset_bottom = 128.0
-theme = ExtResource( 4 )
+theme = ExtResource("4")
 
 [node name="Label" parent="PanelContainer/VBoxContainer/TracksList/ConfirmationDialog" index="0"]
 offset_bottom = -64.0
-script = ExtResource( 10 )
+script = ExtResource("10")
 
 [node name="Remove" parent="PanelContainer/VBoxContainer/TracksList/ConfirmationDialog" index="1"]
 offset_top = -59.0
@@ -198,7 +198,7 @@ offset_bottom = -10.0
 [node name="Cancel" parent="PanelContainer/VBoxContainer/TracksList/ConfirmationDialog" index="2"]
 offset_top = -59.0
 offset_bottom = -10.0
-theme = ExtResource( 12 )
+theme = ExtResource("12")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/UpdateEditorPathButton" to="." method="_on_UpdateEditorPathButton_pressed"]
 [connection signal="user_added_entry" from="PanelContainer/VBoxContainer/TracksList" to="." method="_on_TracksList_user_added_entry"]

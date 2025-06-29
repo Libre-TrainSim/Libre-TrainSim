@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://b2ek661dx15ec"]
 
-[ext_resource path="res://Editor/ui/objects_menu/group_entry.gd" type="Script" id=2]
+[ext_resource type="Script" uid="uid://i2fxiqaoertr" path="res://Editor/ui/objects_menu/group_entry.gd" id="2"]
 
 [node name="Entry" type="VBoxContainer"]
 offset_right = 185.0
 offset_bottom = 345.0
 size_flags_horizontal = 3
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Header" type="HBoxContainer" parent="."]
 offset_right = 185.0

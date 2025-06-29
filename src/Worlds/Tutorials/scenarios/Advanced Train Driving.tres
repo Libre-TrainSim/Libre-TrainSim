@@ -1,10 +1,10 @@
-[gd_resource type="Resource" load_steps=16 format=3 uid="uid://odu6pfc531u6"]
+[gd_resource type="Resource" script_class="TrackScenario" load_steps=16 format=3 uid="uid://odu6pfc531u6"]
 
-[ext_resource type="Script" path="res://Data/Scripts/Resources/track_scenario.gd" id="1"]
-[ext_resource type="Script" path="res://Data/Scripts/Resources/signal_settings.gd" id="2"]
-[ext_resource type="Script" path="res://Data/Scripts/Resources/scenario_route.gd" id="3"]
-[ext_resource type="Script" path="res://Data/Scripts/Resources/route_point_station.gd" id="4"]
-[ext_resource type="Script" path="res://Data/Scripts/Resources/station_settings.gd" id="5"]
+[ext_resource type="Script" uid="uid://bsasm5u2w5k53" path="res://Data/Scripts/Resources/track_scenario.gd" id="1"]
+[ext_resource type="Script" uid="uid://bdmb4e64m5nas" path="res://Data/Scripts/Resources/signal_settings.gd" id="2"]
+[ext_resource type="Script" uid="uid://cvmrpg8l7dnvf" path="res://Data/Scripts/Resources/scenario_route.gd" id="3"]
+[ext_resource type="Script" uid="uid://etroft780o3f" path="res://Data/Scripts/Resources/route_point_station.gd" id="4"]
+[ext_resource type="Script" uid="uid://e4t5sclp4wkw" path="res://Data/Scripts/Resources/station_settings.gd" id="5"]
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("5")

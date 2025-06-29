@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://taa46yw5dmi1"]
 
-[ext_resource path="res://addons/jean28518.jTools/jSettings/input_button.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://dgb76adrybnw1" path="res://addons/jean28518.jTools/jSettings/input_button.gd" id="1"]
 
 [node name="InputButton" type="Button"]
 offset_right = 12.0
 offset_bottom = 20.0
 toggle_mode = true
 clip_text = true
-script = ExtResource( 1 )
+script = ExtResource("1")

@@ -2,13 +2,10 @@
 
 [ext_resource type="FontFile" uid="uid://jy41yueh4hio" path="res://Data/Fonts/NotoSansJP-Regular.otf" id="1"]
 [ext_resource type="FontFile" uid="uid://d23m8mtrj5gdy" path="res://Data/Fonts/Oswald-Bold.ttf" id="2"]
-[ext_resource type="Script" path="res://Data/Fonts/AutoDynamicFont.gd" id="3"]
+[ext_resource type="Script" uid="uid://bv7d52uhq2rei" path="res://Data/Fonts/AutoDynamicFont.gd" id="3"]
 
 [sub_resource type="FontFile" id="1"]
 fallbacks = Array[Font]([ExtResource("2"), ExtResource("1")])
-face_index = null
-embolden = null
-transform = null
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0

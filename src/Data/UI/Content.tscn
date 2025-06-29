@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://c6co0m5kdtjdt"]
 
-[ext_resource type="PackedScene" path="res://Data/UI/custom_item_list.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://1gfnlu5tvllv" path="res://Data/UI/custom_item_list.tscn" id="1"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="2"]
-[ext_resource type="Script" path="res://Data/UI/Content.gd" id="3"]
+[ext_resource type="Script" uid="uid://bu6ajq7fdtlfv" path="res://Data/UI/Content.gd" id="3"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_right.tres" id="4"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_left.tres" id="5"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="7"]

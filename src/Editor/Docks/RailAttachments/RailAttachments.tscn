@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://bvc2401k2fmsl"]
 
-[ext_resource path="res://Editor/Docks/RailAttachments/RailAttachments.gd" type="Script" id=1]
-[ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" uid="uid://1c7u03vh1xds" path="res://Editor/Docks/RailAttachments/RailAttachments.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Editor/Modules/building_settings.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="3"]
 
 [node name="Rail Attachments" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -44,13 +44,13 @@ offset_bottom = 14.0
 text = "Track Objects:"
 align = 1
 
-[node name="jListTrackObjects" parent="Tab/TrackObjects" instance=ExtResource( 3 )]
+[node name="jListTrackObjects" parent="Tab/TrackObjects" instance=ExtResource("3")]
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_top = 18.0
 offset_right = 1016.0
 offset_bottom = 168.0
-custom_minimum_size = Vector2( 0, 150 )
+custom_minimum_size = Vector2(0, 150)
 enable_rename_button = true
 enable_duplicate_button = true
 enable_copy_button = true
@@ -117,7 +117,7 @@ size_flags_horizontal = 3
 text = "Materials:"
 align = 1
 
-[node name="BuildingSettings" parent="Tab/TrackObjects/Settings/Tab/Object" instance=ExtResource( 2 )]
+[node name="BuildingSettings" parent="Tab/TrackObjects/Settings/Tab/Object" instance=ExtResource("2")]
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_top = 64.0
@@ -204,7 +204,7 @@ offset_right = 1008.0
 offset_bottom = 20.0
 text = "No Side"
 align = 1
-items = [ "No Side", null, false, 0, null, "Left", null, false, 1, null, "Right", null, false, 2, null, "Both Sides", null, false, 3, null ]
+items = ["No Side", null, false, 0, null, "Left", null, false, 1, null, "Right", null, false, 2, null, "Both Sides", null, false, 3, null]
 selected = 0
 
 [node name="GridContainer" type="GridContainer" parent="Tab/TrackObjects/Settings/Tab/Object Positioning"]
@@ -489,24 +489,24 @@ text = "Randomize"
 offset_top = 28.0
 offset_right = 1024.0
 offset_bottom = 158.0
-custom_minimum_size = Vector2( 600, 400 )
+custom_minimum_size = Vector2(600, 400)
 exclusive = true
 window_title = "Open a File"
 resizable = true
 mode = 0
-filters = PackedStringArray( "*.obj" )
+filters = PackedStringArray("*.obj")
 show_hidden_files = true
 
 [node name="FileDialogMaterials" type="FileDialog" parent="."]
 offset_top = 28.0
 offset_right = 1024.0
 offset_bottom = 158.0
-custom_minimum_size = Vector2( 600, 400 )
+custom_minimum_size = Vector2(600, 400)
 exclusive = true
 window_title = "Open a File"
 resizable = true
 mode = 0
-filters = PackedStringArray( "*.tres" )
+filters = PackedStringArray("*.tres")
 show_hidden_files = true
 
 [connection signal="user_added_entry" from="Tab/TrackObjects/jListTrackObjects" to="." method="_on_jListTrackObjects_user_added_entry"]

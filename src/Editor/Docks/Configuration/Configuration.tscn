@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://cs5ok4qmbo6qg"]
 
-[ext_resource path="res://Editor/Docks/Configuration/Configuration.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://dqlf04y4avjbi" path="res://Editor/Docks/Configuration/Configuration.gd" id="1"]
 
 [node name="ConfirmationDialog" type="Window"]
 process_mode = 2
@@ -10,7 +10,7 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 exclusive = true
 window_title = "Edit Configuration"
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Configuration" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -99,7 +99,7 @@ offset_left = 119.0
 offset_top = 56.0
 offset_right = 819.0
 offset_bottom = 156.0
-custom_minimum_size = Vector2( 0, 100 )
+custom_minimum_size = Vector2(0, 100)
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Configuration"]
@@ -113,7 +113,7 @@ align = 1
 offset_top = 196.0
 offset_right = 819.0
 offset_bottom = 452.0
-custom_minimum_size = Vector2( 0, 100 )
+custom_minimum_size = Vector2(0, 100)
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="Configuration"]

@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bwifyltrlclv"]
 
-[ext_resource path="res://Editor/Modules/Content_Selector.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://svko1bxkex2h" path="res://Editor/Modules/Content_Selector.gd" id="1"]
 
 [node name="Content_Selector" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_right = 1024.0

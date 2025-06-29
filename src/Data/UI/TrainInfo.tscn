@@ -3,9 +3,9 @@
 [ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="1"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://b187tni46oscs" path="res://Data/Misc/DotRed.png" id="3"]
-[ext_resource type="Script" path="res://Data/Scripts/TrainInfo.gd" id="4"]
+[ext_resource type="Script" uid="uid://coux3cyuc14mv" path="res://Data/Scripts/TrainInfo.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://bmgb01xxsvlnr" path="res://Data/Misc/DotGreen.png" id="5"]
-[ext_resource type="Script" path="res://Data/UI/input_rich_text_label.gd" id="8"]
+[ext_resource type="Script" uid="uid://daonpyfvwlpkj" path="res://Data/UI/input_rich_text_label.gd" id="8"]
 
 [node name="TrainInfo" type="Control"]
 layout_mode = 3

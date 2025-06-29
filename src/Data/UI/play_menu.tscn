@@ -8,8 +8,8 @@
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_hover.tres" id="6"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_normal.tres" id="7"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_section.tres" id="8"]
-[ext_resource type="Script" path="res://Data/UI/translated_rich_rext_label.gd" id="9"]
-[ext_resource type="Script" path="res://Data/UI/play_menu.gd" id="10"]
+[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="9"]
+[ext_resource type="Script" uid="uid://btpp1t4na6o3r" path="res://Data/UI/play_menu.gd" id="10"]
 
 [node name="PlayMenu" type="Panel"]
 anchors_preset = 15

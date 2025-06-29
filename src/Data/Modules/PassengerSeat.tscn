@@ -1,29 +1,29 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://cgyl1m21y5cfk"]
 
-[ext_resource path="res://Data/Scripts/PassengerSeat.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://dkat1jdes1nhc" path="res://Data/Scripts/PassengerSeat.gd" id="1"]
 
-[sub_resource type="PlaneMesh" id=1]
-size = Vector2( 0.5, 0.5 )
+[sub_resource type="PlaneMesh" id="1"]
+size = Vector2(0.5, 0.5)
 
-[sub_resource type="StandardMaterial3D" id=2]
-albedo_color = Color( 0.00784314, 0.788235, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="2"]
+albedo_color = Color(0.00784314, 0.788235, 0, 1)
 
-[sub_resource type="PrismMesh" id=3]
-size = Vector3( 0.5, 0.5, 0.2 )
+[sub_resource type="PrismMesh" id="3"]
+size = Vector3(0.5, 0.5, 0.2)
 
-[sub_resource type="StandardMaterial3D" id=4]
-albedo_color = Color( 0.00784314, 0.788235, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="4"]
+albedo_color = Color(0.00784314, 0.788235, 0, 1)
 
 [node name="PassengerSeat" type="Node3D" groups=["PassengerSeat"]]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-mesh = SubResource( 1 )
-material/0 = SubResource( 2 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("1")
+material/0 = SubResource("2")
 
 [node name="MeshInstance2" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D( -4.2222e-08, 1, 2.98023e-08, 1.13133e-08, 2.98023e-08, -1, -1, -4.2222e-08, -1.13133e-08, 0, 0.1, 0 )
-mesh = SubResource( 3 )
+transform = Transform3D(-4.2222e-08, 1, 2.98023e-08, 1.13133e-08, 2.98023e-08, -1, -1, -4.2222e-08, -1.13133e-08, 0, 0.1, 0)
+mesh = SubResource("3")
 skeleton = NodePath("../..")
-material/0 = SubResource( 4 )
+material/0 = SubResource("4")

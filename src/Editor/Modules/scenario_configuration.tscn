@@ -1,16 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://dws1rk4qe1iji"]
 
-[ext_resource path="res://Editor/ui/size_changer.gd" type="Script" id=1]
-[ext_resource path="res://Editor/Scripts/ScenarioConfiguration.gd" type="Script" id=3]
-[ext_resource path="res://Editor/Modules/TimeField.tscn" type="PackedScene" id=4]
-[ext_resource path="res://addons/jean28518.jTools/jList/jList.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" uid="uid://d1o5qoj2lv7jg" path="res://Editor/ui/size_changer.gd" id="1"]
+[ext_resource type="Script" uid="uid://c2tkdoqoinqir" path="res://Editor/Scripts/ScenarioConfiguration.gd" id="3"]
+[ext_resource type="PackedScene" path="res://Editor/Modules/TimeField.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="5"]
 
 [node name="ScenarioConfiguration" type="Panel"]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -409.0
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
@@ -28,12 +28,12 @@ offset_top = 32.0
 offset_right = -4.0
 offset_bottom = -4.0
 
-[node name="Routes" parent="TabContainer/Routes" instance=ExtResource( 5 )]
+[node name="Routes" parent="TabContainer/Routes" instance=ExtResource("5")]
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_right = 391.0
 offset_bottom = 100.0
-custom_minimum_size = Vector2( 0, 100 )
+custom_minimum_size = Vector2(0, 100)
 enable_rename_button = true
 enable_duplicate_button = true
 
@@ -78,14 +78,14 @@ offset_right = 210.0
 offset_bottom = 45.0
 text = "Interval Start"
 
-[node name="IntervalStart" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource( 4 )]
+[node name="IntervalStart" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource("4")]
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 214.0
 offset_top = 28.0
 offset_right = 383.0
 offset_bottom = 48.0
-custom_minimum_size = Vector2( 0, 20 )
+custom_minimum_size = Vector2(0, 20)
 
 [node name="Label2" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
 offset_top = 57.0
@@ -111,14 +111,14 @@ offset_right = 210.0
 offset_bottom = 97.0
 text = "Interval End"
 
-[node name="IntervalEnd" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource( 4 )]
+[node name="IntervalEnd" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G" instance=ExtResource("4")]
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 214.0
 offset_top = 80.0
 offset_right = 383.0
 offset_bottom = 100.0
-custom_minimum_size = Vector2( 0, 20 )
+custom_minimum_size = Vector2(0, 20)
 
 [node name="Label3" type="Label" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/G"]
 offset_top = 109.0
@@ -152,7 +152,7 @@ __meta__ = {
 offset_top = 160.0
 offset_right = 383.0
 offset_bottom = 220.0
-custom_minimum_size = Vector2( 0, 60 )
+custom_minimum_size = Vector2(0, 60)
 
 [node name="SpecificRoutes" type="GridContainer" parent="TabContainer/Routes/RouteConfiguration/GeneralSettings/P"]
 offset_top = -4.0
@@ -189,7 +189,7 @@ size_flags_vertical = 3
 [node name="ItemList" type="ItemList" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
 offset_right = 383.0
 offset_bottom = 100.0
-custom_minimum_size = Vector2( 0, 100 )
+custom_minimum_size = Vector2(0, 100)
 
 [node name="ListButtons" type="HBoxContainer" parent="TabContainer/Routes/RouteConfiguration/RoutePoints"]
 offset_top = 104.0
@@ -336,7 +336,7 @@ offset_top = 56.0
 offset_right = 371.0
 offset_bottom = 76.0
 text = "Do not halt"
-items = [ "Do not halt", null, false, 0, null, "Regular Stop", null, false, 1, null, "Beginning Station", null, false, 2, null, "End Station", null, false, 3, null ]
+items = ["Do not halt", null, false, 0, null, "Regular Stop", null, false, 1, null, "Beginning Station", null, false, 2, null, "End Station", null, false, 3, null]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -813,7 +813,7 @@ offset_left = 283.0
 offset_right = 387.0
 offset_bottom = 20.0
 text = "Block Mode"
-items = [ "Block Mode", null, false, 0, null, "Station Mode", null, true, 1, null, "Manual Mode", null, false, 2, null ]
+items = ["Block Mode", null, false, 0, null, "Station Mode", null, true, 1, null, "Manual Mode", null, false, 2, null]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -856,7 +856,7 @@ text = "Speed Limit"
 offset_left = 287.0
 offset_right = 387.0
 offset_bottom = 24.0
-custom_minimum_size = Vector2( 100, 0 )
+custom_minimum_size = Vector2(100, 0)
 min_value = -1.0
 max_value = 1000.0
 suffix = "km/h"
@@ -890,7 +890,7 @@ offset_left = 332.0
 offset_right = 387.0
 offset_bottom = 20.0
 text = "Halt"
-items = [ "Halt", null, false, 0, null, "Pass", null, false, 1, null ]
+items = ["Halt", null, false, 0, null, "Pass", null, false, 1, null]
 selected = 0
 
 [node name="Enable Timed Free" type="CheckBox" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer"]
@@ -902,7 +902,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeField" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer" instance=ExtResource( 4 )]
+[node name="TimeField" parent="TabContainer/RailLogic/Signals/ManualSettings/GridContainer" instance=ExtResource("4")]
 offset_left = 332.0
 offset_top = 24.0
 offset_right = 387.0
@@ -1087,7 +1087,7 @@ offset_top = 112.0
 offset_right = 387.0
 offset_bottom = 136.0
 text = "Halt"
-items = [ "Halt", null, false, 0, null, "Pass", null, false, 1, null ]
+items = ["Halt", null, false, 0, null, "Pass", null, false, 1, null]
 selected = 0
 
 [node name="Label6" type="Label" parent="TabContainer/RailLogic/ContactPoints/GridContainer"]
@@ -1125,7 +1125,7 @@ anchor_bottom = 0.5
 offset_top = -20.0
 offset_right = 4.0
 offset_bottom = 20.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 drag_side = 0
 target_path = NodePath("..")
 

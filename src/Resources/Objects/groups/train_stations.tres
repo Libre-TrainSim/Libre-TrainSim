@@ -1,15 +1,15 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" script_class="ObjectGroup" load_steps=6 format=3 uid="uid://cn2apsolfhilv"]
 
-[ext_resource path="res://Data/Scripts/Resources/object_group.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Objects/train_stations/train_station_building_1.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Resources/Objects/train_stations/train_station_building_4.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Resources/Objects/train_stations/train_station_building_3.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Resources/Objects/train_stations/train_station_building_2.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" uid="uid://b4mt1iofa7d71" path="res://Data/Scripts/Resources/object_group.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/train_stations/train_station_building_1.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/train_stations/train_station_building_4.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/train_stations/train_station_building_3.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/train_stations/train_station_building_2.tscn" id="5"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 group_name = "Train Stations"
-scenes = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ]
+scenes = [ExtResource("2"), ExtResource("5"), ExtResource("4"), ExtResource("3")]
 is_building = true
 is_vegetation = false
 is_infrastructure = false

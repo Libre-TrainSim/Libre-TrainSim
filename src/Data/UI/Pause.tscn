@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bngfl6vp17xev"]
 
 [ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="1"]
-[ext_resource type="Script" path="res://Data/UI/pause.gd" id="2"]
-[ext_resource type="PackedScene" path="res://Data/UI/station_jumper.tscn" id="3"]
-[ext_resource type="Shader" path="res://Data/UI/blur.gdshader" id="4"]
+[ext_resource type="Script" uid="uid://chlhyp16epjcy" path="res://Data/UI/pause.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://ye17017qftit" path="res://Data/UI/station_jumper.tscn" id="3"]
+[ext_resource type="Shader" uid="uid://buj1vn41hdp4v" path="res://Data/UI/blur.gdshader" id="4"]
 
 [sub_resource type="ShaderMaterial" id="1"]
 shader = ExtResource("4")

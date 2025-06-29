@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://c0gc581ocnruf"]
 
-[ext_resource path="res://Resources/Objects/Wall4m.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Resources/Materials/Wall_Red.tres" type="Material" id=2]
+[ext_resource type="ArrayMesh" uid="uid://bp8feaqbvhb8x" path="res://Resources/Objects/Wall4m.obj" id="1"]
+[ext_resource type="Material" path="res://Resources/Materials/Wall_Red.tres" id="2"]
 
 [node name="Wall4m" type="MeshInstance3D"]
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 2 )
+mesh = ExtResource("1")
+material/0 = ExtResource("2")

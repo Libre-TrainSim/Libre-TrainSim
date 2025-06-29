@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://8362naoiach7"]
 
-[ext_resource path="res://Editor/Docks/RailBuilder/RailBuilder.gd" type="Script" id=1]
-[ext_resource path="res://Data/UI/custom_item_list.gd" type="Script" id=2]
+[ext_resource type="Script" uid="uid://cyy8punwry111" path="res://Editor/Docks/RailBuilder/RailBuilder.gd" id="1"]
+[ext_resource type="Script" uid="uid://puxsyqr3o8aj" path="res://Data/UI/custom_item_list.gd" id="2"]
 
 [node name="Rail Builder" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="CurrentRail" type="HBoxContainer" parent="."]
 offset_right = 1024.0
@@ -39,7 +39,7 @@ offset_right = 510.0
 offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "After Rail"
-items = [ "After Rail", null, false, 0, null, "Parallel To", null, false, 1, null, "Before Rail", null, false, 2, null ]
+items = ["After Rail", null, false, 0, null, "Parallel To", null, false, 1, null, "Before Rail", null, false, 2, null]
 selected = 0
 
 [node name="ParallelDistance" type="HBoxContainer" parent="AddRail"]
@@ -268,7 +268,7 @@ offset_bottom = 224.0
 offset_right = 1024.0
 offset_bottom = 20.0
 text = "Length - Radius"
-items = [ "Length - Radius", null, false, 0, null, "Radius - Angle", null, false, 1, null, "Length - Angle", null, false, 2, null ]
+items = ["Length - Radius", null, false, 0, null, "Radius - Angle", null, false, 1, null, "Length - Angle", null, false, 2, null]
 selected = 0
 
 [node name="Length" type="HBoxContainer" parent="S/Settings"]
@@ -646,10 +646,10 @@ text = "Connected Rails:"
 offset_top = 466.0
 offset_right = 1024.0
 offset_bottom = 600.0
-custom_minimum_size = Vector2( 0, 80 )
+custom_minimum_size = Vector2(0, 80)
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Items" type="VBoxContainer" parent="ConntectedRails"]
 offset_right = 1012.0

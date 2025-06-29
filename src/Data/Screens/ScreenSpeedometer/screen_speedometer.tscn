@@ -1,42 +1,50 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=15 format=3 uid="uid://dyfovp7g6d816"]
 
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.gd" type="Script" id=1]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.png" type="Texture2D" id=2]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/Zeiger.png" type="Texture2D" id=3]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/DoorRight.png" type="Texture2D" id=4]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/DoorLeft.png" type="Texture2D" id=5]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/Doors.png" type="Texture2D" id=6]
-[ext_resource path="res://Data/Fonts/FontMediumBold.tres" type="FontFile" id=7]
-[ext_resource path="res://Data/Fonts/Oswald-Regular.ttf" type="FontFile" id=9]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/richtung_fwd.png" type="Texture2D" id=10]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/richtung_bwd.png" type="Texture2D" id=11]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/richtung_neutral.png" type="Texture2D" id=12]
-[ext_resource path="res://Data/Screens/ScreenSpeedometer/screen_pzb.gd" type="Script" id=13]
+[ext_resource type="Script" uid="uid://o7vmknbsn55" path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dyc7c4y8mi7x8" path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bx523ph5l5bm" path="res://Data/Screens/ScreenSpeedometer/Zeiger.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://cagi2lt8ed52n" path="res://Data/Screens/ScreenSpeedometer/DoorRight.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://28otgwuq2c7o" path="res://Data/Screens/ScreenSpeedometer/DoorLeft.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://prkc21qigjh4" path="res://Data/Screens/ScreenSpeedometer/Doors.png" id="6"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMediumBold.tres" id="7"]
+[ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="9"]
+[ext_resource type="Texture2D" uid="uid://be57h0c7apolo" path="res://Data/Screens/ScreenSpeedometer/richtung_fwd.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://cb8k3vlgas3kl" path="res://Data/Screens/ScreenSpeedometer/richtung_bwd.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dj116c4nepyd0" path="res://Data/Screens/ScreenSpeedometer/richtung_neutral.png" id="12"]
+[ext_resource type="Script" uid="uid://cos82h3bgnm47" path="res://Data/Screens/ScreenSpeedometer/screen_pzb.gd" id="13"]
 
-[sub_resource type="FontFile" id=1]
-size = 80
-font_data = ExtResource( 9 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("9")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
-[sub_resource type="FontFile" id=2]
-size = 45
-font_data = ExtResource( 9 )
+[sub_resource type="FontFile" id="2"]
+fallbacks = Array[Font]([ExtResource("9")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [node name="Screen1" type="Node2D"]
 process_mode = 1
-script = ExtResource( 1 )
+script = ExtResource("1")
 speed_rotation_100kmh = 40.0
 command_rotation_100percent = 190.0
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2( 650, 450 )
-texture = ExtResource( 2 )
+position = Vector2(650, 450)
+texture = ExtResource("2")
 
 [node name="Speed" type="Label" parent="."]
 offset_left = 272.67
 offset_top = 380.005
 offset_right = 453.67
 offset_bottom = 500.005
-theme_override_fonts/font = SubResource( 1 )
+theme_override_fonts/font = SubResource("1")
 text = "100"
 align = 1
 
@@ -45,7 +53,7 @@ offset_left = 588.367
 offset_top = 19.8775
 offset_right = 738.367
 offset_bottom = 86.8775
-theme_override_fonts/font = SubResource( 2 )
+theme_override_fonts/font = SubResource("2")
 text = "12:00:00"
 align = 1
 __meta__ = {
@@ -53,49 +61,49 @@ __meta__ = {
 }
 
 [node name="SpeedPointer" type="Sprite2D" parent="."]
-modulate = Color( 0.729412, 0.0352941, 0.0352941, 1 )
-position = Vector2( 363.129, 326.524 )
+modulate = Color(0.729412, 0.0352941, 0.0352941, 1)
+position = Vector2(363.129, 326.524)
 rotation = -1.0472
-texture = ExtResource( 3 )
-offset = Vector2( -96.0201, 0.240082 )
+texture = ExtResource("3")
+offset = Vector2(-96.0201, 0.240082)
 
 [node name="CommandPointer" type="Sprite2D" parent="."]
-modulate = Color( 1, 0.545098, 0.0156863, 1 )
-position = Vector2( 954.832, 326.524 )
+modulate = Color(1, 0.545098, 0.0156863, 1)
+position = Vector2(954.832, 326.524)
 rotation = 1.5708
-texture = ExtResource( 3 )
-offset = Vector2( -96.0201, 0.240082 )
+texture = ExtResource("3")
+offset = Vector2(-96.0201, 0.240082)
 
 [node name="Reverser" type="Node2D" parent="."]
 
 [node name="Neutral" type="Sprite2D" parent="Reverser"]
-position = Vector2( 658, 326 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 12 )
+position = Vector2(658, 326)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("12")
 
 [node name="Forward" type="Sprite2D" parent="Reverser"]
 visible = false
-position = Vector2( 658, 326 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 10 )
+position = Vector2(658, 326)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10")
 
 [node name="Backward" type="Sprite2D" parent="Reverser"]
 visible = false
-position = Vector2( 658, 326 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 11 )
+position = Vector2(658, 326)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11")
 
 [node name="Doors" type="Node2D" parent="."]
-position = Vector2( 658, 600 )
+position = Vector2(658, 600)
 
 [node name="Door" type="Sprite2D" parent="Doors"]
-texture = ExtResource( 6 )
+texture = ExtResource("6")
 
 [node name="Left" type="Sprite2D" parent="Doors"]
-texture = ExtResource( 5 )
+texture = ExtResource("5")
 
 [node name="Right" type="Sprite2D" parent="Doors"]
-texture = ExtResource( 4 )
+texture = ExtResource("4")
 
 [node name="Info" type="Control" parent="."]
 offset_left = 42.0
@@ -108,7 +116,7 @@ offset_right = 256.0
 offset_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.866667, 0.054902, 0.054902, 1 )
+color = Color(0.866667, 0.054902, 0.054902, 1)
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -118,8 +126,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "ENFORCED_BREAKING"
 align = 1
 valign = 1
@@ -133,7 +141,7 @@ offset_right = 520.0
 offset_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.745098, 0.564706, 0.0745098, 1 )
+color = Color(0.745098, 0.564706, 0.0745098, 1)
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -143,8 +151,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "ENGINE_OFF"
 align = 1
 valign = 1
@@ -156,7 +164,7 @@ __meta__ = {
 offset_top = 69.0
 offset_right = 256.0
 offset_bottom = 130.0
-custom_minimum_size = Vector2( 256, 61 )
+custom_minimum_size = Vector2(256, 61)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -168,8 +176,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "SIFA"
 align = 1
 valign = 1
@@ -184,7 +192,7 @@ offset_right = 520.0
 offset_bottom = 130.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0.290196, 0.909804, 0.92549, 1 )
+color = Color(0.290196, 0.909804, 0.92549, 1)
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -194,8 +202,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "AUTOMATIC_DRIVING"
 align = 1
 valign = 1
@@ -213,7 +221,7 @@ offset_bottom = 744.0
 theme_override_constants/v_separation = 8
 theme_override_constants/h_separation = 8
 columns = 3
-script = ExtResource( 13 )
+script = ExtResource("13")
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -223,13 +231,13 @@ offset_right = 168.0
 offset_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0, 0.25098, 1, 1 )
+color = Color(0, 0.25098, 1, 1)
 
 [node name="Label" type="Label" parent="PZB/U"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "55"
 align = 1
 valign = 1
@@ -243,13 +251,13 @@ offset_right = 344.0
 offset_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0, 0.25098, 1, 1 )
+color = Color(0, 0.25098, 1, 1)
 
 [node name="Label" type="Label" parent="PZB/M"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "70"
 align = 1
 valign = 1
@@ -263,13 +271,13 @@ offset_right = 520.0
 offset_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 0, 0.25098, 1, 1 )
+color = Color(0, 0.25098, 1, 1)
 
 [node name="Label" type="Label" parent="PZB/O"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "85"
 align = 1
 valign = 1
@@ -287,8 +295,8 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="PZB/Befehl40"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "Befehl 40"
 align = 1
 valign = 1
@@ -303,13 +311,13 @@ offset_right = 344.0
 offset_bottom = 130.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 1, 0, 0, 1 )
+color = Color(1, 0, 0, 1)
 
 [node name="Label" type="Label" parent="PZB/500Hz"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "500 Hz"
 align = 1
 valign = 1
@@ -324,13 +332,13 @@ offset_right = 520.0
 offset_bottom = 130.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color( 1, 1, 0, 1 )
+color = Color(1, 1, 0, 1)
 
 [node name="Label" type="Label" parent="PZB/1000Hz"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = ExtResource( 7 )
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7")
 text = "1000 Hz"
 align = 1
 valign = 1

@@ -4,18 +4,19 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://b3cdb1yo75pub"
-path="res://.godot/imported/empty.obj-8e85ed5731b4f2e26a767725a111b0a8.mesh"
+valid=false
 
 [deps]
 
-files=["res://.godot/imported/empty.obj-8e85ed5731b4f2e26a767725a111b0a8.mesh"]
-
 source_file="res://Resources/Objects/empty.obj"
-dest_files=["res://.godot/imported/empty.obj-8e85ed5731b4f2e26a767725a111b0a8.mesh", "res://.godot/imported/empty.obj-8e85ed5731b4f2e26a767725a111b0a8.mesh"]
 
 [params]
 
 generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
 scale_mesh=Vector3(1, 1, 1)
 offset_mesh=Vector3(0, 0, 0)
-optimize_mesh=true
+force_disable_mesh_compression=false

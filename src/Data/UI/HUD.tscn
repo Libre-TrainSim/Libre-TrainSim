@@ -1,13 +1,13 @@
 [gd_scene load_steps=23 format=3 uid="uid://cwyegfqux6ap2"]
 
-[ext_resource type="PackedScene" path="res://Data/UI/Pause.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://Data/UI/MobileHUD.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Data/UI/text_box.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://Data/UI/Map.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bngfl6vp17xev" path="res://Data/UI/Pause.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bishcea0hrpjb" path="res://Data/UI/MobileHUD.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ck30jmjmp2430" path="res://Data/UI/text_box.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b5jwg8s6wrkcr" path="res://Data/UI/Map.tscn" id="4"]
 [ext_resource type="AudioStream" uid="uid://chxj1g2u5oql0" path="res://Resources/Sounds/Bling.ogg" id="5"]
-[ext_resource type="Script" path="res://Data/Scripts/HUD.gd" id="6"]
-[ext_resource type="PackedScene" path="res://Data/UI/TrainInfo.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" id="8"]
+[ext_resource type="Script" uid="uid://qgx7nee16b54" path="res://Data/Scripts/HUD.gd" id="6"]
+[ext_resource type="PackedScene" uid="uid://y5ifn4ctgrtu" path="res://Data/UI/TrainInfo.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://dyfovp7g6d816" path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" id="8"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame_Small.tres" id="9"]
 [ext_resource type="Texture2D" uid="uid://ucoo1r57sctx" path="res://Data/Misc/GreenSignal.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://bym0shujsr1p2" path="res://Data/Misc/Signal.png" id="11"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cnv3qceih6m7g" path="res://Data/Misc/NextTable.png" id="15"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="16"]
 [ext_resource type="Material" path="res://Data/UI/blur.tres" id="18"]
-[ext_resource type="Script" path="res://Data/UI/input_rich_text_label.gd" id="20"]
+[ext_resource type="Script" uid="uid://daonpyfvwlpkj" path="res://Data/UI/input_rich_text_label.gd" id="20"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "fade"
@@ -60,7 +60,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qljwy"]
 _data = {
-"fade": SubResource("1")
+&"fade": SubResource("1")
 }
 
 [sub_resource type="Animation" id="2"]
@@ -91,7 +91,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0bj05"]
 _data = {
-"FadeOut": SubResource("2")
+&"FadeOut": SubResource("2")
 }
 
 [node name="HUD" type="CanvasLayer"]

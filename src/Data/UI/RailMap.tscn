@@ -1,16 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://r5pc6323ygfu"]
 
-[ext_resource type="Script" path="res://Data/Scripts/RailMap.gd" id="1"]
+[ext_resource type="Script" uid="uid://xswfeccr3wlv" path="res://Data/Scripts/RailMap.gd" id="1"]
 [ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="2"]
 
 [sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
 subpixel_positioning = 0
 msdf_pixel_range = 14
 msdf_size = 128
-fallbacks = Array[Font]([ExtResource("2"), ExtResource("2")])
-face_index = null
-embolden = null
-transform = null
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0

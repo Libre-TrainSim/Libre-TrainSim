@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://crrnswb8oyrs3"]
 
-[ext_resource path="res://Editor/Modules/time_field.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://dxq0r06577lc4" path="res://Editor/Modules/time_field.gd" id="1"]
 
 [node name="TimeField" type="Control" groups=["TimeField"]]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="TimeButton" type="Button" parent="."]
 anchor_left = 0.5

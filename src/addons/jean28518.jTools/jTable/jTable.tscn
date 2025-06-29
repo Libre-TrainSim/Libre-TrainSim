@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://dicw5ufvidwti"]
 
-[ext_resource path="res://addons/jean28518.jTools/jTable/jTable.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://thc1fix6w54s" path="res://addons/jean28518.jTools/jTable/jTable.gd" id="1"]
 
 [node name="jTable" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 minimum_column_size = 150
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://b206lovqwpoov"]
 
-[ext_resource type="Script" path="res://Data/Scripts/World.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Resources/Environments/BasicSun.tscn" id="2"]
-[ext_resource type="Script" path="res://Worlds/German-Safety-Tutorials/SafetyTutorialScript.gd" id="5"]
-[ext_resource type="PackedScene" path="res://Data/Modules/Rail.tscn" id="6"]
+[ext_resource type="Script" uid="uid://da4o4w6ymv1g5" path="res://Data/Scripts/World.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://b4d00bfcvehsf" path="res://Resources/Environments/BasicSun.tscn" id="2"]
+[ext_resource type="Script" uid="uid://b52gci2en6wah" path="res://Worlds/German-Safety-Tutorials/SafetyTutorialScript.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://imblqkfrww6x" path="res://Data/Modules/Rail.tscn" id="6"]
 [ext_resource type="Environment" uid="uid://curw6tgn0x7xq" path="res://Resources/Environments/BasicWorldEnvironment.tres" id="7"]
-[ext_resource type="PackedScene" path="res://Data/Modules/Signal.tscn" id="8"]
-[ext_resource type="Script" path="res://Data/Scripts/BuildingsNode.gd" id="9"]
-[ext_resource type="PackedScene" path="res://Data/Modules/PZBMagnet.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://c4svlbpxjylsb" path="res://Data/Modules/Signal.tscn" id="8"]
+[ext_resource type="Script" uid="uid://bq5t6s6ggauli" path="res://Data/Scripts/BuildingsNode.gd" id="9"]
+[ext_resource type="PackedScene" uid="uid://ccdviy5lbn0v0" path="res://Data/Modules/PZBMagnet.tscn" id="11"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1")

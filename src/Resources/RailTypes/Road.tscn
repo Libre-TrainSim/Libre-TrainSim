@@ -1,21 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://btdeyuublow51"]
 
-[ext_resource path="res://Data/Scripts/RailType.gd" type="Script" id=1]
-[ext_resource path="res://Resources/RailTypes/Road.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://Resources/Materials/Wall_White.tres" type="Material" id=3]
-[ext_resource path="res://Resources/Materials/Beton_Tunnel.tres" type="Material" id=4]
-[ext_resource path="res://Resources/Materials/Grass.tres" type="Material" id=5]
+[ext_resource type="Script" uid="uid://coywt7p1igk7t" path="res://Data/Scripts/RailType.gd" id="1"]
+[ext_resource type="ArrayMesh" uid="uid://d0bcpaen1burp" path="res://Resources/RailTypes/Road.obj" id="2"]
+[ext_resource type="Material" path="res://Resources/Materials/Wall_White.tres" id="3"]
+[ext_resource type="Material" path="res://Resources/Materials/Beton_Tunnel.tres" id="4"]
+[ext_resource type="Material" path="res://Resources/Materials/Grass.tres" id="5"]
 
 [node name="RailType" type="Node3D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 buildDistance = 1.9
 overheadLineHeight1 = -1.0
 overheadLineHeight2 = -0.5
 
 [node name="Road" type="MeshInstance3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.118449, 0 )
-mesh = ExtResource( 2 )
-material/0 = ExtResource( 3 )
-material/1 = ExtResource( 4 )
-material/2 = ExtResource( 3 )
-material/3 = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.118449, 0)
+mesh = ExtResource("2")
+material/0 = ExtResource("3")
+material/1 = ExtResource("4")
+material/2 = ExtResource("3")
+material/3 = ExtResource("5")

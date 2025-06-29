@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://c4svlbpxjylsb"]
 
-[ext_resource path="res://Data/Scripts/Signal.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://bjj5yladci3tg" path="res://Data/Scripts/Signal.gd" id="1"]
 
 [node name="Signal" type="Node3D" groups=["Signal"]]
-script = ExtResource( 1 )
+script = ExtResource("1")

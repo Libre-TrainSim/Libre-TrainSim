@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://u4q5nlp1aoyf"]
 
-[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=1]
-[ext_resource path="res://Resources/Materials/Wood.tres" type="Material" id=2]
-[ext_resource path="res://Resources/Objects/Bench.obj" type="ArrayMesh" id=3]
+[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="1"]
+[ext_resource type="Material" path="res://Resources/Materials/Wood.tres" id="2"]
+[ext_resource type="ArrayMesh" uid="uid://bgc2nsc22b4jf" path="res://Resources/Objects/Bench.obj" id="3"]
 
 [node name="Bench" type="MeshInstance3D"]
-mesh = ExtResource( 3 )
-material/0 = ExtResource( 2 )
-material/1 = ExtResource( 1 )
+mesh = ExtResource("3")
+material/0 = ExtResource("2")
+material/1 = ExtResource("1")

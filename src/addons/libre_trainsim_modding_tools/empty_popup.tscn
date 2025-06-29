@@ -1,4 +1,4 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://68kloj6wi2hs"]
 
 [node name="Control" type="AcceptDialog"]
 anchor_left = 0.5

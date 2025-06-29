@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5jwg8s6wrkcr"]
 
-[ext_resource type="PackedScene" path="res://Data/UI/RailMap.tscn" id="1"]
-[ext_resource type="Script" path="res://Data/UI/map.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://r5pc6323ygfu" path="res://Data/UI/RailMap.tscn" id="1"]
+[ext_resource type="Script" uid="uid://b8b3cbctlic3i" path="res://Data/UI/map.gd" id="2"]
 
 [sub_resource type="ViewportTexture" id="1"]
 viewport_path = NodePath("SubViewportContainer/RailMap")

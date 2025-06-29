@@ -3,8 +3,8 @@
 [ext_resource type="FontFile" path="res://Data/Fonts/message_font.tres" id="1"]
 [ext_resource type="FontFile" path="res://Data/Fonts/button_font.tres" id="2"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="3"]
-[ext_resource type="Script" path="res://Data/UI/text_box.gd" id="4"]
-[ext_resource type="Script" path="res://Data/UI/translated_rich_rext_label.gd" id="5"]
+[ext_resource type="Script" uid="uid://d00vwxi2ppc04" path="res://Data/UI/text_box.gd" id="4"]
+[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="5"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="6"]
 [ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="7"]
 

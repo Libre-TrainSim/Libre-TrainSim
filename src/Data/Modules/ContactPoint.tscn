@@ -1,29 +1,29 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://ccrhf8l12m0mp"]
 
-[ext_resource path="res://Resources/Objects/editor_arrow.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Data/Scripts/ContactPoint.gd" type="Script" id=2]
+[ext_resource type="ArrayMesh" uid="uid://vrxct2molrsm" path="res://Resources/Objects/editor_arrow.obj" id="1"]
+[ext_resource type="Script" uid="uid://ddffwpwfd3n36" path="res://Data/Scripts/ContactPoint.gd" id="2"]
 
-[sub_resource type="StandardMaterial3D" id=1]
-albedo_color = Color( 1, 0.560784, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="1"]
+albedo_color = Color(1, 0.560784, 0, 1)
 
-[sub_resource type="BoxShape3D" id=2]
-size = Vector3( 1.25213, 0.500005, 0.963791 )
+[sub_resource type="BoxShape3D" id="2"]
+size = Vector3(1.25213, 0.500005, 0.963791)
 
 [node name="ContactPoint" type="Node3D" groups=["Signal"]]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289813, 0 )
-mesh = ExtResource( 1 )
-material/0 = SubResource( 1 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289813, 0)
+mesh = ExtResource("1")
+material/0 = SubResource("1")
 
 [node name="Timer" type="Timer" parent="."]
 
 [node name="SelectCollider" type="StaticBody3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929181, -0.210187, -0.892973 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929181, -0.210187, -0.892973)
 
 [node name="AabbShape" type="CollisionShape3D" parent="SelectCollider"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25213, 0.500005, 0.963791 )
-shape = SubResource( 2 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25213, 0.500005, 0.963791)
+shape = SubResource("2")
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=23 format=3 uid="uid://b8ppr3pl4ey26"]
 
-[ext_resource type="PackedScene" path="res://Data/Modules/TrackObjects.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Data/Modules/chunk_prefab_default_grass.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b6i46dhjqu248" path="res://Data/Modules/TrackObjects.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bocr08joma06c" path="res://Data/Modules/chunk_prefab_default_grass.tscn" id="3"]
 [ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="4"]
 [ext_resource type="Material" path="res://Resources/Materials/Black_Plastic.tres" id="5"]
-[ext_resource type="Script" path="res://Data/Scripts/chunk.gd" id="6"]
+[ext_resource type="Script" uid="uid://by8u6asivvep5" path="res://Data/Scripts/chunk.gd" id="6"]
 [ext_resource type="Material" path="res://Resources/Materials/White_Plastic.tres" id="7"]
 [ext_resource type="ArrayMesh" uid="uid://b7ppeiwh8ogrc" path="res://Resources/Objects/Platform-1.obj" id="8"]
 [ext_resource type="Material" path="res://Resources/Materials/Red_Plastic.tres" id="9"]

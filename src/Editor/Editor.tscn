@@ -1,68 +1,68 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=33 format=3 uid="uid://drdh2bnkn7wss"]
 
-[ext_resource path="res://Editor/Scripts/editor_camera.gd" type="Script" id=1]
-[ext_resource path="res://Editor/Scripts/Editor.gd" type="Script" id=2]
-[ext_resource path="res://Editor/Modules/RailLogic.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Data/Postprocess/OutlinesPP.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="FontFile" id=5]
-[ext_resource path="res://Editor/Docks/RailBuilder/RailBuilder.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Editor/Docks/RailAttachments/RailAttachments.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Data/UI/blur.tres" type="Material" id=8]
-[ext_resource path="res://Editor/Scripts/EditorHUD.gd" type="Script" id=9]
-[ext_resource path="res://Editor/Modules/add_objects.gd" type="Script" id=10]
-[ext_resource path="res://Editor/Modules/Content_Selector.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Editor/ui/icons/building.png" type="Texture2D" id=12]
-[ext_resource path="res://Data/UI/styles/button_both.tres" type="Theme" id=13]
-[ext_resource path="res://Editor/Scripts/pause_menu.gd" type="Script" id=14]
-[ext_resource path="res://Editor/ui/icons/random.png" type="Texture2D" id=15]
-[ext_resource path="res://Editor/ui/icons/star.png" type="Texture2D" id=16]
-[ext_resource path="res://Editor/ui/size_changer.gd" type="Script" id=17]
-[ext_resource path="res://Editor/ui/objects_menu/objects_menu.gd" type="Script" id=18]
-[ext_resource path="res://Editor/ui/objects_menu/thumbnail_generator.tscn" type="PackedScene" id=19]
-[ext_resource path="res://Editor/ui/objects_menu/filters.gd" type="Script" id=20]
-[ext_resource path="res://Editor/Scripts/world_cursor.gd" type="Script" id=21]
-[ext_resource path="res://Editor/ui/icons/decoration.png" type="Texture2D" id=22]
-[ext_resource path="res://Editor/ui/icons/infrastructure.png" type="Texture2D" id=23]
-[ext_resource path="res://Editor/ui/icons/common.png" type="Texture2D" id=24]
-[ext_resource path="res://Editor/ui/icons/recent.png" type="Texture2D" id=25]
-[ext_resource path="res://Editor/ui/icons/vegetation.png" type="Texture2D" id=26]
-[ext_resource path="res://Editor/ui/objects_menu/add_rail_object_button.gd" type="Script" id=27]
-[ext_resource path="res://Editor/Modules/building_settings.tscn" type="PackedScene" id=28]
-[ext_resource path="res://Data/UI/play_menu.tscn" type="PackedScene" id=29]
-[ext_resource path="res://Editor/ui/object_transform.gd" type="Script" id=30]
+[ext_resource type="Script" uid="uid://drif3fpa1e1ys" path="res://Editor/Scripts/editor_camera.gd" id="1"]
+[ext_resource type="Script" uid="uid://cgbiuy172srtk" path="res://Editor/Scripts/Editor.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://ci5wkndgdp8gf" path="res://Editor/Modules/RailLogic.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://ckrna76x3sueo" path="res://Data/Postprocess/OutlinesPP.tscn" id="4"]
+[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="5"]
+[ext_resource type="PackedScene" uid="uid://8362naoiach7" path="res://Editor/Docks/RailBuilder/RailBuilder.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://bvc2401k2fmsl" path="res://Editor/Docks/RailAttachments/RailAttachments.tscn" id="7"]
+[ext_resource type="Material" path="res://Data/UI/blur.tres" id="8"]
+[ext_resource type="Script" uid="uid://7aagchbwlmdu" path="res://Editor/Scripts/EditorHUD.gd" id="9"]
+[ext_resource type="Script" uid="uid://bi6syvqvpncf6" path="res://Editor/Modules/add_objects.gd" id="10"]
+[ext_resource type="PackedScene" uid="uid://bwifyltrlclv" path="res://Editor/Modules/Content_Selector.tscn" id="11"]
+[ext_resource type="Texture2D" uid="uid://dhexovq46ylrr" path="res://Editor/ui/icons/building.png" id="12"]
+[ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="13"]
+[ext_resource type="Script" uid="uid://2opwkpg0w1m4" path="res://Editor/Scripts/pause_menu.gd" id="14"]
+[ext_resource type="Texture2D" uid="uid://dfl03s4kkf47j" path="res://Editor/ui/icons/random.png" id="15"]
+[ext_resource type="Texture2D" uid="uid://c8yr8ewae406d" path="res://Editor/ui/icons/star.png" id="16"]
+[ext_resource type="Script" uid="uid://d1o5qoj2lv7jg" path="res://Editor/ui/size_changer.gd" id="17"]
+[ext_resource type="Script" uid="uid://dxxse8fdxuu4r" path="res://Editor/ui/objects_menu/objects_menu.gd" id="18"]
+[ext_resource type="PackedScene" uid="uid://dr33aho241jyi" path="res://Editor/ui/objects_menu/thumbnail_generator.tscn" id="19"]
+[ext_resource type="Script" uid="uid://uv062xdd6q7d" path="res://Editor/ui/objects_menu/filters.gd" id="20"]
+[ext_resource type="Script" uid="uid://m0sq4fvwgl7p" path="res://Editor/Scripts/world_cursor.gd" id="21"]
+[ext_resource type="Texture2D" uid="uid://dvlpxlc8eidc8" path="res://Editor/ui/icons/decoration.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://m1cqq1k6omhm" path="res://Editor/ui/icons/infrastructure.png" id="23"]
+[ext_resource type="Texture2D" uid="uid://c12m0pjrl4v3h" path="res://Editor/ui/icons/common.png" id="24"]
+[ext_resource type="Texture2D" uid="uid://21n1lpmk84iw" path="res://Editor/ui/icons/recent.png" id="25"]
+[ext_resource type="Texture2D" uid="uid://c0pa5sr0j5kjt" path="res://Editor/ui/icons/vegetation.png" id="26"]
+[ext_resource type="Script" uid="uid://b7wyg0au1eoch" path="res://Editor/ui/objects_menu/add_rail_object_button.gd" id="27"]
+[ext_resource type="PackedScene" uid="uid://c0bjm1ejnnjkj" path="res://Editor/Modules/building_settings.tscn" id="28"]
+[ext_resource type="PackedScene" uid="uid://bd8vxksalg0ww" path="res://Data/UI/play_menu.tscn" id="29"]
+[ext_resource type="Script" uid="uid://dik2yoombmpdm" path="res://Editor/ui/object_transform.gd" id="30"]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id="1"]
 content_margin_left = 8.0
-bg_color = Color( 0.223529, 0.215686, 0.25098, 1 )
+bg_color = Color(0.223529, 0.215686, 0.25098, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color( 0.34902, 0.34902, 0.34902, 1 )
+border_color = Color(0.34902, 0.34902, 0.34902, 1)
 border_blend = true
 corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 expand_margin_left = 2.0
-expand_margin_right = 2.0
 expand_margin_top = 2.0
+expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 shadow_size = 1
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id="2"]
 content_margin_left = 7.0
-content_margin_right = 7.0
 content_margin_top = 7.0
+content_margin_right = 7.0
 content_margin_bottom = 7.0
-bg_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+bg_color = Color(0.145098, 0.145098, 0.164706, 1)
 
 [node name="Editor" type="Node3D"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="EditorHUD" type="CanvasLayer" parent="."]
-script = ExtResource( 9 )
+script = ExtResource("9")
 
 [node name="GlobalMenu" type="VBoxContainer" parent="EditorHUD"]
 offset_left = 4.0
@@ -133,29 +133,29 @@ offset_bottom = -11.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -7.224
-theme_override_styles/panel = SubResource( 1 )
+theme_override_styles/panel = SubResource("1")
 
-[node name="RailBuilder" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 6 )]
+[node name="RailBuilder" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("6")]
 offset_left = 8.0
 offset_top = 25.0
 offset_right = -1.0
 offset_bottom = -1.0
 
-[node name="RailLogic" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 3 )]
+[node name="RailLogic" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("3")]
 visible = false
 offset_left = 4.0
 offset_top = 32.0
 offset_right = -4.0
 offset_bottom = -4.0
 
-[node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 7 )]
+[node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("7")]
 visible = false
 offset_left = 4.0
 offset_top = 32.0
 offset_right = -4.0
 offset_bottom = -4.0
 
-[node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource( 28 )]
+[node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("28")]
 visible = false
 
 [node name="VSeparator" type="VSeparator" parent="EditorHUD/Settings"]
@@ -164,7 +164,7 @@ anchor_bottom = 0.5
 offset_top = -60.0
 offset_right = 4.0
 offset_bottom = 60.0
-script = ExtResource( 17 )
+script = ExtResource("17")
 drag_side = 0
 target_path = NodePath("..")
 
@@ -245,8 +245,8 @@ offset_left = -375.0
 offset_top = 30.0
 offset_right = 375.0
 offset_bottom = 84.0
-theme_override_styles/panel = SubResource( 2 )
-script = ExtResource( 30 )
+theme_override_styles/panel = SubResource("2")
+script = ExtResource("30")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/ObjectTransform"]
 offset_left = 7.0
@@ -341,7 +341,7 @@ anchor_bottom = 1.0
 offset_top = 168.0
 offset_right = 241.0
 offset_bottom = -45.0
-script = ExtResource( 18 )
+script = ExtResource("18")
 cursor_path = NodePath("../../WorldCusor")
 
 [node name="MarginContainer" type="MarginContainer" parent="EditorHUD/Objects"]
@@ -396,15 +396,15 @@ mouse_filter = 2
 [node name="Filters" type="VBoxContainer" parent="EditorHUD/Objects/Overlay"]
 offset_right = 30.0
 offset_bottom = 186.0
-script = ExtResource( 20 )
+script = ExtResource("20")
 
 [node name="Buildings" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
 offset_right = 30.0
 offset_bottom = 22.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Buildings"
-icon = ExtResource( 12 )
+icon = ExtResource("12")
 clip_text = true
 align = 0
 
@@ -412,10 +412,10 @@ align = 0
 offset_top = 26.0
 offset_right = 30.0
 offset_bottom = 48.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Vegetation"
-icon = ExtResource( 26 )
+icon = ExtResource("26")
 clip_text = true
 align = 0
 
@@ -423,10 +423,10 @@ align = 0
 offset_top = 52.0
 offset_right = 30.0
 offset_bottom = 74.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Infrastructure"
-icon = ExtResource( 23 )
+icon = ExtResource("23")
 clip_text = true
 align = 0
 
@@ -434,10 +434,10 @@ align = 0
 offset_top = 78.0
 offset_right = 30.0
 offset_bottom = 100.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Decorative"
-icon = ExtResource( 22 )
+icon = ExtResource("22")
 clip_text = true
 align = 0
 
@@ -450,10 +450,10 @@ offset_bottom = 108.0
 offset_top = 112.0
 offset_right = 30.0
 offset_bottom = 134.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Favourites"
-icon = ExtResource( 16 )
+icon = ExtResource("16")
 clip_text = true
 align = 0
 
@@ -461,10 +461,10 @@ align = 0
 offset_top = 138.0
 offset_right = 30.0
 offset_bottom = 160.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Most Commonly Used"
-icon = ExtResource( 24 )
+icon = ExtResource("24")
 clip_text = true
 align = 0
 
@@ -472,10 +472,10 @@ align = 0
 offset_top = 164.0
 offset_right = 30.0
 offset_bottom = 186.0
-custom_minimum_size = Vector2( 30, 0 )
+custom_minimum_size = Vector2(30, 0)
 toggle_mode = true
 text = "Most Recently Used"
-icon = ExtResource( 25 )
+icon = ExtResource("25")
 clip_text = true
 align = 0
 
@@ -487,10 +487,10 @@ offset_right = 30.0
 offset_bottom = 146.0
 toggle_mode = true
 text = "Random"
-icon = ExtResource( 15 )
+icon = ExtResource("15")
 clip_text = true
 align = 0
-script = ExtResource( 20 )
+script = ExtResource("20")
 
 [node name="SizeChanger" type="VSeparator" parent="EditorHUD/Objects/Overlay"]
 anchor_left = 1.0
@@ -500,15 +500,15 @@ anchor_bottom = 0.5
 offset_left = -4.0
 offset_top = -60.0
 offset_bottom = 60.0
-script = ExtResource( 17 )
+script = ExtResource("17")
 target_path = NodePath("../..")
 
-[node name="ThumbnailGenerator" parent="EditorHUD/Objects" instance=ExtResource( 19 )]
+[node name="ThumbnailGenerator" parent="EditorHUD/Objects" instance=ExtResource("19")]
 
 [node name="AddObjects" type="Control" parent="EditorHUD"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 10 )
+script = ExtResource("10")
 
 [node name="RailLogicMenu" type="ItemList" parent="EditorHUD/AddObjects"]
 visible = false
@@ -518,7 +518,7 @@ offset_left = 11.2063
 offset_top = -152.224
 offset_right = 172.206
 offset_bottom = -53.2236
-items = [ "Signal", null, false, "Station", null, false, "Speed Limit", null, false, "Warn Speed Limit", null, false, "Contact Point", null, false ]
+items = ["Signal", null, false, "Station", null, false, "Speed Limit", null, false, "Warn Speed Limit", null, false, "Contact Point", null, false]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -541,7 +541,7 @@ offset_bottom = 40.0
 tooltip_text = "Please select a rail first before adding a dependent rail object."
 disabled = true
 text = "Rail Objects"
-script = ExtResource( 27 )
+script = ExtResource("27")
 
 [node name="AddObjects" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
 offset_left = 132.0
@@ -551,7 +551,7 @@ toggle_mode = true
 pressed = true
 text = "Objects"
 
-[node name="Content_Selector" parent="EditorHUD" instance=ExtResource( 11 )]
+[node name="Content_Selector" parent="EditorHUD" instance=ExtResource("11")]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -608,10 +608,10 @@ process_mode = 2
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 14 )
+script = ExtResource("14")
 
 [node name="ColorRect" type="ColorRect" parent="EditorHUD/Pause"]
-material = ExtResource( 8 )
+material = ExtResource("8")
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -631,24 +631,24 @@ __meta__ = {
 [node name="Back" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
 offset_right = 326.0
 offset_bottom = 49.0
-theme = ExtResource( 13 )
-theme_override_fonts/font = ExtResource( 5 )
+theme = ExtResource("13")
+theme_override_fonts/font = ExtResource("5")
 text = "BACK"
 
 [node name="ExitWithoutSave" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
 offset_top = 53.0
 offset_right = 326.0
 offset_bottom = 102.0
-theme = ExtResource( 13 )
-theme_override_fonts/font = ExtResource( 5 )
+theme = ExtResource("13")
+theme_override_fonts/font = ExtResource("5")
 text = "EXIT_WITHOUT_SAVING"
 
 [node name="SaveAndExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
 offset_top = 106.0
 offset_right = 326.0
 offset_bottom = 155.0
-theme = ExtResource( 13 )
-theme_override_fonts/font = ExtResource( 5 )
+theme = ExtResource("13")
+theme_override_fonts/font = ExtResource("5")
 text = "SAVE_AND_EXIT"
 
 [node name="SnapDialog" type="ConfirmationDialog" parent="EditorHUD"]
@@ -667,7 +667,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayMenu" parent="EditorHUD" instance=ExtResource( 29 )]
+[node name="PlayMenu" parent="EditorHUD" instance=ExtResource("29")]
 visible = false
 offset_left = 12.0
 offset_top = 12.0
@@ -680,14 +680,14 @@ context = 1
 [node name="Camera3D" type="Camera3D" parent="."]
 current = true
 far = 1000.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 control_path = NodePath("../EditorHUD/Settings")
 
-[node name="OutlinesPP" parent="." instance=ExtResource( 4 )]
-highlight_color = Color( 1, 1, 0, 1 )
+[node name="OutlinesPP" parent="." instance=ExtResource("4")]
+highlight_color = Color(1, 1, 0, 1)
 
 [node name="WorldCusor" type="Node3D" parent="."]
-script = ExtResource( 21 )
+script = ExtResource("21")
 
 [connection signal="selected_object_changed" from="." to="EditorHUD" method="_on_selected_object_changed"]
 [connection signal="selected_object_changed" from="." to="EditorHUD/ObjectTransform" method="_on_selected_object_changed"]

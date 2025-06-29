@@ -1,15 +1,15 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" script_class="ObjectGroup" load_steps=6 format=3 uid="uid://bulnq1efux5gx"]
 
-[ext_resource path="res://Data/Scripts/Resources/object_group.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Objects/walls/walls_4m.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Resources/Objects/walls/wall_8m.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Resources/Objects/walls/wall_16m.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Resources/Objects/walls/wall_32m.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" uid="uid://b4mt1iofa7d71" path="res://Data/Scripts/Resources/object_group.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/walls/walls_4m.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/walls/wall_8m.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/walls/wall_16m.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Resources/Objects/walls/wall_32m.tscn" id="5"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 group_name = "Walls"
-scenes = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ]
+scenes = [ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5")]
 is_building = false
 is_vegetation = false
 is_infrastructure = true

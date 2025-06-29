@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nxrw2743tsxg"
-path="res://.godot/imported/rb.png-76e839721b897c401463e70931968e95.ctex"
+uid="uid://8hets451bgxx"
+path="res://.godot/imported/apostrophe.png-8f8272980f0f51de5195fea6a914a748.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/controller_icons/assets/switch/rb.png"
-dest_files=["res://.godot/imported/rb.png-76e839721b897c401463e70931968e95.ctex"]
+source_file="res://addons/controller_icons/assets/key/apostrophe.png"
+dest_files=["res://.godot/imported/apostrophe.png-8f8272980f0f51de5195fea6a914a748.ctex"]
 
 [params]
 

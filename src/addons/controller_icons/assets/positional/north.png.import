@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmm57ko8o8c2l"
-path="res://.godot/imported/lt.png-3919112470fa4580eada927f7ef58bd7.ctex"
+uid="uid://78i5io3k54qf"
+path="res://.godot/imported/north.png-8eae94f078419a6dd29488ecb0e91781.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/controller_icons/assets/switch/lt.png"
-dest_files=["res://.godot/imported/lt.png-3919112470fa4580eada927f7ef58bd7.ctex"]
+source_file="res://addons/controller_icons/assets/positional/north.png"
+dest_files=["res://.godot/imported/north.png-8eae94f078419a6dd29488ecb0e91781.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pbt2gsxqs25f"
-path="res://.godot/imported/lb.png-6801064bd1c155e4e4cafb2a90cecfd3.ctex"
+uid="uid://cquw4xas0kw4b"
+path="res://.godot/imported/wheel_down.png-41403fb0624313a3521aa5396d2e7472.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/controller_icons/assets/switch/lb.png"
-dest_files=["res://.godot/imported/lb.png-6801064bd1c155e4e4cafb2a90cecfd3.ctex"]
+source_file="res://addons/controller_icons/assets/mouse/wheel_down.png"
+dest_files=["res://.godot/imported/wheel_down.png-41403fb0624313a3521aa5396d2e7472.ctex"]
 
 [params]
 

@@ -29,5 +29,3 @@ func update_command(command):
 	$ZK8.value = - command
 	$ZK9.value = - command
 	$ZK10.value = - command
-
-

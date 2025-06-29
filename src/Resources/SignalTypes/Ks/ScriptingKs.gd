@@ -92,4 +92,3 @@ func off() -> void:
 func make_speed_str(speed: float) -> String:
 	var outputSpeed: int = int(speed / 10)
 	return str(outputSpeed)
-

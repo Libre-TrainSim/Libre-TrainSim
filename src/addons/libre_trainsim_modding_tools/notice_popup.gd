@@ -8,4 +8,3 @@ func _on_Control_confirmed() -> void:
 
 func _on_Control_popup_hide() -> void:
 	queue_free()
-

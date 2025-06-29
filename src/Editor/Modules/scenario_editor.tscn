@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dws1rk4qe1iji" path="res://Editor/Modules/scenario_configuration.tscn" id="1"]
 [ext_resource type="Script" uid="uid://bttl84bf3n5kf" path="res://Editor/Scripts/scenario_editor.gd" id="2"]
-[ext_resource type="PackedScene" path="res://Editor/Modules/scenario_map.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://c2wr32jxmivuw" path="res://Editor/Modules/scenario_map.tscn" id="3"]
 [ext_resource type="Material" path="res://Data/UI/blur.tres" id="4"]
 [ext_resource type="PackedScene" uid="uid://bd8vxksalg0ww" path="res://Data/UI/play_menu.tscn" id="5"]
 [ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="8"]

@@ -237,4 +237,3 @@ func set_materials(new_materials: Array):
 		if materials[i] == null:
 			continue
 		multimesh.mesh.surface_set_material(i, materials[i])
-

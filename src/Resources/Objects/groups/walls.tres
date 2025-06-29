@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ObjectGroup" load_steps=6 format=3 uid="uid://bulnq1efux5gx"]
 
 [ext_resource type="Script" uid="uid://b4mt1iofa7d71" path="res://Data/Scripts/Resources/object_group.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/walls/walls_4m.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/walls/wall_8m.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/walls/wall_16m.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/walls/wall_32m.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://c0gc581ocnruf" path="res://Resources/Objects/walls/walls_4m.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://byrp14oogwhjx" path="res://Resources/Objects/walls/wall_8m.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://chjb7f7g18msc" path="res://Resources/Objects/walls/wall_16m.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bt6yeew58djpr" path="res://Resources/Objects/walls/wall_32m.tscn" id="5"]
 
 [resource]
 script = ExtResource("1")

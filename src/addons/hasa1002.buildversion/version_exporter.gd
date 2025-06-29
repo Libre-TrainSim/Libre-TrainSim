@@ -113,4 +113,3 @@ func build() -> void:
 	ProjectSettings.set_setting("application/version/label", "%s.%s%s%s%s" % [parts[0], parts[1], custom_build, broken, dirty])
 	last_generated_label = ProjectSettings["application/version/label"]
 	ProjectSettings.save()
-

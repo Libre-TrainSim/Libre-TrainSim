@@ -68,4 +68,3 @@ func off() -> void:
 	$GreenHp.visible = false
 	$GreenVo1.visible = false
 	$GreenVo2.visible = false
-

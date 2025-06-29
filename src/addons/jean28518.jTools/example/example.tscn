@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://cuqateode3yo2"]
 
 [ext_resource type="Script" uid="uid://c2c5dkxip7gpo" path="res://addons/jean28518.jTools/example/example.gd" id="1"]
-[ext_resource type="PackedScene" path="res://addons/jean28518.jTools/jTable/jTable.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://dicw5ufvidwti" path="res://addons/jean28518.jTools/jTable/jTable.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://b2nc4i3lpyl8" path="res://addons/jean28518.jTools/Heading.png" id="3"]
-[ext_resource type="PackedScene" path="res://addons/jean28518.jTools/jList/jList.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="4"]
 
 [node name="Example" type="Control"]
 anchor_right = 1.0

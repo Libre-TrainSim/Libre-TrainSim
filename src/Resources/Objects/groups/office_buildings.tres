@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ObjectGroup" load_steps=7 format=3 uid="uid://f1arew1qc3c0"]
 
 [ext_resource type="Script" uid="uid://b4mt1iofa7d71" path="res://Data/Scripts/Resources/object_group.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/offices/office_1.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/offices/office_2.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/offices/office_3.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/offices/office_4.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://Resources/Objects/offices/office_5.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://bxd2ihleaw2fy" path="res://Resources/Objects/offices/office_1.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bastv43kycif7" path="res://Resources/Objects/offices/office_2.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://m1fj22lve5a6" path="res://Resources/Objects/offices/office_3.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://djb8j15rjpgho" path="res://Resources/Objects/offices/office_4.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://noi11gvev7hv" path="res://Resources/Objects/offices/office_5.tscn" id="6"]
 
 [resource]
 script = ExtResource("1")

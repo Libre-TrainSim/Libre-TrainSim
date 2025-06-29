@@ -31,4 +31,3 @@ func update_visual_instance(instance: Node) -> void:
 				vo_anim_fsm.travel("Vr2")  # Langsamfahrt erwarten
 			else:
 				vo_anim_fsm.travel("Vr1")  # Fahrt erwarten
-

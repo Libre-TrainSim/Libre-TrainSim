@@ -159,4 +159,3 @@ func _force_load_chunk_immediately(chunk_name):
 	else:
 		chunk = _spawn_empty_chunk()
 	return chunk
-

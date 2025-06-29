@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c2a0hxeyy0sbj"]
 
 [ext_resource type="Script" uid="uid://by8u6asivvep5" path="res://Data/Scripts/chunk.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Data/Modules/chunk_prefab_default_grass.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bocr08joma06c" path="res://Data/Modules/chunk_prefab_default_grass.tscn" id="2"]
 
 [node name="Chunk" type="Node3D"]
 script = ExtResource("1")

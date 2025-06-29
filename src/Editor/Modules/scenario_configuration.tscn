@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1o5qoj2lv7jg" path="res://Editor/ui/size_changer.gd" id="1"]
 [ext_resource type="Script" uid="uid://c2tkdoqoinqir" path="res://Editor/Scripts/ScenarioConfiguration.gd" id="3"]
-[ext_resource type="PackedScene" path="res://Editor/Modules/TimeField.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://crrnswb8oyrs3" path="res://Editor/Modules/TimeField.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="5"]
 
 [node name="ScenarioConfiguration" type="Panel"]

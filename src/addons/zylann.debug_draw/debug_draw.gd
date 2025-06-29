@@ -240,4 +240,3 @@ static func _create_wirecube_mesh(color := Color(1,1,1)) -> ArrayMesh:
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, arrays)
 	return mesh
-

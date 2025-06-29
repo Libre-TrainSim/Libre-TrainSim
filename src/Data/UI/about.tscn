@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsycfvpw8ivvb" path="res://Data/UI/menu_about.gd" id="1"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="2"]
-[ext_resource type="Resource" path="res://authors.tres" id="3"]
+[ext_resource type="Resource" uid="uid://db44ovhhnl3to" path="res://authors.tres" id="3"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="4"]
 [ext_resource type="Theme" uid="uid://cm747u3js8c7p" path="res://Data/UI/styles/v_scrollbar.tres" id="5"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="7"]

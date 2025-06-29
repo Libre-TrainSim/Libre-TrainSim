@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvc2401k2fmsl"]
 
 [ext_resource type="Script" uid="uid://1c7u03vh1xds" path="res://Editor/Docks/RailAttachments/RailAttachments.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Editor/Modules/building_settings.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://c0bjm1ejnnjkj" path="res://Editor/Modules/building_settings.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="3"]
 
 [node name="Rail Attachments" type="VBoxContainer"]

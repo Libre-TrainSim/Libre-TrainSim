@@ -46,4 +46,3 @@ func _process(_delta: float) -> void:
 	if _player.distance_on_route > _start_dist + _distance:
 		emit_signal("reached")
 		stop()
-

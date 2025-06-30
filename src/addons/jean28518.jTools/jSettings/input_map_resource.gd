@@ -2,7 +2,7 @@ class_name InputMapResource
 extends Resource
 
 
-@export (Dictionary) var input_map
+@export var input_map: Dictionary
 
 
 func _init():

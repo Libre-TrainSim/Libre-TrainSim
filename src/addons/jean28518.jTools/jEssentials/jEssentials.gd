@@ -16,9 +16,9 @@ func remove_all_pending_delayed_calls():
 
 
 func copy_folder_recursively(from : String, to : String):
-	var dir = DirAccess.new()
-	dir.make_dir_recursive(to)
-	if not dir.dir_exists(from):
+	var dir = DirAccess
+	dir.make_dir_recursive_absolute(to)
+	if not dir.dir_exists_absolute(from):
 		return
 	if not from.ends_with("/"):
 		from += "/"
@@ -28,26 +28,26 @@ func copy_folder_recursively(from : String, to : String):
 
 
 func create_directory(path : String):
-	var dir = DirAccess.new()
-	dir.make_dir_recursive(path)
+	var dir = DirAccess
+	dir.make_dir_recursive_absolute(path)
 
 
 func copy_file(from : String, to : String):
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(from)
 	dir.copy(from, to)
 
 # Could be also used for moving files
 func rename_file(from: String, to : String):
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(from)
 	dir.rename(from, to)
 
 func remove_folder_recursively(path: String):
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(path)
 	if not dir.dir_exists(path):
 		return
 	if not path.ends_with("/"):
 		path += "/"
-	if dir.open(path) != OK: return
+	if dir.open(path) == null: return
 	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file = dir.get_next()
@@ -57,7 +57,7 @@ func remove_folder_recursively(path: String):
 		if dir.current_is_dir():
 			remove_folder_recursively(path + file + "/")
 		else:
-			var dir2 = DirAccess.new()
+			var dir2 = DirAccess.open(path)
 			dir2.remove(path + file)
 	dir.list_dir_end()
 	dir.remove(path)
@@ -88,7 +88,7 @@ func show_message(message : String, title : String = ""):
 
 
 func does_path_exist(path : String):
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(path)
 	return dir.dir_exists(path) or dir.file_exists(path)
 
 
@@ -122,9 +122,9 @@ func _handle_delayed_calls(delta):
 
 
 func _copy_folder_recursively_helper(from, to):
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(from)
 	dir.make_dir_recursive(to)
-	if dir.open(from) != OK: return
+	if dir.open(from) == null: return
 	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file = dir.get_next()
@@ -135,7 +135,7 @@ func _copy_folder_recursively_helper(from, to):
 			print(from + file + "/" + "     " + to + file + "/")
 			_copy_folder_recursively_helper(from + file + "/", to + file + "/")
 		else:
-			var dir2 = DirAccess.new()
+			var dir2 = DirAccess.open(from)
 			print(from + file + "     " + to + file)
 			dir2.copy(from + file, to + file)
 	dir.list_dir_end()

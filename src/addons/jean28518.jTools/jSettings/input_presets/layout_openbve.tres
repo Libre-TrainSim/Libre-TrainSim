@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=103 format=3 uid="uid://canmcpvrlxm8"]
+[gd_resource type="Resource" script_class="InputMapResource" load_steps=103 format=3 uid="uid://canmcpvrlxm8"]
 
 [ext_resource type="Script" uid="uid://c3sywfsnk1qjv" path="res://addons/jean28518.jTools/jSettings/input_map_resource.gd" id="1"]
 

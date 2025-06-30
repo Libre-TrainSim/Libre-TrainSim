@@ -28,7 +28,7 @@ func _ready():
 
 func first_run_check():
 	# Check if this is the first run, and if it is, apply default settings
-	var dir = DirAccess.new()
+	var dir = DirAccess.open("user://")
 	if not dir.file_exists("user://override.cfg") and not OS.has_feature("editor"):
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		reset_settings_to_default()
@@ -145,7 +145,7 @@ func set_vsync(val: bool):
 func set_fps_limit(target_fps: int):
 	ProjectSettings["debug/settings/fps/force_fps"] = target_fps
 	save_settings()
-	Engine.set_target_fps(target_fps)
+	Engine.set_max_fps(target_fps)
 
 
 func set_shadows(val: bool):

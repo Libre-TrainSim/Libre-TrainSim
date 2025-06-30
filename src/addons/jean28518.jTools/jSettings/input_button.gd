@@ -32,7 +32,7 @@ func _input(event):
 	# If the event is already in the list, remove it again and return
 	for e in events:
 		if event.is_match(e):
-			events.remove(events.find(e))
+			events.remove_at(events.find(e))
 			update_text()
 			return
 	

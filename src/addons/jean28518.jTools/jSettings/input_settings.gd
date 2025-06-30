@@ -30,7 +30,7 @@ func _ready():
 
 func _add_entry(action: String):
 	# Add label
-	var label := TranslatedRichTextLabel.new()
+	var label := RichTextLabel.new()
 	label.text = "INPUT_" + action.to_upper()
 	label.size_flags_horizontal = SIZE_EXPAND_FILL
 	label.set("theme_override_fonts/normal_font", load("res://Data/Fonts/FontMedium.tres"))
@@ -117,7 +117,7 @@ func _on_LayoutExportDialog_file_selected(path: String):
 	# Save current InputMap to selected path
 	Logger.log("Exporting current InputMap to \"" + path + "\".")
 	var input_map_resource := InputMapResource.new()
-	ResourceSaver.save(path, input_map_resource)
+	ResourceSaver.save(input_map_resource, path)
 
 
 func _on_LayoutImportDialog_file_selected(path: String):

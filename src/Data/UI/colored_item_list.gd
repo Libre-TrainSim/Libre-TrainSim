@@ -6,6 +6,6 @@ extends ItemList
 @export var even_color := Color(0.705882, 0.772549, 0.878431, 0.360784)
 
 
-func add_item(text: String, icon: Texture2D = null, selectable := true) -> void:
+func add_colored_item(text: String, icon: Texture2D = null, selectable := true) -> void:
 	super.add_item(text, icon, selectable)
 	set_item_custom_bg_color(get_item_count() - 1, even_color if get_item_count() % 2 == 0 else odd_color)

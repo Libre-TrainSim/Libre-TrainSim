@@ -71,7 +71,7 @@ func update_camera_targets() -> void:
 	for player in get_tree().get_nodes_in_group("Player"):
 		if not (player is LTSPlayer):
 			continue
-		camera_target_list.add_item(player.name)
+		camera_target_list.add_colored_item(player.name)
 		camera_target_list.set_item_metadata(camera_target_list.get_item_count() - 1, player)
 
 

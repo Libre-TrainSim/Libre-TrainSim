@@ -451,6 +451,7 @@ limits/debugger/max_chars_per_second=65536
 
 [rendering]
 
+renderer/rendering_method="mobile"
 environment/defaults/default_environment="res://Resources/Environments/BasicWorldEnvironment.tres"
 threads/thread_model=2
 quality/directional_shadow/size=8192

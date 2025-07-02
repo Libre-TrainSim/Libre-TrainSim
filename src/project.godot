@@ -32,7 +32,7 @@ version/diff_ignore="../.github/workflows/project.godot.ignores"
 
 [audio]
 
-buses/default_bus_layout="res://Data/buses/default_bus_layout.tres"
+buses/default_bus_layout="res://Data/default_bus_layout.tres"
 
 [autoload]
 

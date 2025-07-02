@@ -9,7 +9,6 @@
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_focused.tres" id="7"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_hover.tres" id="8"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_normal.tres" id="9"]
-[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="10"]
 [ext_resource type="Script" uid="uid://1viahedm1yi6" path="res://Editor/Scripts/scenario_editor_selection.gd" id="11"]
 [ext_resource type="PackedScene" uid="uid://cmxsdr7vc2v7o" path="res://addons/jean28518.jTools/jList/jList.tscn" id="12"]
 [ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="13"]

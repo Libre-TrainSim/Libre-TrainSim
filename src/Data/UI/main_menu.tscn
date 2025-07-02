@@ -13,7 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://cglype78xbawr" path="res://Resources/Music/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg" id="11"]
 [ext_resource type="Texture2D" uid="uid://b17cnvy6aj0tl" path="res://screenshot.png" id="12"]
 [ext_resource type="PackedScene" uid="uid://13uawwl0pvqh" path="res://Editor/Modules/scenario_editor_selection.tscn" id="14"]
-[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="15"]
 [ext_resource type="Texture2D" uid="uid://b8hrhle3w3obh" path="res://Data/Misc/banner/lts_banner_version.png" id="16"]
 [ext_resource type="Material" path="res://Data/UI/blur_less.tres" id="17"]
 

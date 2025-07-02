@@ -8,7 +8,6 @@
 [ext_resource type="Theme" path="res://Data/UI/styles/button_right.tres" id="6"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="7"]
 [ext_resource type="Script" uid="uid://xyyv6snnnrge" path="res://Data/UI/colored_item_list.gd" id="8"]
-[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="9"]
 
 [node name="StationJumper" type="PanelContainer"]
 anchors_preset = 15

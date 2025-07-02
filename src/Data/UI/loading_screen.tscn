@@ -4,7 +4,6 @@
 [ext_resource type="FontFile" path="res://Data/Fonts/FontMediumBold.tres" id="2"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="3"]
 [ext_resource type="Script" uid="uid://bij542wxlk5ky" path="res://Data/UI/loading_screen.gd" id="4"]
-[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="5"]
 
 [node name="LoadingScreen" type="Control"]
 layout_mode = 3

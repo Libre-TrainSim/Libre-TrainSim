@@ -9,7 +9,6 @@
 [ext_resource type="Theme" uid="uid://bbk158o7ogkdi" path="res://Data/UI/styles/item_list.tres" id="7"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_right.tres" id="8"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_center.tres" id="9"]
-[ext_resource type="Script" uid="uid://buasetqsq6v5g" path="res://Data/UI/translated_rich_rext_label.gd" id="10"]
 [ext_resource type="Theme" path="res://Data/UI/styles/line_edit.tres" id="11"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_left.tres" id="12"]
 

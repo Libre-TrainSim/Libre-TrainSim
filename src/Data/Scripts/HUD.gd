@@ -42,7 +42,7 @@ func _unhandled_input(_event) -> void:
 
 var messages: int = 0
 func send_message(text: String, actions := []) -> void:
-	message_label.set_text(text, actions)
+	message_label.set_text_input(text, actions)
 	$Bling.play()
 	if messages == 0:
 		$Message.play("fade")

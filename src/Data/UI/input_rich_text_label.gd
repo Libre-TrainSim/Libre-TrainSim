@@ -20,7 +20,7 @@ func _notification(what: int) -> void:
 		update_text()
 
 
-func set_text(text: String, p_actions := []) -> void:
+func set_text_Input(text: String, p_actions := []) -> void:
 	translation_id = text
 	actions = p_actions
 	update_text()

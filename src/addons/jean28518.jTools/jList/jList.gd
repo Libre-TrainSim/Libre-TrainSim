@@ -11,35 +11,35 @@ signal user_pressed_save(data) # array of strings (equal to entry_names)
 signal user_selected_entry(entry_name) # string
 signal user_pressed_action(entry_names) # array of strings (equal to entry_names)
 
-@export (String) var _id = "_random"
+@export var _id: String = "_random"
 var id
-@export (String) var entry_duplicate_text = "_duplicate"
+@export var entry_duplicate_text: String = "_duplicate"
 
-@export (bool) var only_unique_entries_allowed = true
-@export (bool) var multi_selection_allowed = true
-@export (String) var custom_font_path = ""
-@export (bool) var enable_add_button = true
-@export (bool) var enable_remove_button = true
-@export (bool) var display_remove_confirmation = true
-@export (bool) var enable_rename_button = false
-@export (bool) var enable_duplicate_button = false
-@export (bool) var enable_copy_button = false
-@export (bool) var enable_paste_button = false
-@export (bool) var enable_save_button = false
-@export (bool) var enable_action_button = false
+@export var only_unique_entries_allowed: bool = true
+@export var multi_selection_allowed: bool = true
+@export var custom_font_path: String = ""
+@export var enable_add_button: bool = true
+@export var enable_remove_button: bool = true
+@export var display_remove_confirmation: bool = true
+@export var enable_rename_button: bool = false
+@export var enable_duplicate_button: bool = false
+@export var enable_copy_button: bool = false
+@export var enable_paste_button: bool = false
+@export var enable_save_button: bool = false
+@export var enable_action_button: bool = false
 
-@export (String) var add_button_text = "Add"
-@export (String) var remove_button_text = "Remove"
-@export (String) var remove_confirmation_text = "Do you really want to remove these entries?"
-@export (String) var cancel_text = "Cancel"
-@export (String) var rename_button_text = "Rename"
-@export (String) var duplicate_button_text = "Duplicate"
-@export (String) var copy_button_text = "Copy"
-@export (String) var paste_button_text = "Paste"
-@export (String) var save_button_text = "Save"
-@export (String) var action_button_text = "Custom Action"
+@export var add_button_text: String = "Add"
+@export var remove_button_text: String = "Remove"
+@export var remove_confirmation_text: String = "Do you really want to remove these entries?"
+@export var cancel_text: String = "Cancel"
+@export var rename_button_text: String = "Rename"
+@export var duplicate_button_text: String = "Duplicate"
+@export var copy_button_text: String = "Copy"
+@export var paste_button_text: String = "Paste"
+@export var save_button_text: String = "Save"
+@export var action_button_text: String = "Custom Action"
 
-@export (bool) var update : set = update_visible_buttons
+@export var update : bool : set = update_visible_buttons
 
 @onready var confirmation_dialog: Popup = $ConfirmationDialog
 
@@ -106,7 +106,7 @@ func _ready():
 		$VBoxContainer/ItemList.select_mode = ItemList.SELECT_SINGLE
 
 
-func _unhandled_key_input(_event: InputEventKey) -> void:
+func _unhandled_key_input(InputEvent) -> void:
 	if $VBoxContainer/HBoxContainer/LineEdit.has_focus() and enable_add_button \
 			and Input.is_action_just_pressed("ui_accept"):
 		_on_Add_pressed()
@@ -216,7 +216,7 @@ func _enter_tree():
 	if owner != self:
 		if _id == "_random":
 			randomize()
-			id = String(randi())
+			id = str(randi())
 		else:
 			id = _id
 
@@ -288,12 +288,12 @@ func _on_Copy_pressed(): # stores the current entry_names into the global buffer
 	var source_entry_ids = item_list.get_selected_items()
 	for entry_id in source_entry_ids:
 		source_entry_names.append(item_list.get_item_text(entry_id))
-	OS.clipboard = var_to_str(source_entry_names)
+	DisplayServer.clipboard_set(var_to_str(source_entry_names))
 	emit_signal("user_copied_entries", source_entry_names)
 
 
 func _on_Paste_pressed(): # Adds entry_names from global buffer into jList.
-	var source_entry_names = str_to_var(OS.clipboard)
+	var source_entry_names = str_to_var(DisplayServer.clipboard_get())
 	if source_entry_names == null:
 		return
 	var pasted_entry_names = []

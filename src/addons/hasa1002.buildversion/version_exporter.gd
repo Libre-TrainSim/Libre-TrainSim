@@ -31,7 +31,7 @@ func build() -> void:
 	if ProjectSettings.has_setting("application/version/label") and last_generated_label != ProjectSettings["application/version/label"]:
 		version_label = ProjectSettings["application/version/label"]
 	var output := []
-	var exit := OS.execute("git", ["describe", "--all"], true, output, true)
+	var exit := OS.execute("git", ["describe", "--all"], output, true)
 	if exit != 0:
 		printt(exit, output)
 		push_warning("Project used without SCM. No version info available.")
@@ -42,7 +42,7 @@ func build() -> void:
 
 	var custom_build := "" if ("master" in output[0] or "main" in output[0] or "release" in output[0]) else ".custom.%s"
 
-	exit = OS.execute("git", ["status", "-s"], true, output, true)
+	exit = OS.execute("git", ["status", "-s"], output, true)
 	if exit != 0:
 		printt(exit, output)
 		push_warning("Failed to determine state.")
@@ -55,26 +55,25 @@ func build() -> void:
 	if dirty:
 		print("Modified files:")
 		print(output[0])
-		exit = OS.execute("git", ["diff"], true, output, true)
+		exit = OS.execute("git", ["diff"], output, true)
 		if exit != 0:
 			printt(exit, output)
 			push_warning("Failed to determine diff.")
 		else:
 			if ProjectSettings.has_setting("application/version/diff_ignore") and \
 					!ProjectSettings["application/version/diff_ignore"].is_empty():
-				var ignores := File.new()
-				var err := ignores.open(ProjectSettings.globalize_path( \
+				var err := FileAccess.open(ProjectSettings.globalize_path( \
 						ProjectSettings["application/version/diff_ignore"]), \
-						File.READ)
+						1)
 				var regex := RegEx.new()
-				regex.compile(ignores.get_as_text())
+				regex.compile(err.get_as_text())
 				var res := regex.search(output[0])
-				if err == OK and res and res.get_start() == 0 and res.get_end() == len(output[0]) - 1:
+				if err != null and res and res.get_start() == 0 and res.get_end() == len(output[0]) - 1:
 					dirty = ""
 					output[0] = "Ignored diff was found. Behaving as if being clean build."
 			print(output[0])
 
-	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], true, output, true)
+	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], output, true)
 	if exit != 0:
 		printt(exit, output)
 		push_warning("Failed to determine version.")

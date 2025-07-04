@@ -5,7 +5,8 @@ extends EditorPlugin
 var running := true
 var version_exporter := preload("res://addons/hasa1002.buildversion/version_exporter.gd").new()
 
-
+#Interface.get_tree().idle_frame needs changes
+#Different bahavior in 4.4
 func _enter_tree() -> void:
 	enable_plugin()
 	var interface := get_editor_interface()

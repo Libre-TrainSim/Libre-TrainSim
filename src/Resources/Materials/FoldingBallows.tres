@@ -1,10 +1,10 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dah272ybruuhu"]
 
-[ext_resource path="res://Resources/Textures/Courrugated.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://d7b13dox72qe" path="res://Resources/Textures/Courrugated.png" id="1"]
 
 [resource]
-albedo_color = Color( 0.729412, 0.729412, 0.729412, 1 )
-albedo_texture = ExtResource( 1 )
+albedo_color = Color(0.729412, 0.729412, 0.729412, 1)
+albedo_texture = ExtResource("1")
 metallic = 0.04
 metallic_specular = 0.3
 roughness = 0.96

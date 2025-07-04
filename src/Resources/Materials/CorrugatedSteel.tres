@@ -1,8 +1,8 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dxsqvsx2tfffb"]
 
-[ext_resource path="res://Resources/Textures/CorrugatedSteel.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://bf2pr4fv7ob7i" path="res://Resources/Textures/CorrugatedSteel.png" id="1"]
 
 [resource]
-albedo_texture = ExtResource( 1 )
+albedo_texture = ExtResource("1")
 metallic = 0.85
 roughness = 0.9

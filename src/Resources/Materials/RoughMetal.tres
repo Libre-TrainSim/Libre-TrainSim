@@ -1,6 +1,6 @@
-[gd_resource type="StandardMaterial3D" format=2]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bn2d356svnmek"]
 
 [resource]
 resource_name = "Metal"
-albedo_color = Color( 0.2, 0.2, 0.2, 1 )
+albedo_color = Color(0.2, 0.2, 0.2, 1)
 metallic = 0.5

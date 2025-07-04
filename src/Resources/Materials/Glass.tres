@@ -1,9 +1,9 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://d34vb75pkjvuo"]
 
-[ext_resource path="res://Resources/Textures/White.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://d3kedlgvt5kbp" path="res://Resources/Textures/White.png" id="1"]
 
 [resource]
-albedo_color = Color( 0.101961, 0.101961, 0.176471, 1 )
-albedo_texture = ExtResource( 1 )
+albedo_color = Color(0.101961, 0.101961, 0.176471, 1)
+albedo_texture = ExtResource("1")
 metallic = 0.13
 roughness = 0.11

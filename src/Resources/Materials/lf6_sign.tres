@@ -1,7 +1,7 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b1rsmntadceyv"]
 
-[ext_resource path="res://Resources/Textures/lf6.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://djkayerhk2bl1" path="res://Resources/Textures/lf6.png" id="1"]
 
 [resource]
-albedo_texture = ExtResource( 1 )
+albedo_texture = ExtResource("1")
 metallic_specular = 0.0

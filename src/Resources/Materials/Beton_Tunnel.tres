@@ -1,9 +1,8 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dlh7m6cvsa7fa"]
 
-[ext_resource path="res://Resources/Textures/Wall.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://ds73t16v4oj5t" path="res://Resources/Textures/Wall.png" id="1"]
 
 [resource]
-params_line_width = 0.1
-albedo_color = Color( 0.329412, 0.329412, 0.329412, 1 )
-albedo_texture = ExtResource( 1 )
+albedo_color = Color(0.329412, 0.329412, 0.329412, 1)
+albedo_texture = ExtResource("1")
 roughness = 0.95

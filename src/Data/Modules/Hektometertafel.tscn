@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvpyjsy4pfb26"]
 
 [ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="2"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://cbl2kltqv8mbp" path="res://Resources/Objects/hektometertafel.obj" id="3"]
 [ext_resource type="Script" uid="uid://d1uhmfbw2yng" path="res://Data/Scripts/Hektometertafel.gd" id="4"]
 

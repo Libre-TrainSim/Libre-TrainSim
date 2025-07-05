@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://diidolxd71gev"]
 
-[ext_resource type="Material" path="res://Resources/Materials/RoofDark.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Glass.tres" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Grey.tres" id="3"]
+[ext_resource type="Material" uid="uid://ciq6o6bov6rbv" path="res://Resources/Materials/RoofDark.tres" id="1"]
+[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="2"]
+[ext_resource type="Material" uid="uid://df2gse0r6p7da" path="res://Resources/Materials/Wall_Grey.tres" id="3"]
 [ext_resource type="ArrayMesh" uid="uid://c1wmjalsr17i4" path="res://Resources/Objects/house2.obj" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Blue_Light.tres" id="5"]
-[ext_resource type="Material" path="res://Resources/Materials/Roof.tres" id="6"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Beige.tres" id="7"]
+[ext_resource type="Material" uid="uid://ecc3a3l0eryj" path="res://Resources/Materials/Wall_Blue_Light.tres" id="5"]
+[ext_resource type="Material" uid="uid://bcv3dfcb6e73d" path="res://Resources/Materials/Roof.tres" id="6"]
+[ext_resource type="Material" uid="uid://c6umqaskljpyv" path="res://Resources/Materials/Wall_Beige.tres" id="7"]
 
 [node name="House2" type="MeshInstance3D"]
 mesh = ExtResource("4")

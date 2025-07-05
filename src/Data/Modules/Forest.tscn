@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://bjvqib1j8cqa6"]
 
-[ext_resource type="Material" path="res://Resources/Materials/EasyTree.tres" id="1"]
+[ext_resource type="Material" uid="uid://bgnespbeohvej" path="res://Resources/Materials/EasyTree.tres" id="1"]
 [ext_resource type="Script" uid="uid://b16lydr5c7cyn" path="res://Data/Scripts/Forest.gd" id="3"]
 
 [sub_resource type="ArrayMesh" id="1"]

@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=9 format=3 uid="uid://bbk158o7ogkdi"]
 
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="1"]
 
 [sub_resource type="StyleBoxEmpty" id="1"]
 

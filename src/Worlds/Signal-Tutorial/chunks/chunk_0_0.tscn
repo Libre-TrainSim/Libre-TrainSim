@@ -3,13 +3,13 @@
 [ext_resource type="Material" uid="uid://i03ypcoq4i7g" path="res://Resources/Materials/Grass_new.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://b6i46dhjqu248" path="res://Data/Modules/TrackObjects.tscn" id="2"]
 [ext_resource type="Script" uid="uid://by8u6asivvep5" path="res://Data/Scripts/chunk.gd" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="5"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="5"]
 [ext_resource type="ArrayMesh" uid="uid://dvr7cfavnoe5x" path="res://Resources/Objects/Pole1.obj" id="6"]
-[ext_resource type="Material" path="res://Resources/Materials/EasyTree.tres" id="7"]
-[ext_resource type="Material" path="res://Resources/Materials/Metal_Brown.tres" id="8"]
+[ext_resource type="Material" uid="uid://bgnespbeohvej" path="res://Resources/Materials/EasyTree.tres" id="7"]
+[ext_resource type="Material" uid="uid://b2udfq1mrvsqq" path="res://Resources/Materials/Metal_Brown.tres" id="8"]
 [ext_resource type="ArrayMesh" uid="uid://bj8tajp5rvmxq" path="res://Resources/Objects/EasyTree.obj" id="9"]
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="10"]
-[ext_resource type="Material" path="res://Resources/Materials/Metal_Green.tres" id="11"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="10"]
+[ext_resource type="Material" uid="uid://biblu4tdg2fvj" path="res://Resources/Materials/Metal_Green.tres" id="11"]
 
 [sub_resource type="MultiMesh" id="MultiMesh_62dwy"]
 resource_local_to_scene = true

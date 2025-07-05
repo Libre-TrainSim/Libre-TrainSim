@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://ddgdxbtm4s3uh"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="1"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://b7vsv2qmnfbg3" path="res://Resources/Objects/lf7.obj" id="2"]
 [ext_resource type="Script" uid="uid://dfpbup6frw1wx" path="res://Data/Scripts/SpeedLimitSignal.gd" id="3"]
 

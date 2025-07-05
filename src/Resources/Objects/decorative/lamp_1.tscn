@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c0lerxvwqldkr"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="1"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://bm5y4kyq3dnia" path="res://Resources/Objects/platform_light_1.obj" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/White_Plastic.tres" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/LEDLamp.tres" id="4"]
+[ext_resource type="Material" uid="uid://blneaesddc1lq" path="res://Resources/Materials/White_Plastic.tres" id="3"]
+[ext_resource type="Material" uid="uid://dspysp0ogdxkx" path="res://Resources/Materials/LEDLamp.tres" id="4"]
 
 [node name="Lamp1" type="MeshInstance3D"]
 mesh = ExtResource("2")

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://djuq6a3pmfgjh" path="res://Data/Scripts/PZBMagnet.gd" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://dsr5knunrro00" path="res://Resources/Objects/pzb_magnet.obj" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/SmoothMetal.tres" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/RoughMetal.tres" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/Orange_Plastic.tres" id="5"]
+[ext_resource type="Material" uid="uid://bxj7wiohnwt6u" path="res://Resources/Materials/SmoothMetal.tres" id="3"]
+[ext_resource type="Material" uid="uid://bn2d356svnmek" path="res://Resources/Materials/RoughMetal.tres" id="4"]
+[ext_resource type="Material" uid="uid://bexbgtpv8x0sa" path="res://Resources/Materials/Orange_Plastic.tres" id="5"]
 
 [node name="PZBMagnet" type="Node3D"]
 script = ExtResource("1")

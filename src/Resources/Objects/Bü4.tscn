@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dpfv343s5wo1w"]
 
 [ext_resource type="Texture2D" uid="uid://c4q8ipdabhgg" path="res://Resources/Textures/bü4.png" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="2"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://dsg7ng8w76vwg" path="res://Resources/Objects/bü4.obj" id="3"]
 
 [sub_resource type="StandardMaterial3D" id="1"]

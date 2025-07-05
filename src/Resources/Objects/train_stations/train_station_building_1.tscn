@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://c6tpdue2h7wgn"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Roof.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Glass.tres" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Beige.tres" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/Wood_Dark.tres" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Grey.tres" id="5"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Blue.tres" id="6"]
+[ext_resource type="Material" uid="uid://bcv3dfcb6e73d" path="res://Resources/Materials/Roof.tres" id="1"]
+[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="2"]
+[ext_resource type="Material" uid="uid://c6umqaskljpyv" path="res://Resources/Materials/Wall_Beige.tres" id="3"]
+[ext_resource type="Material" uid="uid://dpbwcv3bbh13x" path="res://Resources/Materials/Wood_Dark.tres" id="4"]
+[ext_resource type="Material" uid="uid://df2gse0r6p7da" path="res://Resources/Materials/Wall_Grey.tres" id="5"]
+[ext_resource type="Material" uid="uid://b4q7ws516qoy5" path="res://Resources/Materials/Wall_Blue.tres" id="6"]
 [ext_resource type="ArrayMesh" uid="uid://cpvbx0a2tepmj" path="res://Resources/Objects/TrainStationBuilding1.obj" id="7"]
 
 [node name="TrainStationBuilding1" type="MeshInstance3D"]

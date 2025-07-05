@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://bvc5mbcekvihw"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Black_Plastic.tres" id="2"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="1"]
+[ext_resource type="Material" uid="uid://b7nkr6xlfdaom" path="res://Resources/Materials/Black_Plastic.tres" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://c5mjld5nhayw4" path="res://Resources/Objects/transmission_tower.obj" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/RoughMetal.tres" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/White_Plastic.tres" id="5"]
+[ext_resource type="Material" uid="uid://bn2d356svnmek" path="res://Resources/Materials/RoughMetal.tres" id="4"]
+[ext_resource type="Material" uid="uid://blneaesddc1lq" path="res://Resources/Materials/White_Plastic.tres" id="5"]
 
 [node name="TransmissionTower" type="MeshInstance3D"]
 mesh = ExtResource("3")

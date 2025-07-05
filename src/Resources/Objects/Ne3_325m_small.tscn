@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://brpfy1000v4nd"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="1"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://bt5tumxr2q5t" path="res://Resources/Objects/ne3_small.obj" id="2"]
 [ext_resource type="Texture2D" uid="uid://ds85sbquywctg" path="res://Resources/Textures/ne3_325m_small.png" id="3"]
 

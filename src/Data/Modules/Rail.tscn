@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dyupyv4u6m8nl" path="res://Data/Scripts/Rail.gd" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://vrxct2molrsm" path="res://Resources/Objects/editor_arrow.obj" id="2"]
-[ext_resource type="Material" path="res://Data/Misc/Rail_Beginning_connected.tres" id="4"]
-[ext_resource type="Material" path="res://Data/Misc/Rail_Ending_disconnected.tres" id="5"]
+[ext_resource type="Material" uid="uid://dg4c6qb2ap7d7" path="res://Data/Misc/Rail_Beginning_connected.tres" id="4"]
+[ext_resource type="Material" uid="uid://dc7g4jkithubi" path="res://Data/Misc/Rail_Ending_disconnected.tres" id="5"]
 
 [sub_resource type="MultiMesh" id="1"]
 transform_format = 1

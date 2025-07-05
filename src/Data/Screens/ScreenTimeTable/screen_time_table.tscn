@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c1qp4h18taulw"]
 
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMenu.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://c35rpd7f3edfj" path="res://Data/Fonts/FontMenu.tres" id="1"]
 [ext_resource type="Texture2D" uid="uid://dlocmht05b377" path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" id="2"]
 [ext_resource type="Script" uid="uid://bfrsba8t6a6c0" path="res://Data/Screens/ScreenTimeTable/screen_time_table.gd" id="3"]
 

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://coywt7p1igk7t" path="res://Data/Scripts/RailType.gd" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://d0bcpaen1burp" path="res://Resources/RailTypes/Road.obj" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/Wall_White.tres" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/Beton_Tunnel.tres" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/Grass.tres" id="5"]
+[ext_resource type="Material" uid="uid://d1e20c6sbbr08" path="res://Resources/Materials/Wall_White.tres" id="3"]
+[ext_resource type="Material" uid="uid://dlh7m6cvsa7fa" path="res://Resources/Materials/Beton_Tunnel.tres" id="4"]
+[ext_resource type="Material" uid="uid://cb4u8kmxdqy2d" path="res://Resources/Materials/Grass.tres" id="5"]
 
 [node name="RailType" type="Node3D"]
 script = ExtResource("1")

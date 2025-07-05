@@ -1,8 +1,8 @@
 [gd_resource type="Theme" load_steps=30 format=3 uid="uid://b5rrimsnqtske"]
 
 [ext_resource type="StyleBox" path="res://Data/UI/styles/line_edit_read_only.tres" id="1"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="2"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="3"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://b2gw170tkwchy" path="res://Data/UI/check_button/on.png" id="4"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/line_edit_normal.tres" id="5"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_center_focus.tres" id="6"]

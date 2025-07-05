@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://bishcea0hrpjb"]
 
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMenu.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://c35rpd7f3edfj" path="res://Data/Fonts/FontMenu.tres" id="1"]
 [ext_resource type="Script" uid="uid://dc0f4lfdnbprr" path="res://Data/UI/MobileHUD.gd" id="2"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="3"]
+[ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://cu0l2d5bwbglw" path="res://Resources/Textures/pantograph_button.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://u4bqdhy6anao" path="res://Resources/Textures/light_button.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://b4h6l8jfcqx2f" path="res://Resources/Textures/engine_button.png" id="7"]

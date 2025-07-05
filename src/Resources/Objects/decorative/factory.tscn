@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://cfygt0ehme5i8"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Wall_White.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/Roof.tres" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/Wood_Dark.tres" id="4"]
+[ext_resource type="Material" uid="uid://d1e20c6sbbr08" path="res://Resources/Materials/Wall_White.tres" id="1"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="2"]
+[ext_resource type="Material" uid="uid://bcv3dfcb6e73d" path="res://Resources/Materials/Roof.tres" id="3"]
+[ext_resource type="Material" uid="uid://dpbwcv3bbh13x" path="res://Resources/Materials/Wood_Dark.tres" id="4"]
 [ext_resource type="ArrayMesh" uid="uid://iv00bifjf8gh" path="res://Resources/Objects/factory1.obj" id="5"]
 
 [node name="Factory" type="MeshInstance3D"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=4 uid="uid://hdmdx1mx1bpe"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="1"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="1"]
 [ext_resource type="Script" uid="uid://ctwfynuf0n6w7" path="res://Data/Scripts/SpeedLimitWarnSignal.gd" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/lf6_sign.tres" id="4"]
+[ext_resource type="Material" uid="uid://b1rsmntadceyv" path="res://Resources/Materials/lf6_sign.tres" id="4"]
 [ext_resource type="ArrayMesh" uid="uid://vdfdq2qrao68" path="res://Resources/Objects/zs3_small.obj" id="5"]
 
 [sub_resource type="BoxShape3D" id="3"]

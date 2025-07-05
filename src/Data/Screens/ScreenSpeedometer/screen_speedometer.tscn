@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cagi2lt8ed52n" path="res://Data/Screens/ScreenSpeedometer/DoorRight.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://28otgwuq2c7o" path="res://Data/Screens/ScreenSpeedometer/DoorLeft.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://prkc21qigjh4" path="res://Data/Screens/ScreenSpeedometer/Doors.png" id="6"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMediumBold.tres" id="7"]
+[ext_resource type="FontFile" uid="uid://dx33rlnq7u7h2" path="res://Data/Fonts/FontMediumBold.tres" id="7"]
 [ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="9"]
 [ext_resource type="Texture2D" uid="uid://be57h0c7apolo" path="res://Data/Screens/ScreenSpeedometer/richtung_fwd.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://cb8k3vlgas3kl" path="res://Data/Screens/ScreenSpeedometer/richtung_bwd.png" id="11"]

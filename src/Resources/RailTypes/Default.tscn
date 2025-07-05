@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://c61ygw24ig6ti"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Metal.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Metal-Rail.tres" id="2"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="1"]
+[ext_resource type="Material" uid="uid://dialfekbj1eta" path="res://Resources/Materials/Metal-Rail.tres" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://bfb11nql3t3mc" path="res://Resources/RailTypes/Rail_Beton_1.obj" id="3"]
 [ext_resource type="Script" uid="uid://coywt7p1igk7t" path="res://Data/Scripts/RailType.gd" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/Gravel.tres" id="5"]
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="6"]
+[ext_resource type="Material" uid="uid://dkn5uibwhc1hx" path="res://Resources/Materials/Gravel.tres" id="5"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="6"]
 
 [node name="RailType" type="Node3D"]
 script = ExtResource("4")

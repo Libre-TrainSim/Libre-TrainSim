@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bt6yeew58djpr"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Wall_Green.tres" id="1"]
+[ext_resource type="Material" uid="uid://dkevg1g3pr2bs" path="res://Resources/Materials/Wall_Green.tres" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://cw3utfb2np3o5" path="res://Resources/Objects/Wall32m.obj" id="2"]
 
 [node name="Wall32m" type="MeshInstance3D"]

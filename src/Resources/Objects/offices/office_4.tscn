@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://djb8j15rjpgho"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Glass.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Roof.tres" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="3"]
+[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="1"]
+[ext_resource type="Material" uid="uid://bcv3dfcb6e73d" path="res://Resources/Materials/Roof.tres" id="2"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="3"]
 [ext_resource type="ArrayMesh" uid="uid://cufw48bqjqcaw" path="res://Resources/Objects/office4.obj" id="4"]
 
 [node name="Office4" type="MeshInstance3D"]

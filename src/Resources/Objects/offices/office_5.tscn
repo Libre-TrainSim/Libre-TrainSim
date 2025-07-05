@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://noi11gvev7hv"]
 
-[ext_resource type="Material" path="res://Resources/Materials/Glass.tres" id="1"]
-[ext_resource type="Material" path="res://Resources/Materials/Beton.tres" id="2"]
-[ext_resource type="Material" path="res://Resources/Materials/White_Plastic.tres" id="3"]
-[ext_resource type="Material" path="res://Resources/Materials/Red_Plastic.tres" id="4"]
-[ext_resource type="Material" path="res://Resources/Materials/RoofDark.tres" id="5"]
+[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="1"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="2"]
+[ext_resource type="Material" uid="uid://blneaesddc1lq" path="res://Resources/Materials/White_Plastic.tres" id="3"]
+[ext_resource type="Material" uid="uid://dskb3swtgn57q" path="res://Resources/Materials/Red_Plastic.tres" id="4"]
+[ext_resource type="Material" uid="uid://ciq6o6bov6rbv" path="res://Resources/Materials/RoofDark.tres" id="5"]
 [ext_resource type="ArrayMesh" uid="uid://clx7cxqboaxm6" path="res://Resources/Objects/office5.obj" id="6"]
 
 [node name="Office5" type="MeshInstance3D"]

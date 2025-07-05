@@ -1,10 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccrhf8l12m0mp"]
+[gd_scene load_steps=4 format=3 uid="uid://ccrhf8l12m0mp"]
 
-[ext_resource type="ArrayMesh" uid="uid://vrxct2molrsm" path="res://Resources/Objects/editor_arrow.obj" id="1"]
 [ext_resource type="Script" uid="uid://ddffwpwfd3n36" path="res://Data/Scripts/ContactPoint.gd" id="2"]
-
-[sub_resource type="StandardMaterial3D" id="1"]
-albedo_color = Color(1, 0.560784, 0, 1)
+[ext_resource type="ArrayMesh" uid="uid://pqqyvqg4v2pn" path="res://Resources/Objects/Editor_Arrow.mesh" id="2_ugq1c"]
 
 [sub_resource type="BoxShape3D" id="2"]
 size = Vector3(1.25213, 0.500005, 0.963791)
@@ -14,8 +11,7 @@ script = ExtResource("2")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289813, 0)
-mesh = ExtResource("1")
-material/0 = SubResource("1")
+mesh = ExtResource("2_ugq1c")
 
 [node name="Timer" type="Timer" parent="."]
 

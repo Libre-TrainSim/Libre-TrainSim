@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://byro7gesxd6mn"]
 
-[ext_resource type="ArrayMesh" uid="uid://vrxct2molrsm" path="res://Resources/Objects/editor_arrow.obj" id="1"]
 [ext_resource type="Script" uid="uid://bvalgaws61ote" path="res://Data/Scripts/Station.gd" id="2"]
+[ext_resource type="ArrayMesh" uid="uid://pqqyvqg4v2pn" path="res://Resources/Objects/Editor_Arrow.mesh" id="2_erm87"]
 
 [sub_resource type="StandardMaterial3D" id="1"]
 albedo_color = Color(0, 0.180392, 1, 1)
@@ -16,7 +16,7 @@ script = ExtResource("2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.2, 0, 0, 0)
 material_override = SubResource("1")
 cast_shadow = 0
-mesh = ExtResource("1")
+mesh = ExtResource("2_erm87")
 
 [node name="SelectCollider" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929181, -0.5, -1.07157)

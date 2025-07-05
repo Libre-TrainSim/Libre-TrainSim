@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://imblqkfrww6x"]
 
 [ext_resource type="Script" uid="uid://dyupyv4u6m8nl" path="res://Data/Scripts/Rail.gd" id="1"]
-[ext_resource type="ArrayMesh" uid="uid://vrxct2molrsm" path="res://Resources/Objects/editor_arrow.obj" id="2"]
 [ext_resource type="Material" uid="uid://dg4c6qb2ap7d7" path="res://Data/Misc/Rail_Beginning_connected.tres" id="4"]
+[ext_resource type="ArrayMesh" uid="uid://pqqyvqg4v2pn" path="res://Resources/Objects/Editor_Arrow.mesh" id="4_ubefe"]
 [ext_resource type="Material" uid="uid://dc7g4jkithubi" path="res://Data/Misc/Rail_Ending_disconnected.tres" id="5"]
 
 [sub_resource type="MultiMesh" id="1"]
@@ -18,7 +18,7 @@ size = Vector3(1.25213, 0.500005, 0.963791)
 [sub_resource type="MultiMesh" id="9"]
 resource_local_to_scene = true
 transform_format = 1
-mesh = ExtResource("2")
+mesh = ExtResource("4_ubefe")
 
 [node name="Rail" type="Node3D" groups=["Rail"]]
 script = ExtResource("1")
@@ -38,7 +38,7 @@ shape = SubResource("8")
 [node name="Beginning" type="MeshInstance3D" parent="Beginning"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 material_override = ExtResource("4")
-mesh = ExtResource("2")
+mesh = ExtResource("4_ubefe")
 
 [node name="AabbShape" type="CollisionShape3D" parent="Beginning"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.322, 0, 0)
@@ -52,7 +52,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
 
 [node name="Ending" type="MeshInstance3D" parent="Ending"]
 material_override = ExtResource("5")
-mesh = ExtResource("2")
+mesh = ExtResource("4_ubefe")
 
 [node name="AabbShape" type="CollisionShape3D" parent="Ending"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.317, 0, 0)

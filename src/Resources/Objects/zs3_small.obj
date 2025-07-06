@@ -1,6 +1,5 @@
 # Blender 3.4.1
 # www.blender.org
-mtllib zs3_small.mtl
 o Zs3_small
 v -0.000000 -0.818513 0.245579
 v -0.000000 0.983633 0.245579

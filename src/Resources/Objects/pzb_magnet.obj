@@ -1,6 +1,5 @@
 # Blender v2.93.4 OBJ File: 'pzb_magnet.blend'
 # www.blender.org
-mtllib pzb_magnet.mtl
 o Cube
 v -0.725981 0.035279 0.121912
 v -0.695932 0.035279 0.148570

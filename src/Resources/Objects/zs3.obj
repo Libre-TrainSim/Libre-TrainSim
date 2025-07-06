@@ -1,6 +1,5 @@
 # Blender 3.4.1
 # www.blender.org
-mtllib zs3.mtl
 o Zs3
 v -0.000000 -1.000000 0.245579
 v -0.000000 1.999999 0.245579

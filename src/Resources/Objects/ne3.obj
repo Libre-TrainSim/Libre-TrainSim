@@ -1,6 +1,5 @@
 # Blender v2.93.4 OBJ File: 'ne3.blend'
 # www.blender.org
-mtllib ne3.mtl
 o Ne3_Cylinder
 v -0.000000 -1.000000 0.245579
 v -0.000000 1.999999 0.245579

@@ -1,16 +1,16 @@
 [gd_scene load_steps=5 format=3 uid="uid://dldr737stfkq6"]
 
-[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="1"]
 [ext_resource type="ArrayMesh" uid="uid://ugbingnp5vr0" path="res://Resources/Objects/ne3.obj" id="2"]
-[ext_resource type="Texture2D" uid="uid://biht5875mrcbc" path="res://Resources/Textures/ne3_175m.png" id="3"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="2_p8nfp"]
+[ext_resource type="Texture2D" uid="uid://biht5875mrcbc" path="res://Resources/Textures/ne3_175m.png" id="3_28uif"]
 
-[sub_resource type="StandardMaterial3D" id="1"]
-albedo_texture = ExtResource("3")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wgag0"]
+albedo_texture = ExtResource("3_28uif")
 
 [node name="Ne3" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667)
 mesh = ExtResource("2")
-material/0 = ExtResource("1")
-material/1 = SubResource("1")
+surface_material_override/0 = ExtResource("2_p8nfp")
+surface_material_override/1 = SubResource("StandardMaterial3D_wgag0")

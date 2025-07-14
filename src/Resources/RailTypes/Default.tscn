@@ -12,7 +12,7 @@ script = ExtResource("4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("3")
-material/0 = ExtResource("6")
-material/1 = ExtResource("2")
-material/2 = ExtResource("1")
-material/3 = ExtResource("5")
+surface_material_override/0 = ExtResource("6")
+surface_material_override/1 = ExtResource("2")
+surface_material_override/2 = ExtResource("1")
+surface_material_override/3 = ExtResource("5")

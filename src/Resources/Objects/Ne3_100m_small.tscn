@@ -4,7 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bt5tumxr2q5t" path="res://Resources/Objects/ne3_small.obj" id="2"]
 [ext_resource type="Texture2D" uid="uid://2mkmo28cm4sj" path="res://Resources/Textures/ne3_100m_small.png" id="3"]
 
-[sub_resource type="StandardMaterial3D" id="1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hg18c"]
 albedo_texture = ExtResource("3")
 
 [node name="Ne3" type="Node3D"]
@@ -12,5 +12,5 @@ albedo_texture = ExtResource("3")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667)
 mesh = ExtResource("2")
-material/0 = ExtResource("1")
-material/1 = SubResource("1")
+surface_material_override/0 = ExtResource("1")
+surface_material_override/1 = SubResource("StandardMaterial3D_hg18c")

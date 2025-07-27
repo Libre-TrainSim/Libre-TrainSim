@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dijn7haax0boi"]
 
-[ext_resource type="Script" path="res://addons/controller_icons/objects/ControllerIconPathSelector.gd" id="1_0ucf4"]
+[ext_resource type="Script" uid="uid://dnqg4s5nvdlhg" path="res://addons/controller_icons/objects/ControllerIconPathSelector.gd" id="1_0ucf4"]
 [ext_resource type="PackedScene" uid="uid://bituity863qe4" path="res://addons/controller_icons/objects/path_selection/input_action.tscn" id="2_wlqmh"]
 [ext_resource type="PackedScene" uid="uid://b3lplrf2w6kh7" path="res://addons/controller_icons/objects/path_selection/joypad_path.tscn" id="3_6ffwr"]
 [ext_resource type="PackedScene" uid="uid://d2ow6e2ba86b6" path="res://addons/controller_icons/objects/path_selection/specific_path.tscn" id="4_3ai5v"]

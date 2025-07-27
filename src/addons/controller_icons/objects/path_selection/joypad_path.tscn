@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=3 uid="uid://b3lplrf2w6kh7"]
 
-[ext_resource type="Script" path="res://addons/controller_icons/objects/path_selection/JoypadPathSelector.gd" id="1_4ryog"]
-[ext_resource type="Script" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="2_yxfq6"]
+[ext_resource type="Script" uid="uid://7mi4mnpskcvc" path="res://addons/controller_icons/objects/path_selection/JoypadPathSelector.gd" id="1_4ryog"]
+[ext_resource type="Script" uid="uid://q6s47dindbqb" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="2_yxfq6"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_haylq"]
 
@@ -9,189 +9,168 @@
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/l_stick"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_6klsb"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/l_stick_click"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_bij8j"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/r_stick"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_2h0w3"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/r_stick_click"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_kvj2q"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/lb"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_wtcrq"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/lt"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_lfpf5"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/rb"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_b3bsp"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/rt"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_u40go"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/a"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_rnqww"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/b"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_1a2yv"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/x"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_hktfi"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/y"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_2ksy6"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/select"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_08sqi"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/start"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_tivgf"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/home"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_87fow"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/share"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_n4i6p"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/dpad"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_eoyuo"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/dpad_down"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_c660e"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/dpad_right"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_riwus"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/dpad_left"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [sub_resource type="Texture2D" id="Texture2D_onmvf"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_yxfq6")
-_horizontal_repeat = 1
 path = "joypad/dpad_up"
-show_only = 0
+show_mode = 0
 force_type = 0
 
 [node name="Joypad Path" type="Panel"]

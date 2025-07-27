@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ib8ydhcaklwy"]
 
-[ext_resource type="Script" path="res://addons/controller_icons/objects/ControllerIconPathSelectorPopup.gd" id="1_6s0ph"]
+[ext_resource type="Script" uid="uid://dqml4lag760k0" path="res://addons/controller_icons/objects/ControllerIconPathSelectorPopup.gd" id="1_6s0ph"]
 [ext_resource type="PackedScene" uid="uid://dijn7haax0boi" path="res://addons/controller_icons/objects/ControllerIconPathSelector.tscn" id="2_gfs7t"]
 
 [node name="ControllerIconPathSelectorPopup" type="ConfirmationDialog"]

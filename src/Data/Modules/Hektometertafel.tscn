@@ -1,22 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvpyjsy4pfb26"]
+[gd_scene load_steps=6 format=3 uid="uid://bvpyjsy4pfb26"]
 
 [ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="1"]
 [ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://cbl2kltqv8mbp" path="res://Resources/Objects/hektometertafel.obj" id="3"]
 [ext_resource type="Script" uid="uid://d1uhmfbw2yng" path="res://Data/Scripts/Hektometertafel.gd" id="4"]
 
-[sub_resource type="StandardMaterial3D" id="1"]
-transparency = 2
-alpha_scissor_threshold = 0.98
-alpha_antialiasing_mode = 0
-
-[sub_resource type="FontFile" id="2"]
-fallbacks = Array[Font]([ExtResource("1")])
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyvcc"]
 
 [node name="Hektometertafel" type="Node3D"]
 script = ExtResource("4")
@@ -24,25 +13,25 @@ script = ExtResource("4")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667)
 mesh = ExtResource("3")
-material/0 = ExtResource("2")
-material/1 = SubResource("1")
+surface_material_override/0 = ExtResource("2")
+surface_material_override/1 = SubResource("StandardMaterial3D_iyvcc")
 
 [node name="LabelTop" type="Label3D" parent="."]
 transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.111734, 1.78168, 1.96706)
-cast_shadow = 0
-generate_lightmap = false
 pixel_size = 0.001
 double_sided = false
 modulate = Color(0, 0, 0, 1)
 text = "0"
-font = SubResource("2")
+font = ExtResource("1")
+font_size = 300
+outline_size = 0
 
 [node name="LabelBottom" type="Label3D" parent="."]
 transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.111734, 1.3323, 1.96706)
-cast_shadow = 0
-generate_lightmap = false
 pixel_size = 0.001
 double_sided = false
 modulate = Color(0, 0, 0, 1)
 text = "0"
-font = SubResource("2")
+font = ExtResource("1")
+font_size = 300
+outline_size = 0

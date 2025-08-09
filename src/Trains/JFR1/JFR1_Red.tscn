@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://bj2yij4ficda"]
+[gd_scene load_steps=84 format=3 uid="uid://bj2yij4ficda"]
 
 [ext_resource type="ArrayMesh" uid="uid://dxp7wn0sgbj5l" path="res://Trains/JFR1/DriverCabin.obj" id="1"]
 [ext_resource type="Material" uid="uid://b7nkr6xlfdaom" path="res://Resources/Materials/Black_Plastic.tres" id="2"]
@@ -6,18 +6,23 @@
 [ext_resource type="Script" uid="uid://jnqkf81agoj" path="res://Trains/JFR1/Sound.gd" id="4"]
 [ext_resource type="Script" uid="uid://drjb4xxvf5whq" path="res://Trains/JFR1/SpecificScripting.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://djg7egu81vqbc" path="res://Data/Modules/SifaModule.tscn" id="6"]
-[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="7"]
 [ext_resource type="PackedScene" uid="uid://b0ro5xyduwwf" path="res://Data/Modules/PZBModule.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://eo6syh5g8qec" path="res://Data/Screens/ScreenReverser/screen_reverser.tscn" id="9"]
 [ext_resource type="PackedScene" uid="uid://ddj0rtw25lymc" path="res://Data/Modules/PassengerDoor.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://deq15f8lo8fp" path="res://Data/Modules/PassengerPathNode.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cgyl1m21y5cfk" path="res://Data/Modules/PassengerSeat.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://f75asncvh278" path="res://Data/Modules/AdvancedEngineSound.tscn" id="13"]
+[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="13_ebjxi"]
 [ext_resource type="ArrayMesh" uid="uid://ctvam0rwbuhre" path="res://Resources/Objects/reverser.obj" id="14"]
-[ext_resource type="Material" uid="uid://121s8aw5cpee" path="res://Resources/Materials/Carpet_Blue.tres" id="15"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="14_2gmus"]
+[ext_resource type="Material" uid="uid://qpinwn2gxyvy" path="res://Resources/Materials/Metal_White.tres" id="14_r1ahg"]
+[ext_resource type="Material" uid="uid://blneaesddc1lq" path="res://Resources/Materials/White_Plastic.tres" id="15_tkw4t"]
 [ext_resource type="Texture2D" uid="uid://dlocmht05b377" path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.png" id="16"]
+[ext_resource type="Material" uid="uid://121s8aw5cpee" path="res://Resources/Materials/Carpet_Blue.tres" id="16_xt4jx"]
 [ext_resource type="AudioStream" uid="uid://b076k8at4t1kb" path="res://Resources/Sounds/DoorsClosing2.ogg" id="17"]
+[ext_resource type="Material" uid="uid://jgvjayq8oo2i" path="res://Resources/Materials/LightBlue_Plastic.tres" id="17_5nojm"]
 [ext_resource type="AudioStream" uid="uid://b1r3l70vsrk4m" path="res://Resources/Sounds/DoorsOpening.ogg" id="18"]
+[ext_resource type="Material" uid="uid://fdwbbi5acir1" path="res://Resources/Materials/Blue_Plastic.tres" id="18_8b6f2"]
 [ext_resource type="PackedScene" uid="uid://dyfovp7g6d816" path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" id="19"]
 [ext_resource type="PackedScene" uid="uid://deriupyeg7gf5" path="res://Data/Screens/ScreenMultiFunctionDisplay/screen_mfd.tscn" id="20"]
 [ext_resource type="PackedScene" uid="uid://cwyegfqux6ap2" path="res://Data/UI/HUD.tscn" id="21"]
@@ -26,17 +31,13 @@
 [ext_resource type="AudioStream" uid="uid://c4ynn3m1uxvvd" path="res://Resources/Sounds/SiFa.ogg" id="24"]
 [ext_resource type="AudioStream" uid="uid://chyxacclyp1oe" path="res://Resources/Sounds/EnforcedBreake.ogg" id="25"]
 [ext_resource type="Script" uid="uid://cqlafoiyyqssw" path="res://Data/Scripts/Wagon.gd" id="26"]
-[ext_resource type="Material" uid="uid://4eirpph2klk1" path="res://Resources/Materials/GlassInvisible.tres" id="27"]
+[ext_resource type="Material" uid="uid://4eirpph2klk1" path="res://Resources/Materials/GlassInvisible.tres" id="27_xt4jx"]
 [ext_resource type="ArrayMesh" uid="uid://swqcqpixc4vr" path="res://Trains/JFR1/Door.obj" id="28"]
-[ext_resource type="Material" path="res://Trains/JFR1/Wagon_Red.tres" id="29"]
-[ext_resource type="Material" path="res://Trains/JFR1/Wagon_WithDriverStand_Red.tres" id="30"]
-[ext_resource type="Material" uid="uid://qpinwn2gxyvy" path="res://Resources/Materials/Metal_White.tres" id="31"]
-[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="32"]
-[ext_resource type="Material" uid="uid://cf44ng3sk3wbu" path="res://Resources/Materials/Metal_Black.tres" id="33"]
-[ext_resource type="Material" uid="uid://fdwbbi5acir1" path="res://Resources/Materials/Blue_Plastic.tres" id="34"]
-[ext_resource type="Material" uid="uid://jgvjayq8oo2i" path="res://Resources/Materials/LightBlue_Plastic.tres" id="35"]
-[ext_resource type="Material" uid="uid://blneaesddc1lq" path="res://Resources/Materials/White_Plastic.tres" id="36"]
+[ext_resource type="Material" uid="uid://bbotkgl3akjki" path="res://Resources/Materials/LEDLamp_Bright.tres" id="28_5nojm"]
+[ext_resource type="Material" path="res://Trains/JFR1/Wagon_Red.tres" id="29_8b6f2"]
+[ext_resource type="Material" path="res://Trains/JFR1/Wagon_WithDriverStand_Red.tres" id="35_5nojm"]
 [ext_resource type="ArrayMesh" uid="uid://btw4qtdca8wng" path="res://Trains/JFR1/Wagon_1.obj" id="37"]
+[ext_resource type="Material" uid="uid://cf44ng3sk3wbu" path="res://Resources/Materials/Metal_Black.tres" id="37_8b6f2"]
 [ext_resource type="ArrayMesh" uid="uid://bfoe2st0nfmb0" path="res://Trains/JFR1/Wagon_1_WithDriverStand.obj" id="38"]
 [ext_resource type="Script" uid="uid://bqj5r31muk253" path="res://Data/Scripts/Camera.gd" id="39"]
 [ext_resource type="PackedScene" uid="uid://wal5iknf2wdp" path="res://Data/Modules/WagonSound.tscn" id="41"]
@@ -44,7 +45,6 @@
 [ext_resource type="ArrayMesh" uid="uid://b02elrdmjmisq" path="res://Trains/JFR1/Pantograph_1_T2.obj" id="43"]
 [ext_resource type="ArrayMesh" uid="uid://byfqee0faqmbm" path="res://Trains/JFR1/Pantograph_1_B.obj" id="44"]
 [ext_resource type="ArrayMesh" uid="uid://dk776tac06sod" path="res://Resources/Objects/Control-Roll.obj" id="46"]
-[ext_resource type="Material" uid="uid://bbotkgl3akjki" path="res://Resources/Materials/LEDLamp_Bright.tres" id="47"]
 
 [sub_resource type="StandardMaterial3D" id="1"]
 albedo_color = Color(0, 0, 0, 1)
@@ -171,6 +171,11 @@ tracks/5/keys = {
 "values": [Vector3(5.05345, 1.02943, 1.51497), Vector3(5.05345, 1.02943, 1.56736), Vector3(5.80366, 1.02943, 1.56736)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rmmn1"]
+_data = {
+&"open": SubResource("8")
+}
+
 [sub_resource type="Animation" id="9"]
 length = 4.0
 tracks/0/type = "value"
@@ -246,6 +251,11 @@ tracks/5/keys = {
 "values": [Vector3(5.05345, 1.02943, -1.51171), Vector3(5.05345, 1.02943, -1.5828), Vector3(5.76987, 1.02943, -1.5828)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2gmus"]
+_data = {
+&"open": SubResource("9")
+}
+
 [sub_resource type="Animation" id="10"]
 length = 5.0
 tracks/0/type = "value"
@@ -295,6 +305,11 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 12.649), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ewtn"]
+_data = {
+&"Up": SubResource("10")
 }
 
 [sub_resource type="Animation" id="11"]
@@ -372,6 +387,11 @@ tracks/5/keys = {
 "values": [Vector3(5.05345, 1.02943, 1.51497), Vector3(5.05345, 1.02943, 1.56736), Vector3(5.80366, 1.02943, 1.56736)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n5qp6"]
+_data = {
+&"open": SubResource("11")
+}
+
 [sub_resource type="Animation" id="12"]
 length = 4.0
 tracks/0/type = "value"
@@ -447,18 +467,47 @@ tracks/5/keys = {
 "values": [Vector3(5.05345, 1.02943, -1.51171), Vector3(5.05345, 1.02943, -1.5828), Vector3(5.76987, 1.02943, -1.5828)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fqmt8"]
+_data = {
+&"open": SubResource("12")
+}
+
 [sub_resource type="SphereMesh" id="13"]
 radius = 0.06
 height = 0.12
 
-[sub_resource type="StandardMaterial3D" id="14"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8b6f2"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 distance_fade_mode = 1
 distance_fade_min_distance = 50.0
 distance_fade_max_distance = 150.0
 
-[sub_resource type="StandardMaterial3D" id="15"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ocr3c"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e11pn"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1upi5"]
+albedo_color = Color(0.717647, 1, 0.968627, 1)
+emission_enabled = true
+emission = Color(0.839216, 1, 0.996078, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4k37p"]
+albedo_color = Color(0.717647, 1, 0.968627, 1)
+emission_enabled = true
+emission = Color(0.839216, 1, 0.996078, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0kit"]
 albedo_color = Color(0.717647, 1, 0.968627, 1)
 emission_enabled = true
 emission = Color(0.839216, 1, 0.996078, 1)
@@ -514,11 +563,24 @@ tracks/3/keys = {
 "values": [Vector3(0, 0, 12.649), Vector3(0, 0, 0)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2b0kv"]
+_data = {
+&"Up": SubResource("16")
+}
+
 [sub_resource type="SphereMesh" id="17"]
 radius = 0.06
 height = 0.12
 
-[sub_resource type="StandardMaterial3D" id="18"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijkgg"]
+albedo_color = Color(1, 0.211765, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2pbcj"]
 albedo_color = Color(1, 0.211765, 0, 1)
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
@@ -530,10 +592,19 @@ distance_fade_max_distance = 150.0
 radius = 0.06
 height = 0.12
 
-[sub_resource type="StandardMaterial3D" id="20"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ch0p"]
 albedo_color = Color(1, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cxsp4"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+distance_fade_min_distance = 50.0
+distance_fade_max_distance = 150.0
 
 [sub_resource type="Animation" id="21"]
 length = 4.0
@@ -608,6 +679,11 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(5.05345, 1.02943, 1.51497), Vector3(5.05345, 1.02943, 1.56736), Vector3(5.80366, 1.02943, 1.56736)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ajdw0"]
+_data = {
+&"open": SubResource("21")
 }
 
 [sub_resource type="Animation" id="22"]
@@ -685,6 +761,11 @@ tracks/5/keys = {
 "values": [Vector3(5.05345, 1.02943, -1.51171), Vector3(5.05345, 1.02943, -1.5828), Vector3(5.76987, 1.02943, -1.5828)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ebjxi"]
+_data = {
+&"open": SubResource("22")
+}
+
 [node name="Player" type="Node3D"]
 script = ExtResource("3")
 acceleration = 0.8
@@ -697,7 +778,7 @@ description = "JFR1_DESCRIPTION_RED"
 author = "Jean"
 releaseDate = "11 2020"
 screenshotPath = "res://Trains/JFR1/JFR1-Red.png"
-wagons = [NodePath("DriverCabinF"), NodePath("Wagon1"), NodePath("Wagon1"), NodePath("Wagon1"), NodePath("Wagon1"), NodePath("DriverCabinB")]
+wagons = Array[NodePath]([NodePath("DriverCabinF"), NodePath("Wagon1"), NodePath("Wagon1"), NodePath("Wagon1"), NodePath("Wagon1"), NodePath("DriverCabinB")])
 
 [node name="HUD" parent="." instance=ExtResource("21")]
 
@@ -731,10 +812,7 @@ mesh = SubResource("24")
 skeleton = NodePath("../..")
 
 [node name="DisplayMiddle" type="SubViewport" parent="Cabin"]
-size = Vector2(1300, 900)
-msaa = 2
-usage = 0
-render_target_v_flip = true
+size = Vector2i(1300, 900)
 
 [node name="Display" parent="Cabin/DisplayMiddle" instance=ExtResource("19")]
 
@@ -750,10 +828,7 @@ mesh = SubResource("24")
 skeleton = NodePath("../..")
 
 [node name="DisplayLeft" type="SubViewport" parent="Cabin"]
-size = Vector2(1200, 800)
-msaa = 2
-usage = 0
-render_target_v_flip = true
+size = Vector2i(1200, 800)
 
 [node name="ScreenLeft2" parent="Cabin/DisplayLeft" instance=ExtResource("20")]
 
@@ -769,9 +844,7 @@ mesh = SubResource("24")
 skeleton = NodePath("../..")
 
 [node name="DisplayRight" type="SubViewport" parent="Cabin"]
-size = Vector2(1000, 750)
-msaa = 2
-render_target_v_flip = true
+size = Vector2i(1000, 750)
 
 [node name="ScreenRight" parent="Cabin/DisplayRight" instance=ExtResource("22")]
 
@@ -779,37 +852,37 @@ render_target_v_flip = true
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 cast_shadow = 2
 mesh = ExtResource("1")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
-material/2 = ExtResource("31")
-material/3 = ExtResource("31")
-material/4 = ExtResource("2")
-material/5 = ExtResource("36")
-material/6 = ExtResource("36")
-material/7 = ExtResource("36")
-material/8 = ExtResource("15")
-material/9 = ExtResource("36")
-material/10 = ExtResource("36")
-material/11 = ExtResource("35")
-material/12 = ExtResource("34")
-material/13 = ExtResource("32")
+surface_material_override/0 = ExtResource("13_ebjxi")
+surface_material_override/1 = ExtResource("14_r1ahg")
+surface_material_override/2 = ExtResource("14_r1ahg")
+surface_material_override/3 = ExtResource("14_r1ahg")
+surface_material_override/4 = ExtResource("2")
+surface_material_override/5 = ExtResource("15_tkw4t")
+surface_material_override/6 = ExtResource("15_tkw4t")
+surface_material_override/7 = ExtResource("15_tkw4t")
+surface_material_override/8 = ExtResource("16_xt4jx")
+surface_material_override/9 = ExtResource("15_tkw4t")
+surface_material_override/10 = ExtResource("15_tkw4t")
+surface_material_override/11 = ExtResource("17_5nojm")
+surface_material_override/12 = ExtResource("18_8b6f2")
+surface_material_override/13 = ExtResource("13_ebjxi")
 
 [node name="BrakeRoll" type="MeshInstance3D" parent="Cabin"]
 transform = Transform3D(0.64805, -0.469075, 0, 0.469075, 0.64805, 0, 0, 0, 0.8, 8.4507, 2.10677, 0.2)
 mesh = ExtResource("46")
-material/0 = ExtResource("7")
-material/1 = ExtResource("2")
+surface_material_override/0 = ExtResource("14_2gmus")
+surface_material_override/1 = ExtResource("2")
 
 [node name="AccRoll" type="MeshInstance3D" parent="Cabin"]
 transform = Transform3D(0.64805, -0.469075, 0, 0.469075, 0.64805, 0, 0, 0, 0.8, 8.4507, 2.10677, -0.2)
 mesh = ExtResource("46")
-material/0 = ExtResource("7")
-material/1 = ExtResource("2")
+surface_material_override/0 = ExtResource("14_2gmus")
+surface_material_override/1 = ExtResource("2")
 
 [node name="Reverser" type="MeshInstance3D" parent="Cabin"]
 transform = Transform3D(-4.33956e-08, -0.119981, -0.992776, -5.24453e-09, 0.992776, -0.119981, 1, 0, -4.37114e-08, 8.45067, 2.14461, 0.0417276)
 mesh = ExtResource("14")
-material/0 = ExtResource("2")
+surface_material_override/0 = ExtResource("2")
 
 [node name="ScreenReverser" type="MeshInstance3D" parent="Cabin"]
 transform = Transform3D(-6.07538e-09, 0.138989, -0.119981, -7.34234e-10, 0.0167973, 0.992776, 0.14, 6.11959e-09, 1.91069e-15, 8.45073, 2.14416, 0)
@@ -818,12 +891,11 @@ cast_shadow = 0
 mesh = SubResource("23")
 
 [node name="DisplayReverser" type="SubViewport" parent="Cabin"]
-size = Vector2(1200, 800)
-msaa = 2
-usage = 0
-render_target_v_flip = true
+size = Vector2i(1200, 800)
 
 [node name="Reverser" parent="Cabin/DisplayReverser" instance=ExtResource("9")]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="WagonSound" parent="Cabin" instance=ExtResource("41")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84215, 0, 0)
@@ -846,9 +918,9 @@ accel = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wagon1"]
 cast_shadow = 2
 mesh = ExtResource("37")
-material/0 = ExtResource("27")
-material/1 = ExtResource("47")
-material/2 = ExtResource("29")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("28_5nojm")
+surface_material_override/2 = ExtResource("29_8b6f2")
 
 [node name="WagonSound" parent="Wagon1" instance=ExtResource("41")]
 
@@ -905,82 +977,86 @@ spot_angle = 77.4
 [node name="Doors" type="Node3D" parent="Wagon1"]
 
 [node name="DoorRight" type="AnimationPlayer" parent="Wagon1/Doors"]
-anims/open = SubResource("8")
+libraries = {
+&"": SubResource("AnimationLibrary_rmmn1")
+}
 
 [node name="DoorR1" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR2" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR4" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR3" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR6" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR5" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorLeft" type="AnimationPlayer" parent="Wagon1/Doors"]
-anims/open = SubResource("9")
+libraries = {
+&"": SubResource("AnimationLibrary_2gmus")
+}
 
 [node name="DoorR12" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR11" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR10" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR9" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR8" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR7" type="MeshInstance3D" parent="Wagon1/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="PassengerDoor" parent="Wagon1/Doors" instance=ExtResource("10")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181)
@@ -1128,39 +1204,39 @@ transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.762
 
 [node name="PassengerPathNode" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878)
-connections = [NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3")]
+connections = Array[NodePath]([NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3")])
 
 [node name="PassengerPathNode3" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7")])
 
 [node name="PassengerPathNode7" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28")])
 
 [node name="PassengerPathNode8" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36")])
 
 [node name="PassengerPathNode6" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20")])
 
 [node name="PassengerPathNode4" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9")])
 
 [node name="PassengerPathNode9" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40")])
 
 [node name="PassengerPathNode2" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5")])
 
 [node name="PassengerPathNode5" parent="Wagon1/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12")])
 
 [node name="DriverCabinF" type="Node3D" parent="."]
 visible = false
@@ -1171,30 +1247,32 @@ length = 14.0
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0)
 cast_shadow = 2
 mesh = ExtResource("38")
-material/0 = ExtResource("27")
-material/1 = ExtResource("47")
-material/2 = ExtResource("30")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("28_5nojm")
+surface_material_override/2 = ExtResource("35_5nojm")
 
 [node name="Pantograph" type="Node3D" parent="DriverCabinF"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16962, 3.77014, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinF/Pantograph"]
-anims/Up = SubResource("10")
+libraries = {
+&"": SubResource("AnimationLibrary_7ewtn")
+}
 
 [node name="Pantograph_1_B" type="MeshInstance3D" parent="DriverCabinF/Pantograph"]
 transform = Transform3D(0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("44")
-material/0 = ExtResource("33")
+surface_material_override/0 = ExtResource("37_8b6f2")
 
 [node name="Pantograph_1_T2" type="MeshInstance3D" parent="DriverCabinF/Pantograph"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0941203, 0.344003, 0)
 mesh = ExtResource("43")
-material/0 = ExtResource("33")
+surface_material_override/0 = ExtResource("37_8b6f2")
 
 [node name="Pantograph_1_T" type="MeshInstance3D" parent="DriverCabinF/Pantograph"]
 transform = Transform3D(0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.41134, 0.150598, 0)
 mesh = ExtResource("42")
-material/0 = ExtResource("33")
+surface_material_override/0 = ExtResource("37_8b6f2")
 
 [node name="PassengerCamera2" type="Camera3D" parent="DriverCabinF" groups=["PlayerCameras"]]
 transform = Transform3D(-0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182)
@@ -1209,119 +1287,123 @@ accel = true
 
 [node name="PassengerPathNode" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878)
-connections = [NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3")]
+connections = Array[NodePath]([NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3")])
 
 [node name="PassengerPathNode3" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7")])
 
 [node name="PassengerPathNode7" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28")])
 
 [node name="PassengerPathNode8" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36")])
 
 [node name="PassengerPathNode6" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20")])
 
 [node name="PassengerPathNode4" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9")])
 
 [node name="PassengerPathNode9" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40")])
 
 [node name="PassengerPathNode2" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5")])
 
 [node name="PassengerPathNode5" parent="DriverCabinF/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12")])
 
 [node name="Doors" type="Node3D" parent="DriverCabinF"]
 
 [node name="DoorRight" type="AnimationPlayer" parent="DriverCabinF/Doors"]
-anims/open = SubResource("11")
+libraries = {
+&"": SubResource("AnimationLibrary_n5qp6")
+}
 
 [node name="DoorR1" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR2" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR4" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR3" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR6" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR5" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinF/Doors"]
-anims/open = SubResource("12")
+libraries = {
+&"": SubResource("AnimationLibrary_fqmt8")
+}
 
 [node name="DoorR12" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR11" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR10" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR9" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR8" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR7" type="MeshInstance3D" parent="DriverCabinF/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="PassengerDoor" parent="DriverCabinF/Doors" instance=ExtResource("10")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.72651, 1.1985, 1.48181)
@@ -1533,32 +1615,32 @@ omni_range = 0.6
 [node name="LightBulb" type="MeshInstance3D" parent="DriverCabinF/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92197, 1.59974, 1.05747)
 mesh = SubResource("13")
-material/0 = SubResource("14")
+surface_material_override/0 = SubResource("StandardMaterial3D_8b6f2")
 
 [node name="LightBulb2" type="MeshInstance3D" parent="DriverCabinF/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92197, 1.59974, -1.07249)
 mesh = SubResource("13")
-material/0 = SubResource("14")
+surface_material_override/0 = SubResource("StandardMaterial3D_ocr3c")
 
 [node name="LightBulb3" type="MeshInstance3D" parent="DriverCabinF/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.12134, 3.50845, -0.0044162)
 mesh = SubResource("13")
-material/0 = SubResource("14")
+surface_material_override/0 = SubResource("StandardMaterial3D_e11pn")
 
 [node name="LightBulb4" type="MeshInstance3D" parent="DriverCabinF/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.95602, 1.61265, 1.05747)
 mesh = SubResource("13")
-material/0 = SubResource("15")
+surface_material_override/0 = SubResource("StandardMaterial3D_1upi5")
 
 [node name="LightBulb5" type="MeshInstance3D" parent="DriverCabinF/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.95602, 1.61265, -1.06143)
 mesh = SubResource("13")
-material/0 = SubResource("15")
+surface_material_override/0 = SubResource("StandardMaterial3D_4k37p")
 
 [node name="LightBulb6" type="MeshInstance3D" parent="DriverCabinF/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.07961, 3.45851, -0.00425051)
 mesh = SubResource("13")
-material/0 = SubResource("15")
+surface_material_override/0 = SubResource("StandardMaterial3D_b0kit")
 
 [node name="DriverCabinB" type="Node3D" parent="."]
 visible = false
@@ -1569,30 +1651,32 @@ pantographEnabled = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="DriverCabinB"]
 cast_shadow = 2
 mesh = ExtResource("38")
-material/0 = ExtResource("27")
-material/1 = ExtResource("47")
-material/2 = ExtResource("30")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("28_5nojm")
+surface_material_override/2 = ExtResource("35_5nojm")
 
 [node name="Pantograph" type="Node3D" parent="DriverCabinB"]
 transform = Transform3D(-1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, -4.23426, 3.77014, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DriverCabinB/Pantograph"]
-anims/Up = SubResource("16")
+libraries = {
+&"": SubResource("AnimationLibrary_2b0kv")
+}
 
 [node name="Pantograph_1_B" type="MeshInstance3D" parent="DriverCabinB/Pantograph"]
 transform = Transform3D(0.959599, 0.28137, 0, -0.28137, 0.959599, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("44")
-material/0 = ExtResource("33")
+surface_material_override/0 = ExtResource("37_8b6f2")
 
 [node name="Pantograph_1_T2" type="MeshInstance3D" parent="DriverCabinB/Pantograph"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0941203, 0.344003, 0)
 mesh = ExtResource("43")
-material/0 = ExtResource("33")
+surface_material_override/0 = ExtResource("37_8b6f2")
 
 [node name="Pantograph_1_T" type="MeshInstance3D" parent="DriverCabinB/Pantograph"]
 transform = Transform3D(0.97573, -0.218978, 0, 0.218978, 0.97573, 0, 0, 0, 1, 2.41134, 0.150598, 0)
 mesh = ExtResource("42")
-material/0 = ExtResource("33")
+surface_material_override/0 = ExtResource("37_8b6f2")
 
 [node name="PassengerCamera3" type="Camera3D" parent="DriverCabinB" groups=["PlayerCameras"]]
 transform = Transform3D(-0.790797, 0, -0.612079, 0, 1, 0, 0.612079, 0, -0.790797, 1.097, 2.406, -1.182)
@@ -1618,22 +1702,22 @@ omni_range = 0.6
 [node name="LightBulb5" type="MeshInstance3D" parent="DriverCabinB/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, 1.05747)
 mesh = SubResource("17")
-material/0 = SubResource("18")
+surface_material_override/0 = SubResource("StandardMaterial3D_ijkgg")
 
 [node name="LightBulb6" type="MeshInstance3D" parent="DriverCabinB/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.04295, 1.59974, -1.05558)
 mesh = SubResource("17")
-material/0 = SubResource("18")
+surface_material_override/0 = SubResource("StandardMaterial3D_2pbcj")
 
 [node name="LightBulb7" type="MeshInstance3D" parent="DriverCabinB/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.95212, 1.61106, 1.05527)
 mesh = SubResource("19")
-material/0 = SubResource("20")
+surface_material_override/0 = SubResource("StandardMaterial3D_4ch0p")
 
 [node name="LightBulb8" type="MeshInstance3D" parent="DriverCabinB/ExteriorLights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.94702, 1.61106, -1.05467)
 mesh = SubResource("19")
-material/0 = SubResource("20")
+surface_material_override/0 = SubResource("StandardMaterial3D_cxsp4")
 
 [node name="InteriorLights" type="Node3D" parent="DriverCabinB"]
 
@@ -1689,39 +1773,39 @@ spot_angle = 77.4
 
 [node name="PassengerPathNode" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.24781, 1.1985, 0.000111878)
-connections = [NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3")]
+connections = Array[NodePath]([NodePath("../../Seats/PassengerSeat"), NodePath("../../Seats/PassengerSeat2"), NodePath("../../Seats/PassengerSeat3"), NodePath("../../Seats/PassengerSeat4"), NodePath("../../Seats/PassengerSeat5"), NodePath("../../Seats/PassengerSeat6"), NodePath("../../Seats/PassengerSeat7"), NodePath("../../Seats/PassengerSeat8"), NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../PathNodes/PassengerPathNode3")])
 
 [node name="PassengerPathNode3" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191352, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor3"), NodePath("../../Doors/PassengerDoor4"), NodePath("../../PathNodes/PassengerPathNode6"), NodePath("../../PathNodes/PassengerPathNode7")])
 
 [node name="PassengerPathNode7" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50533, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat21"), NodePath("../../Seats/PassengerSeat22"), NodePath("../../Seats/PassengerSeat23"), NodePath("../../Seats/PassengerSeat24"), NodePath("../../Seats/PassengerSeat25"), NodePath("../../Seats/PassengerSeat26"), NodePath("../../Seats/PassengerSeat27"), NodePath("../../Seats/PassengerSeat28")])
 
 [node name="PassengerPathNode8" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85938, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../PathNodes/PassengerPathNode7"), NodePath("../../Seats/PassengerSeat29"), NodePath("../../Seats/PassengerSeat30"), NodePath("../../Seats/PassengerSeat31"), NodePath("../../Seats/PassengerSeat32"), NodePath("../../Seats/PassengerSeat33"), NodePath("../../Seats/PassengerSeat34"), NodePath("../../Seats/PassengerSeat35"), NodePath("../../Seats/PassengerSeat36")])
 
 [node name="PassengerPathNode6" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53054, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode3"), NodePath("../../Seats/PassengerSeat13"), NodePath("../../Seats/PassengerSeat14"), NodePath("../../Seats/PassengerSeat15"), NodePath("../../Seats/PassengerSeat16"), NodePath("../../Seats/PassengerSeat17"), NodePath("../../Seats/PassengerSeat18"), NodePath("../../Seats/PassengerSeat19"), NodePath("../../Seats/PassengerSeat20")])
 
 [node name="PassengerPathNode4" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55734, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor"), NodePath("../../Doors/PassengerDoor2"), NodePath("../../PathNodes/PassengerPathNode8"), NodePath("../../PathNodes/PassengerPathNode9")])
 
 [node name="PassengerPathNode9" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22597, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode4"), NodePath("../../Seats/PassengerSeat37"), NodePath("../../Seats/PassengerSeat38"), NodePath("../../Seats/PassengerSeat39"), NodePath("../../Seats/PassengerSeat40")])
 
 [node name="PassengerPathNode2" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66551, 1.1985, 0.000111878)
-connections = [NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5")]
+connections = Array[NodePath]([NodePath("../../Doors/PassengerDoor5"), NodePath("../../Doors/PassengerDoor6"), NodePath("../../PathNodes/PassengerPathNode"), NodePath("../../PathNodes/PassengerPathNode5")])
 
 [node name="PassengerPathNode5" parent="DriverCabinB/PathNodes" instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37808, 1.1985, 0.000111878)
-connections = [NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12")]
+connections = Array[NodePath]([NodePath("../../PathNodes/PassengerPathNode2"), NodePath("../../Seats/PassengerSeat9"), NodePath("../../Seats/PassengerSeat10"), NodePath("../../Seats/PassengerSeat11"), NodePath("../../Seats/PassengerSeat12")])
 
 [node name="Doors" type="Node3D" parent="DriverCabinB"]
 
@@ -1744,82 +1828,86 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65951, 1.1985, 1.46088)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6719, 1.1985, -1.48098)
 
 [node name="DoorRight" type="AnimationPlayer" parent="DriverCabinB/Doors"]
-anims/open = SubResource("21")
+libraries = {
+&"": SubResource("AnimationLibrary_ajdw0")
+}
 
 [node name="DoorR1" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -5.05109, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR2" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -4.33488, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR4" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -0.363548, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR3" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.352662, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR6" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.33724, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR5" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(-1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 5.05345, 1.02943, 1.51497)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorLeft" type="AnimationPlayer" parent="DriverCabinB/Doors"]
-anims/open = SubResource("22")
+libraries = {
+&"": SubResource("AnimationLibrary_ebjxi")
+}
 
 [node name="DoorR12" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.05109, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR11" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33488, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR10" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.363548, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR9" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.352662, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR8" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.33724, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="DoorR7" type="MeshInstance3D" parent="DriverCabinB/Doors"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05345, 1.02943, -1.51171)
 mesh = ExtResource("28")
-material/0 = ExtResource("27")
-material/1 = ExtResource("31")
+surface_material_override/0 = ExtResource("27_xt4jx")
+surface_material_override/1 = ExtResource("14_r1ahg")
 
 [node name="Seats" type="Node3D" parent="DriverCabinB"]
 
@@ -1950,11 +2038,9 @@ AccelerationTransitionSpeed = 10.0
 
 [node name="DoorsOpen" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource("18")
-unit_size = 10.0
 
 [node name="DoorsClose" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource("17")
-unit_size = 10.0
 
 [node name="Horn" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.596, 3.60857, 0)
@@ -1964,7 +2050,6 @@ unit_size = 20.0
 [node name="SiFa" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69591, 2.77763, 0)
 stream = ExtResource("24")
-stream_paused = true
 
 [node name="EnforcedBrake" type="AudioStreamPlayer3D" parent="Sound"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.80865, 2.77868, 0)

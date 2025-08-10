@@ -7,17 +7,12 @@
 
 [node name="Lamp1" type="MeshInstance3D"]
 mesh = ExtResource("2")
-material/0 = ExtResource("1")
-material/1 = ExtResource("3")
-material/2 = ExtResource("4")
+surface_material_override/0 = ExtResource("1")
+surface_material_override/1 = ExtResource("3")
+surface_material_override/2 = ExtResource("4")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.526244, 0.850334, 0, -0.850334, 0.526244, 0, 9.51571, -0.407207)
 light_color = Color(1, 0.807122, 0.651299, 1)
 spot_range = 29.3067
 spot_angle = 39.375
-__meta__ = {
-"color_filter": Color(1, 1, 1, 0),
-"color_temperature": 4000,
-"use_color_temperature": true
-}

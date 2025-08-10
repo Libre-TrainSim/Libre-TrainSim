@@ -8,7 +8,7 @@
 
 [node name="TransmissionTower" type="MeshInstance3D"]
 mesh = ExtResource("3")
-material/0 = ExtResource("5")
-material/1 = ExtResource("4")
-material/2 = ExtResource("2")
-material/3 = ExtResource("1")
+surface_material_override/0 = ExtResource("5")
+surface_material_override/1 = ExtResource("4")
+surface_material_override/2 = ExtResource("2")
+surface_material_override/3 = ExtResource("1")

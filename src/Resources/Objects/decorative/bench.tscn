@@ -6,5 +6,5 @@
 
 [node name="Bench" type="MeshInstance3D"]
 mesh = ExtResource("3")
-material/0 = ExtResource("2")
-material/1 = ExtResource("1")
+surface_material_override/0 = ExtResource("2")
+surface_material_override/1 = ExtResource("1")

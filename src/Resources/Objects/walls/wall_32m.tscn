@@ -5,4 +5,4 @@
 
 [node name="Wall32m" type="MeshInstance3D"]
 mesh = ExtResource("2")
-material/0 = ExtResource("1")
+surface_material_override/0 = ExtResource("1")

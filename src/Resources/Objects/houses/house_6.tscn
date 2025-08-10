@@ -9,8 +9,8 @@
 
 [node name="House6" type="MeshInstance3D"]
 mesh = ExtResource("4")
-material/0 = ExtResource("6")
-material/1 = ExtResource("5")
-material/2 = ExtResource("1")
-material/3 = ExtResource("2")
-material/4 = ExtResource("3")
+surface_material_override/0 = ExtResource("6")
+surface_material_override/1 = ExtResource("5")
+surface_material_override/2 = ExtResource("1")
+surface_material_override/3 = ExtResource("2")
+surface_material_override/4 = ExtResource("3")

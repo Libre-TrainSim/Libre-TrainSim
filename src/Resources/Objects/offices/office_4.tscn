@@ -7,6 +7,6 @@
 
 [node name="Office4" type="MeshInstance3D"]
 mesh = ExtResource("4")
-material/0 = ExtResource("2")
-material/1 = ExtResource("3")
-material/2 = ExtResource("1")
+surface_material_override/0 = ExtResource("2")
+surface_material_override/1 = ExtResource("3")
+surface_material_override/2 = ExtResource("1")

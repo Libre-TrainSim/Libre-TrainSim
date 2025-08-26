@@ -1,18 +1,22 @@
 [gd_scene load_steps=6 format=3 uid="uid://bngfl6vp17xev"]
 
-[ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="1"]
+[ext_resource type="Theme" uid="uid://bq4xfor25166x" path="res://Data/UI/styles/button_both.tres" id="1"]
 [ext_resource type="Script" uid="uid://chlhyp16epjcy" path="res://Data/UI/pause.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://ye17017qftit" path="res://Data/UI/station_jumper.tscn" id="3"]
 [ext_resource type="Shader" uid="uid://buj1vn41hdp4v" path="res://Data/UI/blur.gdshader" id="4"]
 
 [sub_resource type="ShaderMaterial" id="1"]
 shader = ExtResource("4")
+shader_parameter/blur_amount = 1.7
+shader_parameter/tint_color = Color(0.2, 0.2, 0.2, 0.2)
 
 [node name="Pause" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -35,7 +39,9 @@ alignment = 1
 
 [node name="Label" type="Label" parent="CenterContainer/HBox"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "PAUSE"
+horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="CenterContainer/HBox"]
 layout_mode = 2
@@ -72,13 +78,20 @@ layout_mode = 2
 text = "EXIT_GAME"
 
 [node name="StationJumper" parent="." instance=ExtResource("3")]
-visible = false
-layout_mode = 0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = -12.0
-offset_bottom = -12.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -295.0
+offset_right = 550.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="pressed" from="CenterContainer/HBox/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/RestartScenario" to="." method="_on_RestartScenario_pressed"]
 [connection signal="pressed" from="CenterContainer/HBox/JumpToStation" to="." method="_on_JumpToStation_pressed"]

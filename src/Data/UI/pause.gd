@@ -13,18 +13,16 @@ var player: LTSPlayer
 
 
 func _ready() -> void:
-	$StationJumper.connect("hide", Callable($CenterContainer/HBox/JumpToStation, "grab_focus"))
-	settings.connect("hide", Callable($CenterContainer/HBox/Settings, "grab_focus"))
+	$StationJumper.connect("hidden", Callable($CenterContainer/HBox/JumpToStation, "grab_focus"))
+	settings.connect("hidden", Callable($CenterContainer/HBox/Settings, "grab_focus"))
 
-
-func show() -> void:
+func _on_draw() -> void:
 	if player.game_start_context == LTSPlayer.GameStartContext.ScenarioEditor:
 		$CenterContainer/HBox/BackToScenarioEditor.show()
 	elif player.game_start_context == LTSPlayer.GameStartContext.TrackEditor:
 		$CenterContainer/HBox/BackToTrackEditor.show()
 
 	$CenterContainer/HBox/Back.grab_focus()
-	super.show()
 
 
 func _unhandled_input(_event) -> void:

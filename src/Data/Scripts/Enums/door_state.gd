@@ -44,7 +44,7 @@ signal state_changed(state) # int, enum value
 
 func open() -> void:
 	if state == State.OPENED:
-		assert(false, "Doors are already in opened state.")
+		assert(false) #,"Doors are already in opened state.")
 		return
 	_set_state(State.OPENING)
 
@@ -55,7 +55,7 @@ func is_opened() -> bool:
 
 func close() -> void:
 	if state == State.CLOSED:
-		assert(false, "Doors are already in closed state.")
+		assert(false) #,"Doors are already in closed state.")
 		return
 	_set_state(State.CLOSING)
 

@@ -4,51 +4,41 @@ extends CanvasLayer
 var debug_camera: DebugCamera
 
 
-onready var fps_label := $Stats/Infos/FPSLabel as Label
-onready var camera_target_list := $DebugContainer/DebugCameraTargets as ColoredItemList
-onready var stats := $Stats as Control
-onready var debug_container := $DebugContainer as Control
+@onready var fps_label := $Stats/Infos/FPSLabel as Label
+@onready var camera_target_list := $DebugContainer/DebugCameraTargets as ColoredItemList
+@onready var stats := $Stats as Control
+@onready var debug_container := $DebugContainer as Control
 
-onready var draw_passenger_label := $DebugContainer/PassengerDebugContainer/DrawPassengerLabel as CheckBox
-onready var draw_station_label := $DebugContainer/PassengerDebugContainer/DrawStationLabel as CheckBox
-onready var draw_wagon_label := $DebugContainer/PassengerDebugContainer/DrawWagonLabel as CheckBox
-onready var show_stats := $DebugContainer/ShowStats as CheckBox
+@onready var draw_passenger_label := $DebugContainer/PassengerDebugContainer/DrawPassengerLabel as CheckBox
+@onready var draw_station_label := $DebugContainer/PassengerDebugContainer/DrawStationLabel as CheckBox
+@onready var draw_wagon_label := $DebugContainer/PassengerDebugContainer/DrawWagonLabel as CheckBox
+@onready var show_stats := $DebugContainer/ShowStats as CheckBox
 
-onready var objects := $Stats/Infos/Objects as Label
-onready var verts := $Stats/Infos/Verts as Label
-onready var draw_calls := $Stats/Infos/DrawCalls as Label
-onready var mat_changes := $Stats/Infos/MatChanges as Label
-onready var shader_changes := $Stats/Infos/ShaderChanges as Label
-onready var surface_changes := $Stats/Infos/SurfaceChanges as Label
-onready var compiles := $Stats/Infos/ShaderCompiles as Label
-onready var video_mem := $Stats/Infos/VideoMem as Label
-onready var texture_mem := $Stats/Infos/TextureMem as Label
-onready var vertex_mem := $Stats/Infos/VertexMem as Label
+@onready var objects := $Stats/Infos/Objects as Label
+@onready var primitives := $Stats/Infos/Primitives as Label
+@onready var draw_calls := $Stats/Infos/DrawCalls as Label
+@onready var video_mem := $Stats/Infos/VideoMem as Label
+@onready var texture_mem := $Stats/Infos/TextureMem as Label
 
 
 func _ready() -> void:
 	debug_container.hide()
-	draw_passenger_label.pressed = ProjectSettings.get_setting("game/debug/draw_labels/passenger")
-	draw_station_label.pressed = ProjectSettings.get_setting("game/debug/draw_labels/station")
-	draw_wagon_label.pressed = ProjectSettings.get_setting("game/debug/draw_labels/wagon")
-	show_stats.pressed = ProjectSettings.get_setting("game/debug/show_stats")
-	stats.visible = show_stats.pressed
+	draw_passenger_label.button_pressed = ProjectSettings.get_setting("game/debug/draw_labels/passenger")
+	draw_station_label.button_pressed = ProjectSettings.get_setting("game/debug/draw_labels/station")
+	draw_wagon_label.button_pressed = ProjectSettings.get_setting("game/debug/draw_labels/wagon")
+	show_stats.button_pressed = ProjectSettings.get_setting("game/debug/show_stats")
+	stats.visible = show_stats.button_pressed
 
 
 func _process(_delta: float) -> void:
 	if not stats.visible and not debug_container.visible:
 		return
 	fps_label.text = "%d FPS" % Engine.get_frames_per_second()
-	objects.text = "%d objects" % VisualServer.get_render_info(VisualServer.INFO_OBJECTS_IN_FRAME)
-	verts.text = "%d vertices" % VisualServer.get_render_info(VisualServer.INFO_VERTICES_IN_FRAME)
-	draw_calls.text = "%d draw calls" % VisualServer.get_render_info(VisualServer.INFO_DRAW_CALLS_IN_FRAME)
-	mat_changes.text = "%d mat changes" % VisualServer.get_render_info(VisualServer.INFO_MATERIAL_CHANGES_IN_FRAME)
-	shader_changes.text = "%d shader changes" % VisualServer.get_render_info(VisualServer.INFO_SHADER_CHANGES_IN_FRAME)
-	surface_changes.text = "%d surf changes" % VisualServer.get_render_info(VisualServer.INFO_SURFACE_CHANGES_IN_FRAME)
-	compiles.text = "%d shader comp" % VisualServer.get_render_info(VisualServer.INFO_SHADER_COMPILES_IN_FRAME)
-	video_mem.text = "%d MB vid mem" % (VisualServer.get_render_info(VisualServer.INFO_VIDEO_MEM_USED) / 1_000_000.0)
-	texture_mem.text = "%d MB tex mem" % (VisualServer.get_render_info(VisualServer.INFO_TEXTURE_MEM_USED) / 1_000_000.0)
-	vertex_mem.text = "%d MB vert mem" % (VisualServer.get_render_info(VisualServer.INFO_VERTEX_MEM_USED) / 1_000_000.0)
+	objects.text = "%d objects" % RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME)
+	primitives.text = "%d primitives" % RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)
+	draw_calls.text = "%d draw calls" % RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+	video_mem.text = "%d MB vid mem" % (RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_VIDEO_MEM_USED) / 1_000_000.0)
+	texture_mem.text = "%d MB tex mem" % (RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1_000_000.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -71,7 +61,7 @@ func update_camera_targets() -> void:
 	for player in get_tree().get_nodes_in_group("Player"):
 		if not (player is LTSPlayer):
 			continue
-		camera_target_list.add_item(player.name)
+		camera_target_list.add_colored_item(player.name)
 		camera_target_list.set_item_metadata(camera_target_list.get_item_count() - 1, player)
 
 
@@ -136,4 +126,4 @@ func _on_DrawStationLabel_pressed():
 
 func _on_ShowStats_pressed() -> void:
 	ProjectSettings.set_setting("game/debug/show_stats", show_stats.pressed)
-	stats.visible = show_stats.pressed
+	stats.visible = show_stats.button_pressed

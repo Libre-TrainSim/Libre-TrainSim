@@ -1,44 +1,36 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://hdmdx1mx1bpe"]
 
-[ext_resource path="res://Resources/Materials/Metal.tres" type="Material" id=1]
-[ext_resource path="res://Data/Scripts/SpeedLimitWarnSignal.gd" type="Script" id=3]
-[ext_resource path="res://Resources/Materials/lf6_sign.tres" type="Material" id=4]
-[ext_resource path="res://Resources/Objects/zs3_small.obj" type="ArrayMesh" id=5]
+[ext_resource type="Script" uid="uid://ctwfynuf0n6w7" path="res://Data/Scripts/SpeedLimitWarnSignal.gd" id="3"]
+[ext_resource type="Material" uid="uid://ddukbn5ysofwq" path="res://Resources/Materials/Metal.tres" id="3_3sj3r"]
+[ext_resource type="FontFile" uid="uid://d23m8mtrj5gdy" path="res://Data/Fonts/Oswald-Bold.ttf" id="3_g78oi"]
+[ext_resource type="Material" uid="uid://b1rsmntadceyv" path="res://Resources/Materials/lf6_sign.tres" id="4_itrm3"]
+[ext_resource type="ArrayMesh" uid="uid://vdfdq2qrao68" path="res://Resources/Objects/zs3_small.obj" id="5"]
 
-[sub_resource type="BoxShape" id=3]
-extents = Vector3( 0.0652475, 1.05279, 0.380659 )
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(0.129677, 2.1067, 0.764537)
 
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://Data/Fonts/Oswald-Bold.ttf"
+[node name="WarnSpeed_Lf6_small" type="Node3D" groups=["Signal"]]
+script = ExtResource("3")
 
-[sub_resource type="DynamicFont" id=5]
-size = 190
-extra_spacing_top = -30
-extra_spacing_bottom = -30
-font_data = SubResource( 4 )
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667)
+mesh = ExtResource("5")
+surface_material_override/0 = ExtResource("3_3sj3r")
+surface_material_override/1 = ExtResource("4_itrm3")
 
-[node name="WarnSpeed_Lf6_small" type="Spatial" groups=["Signal"]]
-script = ExtResource( 3 )
+[node name="SelectCollider" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.080495, -0.818513, 1.5822)
 
-[node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667 )
-mesh = ExtResource( 5 )
-material/0 = ExtResource( 1 )
-material/1 = ExtResource( 4 )
-
-[node name="SelectCollider" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.080495, -0.818513, 1.5822 )
-
-[node name="AabbShape" type="CollisionShape" parent="SelectCollider"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0652475, 1.05279, 0.380659 )
-shape = SubResource( 3 )
+[node name="AabbShape" type="CollisionShape3D" parent="SelectCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0680742, 1.05243, 0.379128)
+shape = SubResource("3")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.0812835, 0.799968, 1.96745 )
-cast_shadow = 0
-generate_lightmap = false
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -0.0812835, 0.799968, 1.96745)
 pixel_size = 0.0015
 double_sided = false
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color(0, 0, 0, 1)
 text = "12"
-font = SubResource( 5 )
+font = ExtResource("3_g78oi")
+font_size = 190
+outline_size = 0

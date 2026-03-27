@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bwyyuski5rvip"]
 
-[ext_resource path="res://Data/Scripts/Person.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://rax6tcl8alrt" path="res://Data/Scripts/Person.gd" id="1"]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.4
 height = 1.5
 
-[node name="Person" type="Spatial"]
-script = ExtResource( 1 )
+[node name="Person" type="Node3D"]
+script = ExtResource("1")
 
-[node name="Body" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.18796, 0 )
+[node name="Body" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.18796, 0)
 
-[node name="CollisionShape" type="CollisionShape" parent="Body"]
-shape = SubResource( 1 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("1")

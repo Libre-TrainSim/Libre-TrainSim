@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh"
+uid="uid://4u1m8c21upp8"
+path="res://.godot/imported/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh"
 
 [deps]
 
-files=[ "res://.import/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh" ]
+files=["res://.godot/imported/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh"]
 
 source_file="res://Resources/Objects/Halt300m.obj"
-dest_files=[ "res://.import/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh", "res://.import/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh" ]
+dest_files=["res://.godot/imported/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh", "res://.godot/imported/Halt300m.obj-6b971bd776615786c4b036a81f7e4e40.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

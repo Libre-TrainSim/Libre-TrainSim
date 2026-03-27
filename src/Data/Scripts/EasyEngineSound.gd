@@ -1,18 +1,18 @@
-extends Spatial
+extends Node3D
 
 var player: LTSPlayer
-onready var wagon: Spatial = get_parent()
+@onready var wagon: Node3D = get_parent()
 
-export (AudioStream) var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
-export (AudioStream) var acceleration: AudioStream = preload("res://Resources/Sounds/Acceleration3.ogg")
+@export var engine_idle: AudioStream = preload("res://Resources/Sounds/EngineIdle.ogg")
+@export var acceleration: AudioStream = preload("res://Resources/Sounds/Acceleration3.ogg")
 
 
 func _ready() -> void:
 	$Idle.stream = engine_idle
 	$Acceleration.stream = acceleration
 
-	$Idle.unit_db = -50
-	$Acceleration.unit_db = -50
+	$Idle.volume_db = -50
+	$Acceleration.volume_db = -50
 
 func _process(delta: float) -> void:
 	if player == null:
@@ -20,9 +20,9 @@ func _process(delta: float) -> void:
 		return
 
 	if player.engine:
-		$Idle.unit_db = lerp(0, $Idle.unit_db, delta)
+		$Idle.volume_db = lerp(0, $Idle.volume_db, delta)
 	else:
-		$Idle.unit_db = lerp(-50, $Idle.unit_db, delta)
+		$Idle.volume_db = lerp(-50, $Idle.volume_db, delta)
 
 	var sollAcceleration: float = -50
 	if player.command > 0 and player.engine and player.speed != 0:
@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 		else:
 			sollAcceleration = -30 + abs(player.command*30) - (Math.speed_to_kmh(player.speed)-60)*3.0
 
-	$Acceleration.unit_db = lerp(sollAcceleration, $Acceleration.unit_db, delta)
+	$Acceleration.volume_db = lerp(sollAcceleration, $Acceleration.volume_db, delta)
 
 	$Idle.stream_paused = not wagon.visible
 	$Acceleration.stream_paused = not wagon.visible

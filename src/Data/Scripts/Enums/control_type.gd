@@ -7,4 +7,3 @@ enum {
 	XBox = 8 | 2,
 	Playstation = 16 | 2,
 }
-

@@ -3,9 +3,8 @@ extends Control
 signal save_requested
 
 
-func show() -> void:
+func _on_draw() -> void:
 	$VBoxContainer/Back.grab_focus()
-	.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:

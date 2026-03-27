@@ -1,17 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://ccdviy5lbn0v0"]
 
-[ext_resource path="res://Data/Scripts/PZBMagnet.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Objects/pzb_magnet.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://Resources/Materials/SmoothMetal.tres" type="Material" id=3]
-[ext_resource path="res://Resources/Materials/RoughMetal.tres" type="Material" id=4]
-[ext_resource path="res://Resources/Materials/Orange_Plastic.tres" type="Material" id=5]
+[ext_resource type="Script" uid="uid://djuq6a3pmfgjh" path="res://Data/Scripts/PZBMagnet.gd" id="1"]
+[ext_resource type="ArrayMesh" uid="uid://dsr5knunrro00" path="res://Resources/Objects/pzb_magnet.obj" id="2"]
+[ext_resource type="Material" uid="uid://bxj7wiohnwt6u" path="res://Resources/Materials/SmoothMetal.tres" id="3"]
+[ext_resource type="Material" uid="uid://bn2d356svnmek" path="res://Resources/Materials/RoughMetal.tres" id="4"]
+[ext_resource type="Material" uid="uid://bexbgtpv8x0sa" path="res://Resources/Materials/Orange_Plastic.tres" id="5"]
 
-[node name="PZBMagnet" type="Spatial"]
-script = ExtResource( 1 )
+[node name="PZBMagnet" type="Node3D"]
+script = ExtResource("1")
 
-[node name="pzb_magnet" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.765594, 0.0447806, 1.11791 )
-mesh = ExtResource( 2 )
-material/0 = ExtResource( 5 )
-material/1 = ExtResource( 4 )
-material/2 = ExtResource( 3 )
+[node name="pzb_magnet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.765594, 0.0447806, 1.11791)
+mesh = ExtResource("2")
+surface_material_override/0 = ExtResource("5")
+surface_material_override/1 = ExtResource("4")
+surface_material_override/2 = ExtResource("3")

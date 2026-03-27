@@ -1,16 +1,16 @@
-extends WindowDialog
+extends Window
 
 var world_config: WorldConfig
 var save_path: String
 
 func _ready() -> void:
 	var editor = find_parent("Editor")
-	save_path = editor.current_track_path.plus_file(editor.current_track_name) + "_config.tres"
+	save_path = editor.current_track_path + "/" + editor.current_track_name + "_config.tres"
 	world_config = load(save_path)
 	load_stored_config()
 
 
-func _unhandled_key_input(_event: InputEventKey) -> void:
+func _unhandled_key_input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("ui_cancel", true):
 		# There seems to be an issue with event propagation
 		# Hence we wait for the frame to end before we actually hide it
@@ -28,7 +28,7 @@ func save_config() -> void:
 	world_config.track_description = $Configuration/GridContainer/TrackDescription.text
 	world_config.editor_notes = $Configuration/Notes.text
 
-	if ResourceSaver.save(save_path, world_config) != OK:
+	if ResourceSaver.save(world_config,save_path) != OK:
 		Logger.err("Error saving world config at '%s'" % save_path, self)
 		return
 	Logger.log("World Config saved.")

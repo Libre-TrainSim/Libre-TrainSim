@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/Acceleration3.ogg-8b6ed4431013fff0c8b6ba4c1cce8042.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ca6l45uxehm8k"
+path="res://.godot/imported/Acceleration3.ogg-8b6ed4431013fff0c8b6ba4c1cce8042.oggvorbisstr"
 
 [deps]
 
 source_file="res://Resources/Sounds/Acceleration3.ogg"
-dest_files=[ "res://.import/Acceleration3.ogg-8b6ed4431013fff0c8b6ba4c1cce8042.oggstr" ]
+dest_files=["res://.godot/imported/Acceleration3.ogg-8b6ed4431013fff0c8b6ba4c1cce8042.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

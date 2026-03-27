@@ -1,26 +1,26 @@
 class_name CameraBase
-extends Camera
+extends Camera3D
 
 
 var rot: Vector2 = Vector2.ZERO # is in screen coordinates
 var capture_mouse_position: Vector2 = Vector2.ZERO
 
 var zoom_level: float = 80
-var orbit_rotation_helper: Spatial = Spatial.new()
+var orbit_rotation_helper: Node3D = Node3D.new()
 
 
 func _ready() -> void:
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Root.connect("world_origin_shifted", Callable(self, "_on_world_origin_shifted"))
 
 
 func _on_world_origin_shifted(delta: Vector3):
-	translation += delta
+	position += delta
 
 
 func _prepare_orbit() -> void:
 	assert(get_parent() != orbit_rotation_helper)
 	get_parent().add_child(orbit_rotation_helper)
-	var target_point := Plane.PLANE_XZ.intersects_ray(\
+	var target_point = Plane.PLANE_XZ.intersects_ray(\
 			global_transform.origin, project_ray_normal(get_viewport().size/2))
 	if target_point == null:
 		# Set point with zoom_level distance in direction of camera

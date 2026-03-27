@@ -1,13 +1,13 @@
 class_name Chunk
-extends Spatial
+extends Node3D
 
-export var is_empty := true
-export var generate_grass := true  # set this to false when we have terrain
+@export var is_empty := true
+@export var generate_grass := true  # set this to false when we have terrain
 
-export var chunk_position: Vector3
+@export var chunk_position: Vector3
 
 # array of node names
-export (Array, String) var rails := []
+@export var rails: Array[String]= []
 
 var default_grass_prefab = preload("res://Data/Modules/chunk_prefab_default_grass.tscn")
 
@@ -20,18 +20,18 @@ var default_grass_prefab = preload("res://Data/Modules/chunk_prefab_default_gras
 
 
 func _ready() -> void:
-	translation = Vector3(0, 0, 0)
+	position = Vector3(0, 0, 0)
 	if not generate_grass:
 		if has_node("DefaultGrass") and is_instance_valid($DefaultGrass):
 			$DefaultGrass.queue_free()
 	else:
 		if not has_node("DefaultGrass"):
-			var default_grass = default_grass_prefab.instance()
+			var default_grass = default_grass_prefab.instantiate()
 			default_grass.name = "DefaultGrass"
 			add_child(default_grass)
 			default_grass.owner = self
-		$DefaultGrass.translation = chunk_position * 1000  # 1000 = ChunkManager.chunk_size
-		$DefaultGrass.translation.y = -0.5
+		$DefaultGrass.position = chunk_position * 1000  # 1000 = ChunkManager.chunk_size
+		$DefaultGrass.position.y = -0.5
 
 	if Root.Editor:
 		for building in $Buildings.get_children():
@@ -41,7 +41,7 @@ func _ready() -> void:
 			building.generate_collider()
 			building.set_script(old_script)
 
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Root.connect("world_origin_shifted", Callable(self, "_on_world_origin_shifted"))
 
 
 func update():
@@ -52,8 +52,8 @@ func update():
 func _prepare_saving():
 	# do NOT save world origin shift!!
 	if has_node("DefaultGrass"):
-		$DefaultGrass.translation = Vector3(0, 0, 0)
-	$Buildings.translation = Vector3(0, 0, 0)
+		$DefaultGrass.position = Vector3(0, 0, 0)
+	$Buildings.position = Vector3(0, 0, 0)
 
 	# clear multimesh data, it is generated at runtime
 	# saves disk space
@@ -61,17 +61,17 @@ func _prepare_saving():
 		obj.multimesh = null
 
 	for building in $Buildings.get_children():
-		var node = building.find_node("SelectCollider")
+		var node = building.find_child("SelectCollider")
 		if is_instance_valid(node):
 			node.queue_free()
 
 
 func _on_world_origin_shifted(delta):
 	if generate_grass:
-		$DefaultGrass.translation += delta
+		$DefaultGrass.position += delta
 
 	# buildings are just mesh instances, we need to shift them!
-	$Buildings.translation += delta
+	$Buildings.position += delta
 
 	# FIXME: this does not actually work...
 	#        it would be so nice, if we could just shift the entire chunk node

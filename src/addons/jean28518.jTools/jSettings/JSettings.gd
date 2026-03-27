@@ -2,7 +2,7 @@ extends CanvasLayer
 
 var language_selector_prepared = false
 
-onready var tab_container = $JSettings/MarginContainer/VBoxContainer/TabContainer
+@onready var tab_container = $JSettings/MarginContainer/VBoxContainer/TabContainer
 
 func popup():
 	update_and_prepare_language_handling()
@@ -17,18 +17,18 @@ func _ready():
 		$JSettings.hide()
 
 	# Localize the Reset Dialog
-	$"%ResetConfirmationDialog".get_cancel().text = "NO"
-	$"%ResetConfirmationDialog".get_ok().text = "YES"
+	$"%ResetConfirmationDialog".get_cancel_button().text = "NO"
+	$"%ResetConfirmationDialog".get_ok_button().text = "YES"
 
 	first_run_check()
 	apply_saved_settings()
 
-	tab_container.connect("tab_changed", self, "_on_tab_changed")
+	tab_container.connect("tab_changed", Callable(self, "_on_tab_changed"))
 
 
 func first_run_check():
 	# Check if this is the first run, and if it is, apply default settings
-	var dir = Directory.new()
+	var dir = DirAccess.open("user://")
 	if not dir.file_exists("user://override.cfg") and not OS.has_feature("editor"):
 		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		reset_settings_to_default()
@@ -103,24 +103,25 @@ func save_settings():
 
 
 func update_settings_window():
-	$"%Fullscreen".pressed = ProjectSettings["display/window/size/fullscreen"]
-	$"%Vsync".pressed = ProjectSettings["display/window/vsync/use_vsync"]
-	$"%FpsLimitToggle".pressed = (ProjectSettings["debug/settings/fps/force_fps"] != 0)
-	show_fps_limit(not ProjectSettings["display/window/vsync/use_vsync"])
-	$"%Shadows".pressed = ProjectSettings["game/graphics/shadows"]
-	$"%DynamicLights".pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
-	$"%Fog".pressed = ProjectSettings["game/graphics/fog"]
-	$"%Persons".pressed = ProjectSettings["game/gameplay/enable_persons"]
+	#Fullscreen was changed from bool to enum, need more edits
+	$"%Fullscreen".button_pressed = ProjectSettings["display/window/size/mode"]
+	$"%Vsync".button_pressed = ProjectSettings["display/window/vsync/vsync_mode"]
+	$"%FpsLimitToggle".button_pressed = (ProjectSettings["application/run/max_fps"] != 0)
+	show_fps_limit(not ProjectSettings["display/window/vsync/vsync_mode"])
+	$"%Shadows".button_pressed = ProjectSettings["game/graphics/shadows"]
+	$"%DynamicLights".button_pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
+	$"%Fog".button_pressed = ProjectSettings["game/graphics/fog"]
+	$"%Persons".button_pressed = ProjectSettings["game/gameplay/enable_persons"]
 	$"%ViewDistance".value = ProjectSettings["game/gameplay/view_distance"]
 	$"%Language".select(_language_table[get_language()])
 	$"%AntiAliasing".selected = ProjectSettings["rendering/quality/filters/msaa"]
 	$"%MainVolume".value = ProjectSettings["game/audio/main_volume"]
 	$"%MusicVolume".value = ProjectSettings["game/audio/music_volume"]
 	$"%GameVolume".value = ProjectSettings["game/audio/game_volume"]
-	$"%SIFA".pressed = ProjectSettings["game/gameplay/sifa_enabled"]
-	$"%PZB".pressed = ProjectSettings["game/gameplay/pzb_enabled"]
+	$"%SIFA".button_pressed = ProjectSettings["game/gameplay/sifa_enabled"]
+	$"%PZB".button_pressed = ProjectSettings["game/gameplay/pzb_enabled"]
 	$"%ChunkUnloadDistance".value = ProjectSettings["game/gameplay/chunk_unload_distance"]
-	$"%ChunkLoadAll".pressed = ProjectSettings["game/gameplay/load_all_chunks"]
+	$"%ChunkLoadAll".button_pressed = ProjectSettings["game/gameplay/load_all_chunks"]
 
 
 func hide():
@@ -132,20 +133,20 @@ func hide():
 func set_fullscreen(val: bool):
 	ProjectSettings["display/window/size/fullscreen"] = val
 	save_settings()
-	OS.window_fullscreen = val
+	get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (val) else Window.MODE_WINDOWED
 
 
 func set_vsync(val: bool):
-	ProjectSettings["display/window/vsync/use_vsync"] = val
+	ProjectSettings["display/window/vsync/vsync_mode"] = val
 	show_fps_limit(not val) # only show fps limit settings if vsync is off
 	save_settings()
-	OS.set_use_vsync(val)
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if (val) else DisplayServer.VSYNC_DISABLED)
 
 
 func set_fps_limit(target_fps: int):
 	ProjectSettings["debug/settings/fps/force_fps"] = target_fps
 	save_settings()
-	Engine.set_target_fps(target_fps)
+	Engine.set_max_fps(target_fps)
 
 
 func set_shadows(val: bool):
@@ -280,7 +281,7 @@ func _id_to_language_code(id : int):
 func show_fps_limit(val: bool):
 	$"%LabelFpsLimitToggle".visible = val
 	$"%FpsLimitToggle".visible = val
-	show_fps_limit_selector(val and $"%FpsLimitToggle".pressed)
+	show_fps_limit_selector(val and $"%FpsLimitToggle".button_pressed)
 	if not val:
 		set_fps_limit(0)
 
@@ -289,7 +290,7 @@ func show_fps_limit_selector(val: bool):
 		# Initate the FPS limit with the screen refresh rate if we just enabled the fps limiter.
 		# Otherwise, show the current fps limit.
 		if ProjectSettings["debug/settings/fps/force_fps"] == 0:
-			$"%FpsLimit".value = OS.get_screen_refresh_rate()
+			$"%FpsLimit".value = DisplayServer.screen_get_refresh_rate()
 		else:
 			$"%FpsLimit".value = ProjectSettings["debug/settings/fps/force_fps"]
 		set_fps_limit($"%FpsLimit".value)
@@ -326,11 +327,11 @@ func _on_Back_pressed():
 
 
 func _on_Fullscreen_pressed():
-	set_fullscreen($"%Fullscreen".pressed)
+	set_fullscreen($"%Fullscreen".button_pressed)
 
 
 func _on_Vsync_pressed():
-	set_vsync($"%Vsync".pressed)
+	set_vsync($"%Vsync".button_pressed)
 
 
 func _on_FpsLimitToggle_toggled(button_pressed):
@@ -340,7 +341,7 @@ func _on_FpsLimitToggle_toggled(button_pressed):
 
 
 func _on_Shadows_pressed():
-	set_shadows($"%Shadows".pressed)
+	set_shadows($"%Shadows".button_pressed)
 
 
 func _on_Language_item_selected(index):
@@ -348,23 +349,23 @@ func _on_Language_item_selected(index):
 
 
 func _on_Fog_pressed():
-	set_fog($"%Fog".pressed)
+	set_fog($"%Fog".button_pressed)
 
 
 func _on_Persons_pressed():
-	set_persons($"%Persons".pressed)
+	set_persons($"%Persons".button_pressed)
 
 
 func _on_DynamicLights_pressed():
-	set_dynamic_lights($"%DynamicLights".pressed)
+	set_dynamic_lights($"%DynamicLights".button_pressed)
 
 
 func _on_SIFA_pressed():
-	set_sifa($"%SIFA".pressed)
+	set_sifa($"%SIFA".button_pressed)
 
 
 func _on_PZB_pressed():
-	set_pzb($"%PZB".pressed)
+	set_pzb($"%PZB".button_pressed)
 
 
 func _on_Reset_pressed():

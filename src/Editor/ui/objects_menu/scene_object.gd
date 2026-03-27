@@ -3,8 +3,8 @@ extends Button
 signal favourite_toggled(is_favourite)
 
 
-var scene: PackedScene = null setget set_scene
-var multiselectable := false setget set_multiselectable
+var scene: PackedScene = null: set = set_scene
+var multiselectable := false: set = set_multiselectable
 var block_hover_select := false
 
 
@@ -22,8 +22,8 @@ func _input(event: InputEvent) -> void:
 	if block_hover_select || Input.mouse_mode == Input.MOUSE_MODE_CAPTURED || !visible:
 		return
 	var mm := event as InputEventMouseMotion
-	if mm != null and mm.button_mask == BUTTON_LEFT and _mouse_in_bounds() and event.shift:
-		pressed = !pressed
+	if mm != null and mm.button_mask == MOUSE_BUTTON_LEFT and _mouse_in_bounds() and event.shift_pressed:
+		button_pressed = !button_pressed
 		block_hover_select = true
 		_free_mouse_on_exit()
 
@@ -34,30 +34,30 @@ func set_scene(value: PackedScene) -> void:
 
 
 func set_favourite(is_favourite: bool) -> void:
-	$MarkFavourite.pressed = is_favourite
+	$MarkFavourite.button_pressed = is_favourite
 
 
-func get_text() -> String:
+func get_object_text() -> String:
 	return $Label.text
 
 
-func _on_MarkFavourite_toggled(button_pressed: bool) -> void:
-	emit_signal("favourite_toggled", button_pressed)
+func _on_mark_favourite_toggled(toggled_on: bool) -> void:
+	emit_signal("favourite_toggled", toggled_on)
 
 
 func set_multiselectable(value: bool) -> void:
 	multiselectable = value
 	if multiselectable:
-		group = null
+		button_group = null
 	else:
-		group = preload("res://Editor/ui/objects_menu/object_button_group.tres")
+		button_group = preload("res://Editor/ui/objects_menu/object_button_group.tres")
 
 
 func _mouse_in_bounds() -> bool:
-	return Rect2(Vector2(), rect_size).has_point(get_local_mouse_position())
+	return Rect2(Vector2(), size).has_point(get_local_mouse_position())
 
 
 func _free_mouse_on_exit() -> void:
 	while _mouse_in_bounds() and block_hover_select:
-		yield(get_tree(), "idle_frame")
+		await get_tree().process_frame
 	block_hover_select = false

@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh"
+uid="uid://dukxq6wlenclq"
+path="res://.godot/imported/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh"
 
 [deps]
 
-files=[ "res://.import/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh" ]
+files=["res://.godot/imported/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh"]
 
 source_file="res://Resources/Objects/SoundSavingWall.obj"
-dest_files=[ "res://.import/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh", "res://.import/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh" ]
+dest_files=["res://.godot/imported/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh", "res://.godot/imported/SoundSavingWall.obj-c2fdf3fcce5e4837e50382c1ac0e851f.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

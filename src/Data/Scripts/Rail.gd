@@ -5,50 +5,50 @@ extends WorldObject
 # Please be aware of the parallel Mode:
 # If 'parallel_rail_name != ""' All local train Settings apart from 'railType' and 'distance_to_parallel_rail' are deprecated. The Rail gets the rest information from parallel rail.
 
-export (String, FILE, "*.tscn,*.scn") var rail_type_path: String = "res://Resources/RailTypes/Default.tscn"
-export (float) var length: float
-export (float) var radius: float
-export (float) var build_distance: float = 1
-export (int) var visible_segments: int
-export (bool) var manual_moving: bool = true
+@export_file ("*.tscn","*.scn") var rail_type_path: String = "res://Resources/RailTypes/Default.tscn"
+@export var length: float
+@export var radius: float
+@export var build_distance: float = 1
+@export var visible_segments: int
+@export var manual_moving: bool = true
 
 var track_objects: Array = []
 
 const MAX_LENGTH: float = 1000.0
 const POSITION_TOLERANCE: float = 0.25
-const ROTATION_TOLERANCE: float = deg2rad(1)
+const ROTATION_TOLERANCE: float = deg_to_rad(1)
 
-export (float) var start_rot: float  # Radians
-export (float) var end_rot: float  # Radians
-export (Vector3) var start_pos: Vector3
-export (Vector3) var end_pos: Vector3
+@export var start_rot: float  # Radians
+@export var end_rot: float  # Radians
+@export var start_pos: Vector3
+@export var end_pos: Vector3
 
 
 ## Steep
-export (float) var start_slope: float = 0  # % (meters / 100 meters)
-export (float) var end_slope: float = 0  # % (meters / 100 meters)
+@export var start_slope: float = 0  # % (meters / 100 meters)
+@export var end_slope: float = 0  # % (meters / 100 meters)
 
-export (float) var start_tend: float = 0
-export (float) var tend1_pos: float = -1
-export (float) var tend1: float = 0
-export (float) var tend2_pos: float = 0
-export (float) var tend2: float = 0
-export (float) var end_tend: float
-export (bool) var automatic_tend: bool = false
+@export var start_tend: float = 0
+@export var tend1_pos: float = -1
+@export var tend1: float = 0
+@export var tend2_pos: float = 0
+@export var tend2: float = 0
+@export var end_tend: float
+@export var automatic_tend: bool = false
 
-export (String) var parallel_rail_name: String = ""
-export (float) var distance_to_parallel_rail: float = 0
+@export var parallel_rail_name: String = ""
+@export var distance_to_parallel_rail: float = 0
 
-export (bool) var has_overhead_line: bool = false
+@export var has_overhead_line: bool = false
 var overhead_line_height1: float = 5.3
 var overhead_line_height2: float = 6.85
 var overhead_line_thickness: float = 0.02
 var overhead_line_height_factor: float = 0.9
 
-var parallel_rail: Spatial
+var parallel_rail: Node3D
 
-onready var world: Node = find_parent("World")
-onready var buildings: Spatial = world.get_node("Buildings")
+@onready var world: Node = find_parent("World")
+@onready var buildings: Node3D = world.get_node("Buildings")
 
 var attached_signals: Array = []
 
@@ -60,32 +60,32 @@ func _ready() -> void:
 		$Beginning.queue_free()
 		$Ending.queue_free()
 		$Arrows.queue_free()
-		$MultiMeshInstance/Area.queue_free()
+		$MultiMeshInstance3D/Area3D.queue_free()
 	else:
 		_generate_rail_collision()
 		_generate_direction_arrows()
 
 
 func _generate_rail_collision():
-	var area := $MultiMeshInstance/Area
+	var area := $MultiMeshInstance3D/Area3D
 	var child_count := area.get_child_count()
-	var col_shape_prefab: CollisionShape = $MultiMeshInstance/Area/CS1
+	var col_shape_prefab: CollisionShape3D = $MultiMeshInstance3D/Area3D/CS1
 	var offset := col_shape_prefab.transform.origin
 
 	for i in range(1, child_count):
 		area.get_child(i).queue_free()
 
 	var step := int(clamp(length / 100, 3, 10))
-	var box: BoxShape = col_shape_prefab.shape
-	box.extents.x = step
+	var box: BoxShape3D = col_shape_prefab.shape
+	box.size.x = step
 	col_shape_prefab.transform.origin.x = step
 
 	for i in range(2 * step, length, 2 * step):
-		var col_shape: CollisionShape = col_shape_prefab.duplicate()
+		var col_shape: CollisionShape3D = col_shape_prefab.duplicate()
 		area.add_child(col_shape)
 		col_shape.owner = area
 		col_shape.transform = get_local_transform_at_distance(i)
-		col_shape.transform.origin += col_shape.transform.basis.xform(offset)
+		col_shape.transform.origin += col_shape.transform.basis * (offset)
 
 
 func _generate_direction_arrows():
@@ -126,12 +126,12 @@ func update_parallel_rail_settings() -> void:
 	else:
 		radius = parallel_rail.radius + distance_to_parallel_rail
 		length = parallel_rail.length * ((radius)/(parallel_rail.radius))
-	translation = parallel_rail.get_shifted_pos_at_distance(0, distance_to_parallel_rail) ## Hier verstehe ich das minus nicht
+	position = parallel_rail.get_shifted_pos_at_distance(0, distance_to_parallel_rail) ## Hier verstehe ich das minus nicht
 	rotation.y = parallel_rail.rotation.y
 
 
 func _update() -> void:
-	var rail_type_node: Spatial = load(rail_type_path).instance()
+	var rail_type_node: Node3D = load(rail_type_path).instantiate()
 
 	build_distance = rail_type_node.build_distance
 	overhead_line_height1 = rail_type_node.overhead_line_height1
@@ -139,23 +139,23 @@ func _update() -> void:
 	overhead_line_thickness = rail_type_node.overhead_line_thickness
 	overhead_line_height_factor = rail_type_node.overhead_line_height_factor
 
-	if parallel_rail_name.empty():
+	if parallel_rail_name.is_empty():
 		update_automatic_tend()
 	else:
 		update_parallel_rail_settings()
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
-		Logger.warn(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
+		Logger.warn(self.name + ": The max length is " + str(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
 
 	visible_segments = int(length / build_distance) + 1
 
 	# Ensure visible Instance:
 	visible = true
-	var multimesh_instance: MultiMeshInstance = get_node_or_null("MultiMeshInstance")
+	var multimesh_instance: MultiMeshInstance3D = get_node_or_null("MultiMeshInstance3D")
 	if multimesh_instance == null:
-		multimesh_instance = MultiMeshInstance.new()
-		multimesh_instance.name = "MultiMeshInstance"
+		multimesh_instance = MultiMeshInstance3D.new()
+		multimesh_instance.name = "MultiMeshInstance3D"
 		add_child(multimesh_instance)
 		multimesh_instance.set_owner(self)
 
@@ -168,8 +168,8 @@ func _update() -> void:
 
 	if multimesh_instance.multimesh.mesh == null:
 		multimesh_instance.multimesh.mesh = rail_type_node.get_child(0).mesh
-		for i in range(rail_type_node.get_child(0).get_surface_material_count()):
-			multimesh_instance.multimesh.mesh.surface_set_material(i, rail_type_node.get_child(0).get_surface_material(i))
+		for i in range(rail_type_node.get_child(0).get_surface_override_material_count()):
+			multimesh_instance.multimesh.mesh.surface_set_material(i, rail_type_node.get_child(0).get_surface_override_material(i))
 
 	for i in range(visible_segments):
 		multimesh_instance.multimesh.set_instance_transform(i, get_local_transform_at_distance(i*build_distance))
@@ -195,8 +195,8 @@ func _update() -> void:
 
 func unload_visible_instance() -> void:
 	visible = false
-	if get_node_or_null("MultiMeshInstance") != null:
-		$MultiMeshInstance.queue_free()
+	if get_node_or_null("MultiMeshInstance3D") != null:
+		$MultiMeshInstance3D.queue_free()
 	if get_node_or_null("OverheadLine") != null:
 		$OverheadLine.queue_free()
 	for track_object in track_objects:
@@ -213,7 +213,7 @@ func update() -> void:
 		_update()
 
 
-func get_track_object(track_object_name : String) -> Spatial: # (Searches for the description of track objects
+func get_track_object(track_object_name : String) -> Node3D: # (Searches for the description of track objects
 	for track_object in track_objects:
 		if not is_instance_valid(track_object):
 			continue
@@ -224,22 +224,22 @@ func get_track_object(track_object_name : String) -> Spatial: # (Searches for th
 
 
 # local to "Rails" node
-func get_transform_at_distance(distance: float) -> Transform:
-	var locTransform: Transform = get_local_transform_at_distance(distance)
-	return Transform(locTransform.basis.rotated(Vector3(0,1,0), rotation.y) ,translation + locTransform.origin.rotated(Vector3(0,1,0), rotation.y))
+func get_transform_at_distance(distance: float) -> Transform3D:
+	var locTransform: Transform3D = get_local_transform_at_distance(distance)
+	return Transform3D(locTransform.basis.rotated(Vector3(0,1,0), rotation.y) ,position + locTransform.origin.rotated(Vector3(0,1,0), rotation.y))
 
 
 # completely global
-func get_global_transform_at_distance(distance: float) -> Transform:
-	var locTransform: Transform = get_local_transform_at_distance(distance)
+func get_global_transform_at_distance(distance: float) -> Transform3D:
+	var locTransform: Transform3D = get_local_transform_at_distance(distance)
 	var global_rot: Vector3 = global_transform.basis.get_euler()
 	var global_pos: Vector3 = global_transform.origin
-	return Transform(locTransform.basis.rotated(Vector3(0,1,0), global_rot.y), global_pos + locTransform.origin.rotated(Vector3(0,1,0), global_rot.y))
+	return Transform3D(locTransform.basis.rotated(Vector3(0,1,0), global_rot.y), global_pos + locTransform.origin.rotated(Vector3(0,1,0), global_rot.y))
 
 # local to this rail
-func get_local_transform_at_distance(distance: float) -> Transform:
+func get_local_transform_at_distance(distance: float) -> Transform3D:
 	if !is_instance_valid(parallel_rail):
-		return Transform( \
+		return Transform3D( \
 			Basis() \
 				.rotated(Vector3(1,0,0), get_tend_at_distance(distance)) \
 				.rotated(Vector3(0,0,1), get_height_rot(distance)) \
@@ -248,7 +248,7 @@ func get_local_transform_at_distance(distance: float) -> Transform:
 		)
 	update_parallel_rail_settings()
 	var parDistance: float = distance/length * parallel_rail.length
-	return Transform(\
+	return Transform3D(\
 		Basis()\
 			.rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance))\
 			.rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance))\
@@ -258,9 +258,9 @@ func get_local_transform_at_distance(distance: float) -> Transform:
 	)
 
 
-func register_signal(name: String, distance: float) -> void:
-	Logger.vlog("Signal " + name + " registered at rail.")
-	attached_signals.append({"name": name, "distance": distance})
+func register_signal(signal_name: String, distance: float) -> void:
+	Logger.vlog("Signal " + signal_name + " registered at rail.")
+	attached_signals.append({"name": signal_name, "distance": distance})
 
 
 func get_pos_at_distance(distance: float) -> Vector3:
@@ -403,15 +403,15 @@ func get_tend_at_distance(distance: float) -> float:
 		return parallel_rail.get_tend_at_distance(newDistance)
 
 	if distance >= tend1_pos and distance < tend2_pos:
-		return deg2rad(-(tend1 + (tend2-tend1) * (distance - tend1_pos)/(tend2_pos - tend1_pos)))
+		return deg_to_rad(-(tend1 + (tend2-tend1) * (distance - tend1_pos)/(tend2_pos - tend1_pos)))
 
 	if distance <= tend1_pos:
-		return deg2rad(-(start_tend + (tend1-start_tend) * (distance)/(tend1_pos)))
+		return deg_to_rad(-(start_tend + (tend1-start_tend) * (distance)/(tend1_pos)))
 
 	if tend2_pos > 0 and distance >= tend2_pos:
-		return deg2rad(-(tend2 + (end_tend-tend2) * (distance -tend2_pos)/(length-tend2_pos)))
+		return deg_to_rad(-(tend2 + (end_tend-tend2) * (distance -tend2_pos)/(length-tend2_pos)))
 
-	return deg2rad(-(start_tend + (end_tend-start_tend) * (distance/length)))
+	return deg_to_rad(-(start_tend + (end_tend-start_tend) * (distance/length)))
 
 
 func get_tendSlopeData() -> Dictionary:
@@ -454,8 +454,8 @@ func update_automatic_tend() -> void:
 
 ###############################################################################
 ## Overhad Line
-var vertices: PoolVector3Array
-var indices: PoolIntArray
+var vertices: PackedVector3Array
+var indices: PackedInt32Array
 
 func update_overhead_line(mesh: ArrayMesh) -> void:
 	if mesh == null and has_node("OverheadLine"):
@@ -463,7 +463,7 @@ func update_overhead_line(mesh: ArrayMesh) -> void:
 		return
 
 	if get_node_or_null("OverheadLine") == null:
-		var overhead_line_mesh_instance: MeshInstance = MeshInstance.new()
+		var overhead_line_mesh_instance: MeshInstance3D = MeshInstance3D.new()
 		overhead_line_mesh_instance.name = "OverheadLine"
 		self.add_child(overhead_line_mesh_instance)
 		overhead_line_mesh_instance.owner = self
@@ -471,8 +471,8 @@ func update_overhead_line(mesh: ArrayMesh) -> void:
 
 
 func calculate_overhead_line_mesh() -> ArrayMesh:
-	vertices = PoolVector3Array()
-	indices = PoolIntArray()
+	vertices = PackedVector3Array()
+	indices = PackedInt32Array()
 
 	## Get Pole Points:
 	var pole_positions: Array = []
@@ -489,7 +489,7 @@ func calculate_overhead_line_mesh() -> ArrayMesh:
 				pole_positions.append(pos + track_object.on_rail_position)
 				pos += track_object.distanceLength
 			if not track_object.placeLast and pole_positions.size() > 1:
-				pole_positions.remove(pole_positions.size()-1)
+				pole_positions.remove_at(pole_positions.size()-1)
 			## Maybe here comes a break in. (If we only want to search for one trackobkject which begins with "pole"
 	pole_positions.append(length)
 	pole_positions = jEssentials.remove_duplicates(pole_positions)
@@ -512,8 +512,8 @@ func calculate_overhead_line_mesh() -> ArrayMesh:
 
 
 func build_overhead_line_segment(start: float, end: float) -> Dictionary:
-	var start_pos = get_local_pos_at_distance(start)+Vector3(0,overhead_line_height1,0)
-	var end_pos = get_local_pos_at_distance(end)+Vector3(0,overhead_line_height1,0)
+	start_pos = get_local_pos_at_distance(start)+Vector3(0,overhead_line_height1,0)
+	end_pos = get_local_pos_at_distance(end)+Vector3(0,overhead_line_height1,0)
 	var direct_vector = (end_pos-start_pos).normalized()
 	var direct_distance = start_pos.distance_to(end_pos)
 
@@ -547,7 +547,7 @@ func create_3D_line(start: Vector3, end: Vector3, thickness: float) -> void:
 	vertices.push_back(end + Vector3(0,-thickness,0))
 	vertices.push_back(end + Vector3(0,0,thickness))
 
-	var indices_array := PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
+	var indices_array := PackedInt32Array([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
 
 	indices.append_array(indices_array)
 
@@ -564,20 +564,20 @@ func create_3D_line_up(start: Vector3, end: Vector3, thickness: float) -> void:
 	vertices.push_back(end + Vector3(-thickness,0,0))
 	vertices.push_back(end + Vector3(0,0,thickness))
 
-	var indices_array := PoolIntArray([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
+	var indices_array := PackedInt32Array([0+x, 2+x, 4+x,  2+x, 4+x, 6+x,  1+x, 5+x, 7+x,  1+x, 7+x, 3+x])
 
 	indices.append_array(indices_array)
 
 
 ###############################################################################
 func update_positions_and_rotations() -> void:
-	start_pos = self.get_translation()
+	start_pos = self.get_position()
 	start_rot = self.rotation.y
 	end_rot = get_rad_at_distance(length)
 	end_pos = get_pos_at_distance(length)
 
 
-export(Array, String) var switch_part: Array = ["", ""]
+@export var switch_part: Array = ["", ""] # (Array, String)
 # 0: is Rail at beginning part of switch? 1: is the rail at end part of switch if not
 # It is saved the name of the other rail which is part of switch
 func update_is_switch_part() -> void:
@@ -662,14 +662,14 @@ func _update_connection_arrows_not_recursive():
 		return
 	if world == null:
 		# Hack (but what follows is so broken and hacky...)
-		yield(self, "ready")
+		await self.ready
 	update_connections()
-	if not _connected_rails_at_beginning.empty():
+	if not _connected_rails_at_beginning.is_empty():
 		$Beginning/Beginning.material_override = preload("res://Data/Misc/Rail_Beginning_connected.tres")
 	else:
 		$Beginning/Beginning.material_override = preload("res://Data/Misc/Rail_Beginning_disconnected.tres")
 
-	if not _connected_rails_at_ending.empty():
+	if not _connected_rails_at_ending.is_empty():
 		$Ending/Ending.material_override = preload("res://Data/Misc/Rail_Ending_connected.tres")
 	else:
 		$Ending/Ending.material_override = preload("res://Data/Misc/Rail_Ending_disconnected.tres")

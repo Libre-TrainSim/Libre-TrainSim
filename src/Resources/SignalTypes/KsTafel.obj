@@ -1,6 +1,5 @@
 # Blender v2.93.1 OBJ File: 'KS-Sig.blend'
 # www.blender.org
-mtllib KsTafel.mtl
 o KsTafel_Cube.002
 v -0.010984 0.708371 0.310040
 v -0.010984 1.500684 0.443421
@@ -21,7 +20,6 @@ vn 0.0000 -0.1660 -0.9861
 vn 1.0000 -0.0000 0.0000
 vn 0.0000 -0.1660 0.9861
 vn 0.0000 1.0000 0.0000
-usemtl None
 s off
 f 1/1/1 2/2/1 3/3/1
 f 1/4/2 3/3/2 6/5/2 4/6/2

@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh"
+uid="uid://xqjy7vqiunej"
+path="res://.godot/imported/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh"
 
 [deps]
 
-files=[ "res://.import/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh" ]
+files=["res://.godot/imported/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh"]
 
 source_file="res://Resources/Objects/house7.obj"
-dest_files=[ "res://.import/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh", "res://.import/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh" ]
+dest_files=["res://.godot/imported/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh", "res://.godot/imported/house7.obj-8d44603400684961de1ed4e46f95f0fc.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

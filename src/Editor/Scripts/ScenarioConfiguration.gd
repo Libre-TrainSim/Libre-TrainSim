@@ -10,7 +10,7 @@ var loaded_route: ScenarioRoute = null
 var world
 var scenario_editor
 
-onready var content_selector = get_parent().get_node("Content_Selector")
+@onready var content_selector = get_parent().get_node("Content_Selector")
 
 
 func init():
@@ -110,7 +110,7 @@ func update_ui_for_current_route():
 		$TabContainer/Routes/RouteConfiguration.hide()
 		return
 	$TabContainer/Routes/RouteConfiguration.show()
-	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/Playable.pressed = loaded_route.is_playable
+	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/Playable.button_pressed = loaded_route.is_playable
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/IntervalStart.set_data_in_seconds(loaded_route.interval_start)
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/Interval.value = loaded_route.interval
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/IntervalEnd.visible = loaded_route.interval != 0
@@ -121,7 +121,7 @@ func update_ui_for_current_route():
 
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/Label6.visible = not loaded_route.is_playable
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/ActivateOnlyAtSpecificRoutes.visible = not loaded_route.is_playable
-	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/ActivateOnlyAtSpecificRoutes.pressed = loaded_route.activate_only_at_specific_routes
+	$TabContainer/Routes/RouteConfiguration/GeneralSettings/G/ActivateOnlyAtSpecificRoutes.button_pressed = loaded_route.activate_only_at_specific_routes
 	$TabContainer/Routes/RouteConfiguration/GeneralSettings/P.visible = loaded_route.activate_only_at_specific_routes and not loaded_route.is_playable
 
 	for child in $TabContainer/Routes/RouteConfiguration/GeneralSettings/P/SpecificRoutes.get_children():
@@ -132,8 +132,8 @@ func update_ui_for_current_route():
 			var checkbox: CheckBox = CheckBox.new()
 			checkbox.name = route_name
 			checkbox.text = route_name
-			checkbox.pressed = routes[current_route].specific_routes.has(route_name)
-			checkbox.connect("pressed", self, "_on_genereal_settings_SpecificRoutes_entry_pressed")
+			checkbox.button_pressed = routes[current_route].specific_routes.has(route_name)
+			checkbox.connect("pressed", Callable(self, "_on_genereal_settings_SpecificRoutes_entry_pressed"))
 			$TabContainer/Routes/RouteConfiguration/GeneralSettings/P/SpecificRoutes.add_child(checkbox)
 
 	update_route_point_list()
@@ -581,7 +581,7 @@ func update_rail_logic_ui():
 		$TabContainer/RailLogic/Label.text = "Signal: " + current_rail_logic_selected
 		$TabContainer/RailLogic/Signals/OperationMode/OptionButton.selected = sd.operation_mode
 		$TabContainer/RailLogic/Signals/OperationMode/OptionButton.disabled = sd.operation_mode == SignalOperationMode.STATION
-		$TabContainer/RailLogic/Signals/SpeedLimitSettings/EnableSpeedLimit/CheckBox.pressed = sd.speed != -1
+		$TabContainer/RailLogic/Signals/SpeedLimitSettings/EnableSpeedLimit/CheckBox.button_pressed = sd.speed != -1
 		$TabContainer/RailLogic/Signals/SpeedLimitSettings/Speed/SpinBox.value = sd.speed
 		$TabContainer/RailLogic/Signals/SpeedLimitSettings/Speed.visible = sd.speed != -1
 
@@ -597,7 +597,7 @@ func update_rail_logic_ui():
 			SignalOperationMode.MANUAL:
 				$TabContainer/RailLogic/Signals/ManualSettings.show()
 				$TabContainer/RailLogic/Signals/ManualSettings/GridContainer/Status.selected = sd.status
-				$"TabContainer/RailLogic/Signals/ManualSettings/GridContainer/Enable Timed Free".pressed = sd.signal_free_time != -1
+				$"TabContainer/RailLogic/Signals/ManualSettings/GridContainer/Enable Timed Free".button_pressed = sd.signal_free_time != -1
 				$TabContainer/RailLogic/Signals/ManualSettings/GridContainer/TimeField.set_data_in_seconds(sd.signal_free_time)
 				$TabContainer/RailLogic/Signals/ManualSettings/GridContainer/TimeField.visible = sd.signal_free_time != -1
 
@@ -612,7 +612,7 @@ func update_rail_logic_ui():
 
 		$TabContainer/RailLogic/Label.text = "Station: " + current_rail_logic_selected
 
-		$TabContainer/RailLogic/Stations/Overwrite.pressed = sd.overwrite
+		$TabContainer/RailLogic/Stations/Overwrite.button_pressed = sd.overwrite
 		$TabContainer/RailLogic/Stations/GridContainer.visible = sd.overwrite
 		$TabContainer/RailLogic/Stations/Label.visible = sd.overwrite
 		$TabContainer/RailLogic/Stations/ReloadWorld.visible = sd.overwrite
@@ -621,7 +621,7 @@ func update_rail_logic_ui():
 			return
 
 		$TabContainer/RailLogic/Stations/GridContainer/AssignedSignal.text = sd.assigned_signal
-		$TabContainer/RailLogic/Stations/GridContainer/EnablePersonSystem.pressed = sd.enable_person_system
+		$TabContainer/RailLogic/Stations/GridContainer/EnablePersonSystem.button_pressed = sd.enable_person_system
 
 	if rail_logic.type == "ContactPoint":
 		$TabContainer/RailLogic/ContactPoints.show()
@@ -633,16 +633,18 @@ func update_rail_logic_ui():
 			rail_logic_settings[rail_logic.name] = sd
 
 		$TabContainer/RailLogic/Label.text = "Contact Point: " + current_rail_logic_selected
-		$TabContainer/RailLogic/ContactPoints/GridContainer/Enabled.pressed = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/Enabled.button_pressed = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/LineEdit.text = sd.affected_signal
 		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectTime.value = sd.affect_time
 		$TabContainer/RailLogic/ContactPoints/GridContainer/NewSpeedLimit.value = sd.new_speed_limit
 		$TabContainer/RailLogic/ContactPoints/GridContainer/NewStatus.selected = sd.new_status
-		$TabContainer/RailLogic/ContactPoints/GridContainer/EnableForAllTrains.pressed = sd.enable_for_all_trains
+		$TabContainer/RailLogic/ContactPoints/GridContainer/EnableForAllTrains.button_pressed = sd.enable_for_all_trains
 		$TabContainer/RailLogic/ContactPoints/GridContainer/SpecificTrains.text = sd.specific_train
 
 		$TabContainer/RailLogic/ContactPoints/GridContainer/Label2.visible = sd.enabled
-		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/.visible = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal.visible = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/LineEdit.visible = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/Select.visible = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/Label3.visible = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectTime.visible = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/Label4.visible = sd.enabled
@@ -826,7 +828,7 @@ func check_route_for_errors() -> void:
 		if signal_instance.type == "Signal" and get_operation_mode_of_signal(signal_instance.name) == SignalOperationMode.MANUAL:
 			signals_with_manual_mode.append(signal_instance.name)
 	if signals_with_manual_mode.size() != 0:
-		error_message += "Just for notice: The following signals are set to manual mode. They don't turn automatically back to green if not explicit called by a script, a contact point or by the time field in the signal settings. If you don't want this change them to block mode: \n%s\n\n" % String(signals_with_manual_mode)
+		error_message += "Just for notice: The following signals are set to manual mode. They don't turn automatically back to green if not explicit called by a script, a contact point or by the time field in the signal settings. If you don't want this change them to block mode: \n%s\n\n" % str(signals_with_manual_mode)
 
 	for i in range(loaded_route.size()):
 		if i != 0 and ((route_points[i] is RoutePointStation and route_points[i].stop_type == StopType.BEGINNING) or route_points[i] is RoutePointSpawnPoint):

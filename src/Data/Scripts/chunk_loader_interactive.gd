@@ -12,11 +12,11 @@ var _chunks_to_load := []  # Array[String] ; Queue
 
 var chunk_manager = null
 
-var _loader: ResourceInteractiveLoader
+var _loader = null
 var _currently_loading_chunk: String
 
-var _dir: Directory
-
+var _dir:= DirAccess.open("user://")
+var file
 
 func load_chunks(new_chunks: Array):
 	for chunk in new_chunks:
@@ -26,7 +26,7 @@ func load_chunks(new_chunks: Array):
 			and chunk != _currently_loading_chunk:
 			_chunks_to_load.push_back(chunk)
 
-	if not _chunks_to_load.empty():
+	if not _chunks_to_load.is_empty():
 		set_process(true)
 
 
@@ -38,7 +38,7 @@ func unload_chunks(old_chunks: Array):
 			rail.unload_visible_instance()
 
 	for chunk_name in old_chunks:
-		var chunk = chunk_manager.world.get_node("Chunks").get_node_or_null(chunk_name)
+		var chunk = chunk_manager.world.get_node("Chunks").get_node_or_null(String(chunk_name))
 		if is_instance_valid(chunk):
 			if Root.Editor:
 				chunk.free() # necessary for saving
@@ -49,22 +49,21 @@ func unload_chunks(old_chunks: Array):
 
 
 func _ready() -> void:
-	_dir = Directory.new()
-	if _dir.open("res://") != OK:
+	if DirAccess.open("res://") == null:
 		Logger.err("Cannot open resource directory.", self)
 		return
 
 
 func _process(delta: float) -> void:
-	if _chunks_to_load.empty():
+	if _chunks_to_load.is_empty():
 		set_process(false)
 		return
 
 	if _loader == null:
 		_currently_loading_chunk = _chunks_to_load.pop_front()
-		var file = _get_chunk_file_path(_currently_loading_chunk)
-		if _dir.file_exists(file):
-			_loader = ResourceLoader.load_interactive(file)
+		file = _get_chunk_file_path(_currently_loading_chunk)
+		if FileAccess.file_exists(file):
+			_loader = ResourceLoader.load_threaded_request(file)
 		else:
 			_spawn_empty_chunk()
 			_currently_loading_chunk = ""
@@ -72,19 +71,23 @@ func _process(delta: float) -> void:
 
 	assert(_loader != null)
 
-	var t = OS.get_ticks_msec()
-	while OS.get_ticks_msec() < t + MAX_LOAD_TIME_STEP:
-		var err = _loader.poll()
-		if err == ERR_FILE_EOF:
-			_spawn_chunk_from_res(_loader.get_resource())
+	var t = Time.get_ticks_msec()
+	while Time.get_ticks_msec() < t + MAX_LOAD_TIME_STEP:
+		var err = ResourceLoader.load_threaded_get_status(file)
+		if err == 3:
+			_spawn_chunk_from_res(ResourceLoader.load_threaded_get(file))
 			_loader = null
 			_currently_loading_chunk = ""
 			break
-		elif err != OK:
-			Logger.err("Cannot load chunk %s (Reason %s)" % [_currently_loading_chunk, err], self)
-			_loader = null
-			chunk_manager._send_message("Chunk could not be loaded, please check your logs!")
-			break
+		if err == 2:
+			print("some error occurred")
+		if err == 0:
+			print("Invalid resource")
+		#elif err != OK:
+			#Logger.err("Cannot load chunk %s (Reason %s)" % [_currently_loading_chunk, err], self)
+			#_loader = null
+			#chunk_manager._send_message("Chunk could not be loaded, please check your logs!")
+			#break
 
 
 func _spawn_chunk_from_res(resource):
@@ -92,7 +95,7 @@ func _spawn_chunk_from_res(resource):
 		Logger.warn("What? Your chunk is not a packed scene! %s" % _currently_loading_chunk, self)
 		return
 
-	var chunk = resource.instance()
+	var chunk = resource.instantiate()
 	chunk.generate_grass = chunk_manager.world.current_world_config.generate_grass
 
 	_add_chunk_to_scene_tree(chunk)
@@ -101,7 +104,7 @@ func _spawn_chunk_from_res(resource):
 
 
 func _spawn_empty_chunk():
-	var chunk = chunk_prefab.instance()
+	var chunk = chunk_prefab.instantiate()
 	chunk.name = _currently_loading_chunk
 	chunk.chunk_position = chunk_manager.string_to_chunk(_currently_loading_chunk)
 	chunk.generate_grass = chunk_manager.world.current_world_config.generate_grass
@@ -113,7 +116,8 @@ func _spawn_empty_chunk():
 
 func _add_chunk_to_scene_tree(chunk):
 	# This should never happen! If it does, we're hiding a bug.
-	if chunk_manager.world.get_node("Chunks").has_node(chunk.name):
+	print(str(chunk.name))
+	if chunk_manager.world.get_node("Chunks").has_node("/root/world/Chunks/" + chunk.name):
 		Logger.warn("Chunk already loaded: %s" % chunk.name, self)
 		_loaded_chunks.push_back(chunk.name)
 		chunk.free()
@@ -134,13 +138,13 @@ func _add_chunk_to_scene_tree(chunk):
 func _get_chunk_file_path(chunk: String):
 	var chunk_path := ""
 	if Root.Editor:
-		chunk_path = chunk_manager.editor.current_track_path.plus_file("chunks")
+		chunk_path = chunk_manager.editor.current_track_path + "/chunks"
 	else:
-		chunk_path = Root.current_track.get_base_dir().plus_file("chunks")
-	var chunk_file = chunk_path.plus_file(chunk) + ".tscn"
+		chunk_path = Root.current_track.get_base_dir() + "/chunks"
+	var chunk_file = chunk_path + "/" + chunk + ".tscn"
 
 	if Root.Editor:
-		var temp_file = chunk_path.plus_file(chunk) + "_temp.tscn"
+		var temp_file = chunk_path + "/" + chunk + "_temp.tscn"
 		if _dir.file_exists(temp_file):
 			chunk_file = temp_file
 
@@ -150,7 +154,7 @@ func _get_chunk_file_path(chunk: String):
 func _force_load_chunk_immediately(chunk_name):
 	assert(Root.Editor)
 
-	var file = _get_chunk_file_path(chunk_name)
+	file = _get_chunk_file_path(chunk_name)
 	var chunk = null
 	_currently_loading_chunk = chunk_name
 	if _dir.file_exists(file):
@@ -159,4 +163,3 @@ func _force_load_chunk_immediately(chunk_name):
 	else:
 		chunk = _spawn_empty_chunk()
 	return chunk
-

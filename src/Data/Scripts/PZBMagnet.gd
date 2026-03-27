@@ -11,11 +11,11 @@ enum Hz {
 	Hz1000 = 1000,
 	Hz2000 = 2000
 }
-export(Hz) var hz: int
+@export var hz: Hz
 
 
-export(NodePath) var attached_signal: NodePath setget set_attached_signal
-var attached_signal_node: Spatial
+@export var attached_signal: NodePath: set = set_attached_signal
+var attached_signal_node: Node3D
 func set_attached_signal(val: NodePath) -> void:
 	attached_signal = val
 	attached_signal_node = get_node(val)
@@ -33,13 +33,13 @@ func _ready() -> void:
 			#queue_free()
 			return
 
-	var _unused = attached_signal_node.connect("signal_changed", self, "update_active")
+	var _unused = attached_signal_node.connect("signal_changed", Callable(self, "update_active"))
 
 	set_to_rail()
 	update_active(attached_signal_node)
 
 
-func update_active(_signal_instance: Spatial) -> void:
+func update_active(_signal_instance: Node3D) -> void:
 	#print(name, ": Updating is_active!")
 	# handle combined magnets (yes, they exist, at Ks signals)
 	if attached_signal_node.signal_type == attached_signal_node.SignalType.COMBINED:

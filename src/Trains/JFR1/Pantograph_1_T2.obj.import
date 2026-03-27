@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh"
+uid="uid://b02elrdmjmisq"
+path="res://.godot/imported/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh"
 
 [deps]
 
-files=[ "res://.import/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh" ]
+files=["res://.godot/imported/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh"]
 
 source_file="res://Trains/JFR1/Pantograph_1_T2.obj"
-dest_files=[ "res://.import/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh", "res://.import/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh" ]
+dest_files=["res://.godot/imported/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh", "res://.godot/imported/Pantograph_1_T2.obj-ec7cf5e634a88fb985e8e549fce07956.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

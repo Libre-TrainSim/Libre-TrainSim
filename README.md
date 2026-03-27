@@ -22,7 +22,7 @@ Nothing is perfect. If you found a bug, please feel encouraged to create a [bug 
 
 ## Installation (for contributers)
 
-Fork and clone the repository. Install the latest version of [Godot](https://godotengine.org/download). Start Godot and import the cloned folder.
+Fork and clone the repository. Install [Godot 4.4](https://godotengine.org/download/archive/4.4.1-stable/). Start Godot and import the cloned folder.
 
 ## Links
 

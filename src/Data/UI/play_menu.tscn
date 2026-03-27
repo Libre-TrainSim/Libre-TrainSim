@@ -1,350 +1,272 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://bd8vxksalg0ww"]
 
-[ext_resource path="res://Data/UI/styles/complete_menu.tres" type="Theme" id=1]
-[ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Data/UI/styles/button_left_focus.tres" type="StyleBox" id=3]
-[ext_resource path="res://Data/UI/styles/button_left_disabled.tres" type="StyleBox" id=4]
-[ext_resource path="res://Data/UI/styles/button_left_pressed.tres" type="StyleBox" id=5]
-[ext_resource path="res://Data/UI/styles/button_left_hover.tres" type="StyleBox" id=6]
-[ext_resource path="res://Data/UI/styles/button_left_normal.tres" type="StyleBox" id=7]
-[ext_resource path="res://Data/UI/styles/panel_section.tres" type="StyleBox" id=8]
-[ext_resource path="res://Data/UI/translated_rich_rext_label.gd" type="Script" id=9]
-[ext_resource path="res://Data/UI/play_menu.gd" type="Script" id=10]
+[ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="2"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_focus.tres" id="3"]
+[ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="3_1r63x"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_disabled.tres" id="4"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_pressed.tres" id="5"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_hover.tres" id="6"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_normal.tres" id="7"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/panel_section.tres" id="8"]
+[ext_resource type="Script" uid="uid://btpp1t4na6o3r" path="res://Data/UI/play_menu.gd" id="10"]
 
 [node name="PlayMenu" type="Panel"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 1 )
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme = ExtResource("1")
+script = ExtResource("10")
 
 [node name="V" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 20.0
-margin_right = -20.0
-margin_bottom = -20.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 
 [node name="Breadcrumb" type="Label" parent="V"]
-margin_right = 984.0
-margin_bottom = 30.0
-custom_fonts/font = ExtResource( 2 )
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_1r63x")
+theme_override_font_sizes/font_size = 20
 text = "Hainfurt > Standart - Scenario > S1: Hainfurt - Buchenhain > 12:30:00"
 clip_text = true
 
 [node name="Tracks" type="VBoxContainer" parent="V"]
-margin_top = 34.0
-margin_right = 984.0
-margin_bottom = 560.0
+layout_mode = 2
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="H" type="HBoxContainer" parent="V/Tracks"]
-margin_right = 984.0
-margin_bottom = 473.0
+layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ItemList" type="ItemList" parent="V/Tracks/H"]
-margin_right = 984.0
-margin_bottom = 473.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-items = [ "Hainfurt", null, false, "Nuremberg", null, false ]
+item_count = 2
+item_0/text = "Hainfurt"
+item_1/text = "Nuremberg"
 
 [node name="Information" type="Panel" parent="V/Tracks/H"]
 visible = false
-margin_left = 460.0
-margin_right = 760.0
-margin_bottom = 473.0
-rect_min_size = Vector2( 300, 0 )
-custom_styles/panel = ExtResource( 8 )
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("8")
 
 [node name="V" type="VBoxContainer" parent="V/Tracks/H/Information"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 
 [node name="Image" type="TextureRect" parent="V/Tracks/H/Information/V"]
-margin_right = 280.0
-margin_bottom = 158.0
-rect_min_size = Vector2( 280, 158 )
-expand = true
+custom_minimum_size = Vector2(280, 158)
+layout_mode = 2
+expand_mode = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="V/Tracks/H/Information/V"]
-margin_top = 162.0
-margin_right = 280.0
-margin_bottom = 453.0
+layout_mode = 2
 size_flags_vertical = 3
-custom_fonts/normal_font = ExtResource( 2 )
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme_override_fonts/normal_font = ExtResource("2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="V/Tracks"]
-margin_top = 477.0
-margin_right = 984.0
-margin_bottom = 526.0
+layout_mode = 2
 
 [node name="Back" type="Button" parent="V/Tracks/HBoxContainer"]
-margin_right = 490.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
-custom_styles/hover = ExtResource( 6 )
-custom_styles/pressed = ExtResource( 5 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 4 )
-custom_styles/normal = ExtResource( 7 )
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
+theme_override_styles/hover = ExtResource("6")
+theme_override_styles/pressed = ExtResource("5")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Tracks/HBoxContainer"]
-margin_left = 494.0
-margin_right = 984.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SELECT"
 
 [node name="Scenarios" type="VBoxContainer" parent="V"]
 visible = false
-margin_top = 34.0
-margin_right = 760.0
-margin_bottom = 295.0
+layout_mode = 2
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ItemList" type="ItemList" parent="V/Scenarios"]
-margin_right = 760.0
-margin_bottom = 208.0
+layout_mode = 2
 size_flags_vertical = 3
-items = [ "Scenario 1", null, false, "Scenario 2", null, false ]
+item_count = 2
+item_0/text = "Scenario 1"
+item_1/text = "Scenario 2"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="V/Scenarios"]
-margin_top = 212.0
-margin_right = 760.0
-margin_bottom = 261.0
+layout_mode = 2
 
 [node name="Back" type="Button" parent="V/Scenarios/HBoxContainer"]
-margin_right = 378.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
-custom_styles/hover = ExtResource( 6 )
-custom_styles/pressed = ExtResource( 5 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 4 )
-custom_styles/normal = ExtResource( 7 )
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
+theme_override_styles/hover = ExtResource("6")
+theme_override_styles/pressed = ExtResource("5")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Scenarios/HBoxContainer"]
-margin_left = 382.0
-margin_right = 760.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SELECT"
 
 [node name="Routes" type="VBoxContainer" parent="V"]
 visible = false
-margin_top = 34.0
-margin_right = 760.0
-margin_bottom = 560.0
+layout_mode = 2
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ItemList" type="ItemList" parent="V/Routes"]
-margin_right = 760.0
-margin_bottom = 473.0
+layout_mode = 2
 size_flags_vertical = 3
-items = [ "Hainfurt", null, false, "Nuremberg", null, false ]
+item_count = 2
+item_0/text = "Hainfurt"
+item_1/text = "Nuremberg"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="V/Routes"]
-margin_top = 477.0
-margin_right = 760.0
-margin_bottom = 526.0
+layout_mode = 2
 
 [node name="Back" type="Button" parent="V/Routes/HBoxContainer"]
-margin_right = 378.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
-custom_styles/hover = ExtResource( 6 )
-custom_styles/pressed = ExtResource( 5 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 4 )
-custom_styles/normal = ExtResource( 7 )
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
+theme_override_styles/hover = ExtResource("6")
+theme_override_styles/pressed = ExtResource("5")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Routes/HBoxContainer"]
-margin_left = 382.0
-margin_right = 760.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SELECT"
 
 [node name="Times" type="VBoxContainer" parent="V"]
 visible = false
-margin_top = 34.0
-margin_right = 760.0
-margin_bottom = 560.0
+layout_mode = 2
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ItemList" type="ItemList" parent="V/Times"]
-margin_right = 760.0
-margin_bottom = 473.0
+layout_mode = 2
 size_flags_vertical = 3
-items = [ "Hainfurt", null, false, "Nuremberg", null, false ]
+item_count = 2
+item_0/text = "Hainfurt"
+item_1/text = "Nuremberg"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="V/Times"]
-margin_top = 477.0
-margin_right = 760.0
-margin_bottom = 526.0
+layout_mode = 2
 
 [node name="Back" type="Button" parent="V/Times/HBoxContainer"]
-margin_right = 378.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
-custom_styles/hover = ExtResource( 6 )
-custom_styles/pressed = ExtResource( 5 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 4 )
-custom_styles/normal = ExtResource( 7 )
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
+theme_override_styles/hover = ExtResource("6")
+theme_override_styles/pressed = ExtResource("5")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Times/HBoxContainer"]
-margin_left = 382.0
-margin_right = 760.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SELECT"
 
 [node name="Trains" type="VBoxContainer" parent="V"]
 visible = false
-margin_top = 34.0
-margin_right = 760.0
-margin_bottom = 560.0
+layout_mode = 2
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="H" type="HBoxContainer" parent="V/Trains"]
-margin_right = 760.0
-margin_bottom = 473.0
+layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ItemList" type="ItemList" parent="V/Trains/H"]
-margin_right = 456.0
-margin_bottom = 473.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-items = [ "Hainfurt", null, false, "Nuremberg", null, false ]
+item_count = 2
+item_0/text = "Hainfurt"
+item_1/text = "Nuremberg"
 
 [node name="V" type="VBoxContainer" parent="V/Trains/H"]
-margin_left = 460.0
-margin_right = 760.0
-margin_bottom = 473.0
+layout_mode = 2
 
 [node name="Information" type="Panel" parent="V/Trains/H/V"]
 visible = false
-margin_right = 300.0
-margin_bottom = 369.0
-rect_min_size = Vector2( 300, 0 )
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
 size_flags_vertical = 3
-custom_styles/panel = ExtResource( 8 )
+theme_override_styles/panel = ExtResource("8")
 
 [node name="V" type="VBoxContainer" parent="V/Trains/H/V/Information"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 
 [node name="Image" type="TextureRect" parent="V/Trains/H/V/Information/V"]
-margin_right = 280.0
-margin_bottom = 158.0
-rect_min_size = Vector2( 280, 158 )
-expand = true
+custom_minimum_size = Vector2(280, 158)
+layout_mode = 2
+expand_mode = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="V/Trains/H/V/Information/V"]
-margin_top = 162.0
-margin_right = 280.0
-margin_bottom = 349.0
+layout_mode = 2
 size_flags_vertical = 3
-custom_fonts/normal_font = ExtResource( 2 )
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme_override_fonts/normal_font = ExtResource("2")
 
 [node name="EasyMode" type="Panel" parent="V/Trains/H/V"]
 visible = false
-margin_top = 373.0
-margin_right = 300.0
-margin_bottom = 473.0
-rect_min_size = Vector2( 0, 100 )
-custom_styles/panel = ExtResource( 8 )
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("8")
 
 [node name="CheckButton" type="CheckButton" parent="V/Trains/H/V/EasyMode"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -104.5
-margin_top = -16.0
-margin_right = 104.5
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 2 )
-pressed = true
+offset_left = -104.5
+offset_top = -16.0
+offset_right = 104.5
+offset_bottom = 16.0
+theme_override_fonts/font = ExtResource("2")
 text = "MENU_EASY_MODE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="V/Trains"]
-margin_top = 477.0
-margin_right = 760.0
-margin_bottom = 526.0
+layout_mode = 2
 
 [node name="Back" type="Button" parent="V/Trains/HBoxContainer"]
-margin_right = 378.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
-custom_styles/hover = ExtResource( 6 )
-custom_styles/pressed = ExtResource( 5 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 4 )
-custom_styles/normal = ExtResource( 7 )
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
+theme_override_styles/hover = ExtResource("6")
+theme_override_styles/pressed = ExtResource("5")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Play" type="Button" parent="V/Trains/HBoxContainer"]
-margin_left = 382.0
-margin_right = 760.0
-margin_bottom = 49.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "PLAY"
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="item_activated" from="V/Tracks/H/ItemList" to="." method="_on_Tracks_item_activated"]
 [connection signal="item_selected" from="V/Tracks/H/ItemList" to="." method="_on_Tracklist_item_selected"]
 [connection signal="pressed" from="V/Tracks/HBoxContainer/Back" to="." method="_on_Tracks_Back_pressed"]

@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://c4o3unawh74dt"]
 
-[ext_resource path="res://Data/Scripts/RailType.gd" type="Script" id=1]
-[ext_resource path="res://Resources/RailTypes/Invisible.gd" type="Script" id=7]
+[ext_resource type="Script" uid="uid://coywt7p1igk7t" path="res://Data/Scripts/RailType.gd" id="1"]
+[ext_resource type="Script" uid="uid://cym1bmt7q4nq2" path="res://Resources/RailTypes/Invisible.gd" id="7"]
 
-[sub_resource type="CubeMesh" id=1]
-size = Vector3( 0.5, 0.5, 1 )
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(0.5, 0.5, 1)
 
-[node name="RailType" type="Spatial"]
-script = ExtResource( 1 )
+[node name="RailType" type="Node3D"]
+script = ExtResource("1")
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
-mesh = SubResource( 1 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("1")
 
 [node name="Invisible" type="Node" parent="."]
-script = ExtResource( 7 )
+script = ExtResource("7")

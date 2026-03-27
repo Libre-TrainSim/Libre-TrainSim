@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://fxoi3whyi2h3"]
 
-[ext_resource path="res://Data/Postprocess/highlight_shader.gdshader" type="Shader" id=1]
-[ext_resource path="res://Data/Postprocess/ShaderPP.gd" type="Script" id=2]
+[ext_resource type="Shader" uid="uid://dibrtvl6gisii" path="res://Data/Postprocess/highlight_shader.gdshader" id="1"]
+[ext_resource type="Script" uid="uid://dgv6owwnilte8" path="res://Data/Postprocess/ShaderPP.gd" id="2"]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 1 )
-shader_param/highlight_color = Color( 1, 0.913725, 0, 0.231373 )
+[sub_resource type="ShaderMaterial" id="1"]
+shader = ExtResource("1")
+shader_parameter/highlight_color = Color(1, 0.913725, 0, 0.231373)
 
 [node name="HighlightPP" type="Node"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
-[node name="HighlightShader" type="ViewportContainer" parent="."]
-material = SubResource( 1 )
+[node name="HighlightShader" type="SubViewportContainer" parent="."]
+material = SubResource("1")
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -20,14 +20,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="HighlightShader"]
-size = Vector2( 1024, 600 )
+[node name="SubViewport" type="SubViewport" parent="HighlightShader"]
+size = Vector2(1024, 600)
 transparent_bg = true
 handle_input_locally = false
 keep_3d_linear = true
 debug_draw = 1
 render_target_update_mode = 3
 
-[node name="Camera" type="Camera" parent="HighlightShader/Viewport"]
+[node name="Camera3D" type="Camera3D" parent="HighlightShader/SubViewport"]
 cull_mask = 2
 far = 1000.0

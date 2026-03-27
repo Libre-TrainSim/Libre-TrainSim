@@ -1,13 +1,13 @@
-tool
+@tool
 extends VBoxContainer
 
 var base: Control
 var dir_select_dialog: FileDialog
 
-var IMPORTED_RESOURCE_TYPES := ["StreamTexture", "Mesh"]
+var IMPORTED_RESOURCE_TYPES := ["CompressedTexture2D", "Mesh"]
 
 func _on_new_mod_pressed() -> void:
-	var popup = preload("new_mod_popup.tscn").instance()
+	var popup = preload("new_mod_popup.tscn").instantiate()
 	popup.base_control = base
 	base.add_child(popup)
 	popup.popup_centered()
@@ -25,10 +25,10 @@ func _on_export_mod_pressed() -> void:
 	dir_select_dialog = FileDialog.new()
 	dir_select_dialog.resizable = true
 	dir_select_dialog.window_title = "Select Mod to Export"
-	dir_select_dialog.mode = FileDialog.MODE_OPEN_DIR
+	dir_select_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
 	dir_select_dialog.access = FileDialog.ACCESS_RESOURCES
 	dir_select_dialog.current_dir = "res://Mods"
-	dir_select_dialog.connect("dir_selected", self, "_on_export_dir_selected")
+	dir_select_dialog.connect("dir_selected", Callable(self, "_on_export_dir_selected"))
 	base.add_child(dir_select_dialog)
 	dir_select_dialog.popup_centered_ratio()
 
@@ -37,10 +37,10 @@ func _on_export_dir_selected(dir: String) -> void:
 	dir_select_dialog.queue_free()
 
 	var mod_name = dir.get_file()
-	var mod_path = "user://addons/".plus_file(mod_name)
+	#skynote original version redundant?
+	var mod_path = "user://addons/" + "/" + mod_name
 
-	var directory = Directory.new()
-	directory.open("user://")
+	var directory = DirAccess.open("user://")
 	directory.make_dir_recursive(mod_path)
 	directory.change_dir(mod_path)
 
@@ -51,8 +51,8 @@ func _on_export_dir_selected(dir: String) -> void:
 		return
 
 	var import_files_to_pack = []
-
-	var files = get_files_in_directory("res://Mods/".plus_file(mod_name))
+#skynote original plusfile() redundant?
+	var files = get_files_in_directory("res://Mods/" + "/" + mod_name)
 	for file in files:
 		if file.ends_with(".import"):
 			import_files_to_pack.append_array(_get_imported_paths(file))
@@ -69,8 +69,8 @@ func _on_export_dir_selected(dir: String) -> void:
 	err = packer.flush(true)
 	if err != OK:
 		Logger.err("Could not flush pck! (Reason: %s)" % err, self)
-
-	err = directory.copy(dir.plus_file("content.tres"), mod_path.plus_file("content.tres"))
+#skynote original plusfile() redundant?
+	err = directory.copy(dir + "/" + "content.tres", mod_path + "/" + "content.tres")
 	if err != OK:
 		Logger.err("Unable to copy content.tres to mod folder! (Reason: %s)" % err, self)
 
@@ -94,14 +94,13 @@ func _get_imported_paths(file):
 
 func get_files_in_directory(path: String) -> Array:
 	var files = []
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin(true, true)
+	var dir = DirAccess.open(path)
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name = dir.get_next()
 	while file_name != "":
 		if dir.current_is_dir():
-			files.append_array(get_files_in_directory(path.plus_file(file_name)))
+			files.append_array(get_files_in_directory(path + "/" + file_name))
 		else:
-			files.append(path.plus_file(file_name))
+			files.append(path + "/" + file_name)
 		file_name = dir.get_next()
 	return files

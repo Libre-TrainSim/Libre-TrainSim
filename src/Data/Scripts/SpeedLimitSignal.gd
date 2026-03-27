@@ -2,13 +2,13 @@ class_name SpeedLimit
 extends RailLogic
 
 
-export (float) var speed: float setget set_speed
+@export var speed: float: set = set_velocity
 
 
-func set_speed(val: float) -> void:
+func set_velocity(val: float) -> void:
 	speed = val
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	$Label3D.text = str(int(val/10))
 
 

@@ -4,13 +4,13 @@ signal updated
 
 var current_material_index := 0
 var current_mesh: ArrayMesh = null
-var mesh_instance: MeshInstance = null # for buildings
+var mesh_instance: MeshInstance3D = null # for buildings
 var material_count := 0
 
 var requested_content_selector := false
 
-onready var editor := find_parent("Editor")
-onready var content_selector := editor.get_node("EditorHUD/Content_Selector")
+@onready var editor := find_parent("Editor")
+@onready var content_selector := editor.get_node("EditorHUD/Content_Selector")
 
 var possible_materials := {}
 
@@ -25,7 +25,7 @@ func _ready():
 		possible_materials[material.get_file().get_basename()] = material
 
 
-func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
+func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance3D = null):
 	#if current_mesh == new_mesh:
 	#	Logger.warn("BuildingSettings is set with the already set mesh. There is a logic issue anywhere. We are probably hiding a bug here.", self)
 	#	return
@@ -41,7 +41,7 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 	material_count = new_mesh.get_surface_count()
 	for i in range(material_count):
 		var new_child = get_node("Material-1").duplicate()
-		new_child.name = "Material" + String(i)
+		new_child.name = "Material" + str(i)
 
 		var line_edit := new_child.get_node("LineEdit") as LineEdit
 
@@ -62,13 +62,13 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 				line_edit.text = possible_materials[material_name]
 				current_material = load(possible_materials[material_name])
 				if mesh_instance:
-					mesh_instance.set_surface_material(i, current_material)
+					mesh_instance.set_surface_override_material(i, current_material)
 				else:
 					current_mesh.surface_set_material(i, current_material)
 			else:
 				line_edit.text = ""
 
-		new_child.get_node("Label").text += String(i)
+		new_child.get_node("Label").text += str(i)
 		add_child(new_child)
 		new_child.show()
 
@@ -78,7 +78,7 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 	var button := Button.new()
 	button.name = "Button"
 	button.text = "Update"
-	button.connect("pressed", self, "set_current_config_to_mesh")
+	button.connect("pressed", Callable(self, "set_current_config_to_mesh"))
 	add_child(button)
 
 	show()
@@ -100,7 +100,7 @@ func set_current_config_to_mesh():
 
 		if ResourceLoader.exists(material_path):
 			if mesh_instance:
-				mesh_instance.set_surface_material(counter, load(material_path))
+				mesh_instance.set_surface_override_material(counter, load(material_path))
 			else:
 				current_mesh.surface_set_material(counter, load(material_path))
 

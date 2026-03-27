@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh"
+uid="uid://bvpi5t7qmny7a"
+path="res://.godot/imported/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh"
 
 [deps]
 
-files=[ "res://.import/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh" ]
+files=["res://.godot/imported/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh"]
 
 source_file="res://Resources/Objects/TrainStationBuilding3.obj"
-dest_files=[ "res://.import/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh", "res://.import/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh" ]
+dest_files=["res://.godot/imported/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh", "res://.godot/imported/TrainStationBuilding3.obj-060c6ac87f1d3e1f253f3ebfb19ee864.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

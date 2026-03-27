@@ -9,22 +9,20 @@ var _saved_ingame_pause: bool = false
 var _saved_mouse_mode: int = 0
 var player: LTSPlayer
 
-onready var settings: Node = jSettings.get_node("JSettings")
+@onready var settings: Node = jSettings.get_node("JSettings")
 
 
 func _ready() -> void:
-	$StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus")
-	settings.connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
+	$StationJumper.connect("hidden", Callable($CenterContainer/HBox/JumpToStation, "grab_focus"))
+	settings.connect("hidden", Callable($CenterContainer/HBox/Settings, "grab_focus"))
 
-
-func show() -> void:
+func _on_draw() -> void:
 	if player.game_start_context == LTSPlayer.GameStartContext.ScenarioEditor:
 		$CenterContainer/HBox/BackToScenarioEditor.show()
 	elif player.game_start_context == LTSPlayer.GameStartContext.TrackEditor:
 		$CenterContainer/HBox/BackToTrackEditor.show()
 
 	$CenterContainer/HBox/Back.grab_focus()
-	.show()
 
 
 func _unhandled_input(_event) -> void:
@@ -96,9 +94,9 @@ func _on_Settings_pressed() -> void:
 
 
 func _on_BackToTrackEditor_pressed() -> void:
-	var screenshot = Image.new().load(Root.current_track.get_base_dir().plus_file("screenshot.png"))
+	var screenshot = Image.new().load(Root.current_track.get_base_dir() + "/" + "screenshot.png")
 	LoadingScreen.load_editor(Root.current_track.get_basename(), screenshot)
 
 
 func _on_BackToScenarioEditor_pressed() -> void:
-	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+	get_tree().change_scene_to_packed(load("res://Editor/Modules/scenario_editor.tscn"))

@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorExportPlugin
 
 
@@ -6,7 +6,7 @@ var version_label := ""
 var last_generated_label := ""
 
 
-func _export_begin(_features: PoolStringArray, _is_debug: bool, _path: String, _flags: int) -> void:
+func _export_begin(_features: PackedStringArray, _is_debug: bool, _path: String, _flags: int) -> void:
 	build()
 
 
@@ -31,7 +31,7 @@ func build() -> void:
 	if ProjectSettings.has_setting("application/version/label") and last_generated_label != ProjectSettings["application/version/label"]:
 		version_label = ProjectSettings["application/version/label"]
 	var output := []
-	var exit := OS.execute("git", ["describe", "--all"], true, output, true)
+	var exit := OS.execute("git", ["describe", "--all"], output, true)
 	if exit != 0:
 		printt(exit, output)
 		push_warning("Project used without SCM. No version info available.")
@@ -42,7 +42,7 @@ func build() -> void:
 
 	var custom_build := "" if ("master" in output[0] or "main" in output[0] or "release" in output[0]) else ".custom.%s"
 
-	exit = OS.execute("git", ["status", "-s"], true, output, true)
+	exit = OS.execute("git", ["status", "-s"], output, true)
 	if exit != 0:
 		printt(exit, output)
 		push_warning("Failed to determine state.")
@@ -51,30 +51,29 @@ func build() -> void:
 		ProjectSettings.save()
 		return
 
-	var dirty := " DIRTY BRANCH" if !output[0].empty() else ""
+	var dirty := " DIRTY BRANCH" if !output[0].is_empty() else ""
 	if dirty:
 		print("Modified files:")
 		print(output[0])
-		exit = OS.execute("git", ["diff"], true, output, true)
+		exit = OS.execute("git", ["diff"], output, true)
 		if exit != 0:
 			printt(exit, output)
 			push_warning("Failed to determine diff.")
 		else:
 			if ProjectSettings.has_setting("application/version/diff_ignore") and \
-					!ProjectSettings["application/version/diff_ignore"].empty():
-				var ignores := File.new()
-				var err := ignores.open(ProjectSettings.globalize_path( \
+					!ProjectSettings["application/version/diff_ignore"].is_empty():
+				var err := FileAccess.open(ProjectSettings.globalize_path( \
 						ProjectSettings["application/version/diff_ignore"]), \
-						File.READ)
+						1)
 				var regex := RegEx.new()
-				regex.compile(ignores.get_as_text())
+				regex.compile(err.get_as_text())
 				var res := regex.search(output[0])
-				if err == OK and res and res.get_start() == 0 and res.get_end() == len(output[0]) - 1:
+				if err != null and res and res.get_start() == 0 and res.get_end() == len(output[0]) - 1:
 					dirty = ""
 					output[0] = "Ignored diff was found. Behaving as if being clean build."
 			print(output[0])
 
-	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], true, output, true)
+	exit = OS.execute("git", ["describe", "--tags", "--long" ,"--always", "--dirty=", "--broken=?"], output, true)
 	if exit != 0:
 		printt(exit, output)
 		push_warning("Failed to determine version.")
@@ -83,17 +82,17 @@ func build() -> void:
 		ProjectSettings.save()
 		return
 
-	var parts: PoolStringArray = output[0].split("-", false)
+	var parts: PackedStringArray = output[0].split("-", false)
 	var broken := " BROKEN" if "?" in parts[-1] else ""
 	var commit: String = parts[-1].left(len(parts[-1]) - (2 if broken else 1))
 
-	ProjectSettings["application/version/dirty"] = !dirty.empty()
-	ProjectSettings["application/version/broken"] = !broken.empty()
-	ProjectSettings["application/version/custom"] = !custom_build.empty()
+	ProjectSettings["application/version/dirty"] = !dirty.is_empty()
+	ProjectSettings["application/version/broken"] = !broken.is_empty()
+	ProjectSettings["application/version/custom"] = !custom_build.is_empty()
 	ProjectSettings["application/version/commit"] = commit
 
 	if len(parts) < 3:
-		if !custom_build.empty():
+		if !custom_build.is_empty():
 			custom_build = custom_build % commit
 		ProjectSettings["application/version/label"] = "v %s%s%s%s" % [commit, custom_build, broken, dirty]
 		last_generated_label = ProjectSettings["application/version/label"]
@@ -102,7 +101,7 @@ func build() -> void:
 
 	commit = commit.right(1)
 	ProjectSettings["application/version/commit"] = commit
-	if !custom_build.empty():
+	if !custom_build.is_empty():
 		custom_build = custom_build % commit
 
 	if (parts[1] == "0"):
@@ -113,4 +112,3 @@ func build() -> void:
 	ProjectSettings.set_setting("application/version/label", "%s.%s%s%s%s" % [parts[0], parts[1], custom_build, broken, dirty])
 	last_generated_label = ProjectSettings["application/version/label"]
 	ProjectSettings.save()
-

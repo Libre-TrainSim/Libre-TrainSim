@@ -1,265 +1,159 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://ci5wkndgdp8gf"]
 
-[ext_resource path="res://Editor/Modules/RailLogic.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://chw3awwna5gan" path="res://Editor/Modules/RailLogic.gd" id="1"]
 
 [node name="RailLogic" type="VBoxContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="GeneralSettings" type="GridContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 52.0
+layout_mode = 2
 columns = 2
 
 [node name="Label" type="Label" parent="GeneralSettings"]
-margin_top = 5.0
-margin_right = 122.0
-margin_bottom = 19.0
+layout_mode = 2
 text = "Distance along rail:"
 
 [node name="Distance" type="SpinBox" parent="GeneralSettings"]
-margin_left = 126.0
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1000.0
 step = 0.01
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label2" type="Label" parent="GeneralSettings"]
-margin_top = 33.0
-margin_right = 122.0
-margin_bottom = 47.0
+layout_mode = 2
 text = "Forward:"
 
 [node name="Forwad" type="CheckBox" parent="GeneralSettings"]
-margin_left = 126.0
-margin_top = 28.0
-margin_right = 1024.0
-margin_bottom = 52.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_top = 56.0
-margin_right = 1024.0
-margin_bottom = 60.0
+layout_mode = 2
 
 [node name="SignalSettings" type="GridContainer" parent="."]
-margin_top = 64.0
-margin_right = 1024.0
-margin_bottom = 88.0
+layout_mode = 2
 columns = 2
 
 [node name="Label2" type="Label" parent="SignalSettings"]
-margin_top = 5.0
-margin_right = 106.0
-margin_bottom = 19.0
+layout_mode = 2
 text = "Visible Instance:"
 
 [node name="VisibleInstance" type="HBoxContainer" parent="SignalSettings"]
-margin_left = 110.0
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="LineEdit" type="LineEdit" parent="SignalSettings/VisibleInstance"]
-margin_right = 872.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 editable = false
 
 [node name="PickVisibleInstance" type="Button" parent="SignalSettings/VisibleInstance"]
-margin_left = 876.0
-margin_right = 914.0
-margin_bottom = 24.0
+layout_mode = 2
 text = "Pick"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="StationSettings" type="GridContainer" parent="."]
-margin_top = 92.0
-margin_right = 1024.0
-margin_bottom = 308.0
+layout_mode = 2
 columns = 2
 
 [node name="Label" type="Label" parent="StationSettings"]
-margin_top = 5.0
-margin_right = 160.0
-margin_bottom = 19.0
+layout_mode = 2
 text = "Node Name:"
 
 [node name="Name" type="LineEdit" parent="StationSettings"]
-margin_left = 164.0
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="StationSettings"]
-margin_top = 33.0
-margin_right = 160.0
-margin_bottom = 47.0
+layout_mode = 2
 text = "Length of station"
 
 [node name="Length" type="SpinBox" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 28.0
-margin_right = 1024.0
-margin_bottom = 52.0
+layout_mode = 2
 max_value = 1000.0
 step = 0.1
 value = 100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label7" type="Label" parent="StationSettings"]
-margin_top = 59.0
-margin_right = 160.0
-margin_bottom = 73.0
+layout_mode = 2
 text = "Platform Side:"
 
 [node name="PlatformSide" type="OptionButton" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 56.0
-margin_right = 1024.0
-margin_bottom = 76.0
-text = "No Side"
-items = [ "No Side", null, false, 0, null, "Left", null, false, 1, null, "Right", null, false, 2, null, "Both Sides", null, false, 3, null ]
-selected = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+layout_mode = 2
 
 [node name="Label8" type="Label" parent="StationSettings"]
-margin_top = 85.0
-margin_right = 160.0
-margin_bottom = 99.0
+layout_mode = 2
 text = "Assigned Signal:"
 
 [node name="AssignedSignal" type="LineEdit" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 80.0
-margin_right = 1024.0
-margin_bottom = 104.0
+layout_mode = 2
 
 [node name="Label3" type="Label" parent="StationSettings"]
-margin_top = 113.0
-margin_right = 160.0
-margin_bottom = 127.0
+layout_mode = 2
 text = "Enable Person System:"
 
 [node name="EnablePersonSystem" type="CheckBox" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 108.0
-margin_right = 1024.0
-margin_bottom = 132.0
+layout_mode = 2
 
 [node name="Label4" type="Label" parent="StationSettings"]
-margin_top = 141.0
-margin_right = 160.0
-margin_bottom = 155.0
+layout_mode = 2
 text = "Platform Height:"
 
 [node name="PlatformHeight" type="SpinBox" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 136.0
-margin_right = 1024.0
-margin_bottom = 160.0
+layout_mode = 2
 step = 0.01
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label5" type="Label" parent="StationSettings"]
-margin_top = 169.0
-margin_right = 160.0
-margin_bottom = 183.0
+layout_mode = 2
 text = "Platform Start (Left/Right)"
 
 [node name="PlatformStart" type="SpinBox" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 164.0
-margin_right = 1024.0
-margin_bottom = 188.0
+layout_mode = 2
 step = 0.01
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label6" type="Label" parent="StationSettings"]
-margin_top = 197.0
-margin_right = 160.0
-margin_bottom = 211.0
+layout_mode = 2
 text = "Platform End (Left/Right)"
 
 [node name="PlatformEnd" type="SpinBox" parent="StationSettings"]
-margin_left = 164.0
-margin_top = 192.0
-margin_right = 1024.0
-margin_bottom = 216.0
+layout_mode = 2
 step = 0.01
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="SpeedLimitSettings" type="GridContainer" parent="."]
-margin_top = 312.0
-margin_right = 1024.0
-margin_bottom = 336.0
+layout_mode = 2
 columns = 2
 
 [node name="Label" type="Label" parent="SpeedLimitSettings"]
-margin_top = 5.0
-margin_right = 84.0
-margin_bottom = 19.0
+layout_mode = 2
 text = "Speed Limit: "
 
 [node name="SpeedLimit" type="SpinBox" parent="SpeedLimitSettings"]
-margin_left = 88.0
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -1.0
 max_value = 1000.0
 value = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="WarnSpeedLimitSettings" type="GridContainer" parent="."]
-margin_top = 340.0
-margin_right = 1024.0
-margin_bottom = 364.0
+layout_mode = 2
 columns = 2
 
 [node name="Label" type="Label" parent="WarnSpeedLimitSettings"]
-margin_top = 5.0
-margin_right = 84.0
-margin_bottom = 19.0
+layout_mode = 2
 text = "Speed Limit: "
 
 [node name="SpeedLimit" type="SpinBox" parent="WarnSpeedLimitSettings"]
-margin_left = 88.0
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -1.0
 max_value = 1000.0
 value = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="value_changed" from="GeneralSettings/Distance" to="." method="_on_Distance_value_changed"]
 [connection signal="pressed" from="GeneralSettings/Forwad" to="." method="_on_Forwad_pressed"]
 [connection signal="pressed" from="SignalSettings/VisibleInstance/PickVisibleInstance" to="." method="_on_PickVisibleInstance_pressed"]
-[connection signal="text_entered" from="StationSettings/Name" to="." method="_on_StationName_text_entered"]
+[connection signal="text_submitted" from="StationSettings/Name" to="." method="_on_StationName_text_entered"]
 [connection signal="value_changed" from="StationSettings/Length" to="." method="_on_Length_value_changed"]
 [connection signal="item_selected" from="StationSettings/PlatformSide" to="." method="_on_PlatformSide_item_selected"]
 [connection signal="text_changed" from="StationSettings/AssignedSignal" to="." method="_on_ConnectedSignal_text_changed"]

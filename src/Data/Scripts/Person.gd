@@ -1,12 +1,12 @@
 class_name Person
-extends Spatial
+extends Node3D
 
-export (float) var walking_speed: float = 1.5
+@export var walking_speed: float = 1.5
 
-var _attached_station: Spatial = null
-var _attached_wagon: Spatial = null
-var _attached_seat: Spatial = null
-var _assigned_door: Spatial = null
+var _attached_station: Node3D = null
+var _attached_wagon: Node3D = null
+var _attached_seat: Node3D = null
+var _assigned_door: Node3D = null
 
 enum Destination {
 	NONE, # Initial state
@@ -32,7 +32,7 @@ var _action: int = Action.IDLE
 var _debug_color := Color(randf(), randf(), randf(), 0.75)
 
 func _ready() -> void:
-	walking_speed = rand_range(walking_speed, walking_speed+0.3)
+	walking_speed = randf_range(walking_speed, walking_speed+0.3)
 	_destination = Destination.STATION_IDLE
 
 
@@ -49,8 +49,8 @@ func _on_world_origin_shifted(delta: Vector3) -> void:
 
 
 func _is_destination_reached() -> bool:
-	if not _destination_path.empty():
-		var current_pos := translation if _is_destination_train_bound() else global_transform.origin
+	if not _destination_path.is_empty():
+		var current_pos := position if _is_destination_train_bound() else global_transform.origin
 		return current_pos.distance_to(_destination_path[0]) < _destination_tolerance
 	return false
 
@@ -62,7 +62,7 @@ func _handle_walk(delta: float) -> void:
 	# Handle next _destination point if required. if we change _destination type, exit.
 	match _destination:
 		Destination.NONE:
-			assert(false, "Some person has no _destination. Spawn failure?")
+			assert(false) #,"Some person has no _destination. Spawn failure?")
 			return
 		Destination.DOOR_OUTSIDE:
 			# We supposed to board the train, but it's gone.
@@ -70,7 +70,7 @@ func _handle_walk(delta: float) -> void:
 				_destination = Destination.STATION_IDLE
 				return
 			# Person is ready to board the train
-			if _destination_path.empty() and is_assigned_door_open():
+			if _destination_path.is_empty() and is_assigned_door_open():
 				# If wagon is full, restart boarding
 				if not try_board_assigned_wagon():
 					if try_board_train():
@@ -81,18 +81,18 @@ func _handle_walk(delta: float) -> void:
 				navigate_to_assigned_seat()
 				return
 			# We reached the door
-			if _destination_path.empty():
+			if _destination_path.is_empty():
 				# If opened we can transit, overwise idle
 				if _attached_wagon.player.whole_train_in_station and is_assigned_door_open():
 					if try_leave_current_wagon():
 						return
 		Destination.STATION:
 			# Proceed to next point
-			if _destination_path.empty():
+			if _destination_path.is_empty():
 				_destination = Destination.STATION_IDLE
 				return
 		Destination.SEAT:
-			if _destination_path.empty():
+			if _destination_path.is_empty():
 				_destination = Destination.SEAT_IDLE
 		Destination.SEAT_IDLE:
 			rotation.y = _attached_seat.rotation.y + (0.5 * PI)
@@ -102,14 +102,14 @@ func _handle_walk(delta: float) -> void:
 				# Something gone really bad
 				assert(false)
 				return
-			if _destination_path.empty():
+			if _destination_path.is_empty():
 				_destination_path.append(_attached_station.get_random_transform_at_platform().origin)
 
 	if _is_destination_reached():
 		_destination_path.pop_front()
 		return
 
-	if _destination_path.empty():
+	if _destination_path.is_empty():
 		match _destination:
 			Destination.SEAT_IDLE:
 				_action = Action.SIT
@@ -133,8 +133,8 @@ func _handle_walk(delta: float) -> void:
 	# Move Person if required
 	var vector_delta := Vector3.ZERO
 	if _is_destination_train_bound():
-		translation = translation.move_toward(_destination_path[0], delta*walking_speed)
-		vector_delta = _destination_path[0] - translation
+		position = position.move_toward(_destination_path[0], delta*walking_speed)
+		vector_delta = _destination_path[0] - position
 	else:
 		global_transform.origin = global_transform.origin \
 				.move_toward(_destination_path[0], delta*walking_speed)
@@ -165,8 +165,8 @@ func _update_action_animation() -> void:
 
 
 func _update_visual_animation(animation: String) -> void:
-	if $VisualInstance/AnimationPlayer.current_animation != animation:
-		$VisualInstance/AnimationPlayer.play(animation)
+	if $VisualInstance3D/AnimationPlayer.current_animation != animation:
+		$VisualInstance3D/AnimationPlayer.play(animation)
 
 
 func is_assigned_door_open() -> bool:
@@ -182,8 +182,8 @@ func is_assigned_door_open() -> bool:
 # Called by train/wagon when arrived to station
 func arriving_to_station(current_station: Node) -> void:
 	var door_info: Array = _attached_wagon.get_route_from_seat_to_door(_attached_seat)
-	if door_info.empty():
-		assert(false, "Unable to unboard at the station. Side mismatch?")
+	if door_info.is_empty():
+		assert(false) #,"Unable to unboard at the station. Side mismatch?")
 		return
 
 	assert(len(door_info) == 2)
@@ -195,7 +195,7 @@ func arriving_to_station(current_station: Node) -> void:
 
 func try_board_train() -> bool:
 	var door_info: Array = _attached_station.current_train.get_route_to_free_wagon(global_transform.origin)
-	if door_info.empty():
+	if door_info.is_empty():
 		# train do not have free wagons, thats not an issue,
 		# as some persons might still unboarding the train so no assert here
 		return false
@@ -211,7 +211,7 @@ func try_board_train() -> bool:
 
 func try_board_assigned_wagon() -> bool:
 	var seat_info = _attached_wagon.register_person(self, _assigned_door)
-	if seat_info.empty():
+	if seat_info.is_empty():
 		return false
 	assert(len(seat_info) == 2)
 	_attached_station.deregister_person(self)
@@ -246,17 +246,17 @@ func navigate_to_assigned_seat() -> void:
 	# We need to get back to seat
 	var route: Array = _attached_wagon.get_path_from_to(_assigned_door, _attached_seat)
 	# We do not need to go outside, so remove first point, but use it for closest waypoint check
-	var distance := translation.distance_to(route.front())
+	var distance := position.distance_to(route.front())
 	route.pop_front()
 	# we need to find closest route point, and omit all prior to it
-	while(translation.distance_to(route.front()) < distance and route.size() > 1):
-		distance = translation.distance_to(route.front())
+	while(position.distance_to(route.front()) < distance and route.size() > 1):
+		distance = position.distance_to(route.front())
 		route.pop_front()
 	_destination_path = route
 	_destination = Destination.SEAT
 
 
-func spawn_at_station(station: Spatial) -> void:
+func spawn_at_station(station: Node3D) -> void:
 	_attached_station = station
 	var route_info: Array = _attached_station.register_person(self)
 	assert(len(route_info) > 0)
@@ -281,10 +281,11 @@ func _is_destination_train_bound() -> bool:
 func _debug_draw_path() -> void:
 	if !ProjectSettings["game/debug/draw_paths"]:
 		return
-	var parent := get_parent_spatial()
+	var parent := get_parent_node_3d()
 	var last_position := global_transform.origin
 	for position in _destination_path:
-		var new_position := parent.to_global(position) \
+# Removed type hint from line below, no longer worked
+		var new_position = parent.to_global(position) \
 				if _is_destination_train_bound() \
 				else position
 		DebugDraw.draw_line_3d(last_position, new_position, _debug_color)

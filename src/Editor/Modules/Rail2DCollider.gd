@@ -7,7 +7,7 @@ var input_handling_node: Node
 func _ready():
 	var area_2d = Area2D.new()
 	add_child(area_2d)
-	area_2d.connect("input_event", self, "_on_RailCollider_input_event")
+	area_2d.connect("input_event", Callable(self, "_on_RailCollider_input_event"))
 
 	var line_points = points
 	for i in range(line_points.size() - 1):
@@ -17,12 +17,12 @@ func _ready():
 
 		var length = points[i].distance_to(points[i+1])
 		var rect = RectangleShape2D.new()
-		rect.extents = Vector2(length/2, width/2)
+		rect.size = Vector2(length/2, width/2)
 
 		shape.shape = rect
 		area_2d.add_child(shape)
 
 
 func _on_RailCollider_input_event(_viewport, event, _shape_idx):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.pressed:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		input_handling_node._item_selected(name, get_parent().name)

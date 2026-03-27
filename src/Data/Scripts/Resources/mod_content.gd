@@ -2,28 +2,28 @@ class_name ModContentDefinition
 extends Resource
 
 
-export (String) var unique_name: String = ""
-export (String) var display_name: String = ""
+@export var unique_name: String = ""
+@export var display_name: String = ""
 
-export (int) var version_major: int = 1
-export (int) var version_minor: int = 0
-export (int) var version_patch: int = 0
+@export var version_major: int = 1
+@export var version_minor: int = 0
+@export var version_patch: int = 0
 
 # example: { "unique_name": "example_mod", "version": ">=1.0.0" }
-export (Array, Dictionary) var depends_on: Array = []
+@export var depends_on: Array[Dictionary] = []
 
-export (Array, String, DIR) var environment_folders: Array = []
-export (Array, String, DIR) var material_folders: Array = []
-export (Array, String, DIR) var music_folders: Array = []
-export (Array, String, DIR) var object_folders: Array = []
-export (Array, String, DIR) var persons_folders: Array = []
-export (Array, String, DIR) var rail_type_folders: Array = []
-export (Array, String, DIR) var signal_type_folders: Array = []
-export (Array, String, DIR) var sound_folders: Array = []
-export (Array, String, DIR) var texture_folders: Array = []
+@export_dir var environment_folders: Array[String] = []
+@export_dir var material_folders: Array[String] = []
+@export_dir var music_folders: Array[String] = []
+@export_dir var object_folders: Array[String] = []
+@export_dir var persons_folders: Array[String] = []
+@export_dir var rail_type_folders: Array[String] = []
+@export_dir var signal_type_folders: Array[String] = []
+@export_dir var sound_folders: Array[String] = []
+@export_dir var texture_folders: Array[String] = []
 
-export (Array, String, FILE, "*.tscn,*.scn") var trains: Array = []
-export (Array, String, FILE, "*.tscn,*.scn") var worlds: Array = []
+@export_file ("*.tscn","*.scn") var trains: Array[String] = []
+@export_file ("*.tscn","*.scn") var worlds: Array[String] = []
 
 
 func _init() -> void:
@@ -55,7 +55,7 @@ func _semver_to_string() -> String:
 func _semver_from_string(version: String) -> Array:
 	var numbers = version.split(".", false)
 	if len(numbers) != 3:
-		Logger.error("Invalid String used for Semver: %s" % version, self)
+		Logger.err("Invalid String used for Semver: %s" % version, self)
 		return [float("NaN"), float("NaN"), float("NaN")]
 	return [int(numbers[0]), int(numbers[1]), int(numbers[2])]
 

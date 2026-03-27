@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/SampleMusic.ogg-eb09020b9dcee1eeda4f959545a4d37c.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://63dov8io3kc1"
+path="res://.godot/imported/SampleMusic.ogg-eb09020b9dcee1eeda4f959545a4d37c.oggvorbisstr"
 
 [deps]
 
 source_file="res://addons/jean28518.jTools/example/SampleMusic.ogg"
-dest_files=[ "res://.import/SampleMusic.ogg-eb09020b9dcee1eeda4f959545a4d37c.oggstr" ]
+dest_files=["res://.godot/imported/SampleMusic.ogg-eb09020b9dcee1eeda4f959545a4d37c.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

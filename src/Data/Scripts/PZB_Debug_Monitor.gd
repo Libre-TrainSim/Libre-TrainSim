@@ -1,6 +1,6 @@
 extends Control
 
-onready var pzb: Node = get_parent()
+@onready var pzb: Node = get_parent()
 
 
 func _ready() -> void:

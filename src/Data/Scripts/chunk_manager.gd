@@ -13,7 +13,7 @@ var active_chunk = null  # chunk the player is currently in (Vector3)
 
 var rails_by_chunk := {}
 
-var _dir: Directory = null
+var _dir := DirAccess.open("res://")
 
 
 func position_to_chunk(position: Vector3) -> Vector3:
@@ -37,7 +37,7 @@ static func string_to_chunk(chunk: String) -> Vector3:
 	var x = chunk.substr(idx1, idx2 - idx1)
 	var z = chunk.substr(idx2+1)
 
-	return Vector3(x, 0, z)
+	return Vector3(int(x), 0, int(z))
 
 
 func get_chunks(around: Vector3, distance: int):
@@ -63,8 +63,7 @@ func _ready():
 		assert(editor != null)
 		_test_position_calc()
 
-	_dir = Directory.new()
-	if _dir.open("res://") != OK:
+	if DirAccess.open("res://") == null:
 		Logger.err("Dir cannot open res://", self)
 
 	_order_rails_by_chunk()
@@ -75,14 +74,14 @@ func _ready():
 
 	# backwards compat.
 	if not world.has_node("Chunks"):
-		var chunks_node := Spatial.new()
+		var chunks_node := Node3D.new()
 		chunks_node.name = "Chunks"
 		world.add_child(chunks_node)
 		chunks_node.owner = world
 
-	yield(get_tree(), "idle_frame")
+	await get_tree().process_frame
 	# get position of active camera
-	var position_provider = get_viewport().get_camera()
+	var position_provider = get_viewport().get_camera_3d()
 	if position_provider == null:
 		Logger.err("Failed to perform initial move", self)
 		return
@@ -107,7 +106,7 @@ func _process(_delta: float):
 	assert(world != null)
 
 	# get position of active camera
-	var position_provider = get_viewport().get_camera()
+	var position_provider = get_viewport().get_camera_3d()
 	if position_provider == null:
 		return
 
@@ -132,7 +131,7 @@ func _process(_delta: float):
 func _shift_world_origin_to(position: Vector3):
 	var delta: Vector3 = position - world_origin
 	world_origin = position
-	Root.world_origin_shifted(delta)
+	Root.world_origin_has_shifted(delta)
 
 
 func _unload_old_chunks(saving: bool = false):
@@ -170,9 +169,9 @@ func save_and_unload_all_chunks():
 
 	# first save chunks that have been temporarily swapped to disk
 	var files_to_save := []
-	var chunk_path = editor.current_track_path.plus_file("chunks")
+	var chunk_path = editor.current_track_path + "/chunks"
 	_dir.change_dir(chunk_path)
-	_dir.list_dir_begin(true, true)
+	_dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = _dir.get_next()
 		if file == "":
@@ -267,9 +266,9 @@ func _save_chunk(chunk_name: String, saving: bool = false):
 	var chunk_pos = string_to_chunk(chunk_name)
 
 	# get chunks dir
-	var base_path = editor.current_track_path.plus_file("chunks")
-	if not _dir.dir_exists(base_path):
-		_dir.make_dir_recursive(base_path)
+	var base_path = editor.current_track_path + "/chunks"
+	if not DirAccess.dir_exists_absolute(base_path):
+		DirAccess.make_dir_recursive_absolute(base_path)
 
 	# find the chunk
 	var chunk: Chunk = world.get_node("Chunks").get_node_or_null(chunk_name)
@@ -289,7 +288,7 @@ func _save_chunk(chunk_name: String, saving: bool = false):
 
 	# save a temp file if the chunk gets unloaded before the editor saves!
 	# -> do not overwrite old chunks unless the USER presses "save"
-	var file = base_path.plus_file(chunk.name)
+	var file = base_path + "/" + chunk.name
 	if saving:
 		file += ".tscn"
 	else:
@@ -309,7 +308,7 @@ func _save_chunk(chunk_name: String, saving: bool = false):
 		Logger.err("Could not pack chunk to tscn!", self)
 		return
 
-	if ResourceSaver.save(file, packed_chunk) != OK:
+	if ResourceSaver.save(packed_chunk, file) != OK:
 		Logger.err("Could not save chunk tscn!", self)
 		return
 
@@ -326,10 +325,10 @@ func cleanup():
 
 	var files_to_remove := []
 
-	var chunk_path = editor.current_track_path.plus_file("chunks")
-	_dir.open(chunk_path)
-	_dir.change_dir(chunk_path)
-	_dir.list_dir_begin(true, true)
+	var chunk_path = editor.current_track_path + "/chunks"
+	_dir =DirAccess.open(chunk_path)
+	#_dir.change_dir(chunk_path) #SkyNote was this doing anything!?
+	_dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = _dir.get_next()
 		if file == "":
@@ -345,7 +344,7 @@ func cleanup():
 
 
 func _test_position_calc() -> void:
-	var cases := PoolVector3Array([
+	var cases := PackedVector3Array([
 		Vector3(0, 0, 0),
 		Vector3(500, 0, 0),
 		Vector3(-499, 0, 152),

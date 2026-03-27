@@ -25,8 +25,8 @@ func init() -> void:
 	world = find_parent("World")
 	player = world.get_node("Players/Player")
 
-	player.find_node("PZBModule")._force_enabled(true)
-	player.find_node("SifaModule")._force_enabled(true)
+	player.find_child("PZBModule")._force_enabled(true)
+	player.find_child("SifaModule")._force_enabled(true)
 
 	player.force_close_doors()
 	player.force_pantograph_up()
@@ -38,15 +38,15 @@ func init() -> void:
 
 	if player != null and scenario == "SiFa":
 		Logger.log("Running Sifa Scenario!", self)
-		player.find_node("PZBModule").queue_free()
-		sifa_module = player.find_node("SifaModule")
+		player.find_child("PZBModule").queue_free()
+		sifa_module = player.find_child("SifaModule")
 		sifa_module.set_process_unhandled_key_input(false)
 	if player != null and scenario == "PZB":
 		Logger.log("Running PZB Scenario!", self)
 		player.speed = Math.kmh_to_speed(120)
 		player.currentSpeedLimit = 120
-		player.find_node("SifaModule").queue_free()
-		pzb_module = player.find_node("PZBModule")
+		player.find_child("SifaModule").queue_free()
+		pzb_module = player.find_child("PZBModule")
 
 	if scenario != null and player != null and world != null:
 		init_done = true
@@ -76,7 +76,7 @@ func sifa(delta: float) -> void:
 			if not sifa_module.get_node("SifaTimer").is_stopped():
 				next_step()
 		1:
-			message = tr("SIFA_TUTORIAL_2") % InputHelper.make_strings_from_actions(["SiFa"])
+			message = tr("SIFA_TUTORIAL_2") % "[img=40]res://Data/Controller_Icon_Textures/SiFa_texture.tres[/img]"
 			if sifa_module.stage == 1:
 				next_step()
 		2:
@@ -88,13 +88,13 @@ func sifa(delta: float) -> void:
 			if sifa_module.stage == 3:
 				next_step()
 		4:
-			message = tr("SIFA_TUTORIAL_5") % InputHelper.make_strings_from_actions(["SiFa"])
+			message = tr("SIFA_TUTORIAL_5") % "[img=40]res://Data/Controller_Icon_Textures/SiFa_texture.tres[/img]"
 			sifa_module.set_process_unhandled_key_input(true)
 			if sifa_module.stage == 0:
 				next_step()
 		5:
 			message = tr("SIFA_TUTORIAL_6")
-			yield( get_tree().create_timer(1, false), "timeout" )  # required, else 5 is skipped
+			await get_tree().create_timer(1, false).timeout  # required, else 5 is skipped
 			if Input.is_action_just_released("SiFa"):
 				next_step()
 		6:
@@ -114,7 +114,7 @@ func pzb(delta: float) -> void:
 			if player.global_transform.origin.distance_to(signal1.global_transform.origin) < 100:
 				next_step()
 		1:
-			message = tr("PZB_TUTORIAL_2") % InputHelper.make_strings_from_actions(["pzb_ack"])
+			message = tr("PZB_TUTORIAL_2") % "[img=40]res://Data/Controller_Icon_Textures/pzb_ack_texture.tres[/img]"
 			if pzb_module.pzb_mode & pzb_module.PZBMode.MONITORING:
 				next_step()
 			elif pzb_module.pzb_mode & pzb_module.PZBMode.EMERGENCY:
@@ -138,14 +138,14 @@ func pzb(delta: float) -> void:
 			if pzb_module.pzb_mode & pzb_module.PZBMode._HIDDEN:
 				next_step()
 		4:
-			message = tr("PZB_TUTORIAL_5") % InputHelper.make_strings_from_actions(["pzb_free"])
+			message = tr("PZB_TUTORIAL_5") % "[img=40]res://Data/Controller_Icon_Textures/pzb_free_texture.tres[/img]"
 			#\n\nIn diesem Fall zeigt das nächste Signal Rot, das bedeutet, dass Sie Ihre Geschwindigkeit auf 65 km/h reduzieren müssen, bevor Sie den 500Hz Magneten erreichen. Bremsen Sie weiter ab."
 			var pzbmagnet2: PZBMagnet = world.get_node("Signals/PZBMagnet2")
 			if player.global_transform.origin.distance_to(pzbmagnet2.global_transform.origin) < 75:
 				world.get_node("Signals/Signal2").set_status(SignalStatus.GREEN)
 				next_step()
 		5:
-			message = tr("PZB_TUTORIAL_6") % InputHelper.make_strings_from_actions(["pzb_free"])
+			message = tr("PZB_TUTORIAL_6") % "[img=40]res://Data/Controller_Icon_Textures/pzb_free_texture.tres[/img]"
 			if pzb_module.pzb_mode & pzb_module.PZBMode.IDLE:
 				next_step()
 		6:
@@ -175,11 +175,11 @@ func pzb(delta: float) -> void:
 				next_step()
 		11:
 			_sig_green_timer = 0
-			message = tr("PZB_TUTORIAL_12") % InputHelper.make_strings_from_actions(["pzb_free"])
+			message = tr("PZB_TUTORIAL_12") % "[img=40]res://Data/Controller_Icon_Textures/pzb_free_texture.tres[/img]"
 			if pzb_module.pzb_mode == pzb_module.PZBMode.IDLE:
 				next_step()
 		12:
-			message = tr("PZB_TUTORIAL_13") % InputHelper.make_strings_from_actions(["pzb_free"])
+			message = tr("PZB_TUTORIAL_13") % "[img=40]res://Data/Controller_Icon_Textures/pzb_free_texture.tres[/img]"
 			_sig_green_timer += delta
 			if _sig_green_timer > 3:
 				LoadingScreen.load_main_menu()

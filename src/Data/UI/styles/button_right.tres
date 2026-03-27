@@ -1,23 +1,24 @@
-[gd_resource type="Theme" load_steps=7 format=2]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://b6byvnkhno8op"]
 
-[ext_resource path="res://Data/UI/styles/button_right_normal.tres" type="StyleBox" id=1]
-[ext_resource path="res://Data/UI/styles/button_right_disabled.tres" type="StyleBox" id=2]
-[ext_resource path="res://Data/UI/styles/button_right_hover.tres" type="StyleBox" id=3]
-[ext_resource path="res://Data/UI/styles/button_right_pressed.tres" type="StyleBox" id=4]
-[ext_resource path="res://Data/UI/styles/button_right_focused.tres" type="StyleBox" id=5]
-[ext_resource path="res://Data/Fonts/FontMedium.tres" type="DynamicFont" id=6]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_normal.tres" id="1"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_disabled.tres" id="2"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_hover.tres" id="3"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_pressed.tres" id="4"]
+[ext_resource type="StyleBox" path="res://Data/UI/styles/button_right_focused.tres" id="5"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="6"]
 
 [resource]
-default_font = ExtResource( 6 )
-Button/colors/font_color = Color( 0.117647, 0.423529, 0.576471, 1 )
-Button/colors/font_color_disabled = Color( 0.219608, 0.219608, 0.219608, 1 )
-Button/colors/font_color_focus = Color( 0.0941176, 0.352941, 0.478431, 1 )
-Button/colors/font_color_hover = Color( 0.14902, 0.54902, 0.74902, 1 )
-Button/colors/font_color_pressed = Color( 0.0941176, 0.345098, 0.470588, 1 )
+default_font = ExtResource("6")
+default_font_size = 30
+Button/colors/font_color = Color(0.117647, 0.423529, 0.576471, 1)
+Button/colors/font_color_disabled = Color(0.219608, 0.219608, 0.219608, 1)
+Button/colors/font_color_focus = Color(0.0941176, 0.352941, 0.478431, 1)
+Button/colors/font_color_hover = Color(0.14902, 0.54902, 0.74902, 1)
+Button/colors/font_color_pressed = Color(0.0941176, 0.345098, 0.470588, 1)
 Button/constants/hseparation = 2
-Button/fonts/font = ExtResource( 6 )
-Button/styles/disabled = ExtResource( 2 )
-Button/styles/focus = ExtResource( 5 )
-Button/styles/hover = ExtResource( 3 )
-Button/styles/normal = ExtResource( 1 )
-Button/styles/pressed = ExtResource( 4 )
+Button/fonts/font = ExtResource("6")
+Button/styles/disabled = ExtResource("2")
+Button/styles/focus = ExtResource("5")
+Button/styles/hover = ExtResource("3")
+Button/styles/normal = ExtResource("1")
+Button/styles/pressed = ExtResource("4")

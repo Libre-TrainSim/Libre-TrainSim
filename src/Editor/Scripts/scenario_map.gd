@@ -47,21 +47,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		zoom.x = clamp(zoom.x*0.8, 0.05, 50)
 		zoom.y = clamp(zoom.y*0.8, 0.05, 50)
 		$Camera2D.zoom = zoom
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
 	if event.is_action("zoom_out"):
 		var zoom = $Camera2D.zoom
 		zoom.x = clamp(zoom.x*1.25, 0.05, 50)
 		zoom.y = clamp(zoom.y*1.25, 0.05, 50)
 		$Camera2D.zoom = zoom
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
-	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
+	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
 		mouse_motion -= event.relative
 		var movement = mouse_motion * $Camera2D.zoom.x
 		$Camera2D.position += movement
 		mouse_motion = Vector2(0,0)
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 
 
 func set_label_mask(_label_mask: Dictionary):
@@ -72,7 +72,7 @@ func set_label_mask(_label_mask: Dictionary):
 func create_signal(signal_instance):
 	var sprite = generate_rail_icon_at(signal_instance.attached_rail, signal_instance.on_rail_position, signal_instance.forward)
 	sprite.name = signal_instance.name
-	var collider = preload("res://Editor/Modules/Collider2D.tscn").instance()
+	var collider = preload("res://Editor/Modules/Collider2D.tscn").instantiate()
 	if signal_instance.type == "Signal":
 		match find_parent("ScenarioEditor").get_node("CanvasLayer/ScenarioConfiguration").get_operation_mode_of_signal(signal_instance.name):
 			SignalOperationMode.BLOCK:
@@ -82,7 +82,7 @@ func create_signal(signal_instance):
 			SignalOperationMode.MANUAL:
 				sprite.texture = signal_icon
 		var rect = RectangleShape2D.new()
-		rect.extents = Vector2(20, 50)
+		rect.size = Vector2(20, 50)
 		collider.get_node("CollisionShape2D").shape = rect
 		collider.position += Vector2(36, 0)
 		sprite.add_to_group("Signal")
@@ -206,20 +206,20 @@ func update_map():
 
 	# Mark stations at route and add waypoints:
 	for route_point in route_data:
-		if route_point is RoutePointStation and not route_point.station_node_name.empty():
-			var sprite: Sprite
+		if route_point is RoutePointStation and not route_point.station_node_name.is_empty():
+			var sprite: Sprite2D
 			var station = world.get_signal(route_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
 			sprite.name = route_point.station_node_name
 			sprite.texture = station_image_selected
 			$Special.add_child(sprite)
 
-		if route_point is RoutePointWayPoint and not route_point.rail_name.empty():
+		if route_point is RoutePointWayPoint and not route_point.rail_name.is_empty():
 			var forward = true
 			for entry in baked_route:
 				if entry.rail.name == route_point.rail_name:
 					forward = entry.forward
-			var sprite: Sprite
+			var sprite: Sprite2D
 			if forward:
 				sprite = generate_rail_icon_at(route_point.rail_name, 0, true)
 			else:
@@ -234,7 +234,7 @@ func update_map():
 		spawn_point = route_data[0]
 
 	if is_instance_valid(spawn_point):
-		var sprite: Sprite
+		var sprite: Sprite2D
 		if spawn_point is RoutePointStation:
 			var station = world.get_signal(spawn_point.station_node_name)
 			sprite = generate_rail_icon_at(station.attached_rail, station.on_rail_position, station.forward)
@@ -248,7 +248,7 @@ func update_map():
 	# Despawn Point:
 	var despawn_point: RoutePoint = loaded_route.get_despawn_point()
 	if despawn_point is RoutePointStation or despawn_point is RoutePointDespawnPoint:
-		var sprite: Sprite
+		var sprite: Sprite2D
 		if despawn_point is RoutePointStation:
 			var station = world.get_signal(despawn_point.station_node_name)
 			if !station:
@@ -261,8 +261,8 @@ func update_map():
 		$Special.add_child(sprite)
 
 
-func generate_rail_icon_at(rail_name: String, distance: float, forward: bool) -> Sprite:
-	var sprite = Sprite.new()
+func generate_rail_icon_at(rail_name: String, distance: float, forward: bool) -> Sprite2D:
+	var sprite = Sprite2D.new()
 	var position_3d = world.get_rail(rail_name).get_pos_at_distance(distance)
 	var rotation = world.get_rail(rail_name).get_rad_at_distance(distance)
 	if not forward:

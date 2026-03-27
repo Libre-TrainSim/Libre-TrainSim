@@ -18,13 +18,13 @@ extends Node
 
 # check ViewportContainer -> Material for the Shader
 
-export var highlight_color: Color
+@export var highlight_color: Color
 
-onready var external_camera := get_viewport().get_camera()
-onready var shader_camera := find_node("Camera") as Camera
+@onready var external_camera := get_viewport().get_camera_3d()
+@onready var shader_camera := find_child("Camera3D") as Camera3D
 
 func _ready():
-	get_child(0).material.set_shader_param("highlight_color", highlight_color)
+	get_child(0).material.set_shader_parameter("highlight_color", highlight_color)
 
 
 func _process(_delta: float) -> void:

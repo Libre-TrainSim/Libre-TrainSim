@@ -1,6 +1,5 @@
 # Blender v2.93.1 OBJ File: 'Reverser.blend'
 # www.blender.org
-mtllib Reverser.mtl
 o Cylinder
 v 0.000000 0.000354 -0.020524
 v -0.000000 0.014482 -0.017668
@@ -449,7 +448,6 @@ vn 0.3023 0.8390 -0.4524
 vn 0.3847 0.8390 -0.3847
 vn 0.4524 0.8390 -0.3023
 vn -0.9621 -0.2728 0.0000
-usemtl None
 s off
 f 90/1/1 51/2/1 123/3/1
 f 49/4/2 47/5/2 123/6/2

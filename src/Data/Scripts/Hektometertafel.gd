@@ -1,9 +1,9 @@
-extends Spatial
+extends Node3D
 
-export (int) var distance: int = 0
+@export var distance: int = 0
 
 func _ready() -> void:
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		var km = int(distance / 1000)
 		var m = int((distance - km*1000) / 100)
 		$LabelTop.text = str(km)

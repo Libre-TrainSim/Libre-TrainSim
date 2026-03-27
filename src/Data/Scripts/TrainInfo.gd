@@ -1,8 +1,8 @@
 extends Control
 
-var red: Texture = preload("res://Data/Misc/DotRed.png")
-var green: Texture = preload("res://Data/Misc/DotGreen.png")
-var orange: Texture = preload("res://Data/Misc/DotOrange.png")
+var red: Texture2D = preload("res://Data/Misc/DotRed.png")
+var green: Texture2D = preload("res://Data/Misc/DotGreen.png")
+var orange: Texture2D = preload("res://Data/Misc/DotOrange.png")
 
 func update_info(player: LTSPlayer) -> void:
 	if player.engine:
@@ -31,7 +31,7 @@ func update_info(player: LTSPlayer) -> void:
 			$ScrollContainer/VBoxContainer/Doors/dot.texture = red
 
 	## Control Type:
-	if player.control_type == player.ControlType.COMBINED:
+	if player.control_type == player.TrainControlType.COMBINED:
 		$"ScrollContainer/VBoxContainer/Brakes-1".hide()
 		$"ScrollContainer/VBoxContainer/Acceleration-1".hide()
 	else:

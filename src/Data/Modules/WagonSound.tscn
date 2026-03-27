@@ -1,39 +1,39 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://wal5iknf2wdp"]
 
-[ext_resource path="res://Resources/Sounds/Curve.ogg" type="AudioStream" id=1]
-[ext_resource path="res://Data/Scripts/WagonSound.gd" type="Script" id=2]
-[ext_resource path="res://Resources/Sounds/Drive.ogg" type="AudioStream" id=3]
-[ext_resource path="res://Resources/Sounds/DriveOverSwitch.ogg" type="AudioStream" id=4]
-[ext_resource path="res://Resources/Sounds/Brakes.ogg" type="AudioStream" id=5]
+[ext_resource type="AudioStream" uid="uid://bq21dkknosbh2" path="res://Resources/Sounds/Curve.ogg" id="1"]
+[ext_resource type="Script" uid="uid://bp1tfbrpe6v4l" path="res://Data/Scripts/WagonSound.gd" id="2"]
+[ext_resource type="AudioStream" uid="uid://cvp5pw6dujcbe" path="res://Resources/Sounds/Drive.ogg" id="3"]
+[ext_resource type="AudioStream" uid="uid://cwkef26eldrym" path="res://Resources/Sounds/DriveOverSwitch.ogg" id="4"]
+[ext_resource type="AudioStream" uid="uid://bu7cp1s6ae3od" path="res://Resources/Sounds/Brakes.ogg" id="5"]
 
-[node name="WagonSound" type="Spatial"]
-pause_mode = 2
-script = ExtResource( 2 )
+[node name="WagonSound" type="Node3D"]
+process_mode = 2
+script = ExtResource("2")
 
 [node name="DriveSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource("3")
 unit_size = 7.0
 autoplay = true
 bus = "Game"
 
 [node name="CurveSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 1 )
+stream = ExtResource("1")
 unit_size = 7.0
 autoplay = true
 bus = "Game"
 
 [node name="SwitchSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource("4")
 unit_size = 7.0
 bus = "Game"
 
 [node name="SwitchSound2" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource("4")
 unit_size = 7.0
 bus = "Game"
 
 [node name="BrakeSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 unit_size = 7.0
 autoplay = true
 bus = "Game"

@@ -1,6 +1,5 @@
 # Blender v2.93.4 OBJ File: 'Control-Roll.blend'
 # www.blender.org
-mtllib Control-Roll.mtl
 o Cylinder.001
 v -0.000248 0.149972 -0.010355
 v 0.007300 0.149972 -0.007229

@@ -2,7 +2,7 @@ class_name WarnSpeedLimit
 extends RailLogic
 
 
-export (float) var warn_speed: float
+@export var warn_speed: float
 
 
 func _get_type() -> String:

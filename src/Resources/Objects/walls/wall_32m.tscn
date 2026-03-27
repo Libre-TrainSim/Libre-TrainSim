@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bt6yeew58djpr"]
 
-[ext_resource path="res://Resources/Materials/Wall_Green.tres" type="Material" id=1]
-[ext_resource path="res://Resources/Objects/Wall32m.obj" type="ArrayMesh" id=2]
+[ext_resource type="Material" uid="uid://dkevg1g3pr2bs" path="res://Resources/Materials/Wall_Green.tres" id="1"]
+[ext_resource type="ArrayMesh" uid="uid://cw3utfb2np3o5" path="res://Resources/Objects/Wall32m.obj" id="2"]
 
-[node name="Wall32m" type="MeshInstance"]
-mesh = ExtResource( 2 )
-material/0 = ExtResource( 1 )
+[node name="Wall32m" type="MeshInstance3D"]
+mesh = ExtResource("2")
+surface_material_override/0 = ExtResource("1")

@@ -1,30 +1,30 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bocr08joma06c"]
 
-[ext_resource path="res://Resources/Materials/Grass_new.tres" type="Material" id=1]
+[ext_resource type="Material" uid="uid://i03ypcoq4i7g" path="res://Resources/Materials/Grass_new.tres" id="1"]
 
-[sub_resource type="PlaneMesh" id=1]
-material = ExtResource( 1 )
-size = Vector2( 500, 500 )
+[sub_resource type="PlaneMesh" id="1"]
+material = ExtResource("1")
+size = Vector2(500, 500)
 
-[node name="DefaultGrass" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+[node name="DefaultGrass" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, 250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, 250)
+mesh = SubResource("1")
+material/0 = ExtResource("1")
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, -250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+[node name="MeshInstance2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 250, 0, -250)
+mesh = SubResource("1")
+material/0 = ExtResource("1")
 
-[node name="MeshInstance3" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, -250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+[node name="MeshInstance3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, -250)
+mesh = SubResource("1")
+material/0 = ExtResource("1")
 
-[node name="MeshInstance4" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, 250 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 1 )
+[node name="MeshInstance4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, 250)
+mesh = SubResource("1")
+material/0 = ExtResource("1")

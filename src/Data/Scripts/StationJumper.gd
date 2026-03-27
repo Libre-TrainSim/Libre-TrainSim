@@ -3,22 +3,20 @@ extends Control
 
 var current_station_indices := [] # All indices of selectable stations
 
-onready var item_list: ItemList = $StationJumper/ItemList
+@onready var item_list: ItemList = $StationJumper/ItemList
 
 
 signal station_index_selected(station_index)
 
 
 func _ready() -> void:
-	item_list.connect("item_activated", self, "_on_ItemList_item_activated")
+	item_list.connect("item_activated", Callable(self, "_on_ItemList_item_activated"))
 
-
-func show() -> void:
+func _on_draw() -> void:
 	if item_list.get_item_count() > 0:
 		item_list.grab_focus()
 	else:
 		$StationJumper/HBoxContainer/Cancel.grab_focus()
-	.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -27,7 +25,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		accept_event()
 
 
-func update_list(player: Spatial) -> void:
+func update_list(player: Node3D) -> void:
 	item_list.clear()
 	current_station_indices.clear()
 	for station_index in range(player.current_station_table_index, player.station_table.size()):

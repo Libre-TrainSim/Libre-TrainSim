@@ -26,7 +26,7 @@ enum PZBType {
 	LIGHT_FREIGHT = 70, # not yet coded
 	PASSENGER = 85
 }
-var pzb_type: int = PZBType.PASSENGER setget set_type
+var pzb_type: int = PZBType.PASSENGER: set = set_type
 
 enum PZBMode {
 	DISABLED =    0b0000_0000, # 0
@@ -41,12 +41,12 @@ enum PZBMode {
 	_2000Hz =     0b1000_0000, # 128
 	MASK_MAGNET = 0b1111_0000
 }
-var pzb_mode: int = PZBMode.IDLE setget set_mode
-var pzb_speed_limit: float setget set_speed_limit  # no speed limit
+var pzb_mode: int = PZBMode.IDLE: set = set_mode
+var pzb_speed_limit: float: set = set_speed_limit
 
 var pzb_command_pressed: bool = false
 
-onready var player: LTSPlayer = find_parent("Player")
+@onready var player: LTSPlayer = find_parent("Player")
 
 
 func _ready() -> void:
@@ -250,7 +250,7 @@ func restrictive_mode() -> void:
 	emit_signal("pzb_changed", self)
 
 
-func _on_passed_signal(signal_instance: Spatial) -> void:
+func _on_passed_signal(signal_instance: Node3D) -> void:
 	if pzb_mode == PZBMode.DISABLED:
 		return
 

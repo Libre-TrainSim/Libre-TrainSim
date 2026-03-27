@@ -14,7 +14,7 @@ func play(soundPath: String, loop: bool = false, pausable: bool = true, volume_d
 	var audioStreamPlayer = AudioStreamPlayer.new()
 
 	# Return early if soundPath is empty
-	if soundPath.empty() or soundPath in ["res://", "user://"]:
+	if soundPath.is_empty() or soundPath in ["res://", "user://"]:
 		Logger.vlog("jAudioManager: soundPath is '" + soundPath + "', returning early")
 		return
 
@@ -31,14 +31,14 @@ func play(soundPath: String, loop: bool = false, pausable: bool = true, volume_d
 	audioStreamPlayer.bus = bus_names[bus]
 
 	if pausable:
-		audioStreamPlayer.pause_mode  = 1
+		audioStreamPlayer.process_mode  = 1
 	else:
-		audioStreamPlayer.pause_mode  = 2
+		audioStreamPlayer.process_mode  = 2
 
 	add_child(audioStreamPlayer)
 	audioStreamPlayer.owner = self
 	audioStreamPlayer.play()
-	audioStreamPlayer.connect("finished", audioStreamPlayer, "queue_free")
+	audioStreamPlayer.connect("finished", Callable(audioStreamPlayer, "queue_free"))
 
 
 func clear_all_sounds():
@@ -55,12 +55,12 @@ func play_game_sound(soundPath : String, volume_db : float = 0.0):
 
 
 func set_main_volume_db(volume : float):
-	AudioServer.set_bus_volume_db(AudioBus.MASTER, linear2db(volume))
+	AudioServer.set_bus_volume_db(AudioBus.MASTER, linear_to_db(volume))
 
 
 func set_game_volume_db(volume : float):
-	AudioServer.set_bus_volume_db(AudioBus.GAME, linear2db(volume))
+	AudioServer.set_bus_volume_db(AudioBus.GAME, linear_to_db(volume))
 
 
 func set_music_volume_db(volume : float):
-	AudioServer.set_bus_volume_db(AudioBus.MUSIC, linear2db(volume))
+	AudioServer.set_bus_volume_db(AudioBus.MUSIC, linear_to_db(volume))

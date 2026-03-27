@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh"
+uid="uid://ce8ixgliw6cvl"
+path="res://.godot/imported/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh"
 
 [deps]
 
-files=[ "res://.import/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh" ]
+files=["res://.godot/imported/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh"]
 
 source_file="res://Resources/Objects/Poles_1_32m.obj"
-dest_files=[ "res://.import/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh", "res://.import/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh" ]
+dest_files=["res://.godot/imported/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh", "res://.godot/imported/Poles_1_32m.obj-17b3ed0b45e3456cb5408dc085717477.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

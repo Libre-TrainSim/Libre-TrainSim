@@ -1,25 +1,25 @@
 class_name Station
 extends RailLogic
 
-var personsNode: Spatial
+var personsNode: Node3D
 
-export (int) var length: int # Length of platform
+@export var length: int # Length of platform
 
 
-export (PlatformSide.TypeHint) var platform_side: int = PlatformSide.NONE
-export (bool) var personSystem: bool = true
-export (float) var platformHeight: float = 1.2
-export (float) var platformStart: float = 2.5
-export (float) var platformEnd: float = 4.5
+@export var platform_side: PlatformSide.TypeHint = PlatformSide.TypeHint.NONE
+@export var personSystem: bool = true
+@export var platformHeight: float = 1.2
+@export var platformStart: float = 2.5
+@export var platformEnd: float = 4.5
 
-export var assigned_signal: String = ""
+@export var assigned_signal: String = ""
 
 var waitingPersonCount: int = 5
 var _attached_persons: Array = []
 
 # We assume there is only one train at the station as of now
 # Spatial for now, but we should switch to LTSTrain at some point
-var current_train: Spatial = null
+var current_train: Node3D = null
 
 
 func _get_type() -> String:
@@ -39,13 +39,13 @@ func _ready():
 		set_process(false)
 
 	if personSystem:
-		personsNode = Spatial.new()
+		personsNode = Node3D.new()
 		add_child(personsNode)
 		personsNode.owner = self
 
 
 func _on_world_origin_shifted(shift: Vector3) -> void:
-	._on_world_origin_shifted(shift)
+	super._on_world_origin_shifted(shift)
 	for person in _attached_persons:
 		person._on_world_origin_shifted(shift)
 
@@ -87,39 +87,39 @@ func spawn_random_person() -> void:
 	person.spawn_at_station(self)
 
 
-func get_random_transform_at_platform() -> Transform:
+func get_random_transform_at_platform() -> Transform3D:
 	if forward:
-		var randRailDistance = int(rand_range(on_rail_position, on_rail_position+length))
+		var randRailDistance = int(randf_range(on_rail_position, on_rail_position+length))
 		if platform_side == PlatformSide.LEFT:
-			return Transform(Basis( \
+			return Transform3D(Basis.from_euler( \
 					Vector3(0, rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance( \
-					randRailDistance, rand_range(-platformStart, -platformEnd)) \
+					randRailDistance, randf_range(-platformStart, -platformEnd)) \
 					+ Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
-			return Transform(Basis(Vector3(0, \
+			return Transform3D(Basis.from_euler(Vector3(0, \
 					rail.get_rad_at_distance(randRailDistance)+PI, 0)), \
 					rail.get_shifted_global_pos_at_distance( \
-					randRailDistance, rand_range(platformStart, platformEnd)) \
+					randRailDistance, randf_range(platformStart, platformEnd)) \
 					+ Vector3(0, platformHeight, 0))
 	else:
-		var randRailDistance = int(rand_range(on_rail_position, on_rail_position-length))
+		var randRailDistance = int(randf_range(on_rail_position, on_rail_position-length))
 		if platform_side == PlatformSide.LEFT:
-			return Transform(Basis(Vector3(0, \
+			return Transform3D(Basis.from_euler(Vector3(0, \
 					rail.get_rad_at_distance(randRailDistance)+PI, 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
-					rand_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
+					randf_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
-			return Transform(Basis(Vector3(0, \
+			return Transform3D(Basis.from_euler(Vector3(0, \
 					rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
-					rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
+					randf_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
 	Logger.warn("Unsupported platform type %s" % platform_side, self)
 	#assert(false) # Unsupported platform type. I don't wanna fix here
 	return global_transform
 
 
-func train_arrived(train: Spatial) -> void:
+func train_arrived(train: Node3D) -> void:
 	current_train = train
 
 	# TODO: not all passengers should board train when person will have destination
@@ -128,23 +128,23 @@ func train_arrived(train: Spatial) -> void:
 		person.try_board_train()
 
 
-func train_departured(_train: Spatial) -> void:
+func train_departured(_train: Node3D) -> void:
 	current_train = null
 
 
-func is_person_registered(person: Spatial) -> bool:
+func is_person_registered(person: Node3D) -> bool:
 	return _attached_persons.has(person)
 
 
-func deregister_person(personToDelete: Spatial) -> void:
-	assert(_attached_persons.has(personToDelete), "Trying to deregister unknown Person")
+func deregister_person(personToDelete: Node3D) -> void:
+	assert(_attached_persons.has(personToDelete)) #,"Trying to deregister unknown Person")
 	_attached_persons.erase(personToDelete)
 	# Reduce waiting person count to prevent spawning new persons
 	waitingPersonCount -= 1
 
 
 # return route path for the person
-func register_person(personNode: Spatial) -> Array:
+func register_person(personNode: Node3D) -> Array:
 	_attached_persons.append(personNode)
 	personNode.get_parent().remove_child(personNode)
 	personsNode.add_child(personNode)

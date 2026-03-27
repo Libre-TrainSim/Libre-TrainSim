@@ -1,6 +1,5 @@
 # Blender 3.6.0
 # www.blender.org
-mtllib RotationGizmo.mtl
 o Torus
 v 18.250000 0.000000 0.000000
 v 18.163628 0.118882 0.000000

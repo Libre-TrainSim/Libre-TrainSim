@@ -14,17 +14,17 @@ func _unhandled_input(_event):
 		map_status = (map_status + 1) % MapStatus.size()
 		match map_status:
 			MapStatus.CLOSED:
-				$ViewportContainer/RailMap.close_map()
+				$SubViewportContainer/RailMap.close_map()
 				hide()
 			MapStatus.OVERLAY:
-				$ViewportContainer.anchor_right = $OverlayMap.anchor_right
-				$ViewportContainer/RailMap.open_overlay_map()
+				$SubViewportContainer.anchor_right = $OverlayMap.anchor_right
+				$SubViewportContainer/RailMap.open_overlay_map()
 				show()
 				$FullMap.hide()
 				$OverlayMap.show()
 			MapStatus.FULL:
-				$ViewportContainer.anchor_right = $FullMap.anchor_right
-				$ViewportContainer/RailMap.open_full_map()
+				$SubViewportContainer.anchor_right = $FullMap.anchor_right
+				$SubViewportContainer/RailMap.open_full_map()
 				show()
 				$FullMap.show()
 				$OverlayMap.hide()

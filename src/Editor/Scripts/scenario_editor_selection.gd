@@ -4,12 +4,12 @@ var selected_track: String = ""
 
 
 func _ready() -> void:
-	$ScenarioList.connect("visibility_changed", self, "_on_ScenarioList_visibility_changed")
+	$ScenarioList.connect("visibility_changed", Callable(self, "_on_ScenarioList_visibility_changed"))
 
 
-func show() -> void:
+func _on_draw() -> void:
 	$TrackList/ItemList.grab_focus()
-	.show()
+	update_track_list()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -50,7 +50,7 @@ func _on_Select_TrackList_pressed():
 
 func update_scenario_list():
 	$ScenarioList/scenarioList.clear()
-	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
+	var scenarios_folder: String = selected_track.get_base_dir() + "/" + "scenarios"
 	if not jEssentials.does_path_exist(scenarios_folder):
 		jEssentials.create_directory(scenarios_folder)
 		return
@@ -71,8 +71,8 @@ func _on_Back_ScenarioList_pressed():
 
 
 func _on_scenarioList_user_added_entry(entry_name):
-	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	var scenario_file = scenarios_folder.plus_file(entry_name + ".tres")
+	var scenarios_folder: String = selected_track.get_base_dir() + "/" + "scenarios"
+	var scenario_file = scenarios_folder + "/" + entry_name + ".tres"
 	var empty_scenario = TrackScenario.new()
 
 	var err = ResourceSaver.save(scenario_file, empty_scenario)
@@ -81,24 +81,24 @@ func _on_scenarioList_user_added_entry(entry_name):
 
 
 func _on_scenarioList_user_duplicated_entries(source_entry_names, duplicated_entry_names):
-	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	var scenario_file = scenarios_folder.plus_file(source_entry_names[0] + ".tres")
-	var new_file = scenarios_folder.plus_file(duplicated_entry_names[0] + ".tres")
+	var scenarios_folder: String = selected_track.get_base_dir() + "/" +"scenarios"
+	var scenario_file = scenarios_folder + "/" + source_entry_names[0] + ".tres"
+	var new_file = scenarios_folder + "/" + duplicated_entry_names[0] + ".tres"
 	jEssentials.copy_file(scenario_file, new_file)
 
 
 func _on_scenarioList_user_renamed_entry(old_name, new_name):
-	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	var old_file = scenarios_folder.plus_file(old_name + ".tres")
-	var new_file = scenarios_folder.plus_file(new_name + ".tres")
+	var scenarios_folder: String = selected_track.get_base_dir() + "/" + "scenarios"
+	var old_file = scenarios_folder + "/" + old_name + ".tres"
+	var new_file = scenarios_folder + "/" + new_name + ".tres"
 	jEssentials.rename_file(old_file, new_file)
 
 
 func _on_scenarioList_user_pressed_action(entry_names):
-	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
+	var scenarios_folder: String = selected_track.get_base_dir() + "/" + "scenarios"
 	var entry_name = entry_names[0]
-	Root.current_scenario = scenarios_folder.plus_file(entry_name + ".tres")
-	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+	Root.current_scenario = scenarios_folder + "/" + entry_name + ".tres"
+	get_tree().change_scene_to_packed(load("res://Editor/Modules/scenario_editor.tscn"))
 
 
 func _on_ScenarioList_visibility_changed() -> void:
@@ -114,12 +114,5 @@ func _on_ItemList_item_activated(_index):
 
 
 func _on_scenarioList_user_removed_entries(entry_names):
-	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
-	var dir = Directory.new()
-	dir.remove(scenarios_folder.plus_file(entry_names[0] + ".tres"))
-
-
-
-func _on_Control_visibility_changed():
-	if visible:
-		update_track_list()
+	var scenarios_folder: String = selected_track.get_base_dir() + "/" + "scenarios"
+	DirAccess.remove_absolute(scenarios_folder + "/" + entry_names[0] + ".tres")

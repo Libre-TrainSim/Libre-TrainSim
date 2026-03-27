@@ -1,12 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://djb8j15rjpgho"]
 
-[ext_resource path="res://Resources/Materials/Glass.tres" type="Material" id=1]
-[ext_resource path="res://Resources/Materials/Roof.tres" type="Material" id=2]
-[ext_resource path="res://Resources/Materials/Beton.tres" type="Material" id=3]
-[ext_resource path="res://Resources/Objects/office4.obj" type="ArrayMesh" id=4]
+[ext_resource type="Material" uid="uid://d34vb75pkjvuo" path="res://Resources/Materials/Glass.tres" id="1"]
+[ext_resource type="Material" uid="uid://bcv3dfcb6e73d" path="res://Resources/Materials/Roof.tres" id="2"]
+[ext_resource type="Material" uid="uid://dpd28nyoxdxfb" path="res://Resources/Materials/Beton.tres" id="3"]
+[ext_resource type="ArrayMesh" uid="uid://cufw48bqjqcaw" path="res://Resources/Objects/office4.obj" id="4"]
 
-[node name="Office4" type="MeshInstance"]
-mesh = ExtResource( 4 )
-material/0 = ExtResource( 2 )
-material/1 = ExtResource( 3 )
-material/2 = ExtResource( 1 )
+[node name="Office4" type="MeshInstance3D"]
+mesh = ExtResource("4")
+surface_material_override/0 = ExtResource("2")
+surface_material_override/1 = ExtResource("3")
+surface_material_override/2 = ExtResource("1")

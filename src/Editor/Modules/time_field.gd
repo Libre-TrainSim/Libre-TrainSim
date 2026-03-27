@@ -23,7 +23,7 @@ func set_data_in_seconds(seconds : int):
 
 
 func _on_TimeButton_pressed():
-	$Popup.popup_centered_minsize()
+	$Popup.popup_centered_clamped()
 
 func update_button_text():
 	$TimeButton.text = Math.time_to_string(get_data())

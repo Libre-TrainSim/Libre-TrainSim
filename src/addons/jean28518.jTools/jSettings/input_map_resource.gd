@@ -2,7 +2,7 @@ class_name InputMapResource
 extends Resource
 
 
-export (Dictionary) var input_map
+@export var input_map: Dictionary
 
 
 func _init():
@@ -16,7 +16,7 @@ func update() -> void:
 	# Parse all InputMap content into input_map
 	for action in InputMap.get_actions():
 		input_map[action] = []
-		for event in InputMap.get_action_list(action):
+		for event in InputMap.action_get_events(action):
 			input_map[action].append(event)
 
 

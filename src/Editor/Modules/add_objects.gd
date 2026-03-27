@@ -1,13 +1,13 @@
 extends Control
 
 
-onready var editor = find_parent("Editor")
-onready var objects_menu := $"../Objects"
+@onready var editor = find_parent("Editor")
+@onready var objects_menu := $"../Objects"
 
 
 func _on_RailLogicMenu_item_selected(index):
 	$RailLogicMenu.hide()
-	$RailLogicMenu.unselect_all()
+	$RailLogicMenu.deselect_all()
 	if editor.selected_object_type != "Rail":
 		editor.send_message("At first you need to select a rail,\nto which you want to add the Rail Logic Element!")
 		return
@@ -39,5 +39,5 @@ func _on_AddObjects_toggled(button_pressed: bool) -> void:
 	objects_menu.visible = button_pressed
 
 
-func _on_selected_object_changed(_new_object, type_string) -> void:
-	$RailLogicMenu.visible = $RailLogicMenu.visible and type_string == "Rail"
+func _on_selected_object_changed(_new_object, object_type_string) -> void:
+	$RailLogicMenu.visible = $RailLogicMenu.visible and object_type_string == "Rail"

@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="Authors" load_steps=2 format=3 uid="uid://db44ovhhnl3to"]
 
-[ext_resource path="res://authors.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://ulctawertm4r" path="res://authors.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
-developers = [ "Jean3219 - Jean28518", "Johannes Witt - HaSa1002", "Dominik Waurenschk - DasCapschen" ]
-contributors = [ "librebob", "Bohdan Matviiv - bodamat", "Michele Comignano - comick", "Matthew - skyace65", "Yann Dirson - ydirson", "IntinteDAO", "Uli Horn - ulihorn", "simfann", "SeaMac", "JupiterRider", "rogerm4242", "nalquas", "Brigham Keys, Esq. - bkeys", "Trojaner" ]
-translators = [ [ "Bulgarian", "Georgi Georgiev (RacerBG)" ], [ "Ukrainian", "Bohdan Matviiv" ], [ "Polish", "toxicnet" ], [ "Japanese", "paontv" ], [ "Español", "Miguel de Dios Matias", "Pablo Lilao" ], [ "Bulgarian", "Georgi - RacerBG" ], [ "French", "Haeroxys", "Miks - Miksimus1" ], [ "Brazilian Portuguese", "Rafael Games" ] ]
+script = ExtResource("1")
+developers = ["Jean3219 - Jean28518", "Johannes Witt - HaSa1002", "Dominik Waurenschk - DasCapschen"]
+contributors = ["librebob", "Bohdan Matviiv - bodamat", "Michele Comignano - comick", "Matthew - skyace65", "Yann Dirson - ydirson", "IntinteDAO", "Uli Horn - ulihorn", "simfann", "SeaMac", "JupiterRider", "rogerm4242", "nalquas", "Brigham Keys, Esq. - bkeys", "Trojaner"]
+translators = [["Bulgarian", "Georgi Georgiev (RacerBG)"], ["Ukrainian", "Bohdan Matviiv"], ["Polish", "toxicnet"], ["Japanese", "paontv"], ["Español", "Miguel de Dios Matias", "Pablo Lilao"], ["Bulgarian", "Georgi - RacerBG"], ["French", "Haeroxys", "Miks - Miksimus1"], ["Brazilian Portuguese", "Rafael Games"]]

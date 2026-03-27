@@ -1,4 +1,9 @@
-[gd_resource type="BitmapFont" format=2]
+[gd_resource type="FontFile" format=3 uid="uid://866cey0i8pcp"]
 
 [resource]
-ascent = 6.0
+fixed_size = 16
+cache/0/16/0/ascent = 6.0
+cache/0/16/0/descent = -6.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0

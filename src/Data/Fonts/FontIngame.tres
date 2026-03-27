@@ -1,15 +1,22 @@
-[gd_resource type="DynamicFont" load_steps=4 format=2]
+[gd_resource type="FontFile" load_steps=3 format=3 uid="uid://drpvc003gljcm"]
 
-[ext_resource path="res://Data/Fonts/Oswald-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Data/Fonts/NotoSansJP-Regular.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://Data/Fonts/AutoDynamicFont.gd" type="Script" id=3]
+[ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="1"]
+[ext_resource type="FontFile" uid="uid://jy41yueh4hio" path="res://Data/Fonts/NotoSansJP-Regular.otf" id="2"]
 
 [resource]
-size = 20
-use_filter = true
-font_data = ExtResource( 1 )
-fallback/0 = ExtResource( 2 )
-script = ExtResource( 3 )
-desktop_size = 20
-mobile_size = 40
-debug_test_size = false
+fallbacks = Array[Font]([ExtResource("1"), ExtResource("2")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/50/0/ascent = 0.0
+cache/0/50/0/descent = 0.0
+cache/0/50/0/underline_position = 0.0
+cache/0/50/0/underline_thickness = 0.0
+cache/0/50/0/scale = 1.0
+cache/0/30/0/ascent = 0.0
+cache/0/30/0/descent = 0.0
+cache/0/30/0/underline_position = 0.0
+cache/0/30/0/underline_thickness = 0.0
+cache/0/30/0/scale = 1.0

@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh"
+uid="uid://c3j1mn3hvw6q2"
+path="res://.godot/imported/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh"
 
 [deps]
 
-files=[ "res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh" ]
+files=["res://.godot/imported/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh"]
 
 source_file="res://Resources/Objects/SpecialGround.obj"
-dest_files=[ "res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh", "res://.import/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh" ]
+dest_files=["res://.godot/imported/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh", "res://.godot/imported/SpecialGround.obj-869bf142170848095db5e1c0677d340e.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,179 +1,161 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=13 format=3 uid="uid://crwv86ys6r5r7"]
 
-[ext_resource path="res://Editor/Scripts/Gizmo.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Objects/RotationGizmo.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://Editor/Modules/gizmo_rot_collider.tres" type="Shape" id=3]
+[ext_resource type="Script" uid="uid://dlcye147fy7lg" path="res://Editor/Scripts/Gizmo.gd" id="1"]
+[ext_resource type="ArrayMesh" uid="uid://cwem4ogdlakm1" path="res://Resources/Objects/RotationGizmo.obj" id="2"]
+[ext_resource type="Shape3D" path="res://Editor/Modules/gizmo_rot_collider.tres" id="3"]
 
-[sub_resource type="CylinderShape" id=15]
+[sub_resource type="CylinderShape3D" id="15"]
 height = 26.0
 radius = 4.0
 
-[sub_resource type="CylinderMesh" id=11]
+[sub_resource type="CylinderMesh" id="11"]
 top_radius = 0.25
 bottom_radius = 0.25
 height = 20.0
 
-[sub_resource type="SpatialMaterial" id=3]
-flags_no_depth_test = true
-flags_disable_ambient_light = true
-albedo_color = Color( 1, 0, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="3"]
+no_depth_test = true
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
 emission_enabled = true
-emission = Color( 1, 0, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+emission = Color(1, 0, 0, 1)
 
-[sub_resource type="CylinderMesh" id=14]
+[sub_resource type="CylinderMesh" id="14"]
 top_radius = 0.0
 height = 4.0
 
-[sub_resource type="SpatialMaterial" id=5]
-flags_no_depth_test = true
-flags_disable_ambient_light = true
-albedo_color = Color( 0, 1, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="5"]
+no_depth_test = true
+disable_ambient_light = true
+albedo_color = Color(0, 1, 0, 1)
 emission_enabled = true
-emission = Color( 0, 1, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+emission = Color(0, 1, 0, 1)
 
-[sub_resource type="SpatialMaterial" id=7]
-flags_no_depth_test = true
-flags_disable_ambient_light = true
-albedo_color = Color( 0, 0, 1, 1 )
+[sub_resource type="StandardMaterial3D" id="7"]
+no_depth_test = true
+disable_ambient_light = true
+albedo_color = Color(0, 0, 1, 1)
 emission_enabled = true
-emission = Color( 0, 0, 1, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+emission = Color(0, 0, 1, 1)
 
-[sub_resource type="SpatialMaterial" id=24]
-flags_no_depth_test = true
-flags_disable_ambient_light = true
-albedo_color = Color( 1, 0, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="24"]
+no_depth_test = true
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
 emission_enabled = true
-emission = Color( 1, 0, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+emission = Color(1, 0, 0, 1)
 
-[sub_resource type="SpatialMaterial" id=25]
-flags_no_depth_test = true
-flags_disable_ambient_light = true
-albedo_color = Color( 0, 1, 0, 1 )
+[sub_resource type="StandardMaterial3D" id="25"]
+no_depth_test = true
+disable_ambient_light = true
+albedo_color = Color(0, 1, 0, 1)
 emission_enabled = true
-emission = Color( 0, 1, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+emission = Color(0, 1, 0, 1)
 
-[sub_resource type="SpatialMaterial" id=26]
-flags_no_depth_test = true
-flags_disable_ambient_light = true
-albedo_color = Color( 0, 0, 1, 1 )
+[sub_resource type="StandardMaterial3D" id="26"]
+no_depth_test = true
+disable_ambient_light = true
+albedo_color = Color(0, 0, 1, 1)
 emission_enabled = true
-emission = Color( 0, 0, 1, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
+emission = Color(0, 0, 1, 1)
 
-[node name="Gizmo" type="Spatial" groups=["Gizmo"]]
-script = ExtResource( 1 )
-x_axis_color = Color( 1, 0, 0, 1 )
-y_axis_color = Color( 0, 1, 0, 1 )
-z_axis_color = Color( 0, 0, 1, 1 )
-x_axis_color_hover = Color( 1, 0.5, 0.5, 1 )
-y_axis_color_hover = Color( 0.5, 1, 0.5, 1 )
-z_axis_color_hover = Color( 0.5, 0.5, 1, 1 )
+[node name="Gizmo" type="Node3D" groups=["Gizmo"]]
+script = ExtResource("1")
+x_axis_color = Color(1, 0, 0, 1)
+y_axis_color = Color(0, 1, 0, 1)
+z_axis_color = Color(0, 0, 1, 1)
+x_axis_color_hover = Color(1, 0.5, 0.5, 1)
+y_axis_color_hover = Color(0.5, 1, 0.5, 1)
+z_axis_color_hover = Color(0.5, 0.5, 1, 1)
 
-[node name="x-axis" type="StaticBody" parent="."]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0 )
+[node name="x-axis" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 10, 0, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape" type="CollisionShape" parent="x-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-shape = SubResource( 15 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="x-axis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("15")
 
-[node name="MeshInstance" type="MeshInstance" parent="x-axis"]
-mesh = SubResource( 11 )
-material/0 = SubResource( 3 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="x-axis"]
+mesh = SubResource("11")
+material/0 = SubResource("3")
 
-[node name="MeshInstance" type="MeshInstance" parent="x-axis/MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
-mesh = SubResource( 14 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="x-axis/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+mesh = SubResource("14")
 skeleton = NodePath("../..")
-material/0 = SubResource( 3 )
+material/0 = SubResource("3")
 
-[node name="y-axis" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+[node name="y-axis" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape" type="CollisionShape" parent="y-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-shape = SubResource( 15 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="y-axis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("15")
 
-[node name="MeshInstance" type="MeshInstance" parent="y-axis"]
-mesh = SubResource( 11 )
-material/0 = SubResource( 5 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="y-axis"]
+mesh = SubResource("11")
+material/0 = SubResource("5")
 
-[node name="MeshInstance" type="MeshInstance" parent="y-axis/MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
-mesh = SubResource( 14 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="y-axis/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+mesh = SubResource("14")
 skeleton = NodePath("../..")
-material/0 = SubResource( 5 )
+material/0 = SubResource("5")
 
-[node name="z-axis" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 10 )
+[node name="z-axis" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 10)
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape" type="CollisionShape" parent="z-axis"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-shape = SubResource( 15 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="z-axis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("15")
 
-[node name="MeshInstance" type="MeshInstance" parent="z-axis"]
-mesh = SubResource( 11 )
-material/0 = SubResource( 7 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="z-axis"]
+mesh = SubResource("11")
+material/0 = SubResource("7")
 
-[node name="MeshInstance" type="MeshInstance" parent="z-axis/MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -8.52651e-14 )
-mesh = SubResource( 14 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="z-axis/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -8.52651e-14)
+mesh = SubResource("14")
 skeleton = NodePath("../..")
-material/0 = SubResource( 7 )
+material/0 = SubResource("7")
 
-[node name="x-rot" type="StaticBody" parent="."]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+[node name="x-rot" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="MeshInstance" type="MeshInstance" parent="x-rot"]
-mesh = ExtResource( 2 )
-material/0 = SubResource( 24 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="x-rot"]
+mesh = ExtResource("2")
+material/0 = SubResource("24")
 
-[node name="CollisionShape" type="CollisionShape" parent="x-rot"]
-shape = ExtResource( 3 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="x-rot"]
+shape = ExtResource("3")
 
-[node name="y-rot" type="StaticBody" parent="."]
+[node name="y-rot" type="StaticBody3D" parent="."]
 collision_layer = 2
 collision_mask = 2
 
-[node name="MeshInstance" type="MeshInstance" parent="y-rot"]
-mesh = ExtResource( 2 )
-material/0 = SubResource( 25 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="y-rot"]
+mesh = ExtResource("2")
+material/0 = SubResource("25")
 
-[node name="CollisionShape" type="CollisionShape" parent="y-rot"]
-shape = ExtResource( 3 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="y-rot"]
+shape = ExtResource("3")
 
-[node name="z-rot" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+[node name="z-rot" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 collision_layer = 2
 collision_mask = 2
 
-[node name="MeshInstance" type="MeshInstance" parent="z-rot"]
-mesh = ExtResource( 2 )
-material/0 = SubResource( 26 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="z-rot"]
+mesh = ExtResource("2")
+material/0 = SubResource("26")
 
-[node name="CollisionShape" type="CollisionShape" parent="z-rot"]
-shape = ExtResource( 3 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="z-rot"]
+shape = ExtResource("3")

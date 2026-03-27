@@ -2,18 +2,18 @@ class_name TrackScenario
 extends Resource
 
 
-export (int) var time: int = 0  # seconds
-export (String) var title := ""
-export (String) var description := ""
-export (int) var duration: int = 0  # minutes
+@export var time: int = 0  # seconds
+@export var title: String = ""
+@export var description: String = ""
+@export var duration: int = 0  # minutes
 
-export (bool) var is_hidden := false  # true = visible only in Editor, not in Play menu
+@export var is_hidden: bool = false  # true = visible only in Editor, not in Play menu
 
 # Dict[String, ScenarioRoute]
-export (Dictionary) var routes := {}
+@export var routes: Dictionary = {}
 
 # Dict[String, RailLogicSettings]
-export (Dictionary) var rail_logic_settings := {}
+@export var rail_logic_settings: Dictionary = {}
 
 
 func _init() -> void:
@@ -42,6 +42,6 @@ func save_scenario(path = null):
 	if path == null:
 		path = Root.current_scenario
 
-	var err = ResourceSaver.save(path, self)
+	var err = ResourceSaver.save(self, path)
 	if err != OK:
 		Logger.err("Failed saving scenario at %s. Reason: %s" % [path, err], self)

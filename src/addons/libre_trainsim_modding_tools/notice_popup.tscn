@@ -1,22 +1,22 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://qeiqbmekt4qo"]
 
-[ext_resource path="res://addons/libre_trainsim_modding_tools/notice_popup.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://df4a0p4f857km" path="res://addons/libre_trainsim_modding_tools/notice_popup.gd" id="1"]
 
 [node name="Control" type="ConfirmationDialog"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -200.0
-margin_top = -54.5
-margin_right = 200.0
-margin_bottom = 54.5
-popup_exclusive = true
+offset_left = -200.0
+offset_top = -54.5
+offset_right = 200.0
+offset_bottom = 54.5
+exclusive = true
 window_title = "Information"
 dialog_text = "Godot needs to reload the project in order to import your newly created mod.
 When you click OK, Godot will close, just open it again."
 dialog_autowrap = true
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [connection signal="confirmed" from="." to="." method="_on_Control_confirmed"]
 [connection signal="popup_hide" from="." to="." method="_on_Control_popup_hide"]

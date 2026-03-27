@@ -1,12 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://b6i46dhjqu248"]
 
-[ext_resource path="res://Data/Scripts/TrackObjects.gd" type="Script" id=3]
+[ext_resource type="Script" uid="uid://dxc2yec1pd8ym" path="res://Data/Scripts/TrackObjects.gd" id="3"]
 
-[sub_resource type="MultiMesh" id=1]
+[sub_resource type="MultiMesh" id="1"]
 resource_local_to_scene = true
 transform_format = 1
 
-[node name="TO" type="MultiMeshInstance" groups=["TrackObject"]]
-lod_max_distance = 100.0
-multimesh = SubResource( 1 )
-script = ExtResource( 3 )
+[node name="TO" type="MultiMeshInstance3D" groups=["TrackObject"]]
+multimesh = SubResource("1")
+script = ExtResource("3")

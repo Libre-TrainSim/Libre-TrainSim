@@ -1,20 +1,25 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh"
+uid="uid://bhs1lv0wrex5d"
+path="res://.godot/imported/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh"
 
 [deps]
 
-files=[ "res://.import/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh" ]
+files=["res://.godot/imported/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh"]
 
 source_file="res://Resources/Objects/BridgePfost1.obj"
-dest_files=[ "res://.import/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh", "res://.import/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh" ]
+dest_files=["res://.godot/imported/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh", "res://.godot/imported/BridgePfost1.obj-08ffef3ebab973ae7bf69d21c500365d.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

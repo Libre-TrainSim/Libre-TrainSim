@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="WorldConfig" load_steps=2 format=3 uid="uid://bcxagfisix4kv"]
 
-[ext_resource path="res://Data/Scripts/Resources/world_config.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://bttnohupdyxhy" path="res://Data/Scripts/Resources/world_config.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 release_date = {
 "day": 1.0,
 "month": 12.0,
@@ -12,6 +12,5 @@ release_date = {
 title = "Unknown"
 author = "Libre TrainSim Team"
 track_description = "TUTORIAL_TRACK_DESCRIPTION"
-thumbnail_path = ""
-scenarios = [  ]
+generate_grass = true
 editor_notes = ""

@@ -19,9 +19,9 @@ func _on_Cancel_pressed():
 
 
 func _on_Export_pressed():
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if not dir.dir_exists($LineEdit.text):
-		find_parent("Editor").send_message("Path does not exist!")
+		find_parent("Editor").send_message("Path3D does not exist!")
 		return
 	$Question.hide()
 	$LineEdit.hide()

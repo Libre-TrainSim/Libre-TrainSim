@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg-0abd4b8f36cd418a2854d69dfbfc5432.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cglype78xbawr"
+path="res://.godot/imported/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg-0abd4b8f36cd418a2854d69dfbfc5432.oggvorbisstr"
 
 [deps]
 
 source_file="res://Resources/Music/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg"
-dest_files=[ "res://.import/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg-0abd4b8f36cd418a2854d69dfbfc5432.oggstr" ]
+dest_files=["res://.godot/imported/follow-that-dream-by-luca-fraula-from-filmmusic-io.ogg-0abd4b8f36cd418a2854d69dfbfc5432.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

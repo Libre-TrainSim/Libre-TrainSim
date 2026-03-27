@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/DoorsClosing.ogg-6dfc78250e9abd961709f0147cf154a4.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cwkumxfrr0nds"
+path="res://.godot/imported/DoorsClosing.ogg-6dfc78250e9abd961709f0147cf154a4.oggvorbisstr"
 
 [deps]
 
 source_file="res://Resources/Sounds/DoorsClosing.ogg"
-dest_files=[ "res://.import/DoorsClosing.ogg-6dfc78250e9abd961709f0147cf154a4.oggstr" ]
+dest_files=["res://.godot/imported/DoorsClosing.ogg-6dfc78250e9abd961709f0147cf154a4.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

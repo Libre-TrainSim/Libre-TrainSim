@@ -4,10 +4,10 @@ extends Control
 const MAX_LOAD_TIME_STEP = 1.0
 
 
-export(Array, String) var descriptions = []
+@export var descriptions = [] # (Array, String)
 
 
-var loader: ResourceInteractiveLoader
+var loader: ResourceLoader
 var resources := []
 var scenes := []
 var instance_thread := Thread.new()
@@ -16,6 +16,7 @@ var thread_done_mutex := Mutex.new()
 var is_instancing := false
 var editor_world_path := ""
 var game_start_context := -1
+var current_load_path : String
 
 func _ready() -> void:
 	assert(descriptions.size() > 0)
@@ -24,25 +25,28 @@ func _ready() -> void:
 
 
 func load_main_menu():
-	loader = ResourceLoader.load_interactive("res://Data/UI/main_menu.tscn")
+	ResourceLoader.load_threaded_request("res://Data/UI/main_menu.tscn")
+	current_load_path = "res://Data/UI/main_menu.tscn"
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
 	jAudioManager.clear_all_sounds()
 	jEssentials.remove_all_pending_delayed_calls()
-	$ProgressBar/Bar.max_value = loader.get_stage_count()
+	#$ProgressBar/Bar.max_value = loader.get_stage_count()
 	$ProgressBar/Bar.value = 0
 	$ProgressBar/Description.lines_skipped = 0
-	$Screenshot.texture = load("res://screenshot.png") as Texture
+	$Screenshot.texture = load("res://screenshot.png") as Texture2D
 	show()
 
 
-func load_world(world: String, bg_img: Texture, start_context: int) -> void:
-	loader = ResourceLoader.load_interactive(world)
+func load_world(world: String, bg_img: Texture2D, start_context: int) -> void:
+	current_load_path = world
+	ResourceLoader.load_threaded_request(world)
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
-	$ProgressBar/Bar.max_value = loader.get_stage_count() - 1
+	print(str(ResourceLoader.load_threaded_get_status(world)))
+	#$ProgressBar/Bar.max_value = loader.get_stage_count() - 1
 	$ProgressBar/Bar.value = 0
 	$ProgressBar/Description.text = descriptions[0]
 	$Screenshot.texture = bg_img
@@ -50,12 +54,13 @@ func load_world(world: String, bg_img: Texture, start_context: int) -> void:
 	show()
 
 
-func load_editor(world_path: String, bg_img: Texture) -> void:
-	loader = ResourceLoader.load_interactive("res://Editor/Editor.tscn")
+func load_editor(world_path: String, bg_img: Texture2D) -> void:
+	ResourceLoader.load_threaded_request("res://Editor/Editor.tscn")
+	current_load_path = "res://Editor/Editor.tscn"
 	get_tree().current_scene.queue_free()
 	get_tree().current_scene = self
 	set_process(true)
-	$ProgressBar/Bar.max_value = loader.get_stage_count() - 1
+	#$ProgressBar/Bar.max_value = loader.get_stage_count() - 1
 	$ProgressBar/Bar.value = 0
 	$ProgressBar/Description.text = descriptions[0]
 	$Screenshot.texture = bg_img
@@ -72,29 +77,29 @@ func _process(_delta: float) -> void:
 		thread_done_mutex.unlock()
 		return
 
-	var t = OS.get_ticks_msec()
-	# use "time_max" to control for how long we block this thread
-	while OS.get_ticks_msec() < t + MAX_LOAD_TIME_STEP:
-		var err = loader.poll()
-		if err == ERR_FILE_EOF: # Finished loading.
+	var t = Time.get_ticks_msec()
+	#use "time_max" to control for how long we block this thread
+	while Time.get_ticks_msec() < t + MAX_LOAD_TIME_STEP:
+		if ResourceLoader.load_threaded_get_status(current_load_path) == 3: # Finished loading.
 			update_progress_bar()
-			resources.push_back(loader.get_resource())
-			loader = null
-			if instance_thread.start(self, "_instanciate_scenes") != OK:
+			resources.push_back(ResourceLoader.load_threaded_get(current_load_path))
+			#loader = null
+			if instance_thread.start(Callable(self, "_instanciate_scenes")) != OK:
 				Logger.warn("Can't create instanciation thread. Loading in main thread", self)
 				_instanciate_scenes()
 				_clean_up_and_switch()
 				return
 			is_instancing = true
 			return
-		elif err == OK:
+		elif ResourceLoader.load_threaded_get_status(current_load_path) == 1:
 			update_progress_bar()
-		else: # error during loading
-			Logger.err("An error occured during loading! (%s)" % err, self);
-			loader = null
+		elif ResourceLoader.load_threaded_get_status(current_load_path) == 2: # error during loading
+			Logger.err("An error occured during loading!", self);
 			var _unused = OS.shell_open(ProjectSettings.globalize_path("user://logs/"))
-			_unused = get_tree().change_scene("res://Data/UI/main_menu.tscn")
+			_unused = get_tree().change_scene_to_file("res://Data/UI/main_menu.tscn")
 			break
+		elif ResourceLoader.load_threaded_get_status(current_load_path) == 0:
+			Logger.err("Invalid resource", self);
 
 
 func _clean_up_and_switch() -> void:
@@ -109,7 +114,7 @@ func _clean_up_and_switch() -> void:
 func _instanciate_scenes(_args = null) -> void:
 	for resource in resources:
 		if resource is PackedScene:
-			scenes.push_back(resource.instance())
+			scenes.push_back(resource.instantiate())
 	thread_done_mutex.lock()
 	thread_done = true
 	thread_done_mutex.unlock()
@@ -126,7 +131,7 @@ func _add_to_tree() -> void:
 		var world = scenes[0]
 		var gsc := game_start_context
 		# Skip one frame so that world.player is initialized
-		yield(get_tree(), "idle_frame")
+		await get_tree().process_frame
 		world.player.game_start_context = gsc
 
 
@@ -141,8 +146,10 @@ func _clear() -> void:
 
 
 func update_progress_bar() -> void:
-	var stage := min(loader.get_stage(), loader.get_stage_count() - 1)
-	$ProgressBar/Bar.value = stage
-	$ProgressBar/Description.text = descriptions[\
-			int(round(stage * (descriptions.size() - 1) \
-					/ float(loader.get_stage_count() - 1)))]
+	#Set Static type later
+	#var stage = min(loader.get_stage(), loader.get_stage_count() - 1)
+	#$ProgressBar/Bar.value = stage
+	#$ProgressBar/Description.text = descriptions[\
+			#int(round(stage * (descriptions.size() - 1) \
+					#/ float(loader.get_stage_count() - 1)))]
+	pass

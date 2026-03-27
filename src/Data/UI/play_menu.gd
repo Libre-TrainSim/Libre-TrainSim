@@ -1,6 +1,6 @@
 extends Panel
 
-export(int, "Main Menu", "Track Editor", "Scenario Editor") var context: int
+@export var context: int # (int, "Main Menu", "Track Editor", "Scenario Editor")
 
 var selected_track: String = ""
 var selected_scenario: String = ""
@@ -12,25 +12,24 @@ var world_config: WorldConfig # config of selected world
 var loaded_scenario: TrackScenario = null
 var loaded_route: ScenarioRoute = null
 
-onready var track_selector: BoxContainer = $V/Tracks
-onready var scenario_selector: BoxContainer = $V/Scenarios
-onready var route_selector: BoxContainer = $V/Routes
-onready var time_selector: BoxContainer = $V/Times
-onready var train_selector: BoxContainer = $V/Trains
+@onready var track_selector: BoxContainer = $V/Tracks
+@onready var scenario_selector: BoxContainer = $V/Scenarios
+@onready var route_selector: BoxContainer = $V/Routes
+@onready var time_selector: BoxContainer = $V/Times
+@onready var train_selector: BoxContainer = $V/Trains
 
 
 func _ready() -> void:
-	track_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	scenario_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	route_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	time_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	train_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	track_selector.connect("visibility_changed", Callable(self, "_on_menu_visibility_changed"))
+	scenario_selector.connect("visibility_changed", Callable(self, "_on_menu_visibility_changed"))
+	route_selector.connect("visibility_changed", Callable(self, "_on_menu_visibility_changed"))
+	time_selector.connect("visibility_changed", Callable(self, "_on_menu_visibility_changed"))
+	train_selector.connect("visibility_changed", Callable(self, "_on_menu_visibility_changed"))
 
 
-func show() -> void:
+func _on_draw() -> void:
 	update_tracks()
 	$V/Tracks/H/ItemList.grab_focus()
-	.show()
 
 # Directly show the scenario selector for the given track.
 # Used by the "test track" feature in the track editor
@@ -41,7 +40,7 @@ func show_scenario_selector(track: String) -> void:
 	track_selector.hide()
 	scenario_selector.show()
 	$V/Scenarios/ItemList.grab_focus()
-	.show()
+	super.show()
 
 # Directly show the route selector for the given track and scenario.
 # Used by the "test track" feature in the scenario editor
@@ -54,7 +53,7 @@ func show_route_selector(track: String, scenario: String) -> void:
 	track_selector.hide()
 	route_selector.show()
 	$V/Routes/ItemList.grab_focus()
-	.show()
+	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,7 +93,7 @@ func load_game():
 	Root.selected_route = selected_route
 	Root.selected_time = selected_time
 	Root.selected_train = selected_train
-	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.pressed
+	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.button_pressed
 	hide()
 
 	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture, context)
@@ -112,6 +111,7 @@ func update_tracks() -> void:
 	for track in ContentLoader.repo.worlds:
 		$V/Tracks/H/ItemList.add_item(track.get_file().get_basename())
 	$V/Tracks/H/ItemList.select(0)
+	print(str(ContentLoader.repo.worlds))
 
 
 func update_scenarios() -> void:
@@ -197,16 +197,15 @@ func _on_Tracklist_item_selected(index) -> void:
 	$V/Tracks/H/Information/V/Image.texture = _make_image(selected_track.get_base_dir() + "/screenshot.png")
 
 
-func _make_image(path: String) -> Texture:
-	var screenshot_texture: Texture
-	var dir := Directory.new()
-	if dir.open("res://") == OK and dir.file_exists(path + ".import"):
+func _make_image(path: String) -> Texture2D:
+	var screenshot_texture: Texture2D
+	var dir := DirAccess.open("res://")
+	if dir.open("res://") != null and dir.file_exists(path + ".import") == true:
 		screenshot_texture = load(path)
 	else:
 		Logger.warn("Cannot find image path", path)
-		var img := Image.new()
-		img.create(1, 1, false, Image.FORMAT_RGB8)
-		img.fill(Color.black)
+		var img := Image.create(1, 1, false, Image.FORMAT_RGB8)
+		img.fill(Color.BLACK)
 		screenshot_texture = ImageTexture.new()
 		screenshot_texture.create_from_image(img)
 	return screenshot_texture
@@ -318,7 +317,7 @@ func _on_Trains_item_selected(index):
 	selected_train = ContentLoader.repo.trains[index]
 	# FIXME: this should not happen in the menu. The trains can get huge, so we should
 	# add a resource holding information about the trains
-	var train: Spatial = load(selected_train).instance()
+	var train: Node3D = load(selected_train).instantiate()
 	Logger.vlog("Current Train: " + selected_train)
 
 	$V/Trains/H/V/Information.show()
@@ -338,7 +337,7 @@ func _on_Trains_item_selected(index):
 	if not Root.mobile_version:
 		$V/Trains/H/V/EasyMode.show()
 	else:
-		$V/Trains/H/V/EasyMode/CheckButton.pressed = true
+		$V/Trains/H/V/EasyMode/CheckButton.button_pressed = true
 
 
 func _on_Trains_Back_pressed():

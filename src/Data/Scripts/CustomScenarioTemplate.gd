@@ -1,7 +1,7 @@
 extends Node
 
 var scenario: String = Root.current_scenario
-onready var world: Node = find_parent("World")
+@onready var world: Node = find_parent("World")
 var step: int = 0
 var message: String = ""
 var player: LTSPlayer

@@ -12,13 +12,11 @@ signal station_index_selected(station_index)
 func _ready() -> void:
 	item_list.connect("item_activated", Callable(self, "_on_ItemList_item_activated"))
 
-
-func show() -> void:
+func _on_draw() -> void:
 	if item_list.get_item_count() > 0:
 		item_list.grab_focus()
 	else:
 		$StationJumper/HBoxContainer/Cancel.grab_focus()
-	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -1,7 +1,7 @@
 extends Control
 
 
-@export var authors: Resource = authors as Authors
+@export var authors: Authors
 @export var label: PackedScene = preload("res://Data/UI/AboutAuthorLabel.tscn")
 @export var language_label: PackedScene = preload("res://Data/UI/AboutLanguageLabel.tscn")
 
@@ -18,10 +18,8 @@ func _ready() -> void:
 	show_authors(authors.contributors, contributors_vbox)
 	show_translators()
 
-
-func show() -> void:
+func _on_draw() -> void:
 	$Control/Back.grab_focus()
-	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:

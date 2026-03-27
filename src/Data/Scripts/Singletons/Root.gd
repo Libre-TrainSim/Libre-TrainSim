@@ -79,9 +79,8 @@ func name_node_appropriate(node: Node, wanted_name: String, parent_node: Node) -
 func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 	Logger.vlog(trackName.get_file().get_basename())
 	var trackTranslations := []
-	var dir := DirAccess.new()
-	var _unused = dir.open("res://Translations")
-	_unused = dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	var dir = DirAccess.open("res://Translations")
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = dir.get_next()
 		if file == "":
@@ -101,9 +100,8 @@ func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 	Logger.vlog(trainDirPath)
 	var trainTranslations := []
-	var dir := DirAccess.new()
-	var _unused = dir.open(trainDirPath)
-	_unused = dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	var dir = DirAccess.open(trainDirPath)
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	while(true):
 		var file: String = dir.get_next()
 		if file == "":
@@ -120,8 +118,8 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 # recursion_depth = -1 -> unlimited recursion
 # the result is saved to the 'found_files' variable
 func crawl_directory(found_files: Array, directory_path: String, file_extensions: Array, recursion_depth: int = -1) -> void:
-	var dir := DirAccess.new()
-	if dir.open(directory_path) != OK or dir.list_dir_begin()  != OK:# TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	var dir := DirAccess.open(directory_path)
+	if dir == null or dir.list_dir_begin() != OK:# TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		return
 
 	while true:
@@ -129,20 +127,20 @@ func crawl_directory(found_files: Array, directory_path: String, file_extensions
 		if file.is_empty():
 			break
 		elif dir.current_is_dir() and recursion_depth != 0:
-			crawl_directory(found_files, directory_path.plus_file(file), file_extensions, recursion_depth - 1)
+			crawl_directory(found_files, directory_path + "/" + file, file_extensions, recursion_depth - 1)
 		else:
 			var ext := file.get_extension()
 			if OS.has_feature("standalone") and ext == "import":
 				file = file.get_basename()
 				ext = file.get_extension()
 			if ext in file_extensions:
-				found_files.push_back(directory_path.plus_file(file))
+				found_files.push_back(directory_path + "/" + file)
 	dir.list_dir_end()
 
 
 func get_subfolders_of(directory_path: String) -> Array:
-	var dir := DirAccess.new()
-	if dir.open(directory_path) != OK or dir.list_dir_begin()  != OK:# TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
+	var dir := DirAccess.open(directory_path)
+	if dir.open(directory_path) == null or dir.list_dir_begin()  != OK:# TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		return []
 	var folder_names: Array = []
 	while(true):

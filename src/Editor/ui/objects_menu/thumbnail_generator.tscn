@@ -1,24 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dr33aho241jyi"]
+[gd_scene load_steps=2 format=3 uid="uid://dr33aho241jyi"]
 
 [ext_resource type="Script" uid="uid://b0u24jo6tbdsr" path="res://Editor/ui/objects_menu/thumbnail_generator.gd" id="2"]
 
-[sub_resource type="Sky" id="1"]
-
-[sub_resource type="Environment" id="2"]
-sky = SubResource("1")
-ambient_light_color = Color(1, 1, 1, 1)
-tonemap_mode = 4
-
-[sub_resource type="World3D" id="3"]
-environment = SubResource("2")
-
 [node name="ThumbnailGenerator" type="SubViewport"]
-size = Vector2(64, 64)
-own_world = true
-world = SubResource("3")
 transparent_bg = true
-msaa = 2
-render_target_v_flip = true
+size = Vector2i(64, 64)
 render_target_update_mode = 3
 script = ExtResource("2")
 

@@ -1,14 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://coypfrfp7aemo"]
+[gd_scene load_steps=14 format=3 uid="uid://coypfrfp7aemo"]
 
-[ext_resource type="Material" path="res://Resources/SignalTypes/hp_tafel.tres" id="1"]
+[ext_resource type="ArrayMesh" uid="uid://cif2jjniyee3f" path="res://Resources/SignalTypes/Hp/Light/Hp-Sig.obj" id="2_38b70"]
 [ext_resource type="Material" path="res://Resources/SignalTypes/LightSignalMaterial.tres" id="3"]
 [ext_resource type="ArrayMesh" uid="uid://34k7sxymbita" path="res://Resources/SignalTypes/HpTafel.obj" id="4"]
-
-[sub_resource type="Resource" id="Resource_38b70"]
-metadata/__load_path__ = "res://Resources/SignalTypes/Hp/Light3D/ScriptingHpLight.gd"
-
-[sub_resource type="Resource" id="Resource_kwy7q"]
-metadata/__load_path__ = "res://Resources/SignalTypes/Hp/Light3D/Hp-Sig.obj"
+[ext_resource type="Material" path="res://Resources/SignalTypes/hp_tafel.tres" id="4_kwy7q"]
 
 [sub_resource type="StandardMaterial3D" id="1"]
 albedo_color = Color(1, 0.00392157, 0.00392157, 1)
@@ -66,12 +61,11 @@ distance_fade_max_distance = 200.0
 size = Vector3(0.550892, 2.87686, 0.324287)
 
 [node name="VisualInstance3D" type="Node3D"]
-script = SubResource("Resource_38b70")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667)
 material_override = ExtResource("3")
-mesh = SubResource("Resource_kwy7q")
+mesh = ExtResource("2_38b70")
 
 [node name="Red1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0954146, 4.00953, 1.85626)
@@ -120,7 +114,7 @@ mesh = SubResource("4")
 [node name="HpTafel" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 1.74491)
 mesh = ExtResource("4")
-material/0 = ExtResource("1")
+surface_material_override/0 = ExtResource("4_kwy7q")
 
 [node name="SelectCollider" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37803, -1.33251, 1.65292)

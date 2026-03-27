@@ -24,7 +24,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	$FPS.text = String(Engine.get_frames_per_second())
+	$FPS.text = str(Engine.get_frames_per_second())
 	update_nextTable()
 	$IngameInformation/TrainInfo/Screen1.update_display(Math.speed_to_kmh(player.speed), \
 			player.technicalSoll, player.door_left.is_opened(), player.door_right.is_opened(), player.are_doors_closing(),\
@@ -42,7 +42,7 @@ func _unhandled_input(_event) -> void:
 
 var messages: int = 0
 func send_message(text: String, actions := []) -> void:
-	message_label.set_text_input(text, actions)
+	%MessageLabel.text = text
 	$Bling.play()
 	if messages == 0:
 		$Message.play("fade")
@@ -91,7 +91,7 @@ func update_nextTable() -> void:
 	## Update next Speedlimit
 	if player.nextSpeedLimitNode != null:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = Math.distance_to_string(player.distanceToNextSpeedLimit)
-		$IngameInformation/Next/GridContainer/SpeedLimit.text = String(player.nextSpeedLimitNode.speed) + " km/h"
+		$IngameInformation/Next/GridContainer/SpeedLimit.text = str(player.nextSpeedLimitNode.speed) + " km/h"
 	else:
 		$IngameInformation/Next/GridContainer/DistanceToSpeedLimit.text = "-"
 

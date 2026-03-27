@@ -7,9 +7,9 @@ func _ready() -> void:
 	$ScenarioList.connect("visibility_changed", Callable(self, "_on_ScenarioList_visibility_changed"))
 
 
-func show() -> void:
+func _on_draw() -> void:
 	$TrackList/ItemList.grab_focus()
-	super.show()
+	update_track_list()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -116,9 +116,3 @@ func _on_ItemList_item_activated(_index):
 func _on_scenarioList_user_removed_entries(entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir() + "/" + "scenarios"
 	DirAccess.remove_absolute(scenarios_folder + "/" + entry_names[0] + ".tres")
-
-
-
-func _on_Control_visibility_changed():
-	if visible:
-		update_track_list()

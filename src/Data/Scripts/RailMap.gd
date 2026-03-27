@@ -19,7 +19,7 @@ var chunk_origin: Vector2 = Vector2()
 
 func _ready() -> void:
 	render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	await get_tree().idle_frame
+	await get_tree().process_frame
 	init_map()
 
 
@@ -44,7 +44,7 @@ func init_map() -> void:
 			create_station(signal_i)
 
 	close_map()
-	camera.current = true
+	camera.make_current()
 
 
 func open_full_map() -> void:
@@ -202,15 +202,15 @@ func create_signal(signal_instance: Node3D) -> void:
 	sprite.owner = $Signals
 # warning-ignore:return_value_discarded
 	signal_instance.connect("signal_changed", Callable(self, "_on_signal_changed"))
-	_on_signal_changed(signal_instance) # call once to init
+#	_on_signal_changed(signal_instance) # call once to init
 
 
-func _on_signal_changed(signal_instance: Node3D) -> void:
-	var sprite: Sprite2D = $Signals.get_node(signal_instance.name)
-	match signal_instance.status:
-		SignalStatus.RED: sprite.texture = signal_red
-		SignalStatus.ORANGE: sprite.texture = signal_orange
-		SignalStatus.GREEN: sprite.texture = signal_green
+#func _on_signal_changed(signal_instance: Node3D) -> void:
+	#var sprite: Sprite2D = $Signals.get_node(signal_instance.name)
+	#match signal_instance.status:
+		#SignalStatus.RED: sprite.texture = signal_red
+		#SignalStatus.ORANGE: sprite.texture = signal_orange
+		#SignalStatus.GREEN: sprite.texture = signal_green
 
 
 func _on_world_origin_update(delta: Vector3):
@@ -283,8 +283,8 @@ func build_rail(rail: Node3D) -> Array:
 		var point_count: int = int(length / LINE_POINT_INTERVAL) + 1
 		# add point count many points along track
 		for i in range(0,point_count):
-			var rail_transform: Transform3D = rail.get_global_transform_at_distance(i*LINE_POINT_INTERVAL)
-			points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))
+			var rail_transform_1: Transform3D = rail.get_global_transform_at_distance(i*LINE_POINT_INTERVAL)
+			points.append(Vector2(rail_transform_1.origin.x, rail_transform_1.origin.z))
 		# add end point
 		var rail_transform: Transform3D = rail.get_global_transform_at_distance(rail.length)
 		points.append(Vector2(rail_transform.origin.x, rail_transform.origin.z))

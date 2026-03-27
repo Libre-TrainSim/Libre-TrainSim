@@ -42,28 +42,28 @@ func _init() -> void:
 	calculated_rail_route = []
 
 
-func duplicate(recursive: bool = true):
-	var copy = get_script().new()
-
-	copy.description = description
-	copy.train_name = train_name
-	copy.is_playable = is_playable
-	copy.activate_only_at_specific_routes = activate_only_at_specific_routes
-	copy.specific_routes = specific_routes.duplicate(true)
-	copy.interval = interval
-	copy.interval_start = interval_start
-	copy.interval_end = interval_end
-
-	copy.route_points = []
-	for p in route_points:
-		var pcopy = p.duplicate(true)
-		copy.route_points.append(pcopy)
-
-	copy.rail_logic_settings = {}
-	for s in rail_logic_settings:
-		copy.rail_logic_settings[s] = rail_logic_settings[s].duplicate(true)
-
-	return copy
+#func duplicate(recursive: bool = true):
+	#var copy = get_script().new()
+#
+	#copy.description = description
+	#copy.train_name = train_name
+	#copy.is_playable = is_playable
+	#copy.activate_only_at_specific_routes = activate_only_at_specific_routes
+	#copy.specific_routes = specific_routes.duplicate(true)
+	#copy.interval = interval
+	#copy.interval_start = interval_start
+	#copy.interval_end = interval_end
+#
+	#copy.route_points = []
+	#for p in route_points:
+		#var pcopy = p.duplicate(true)
+		#copy.route_points.append(pcopy)
+#
+	#copy.rail_logic_settings = {}
+	#for s in rail_logic_settings:
+		#copy.rail_logic_settings[s] = rail_logic_settings[s].duplicate(true)
+#
+	#return copy
 
 
 ##### ROUTE MANAGER FUNCTIONS
@@ -241,7 +241,7 @@ func get_minimal_platform_length(world: Node) -> int:
 
 func remove_point(index: int):
 	route_points[index].disconnect("route_rebuild_required", Callable(self, "_on_route_changed"))
-	route_points.remove(index)
+	route_points.remove_at(index)
 	dirty = true
 
 

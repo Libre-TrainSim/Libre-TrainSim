@@ -5,8 +5,7 @@ static func export_editor_track(track_name: String, export_path: String) -> Stri
 	var mod_path = editor_directory.plus_file(track_name)
 	export_path = export_path + "/" + track_name
 
-	var directory := DirAccess.new()
-	directory.open("user://")
+	var directory := DirAccess.open("user://")
 	directory.make_dir_recursive(export_path)
 	directory.change_dir(export_path)
 
@@ -36,16 +35,16 @@ static func export_editor_track(track_name: String, export_path: String) -> Stri
 
 static func get_files_in_directory(path: String) -> Array:
 	var files = []
-	var dir = DirAccess.new()
-	if dir.open(path) != OK:
+	var dir = DirAccess.open(path)
+	if DirAccess.open(path) == null:
 		return []
 
 	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name = dir.get_next()
 	while file_name != "":
 		if dir.current_is_dir():
-			files.append_array(get_files_in_directory(path.plus_file(file_name)))
+			files.append_array(get_files_in_directory(path + " /" + file_name))
 		else:
-			files.append(path.plus_file(file_name))
+			files.append(path + "/" + file_name)
 		file_name = dir.get_next()
 	return files

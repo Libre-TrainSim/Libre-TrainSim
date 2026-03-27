@@ -85,7 +85,7 @@ func select_entry(entry_name : String):
 	$VBoxContainer/ItemList.select(get_entry_id(entry_name))
 
 
-func get_size():
+func get_jlist_size():
 	return item_list.get_item_count()#
 
 
@@ -119,14 +119,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func is_entry_name_unique(entry : String):
-	for i in range(get_size()):
+	for i in range(get_jlist_size()):
 		if item_list.get_item_text(i) == entry:
 			return true
 	return false
 
 
 func get_entry_id(entry : String):
-	for i in range(get_size()):
+	for i in range(get_jlist_size()):
 		if item_list.get_item_text(i) == entry:
 			return i
 	return -1
@@ -139,7 +139,7 @@ func get_unique_entry_name(entry_name : String):
 
 
 func rename_entry_id(entry_id : int, new_entry_name : String):
-	if entry_id >= get_size():
+	if entry_id >= get_jlist_size():
 		print_debug("jList " + name + ": rename_entry(): entry_id out of bounds! Skipping...")
 		return
 	if only_unique_entries_allowed:
@@ -153,7 +153,7 @@ func duplicate_entry_id(entry_id : int):
 
 
 func remove_entry_id(entry_id : int):
-	if entry_id >= get_size():
+	if entry_id >= get_jlist_size():
 		print_debug("jList " + name + ": remove_entry_id(): entry_id out of bounds! Skipping...")
 		return
 	item_list.remove_item(entry_id)

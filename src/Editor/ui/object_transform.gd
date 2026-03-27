@@ -91,7 +91,7 @@ func _on_local_toggled(is_local: bool) -> void:
 		break
 
 
-func _on_selected_object_changed(new_object, type_string) -> void:
+func _on_selected_object_changed(new_object, object_type_string) -> void:
 	selected_object = new_object
-	selected_type = type_string
+	selected_type = object_type_string
 	visible = selected_type in ["Building", "Rail"]

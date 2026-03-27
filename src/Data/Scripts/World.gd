@@ -104,7 +104,7 @@ func apply_user_settings() -> void:
 	if get_node("DirectionalLight3D") != null:
 		$DirectionalLight3D.shadow_enabled = ProjectSettings["game/graphics/shadows"]
 	player.get_node("Camera3D").far = ProjectSettings["game/gameplay/view_distance"]
-	get_viewport().set_msaa(ProjectSettings["rendering/quality/filters/msaa"])
+	get_viewport().set_msaa_3d(ProjectSettings["rendering/anti_aliasing/quality/msaa_3d"])
 	$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
 
 
@@ -212,7 +212,7 @@ func spawn_train(train_spawn_information: TrainSpawnInformation) -> void:
 	new_train.spawn_point = route.get_spawn_point(new_train.length, self)
 	new_train.despawn_point = train_spawn_information.despawn_point
 	new_train.station_table = train_spawn_information.station_table
-	new_train.ready()
+	new_train.player_ready()
 
 
 var _check_train_spawn_timer: float = 0

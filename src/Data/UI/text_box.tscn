@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://ck30jmjmp2430"]
+[gd_scene load_steps=7 format=3 uid="uid://ck30jmjmp2430"]
 
-[ext_resource type="FontFile" path="res://Data/Fonts/message_font.tres" id="1"]
-[ext_resource type="FontFile" path="res://Data/Fonts/button_font.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://wfy018olvhbu" path="res://Data/Fonts/message_font.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://cawx7isjkmhv4" path="res://Data/Fonts/button_font.tres" id="2"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="3"]
 [ext_resource type="Script" uid="uid://d00vwxi2ppc04" path="res://Data/UI/text_box.gd" id="4"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_both.tres" id="6"]
@@ -36,11 +36,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("1")
+bbcode_enabled = true
 text = "Test Test meine Freunde"
-script = ExtResource("5")
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Ok" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 36)

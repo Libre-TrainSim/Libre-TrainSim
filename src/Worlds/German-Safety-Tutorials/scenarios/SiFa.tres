@@ -48,9 +48,9 @@ rail_name = "Rail6"
 [sub_resource type="Resource" id="133"]
 script = ExtResource("5")
 rail_logic_settings = {}
-route_points = [SubResource("131"), SubResource("132")]
+route_points = Array[Resource]([SubResource("131"), SubResource("132")])
 activate_only_at_specific_routes = false
-specific_routes = []
+specific_routes = Array[String]([])
 is_playable = true
 train_name = "JFR1_Red"
 description = "Learn how to use the SiFa system."

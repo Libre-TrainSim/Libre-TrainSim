@@ -36,14 +36,14 @@ func _ready():
 
 	$Feedback.connect("popup_hide", Callable($Buttons/Play, "grab_focus"))
 
-	$Play.connect("hide", Callable($Buttons/Play, "grab_focus"))
-	$Content.connect("hide", Callable($Buttons/Content, "grab_focus"))
-	create_menu.connect("hide", Callable($Buttons/Create, "grab_focus"))
-	jSettings.get_node("JSettings").connect("hide", Callable($Buttons/Settings, "grab_focus"))
-	$About.connect("hide", Callable($Buttons/About, "grab_focus"))
+	$Play.connect("hidden", Callable($Buttons/Play, "grab_focus"))
+	$Content.connect("hidden", Callable($Buttons/Content, "grab_focus"))
+	create_menu.connect("hidden", Callable($Buttons/Create, "grab_focus"))
+	jSettings.get_node("JSettings").connect("hidden", Callable($Buttons/Settings, "grab_focus"))
+	$About.connect("hidden", Callable($Buttons/About, "grab_focus"))
 
-	$TrackEditorSelection.connect("hide", Callable($CreateMenu/TrackEditor, "grab_focus"))
-	$ScenarioEditorSelection.connect("hide", Callable($CreateMenu/ScenarioEditor, "grab_focus"))
+	$TrackEditorSelection.connect("hidden", Callable($CreateMenu/TrackEditor, "grab_focus"))
+	$ScenarioEditorSelection.connect("hidden", Callable($CreateMenu/ScenarioEditor, "grab_focus"))
 
 
 func _unhandled_input(event: InputEvent) -> void:

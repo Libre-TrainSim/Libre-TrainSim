@@ -6,7 +6,7 @@ var personsNode: Node3D
 @export var length: int # Length of platform
 
 
-@export (PlatformSide.TypeHint) var platform_side: int = PlatformSide.NONE
+@export var platform_side: PlatformSide.TypeHint = PlatformSide.TypeHint.NONE
 @export var personSystem: bool = true
 @export var platformHeight: float = 1.2
 @export var platformStart: float = 2.5
@@ -91,13 +91,13 @@ func get_random_transform_at_platform() -> Transform3D:
 	if forward:
 		var randRailDistance = int(randf_range(on_rail_position, on_rail_position+length))
 		if platform_side == PlatformSide.LEFT:
-			return Transform3D(Basis( \
+			return Transform3D(Basis.from_euler( \
 					Vector3(0, rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance( \
 					randRailDistance, randf_range(-platformStart, -platformEnd)) \
 					+ Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
-			return Transform3D(Basis(Vector3(0, \
+			return Transform3D(Basis.from_euler(Vector3(0, \
 					rail.get_rad_at_distance(randRailDistance)+PI, 0)), \
 					rail.get_shifted_global_pos_at_distance( \
 					randRailDistance, randf_range(platformStart, platformEnd)) \
@@ -105,12 +105,12 @@ func get_random_transform_at_platform() -> Transform3D:
 	else:
 		var randRailDistance = int(randf_range(on_rail_position, on_rail_position-length))
 		if platform_side == PlatformSide.LEFT:
-			return Transform3D(Basis(Vector3(0, \
+			return Transform3D(Basis.from_euler(Vector3(0, \
 					rail.get_rad_at_distance(randRailDistance)+PI, 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					randf_range(platformStart, platformEnd)) + Vector3(0, platformHeight, 0))
 		if platform_side == PlatformSide.RIGHT:
-			return Transform3D(Basis(Vector3(0, \
+			return Transform3D(Basis.from_euler(Vector3(0, \
 					rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					randf_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))

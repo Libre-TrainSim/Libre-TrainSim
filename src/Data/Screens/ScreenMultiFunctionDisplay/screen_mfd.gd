@@ -5,9 +5,9 @@ func update_voltage(voltage):
 
 func update_time(time_seconds: int) -> void:
 	var time = Math.seconds_to_time(time_seconds)
-	var hour = String(time[0])
-	var minute = String(time[1])
-	var second = String(time[2])
+	var hour = str(time[0])
+	var minute = str(time[1])
+	var second = str(time[2])
 	if hour.length() == 1:
 		hour = "0" + hour
 	if minute.length() == 1:

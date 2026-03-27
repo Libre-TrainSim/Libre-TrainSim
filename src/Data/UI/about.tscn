@@ -5,8 +5,8 @@
 [ext_resource type="Resource" uid="uid://db44ovhhnl3to" path="res://authors.tres" id="3"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/panel_background.tres" id="4"]
 [ext_resource type="Theme" uid="uid://cm747u3js8c7p" path="res://Data/UI/styles/v_scrollbar.tres" id="5"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="7"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMenu.tres" id="8"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="7"]
+[ext_resource type="FontFile" uid="uid://c35rpd7f3edfj" path="res://Data/Fonts/FontMenu.tres" id="8"]
 
 [node name="About" type="PanelContainer"]
 anchors_preset = 15
@@ -27,7 +27,10 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8")
+theme_override_font_sizes/font_size = 60
 text = "MENU_ABOUT"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control"]
 layout_mode = 2
@@ -50,7 +53,10 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7")
+theme_override_font_sizes/font_size = 30
 text = "ABOUT_DEVELOPERS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Developers" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Developers"]
 layout_mode = 2
@@ -67,7 +73,10 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7")
+theme_override_font_sizes/font_size = 30
 text = "ABOUT_CONTRIBUTORS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Contributors" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Contributors"]
 layout_mode = 2
@@ -84,7 +93,10 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7")
+theme_override_font_sizes/font_size = 30
 text = "ABOUT_TRANSLATORS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Translators" type="VBoxContainer" parent="Control/ScrollContainer/VBoxAbout/Translators"]
 layout_mode = 2
@@ -99,4 +111,5 @@ theme = ExtResource("2")
 theme_override_fonts/font = ExtResource("7")
 text = "MENU_BACK"
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="pressed" from="Control/Back" to="." method="_on_Back_pressed"]

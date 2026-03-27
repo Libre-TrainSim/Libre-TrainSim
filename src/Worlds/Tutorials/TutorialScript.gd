@@ -13,17 +13,17 @@ func _ready() -> void:
 		queue_free()
 		return
 
-	await get_tree().idle_frame
+	await get_tree().process_frame
 	player = world.get_node("Players/Player")
 	assert(player)
 	if world.current_scenario == THE_BASICS:
 		Root.EasyMode = true
-		player.control_type = player.ControlType.COMBINED
+		player.control_type = player.TrainControlType.COMBINED
 	elif world.current_scenario == ADVANCED_TUTORIAL:
 			Root.EasyMode = false
 			if player.get_node_or_null("SafetySystems/SifaModule") != null:
 				player.get_node_or_null("SafetySystems/SifaModule")._force_enabled(true)
-			player.control_type = player.ControlType.SEPARATE
+			player.control_type = player.TrainControlType.SEPARATE
 			if player.get_node_or_null("SafetySystems/PZBModule") != null:
 				player.get_node_or_null("SafetySystems/PZBModule")._force_enabled(false)
 

@@ -216,9 +216,9 @@ rail_name = "KS_Rail2"
 [sub_resource type="Resource" id="121"]
 script = ExtResource("5")
 rail_logic_settings = {}
-route_points = [SubResource("119"), SubResource("120")]
+route_points = Array[Resource]([SubResource("119"), SubResource("120")])
 activate_only_at_specific_routes = false
-specific_routes = []
+specific_routes = Array[String]([])
 is_playable = true
 train_name = "JFR1_Red"
 description = "Learn how to use the new German KS Signalling System."

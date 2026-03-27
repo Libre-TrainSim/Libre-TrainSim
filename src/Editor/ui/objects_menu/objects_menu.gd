@@ -35,7 +35,7 @@ var header_only := false: set = set_header_only
 
 
 func _ready() -> void:
-	await get_tree().idle_frame
+	await get_tree().process_frame
 	assert(editor_info)
 
 	find_groups()
@@ -53,10 +53,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if mb.button_index == MOUSE_BUTTON_LEFT:
 		if moving_camera:
 			return
-		var position := preview_object.global_position
+		var preview_position := preview_object.global_position
 		cursor.remove_child(preview_object)
 		editor_info.push_object(current_object)
-		emit_signal("object_added", preview_object, position)
+		emit_signal("object_added", preview_object, preview_position)
 		preview_object = null
 		select_object()
 	elif mb.button_index == MOUSE_BUTTON_RIGHT:

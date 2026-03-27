@@ -11,10 +11,10 @@ enum Hz {
 	Hz1000 = 1000,
 	Hz2000 = 2000
 }
-@export var hz: Hz: int
+@export var hz: Hz
 
 
-@export var attached_signal: NodePath: NodePath: set = set_attached_signal
+@export var attached_signal: NodePath: set = set_attached_signal
 var attached_signal_node: Node3D
 func set_attached_signal(val: NodePath) -> void:
 	attached_signal = val

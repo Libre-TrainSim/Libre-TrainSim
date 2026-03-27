@@ -1,14 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://csvbncd7b5ffx"]
 
 [ext_resource type="Material" path="res://Resources/SignalTypes/LightSignalMaterial.tres" id="1"]
+[ext_resource type="ArrayMesh" uid="uid://dcuxxx10smgee" path="res://Resources/SignalTypes/Vo/Light/Vo-Sig.obj" id="2_5bw2s"]
 [ext_resource type="ArrayMesh" uid="uid://b8j406ecintdk" path="res://Resources/SignalTypes/VoTafel.obj" id="4"]
-[ext_resource type="Material" path="res://Resources/SignalTypes/vo_tafel.tres" id="5"]
-
-[sub_resource type="Resource" id="Resource_5bw2s"]
-metadata/__load_path__ = "res://Resources/SignalTypes/Vo/Light3D/VoLight.gd"
-
-[sub_resource type="Resource" id="Resource_x0mmh"]
-metadata/__load_path__ = "res://Resources/SignalTypes/Vo/Light3D/Vo-Sig.obj"
+[ext_resource type="Texture2D" uid="uid://b83jhlqix2new" path="res://Resources/SignalTypes/vo_tafel.png" id="4_x0mmh"]
 
 [sub_resource type="StandardMaterial3D" id="1"]
 albedo_color = Color(1, 0.658824, 0.00392157, 1)
@@ -48,16 +43,18 @@ distance_fade_mode = 1
 distance_fade_min_distance = 70.0
 distance_fade_max_distance = 200.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mal50"]
+albedo_texture = ExtResource("4_x0mmh")
+
 [sub_resource type="BoxShape3D" id="7"]
 size = Vector3(0.412814, 2.34241, 0.359881)
 
 [node name="VisualInstance3D" type="Node3D"]
-script = SubResource("Resource_5bw2s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.667)
 material_override = ExtResource("1")
-mesh = SubResource("Resource_x0mmh")
+mesh = ExtResource("2_5bw2s")
 
 [node name="OrangeVo1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.098472, 2.85173, 1.72741)
@@ -106,7 +103,7 @@ mesh = SubResource("4")
 [node name="VoTafel" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.677)
 mesh = ExtResource("4")
-material/0 = ExtResource("5")
+surface_material_override/0 = SubResource("StandardMaterial3D_mal50")
 
 [node name="SelectCollider" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37803, -1.33251, 1.6287)

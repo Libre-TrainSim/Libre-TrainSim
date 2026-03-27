@@ -103,9 +103,10 @@ func save_settings():
 
 
 func update_settings_window():
-	$"%Fullscreen".button_pressed = ProjectSettings["display/window/size/fullscreen"]
+	#Fullscreen was changed from bool to enum, need more edits
+	$"%Fullscreen".button_pressed = ProjectSettings["display/window/size/mode"]
 	$"%Vsync".button_pressed = ProjectSettings["display/window/vsync/vsync_mode"]
-	$"%FpsLimitToggle".button_pressed = (ProjectSettings["debug/settings/fps/force_fps"] != 0)
+	$"%FpsLimitToggle".button_pressed = (ProjectSettings["application/run/max_fps"] != 0)
 	show_fps_limit(not ProjectSettings["display/window/vsync/vsync_mode"])
 	$"%Shadows".button_pressed = ProjectSettings["game/graphics/shadows"]
 	$"%DynamicLights".button_pressed = ProjectSettings["game/graphics/enable_dynamic_lights"]
@@ -280,7 +281,7 @@ func _id_to_language_code(id : int):
 func show_fps_limit(val: bool):
 	$"%LabelFpsLimitToggle".visible = val
 	$"%FpsLimitToggle".visible = val
-	show_fps_limit_selector(val and $"%FpsLimitToggle".pressed)
+	show_fps_limit_selector(val and $"%FpsLimitToggle".button_pressed)
 	if not val:
 		set_fps_limit(0)
 
@@ -326,11 +327,11 @@ func _on_Back_pressed():
 
 
 func _on_Fullscreen_pressed():
-	set_fullscreen($"%Fullscreen".pressed)
+	set_fullscreen($"%Fullscreen".button_pressed)
 
 
 func _on_Vsync_pressed():
-	set_vsync($"%Vsync".pressed)
+	set_vsync($"%Vsync".button_pressed)
 
 
 func _on_FpsLimitToggle_toggled(button_pressed):
@@ -340,7 +341,7 @@ func _on_FpsLimitToggle_toggled(button_pressed):
 
 
 func _on_Shadows_pressed():
-	set_shadows($"%Shadows".pressed)
+	set_shadows($"%Shadows".button_pressed)
 
 
 func _on_Language_item_selected(index):
@@ -348,23 +349,23 @@ func _on_Language_item_selected(index):
 
 
 func _on_Fog_pressed():
-	set_fog($"%Fog".pressed)
+	set_fog($"%Fog".button_pressed)
 
 
 func _on_Persons_pressed():
-	set_persons($"%Persons".pressed)
+	set_persons($"%Persons".button_pressed)
 
 
 func _on_DynamicLights_pressed():
-	set_dynamic_lights($"%DynamicLights".pressed)
+	set_dynamic_lights($"%DynamicLights".button_pressed)
 
 
 func _on_SIFA_pressed():
-	set_sifa($"%SIFA".pressed)
+	set_sifa($"%SIFA".button_pressed)
 
 
 func _on_PZB_pressed():
-	set_pzb($"%PZB".pressed)
+	set_pzb($"%PZB".button_pressed)
 
 
 func _on_Reset_pressed():

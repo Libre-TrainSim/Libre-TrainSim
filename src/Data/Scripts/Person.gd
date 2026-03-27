@@ -137,7 +137,7 @@ func _handle_walk(delta: float) -> void:
 		vector_delta = _destination_path[0] - position
 	else:
 		global_transform.origin = global_transform.origin \
-				super.move_toward(_destination_path[0], delta*walking_speed)
+				.move_toward(_destination_path[0], delta*walking_speed)
 		vector_delta = _destination_path[0] - global_transform.origin
 
 	# Set rotation torwards destination pos
@@ -284,7 +284,8 @@ func _debug_draw_path() -> void:
 	var parent := get_parent_node_3d()
 	var last_position := global_transform.origin
 	for position in _destination_path:
-		var new_position := parent.to_global(position) \
+# Removed type hint from line below, no longer worked
+		var new_position = parent.to_global(position) \
 				if _is_destination_train_bound() \
 				else position
 		DebugDraw.draw_line_3d(last_position, new_position, _debug_color)

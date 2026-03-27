@@ -25,10 +25,9 @@ func validate():
 
 
 func create_mod(author_name: String, mod_unique_name: String, mod_display_name: String):
-	var mod_path = "res://Mods".plus_file(mod_unique_name)
+	var mod_path = "res://Mods/" + mod_unique_name
 
-	var d = DirAccess.new()
-	d.open("res://")
+	var d = DirAccess.open("res://")
 	d.make_dir_recursive(mod_path)
 	d.change_dir(mod_path)
 	d.make_dir("Environments")

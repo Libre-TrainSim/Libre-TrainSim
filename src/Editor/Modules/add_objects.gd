@@ -39,5 +39,5 @@ func _on_AddObjects_toggled(button_pressed: bool) -> void:
 	objects_menu.visible = button_pressed
 
 
-func _on_selected_object_changed(_new_object, type_string) -> void:
-	$RailLogicMenu.visible = $RailLogicMenu.visible and type_string == "Rail"
+func _on_selected_object_changed(_new_object, object_type_string) -> void:
+	$RailLogicMenu.visible = $RailLogicMenu.visible and object_type_string == "Rail"

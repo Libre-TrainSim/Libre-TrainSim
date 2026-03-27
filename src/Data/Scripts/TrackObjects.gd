@@ -8,7 +8,7 @@ extends MultiMeshInstance3D
 
 @export var mesh: Mesh = null
 @export var materials: Array[Material]= []
-@export var sides: PlatformSide.TypeHint = 0 # 0: No Side, 1: Left, 2: Right 4: Both
+@export var sides: PlatformSide.TypeHint = PlatformSide.TypeHint.NONE # 0: No Side, 1: Left, 2: Right 4: Both
 @export var spawnRate: float = 1
 @export var rows: int
 @export var distanceLength: float = 10
@@ -172,11 +172,11 @@ func update_multimesh_positions() -> void:
 		for b in range(rows):
 			if sides == 1 or sides == 3: ## Left Side
 				if randf_range(0,1) < spawnRate:
-					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, -(shift+(b)*distanceRows)) - self.position + Vector3(0,height,0)
+					var mesh_position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, -(shift+(b)*distanceRows)) - self.position + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx: float = randf_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz: float = randf_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
-						position += Vector3(shiftx, 0, shiftz)
+						mesh_position += Vector3(shiftx, 0, shiftz)
 					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
 						rot = randf_range(0, TAU)
@@ -185,19 +185,19 @@ func update_multimesh_positions() -> void:
 					var slopeRot = 0
 					if applySlopeRotation:
 						slopeRot = rail_node.get_height_rot(railpos)
-					var scale := Vector3(1,1,1)
+					var mesh_scale := Vector3(1,1,1)
 					if randomScale:
 						var scaleval: float = randf_range(1 - randomScaleFactor, 1 + randomScaleFactor)
-						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform3D(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
+						mesh_scale = Vector3(scaleval, scaleval, scaleval)
+					self.multimesh.set_instance_transform(idx, Transform3D(Basis(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(mesh_scale), mesh_position))
 					idx += 1
 			if sides == 2 or sides == 3: ## Right Side
 				if randf_range(0,1) < spawnRate:
-					var position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, (shift+(b)*distanceRows)) - self.position + Vector3(0,height,0)
+					var mesh_position: Vector3 = rail_node.get_shifted_pos_at_distance(railpos, (shift+(b)*distanceRows)) - self.position + Vector3(0,height,0)
 					if randomLocation:
 						var shiftx: float = randf_range(-distanceLength * randomLocationFactor, distanceLength * randomLocationFactor)
 						var shiftz: float = randf_range(-distanceRows * randomLocationFactor, distanceRows * randomLocationFactor)
-						position += Vector3(shiftx, 0, shiftz)
+						mesh_position += Vector3(shiftx, 0, shiftz)
 					var rot: float = rail_node.get_rad_at_distance(railpos)
 					if randomRotation:
 						rot = randf_range(0,360)
@@ -206,11 +206,11 @@ func update_multimesh_positions() -> void:
 					var slopeRot = 0
 					if applySlopeRotation:
 						slopeRot = rail_node.get_height_rot(railpos)
-					var scale := Vector3(1,1,1)
+					var mesh_scale := Vector3(1,1,1)
 					if randomScale:
 						var scaleval: float = randf_range(1 - randomScaleFactor, 1 + randomScaleFactor)
-						scale = Vector3(scaleval, scaleval, scaleval)
-					self.multimesh.set_instance_transform(idx, Transform3D(Basis.rotated(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(scale), position))
+						mesh_scale = Vector3(scaleval, scaleval, scaleval)
+					self.multimesh.set_instance_transform(idx, Transform3D(Basis(Vector3(0,0,1), slopeRot).rotated(Vector3(0,1,0), rot).scaled(mesh_scale), mesh_position))
 					idx += 1
 		railpos += distanceLength
 	self.multimesh.visible_instance_count = idx

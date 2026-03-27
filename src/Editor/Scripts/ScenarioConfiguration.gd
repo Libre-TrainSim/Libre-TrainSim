@@ -642,7 +642,9 @@ func update_rail_logic_ui():
 		$TabContainer/RailLogic/ContactPoints/GridContainer/SpecificTrains.text = sd.specific_train
 
 		$TabContainer/RailLogic/ContactPoints/GridContainer/Label2.visible = sd.enabled
-		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/.visible = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal.visible = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/LineEdit.visible = sd.enabled
+		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectedSignal/Select.visible = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/Label3.visible = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/AffectTime.visible = sd.enabled
 		$TabContainer/RailLogic/ContactPoints/GridContainer/Label4.visible = sd.enabled
@@ -826,7 +828,7 @@ func check_route_for_errors() -> void:
 		if signal_instance.type == "Signal" and get_operation_mode_of_signal(signal_instance.name) == SignalOperationMode.MANUAL:
 			signals_with_manual_mode.append(signal_instance.name)
 	if signals_with_manual_mode.size() != 0:
-		error_message += "Just for notice: The following signals are set to manual mode. They don't turn automatically back to green if not explicit called by a script, a contact point or by the time field in the signal settings. If you don't want this change them to block mode: \n%s\n\n" % String(signals_with_manual_mode)
+		error_message += "Just for notice: The following signals are set to manual mode. They don't turn automatically back to green if not explicit called by a script, a contact point or by the time field in the signal settings. If you don't want this change them to block mode: \n%s\n\n" % str(signals_with_manual_mode)
 
 	for i in range(loaded_route.size()):
 		if i != 0 and ((route_points[i] is RoutePointStation and route_points[i].stop_type == StopType.BEGINNING) or route_points[i] is RoutePointSpawnPoint):

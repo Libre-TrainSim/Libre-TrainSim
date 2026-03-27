@@ -9,26 +9,19 @@ size_flags_horizontal = 3
 script = ExtResource("2")
 
 [node name="Header" type="HBoxContainer" parent="."]
-offset_right = 185.0
-offset_bottom = 24.0
+layout_mode = 2
 
 [node name="Description" type="Button" parent="Header"]
-offset_right = 157.0
-offset_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "Description"
 clip_text = true
 
 [node name="SelectAll" type="CheckBox" parent="Header"]
-offset_left = 161.0
-offset_right = 185.0
-offset_bottom = 24.0
+layout_mode = 2
 
 [node name="Objects" type="HFlowContainer" parent="."]
-offset_top = 28.0
-offset_right = 185.0
-offset_bottom = 28.0
-mouse_filter = 1
+layout_mode = 2
 
 [connection signal="pressed" from="Header/Description" to="." method="_on_description_pressed"]
 [connection signal="toggled" from="Header/SelectAll" to="." method="_on_select_all"]

@@ -20,7 +20,7 @@ func filter(regex: RegEx, favourites: Dictionary,
 		return
 	var visible_count := 0
 	for object in get_objects():
-		object.visible = regex.search(object.get_text()) and \
+		object.visible = regex.search(object.get_object_text()) and \
 				(favourites.is_empty() and common.is_empty() and recent.is_empty()) \
 				or object.scene in favourites \
 				or object.scene in common \
@@ -69,7 +69,7 @@ func set_thumbnails() -> void:
 # See object button for more info why we use _input
 func _input(event: InputEvent) -> void:
 	var m := event as InputEventMouse
-	if !m or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or m.button_mask != MOUSE_BUTTON_LEFT || using_multiselect == m.shift:
+	if !m or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or m.button_mask != MOUSE_BUTTON_LEFT || using_multiselect == m.shift_pressed:
 		return
 	using_multiselect = m.shift
 	for child in get_objects():
@@ -83,9 +83,9 @@ func _on_select_all(toggled: bool) -> void:
 
 
 func _on_object_toggled(toggled: bool) -> void:
-	var all_pressed: bool = $Objects.get_child(0).pressed
+	var all_pressed: bool = $Objects.get_child(0).button_pressed
 	for child in get_objects():
-		if child.pressed != all_pressed:
+		if child.button_pressed != all_pressed:
 			$Header/SelectAll.set_pressed_no_signal(false)
 			# TODO: Make a cool three state checkbox!
 			return

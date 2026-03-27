@@ -2,16 +2,16 @@ class_name SizeChanger
 extends Separator
 
 
-enum Side {
-	TOP = MARGIN_TOP,
-	LEFT = MARGIN_LEFT,
-	BOTTOM = MARGIN_BOTTOM,
-	RIGHT = MARGIN_RIGHT
-}
+#enum Side {
+	#TOP = MARGIN_TOP,
+	#LEFT = MARGIN_LEFT,
+	#BOTTOM = MARGIN_BOTTOM,
+	#RIGHT = MARGIN_RIGHT
+#}
 
 
-@export var drag_side: Side := Side.RIGHT
-@export var target_path: NodePath: NodePath
+@export var drag_side: Side = Side.SIDE_RIGHT
+@export var target_path: NodePath
 
 
 var is_dragging := false
@@ -23,9 +23,9 @@ var is_dragging := false
 func _ready() -> void:
 	assert(target)
 	match drag_side:
-		Side.RIGHT, Side.LEFT:
+		Side.SIDE_RIGHT, Side.SIDE_LEFT:
 			mouse_default_cursor_shape = Control.CURSOR_HSIZE
-		Side.TOP, Side.BOTTOM:
+		Side.SIDE_TOP, Side.SIDE_BOTTOM:
 			mouse_default_cursor_shape = Control.CURSOR_VSIZE
 
 
@@ -43,11 +43,11 @@ func _gui_input(event: InputEvent) -> void:
 	var mm := event as InputEventMouseMotion
 	if mm and is_dragging:
 		match drag_side:
-			Side.RIGHT:
+			Side.SIDE_RIGHT:
 				target.offset_right += mm.position.x
-			Side.LEFT:
+			Side.SIDE_LEFT:
 				target.offset_left += mm.position.x
-			Side.TOP:
+			Side.SIDE_TOP:
 				target.offset_top += mm.position.y
-			Side.BOTTOM:
+			Side.SIDE_BOTTOM:
 				target.offset_bottom += mm.position.y

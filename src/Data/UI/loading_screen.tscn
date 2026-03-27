@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0h70qm2s8vnj"]
+[gd_scene load_steps=5 format=3 uid="uid://b0h70qm2s8vnj"]
 
-[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="1"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMediumBold.tres" id="2"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="3"]
+[ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://dx33rlnq7u7h2" path="res://Data/Fonts/FontMediumBold.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="3"]
 [ext_resource type="Script" uid="uid://bij542wxlk5ky" path="res://Data/UI/loading_screen.gd" id="4"]
 
 [node name="LoadingScreen" type="Control"]
@@ -10,6 +10,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("4")
 descriptions = ["Loading world...", "Building tracks", "Placing stations", "Measuring distances", "Adding timetables", "Spawning trains", "Creating traffic jams", "Spawning people", "Making trees", "Moving signals", "Cleaning train", "Joining world..."]
 
@@ -33,7 +35,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("1")
-script = ExtResource("5")
 
 [node name="Info" type="VBoxContainer" parent="Info"]
 layout_mode = 2

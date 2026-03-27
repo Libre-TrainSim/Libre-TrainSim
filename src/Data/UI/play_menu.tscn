@@ -1,8 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://bd8vxksalg0ww"]
 
 [ext_resource type="Theme" uid="uid://b5rrimsnqtske" path="res://Data/UI/styles/complete_menu.tres" id="1"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="2"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_focus.tres" id="3"]
+[ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="3_1r63x"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_disabled.tres" id="4"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_pressed.tres" id="5"]
 [ext_resource type="StyleBox" path="res://Data/UI/styles/button_left_hover.tres" id="6"]
@@ -16,9 +17,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource("1")
 script = ExtResource("10")
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="V" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -31,7 +29,8 @@ offset_bottom = -20.0
 
 [node name="Breadcrumb" type="Label" parent="V"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2")
+theme_override_fonts/font = ExtResource("3_1r63x")
+theme_override_font_sizes/font_size = 20
 text = "Hainfurt > Standart - Scenario > S1: Hainfurt - Buchenhain > 12:30:00"
 clip_text = true
 
@@ -75,10 +74,6 @@ expand_mode = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("2")
-script = ExtResource("9")
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="V/Tracks"]
 layout_mode = 2
@@ -86,11 +81,11 @@ layout_mode = 2
 [node name="Back" type="Button" parent="V/Tracks/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = ExtResource("7")
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
 theme_override_styles/hover = ExtResource("6")
 theme_override_styles/pressed = ExtResource("5")
-theme_override_styles/disabled = ExtResource("4")
-theme_override_styles/focus = ExtResource("3")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Tracks/HBoxContainer"]
@@ -116,11 +111,11 @@ layout_mode = 2
 [node name="Back" type="Button" parent="V/Scenarios/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = ExtResource("7")
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
 theme_override_styles/hover = ExtResource("6")
 theme_override_styles/pressed = ExtResource("5")
-theme_override_styles/disabled = ExtResource("4")
-theme_override_styles/focus = ExtResource("3")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Scenarios/HBoxContainer"]
@@ -146,11 +141,11 @@ layout_mode = 2
 [node name="Back" type="Button" parent="V/Routes/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = ExtResource("7")
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
 theme_override_styles/hover = ExtResource("6")
 theme_override_styles/pressed = ExtResource("5")
-theme_override_styles/disabled = ExtResource("4")
-theme_override_styles/focus = ExtResource("3")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Routes/HBoxContainer"]
@@ -176,11 +171,11 @@ layout_mode = 2
 [node name="Back" type="Button" parent="V/Times/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = ExtResource("7")
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
 theme_override_styles/hover = ExtResource("6")
 theme_override_styles/pressed = ExtResource("5")
-theme_override_styles/disabled = ExtResource("4")
-theme_override_styles/focus = ExtResource("3")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Select" type="Button" parent="V/Times/HBoxContainer"]
@@ -233,10 +228,6 @@ expand_mode = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("2")
-script = ExtResource("9")
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="EasyMode" type="Panel" parent="V/Trains/H/V"]
 visible = false
@@ -263,11 +254,11 @@ layout_mode = 2
 [node name="Back" type="Button" parent="V/Trains/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = ExtResource("7")
+theme_override_styles/focus = ExtResource("3")
+theme_override_styles/disabled = ExtResource("4")
 theme_override_styles/hover = ExtResource("6")
 theme_override_styles/pressed = ExtResource("5")
-theme_override_styles/disabled = ExtResource("4")
-theme_override_styles/focus = ExtResource("3")
+theme_override_styles/normal = ExtResource("7")
 text = "BACK"
 
 [node name="Play" type="Button" parent="V/Trains/HBoxContainer"]
@@ -275,6 +266,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "PLAY"
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="item_activated" from="V/Tracks/H/ItemList" to="." method="_on_Tracks_item_activated"]
 [connection signal="item_selected" from="V/Tracks/H/ItemList" to="." method="_on_Tracklist_item_selected"]
 [connection signal="pressed" from="V/Tracks/HBoxContainer/Back" to="." method="_on_Tracks_Back_pressed"]

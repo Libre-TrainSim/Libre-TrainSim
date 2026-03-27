@@ -27,10 +27,9 @@ func _ready() -> void:
 	train_selector.connect("visibility_changed", Callable(self, "_on_menu_visibility_changed"))
 
 
-func show() -> void:
+func _on_draw() -> void:
 	update_tracks()
 	$V/Tracks/H/ItemList.grab_focus()
-	super.show()
 
 # Directly show the scenario selector for the given track.
 # Used by the "test track" feature in the track editor
@@ -94,7 +93,7 @@ func load_game():
 	Root.selected_route = selected_route
 	Root.selected_time = selected_time
 	Root.selected_train = selected_train
-	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.pressed
+	Root.EasyMode = $V/Trains/H/V/EasyMode/CheckButton.button_pressed
 	hide()
 
 	LoadingScreen.load_world(selected_track, $V/Tracks/H/Information/V/Image.texture, context)
@@ -112,6 +111,7 @@ func update_tracks() -> void:
 	for track in ContentLoader.repo.worlds:
 		$V/Tracks/H/ItemList.add_item(track.get_file().get_basename())
 	$V/Tracks/H/ItemList.select(0)
+	print(str(ContentLoader.repo.worlds))
 
 
 func update_scenarios() -> void:
@@ -199,13 +199,12 @@ func _on_Tracklist_item_selected(index) -> void:
 
 func _make_image(path: String) -> Texture2D:
 	var screenshot_texture: Texture2D
-	var dir := DirAccess.new()
-	if dir.open("res://") == OK and dir.file_exists(path + ".import"):
+	var dir := DirAccess.open("res://")
+	if dir.open("res://") != null and dir.file_exists(path + ".import") == true:
 		screenshot_texture = load(path)
 	else:
 		Logger.warn("Cannot find image path", path)
-		var img := Image.new()
-		img.create(1, 1, false, Image.FORMAT_RGB8)
+		var img := Image.create(1, 1, false, Image.FORMAT_RGB8)
 		img.fill(Color.BLACK)
 		screenshot_texture = ImageTexture.new()
 		screenshot_texture.create_from_image(img)

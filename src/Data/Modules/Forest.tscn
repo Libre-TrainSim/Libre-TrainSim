@@ -2837,7 +2837,6 @@ albedo_color = Color(0.00392157, 0.996078, 0.576471, 0.0235294)
 
 [node name="Forest" type="MultiMeshInstance3D"]
 material_override = ExtResource("1")
-lod_max_distance = 100.0
 multimesh = SubResource("2")
 script = ExtResource("3")
 

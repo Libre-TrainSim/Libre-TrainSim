@@ -15,15 +15,10 @@ var debug_camera: DebugCamera
 @onready var show_stats := $DebugContainer/ShowStats as CheckBox
 
 @onready var objects := $Stats/Infos/Objects as Label
-@onready var verts := $Stats/Infos/Verts as Label
+@onready var primitives := $Stats/Infos/Primitives as Label
 @onready var draw_calls := $Stats/Infos/DrawCalls as Label
-@onready var mat_changes := $Stats/Infos/MatChanges as Label
-@onready var shader_changes := $Stats/Infos/ShaderChanges as Label
-@onready var surface_changes := $Stats/Infos/SurfaceChanges as Label
-@onready var compiles := $Stats/Infos/ShaderCompiles as Label
 @onready var video_mem := $Stats/Infos/VideoMem as Label
 @onready var texture_mem := $Stats/Infos/TextureMem as Label
-@onready var vertex_mem := $Stats/Infos/VertexMem as Label
 
 
 func _ready() -> void:
@@ -32,23 +27,18 @@ func _ready() -> void:
 	draw_station_label.button_pressed = ProjectSettings.get_setting("game/debug/draw_labels/station")
 	draw_wagon_label.button_pressed = ProjectSettings.get_setting("game/debug/draw_labels/wagon")
 	show_stats.button_pressed = ProjectSettings.get_setting("game/debug/show_stats")
-	stats.visible = show_stats.pressed
+	stats.visible = show_stats.button_pressed
 
 
 func _process(_delta: float) -> void:
 	if not stats.visible and not debug_container.visible:
 		return
 	fps_label.text = "%d FPS" % Engine.get_frames_per_second()
-	objects.text = "%d objects" % RenderingServer.get_rendering_info(RenderingServer.INFO_OBJECTS_IN_FRAME)
-	verts.text = "%d vertices" % RenderingServer.get_rendering_info(RenderingServer.INFO_VERTICES_IN_FRAME)
-	draw_calls.text = "%d draw calls" % RenderingServer.get_rendering_info(RenderingServer.INFO_DRAW_CALLS_IN_FRAME)
-	mat_changes.text = "%d mat changes" % RenderingServer.get_rendering_info(RenderingServer.INFO_MATERIAL_CHANGES_IN_FRAME)
-	shader_changes.text = "%d shader changes" % RenderingServer.get_rendering_info(RenderingServer.INFO_SHADER_CHANGES_IN_FRAME)
-	surface_changes.text = "%d surf changes" % RenderingServer.get_rendering_info(RenderingServer.INFO_SURFACE_CHANGES_IN_FRAME)
-	compiles.text = "%d shader comp" % RenderingServer.get_rendering_info(RenderingServer.INFO_SHADER_COMPILES_IN_FRAME)
-	video_mem.text = "%d MB vid mem" % (RenderingServer.get_rendering_info(RenderingServer.INFO_VIDEO_MEM_USED) / 1_000_000.0)
-	texture_mem.text = "%d MB tex mem" % (RenderingServer.get_rendering_info(RenderingServer.INFO_TEXTURE_MEM_USED) / 1_000_000.0)
-	vertex_mem.text = "%d MB vert mem" % (RenderingServer.get_rendering_info(RenderingServer.INFO_VERTEX_MEM_USED) / 1_000_000.0)
+	objects.text = "%d objects" % RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME)
+	primitives.text = "%d primitives" % RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)
+	draw_calls.text = "%d draw calls" % RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+	video_mem.text = "%d MB vid mem" % (RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_VIDEO_MEM_USED) / 1_000_000.0)
+	texture_mem.text = "%d MB tex mem" % (RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1_000_000.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -136,4 +126,4 @@ func _on_DrawStationLabel_pressed():
 
 func _on_ShowStats_pressed() -> void:
 	ProjectSettings.set_setting("game/debug/show_stats", show_stats.pressed)
-	stats.visible = show_stats.pressed
+	stats.visible = show_stats.button_pressed

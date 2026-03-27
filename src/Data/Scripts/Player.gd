@@ -15,11 +15,11 @@ var soll_command: float = -1 # The input by the player. (0: Nothing, 1: Full acc
 @export var length: float # Train length. # Used in Train Stations for example
 @export var speedLimit: float # Maximum Speed, the train can drive. (Unit: km/h)
 
-enum ControlType {
+enum TrainControlType {
 	COMBINED = 0,  # Arrow Keys (Combined Control)
 	SEPARATE = 1   # WASD (Separate Brake and Speed)
 }
-@export var control_type: ControlType = ControlType.COMBINED
+@export var control_type: TrainControlType = TrainControlType.COMBINED
 @export var electric: bool = true
 var pantograph: bool = false   ## Please just use this variable, if to check, if pantograph is up or down. true: up
 var pantographUp: bool = false ## is true, if pantograph is rising.
@@ -192,8 +192,8 @@ signal passed_signal(signal_instance)
 signal reverser_changed(reverser_state)
 signal _textbox_closed
 
-
-func ready() -> void:
+#SkyNote: I assume this is intended to be a function, not signal
+func player_ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Initiliaze Camera:
 	$Camera3D.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -221,7 +221,7 @@ func ready() -> void:
 
 	if Root.EasyMode or ai:
 		pantograph = true
-		control_type = ControlType.COMBINED
+		control_type = TrainControlType.COMBINED
 		reverser = ReverserState.FORWARD
 
 	if not electric:
@@ -469,7 +469,7 @@ func _exit_tree() -> void:
 
 
 func getCommand(delta: float) -> void:
-	if control_type == ControlType.COMBINED and not automaticDriving:
+	if control_type == TrainControlType.COMBINED and not automaticDriving:
 		if Input.is_action_pressed("acc+"):
 			soll_command += 0.7 * delta
 		if Input.is_action_pressed("acc-"):
@@ -485,7 +485,7 @@ func getCommand(delta: float) -> void:
 		if soll_command > 1: soll_command = 1
 		if soll_command < -1: soll_command = -1
 
-	elif control_type == ControlType.SEPARATE and not automaticDriving:
+	elif control_type == TrainControlType.SEPARATE and not automaticDriving:
 		if Input.is_action_pressed("acc+"):
 			accRoll += 0.7 * delta
 		if Input.is_action_pressed("acc-"):
@@ -1025,7 +1025,7 @@ func checkSpeedLimit(delta: float) -> void:
 	if Math.speed_to_kmh(speed) > currentSpeedLimit + 5 and checkSpeedLimitTimer > 5:
 		checkSpeedLimitTimer = 0
 		score -= int(round((Math.speed_to_kmh(speed) - currentSpeedLimit) * SCORE_MULTIPLIER_TOO_FAST))
-		send_message(tr("YOU_ARE_DRIVING_TO_FAST") + " " +  String(currentSpeedLimit))
+		send_message(tr("YOU_ARE_DRIVING_TO_FAST") + " " +  str(currentSpeedLimit))
 	checkSpeedLimitTimer += delta
 
 
@@ -1143,12 +1143,12 @@ func get_route_to_free_wagon(person_position: Vector3) -> Array:
 	return [_station_doors_wagons[index], assigned_door, [assigned_door.global_transform.origin]]
 
 
-func get_closest_door_to_position(position: Vector3, doors_array: Array) -> int:
+func get_closest_door_to_position(person_position: Vector3, doors_array: Array) -> int:
 	var nearestDoorIndex := 0
 	for index in range(doors_array.size()):
-		if doors_array[index].global_transform.origin.distance_to(position) \
+		if doors_array[index].global_transform.origin.distance_to(person_position) \
 				< doors_array[nearestDoorIndex].global_transform.origin \
-				super.distance_to(position):
+				.distance_to(person_position):
 			nearestDoorIndex = index
 	return nearestDoorIndex
 
@@ -1193,7 +1193,7 @@ func get_all_upcoming_signals_of_types(types : Array) -> Array:
 func get_all_previous_signals_of_types(types: Array) -> Array:
 	var return_value: Array = []
 	var search_array: Array = baked_route_signal_names.slice(0, next_signal_index-1)
-	search_array.invert()
+	search_array.reverse()
 	for signal_name in search_array:
 		var signal_instance: Node3D = world.get_node("Signals/"+signal_name)
 		if signal_instance == null: continue
@@ -1225,7 +1225,7 @@ func check_for_next_station(delta: float) -> void:  ## Used for displaying (In 1
 
 	if not stationMessageSent and get_distance_to_signal(nextStation) < 1001 and current_station_table_entry.stop_type != StopType.DO_NOT_STOP and not is_in_station:
 		stationMessageSent = true
-		var distanceS: String = String(int(get_distance_to_signal(nextStation)/100)*100+100)
+		var distanceS: String = str(int(get_distance_to_signal(nextStation)/100)*100+100)
 		if distanceS == "1000":
 			distanceS = "1km"
 		else:
@@ -1711,7 +1711,7 @@ func _on_scenario_ended() -> void:
 		GameStartContext.MainMenu:
 			LoadingScreen.load_main_menu()
 		GameStartContext.TrackEditor:
-			var screenshot = Image.new().load(Root.current_track.get_base_dir().plus_file("screenshot.png"))
+			var screenshot = Image.new().load(Root.current_track.get_base_dir() + "/" + "screenshot.png")
 			LoadingScreen.load_editor(Root.current_track.get_basename(), screenshot)
 		GameStartContext.ScenarioEditor:
 			Root.Editor = true

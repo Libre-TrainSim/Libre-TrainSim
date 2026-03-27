@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cgbiuy172srtk" path="res://Editor/Scripts/Editor.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://ci5wkndgdp8gf" path="res://Editor/Modules/RailLogic.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://ckrna76x3sueo" path="res://Data/Postprocess/OutlinesPP.tscn" id="4"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="5"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="5"]
 [ext_resource type="PackedScene" uid="uid://8362naoiach7" path="res://Editor/Docks/RailBuilder/RailBuilder.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://bvc2401k2fmsl" path="res://Editor/Docks/RailAttachments/RailAttachments.tscn" id="7"]
 [ext_resource type="Material" path="res://Data/UI/blur.tres" id="8"]
@@ -71,56 +71,38 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ShowSettingsButton" type="Button" parent="EditorHUD/GlobalMenu"]
-offset_right = 111.0
-offset_bottom = 20.0
-grow_horizontal = 0
+layout_mode = 2
 text = "Hide Settings"
 
 [node name="HSeparator" type="HSeparator" parent="EditorHUD/GlobalMenu"]
-offset_top = 24.0
-offset_right = 111.0
-offset_bottom = 28.0
+layout_mode = 2
 
 [node name="TestTrack" type="Button" parent="EditorHUD/GlobalMenu"]
-offset_top = 32.0
-offset_right = 111.0
-offset_bottom = 52.0
+layout_mode = 2
 text = "Test Track"
 
 [node name="SaveWorldButton" type="Button" parent="EditorHUD/GlobalMenu"]
-offset_top = 56.0
-offset_right = 111.0
-offset_bottom = 76.0
+layout_mode = 2
 text = "Save World"
 
 [node name="ExportTrack" type="Button" parent="EditorHUD/GlobalMenu"]
-offset_top = 80.0
-offset_right = 111.0
-offset_bottom = 100.0
+layout_mode = 2
 text = "Export Track"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HSeparator2" type="HSeparator" parent="EditorHUD/GlobalMenu"]
-offset_top = 104.0
-offset_right = 111.0
-offset_bottom = 108.0
+layout_mode = 2
 
 [node name="JumpToStation" type="MenuButton" parent="EditorHUD/GlobalMenu"]
-offset_top = 112.0
-offset_right = 111.0
-offset_bottom = 132.0
+layout_mode = 2
 text = "Jump To Station"
 flat = false
 
 [node name="ShowConfig" type="Button" parent="EditorHUD/GlobalMenu"]
-offset_top = 136.0
-offset_right = 111.0
-offset_bottom = 156.0
+layout_mode = 2
 text = "Show Config"
 
 [node name="Settings" type="Control" parent="EditorHUD"]
+layout_mode = 3
 anchor_left = 0.624
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -130,35 +112,34 @@ offset_right = -7.0
 offset_bottom = -11.0
 
 [node name="TabContainer" type="TabContainer" parent="EditorHUD/Settings"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -7.224
 theme_override_styles/panel = SubResource("1")
+current_tab = 0
 
 [node name="RailBuilder" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("6")]
-offset_left = 8.0
-offset_top = 25.0
-offset_right = -1.0
-offset_bottom = -1.0
+layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="RailLogic" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("3")]
 visible = false
-offset_left = 4.0
-offset_top = 32.0
-offset_right = -4.0
-offset_bottom = -4.0
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="RailAttachments" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("7")]
 visible = false
-offset_left = 4.0
-offset_top = 32.0
-offset_right = -4.0
-offset_bottom = -4.0
+layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="BuildingSettings" parent="EditorHUD/Settings/TabContainer" instance=ExtResource("28")]
 visible = false
+layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="VSeparator" type="VSeparator" parent="EditorHUD/Settings"]
+layout_mode = 0
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -60.0
@@ -169,6 +150,8 @@ drag_side = 0
 target_path = NodePath("..")
 
 [node name="ObjectName" type="Control" parent="EditorHUD"]
+layout_mode = 3
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -375.0
@@ -177,10 +160,12 @@ offset_bottom = 30.0
 grow_horizontal = 2
 
 [node name="Panel" type="Panel" parent="EditorHUD/ObjectName"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Name" type="HBoxContainer" parent="EditorHUD/ObjectName"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
@@ -191,54 +176,37 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="EditorHUD/ObjectName/Name"]
-offset_top = 5.0
-offset_right = 102.0
-offset_bottom = 19.0
-grow_horizontal = 2
+layout_mode = 2
 text = "Current Object: "
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LineEdit" type="LineEdit" parent="EditorHUD/ObjectName/Name"]
-offset_left = 106.0
-offset_right = 487.0
-offset_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Clear" type="Button" parent="EditorHUD/ObjectName/Name"]
-offset_left = 491.0
-offset_right = 535.0
-offset_bottom = 24.0
+layout_mode = 2
 text = "Clear"
 
 [node name="Rename" type="Button" parent="EditorHUD/ObjectName/Name"]
-offset_left = 539.0
-offset_right = 603.0
-offset_bottom = 24.0
+layout_mode = 2
 text = "Rename"
 
 [node name="Delete" type="Button" parent="EditorHUD/ObjectName/Name"]
-offset_left = 607.0
-offset_right = 662.0
-offset_bottom = 24.0
+layout_mode = 2
 text = "Delete"
 
 [node name="Duplicate" type="Button" parent="EditorHUD/ObjectName/Name"]
-offset_left = 666.0
-offset_right = 739.0
-offset_bottom = 24.0
+layout_mode = 2
 text = "Duplicate"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/ObjectName"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ObjectTransform" type="PanelContainer" parent="EditorHUD"]
 visible = false
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -375.0
@@ -249,14 +217,10 @@ theme_override_styles/panel = SubResource("2")
 script = ExtResource("30")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/ObjectTransform"]
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 743.0
-offset_bottom = 47.0
+layout_mode = 2
 
 [node name="x" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_right = 87.0
-offset_bottom = 40.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -1000.0
 max_value = 1000.0
@@ -267,9 +231,7 @@ prefix = "x:"
 suffix = "m"
 
 [node name="y" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_left = 91.0
-offset_right = 178.0
-offset_bottom = 40.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -10.0
 step = 0.1
@@ -279,9 +241,7 @@ prefix = "y:"
 suffix = "m"
 
 [node name="z" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_left = 182.0
-offset_right = 270.0
-offset_bottom = 40.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -1000.0
 max_value = 1000.0
@@ -292,9 +252,7 @@ prefix = "z:"
 suffix = "m"
 
 [node name="x_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_left = 274.0
-offset_right = 361.0
-offset_bottom = 40.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -360.0
 max_value = 360.0
@@ -305,9 +263,7 @@ prefix = "rX"
 suffix = "°"
 
 [node name="y_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_left = 365.0
-offset_right = 452.0
-offset_bottom = 40.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -360.0
 max_value = 360.0
@@ -318,9 +274,7 @@ prefix = "rY:"
 suffix = "°"
 
 [node name="z_rot" type="SpinBox" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_left = 456.0
-offset_right = 544.0
-offset_bottom = 40.0
+layout_mode = 2
 size_flags_horizontal = 3
 min_value = -360.0
 max_value = 360.0
@@ -331,12 +285,11 @@ prefix = "rZ:"
 suffix = "°"
 
 [node name="Local" type="CheckButton" parent="EditorHUD/ObjectTransform/HBoxContainer"]
-offset_left = 548.0
-offset_right = 736.0
-offset_bottom = 40.0
+layout_mode = 2
 text = "Local Transforms"
 
 [node name="Objects" type="PanelContainer" parent="EditorHUD"]
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_top = 168.0
 offset_right = 241.0
@@ -345,141 +298,109 @@ script = ExtResource("18")
 cursor_path = NodePath("../../WorldCusor")
 
 [node name="MarginContainer" type="MarginContainer" parent="EditorHUD/Objects"]
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 234.0
-offset_bottom = 380.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_right = 8
 theme_override_constants/margin_left = 34
+theme_override_constants/margin_right = 8
 
 [node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer"]
-offset_left = 34.0
-offset_right = 219.0
-offset_bottom = 373.0
+layout_mode = 2
 mouse_filter = 0
 
 [node name="Search" type="LineEdit" parent="EditorHUD/Objects/MarginContainer/Content"]
-offset_right = 185.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
-clear_button_enabled = true
 placeholder_text = "Search"
+clear_button_enabled = true
 caret_blink = true
 caret_blink_interval = 0.5
 
 [node name="ScrollContainer" type="ScrollContainer" parent="EditorHUD/Objects/MarginContainer/Content"]
-offset_top = 30.0
-offset_right = 185.0
-offset_bottom = 373.0
+layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
-scroll_horizontal_enabled = false
 
 [node name="Content" type="VBoxContainer" parent="EditorHUD/Objects/MarginContainer/Content/ScrollContainer"]
-offset_right = 173.0
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 tooltip_text = "- Use shift to select multiple objects.
 - Right-click deselects all selected objects.
 - Shift+scroll wheel chooses a random object of the selected objects."
 mouse_filter = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Overlay" type="Control" parent="EditorHUD/Objects"]
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 234.0
-offset_bottom = 380.0
+layout_mode = 2
 mouse_filter = 2
 
 [node name="Filters" type="VBoxContainer" parent="EditorHUD/Objects/Overlay"]
+layout_mode = 0
 offset_right = 30.0
 offset_bottom = 186.0
 script = ExtResource("20")
 
 [node name="Buildings" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_right = 30.0
-offset_bottom = 22.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Buildings"
 icon = ExtResource("12")
 clip_text = true
-align = 0
 
 [node name="Vegetation" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 26.0
-offset_right = 30.0
-offset_bottom = 48.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Vegetation"
 icon = ExtResource("26")
 clip_text = true
-align = 0
 
 [node name="Infrastructure" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 52.0
-offset_right = 30.0
-offset_bottom = 74.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Infrastructure"
 icon = ExtResource("23")
 clip_text = true
-align = 0
 
 [node name="Decorative" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 78.0
-offset_right = 30.0
-offset_bottom = 100.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Decorative"
 icon = ExtResource("22")
 clip_text = true
-align = 0
 
 [node name="HSeparator" type="HSeparator" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 104.0
-offset_right = 30.0
-offset_bottom = 108.0
+layout_mode = 2
 
 [node name="Favourites" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 112.0
-offset_right = 30.0
-offset_bottom = 134.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Favourites"
 icon = ExtResource("16")
 clip_text = true
-align = 0
 
 [node name="MostCommon" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 138.0
-offset_right = 30.0
-offset_bottom = 160.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Most Commonly Used"
 icon = ExtResource("24")
 clip_text = true
-align = 0
 
 [node name="MostRecent" type="Button" parent="EditorHUD/Objects/Overlay/Filters"]
-offset_top = 164.0
-offset_right = 30.0
-offset_bottom = 186.0
 custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
 toggle_mode = true
 text = "Most Recently Used"
 icon = ExtResource("25")
 clip_text = true
-align = 0
 
 [node name="Random" type="Button" parent="EditorHUD/Objects/Overlay"]
+layout_mode = 0
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = 116.0
@@ -489,10 +410,10 @@ toggle_mode = true
 text = "Random"
 icon = ExtResource("15")
 clip_text = true
-align = 0
 script = ExtResource("20")
 
 [node name="SizeChanger" type="VSeparator" parent="EditorHUD/Objects/Overlay"]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -506,53 +427,55 @@ target_path = NodePath("../..")
 [node name="ThumbnailGenerator" parent="EditorHUD/Objects" instance=ExtResource("19")]
 
 [node name="AddObjects" type="Control" parent="EditorHUD"]
+layout_mode = 3
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
+grow_vertical = 0
 script = ExtResource("10")
 
 [node name="RailLogicMenu" type="ItemList" parent="EditorHUD/AddObjects"]
 visible = false
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 11.2063
 offset_top = -152.224
 offset_right = 172.206
 offset_bottom = -53.2236
-items = ["Signal", null, false, "Station", null, false, "Speed Limit", null, false, "Warn Speed Limit", null, false, "Contact Point", null, false]
-__meta__ = {
-"_edit_use_anchors_": false
-}
+item_count = 5
+item_0/text = "Signal"
+item_1/text = "Station"
+item_2/text = "Speed Limit"
+item_3/text = "Warn Speed Limit"
+item_4/text = "Contact Point"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EditorHUD/AddObjects"]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -40.0
 offset_right = 194.0
 
 [node name="AddRail" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
-offset_right = 35.0
-offset_bottom = 40.0
+layout_mode = 2
 text = "Rail"
 
 [node name="AddRailObject" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
-offset_left = 39.0
-offset_right = 128.0
-offset_bottom = 40.0
+layout_mode = 2
 tooltip_text = "Please select a rail first before adding a dependent rail object."
 disabled = true
 text = "Rail Objects"
 script = ExtResource("27")
 
 [node name="AddObjects" type="Button" parent="EditorHUD/AddObjects/HBoxContainer"]
-offset_left = 132.0
-offset_right = 194.0
-offset_bottom = 40.0
+layout_mode = 2
 toggle_mode = true
-pressed = true
 text = "Objects"
 
 [node name="Content_Selector" parent="EditorHUD" instance=ExtResource("11")]
 visible = false
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -564,6 +487,7 @@ offset_bottom = 114.0
 
 [node name="Message" type="Panel" parent="EditorHUD"]
 visible = false
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -572,11 +496,9 @@ offset_left = -155.0
 offset_top = -58.5
 offset_right = 155.0
 offset_bottom = 58.5
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="RichTextLabel" type="RichTextLabel" parent="EditorHUD/Message"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -585,11 +507,9 @@ offset_left = -139.0
 offset_top = -40.5
 offset_right = 141.0
 offset_bottom = 21.5
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MessageClose" type="Button" parent="EditorHUD/Message"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -599,23 +519,26 @@ offset_top = -24.4898
 offset_right = 22.0
 offset_bottom = -4.48984
 text = "Okay"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Pause" type="Control" parent="EditorHUD"]
 process_mode = 2
 visible = false
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("14")
 
 [node name="ColorRect" type="ColorRect" parent="EditorHUD/Pause"]
 material = ExtResource("8")
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EditorHUD/Pause"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -624,48 +547,28 @@ offset_left = -163.0
 offset_top = -80.5
 offset_right = 163.0
 offset_bottom = 80.5
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Back" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
-offset_right = 326.0
-offset_bottom = 49.0
+layout_mode = 2
 theme = ExtResource("13")
 theme_override_fonts/font = ExtResource("5")
 text = "BACK"
 
 [node name="ExitWithoutSave" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
-offset_top = 53.0
-offset_right = 326.0
-offset_bottom = 102.0
+layout_mode = 2
 theme = ExtResource("13")
 theme_override_fonts/font = ExtResource("5")
 text = "EXIT_WITHOUT_SAVING"
 
 [node name="SaveAndExit" type="Button" parent="EditorHUD/Pause/VBoxContainer"]
-offset_top = 106.0
-offset_right = 326.0
-offset_bottom = 155.0
+layout_mode = 2
 theme = ExtResource("13")
 theme_override_fonts/font = ExtResource("5")
 text = "SAVE_AND_EXIT"
 
 [node name="SnapDialog" type="ConfirmationDialog" parent="EditorHUD"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -54.5
-offset_right = 150.0
-offset_bottom = 54.5
-window_title = "Please confirm..."
 dialog_text = "Do you want to automatically correct this rail so it is drivable?"
 dialog_autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PlayMenu" parent="EditorHUD" instance=ExtResource("29")]
 visible = false
@@ -689,10 +592,6 @@ highlight_color = Color(1, 1, 0, 1)
 [node name="WorldCusor" type="Node3D" parent="."]
 script = ExtResource("21")
 
-[connection signal="selected_object_changed" from="." to="EditorHUD" method="_on_selected_object_changed"]
-[connection signal="selected_object_changed" from="." to="EditorHUD/ObjectTransform" method="_on_selected_object_changed"]
-[connection signal="selected_object_changed" from="." to="EditorHUD/AddObjects" method="_on_selected_object_changed"]
-[connection signal="selected_object_changed" from="." to="EditorHUD/AddObjects/HBoxContainer/AddRailObject" method="_on_selected_object_changed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/ShowSettingsButton" to="EditorHUD" method="_on_ShowSettings_pressed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/TestTrack" to="." method="_on_TestTrack_pressed"]
 [connection signal="pressed" from="EditorHUD/GlobalMenu/SaveWorldButton" to="." method="_on_SaveWorldButton_pressed"]
@@ -733,8 +632,7 @@ script = ExtResource("21")
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/RailAttachments" method="_on_Content_Selector_resource_selected"]
 [connection signal="resource_selected" from="EditorHUD/Content_Selector" to="EditorHUD/Settings/TabContainer/BuildingSettings" method="_on_Content_Selector_resource_selected"]
 [connection signal="pressed" from="EditorHUD/Message/MessageClose" to="." method="_on_MessageClose_pressed"]
-[connection signal="hide" from="EditorHUD/Pause" to="EditorHUD/Pause" method="_on_hide"]
-[connection signal="save_requested" from="EditorHUD/Pause" to="." method="_on_Pause_save_requested"]
+[connection signal="draw" from="EditorHUD/Pause" to="EditorHUD/Pause" method="_on_draw"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/Back" to="EditorHUD/Pause" method="_on_Back_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/ExitWithoutSave" to="EditorHUD/Pause" method="_on_ExitWithoutSave_pressed"]
 [connection signal="pressed" from="EditorHUD/Pause/VBoxContainer/SaveAndExit" to="EditorHUD/Pause" method="_on_SaveAndExit_pressed"]

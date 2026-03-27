@@ -20,7 +20,7 @@ func _on_world_origin_shifted(delta: Vector3):
 func _prepare_orbit() -> void:
 	assert(get_parent() != orbit_rotation_helper)
 	get_parent().add_child(orbit_rotation_helper)
-	var target_point := Plane.PLANE_XZ.intersects_ray(\
+	var target_point = Plane.PLANE_XZ.intersects_ray(\
 			global_transform.origin, project_ray_normal(get_viewport().size/2))
 	if target_point == null:
 		# Set point with zoom_level distance in direction of camera

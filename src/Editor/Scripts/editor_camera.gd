@@ -112,4 +112,4 @@ func _free_mouse() -> void:
 
 
 func _no_modifier(ev: InputEventWithModifiers) -> bool:
-	return !ev.shift and !ev.alt and !ev.control and !ev.command and !ev.meta
+	return !ev.shift_pressed and !ev.alt_pressed and !ev.ctrl_pressed and !ev.meta_pressed

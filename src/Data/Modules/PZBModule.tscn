@@ -38,167 +38,108 @@ _distance = 1250
 
 [node name="DEBUG" type="Control" parent="."]
 visible = false
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3")
 
 [node name="PanelContainer" type="PanelContainer" parent="DEBUG"]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 60.0
 offset_right = 14.0
 offset_bottom = 14.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="GridContainer" type="GridContainer" parent="DEBUG/PanelContainer"]
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 136.0
-offset_bottom = 219.0
+layout_mode = 2
 columns = 2
 
 [node name="PZBType_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_right = 125.0
-offset_bottom = 14.0
+layout_mode = 2
 text = "PZB Type: "
 
 [node name="PZBType" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_right = 129.0
-offset_bottom = 14.0
+layout_mode = 2
 
 [node name="PZBMode_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 18.0
-offset_right = 125.0
-offset_bottom = 32.0
+layout_mode = 2
 text = "PZB Mode: "
 
 [node name="PZBMode" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 18.0
-offset_right = 129.0
-offset_bottom = 32.0
+layout_mode = 2
 
 [node name="PZBMagnet_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 36.0
-offset_right = 125.0
-offset_bottom = 50.0
+layout_mode = 2
 text = "PZB Magnet:"
 
 [node name="PZBMagnet" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 36.0
-offset_right = 129.0
-offset_bottom = 50.0
+layout_mode = 2
 
 [node name="PZBSpeed_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 54.0
-offset_right = 125.0
-offset_bottom = 68.0
+layout_mode = 2
 text = "PZB Speed:"
 
 [node name="PZBSpeed" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 54.0
-offset_right = 129.0
-offset_bottom = 68.0
+layout_mode = 2
 
 [node name="AckTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 72.0
-offset_right = 125.0
-offset_bottom = 86.0
+layout_mode = 2
 text = "Ack Timer: "
 
 [node name="AckTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 72.0
-offset_right = 129.0
-offset_bottom = 86.0
+layout_mode = 2
 
 [node name="RestrictiveTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 90.0
-offset_right = 125.0
-offset_bottom = 104.0
+layout_mode = 2
 text = "Restrictive Timer: "
 
 [node name="RestrictiveTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 90.0
-offset_right = 129.0
-offset_bottom = 104.0
+layout_mode = 2
 
 [node name="SpeedTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 108.0
-offset_right = 125.0
-offset_bottom = 122.0
+layout_mode = 2
 text = "Speed Timer: "
 
 [node name="SpeedTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 108.0
-offset_right = 129.0
-offset_bottom = 122.0
+layout_mode = 2
 
 [node name="Monitor153m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 126.0
-offset_right = 125.0
-offset_bottom = 140.0
+layout_mode = 2
 text = "153m: "
 
 [node name="Monitor153m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 126.0
-offset_right = 129.0
-offset_bottom = 140.0
+layout_mode = 2
 
 [node name="Monitor250m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 144.0
-offset_right = 125.0
-offset_bottom = 158.0
+layout_mode = 2
 text = "250m: "
 
 [node name="Monitor250m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 144.0
-offset_right = 129.0
-offset_bottom = 158.0
+layout_mode = 2
 
 [node name="Monitor700m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 162.0
-offset_right = 125.0
-offset_bottom = 176.0
+layout_mode = 2
 text = "700m: "
 
 [node name="Monitor700m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 162.0
-offset_right = 129.0
-offset_bottom = 176.0
+layout_mode = 2
 
 [node name="Monitor1250m_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 180.0
-offset_right = 125.0
-offset_bottom = 194.0
+layout_mode = 2
 text = "1250m: "
 
 [node name="Monitor1250m" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 180.0
-offset_right = 129.0
-offset_bottom = 194.0
+layout_mode = 2
 
 [node name="Brakes_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 198.0
-offset_right = 125.0
-offset_bottom = 212.0
+layout_mode = 2
 text = "Emergency Brakes: "
 
 [node name="Brakes" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 129.0
-offset_top = 198.0
-offset_right = 129.0
-offset_bottom = 212.0
+layout_mode = 2
 
 [connection signal="timeout" from="AckTimer" to="." method="emergency_brake"]
 [connection signal="timeout" from="RestrictiveTimer" to="." method="restrictive_mode"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://vtfl0w4lunt8"]
+[gd_resource type="Resource" script_class="ModContentDefinition" load_steps=2 format=3 uid="uid://vtfl0w4lunt8"]
 
 [ext_resource type="Script" uid="uid://dee70xh1gsr4k" path="res://Data/Scripts/Resources/mod_content.gd" id="1"]
 
@@ -9,15 +9,15 @@ display_name = "Libre TrainSim"
 version_major = 0
 version_minor = 9
 version_patch = 0
-depends_on = []
-environment_folders = ["res://Resources/Environments"]
-material_folders = ["res://Resources/Materials"]
-music_folders = ["res://Resources/Music"]
-object_folders = ["res://Resources/Objects/groups", "res://Resources/Objects"]
-persons_folders = ["res://Resources/Persons"]
-rail_type_folders = ["res://Resources/RailTypes"]
-signal_type_folders = ["res://Resources/SignalTypes"]
-sound_folders = ["res://Resources/Sounds"]
-texture_folders = ["res://Resources/Textures"]
-trains = ["res://Trains/JFR1/JFR1_Red.tscn", "res://Trains/JFR1/JFR1_Grey.tscn"]
-worlds = ["res://Worlds/Tutorials/Tutorials.tscn", "res://Worlds/Signal-Tutorial/Signal-Tutorial.tscn", "res://Worlds/German-Safety-Tutorials/German-Safety-Tutorials.tscn"]
+depends_on = Array[Dictionary]([])
+environment_folders = Array[String](["res://Resources/Environments"])
+material_folders = Array[String](["res://Resources/Materials"])
+music_folders = Array[String](["res://Resources/Music"])
+object_folders = Array[String](["res://Resources/Objects/groups", "res://Resources/Objects"])
+persons_folders = Array[String](["res://Resources/Persons"])
+rail_type_folders = Array[String](["res://Resources/RailTypes"])
+signal_type_folders = Array[String](["res://Resources/SignalTypes"])
+sound_folders = Array[String](["res://Resources/Sounds"])
+texture_folders = Array[String](["res://Resources/Textures"])
+trains = Array[String](["res://Trains/JFR1/JFR1_Red.tscn", "res://Trains/JFR1/JFR1_Grey.tscn"])
+worlds = Array[String](["res://Worlds/Tutorials/Tutorials.tscn", "res://Worlds/Signal-Tutorial/Signal-Tutorial.tscn", "res://Worlds/German-Safety-Tutorials/German-Safety-Tutorials.tscn"])

@@ -10,30 +10,32 @@ texture = ExtResource("4")
 region_rect = Rect2(0, 0, 24, 24)
 
 [node name="Object" type="Button"]
+custom_minimum_size = Vector2(76, 70)
 offset_right = 76.0
 offset_bottom = 70.0
-custom_minimum_size = Vector2(76, 70)
 toggle_mode = true
 script = ExtResource("3")
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -14.0
 text = "logo.tscn"
-align = 1
+horizontal_alignment = 1
 clip_text = true
 
 [node name="MarkFavourite" type="CheckBox" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -24.0
 offset_bottom = 24.0
-theme_override_icons/checked = ExtResource("1")
-theme_override_icons/unchecked = ExtResource("2")
+theme_override_styles/hover_pressed = SubResource("1")
 theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("1")
-theme_override_styles/hover_pressed = SubResource("1")
+theme_override_icons/checked = ExtResource("1")
+theme_override_icons/unchecked = ExtResource("2")
 
-[connection signal="toggled" from="MarkFavourite" to="." method="_on_MarkFavourite_toggled"]
+[connection signal="toggled" from="MarkFavourite" to="." method="_on_mark_favourite_toggled"]

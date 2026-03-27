@@ -21,8 +21,8 @@ func show_names() -> void:
 		hide_tween.kill()
 	show_tween = get_tree().create_tween()
 	show_tween.tween_interval(0.5)
-	show_tween.tween_property(self, @"size:x", 180.0, 0.2) \
-			super.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
+	show_tween.tween_property(self, ^"size:x", 180.0, 0.2) \
+			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
 
 
 func hide_names() -> void:
@@ -32,20 +32,20 @@ func hide_names() -> void:
 		show_tween.kill()
 	hide_tween = get_tree().create_tween()
 	hide_tween.tween_interval(0.1)
-	hide_tween.tween_property(self, @"size:x", 30.0, 0.2) \
-			super.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
+	hide_tween.tween_property(self, ^"size:x", 30.0, 0.2) \
+			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
 
 
 func _on_mouse_entered() -> void:
 	self.counter += 1
-	await get_tree().idle_frame
+	await get_tree().process_frame
 	if counter == 1 and last_counter == 0:
 		show_names()
 
 
 func _on_mouse_exited() -> void:
 	self.counter -= 1
-	await get_tree().idle_frame
+	await get_tree().process_frame
 	if counter == 0 and last_counter == 1:
 		hide_names()
 

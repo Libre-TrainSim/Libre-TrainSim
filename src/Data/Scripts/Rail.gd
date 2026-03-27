@@ -5,7 +5,7 @@ extends WorldObject
 # Please be aware of the parallel Mode:
 # If 'parallel_rail_name != ""' All local train Settings apart from 'railType' and 'distance_to_parallel_rail' are deprecated. The Rail gets the rest information from parallel rail.
 
-@export_file ("*.tscn,*.scn") var rail_type_path: String = "res://Resources/RailTypes/Default.tscn"
+@export_file ("*.tscn","*.scn") var rail_type_path: String = "res://Resources/RailTypes/Default.tscn"
 @export var length: float
 @export var radius: float
 @export var build_distance: float = 1
@@ -146,7 +146,7 @@ func _update() -> void:
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
-		Logger.warn(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
+		Logger.warn(self.name + ": The max length is " + str(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
 
 	visible_segments = int(length / build_distance) + 1
 
@@ -241,26 +241,26 @@ func get_local_transform_at_distance(distance: float) -> Transform3D:
 	if !is_instance_valid(parallel_rail):
 		return Transform3D( \
 			Basis() \
-				super.rotated(Vector3(1,0,0), get_tend_at_distance(distance)) \
-				super.rotated(Vector3(0,0,1), get_height_rot(distance)) \
-				super.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)), \
+				.rotated(Vector3(1,0,0), get_tend_at_distance(distance)) \
+				.rotated(Vector3(0,0,1), get_height_rot(distance)) \
+				.rotated(Vector3(0,1,0), circle_get_rad(radius, distance)), \
 			 get_local_pos_at_distance(distance) \
 		)
 	update_parallel_rail_settings()
 	var parDistance: float = distance/length * parallel_rail.length
 	return Transform3D(\
 		Basis()\
-			super.rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance))\
-			super.rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance))\
-			super.rotated(Vector3(0,1,0), parallel_rail.circle_get_rad(parallel_rail.radius, parDistance)),\
+			.rotated(Vector3(1,0,0), parallel_rail.get_tend_at_distance(parDistance))\
+			.rotated(Vector3(0,0,1), parallel_rail.get_height_rot(parDistance))\
+			.rotated(Vector3(0,1,0), parallel_rail.circle_get_rad(parallel_rail.radius, parDistance)),\
 		parallel_rail.get_shifted_local_pos_at_distance(parDistance, distance_to_parallel_rail)\
 		+ ((parallel_rail.start_pos-start_pos).rotated(Vector3(0,1,0), -rotation.y))\
 	)
 
 
-func register_signal(name: String, distance: float) -> void:
-	Logger.vlog("Signal " + name + " registered at rail.")
-	attached_signals.append({"name": name, "distance": distance})
+func register_signal(signal_name: String, distance: float) -> void:
+	Logger.vlog("Signal " + signal_name + " registered at rail.")
+	attached_signals.append({"name": signal_name, "distance": distance})
 
 
 func get_pos_at_distance(distance: float) -> Vector3:
@@ -489,7 +489,7 @@ func calculate_overhead_line_mesh() -> ArrayMesh:
 				pole_positions.append(pos + track_object.on_rail_position)
 				pos += track_object.distanceLength
 			if not track_object.placeLast and pole_positions.size() > 1:
-				pole_positions.remove(pole_positions.size()-1)
+				pole_positions.remove_at(pole_positions.size()-1)
 			## Maybe here comes a break in. (If we only want to search for one trackobkject which begins with "pole"
 	pole_positions.append(length)
 	pole_positions = jEssentials.remove_duplicates(pole_positions)
@@ -512,8 +512,8 @@ func calculate_overhead_line_mesh() -> ArrayMesh:
 
 
 func build_overhead_line_segment(start: float, end: float) -> Dictionary:
-	var start_pos = get_local_pos_at_distance(start)+Vector3(0,overhead_line_height1,0)
-	var end_pos = get_local_pos_at_distance(end)+Vector3(0,overhead_line_height1,0)
+	start_pos = get_local_pos_at_distance(start)+Vector3(0,overhead_line_height1,0)
+	end_pos = get_local_pos_at_distance(end)+Vector3(0,overhead_line_height1,0)
 	var direct_vector = (end_pos-start_pos).normalized()
 	var direct_distance = start_pos.distance_to(end_pos)
 

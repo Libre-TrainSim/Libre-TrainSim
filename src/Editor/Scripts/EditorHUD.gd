@@ -94,12 +94,12 @@ func _on_ShowConfig_pressed() -> void:
 	config.popup_centered()
 
 
-func _on_selected_object_changed(new_object, type_string) -> void:
+func _on_selected_object_changed(new_object, object_type_string) -> void:
 	selected_object = new_object
-	selected_object_type = type_string
+	selected_object_type = object_type_string
 	if is_instance_valid(new_object):
 		$ObjectName/Name/LineEdit.text = new_object.name
-		$ObjectName/Name/Duplicate.visible = type_string == "Building"
+		$ObjectName/Name/Duplicate.visible = object_type_string == "Building"
 		$ObjectName.show()
 		provide_settings_for_selected_object()
 	else:

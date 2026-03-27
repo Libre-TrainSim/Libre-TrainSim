@@ -7,12 +7,12 @@ extends RailLogicSettings
 @export var status: int = SignalStatus.RED
 
 
-func duplicate(deep: bool = true):
-	var copy = get_script().new()
-
-	copy.operation_mode = operation_mode
-	copy.signal_free_time = signal_free_time
-	copy.speed = speed
-	copy.status = status
-
-	return copy
+#func duplicate(deep: bool = true):
+	#var copy = get_script().new()
+#
+	#copy.operation_mode = operation_mode
+	#copy.signal_free_time = signal_free_time
+	#copy.speed = speed
+	#copy.status = status
+#
+	#return copy

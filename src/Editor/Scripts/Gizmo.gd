@@ -89,8 +89,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var ray_old_mouse_position := camera.project_ray_normal(mm.position - event.relative)
 		var ray_new_mouse_position := camera.project_ray_normal(mm.position)
 
-		var intersection_old := plane.intersects_ray(camera.position, ray_old_mouse_position)
-		var intersection_new := plane.intersects_ray(camera.position, ray_new_mouse_position)
+		var intersection_old = plane.intersects_ray(camera.position, ray_old_mouse_position)
+		var intersection_new = plane.intersects_ray(camera.position, ray_new_mouse_position)
 
 		# Do nothing when the mouse pointer doesn't hover over the plane
 		if intersection_old != null and intersection_new != null:
@@ -178,7 +178,7 @@ func _raycast_on_gizmo_layer() -> Dictionary:
 	var to := from + camera.project_ray_normal(mouse_pos) * ray_length
 
 	var space_state := get_world_3d().get_direct_space_state()
-	return space_state.intersect_ray(from, to, [  ], 0b10)
+	return space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to, 0b10, [  ]))
 
 
 func _reset_colors():

@@ -65,8 +65,8 @@ func sort_signals(signal_table: Dictionary, forward: bool = true) -> Array:
 			if signal_t["position"][i] < signal_t["position"][minimum]:
 				minimum = i
 		export_t.append(signal_t["name"][minimum])
-		signal_t["name"].remove(minimum)
-		signal_t["position"].remove(minimum)
+		signal_t["name"].remove_at(minimum)
+		signal_t["position"].remove_at(minimum)
 
 	if forward:
 		return export_t

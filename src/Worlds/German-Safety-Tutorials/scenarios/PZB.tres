@@ -48,9 +48,9 @@ rail_name = "Rail6"
 [sub_resource type="Resource" id="127"]
 script = ExtResource("5")
 rail_logic_settings = {}
-route_points = [SubResource("125"), SubResource("126")]
+route_points = Array[Resource]([SubResource("125"), SubResource("126")])
 activate_only_at_specific_routes = false
-specific_routes = []
+specific_routes = Array[String]([])
 is_playable = true
 train_name = "JFR1_Red"
 description = "Learn how to use the PZB System."

@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=30 format=3 uid="uid://b5rrimsnqtske"]
+[gd_resource type="Theme" load_steps=31 format=3 uid="uid://b5rrimsnqtske"]
 
 [ext_resource type="StyleBox" path="res://Data/UI/styles/line_edit_read_only.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="1_ek6wn"]
 [ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="2"]
 [ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://b2gw170tkwchy" path="res://Data/UI/check_button/on.png" id="4"]
@@ -67,7 +68,8 @@ Button/colors/font_color_focus = Color(0.0941176, 0.352941, 0.478431, 1)
 Button/colors/font_color_hover = Color(0.14902, 0.54902, 0.74902, 1)
 Button/colors/font_color_pressed = Color(0.0941176, 0.345098, 0.470588, 1)
 Button/constants/hseparation = 2
-Button/fonts/font = ExtResource("2")
+Button/font_sizes/font_size = 30
+Button/fonts/font = ExtResource("1_ek6wn")
 Button/styles/disabled = ExtResource("10")
 Button/styles/focus = ExtResource("18")
 Button/styles/hover = ExtResource("14")
@@ -90,7 +92,8 @@ ItemList/constants/hseparation = 0
 ItemList/constants/icon_margin = 0
 ItemList/constants/line_separation = 0
 ItemList/constants/vseparation = 0
-ItemList/fonts/font = ExtResource("2")
+ItemList/font_sizes/font_size = 30
+ItemList/fonts/font = ExtResource("1_ek6wn")
 ItemList/styles/bg = SubResource("1")
 ItemList/styles/bg_focus = null
 ItemList/styles/cursor = null
@@ -103,7 +106,8 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 0
 Label/constants/shadow_offset_y = 0
-Label/fonts/font = ExtResource("2")
+Label/font_sizes/font_size = 30
+Label/fonts/font = ExtResource("1_ek6wn")
 Label/styles/normal = null
 LineEdit/colors/clear_button_color = Color(0.878431, 0.878431, 0.878431, 1)
 LineEdit/colors/clear_button_color_pressed = Color(1, 1, 1, 1)
@@ -113,7 +117,8 @@ LineEdit/colors/font_color_selected = Color(0.913725, 0.94902, 0.92549, 1)
 LineEdit/colors/font_color_uneditable = Color(0.0941176, 0.345098, 0.470588, 0.792157)
 LineEdit/colors/selection_color = Color(0.117647, 0.423529, 0.576471, 1)
 LineEdit/constants/minimum_spaces = 12
-LineEdit/fonts/font = ExtResource("2")
+LineEdit/font_sizes/font_size = 30
+LineEdit/fonts/font = ExtResource("1_ek6wn")
 LineEdit/icons/clear = null
 LineEdit/styles/focus = ExtResource("8")
 LineEdit/styles/normal = ExtResource("5")

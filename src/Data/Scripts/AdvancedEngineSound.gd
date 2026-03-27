@@ -39,13 +39,13 @@ func _process(delta) -> void:
 
 	## Idle Engine:
 	if player.engine:
-		$Idle.volume_db = lerp(0, $Idle.volume_db, delta*2)
+		$Idle.volume_db = lerp(0.0, $Idle.volume_db, delta*2)
 	else:
-		$Idle.volume_db = lerp(-50, $Idle.volume_db, delta*2)
+		$Idle.volume_db = lerp(-50.0, $Idle.volume_db, delta*2)
 
 	## Accleration
 	### Main Volume of accleration
-	var sollAcceleration = -50
+	var sollAcceleration: float = -50
 	if player.engine and player.speed != 0:
 		if  Math.speed_to_kmh(player.speed) < 60:
 			sollAcceleration = -30 + abs(player.command*30)
@@ -64,19 +64,19 @@ func _process(delta) -> void:
 
 	### Acceleration Mixing:
 	if acceleration_sound_index == 1:
-		$Acceleration1.volume_db = lerp(0, $Acceleration1.volume_db, delta*2)
-		$Acceleration2.volume_db = lerp(-50, $Acceleration2.volume_db, delta*2)
+		$Acceleration1.volume_db = lerp(0.0, $Acceleration1.volume_db, delta*2)
+		$Acceleration2.volume_db = lerp(-50.0, $Acceleration2.volume_db, delta*2)
 	if acceleration_sound_index == 2:
-		$Acceleration1.volume_db = lerp(-50, $Acceleration1.volume_db, delta*2)
-		$Acceleration2.volume_db = lerp(0, $Acceleration2.volume_db, delta*2)
+		$Acceleration1.volume_db = lerp(-50.0, $Acceleration1.volume_db, delta*2)
+		$Acceleration2.volume_db = lerp(0.0, $Acceleration2.volume_db, delta*2)
 	if acceleration_sound_index == 0: # Transistion from 1 to 2:
 		if acceleration_timer == 0.0:
 			$AccelerationTransition.play(0)
 		if acceleration_timer > acceleration_transition_1_delta_length_in_ms/1000.0: # Set acceleration 1 down
-			$Acceleration1.volume_db = lerp(-50, $Acceleration1.volume_db, delta*4)
-			$Acceleration2.volume_db = lerp(-50, $Acceleration2.volume_db, delta*4) # just to be safe, that this is off. (normally that should be the case)
+			$Acceleration1.volume_db = lerp(-50.0, $Acceleration1.volume_db, delta*4)
+			$Acceleration2.volume_db = lerp(-50.0, $Acceleration2.volume_db, delta*4) # just to be safe, that this is off. (normally that should be the case)
 		if acceleration_timer > acceleration_transition_length_in_ms/1000.0 - acceleration_transition_2_delta_length_in_ms/1000.0: # Set acceleration 2 uo
-			$Acceleration2.volume_db = lerp(0, $Acceleration2.volume_db, delta*4)
+			$Acceleration2.volume_db = lerp(0.0, $Acceleration2.volume_db, delta*4)
 		if acceleration_timer > acceleration_transition_length_in_ms/1000.0 + acceleration_transition_2_delta_length_in_ms/1000.0:
 			acceleration_sound_index = 2
 		acceleration_timer += delta

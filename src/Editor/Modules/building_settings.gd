@@ -41,7 +41,7 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance3D = null):
 	material_count = new_mesh.get_surface_count()
 	for i in range(material_count):
 		var new_child = get_node("Material-1").duplicate()
-		new_child.name = "Material" + String(i)
+		new_child.name = "Material" + str(i)
 
 		var line_edit := new_child.get_node("LineEdit") as LineEdit
 
@@ -68,7 +68,7 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance3D = null):
 			else:
 				line_edit.text = ""
 
-		new_child.get_node("Label").text += String(i)
+		new_child.get_node("Label").text += str(i)
 		add_child(new_child)
 		new_child.show()
 

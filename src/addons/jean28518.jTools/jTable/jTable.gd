@@ -1,19 +1,19 @@
 extends Control
 
-@export (Array, String) var headings
-@export (Array, String) var keys
+@export var headings: Array[String]
+@export var keys: Array[String]
 
-@export (int) var minimum_column_size = 100
+@export var minimum_column_size: int = 100
 
-@export (bool) var show_save_button = false
-@export (bool) var show_clear_button = true
+@export var show_save_button: bool = false
+@export var show_clear_button: bool = true
 
 signal remove_entry_pressed
 signal clear_table_pressed
 signal add_entry_pressed
 signal saved_pressed(tableData) # Gives a Dictionary
 
-@export (bool) var _update_table : set = update_table_in_editor
+@export var _update_table: bool: set = update_table_in_editor
 
 var columns = 0
 var current_entries = 0
@@ -65,7 +65,7 @@ func initialize():
 	grid_node.columns = columns + 1 # +1 because of our line control
 
 	var labelI = Label.new()
-	labelI.align = Label.ALIGNMENT_CENTER
+	labelI.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	labelI.name = "Space"
 	labelI.text = ""
 	labelI.size_flags_horizontal = Label.SIZE_EXPAND_FILL
@@ -78,7 +78,7 @@ func initialize():
 
 	for heading in headings:
 		labelI = Label.new()
-		labelI.align = Label.ALIGNMENT_CENTER
+		labelI.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		labelI.name = heading
 		labelI.text = heading
 		labelI.size_flags_horizontal = Label.SIZE_EXPAND_FILL

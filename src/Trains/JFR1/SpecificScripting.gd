@@ -37,7 +37,7 @@ func _process(_delta: float) -> void:
 
 	get_node("../Cabin/DisplayRight/ScreenRight").update_display(player.station_table, player.current_station_table_index, player.is_in_station)
 
-	if player.control_type == player.ControlType.COMBINED:
+	if player.control_type == player.TrainControlType.COMBINED:
 		update_Brake_Roll(player.soll_command, get_node("../Cabin/BrakeRoll"))
 		update_Acc_Roll(player.soll_command, get_node("../Cabin/AccRoll"))
 	else:

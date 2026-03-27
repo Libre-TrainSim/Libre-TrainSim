@@ -1,7 +1,7 @@
 extends Node3D
 
 
-signal selected_object_changed(new_object, type_string)
+signal selected_object_changed(new_object, object_type_string)
 
 
 var editor_directory: String = ""
@@ -41,7 +41,7 @@ func _ready() -> void:
 
 func _port_to_new_trackinfo():
 	var info_file = current_track_path + "/" + current_track_name + ".trackinfo"
-	var dir = DirAccess.new()
+	var dir = DirAccess.open("user://")
 	if not dir.file_exists(info_file):
 		return
 
@@ -68,7 +68,7 @@ func _port_to_new_trackinfo():
 
 func _port_very_old_trackinfo():
 	var old_cfg = current_track_path + "/" + current_track_name + "-scenarios.cfg"
-	var dir = DirAccess.new()
+	var dir = DirAccess.open("user://")
 	if not dir.file_exists(old_cfg):
 		return
 
@@ -95,7 +95,7 @@ func _port_very_old_trackinfo():
 
 func _port_v1_to_v2_chunks() -> void:
 	var save_file := current_track_path + "/" + current_track_name + ".save"
-	var dir := DirAccess.new()
+	var dir := DirAccess.open(current_track_path)
 	if dir.file_exists(save_file):
 		return
 	if world.get_meta("chunk_version", 1) >= 2:
@@ -116,8 +116,8 @@ func _port_v1_to_v2_chunks() -> void:
 	var chunks := {} # chunk pos, chunk nodes
 	var buildings := []
 	var track_objects := []
-
-	var err := dir.open(current_track_path + "/" + "chunks")
+	dir = DirAccess.open(current_track_path + "/chunks")
+	var err := dir
 	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name := dir.get_next()
 	while file_name != "":
@@ -236,7 +236,7 @@ func _port_v1_to_v2_chunks() -> void:
 
 func _port_to_new_chunk_system() -> void:
 	var save_file = current_track_path + "/" + current_track_name + ".save"
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(current_track_path)
 	if not dir.file_exists(save_file):
 		return
 
@@ -316,7 +316,7 @@ func _port_to_new_chunk_system() -> void:
 			var packed_chunk := PackedScene.new()
 			packed_chunk.pack(new_chunk)
 			var path: String = current_track_path + "/" + "chunks" + "/" + ChunkManager.chunk_to_string(old_chunk.position) + ".tscn"
-			ResourceSaver.save(path, packed_chunk)
+			ResourceSaver.save(packed_chunk, path)
 
 		dir.remove(save_file)
 		new_chunk.queue_free()
@@ -330,8 +330,8 @@ func _port_to_new_chunk_system() -> void:
 
 func _port_to_new_scenario_system():
 	var path = current_track_path + "/" + "scenarios"
-	var dir = DirAccess.new()
-	if dir.open(path) != OK:
+	var dir = DirAccess.open(path)
+	if DirAccess.open(path) == null:
 		Logger.err("Track has no scenarios folder!", self)
 		return
 
@@ -339,12 +339,12 @@ func _port_to_new_scenario_system():
 
 	# convert .scenario to scenario.tscn files
 	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
-	filename = dir.get_next()
-	while filename != "":
-		if filename.ends_with(".scenario"):
-			_convert_scenario(path.plus_file(filename))
-			files_to_remove.append(filename)
-		filename = dir.get_next()
+	scene_file_path = dir.get_next()
+	while scene_file_path != "":
+		if scene_file_path.ends_with(".scenario"):
+			_convert_scenario(path.plus_file(scene_file_path))
+			files_to_remove.append(scene_file_path)
+		scene_file_path = dir.get_next()
 
 	# remove old .scenario files
 	for file in files_to_remove:
@@ -465,7 +465,7 @@ func _convert_route_point(old_point: Dictionary) -> RoutePoint:
 
 func _port_very_old_scenarios():
 	var old_file = current_track_path + "/" + current_track_name + "-scenarios.cfg"
-	var dir = DirAccess.new()
+	var dir = DirAccess.open(current_track_path)
 	if not dir.file_exists(old_file):
 		return
 
@@ -619,14 +619,14 @@ var _last_connected_signal: String = ""
 func handle_drag_mode() -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var plane := Plane(Vector3(0,1,0), selected_object.start_pos.y)
-	var mouse_pos_3d := plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
+	var mouse_pos_3d = plane.intersects_ray(camera.project_ray_origin(mouse_pos), camera.project_ray_normal(mouse_pos))
 	if mouse_pos_3d != null:
 		selected_object.calculate_from_start_end(mouse_pos_3d)  # update rail
 		$EditorHUD.provide_settings_for_selected_object()  # update ui, but why?
 
 	# wait for update of overlapping areas, else we can never un-snap
 	# yes, this really needs idle_frame, won't work otherwise
-	await get_tree().idle_frame
+	await get_tree().process_frame
 
 	if not is_instance_valid(selected_object):
 		return
@@ -775,7 +775,7 @@ func select_object_under_mouse() -> void:
 
 	var space_state = get_world_3d().get_direct_space_state()
 	# use global coordinates, not local to node
-	var result = space_state.intersect_ray(from, to, [  ], 0x7FFFFFFF, true, true)
+	var result = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to,0x7FFFFFFF, [  ]))
 	var obj_to_select: Node3D = null
 	if result.has("collider"):
 		obj_to_select = result["collider"].get_parent_node_3d()
@@ -851,7 +851,7 @@ func load_world() -> bool:
 	var path := current_track_path + "/" + current_track_name + ".tscn"
 	var world_resource: PackedScene = load(path)
 	if world_resource == null:
-		send_message("World data could not be loaded! Is your super.tscn file corrupt?\nIs every resource available?")
+		send_message("World data could not be loaded! Is your .tscn file corrupt?\nIs every resource available?")
 		return false
 
 	world = world_resource.instantiate() as LTSWorld
@@ -859,7 +859,7 @@ func load_world() -> bool:
 		send_message("Failed to load world. World is not an LTSWorld.")
 		return false
 
-	editor_info = load(current_track_path + "/" + "editor_info.tres")
+	editor_info = load(current_track_path + "/editor_info.tres")
 	if !editor_info:
 		editor_info = EditorInfo.new()
 	$EditorHUD/Objects.editor_info = editor_info
@@ -889,8 +889,8 @@ func save_world(send_message: bool = true) -> void:
 
 	# move newly created buildings from world to chunks
 	for building in $World/Buildings.get_children():
-		var position := building.global_transform.origin as Vector3
-		var chunk_pos = $World.chunk_manager.position_to_chunk(position)
+		var building_position := building.global_transform.origin as Vector3
+		var chunk_pos = $World.chunk_manager.position_to_chunk(building_position)
 		var chunk_name = $World.chunk_manager.chunk_to_string(chunk_pos)
 
 		var chunk = $World/Chunks.find_child(chunk_name)
@@ -900,7 +900,7 @@ func save_world(send_message: bool = true) -> void:
 		$World/Buildings.remove_child(building)
 		chunk.get_node("Buildings").add_child(building)
 		building.owner = chunk
-		building.global_position = position
+		building.global_position = building_position
 
 	$World.chunk_manager.save_and_unload_all_chunks()
 	assert($World/Chunks.get_child_count() == 0)
@@ -940,8 +940,8 @@ func delete_selected_object() -> void:
 	clear_selected_object()
 
 
-func get_rail(name: String) -> Node:
-	return $World/Rails.get_node_or_null(name)
+func get_rail(rail_name: String) -> Node:
+	return $World/Rails.get_node_or_null(rail_name)
 
 
 func set_selected_object(object: Node) -> void:
@@ -1031,9 +1031,9 @@ func add_rail() -> void:
 
 
 func get_current_ground_position() -> Vector3:
-	var position: Vector3 = camera.position
-	position.y = $World.get_terrain_height_at(Vector2(position.x, position.z))
-	return position
+	var current_position: Vector3 = camera.position
+	current_position.y = $World.get_terrain_height_at(Vector2(current_position.x, current_position.z))
+	return current_position
 
 
 func test_track() -> void:
@@ -1204,13 +1204,13 @@ func get_children_of_type_recursive(node: Node, type) -> Array:
 	var children = []
 	var stack = [node]
 
-	if node is type:
+	if is_instance_of(node,type):
 		children.append(node)
 
 	while not stack.is_empty():
 		var parent = stack.pop_front()
 		for child in parent.get_children():
-			if child is type:
+			if is_instance_of(child,type):
 				children.append(child)
 			stack.append(child)
 
@@ -1230,9 +1230,9 @@ func _on_world_origin_shifted(delta: Vector3):
 	$World/Buildings.position += delta
 
 
-func _on_object_added(object: Node3D, position: Vector3) -> void:
+func _on_object_added(object: Node3D, object_position: Vector3) -> void:
 	world.get_node("Buildings").add_child(object)
-	object.global_position = position
+	object.global_position = object_position
 	object.set_owner(world)
 
 	var old_script = object.get_script()
@@ -1241,5 +1241,5 @@ func _on_object_added(object: Node3D, position: Vector3) -> void:
 	object.generate_collider()
 	object.set_script(old_script)
 
-	await get_tree().idle_frame
+	await get_tree().process_frame
 	set_selected_object(object)

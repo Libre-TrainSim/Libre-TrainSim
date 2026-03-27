@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bgli7bj6cvvrj"]
 
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="1"]
 
 [node name="Language" type="Label"]
 offset_right = 658.0

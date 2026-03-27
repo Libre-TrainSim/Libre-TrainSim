@@ -49,7 +49,7 @@ func update_display(speed: float, command: float, door_left: bool, door_right: b
 	$SpeedPointer.rotation = speed_rotation_0kmh + (speed_rotation_per_kmh * speed)
 	command_target = command_rotation_0percent + (command_rotation_per_percent * command)
 
-	$Speed.text = String(int(speed))
+	$Speed.text = str(int(speed))
 	$Time.text = Math.seconds_to_string(world.time)
 
 	## Engine:

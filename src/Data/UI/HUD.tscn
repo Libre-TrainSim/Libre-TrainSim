@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cwyegfqux6ap2"]
+[gd_scene load_steps=24 format=3 uid="uid://cwyegfqux6ap2"]
 
 [ext_resource type="PackedScene" uid="uid://bngfl6vp17xev" path="res://Data/UI/Pause.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://bishcea0hrpjb" path="res://Data/UI/MobileHUD.tscn" id="2"]
@@ -8,16 +8,16 @@
 [ext_resource type="Script" uid="uid://qgx7nee16b54" path="res://Data/Scripts/HUD.gd" id="6"]
 [ext_resource type="PackedScene" uid="uid://y5ifn4ctgrtu" path="res://Data/UI/TrainInfo.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://dyfovp7g6d816" path="res://Data/Screens/ScreenSpeedometer/screen_speedometer.tscn" id="8"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame_Small.tres" id="9"]
+[ext_resource type="FontFile" uid="uid://cmvqkipfu0dmp" path="res://Data/Fonts/FontIngame_Small.tres" id="9"]
 [ext_resource type="Texture2D" uid="uid://ucoo1r57sctx" path="res://Data/Misc/GreenSignal.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://bym0shujsr1p2" path="res://Data/Misc/Signal.png" id="11"]
 [ext_resource type="Texture2D" uid="uid://ci1bba48bf2y0" path="res://Data/Misc/Station.png" id="12"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame_Small_Bold.tres" id="13"]
 [ext_resource type="Texture2D" uid="uid://1iux1vahwh5x" path="res://Data/Misc/SpeedLimit.png" id="14"]
+[ext_resource type="FontFile" uid="uid://cr1epj4rpf3aw" path="res://Data/Fonts/Oswald-Regular.ttf" id="14_0how4"]
 [ext_resource type="Texture2D" uid="uid://cnv3qceih6m7g" path="res://Data/Misc/NextTable.png" id="15"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontMedium.tres" id="16"]
+[ext_resource type="FontFile" uid="uid://cgbyqhi62rgbt" path="res://Data/Fonts/FontMedium.tres" id="16"]
 [ext_resource type="Material" path="res://Data/UI/blur.tres" id="18"]
-[ext_resource type="Script" uid="uid://daonpyfvwlpkj" path="res://Data/UI/input_rich_text_label.gd" id="20"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "fade"
@@ -35,7 +35,7 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/path = NodePath("PanelContainer:anchor_top")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
@@ -47,19 +47,35 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/path = NodePath("PanelContainer:anchor_bottom")
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [1.0, 0.967]
+"values": [Vector2(0, 603), Vector2(0, 582.17)]
+}
+
+[sub_resource type="Animation" id="Animation_0how4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 603)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qljwy"]
 _data = {
+&"RESET": SubResource("Animation_0how4"),
 &"fade": SubResource("1")
 }
 
@@ -95,7 +111,7 @@ _data = {
 }
 
 [node name="HUD" type="CanvasLayer"]
-process_mode = 2
+process_mode = 3
 script = ExtResource("6")
 
 [node name="IngameInformation" type="Control" parent="."]
@@ -103,6 +119,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="Next" type="Control" parent="IngameInformation"]
@@ -218,17 +236,17 @@ scale = Vector2(0.4, 0.4)
 
 [node name="TrainInfoAbove" parent="IngameInformation" instance=ExtResource("7")]
 visible = false
-anchors_preset = 0
+layout_mode = 1
 
 [node name="Map" parent="." instance=ExtResource("4")]
 visible = false
-layout_mode = 3
-anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MobileHUD" parent="." instance=ExtResource("2")]
 visible = false
-layout_mode = 3
-anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="FPS" type="Label" parent="."]
 visible = false
@@ -238,26 +256,33 @@ offset_bottom = 14.0
 [node name="PanelContainer" type="PanelContainer" parent="."]
 modulate = Color(1, 1, 1, 0)
 material = ExtResource("18")
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = -1
+anchor_top = 0.967
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -45.0
+offset_top = -23.616
+offset_bottom = 21.384
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="MessageLabel" type="RichTextLabel" parent="PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 13
 size_flags_vertical = 4
-theme_override_fonts/normal_font = ExtResource("16")
+theme_override_fonts/normal_font = ExtResource("14_0how4")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
 text = "Welcome in Hainfurt"
+fit_content = true
 scroll_active = false
-script = ExtResource("20")
-centered = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Message" type="AnimationPlayer" parent="."]
 process_mode = 1
 libraries = {
-"": SubResource("AnimationLibrary_qljwy")
+&"": SubResource("AnimationLibrary_qljwy")
 }
 
 [node name="Bling" type="AudioStreamPlayer2D" parent="."]
@@ -272,7 +297,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Black"]
 libraries = {
-"": SubResource("AnimationLibrary_0bj05")
+&"": SubResource("AnimationLibrary_0bj05")
 }
 
 [node name="Label" type="Label" parent="Black"]
@@ -286,12 +311,9 @@ text = "STARTING_SIMULATION"
 
 [node name="TextBox" parent="." instance=ExtResource("3")]
 visible = false
-anchors_preset = 8
 
 [node name="Pause" parent="." instance=ExtResource("1")]
 visible = false
-layout_mode = 3
-anchors_preset = 15
 focus_mode = 2
 
 [connection signal="closed" from="TextBox" to="." method="_on_TextBox_closed"]

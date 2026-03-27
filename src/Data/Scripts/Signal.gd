@@ -1,4 +1,4 @@
-class_name Signal
+class_name RegularSignal
 extends RailLogic
 
 
@@ -157,7 +157,7 @@ func reset() -> void:
 
 
 func set_operation_mode(mode: int):
-	operation_mode = mode
+	operation_mode = mode as SignalOperationMode.TypeHint
 	if operation_mode == SignalOperationMode.BLOCK:
 		set_status(SignalStatus.GREEN)
 		signal_free_time = -1

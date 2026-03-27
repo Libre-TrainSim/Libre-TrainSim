@@ -1,0 +1,12 @@
+[gd_resource type="Texture2D" script_class="ControllerIconTexture" load_steps=2 format=3 uid="uid://baihnveu1eddo"]
+
+[ext_resource type="Script" uid="uid://q6s47dindbqb" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="1_n5oct"]
+
+[resource]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_n5oct")
+path = "FrontLight"
+show_mode = 0
+force_type = 0
+metadata/_custom_type_script = "uid://q6s47dindbqb"

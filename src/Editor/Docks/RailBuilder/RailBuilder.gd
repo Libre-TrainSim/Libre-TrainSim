@@ -34,9 +34,9 @@ func update_selected_rail(node: Node) -> void:
 			return
 		$S/Settings.show()
 		$S/General/ParallelRail.hide()
-		$S/Settings/Length/LineEdit.text = String(node.length)
-		$S/Settings/Radius/LineEdit.text = String(node.radius)
-		$S/Settings/Angle/LineEdit.text =  String(rad_to_deg(currentRail.end_rot - currentRail.start_rot))
+		$S/Settings/Length/LineEdit.text = str(node.length)
+		$S/Settings/Radius/LineEdit.text = str(node.radius)
+		$S/Settings/Angle/LineEdit.text =  str(rad_to_deg(currentRail.end_rot - currentRail.start_rot))
 		self.set_tendSlopeData(currentRail.get_tendSlopeData())
 		for rail in currentRail.get_connected_rails(true):
 			conntected_rails.add_item(rail.name)
@@ -361,19 +361,19 @@ func set_tendSlopeData(data: Dictionary) -> void:
 
 
 func update_RotationHeightData() -> void:
-	start_position.text = String(currentRail.start_pos)
-	end_position.text = String(currentRail.end_pos)
-	$RotationHeight/StartRotation.text = String(rad_to_deg(currentRail.start_rot))
-	$RotationHeight/EndRotation.text = String(rad_to_deg(currentRail.end_rot))
-	$RotationHeight/StartHeight.text = String(currentRail.start_pos.y)
-	$RotationHeight/EndHeight.text = String(currentRail.end_pos.y)
+	start_position.text = str(currentRail.start_pos)
+	end_position.text = str(currentRail.end_pos)
+	$RotationHeight/StartRotation.text = str(rad_to_deg(currentRail.start_rot))
+	$RotationHeight/EndRotation.text = str(rad_to_deg(currentRail.end_rot))
+	$RotationHeight/StartHeight.text = str(currentRail.start_pos.y)
+	$RotationHeight/EndHeight.text = str(currentRail.end_pos.y)
 
 
 func update_generalInformation() -> void:
 	$S/General/RailType/LineEdit.text = currentRail.rail_type_path
 	$S/General/OverheadLine.button_pressed = currentRail.has_overhead_line
 	$S/General/ParallelRail/ParallelRail.text = currentRail.parallel_rail_name
-	$S/General/ParallelRail/ParallelDistance.text = String(currentRail.distance_to_parallel_rail)
+	$S/General/ParallelRail/ParallelDistance.text = str(currentRail.distance_to_parallel_rail)
 
 
 func _on_ManualMoving_pressed() -> void:

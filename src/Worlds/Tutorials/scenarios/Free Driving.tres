@@ -86,9 +86,9 @@ waiting_persons = 100
 [sub_resource type="Resource" id="19"]
 script = ExtResource("3")
 rail_logic_settings = {}
-route_points = [SubResource("17"), SubResource("18")]
+route_points = Array[Resource]([SubResource("17"), SubResource("18")])
 activate_only_at_specific_routes = false
-specific_routes = []
+specific_routes = Array[String]([])
 is_playable = true
 train_name = "JFR1_Red"
 description = "TUTORIAL_3_0"

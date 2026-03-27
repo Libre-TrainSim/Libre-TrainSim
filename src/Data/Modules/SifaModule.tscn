@@ -21,85 +21,56 @@ stream = ExtResource("2")
 
 [node name="DEBUG" type="Control" parent="."]
 visible = false
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("3")
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PanelContainer" type="PanelContainer" parent="DEBUG"]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 256.0
 offset_right = 140.269
 offset_bottom = 285.631
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="GridContainer" type="GridContainer" parent="DEBUG/PanelContainer"]
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 142.0
-offset_bottom = 93.0
+layout_mode = 2
 columns = 2
 
 [node name="SifaTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_right = 131.0
-offset_bottom = 14.0
+layout_mode = 2
 text = "Sifa Timer: "
 
 [node name="SifaTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 135.0
-offset_right = 135.0
-offset_bottom = 14.0
+layout_mode = 2
 
 [node name="WarningTimer_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 18.0
-offset_right = 131.0
-offset_bottom = 32.0
+layout_mode = 2
 text = "Warning Timer: "
 
 [node name="WarningTimer" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 135.0
-offset_top = 18.0
-offset_right = 135.0
-offset_bottom = 32.0
+layout_mode = 2
 
 [node name="Reset_Label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 36.0
-offset_right = 131.0
-offset_bottom = 50.0
+layout_mode = 2
 text = "Was Reset?: "
 
 [node name="Reset" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 135.0
-offset_top = 36.0
-offset_right = 135.0
-offset_bottom = 50.0
+layout_mode = 2
 
 [node name="Stage_label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 54.0
-offset_right = 131.0
-offset_bottom = 68.0
+layout_mode = 2
 text = "Stage: "
 
 [node name="Stage" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 135.0
-offset_top = 54.0
-offset_right = 135.0
-offset_bottom = 68.0
+layout_mode = 2
 
 [node name="enforceBrakes_label" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_top = 72.0
-offset_right = 131.0
-offset_bottom = 86.0
+layout_mode = 2
 text = "Emergency Brakes?: "
 
 [node name="enforceBrakes" type="Label" parent="DEBUG/PanelContainer/GridContainer"]
-offset_left = 135.0
-offset_top = 72.0
-offset_right = 135.0
-offset_bottom = 86.0
+layout_mode = 2
 
 [connection signal="timeout" from="SifaTimer" to="." method="_on_SifaTimer_timeout"]

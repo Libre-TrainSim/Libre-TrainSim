@@ -7,7 +7,7 @@ extends Control
 @onready var editor_path := $PanelContainer/VBoxContainer/HBoxContainer/EditorPath as LineEdit
 
 
-var dir := DirAccess.new()
+var dir := DirAccess.open("res://")
 var tracks := {}
 
 
@@ -17,13 +17,11 @@ func _ready() -> void:
 	_find_content()
 	$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.select(0)
 
-
-func show() -> void:
+func _on_draw() -> void:
 	if tracks.is_empty():
 		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/HBoxContainer/Back.grab_focus()
 	else:
 		$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.grab_focus()
-	super.show()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -40,10 +38,10 @@ func to_file_name(track_name: String) -> String:
 
 
 func _initialize_editor_directory():
-	if dir.open("user://") != OK:
+	if DirAccess.open("user://") == null:
 		Logger.err("Can't open directory '%s'" % editor_directory, self)
 		return
-	dir.make_dir_recursive(editor_directory)
+	DirAccess.make_dir_recursive_absolute(editor_directory)
 
 
 func _find_content():
@@ -56,13 +54,13 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	if dir.dir_exists(mod_path):
 		return false
 
-	var worlds_path := "Worlds" + "/" + entry_name
-	dir.make_dir_recursive(mod_path + "/" + worlds_path)
-	dir.make_dir_recursive(mod_path + "/" + worlds_path + "/" + "chunks")
-	dir.make_dir_recursive(mod_path + "/" + worlds_path + "/" + "scenarios")
+	var worlds_path := "Worlds/" + entry_name
+	DirAccess.make_dir_recursive_absolute(mod_path + "/" + worlds_path)
+	DirAccess.make_dir_recursive_absolute(mod_path + "/" + worlds_path + "/chunks")
+	DirAccess.make_dir_recursive_absolute(mod_path + "/" + worlds_path + "/scenarios")
 
 	dir.copy("res://Data/Modules/World-Pattern.tscn", \
-			"%s.tscn" % mod_path + "/" + worlds_path + "/" + entry_name)
+			mod_path + "/" + worlds_path + "/" + entry_name + ".tscn")
 
 	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instantiate() as Chunk
 	chunk_0_0.name = "chunk_0_0"
@@ -81,7 +79,7 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	var content := ModContentDefinition.new()
 	content.display_name = entry_name
 	content.unique_name = "%s" % entry_name
-	content.worlds.push_back("res://Mods/%s.tscn" % entry_name + "/" + worlds_path + "/" + entry_name)
+	content.worlds.push_back("res://Mods/" + entry_name + "/" + worlds_path + "/" + entry_name + ".tscn")
 	if ResourceSaver.save(content, mod_path + "/" + "content.tres") != OK:
 		Logger.err("Can't save content at path %s" % mod_path + "content.tres", self)
 		return false
@@ -89,7 +87,7 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	var world_config = WorldConfig.new()
 	world_config.title = entry_name
 	var path = mod_path + "/" + worlds_path + "/" + entry_name + "_config.tres"
-	var err = ResourceSaver.save(path, world_config)
+	var err = ResourceSaver.save(world_config, path)
 	if err != OK:
 		Logger.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
 		return false
@@ -120,9 +118,9 @@ func _on_TracksList_user_added_entry(entry_name):
 
 func _on_TracksList_user_pressed_action(entry_names):
 	var screenshot := Image.new()
-	var texture := ImageTexture.new()
-	if screenshot.load(entry_names[0].get_base_dir().plus_file("screenshot.png")) == OK:
-		texture.create_from_image(screenshot)
+	var texture: ImageTexture
+	if screenshot.load(entry_names[0].get_base_dir() + "/screenshot.png") == OK:
+		texture = ImageTexture.create_from_image(screenshot)
 	else:
 		texture = null
 
@@ -133,7 +131,7 @@ func _on_TracksList_user_pressed_action(entry_names):
 func _on_TracksList_user_removed_entries(entry_names):
 	# jList is only in single selection mode. entry_names.size() == 1
 	assert(entry_names.size()==1)
-	jEssentials.remove_folder_recursively(editor_directory.plus_file(tracks[entry_names[0]][0].unique_name))
+	jEssentials.remove_folder_recursively(editor_directory + "/" + tracks[entry_names[0]][0].unique_name)
 
 
 func _on_Back_pressed() -> void:

@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://ye17017qftit"]
+[gd_scene load_steps=9 format=3 uid="uid://ye17017qftit"]
 
 [ext_resource type="Script" uid="uid://d0htnllq6omrt" path="res://Data/Scripts/StationJumper.gd" id="1"]
-[ext_resource type="FontFile" path="res://Data/Fonts/FontIngame.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://drpvc003gljcm" path="res://Data/Fonts/FontIngame.tres" id="2"]
 [ext_resource type="FontFile" path="res://Data/Fonts/FontIngame_Small_Bold.tres" id="3"]
 [ext_resource type="Theme" uid="uid://bbk158o7ogkdi" path="res://Data/UI/styles/item_list.tres" id="4"]
 [ext_resource type="Theme" path="res://Data/UI/styles/button_left.tres" id="5"]
@@ -33,16 +33,12 @@ size_flags_vertical = 3
 theme = ExtResource("4")
 theme_override_fonts/font = ExtResource("2")
 script = ExtResource("8")
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label2" type="RichTextLabel" parent="StationJumper"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("3")
-script = ExtResource("9")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="StationJumper"]
 layout_mode = 2
@@ -61,5 +57,6 @@ theme = ExtResource("6")
 theme_override_fonts/font = ExtResource("2")
 text = "JUMP"
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="pressed" from="StationJumper/HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]
 [connection signal="pressed" from="StationJumper/HBoxContainer/Jump" to="." method="_on_Jump_pressed"]

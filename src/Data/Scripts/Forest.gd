@@ -45,5 +45,5 @@ func _update() -> void:
 				var scaleval: float = randf_range(1 - randomScaleFactor, 1 + randomScaleFactor)
 				scale = Vector3(scaleval, scaleval, scaleval)
 
-			self.multimesh.set_instance_transform(idx, Transform3D(Basis.rotated(Vector3(0,1,0), rot).scaled(scale), position))
+			self.multimesh.set_instance_transform(idx, Transform3D(Basis(Vector3(0,1,0), rot).scaled(scale), position))
 			idx += 1

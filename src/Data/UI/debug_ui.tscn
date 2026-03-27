@@ -16,7 +16,7 @@ anchor_right = 1.0
 offset_left = -54.0
 offset_top = 16.0
 offset_right = -16.0
-offset_bottom = 224.0
+offset_bottom = 174.0
 grow_horizontal = 0
 
 [node name="Infos" type="VBoxContainer" parent="Stats"]
@@ -32,32 +32,12 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
 text = "999"
 
-[node name="Verts" type="Label" parent="Stats/Infos"]
+[node name="Primitives" type="Label" parent="Stats/Infos"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
 text = "999"
 
 [node name="DrawCalls" type="Label" parent="Stats/Infos"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
-text = "999"
-
-[node name="MatChanges" type="Label" parent="Stats/Infos"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
-text = "999"
-
-[node name="ShaderChanges" type="Label" parent="Stats/Infos"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
-text = "999"
-
-[node name="SurfaceChanges" type="Label" parent="Stats/Infos"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
-text = "999"
-
-[node name="ShaderCompiles" type="Label" parent="Stats/Infos"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
 text = "999"
@@ -72,11 +52,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
 text = "999"
 
-[node name="VertexMem" type="Label" parent="Stats/Infos"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0352941, 0.913725, 0.854902, 1)
-text = "999"
-
 [node name="DebugContainer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -86,6 +61,8 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = -16.0
 offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="DebugCameraTargets" type="ItemList" parent="DebugContainer"]

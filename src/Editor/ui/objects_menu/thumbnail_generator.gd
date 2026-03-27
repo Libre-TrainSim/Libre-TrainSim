@@ -14,9 +14,8 @@ var scene_root: Node = null
 
 func _ready() -> void:
 	if ProjectSettings["game/debug/editor_save_thumbnails"]:
-		var dir := DirAccess.new()
-		if !dir.dir_exists("user://debug/"):
-			var _err := dir.make_dir_recursive("user://debug/")
+		if DirAccess.dir_exists_absolute("user://debug/") == false:
+			DirAccess.make_dir_recursive_absolute("user://debug/")
 
 
 func position_camera() -> void:
@@ -25,13 +24,12 @@ func position_camera() -> void:
 
 
 func create_texture(scene_path: String, objects: ObjectGroup) -> void:
-	var img := get_texture().get_data()
+	var img = get_texture().get_image()
 	img.flip_y()
-	var texture := ImageTexture.new()
-	texture.create_from_image(img)
+	var texture := ImageTexture.create_from_image(img)
 	objects.thumbnails[scene_path] = texture
 	if ProjectSettings["game/debug/editor_save_thumbnails"]:
-		var _err := img.save_png("user://debug/%s.png" % scene_path.get_file())
+		var _err = img.save_png("user://debug/%s.png" % scene_path.get_file())
 	emit_signal("texture_finished", scene_path)
 
 
@@ -48,7 +46,9 @@ func setup_scene(scene: PackedScene) -> bool:
 func calculate_bounds(node: Node) -> AABB:
 	var aabb := AABB()
 	if node is VisualInstance3D:
-		aabb = (node as VisualInstance3D).get_transformed_aabb()
+		#Skyace test
+		aabb = (node as VisualInstance3D).get_aabb() * (node as VisualInstance3D).global_transform
+		#aabb = (node as VisualInstance3D).get_transformed_aabb()
 
 	for child in node.get_children():
 		aabb = aabb.merge(calculate_bounds(child))

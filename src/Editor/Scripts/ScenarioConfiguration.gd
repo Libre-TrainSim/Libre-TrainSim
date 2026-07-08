@@ -1,5 +1,8 @@
 extends Panel
 
+const TIME_FIELD_SCENE := preload("res://Editor/Modules/TimeField.tscn")
+const WEATHER_NAMES := ["Clear", "Rain", "Snow"]
+
 # local cache of things edited
 var routes: Dictionary = {}
 var rail_logic_settings: Dictionary = {}
@@ -16,6 +19,7 @@ onready var content_selector = get_parent().get_node("Content_Selector")
 func init():
 	scenario_editor = find_parent("ScenarioEditor")
 	world = scenario_editor.get_node("World")
+	_create_scenario_settings_ui()
 
 	routes = scenario_editor.scenario_info.routes.duplicate(true)
 	rail_logic_settings = scenario_editor.scenario_info.rail_logic_settings.duplicate(true)
@@ -31,6 +35,7 @@ func init():
 					rail_logic_settings[signal_instance.name] = StationSettings.new()
 
 	update_route_list()
+	update_scenario_settings_ui()
 	update_rail_logic_ui()
 	world.write_station_data(rail_logic_settings)
 
@@ -48,6 +53,7 @@ func save():
 
 
 func _ready():
+	_create_scenario_settings_ui()
 	update_ui_for_current_route()
 
 
@@ -66,6 +72,84 @@ func show_selection_message(text: String) -> void:
 
 func hide_selection_message() -> void:
 	get_parent().get_node("SelectMessage").hide()
+
+
+func _create_scenario_settings_ui() -> void:
+	if has_node("TabContainer/Scenario"):
+		return
+
+	var scenario_tab := VBoxContainer.new()
+	scenario_tab.name = "Scenario"
+	scenario_tab.anchor_right = 1.0
+	scenario_tab.anchor_bottom = 1.0
+	scenario_tab.margin_left = 4.0
+	scenario_tab.margin_top = 32.0
+	scenario_tab.margin_right = -4.0
+	scenario_tab.margin_bottom = -4.0
+	$TabContainer.add_child(scenario_tab)
+	$TabContainer.move_child(scenario_tab, 0)
+
+	var grid := GridContainer.new()
+	grid.name = "Grid"
+	grid.columns = 2
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scenario_tab.add_child(grid)
+
+	var start_time_label := Label.new()
+	start_time_label.text = "Fallback Start Time"
+	grid.add_child(start_time_label)
+
+	var start_time := TIME_FIELD_SCENE.instance()
+	start_time.name = "StartTime"
+	start_time.rect_min_size = Vector2(0, 20)
+	start_time.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	start_time.connect("time_set", self, "_on_Scenario_StartTime_time_set")
+	grid.add_child(start_time)
+
+	var weather_label := Label.new()
+	weather_label.text = "Weather"
+	grid.add_child(weather_label)
+
+	var weather := OptionButton.new()
+	weather.name = "Weather"
+	weather.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for i in range(WEATHER_NAMES.size()):
+		weather.add_item(WEATHER_NAMES[i], i)
+	weather.connect("item_selected", self, "_on_Scenario_Weather_item_selected")
+	grid.add_child(weather)
+
+	var dynamic_time_label := Label.new()
+	dynamic_time_label.text = "Dynamic Time of Day"
+	grid.add_child(dynamic_time_label)
+
+	var dynamic_time := CheckBox.new()
+	dynamic_time.name = "DynamicTimeOfDay"
+	dynamic_time.connect("pressed", self, "_on_Scenario_DynamicTimeOfDay_pressed")
+	grid.add_child(dynamic_time)
+
+
+func update_scenario_settings_ui() -> void:
+	if scenario_editor == null or scenario_editor.scenario_info == null:
+		return
+	if not has_node("TabContainer/Scenario"):
+		return
+
+	var scenario_info: TrackScenario = scenario_editor.scenario_info
+	$TabContainer/Scenario/Grid/StartTime.set_data_in_seconds(scenario_info.time)
+	$TabContainer/Scenario/Grid/Weather.select(int(clamp(scenario_info.weather, 0, WEATHER_NAMES.size() - 1)))
+	$TabContainer/Scenario/Grid/DynamicTimeOfDay.pressed = scenario_info.dynamic_time_of_day
+
+
+func _on_Scenario_StartTime_time_set() -> void:
+	scenario_editor.scenario_info.time = $TabContainer/Scenario/Grid/StartTime.get_data_in_seconds()
+
+
+func _on_Scenario_Weather_item_selected(index: int) -> void:
+	scenario_editor.scenario_info.weather = index
+
+
+func _on_Scenario_DynamicTimeOfDay_pressed() -> void:
+	scenario_editor.scenario_info.dynamic_time_of_day = $TabContainer/Scenario/Grid/DynamicTimeOfDay.pressed
 
 
 func _on_Routes_user_added_entry(entry_name):

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Data/UI/custom_item_list.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Data/Fonts/FontIngame.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Data/UI/Content.gd" type="Script" id=3]
 [ext_resource path="res://Data/UI/styles/button_right.tres" type="Theme" id=4]
 [ext_resource path="res://Data/UI/styles/button_left.tres" type="Theme" id=5]
+[ext_resource path="res://Data/UI/styles/button_center.tres" type="Theme" id=6]
 [ext_resource path="res://Data/UI/styles/panel_background.tres" type="StyleBox" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -44,12 +45,38 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 34.0
 margin_right = 988.0
-margin_bottom = 475.0
+margin_bottom = 224.0
+
+[node name="AvailableLabel" type="Label" parent="VBoxContainer"]
+margin_top = 228.0
+margin_right = 988.0
+margin_bottom = 258.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "MENU_DOWNLOADABLE_PACKS"
+align = 1
+
+[node name="AvailableList" type="ItemList" parent="VBoxContainer"]
+margin_top = 262.0
+margin_right = 988.0
+margin_bottom = 419.0
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+
+[node name="Status" type="Label" parent="VBoxContainer"]
+margin_top = 423.0
+margin_right = 988.0
+margin_bottom = 453.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "MENU_CONTENT_NO_CATALOG"
+align = 1
 
 [node name="Label3" type="Label" parent="VBoxContainer"]
-margin_top = 479.0
+margin_top = 457.0
 margin_right = 988.0
-margin_bottom = 509.0
+margin_bottom = 487.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 custom_styles/normal = SubResource( 1 )
@@ -57,12 +84,12 @@ text = "MENU_HINT_UPDATED_CONTENT_PACK"
 align = 1
 
 [node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 513.0
+margin_top = 491.0
 margin_right = 988.0
-margin_bottom = 562.0
+margin_bottom = 540.0
 
 [node name="Back" type="Button" parent="VBoxContainer/Buttons"]
-margin_right = 492.0
+margin_right = 241.0
 margin_bottom = 49.0
 rect_min_size = Vector2( 200, 0 )
 focus_neighbour_top = NodePath(".")
@@ -71,8 +98,29 @@ theme = ExtResource( 5 )
 text = "MENU_BACK"
 align = 0
 
+[node name="Refresh" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 245.0
+margin_right = 486.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 200, 0 )
+focus_neighbour_top = NodePath(".")
+size_flags_horizontal = 3
+theme = ExtResource( 6 )
+text = "MENU_RELOAD"
+
+[node name="Download" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 490.0
+margin_right = 731.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 200, 0 )
+focus_neighbour_top = NodePath(".")
+size_flags_horizontal = 3
+theme = ExtResource( 6 )
+disabled = true
+text = "MENU_DOWNLOAD"
+
 [node name="Open" type="Button" parent="VBoxContainer/Buttons"]
-margin_left = 496.0
+margin_left = 735.0
 margin_right = 988.0
 margin_bottom = 49.0
 rect_min_size = Vector2( 200, 0 )
@@ -81,5 +129,12 @@ size_flags_horizontal = 3
 theme = ExtResource( 4 )
 text = "MENU_OPEN_ADDONS"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+
+[connection signal="item_selected" from="VBoxContainer/AvailableList" to="." method="_on_AvailableList_item_selected"]
 [connection signal="pressed" from="VBoxContainer/Buttons/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/Refresh" to="." method="_on_Refresh_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/Download" to="." method="_on_Download_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/Open" to="." method="_on_Open_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

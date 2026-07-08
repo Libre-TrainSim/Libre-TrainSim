@@ -1,6 +1,12 @@
 class_name TrackScenario
 extends Resource
 
+enum Weather {
+	CLEAR,
+	RAIN,
+	SNOW,
+}
+
 
 export (int) var time: int = 0  # seconds
 export (String) var title := ""
@@ -8,6 +14,8 @@ export (String) var description := ""
 export (int) var duration: int = 0  # minutes
 
 export (bool) var is_hidden := false  # true = visible only in Editor, not in Play menu
+export (int, "Clear", "Rain", "Snow") var weather: int = Weather.CLEAR
+export (bool) var dynamic_time_of_day := false
 
 # Dict[String, ScenarioRoute]
 export (Dictionary) var routes := {}

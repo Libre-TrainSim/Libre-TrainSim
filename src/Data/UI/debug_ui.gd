@@ -82,7 +82,7 @@ func _on_DebugCameraTargets_item_selected(index: int) -> void:
 	get_tree().root.add_child(debug_camera)
 	debug_camera.current = true
 	debug_camera.follow_target = camera_target_list.get_item_metadata(index)
-	Logger.err(camera_target_list.get_item_metadata(index), self)
+	Log.err(camera_target_list.get_item_metadata(index), self)
 
 
 func _on_DeactivateDebugCamera_pressed() -> void:

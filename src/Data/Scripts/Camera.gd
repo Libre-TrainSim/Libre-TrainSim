@@ -41,7 +41,7 @@ var mouse_moved: bool = true
 func _ready() -> void:
 	self.set_process_input(true)
 	self.set_process(true)
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_shifted"))
 
 
 func _on_world_origin_shifted(delta: Vector3):

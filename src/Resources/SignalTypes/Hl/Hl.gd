@@ -13,7 +13,7 @@ func _ready() -> void:
 	signal_logic.signal_type = signal_logic.SignalType.COMBINED
 
 	if signal_logic.speed == -1:
-		Logger.warn("HL Signals cannot have Speed -1! Please set a speed limit for this Signal! Setting to 160 km/h", signal_logic.name)
+		Log.warn("HL Signals cannot have Speed -1! Please set a speed limit for this Signal! Setting to 160 km/h", signal_logic.name)
 		signal_logic.speed = 160
 
 	# Hl signals ALWAYS have a speed limit! NEVER -1 !!!
@@ -24,7 +24,7 @@ func _ready() -> void:
 	timer = Timer.new()
 	timer.wait_time = 0.5
 	timer.autostart = true
-	timer.connect("timeout", self, "_blink")
+	Validate.ok(Validate.ok(timer.connect("timeout", self, "_blink")))
 	self.add_child(timer)
 
 	update_visual_instance(signal_logic)

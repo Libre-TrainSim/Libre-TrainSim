@@ -117,7 +117,7 @@ func update_parallel_rail_settings() -> void:
 		return
 	parallel_rail = get_parent().get_node(parallel_rail_name)
 	if !is_instance_valid(parallel_rail):
-		Logger.err("Cant find parallel rail. Updating Rail canceled..", self)
+		Log.err("Cant find parallel rail. Updating Rail canceled..", self)
 		return
 
 	if parallel_rail.radius == 0:
@@ -146,7 +146,7 @@ func _update() -> void:
 
 	if length > MAX_LENGTH:
 		length = MAX_LENGTH
-		Logger.warn(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
+		Log.warn(self.name + ": The max length is " + String(MAX_LENGTH) + ". Shrinking the length to maximal length.", self)
 
 	visible_segments = int(length / build_distance) + 1
 
@@ -259,7 +259,7 @@ func get_local_transform_at_distance(distance: float) -> Transform:
 
 
 func register_signal(name: String, distance: float) -> void:
-	Logger.vlog("Signal " + name + " registered at rail.")
+	Log.verbose("Signal " + name + " registered at rail.")
 	attached_signals.append({"name": name, "distance": distance})
 
 

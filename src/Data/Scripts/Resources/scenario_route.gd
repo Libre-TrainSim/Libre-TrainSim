@@ -42,7 +42,7 @@ func _init() -> void:
 	calculated_rail_route = []
 
 
-func duplicate(recursive: bool = true):
+func duplicate(_deep: bool = true):
 	var copy = get_script().new()
 
 	copy.description = description
@@ -240,14 +240,14 @@ func get_minimal_platform_length(world: Node) -> int:
 
 
 func remove_point(index: int):
-	route_points[index].disconnect("route_rebuild_required", self, "_on_route_changed")
+	Validate.ok(route_points[index].disconnect("route_rebuild_required", self, "_on_route_changed"))
 	route_points.remove(index)
 	dirty = true
 
 
 func add_point(point: RoutePoint) -> void:
 	route_points.append(point)
-	point.connect("route_rebuild_required", self, "_on_route_changed")
+	Validate.ok(point.connect("route_rebuild_required", self, "_on_route_changed"))
 	dirty = true
 
 
@@ -276,13 +276,13 @@ func move_point_down(index: int) -> void:
 
 func connect_points() -> void:
 	for point in route_points:
-		point.connect("route_rebuild_required", self, "_on_route_changed")
+		Validate.ok(point.connect("route_rebuild_required", self, "_on_route_changed"))
 
 
 func _on_route_changed(changed_point: RoutePoint) -> void:
-	Logger.vlog("I am dirty", changed_point)
+	Log.verbose("I am dirty", changed_point)
 	if dirty:
 		return
 	dirty = route_points.has(changed_point)
 	if !dirty:
-		changed_point.disconnect("route_rebuild_required", self, "_on_route_changed")
+		Validate.ok(changed_point.disconnect("route_rebuild_required", self, "_on_route_changed"))

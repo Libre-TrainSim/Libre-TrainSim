@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 		for child in get_children():
 			if child.get_children().size() != 0 and child.is_class("MeshInstance"):
 				for child2 in child.get_children():
-					Logger.vlog("Correcting MeshInstance Position in Scene Tree...")
+					Log.verbose("Correcting MeshInstance Position in Scene Tree...")
 					child.remove_child(child2)
 					add_child(child2)
 					child2.owner = world

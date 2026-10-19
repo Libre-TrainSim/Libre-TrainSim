@@ -5,6 +5,7 @@ extends Control
 onready var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 onready var track_list := $PanelContainer/VBoxContainer/TracksList as jList
 onready var editor_path := $PanelContainer/VBoxContainer/HBoxContainer/EditorPath as LineEdit
+onready var item_list := $PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList as ItemList
 
 
 var dir := Directory.new()
@@ -15,7 +16,8 @@ func _ready() -> void:
 	_initialize_editor_directory()
 	editor_path.text = editor_directory
 	_find_content()
-	$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.select(0)
+	if(item_list.get_item_count()>0):
+		item_list.select(0)
 
 
 func show() -> void:
@@ -41,9 +43,9 @@ func to_file_name(track_name: String) -> String:
 
 func _initialize_editor_directory():
 	if dir.open("user://") != OK:
-		Logger.err("Can't open directory '%s'" % editor_directory, self)
+		Log.err("Can't open directory '%s'" % editor_directory, self)
 		return
-	dir.make_dir_recursive(editor_directory)
+	Validate.ok(dir.make_dir_recursive(editor_directory))
 
 
 func _find_content():
@@ -57,33 +59,33 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 		return false
 
 	var worlds_path := "Worlds".plus_file(entry_name)
-	dir.make_dir_recursive(mod_path.plus_file(worlds_path))
-	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("chunks"))
-	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("scenarios"))
+	Validate.ok(dir.make_dir_recursive(mod_path.plus_file(worlds_path)))
+	Validate.ok(dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("chunks")))
+	Validate.ok(dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("scenarios")))
 
-	dir.copy("res://Data/Modules/World-Pattern.tscn", \
-			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name))
+	Validate.ok(dir.copy("res://Data/Modules/World-Pattern.tscn", \
+			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name)))
 
 	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instance() as Chunk
 	chunk_0_0.name = "chunk_0_0"
 	chunk_0_0.rails = ["Rail"]
 	var packed_chunk := PackedScene.new()
 	if packed_chunk.pack(chunk_0_0) != OK:
-		Logger.err("Failed to pack default chunk", self)
+		Log.err("Failed to pack default chunk", self)
 	if ResourceSaver.save(mod_path.plus_file(worlds_path).plus_file("chunks").plus_file("chunk_0_0.tscn"), packed_chunk) != OK:
-		Logger.err("Failed to write default chunk to disk", self)
+		Log.err("Failed to write default chunk to disk", self)
 	chunk_0_0.free()
 
 	var authors := Authors.new()
 	if ResourceSaver.save(mod_path.plus_file("authors.tres"), authors) != OK:
-		Logger.err("Can't save authors at path %s" % mod_path + "authors.tres", self)
+		Log.err("Can't save authors at path %s" % mod_path + "authors.tres", self)
 
 	var content := ModContentDefinition.new()
 	content.display_name = entry_name
 	content.unique_name = "%s" % entry_name
 	content.worlds.push_back("res://Mods/%s.tscn" % entry_name.plus_file(worlds_path).plus_file(entry_name))
 	if ResourceSaver.save(mod_path.plus_file("content.tres"), content) != OK:
-		Logger.err("Can't save content at path %s" % mod_path + "content.tres", self)
+		Log.err("Can't save content at path %s" % mod_path + "content.tres", self)
 		return false
 
 	var world_config = WorldConfig.new()
@@ -91,7 +93,7 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	var path = mod_path.plus_file(worlds_path).plus_file(entry_name + "_config.tres")
 	var err = ResourceSaver.save(path, world_config)
 	if err != OK:
-		Logger.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
+		Log.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
 		return false
 
 	return true
@@ -114,7 +116,7 @@ func _on_TracksList_user_added_entry(entry_name):
 	if !_initialize_mod_directory(entry_name):
 		var msg: String = "Directory " + editor_directory + entry_name + " already exists.\nPlease choose a different name!"
 		track_list.show_error(msg)
-		Logger.warn(msg, self)
+		Log.warn(msg, self)
 		return
 
 

@@ -25,12 +25,12 @@ func _ready() -> void:
 
 func init_map() -> void:
 	if train_world == null:
-		Logger.err("RAILMAP: Could not find world! Despawning!", self)
+		Log.err("RAILMAP: Could not find world! Despawning!", self)
 		queue_free()
 		return
 
 # warning-ignore:return_value_discarded
-	Root.connect("world_origin_shifted", self, "_on_world_origin_update")
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_update"))
 
 	var rails: Array = train_world.get_node("Rails").get_children()
 	for rail in rails:
@@ -173,7 +173,7 @@ func create_station(signal_instance: Spatial) -> void:
 		if train_world.player.station_table[i].station_node_name == signal_instance.name:
 			index = i
 	if index < 0:
-		Logger.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
+		Log.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
 		return
 
 	var node: Node2D = Node2D.new()
@@ -200,8 +200,7 @@ func create_signal(signal_instance: Spatial) -> void:
 	sprite.name = signal_instance.name
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
-# warning-ignore:return_value_discarded
-	signal_instance.connect("signal_changed", self, "_on_signal_changed")
+	Validate.ok(signal_instance.connect("signal_changed", self, "_on_signal_changed"))
 	_on_signal_changed(signal_instance) # call once to init
 
 
@@ -214,7 +213,7 @@ func _on_signal_changed(signal_instance: Spatial) -> void:
 
 
 func _on_world_origin_update(delta: Vector3):
-	Logger.log("Rail Map: Updating world origin")
+	Log.info("Rail Map: Updating world origin")
 	chunk_origin += Vector2(delta.x, delta.z)
 
 

@@ -190,9 +190,9 @@ _global_script_classes=[ {
 "path": "res://addons/HaSa1002.light-tools/LightColorEditor.gd"
 }, {
 "base": "Object",
-"class": "Logger",
+"class": "Log",
 "language": "GDScript",
-"path": "res://Data/Scripts/Singletons/logger.gd"
+"path": "res://Data/Scripts/Singletons/log.gd"
 }, {
 "base": "Control",
 "class": "Map",
@@ -379,6 +379,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Data/UI/translated_rich_rext_label.gd"
 }, {
+"base": "Object",
+"class": "Validate",
+"language": "GDScript",
+"path": "res://Data/Scripts/Singletons/validate.gd"
+}, {
 "base": "RailLogic",
 "class": "WarnSpeedLimit",
 "language": "GDScript",
@@ -446,7 +451,7 @@ _global_script_class_icons={
 "LTSPlayer": "",
 "LTSWorld": "",
 "LightColorEditor": "",
-"Logger": "",
+"Log": "",
 "Map": "",
 "ModContentDefinition": "",
 "ObjectGroup": "",
@@ -484,6 +489,7 @@ _global_script_class_icons={
 "TrackScenario": "",
 "TrainSpawnInformation": "",
 "TranslatedRichTextLabel": "",
+"Validate": "",
 "WarnSpeedLimit": "",
 "WorldConfig": "",
 "WorldCursor": "",

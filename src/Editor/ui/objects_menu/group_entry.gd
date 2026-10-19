@@ -56,9 +56,9 @@ func set_objects(value: ObjectGroup, toggle_target: Object, toggle_target_name: 
 			# Register thumbnail update ???
 			pass
 		objects.add_child(object)
-		object.connect("toggled", toggle_target, toggle_target_name, [scene])
-		object.connect("favourite_toggled", toggle_target, favourite_toggle_name, [scene])
-		object.connect("toggled", self, "_on_object_toggled")
+		Validate.ok(object.connect("toggled", toggle_target, toggle_target_name, [scene]))
+		Validate.ok(object.connect("favourite_toggled", toggle_target, favourite_toggle_name, [scene]))
+		Validate.ok(object.connect("toggled", self, "_on_object_toggled"))
 
 
 func set_thumbnails() -> void:

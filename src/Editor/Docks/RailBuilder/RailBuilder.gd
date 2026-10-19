@@ -91,10 +91,10 @@ func _on_Update_pressed() -> void:
 				radius = 0
 			else:
 				radius = length / deg2rad(angle)
-			Logger.vlog(radius)
+			Log.verbose(radius)
 
 		if length > 1000:
-			Logger.log("MaxRailLength of 1000 exceedet! Canceling..", self)
+			Log.info("MaxRailLength of 1000 exceedet! Canceling..", self)
 			return
 		if length != 0:
 			currentRail.length = length
@@ -103,7 +103,7 @@ func _on_Update_pressed() -> void:
 
 	currentRail.update()
 	update_selected_rail(currentRail)
-	Logger.log("Rail updated.")
+	Log.info("Rail updated.")
 
 
 func _on_AddRail_pressed() -> void:
@@ -114,7 +114,7 @@ func _on_AddRail_pressed() -> void:
 		update_selected_rail(self)
 	if $AddRail/Mode.selected == 0: ## After Rail
 		var newRail: Node = editor._spawn_rail()
-		Logger.vlog(newRail.name)
+		Log.verbose(newRail.name)
 		newRail.translation = currentRail.end_pos
 		newRail.rotation.y = currentRail.end_rot
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -132,7 +132,7 @@ func _on_AddRail_pressed() -> void:
 		var RailParent: Node = currentRail.get_parent()
 		var newRail: Node = editor._spawn_rail()
 		Root.name_node_appropriate(newRail, currentRail.name + "P", RailParent)
-		Logger.vlog(newRail.name)
+		Log.verbose(newRail.name)
 		newRail.parallel_rail_name = currentRail.name
 		newRail.distance_to_parallel_rail = float($AddRail/ParallelDistance/LineEdit.text)
 		update_selected_rail(newRail)
@@ -141,7 +141,7 @@ func _on_AddRail_pressed() -> void:
 			editor_selection.add_node(newRail)
 	if $AddRail/Mode.selected == 2: ## Before Rail
 		var newRail: Node = editor._spawn_rail()
-		Logger.vlog(newRail.name)
+		Log.verbose(newRail.name)
 		newRail.translation = currentRail.translation
 		newRail.rotation.y = currentRail.rotation.y + PI
 		newRail.length = float($S/Settings/Length/LineEdit.text)
@@ -157,7 +157,7 @@ func _on_AddRail_pressed() -> void:
 			editor_selection.add_node(newRail)
 
 	editor.set_selected_object(currentRail)
-	Logger.log("Rail added.")
+	Log.info("Rail added.")
 
 
 func _on_Rename_pressed() -> void:
@@ -167,14 +167,14 @@ func _on_Rename_pressed() -> void:
 	currentRail.rename($CurrentRail/Name.text)
 	update_selected_rail(currentRail)
 	editor.set_selected_object(currentRail)
-	Logger.log("Rail renamed.")
+	Log.info("Rail renamed.")
 
 
 func _on_Delete_pressed() -> void:
 	currentRail.queue_free()
 	currentRail = null
 	update_selected_rail(self)
-	Logger.log("Rail deleted.")
+	Log.info("Rail deleted.")
 
 
 func _on_Mode_item_selected(id: int) -> void:
@@ -193,7 +193,7 @@ func _on_ShiftButton_pressed() -> void:
 		currentRail.InShift = currentRail.InShift*-1
 	currentRail.calcShift(true)
 	if currentRail.Outlength > 1000:
-		Logger.err("MaxRailLength of 1000 exceedet! Canceling..", self)
+		Log.err("MaxRailLength of 1000 exceedet! Canceling..", self)
 		return
 	currentRail.length = currentRail.Outlength
 	currentRail._update(true)
@@ -209,7 +209,7 @@ func _on_Shift2Button_pressed() -> void:
 
 	var data: Array = calc_shift(float($S/Settings/Shift2/LengthForward/LineEdit.text), float($S/Settings/Shift2/Shift/LineEdit.text))
 	if data[1] > 1000:
-		Logger.err("MaxRailLength of 1000 exceedet! Canceling..", self)
+		Log.err("MaxRailLength of 1000 exceedet! Canceling..", self)
 		return
 	currentRail.length = data[1]
 	currentRail.radius = data[0]
@@ -236,9 +236,9 @@ func _on_Connect_pressed() -> void:
 	var firstRail: Node = RailParent.get_node($RailConnector/FirstRail/LineEdit.text)
 	var secondRail: Node = RailParent.get_node($RailConnector/SecondRail/LineEdit.text)
 	if not (firstRail.is_in_group("Rail") and secondRail.is_in_group("Rail")) :
-		Logger.err("Some Rail not found. Check your spelling!", "%s, %s" % [firstRail, secondRail])
+		Log.err("Some Rail not found. Check your spelling!", "%s, %s" % [firstRail, secondRail])
 		return
-	Logger.log("Rails connected.")
+	Log.info("Rails connected.")
 
 	firstRail._update(true)
 	secondRail._update(true)
@@ -261,7 +261,7 @@ func _on_Connect_pressed() -> void:
 		rot2 = secondRail.end_rot
 
 	var vector: Vector3 = (pos2 - pos1)/2
-	Logger.vlog(vector)
+	Log.verbose(vector)
 	vector = vector.rotated(Vector3(0,1,0), -rot1)
 
 	## Rail 1:

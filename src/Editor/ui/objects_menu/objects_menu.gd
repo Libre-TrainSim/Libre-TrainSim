@@ -83,7 +83,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func filter(query: String) -> void:
 	var regex := RegEx.new()
 	if regex.compile(query) != OK:
-		Logger.warn("Failed to compile query \"%s\"" % query, self)
+		Log.warn("Failed to compile query \"%s\"" % query, self)
 		regex = null
 
 	for entry in entries.values():
@@ -137,7 +137,7 @@ func populate_content() -> void:
 		var entry := preload("res://Editor/ui/objects_menu/group_entry.tscn").instance()
 		entry.set_objects(group, self, "_on_object_scene_changed", \
 				"_on_favourite_changed", editor_info.favourites)
-		entry.connect("header_pressed", self, "_on_header_pressed")
+		Validate.ok(entry.connect("header_pressed", self, "_on_header_pressed"))
 		entries[group.group_name] = entry
 		content.add_child(entry)
 

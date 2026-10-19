@@ -20,7 +20,7 @@ func _ready() -> void:
 	$Pause.player = player
 	$Black.show()
 
-	$Pause.connect("unpaused", $TextBox, "_on_unpaused")
+	Validate.ok($Pause.connect("unpaused", $TextBox, "_on_unpaused"))
 
 
 func _process(_delta: float) -> void:

@@ -27,7 +27,7 @@ func _ready():
 
 func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 	#if current_mesh == new_mesh:
-	#	Logger.warn("BuildingSettings is set with the already set mesh. There is a logic issue anywhere. We are probably hiding a bug here.", self)
+	#	Log.warn("BuildingSettings is set with the already set mesh. There is a logic issue anywhere. We are probably hiding a bug here.", self)
 	#	return
 
 	current_mesh = new_mesh
@@ -78,7 +78,7 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 	var button := Button.new()
 	button.name = "Button"
 	button.text = "Update"
-	button.connect("pressed", self, "set_current_config_to_mesh")
+	Validate.ok(button.connect("pressed", self, "set_current_config_to_mesh"))
 	add_child(button)
 
 	show()

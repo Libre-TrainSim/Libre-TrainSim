@@ -16,7 +16,7 @@ func _ready():
 	for connection in connections:
 		var conn = get_node(connection)
 		if conn == null:
-			Logger.warn("Connection has wrong NodePath!", self)
+			Log.warn("Connection has wrong NodePath!", self)
 			continue
 		connection_nodes.append(conn)
 		if conn.type != Type.PATH_NODE:

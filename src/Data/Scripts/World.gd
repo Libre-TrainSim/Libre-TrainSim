@@ -41,7 +41,7 @@ func _ready() -> void:
 	var world_config_path = Root.current_track.get_basename() + "_config.tres"
 	current_world_config = load(world_config_path) as WorldConfig
 	if not is_instance_valid(current_world_config):
-		Logger.err("Could not load world config at %s" % world_config_path, self)
+		Log.err("Could not load world config at %s" % world_config_path, self)
 		return
 
 	chunk_manager = ChunkManager.new()
@@ -57,7 +57,7 @@ func _ready() -> void:
 	if trackName == "":
 		trackName = FileName
 
-	Logger.log("trackName: " +trackName + " " + FileName)
+	Log.info("trackName: " +trackName + " " + FileName)
 
 	if Root.Editor:
 		$WorldEnvironment.environment.fog_enabled = ProjectSettings["game/graphics/fog"]
@@ -316,7 +316,7 @@ func get_terrain_height_at(_position: Vector2) -> float:
 
 
 func jump_player_to_station(station_table_index: int) -> void:
-	Logger.log("Jumping player to station " + player.station_table[station_table_index].station_name)
+	Log.info("Jumping player to station " + player.station_table[station_table_index].station_name)
 	var new_station_node: Spatial = get_signal(player.station_table[station_table_index].station_node_name)
 
 	time = player.station_table[station_table_index].arrival_time

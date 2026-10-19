@@ -32,7 +32,7 @@ func set_type(type):
 var current_resources = []
 func crawl_directory_for_resources():
 	current_resources.clear()
-	Logger.vlog("Searching for resources", current_type)
+	Log.verbose("Searching for resources", current_type)
 
 	if current_type == MATERIALS:
 		for folder in ContentLoader.repo.material_folders:
@@ -60,7 +60,7 @@ func crawl_directory_for_resources():
 
 	current_resources = jEssentials.remove_duplicates(current_resources)
 
-	Logger.vlog(current_resources)
+	Log.verbose(current_resources)
 
 
 func update_ItemList():

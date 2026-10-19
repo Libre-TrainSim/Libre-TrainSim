@@ -13,8 +13,8 @@ onready var settings: Node = jSettings.get_node("JSettings")
 
 
 func _ready() -> void:
-	$StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus")
-	settings.connect("hide", $CenterContainer/HBox/Settings, "grab_focus")
+	Validate.ok($StationJumper.connect("hide", $CenterContainer/HBox/JumpToStation, "grab_focus"))
+	Validate.ok(settings.connect("hide", $CenterContainer/HBox/Settings, "grab_focus"))
 
 
 func show() -> void:

@@ -4,7 +4,7 @@ var selected_track: String = ""
 
 
 func _ready() -> void:
-	$ScenarioList.connect("visibility_changed", self, "_on_ScenarioList_visibility_changed")
+	Validate.ok($ScenarioList.connect("visibility_changed", self, "_on_ScenarioList_visibility_changed"))
 
 
 func show() -> void:
@@ -77,7 +77,7 @@ func _on_scenarioList_user_added_entry(entry_name):
 
 	var err = ResourceSaver.save(scenario_file, empty_scenario)
 	if err != OK:
-		Logger.err("Failed to create new scenario at %s. (Reason %s)" % [scenario_file, err], self)
+		Log.err("Failed to create new scenario at %s. (Reason %s)" % [scenario_file, err], self)
 
 
 func _on_scenarioList_user_duplicated_entries(source_entry_names, duplicated_entry_names):
@@ -98,7 +98,7 @@ func _on_scenarioList_user_pressed_action(entry_names):
 	var scenarios_folder: String = selected_track.get_base_dir().plus_file("scenarios")
 	var entry_name = entry_names[0]
 	Root.current_scenario = scenarios_folder.plus_file(entry_name + ".tres")
-	get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+	Validate.ok(get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn")))
 
 
 func _on_ScenarioList_visibility_changed() -> void:

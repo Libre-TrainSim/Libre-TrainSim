@@ -30,12 +30,12 @@ func first_run_check():
 	# Check if this is the first run, and if it is, apply default settings
 	var dir = Directory.new()
 	if not dir.file_exists("user://override.cfg") and not OS.has_feature("editor"):
-		Logger.log("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
+		Log.info("First run (\"user://override.cfg\" doesn't exist). Applying default settings.")
 		reset_settings_to_default()
 
 
 func reset_settings_to_default():
-	Logger.log("Settings reset to default.")
+	Log.info("Settings reset to default.")
 	set_fullscreen(true)
 	set_vsync(true)
 	set_fps_limit(0) # disable limit
@@ -66,7 +66,7 @@ func save_settings():
 		return
 	var err := ProjectSettings.save_custom("user://override.cfg")
 	if err != OK:
-		Logger.err("Failed to save user settings", self)
+		Log.err("Failed to save user settings", self)
 		# Nothing was saved, so nothing needs special treatment
 		return
 	# _global_script_classes gets saved, too
@@ -78,7 +78,7 @@ func save_settings():
 	var file := ConfigFile.new()
 	err = file.load("user://override.cfg")
 	if err != OK:
-		Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \
+		Log.err("Couldn't load user://override.cfg for _global_script_classes" + \
 				"stripping. This is a major functionality threat! " + \
 				"Please ensure removal of the file!", self)
 		return
@@ -95,7 +95,7 @@ func save_settings():
 
 	err = file.save("user://override.cfg")
 	if err != OK:
-		Logger.err("Couldn't load user://override.cfg for _global_script_classes" + \
+		Log.err("Couldn't load user://override.cfg for _global_script_classes" + \
 				"stripping. This is a major functionality threat! " + \
 				"Please ensure removal of the file!", self)
 		return

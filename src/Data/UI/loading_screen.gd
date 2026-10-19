@@ -81,7 +81,7 @@ func _process(_delta: float) -> void:
 			resources.push_back(loader.get_resource())
 			loader = null
 			if instance_thread.start(self, "_instanciate_scenes") != OK:
-				Logger.warn("Can't create instanciation thread. Loading in main thread", self)
+				Log.warn("Can't create instanciation thread. Loading in main thread", self)
 				_instanciate_scenes()
 				_clean_up_and_switch()
 				return
@@ -90,7 +90,7 @@ func _process(_delta: float) -> void:
 		elif err == OK:
 			update_progress_bar()
 		else: # error during loading
-			Logger.err("An error occured during loading! (%s)" % err, self);
+			Log.err("An error occured during loading! (%s)" % err, self);
 			loader = null
 			var _unused = OS.shell_open(ProjectSettings.globalize_path("user://logs/"))
 			_unused = get_tree().change_scene("res://Data/UI/main_menu.tscn")

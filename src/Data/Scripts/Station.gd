@@ -114,7 +114,7 @@ func get_random_transform_at_platform() -> Transform:
 					rail.get_rad_at_distance(randRailDistance), 0)), \
 					rail.get_shifted_global_pos_at_distance(randRailDistance, \
 					rand_range(-platformStart, -platformEnd)) + Vector3(0, platformHeight, 0))
-	Logger.warn("Unsupported platform type %s" % platform_side, self)
+	Log.warn("Unsupported platform type %s" % platform_side, self)
 	#assert(false) # Unsupported platform type. I don't wanna fix here
 	return global_transform
 

@@ -77,7 +77,7 @@ func name_node_appropriate(node: Node, wanted_name: String, parent_node: Node) -
 
 # Searches for translation files with trackName in res://Translations/
 func checkAndLoadTranslationsForTrack(trackName: String) -> void:
-	Logger.vlog(trackName.get_file().get_basename())
+	Log.verbose(trackName.get_file().get_basename())
 	var trackTranslations := []
 	var dir := Directory.new()
 	var _unused = dir.open("res://Translations")
@@ -89,17 +89,17 @@ func checkAndLoadTranslationsForTrack(trackName: String) -> void:
 		if file.get_extension() == "translation":
 			if file.get_file().begins_with(trackName):
 				trackTranslations.append("res://Translations/" + file.get_file())
-				Logger.vlog("Track Translation Found " + "res://Translations/" + file.get_file())
+				Log.verbose("Track Translation Found " + "res://Translations/" + file.get_file())
 	for trackTranslationPath in trackTranslations:
 		var trackTranslation: Translation = load(trackTranslationPath)
-		Logger.vlog(trackTranslation.locale)
+		Log.verbose(trackTranslation.locale)
 		TranslationServer.add_translation(trackTranslation)
 
 
 # Searches for translation files wich are located in the same folder as the train.tscn.
 # Gets the full path to train.tscn as input
 func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
-	Logger.vlog(trainDirPath)
+	Log.verbose(trainDirPath)
 	var trainTranslations := []
 	var dir := Directory.new()
 	var _unused = dir.open(trainDirPath)
@@ -110,10 +110,10 @@ func checkAndLoadTranslationsForTrain(trainDirPath: String) -> void:
 				break
 		if file.get_extension() == "translation":
 			trainTranslations.append(trainDirPath+"/"+file)
-			Logger.vlog("Track Translation Found " + "res://Translations/" + file.get_file())
+			Log.verbose("Track Translation Found " + "res://Translations/" + file.get_file())
 	for trainTranslationPath in trainTranslations:
 		var tainTranslation: Translation = load(trainTranslationPath)
-		Logger.vlog(tainTranslation.locale)
+		Log.verbose(tainTranslation.locale)
 		TranslationServer.add_translation(tainTranslation)
 
 

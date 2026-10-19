@@ -37,7 +37,7 @@ func create_texture(scene_path: String, objects: ObjectGroup) -> void:
 
 func setup_scene(scene: PackedScene) -> bool:
 	if !scene.can_instance():
-		Logger.err("Can't instantiate scene", scene)
+		Log.err("Can't instantiate scene", scene)
 		return false
 	scene_root = scene.instance()
 	add_child(scene_root)

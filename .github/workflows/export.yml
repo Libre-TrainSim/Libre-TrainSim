@@ -4,6 +4,8 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+  # Lets maintainers run the pipeline manually (e.g. after approving workflows on a fork PR).
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}-test

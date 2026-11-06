@@ -7,6 +7,7 @@ src/Trains/*
 !src/Trains/JFR1/
 
 src/.godot/
+src/.import/
 *.csv.import
 *.translation
 

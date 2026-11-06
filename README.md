@@ -8,7 +8,7 @@
 
 ## About
 
-This project was initially created by Jean28518. As the project attracted new contributers, we moved the repository into the [Libre Train Sim Organisation](https://github.com/Libre-TrainSim/). We want to create a modern, fully free train driving simulator running on Linux, Mac, Windows, and Android.
+This project was initially created by Jean28518. As the project attracted new contributors, we moved the repository into the [Libre Train Sim Organisation](https://github.com/Libre-TrainSim/). We want to create a modern, fully free train driving simulator running on Linux, Mac, Windows, and Android.
 
 ## Leave Feedback
 
@@ -20,9 +20,21 @@ Nothing is perfect. If you found a bug, please feel encouraged to create a [bug 
 
 [Follow the development here](https://github.com/Libre-TrainSim/Libre-TrainSim/projects)
 
-## Installation (for contributers)
+## Installation (for contributors)
 
-Fork and clone the repository. Install [Godot 4.4](https://godotengine.org/download/archive/4.4.1-stable/). Start Godot and import the cloned folder.
+Fork and clone the repository. Install **[Godot 4.4](https://godotengine.org/download/archive/4.4-stable/)** (or newer compatible 4.x). Open **`src/project.godot`** as the project root.
+
+### CI and local checks
+
+Continuous integration imports the project with `godot --headless --path src --import`, then runs `src/tools/ci_validate_scripts.gd` to catch **GDScript parse errors**. Locally:
+
+```bash
+export GODOT_BIN="/path/to/Godot_v4.4-stable_linux.x86_64"
+chmod +x scripts/ci_validate.sh
+./scripts/ci_validate.sh
+```
+
+See [MODERNIZATION.md](MODERNIZATION.md) for the technical roadmap.
 
 ## Links
 

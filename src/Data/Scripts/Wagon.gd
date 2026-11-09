@@ -64,7 +64,7 @@ func initalize() -> void:
 	# If there is an world shift happening, all world objects might be shifted, but Wagon will not be notified about it.
 	# This might result in Wagon being in wrong world position, which affect all the calculations relying or global_transform.
 	# This is a temporary fix to make sure that Wagon is always in correct position.
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted", [], CONNECT_ONESHOT)
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_shifted", [], CONNECT_ONESHOT))
 
 	# TODO: this is a performance hotfix, we should do a better implementation in 0.10
 	if not ProjectSettings["game/graphics/enable_dynamic_lights"]:
@@ -233,8 +233,8 @@ func register_doors() -> void:
 					assert(true, "Unsupported DoorSide. DoorSide.BOTH is not yet supported")
 
 	# Connect door state to animations
-	var _res = $Doors/DoorLeft.connect("animation_finished", door_left, "_on_animation_transition_finished")
-	_res = $Doors/DoorRight.connect("animation_finished", door_right, "_on_animation_transition_finished")
+	Validate.ok($Doors/DoorLeft.connect("animation_finished", door_left, "_on_animation_transition_finished"))
+	Validate.ok($Doors/DoorRight.connect("animation_finished", door_right, "_on_animation_transition_finished"))
 
 
 func _animate_side_door(animation: AnimationPlayer, sound: AudioStreamPlayer3D, backwards := false) -> bool:

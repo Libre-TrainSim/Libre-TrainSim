@@ -78,7 +78,7 @@ func set_mesh(new_mesh: ArrayMesh, new_mesh_instance: MeshInstance = null):
 	var button := Button.new()
 	button.name = "Button"
 	button.text = "Update"
-	button.connect("pressed", self, "set_current_config_to_mesh")
+	Validate.ok(button.connect("pressed", self, "set_current_config_to_mesh"))
 	add_child(button)
 
 	show()

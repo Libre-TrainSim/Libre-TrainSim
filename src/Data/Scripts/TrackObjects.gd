@@ -113,7 +113,7 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	make_mesh_unique()
-	Root.connect("world_origin_shifted", self, "update")
+	Validate.ok(Root.connect("world_origin_shifted", self, "update"))
 
 
 func make_mesh_unique():

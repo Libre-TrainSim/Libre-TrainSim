@@ -10,7 +10,7 @@ export (bool) var enable_for_all_trains := true
 export (String) var specific_train := ""
 
 
-func duplicate(deep: bool = true):
+func duplicate(_deep: bool = true):
 	var copy = get_script().new()
 
 	copy.enabled = enabled

@@ -137,7 +137,7 @@ func populate_content() -> void:
 		var entry := preload("res://Editor/ui/objects_menu/group_entry.tscn").instance()
 		entry.set_objects(group, self, "_on_object_scene_changed", \
 				"_on_favourite_changed", editor_info.favourites)
-		entry.connect("header_pressed", self, "_on_header_pressed")
+		Validate.ok(entry.connect("header_pressed", self, "_on_header_pressed"))
 		entries[group.group_name] = entry
 		content.add_child(entry)
 

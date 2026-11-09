@@ -30,7 +30,7 @@ func init_map() -> void:
 		return
 
 # warning-ignore:return_value_discarded
-	Root.connect("world_origin_shifted", self, "_on_world_origin_update")
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_update"))
 
 	var rails: Array = train_world.get_node("Rails").get_children()
 	for rail in rails:
@@ -200,8 +200,7 @@ func create_signal(signal_instance: Spatial) -> void:
 	sprite.name = signal_instance.name
 	$Signals.add_child(sprite)
 	sprite.owner = $Signals
-# warning-ignore:return_value_discarded
-	signal_instance.connect("signal_changed", self, "_on_signal_changed")
+	Validate.ok(signal_instance.connect("signal_changed", self, "_on_signal_changed"))
 	_on_signal_changed(signal_instance) # call once to init
 
 

@@ -24,7 +24,7 @@ func _ready() -> void:
 	timer = Timer.new()
 	timer.wait_time = 0.5
 	timer.autostart = true
-	timer.connect("timeout", self, "_blink")
+	Validate.ok(timer.connect("timeout", self, "_blink"))
 	self.add_child(timer)
 
 	update_visual_instance(signal_logic)

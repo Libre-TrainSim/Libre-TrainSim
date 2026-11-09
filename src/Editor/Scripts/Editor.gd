@@ -31,7 +31,7 @@ func _ready() -> void:
 	if !load_world():
 		return
 
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_shifted"))
 
 	_port_to_new_chunk_system()
 	_port_v1_to_v2_chunks()
@@ -666,24 +666,24 @@ func handle_drag_mode() -> void:
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_simple_connector"
-				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+				Validate.ok($EditorHUD/SnapDialog.connect("confirmed", self, "_snap_simple_connector", [snap_pos, snap_rot], CONNECT_ONESHOT))
 		elif abs(Math.angle_distance_rad(start_rot, snap_rot) - (0.5*PI)) < deg2rad(1):
 			# right angle, can be done with straight rail + 90deg curve
 			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_90deg_connector"):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_90deg_connector"
-				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+				Validate.ok($EditorHUD/SnapDialog.connect("confirmed", self, "_snap_90deg_connector", [snap_pos, snap_rot], CONNECT_ONESHOT))
 		else:
 			# complicated snapping I don't know how to do yet
 			if not $EditorHUD/SnapDialog.is_connected("confirmed", self, "_snap_complex_connector"):
 				$EditorHUD/SnapDialog.dialog_text = tr("EDITOR_SNAP_CONNECTOR_TODO")
 				$EditorHUD/SnapDialog.popup_centered()
 				_last_connected_signal = "_snap_complex_connector"
-				$EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT)
+				Validate.ok($EditorHUD/SnapDialog.connect("confirmed", self, "_snap_complex_connector", [snap_pos, snap_rot], CONNECT_ONESHOT))
 	else:
 		if _last_connected_signal != "" and $EditorHUD/SnapDialog.is_connected("confirmed", self, _last_connected_signal):
-			$EditorHUD/SnapDialog.disconnect("confirmed", self, _last_connected_signal)
+			Validate.ok($EditorHUD/SnapDialog.disconnect("confirmed", self, _last_connected_signal))
 		$EditorHUD/SnapDialog.hide()
 
 

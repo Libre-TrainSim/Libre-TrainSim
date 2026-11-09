@@ -5,6 +5,7 @@ extends Control
 onready var editor_directory: String = jSaveManager.get_setting("editor_directory_path", "user://editor/")
 onready var track_list := $PanelContainer/VBoxContainer/TracksList as jList
 onready var editor_path := $PanelContainer/VBoxContainer/HBoxContainer/EditorPath as LineEdit
+onready var item_list := $PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList as ItemList
 
 
 var dir := Directory.new()
@@ -15,7 +16,8 @@ func _ready() -> void:
 	_initialize_editor_directory()
 	editor_path.text = editor_directory
 	_find_content()
-	$PanelContainer/VBoxContainer/TracksList/VBoxContainer/ItemList.select(0)
+	if item_list.get_item_count() > 0:
+		item_list.select(0)
 
 
 func show() -> void:
@@ -43,7 +45,7 @@ func _initialize_editor_directory():
 	if dir.open("user://") != OK:
 		Logger.err("Can't open directory '%s'" % editor_directory, self)
 		return
-	dir.make_dir_recursive(editor_directory)
+	Validate.ok(dir.make_dir_recursive(editor_directory))
 
 
 func _find_content():
@@ -57,12 +59,12 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 		return false
 
 	var worlds_path := "Worlds".plus_file(entry_name)
-	dir.make_dir_recursive(mod_path.plus_file(worlds_path))
-	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("chunks"))
-	dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("scenarios"))
+	Validate.ok(dir.make_dir_recursive(mod_path.plus_file(worlds_path)))
+	Validate.ok(dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("chunks")))
+	Validate.ok(dir.make_dir_recursive(mod_path.plus_file(worlds_path).plus_file("scenarios")))
 
-	dir.copy("res://Data/Modules/World-Pattern.tscn", \
-			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name))
+	Validate.ok(dir.copy("res://Data/Modules/World-Pattern.tscn", \
+			"%s.tscn" % mod_path.plus_file(worlds_path).plus_file(entry_name)))
 
 	var chunk_0_0 := preload("res://Data/Modules/chunk_prefab.tscn").instance() as Chunk
 	chunk_0_0.name = "chunk_0_0"

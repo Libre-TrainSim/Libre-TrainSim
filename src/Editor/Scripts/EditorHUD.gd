@@ -7,7 +7,7 @@ var selected_object_type := ""
 
 func _ready() -> void:
 	var station_popup: PopupMenu = $GlobalMenu/JumpToStation.get_popup()
-	station_popup.connect("index_pressed", self, "_on_jump_station_pressed")
+	Validate.ok(station_popup.connect("index_pressed", self, "_on_jump_station_pressed"))
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -20,11 +20,11 @@ onready var train_selector: BoxContainer = $V/Trains
 
 
 func _ready() -> void:
-	track_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	scenario_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	route_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	time_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
-	train_selector.connect("visibility_changed", self, "_on_menu_visibility_changed")
+	Validate.ok(track_selector.connect("visibility_changed", self, "_on_menu_visibility_changed"))
+	Validate.ok(scenario_selector.connect("visibility_changed", self, "_on_menu_visibility_changed"))
+	Validate.ok(route_selector.connect("visibility_changed", self, "_on_menu_visibility_changed"))
+	Validate.ok(time_selector.connect("visibility_changed", self, "_on_menu_visibility_changed"))
+	Validate.ok(train_selector.connect("visibility_changed", self, "_on_menu_visibility_changed"))
 
 
 func show() -> void:

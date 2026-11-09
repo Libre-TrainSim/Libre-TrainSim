@@ -16,7 +16,7 @@ func _ready() -> void:
 	_initialize_editor_directory()
 	editor_path.text = editor_directory
 	_find_content()
-	if(item_list.get_item_count()>0):
+	if item_list.get_item_count() > 0:
 		item_list.select(0)
 
 

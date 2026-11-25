@@ -24,7 +24,7 @@ func _ready():
 	$CanvasLayer/ScenarioConfiguration.init()
 	Logger.log("Successfully loaded track data.")
 
-	pause_menu.connect("visibility_changed", self, "_on_Pause_visibility_changed")
+	Validate.ok(pause_menu.connect("visibility_changed", self, "_on_Pause_visibility_changed"))
 
 
 func _enter_tree() -> void:

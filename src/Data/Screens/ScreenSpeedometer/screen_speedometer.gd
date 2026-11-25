@@ -24,12 +24,12 @@ func _ready():
 	command_rotation_per_percent = (command_rotation_100percent - command_rotation_0percent)
 	#print("DISPLAY: " + String(SpeedPerKmH) + " " + String(SpeedPointerZero) + " " + String(SpeedPointerRotationAt100))
 
-	$BlinkTimer.connect("timeout", self, "_toggle_blink_status")
+	Validate.ok($BlinkTimer.connect("timeout", self, "_toggle_blink_status"))
 
 	# SIFA
 	var player = find_parent("Player")
 	if is_instance_valid(player):
-		player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint")
+		Validate.ok(player.get_node("SafetySystems/SifaModule").connect("sifa_visual_hint", self, "_on_sifa_visual_hint"))
 	$Info/Sifa.visible = false
 
 

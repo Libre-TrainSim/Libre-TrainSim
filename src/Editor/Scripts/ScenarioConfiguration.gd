@@ -133,7 +133,7 @@ func update_ui_for_current_route():
 			checkbox.name = route_name
 			checkbox.text = route_name
 			checkbox.pressed = routes[current_route].specific_routes.has(route_name)
-			checkbox.connect("pressed", self, "_on_genereal_settings_SpecificRoutes_entry_pressed")
+			Validate.ok(checkbox.connect("pressed", self, "_on_genereal_settings_SpecificRoutes_entry_pressed"))
 			$TabContainer/Routes/RouteConfiguration/GeneralSettings/P/SpecificRoutes.add_child(checkbox)
 
 	update_route_point_list()

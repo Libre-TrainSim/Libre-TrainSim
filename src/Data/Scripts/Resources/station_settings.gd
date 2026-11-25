@@ -6,7 +6,7 @@ export (bool) var enable_person_system := true
 export (bool) var overwrite := false
 
 
-func duplicate(deep: bool = true):
+func duplicate(_deep: bool = true):
 	var copy = get_script().new()
 
 	copy.assigned_signal_name = assigned_signal_name

@@ -41,7 +41,7 @@ func update_visual_instance() -> void:
 	visible = rail.visible
 	if not rail.visible:
 		if get_node_or_null("VisualInstance") != null:
-			self.disconnect("signal_changed", $VisualInstance, "update_visual_instance")
+			Validate.ok(self.disconnect("signal_changed", $VisualInstance, "update_visual_instance"))
 			$VisualInstance.queue_free()
 			if get_node_or_null("SelectCollider") != null:
 				$SelectCollider.queue_free()
@@ -65,7 +65,7 @@ func create_visual_instance() -> void:
 
 func connect_visual_instance() -> void:
 	var visual_instance = get_node_or_null("VisualInstance")
-	var _unused = self.connect("signal_changed", visual_instance, "update_visual_instance")
+	Validate.ok(.connect("signal_changed", visual_instance, "update_visual_instance"))
 
 
 func update() -> void:

@@ -32,18 +32,18 @@ func _ready():
 
 	# Signal connections for UI focus
 
-	create_menu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed")
+	Validate.ok(create_menu.connect("visibility_changed", self, "_on_CreateMenu_visibility_changed"))
 
-	$Feedback.connect("popup_hide", $Buttons/Play, "grab_focus")
+	Validate.ok($Feedback.connect("popup_hide", $Buttons/Play, "grab_focus"))
 
-	$Play.connect("hide", $Buttons/Play, "grab_focus")
-	$Content.connect("hide", $Buttons/Content, "grab_focus")
-	create_menu.connect("hide", $Buttons/Create, "grab_focus")
-	jSettings.get_node("JSettings").connect("hide", $Buttons/Settings, "grab_focus")
-	$About.connect("hide", $Buttons/About, "grab_focus")
+	Validate.ok($Play.connect("hide", $Buttons/Play, "grab_focus"))
+	Validate.ok($Content.connect("hide", $Buttons/Content, "grab_focus"))
+	Validate.ok(create_menu.connect("hide", $Buttons/Create, "grab_focus"))
+	Validate.ok(jSettings.get_node("JSettings").connect("hide", $Buttons/Settings, "grab_focus"))
+	Validate.ok($About.connect("hide", $Buttons/About, "grab_focus"))
 
-	$TrackEditorSelection.connect("hide", $CreateMenu/TrackEditor, "grab_focus")
-	$ScenarioEditorSelection.connect("hide", $CreateMenu/ScenarioEditor, "grab_focus")
+	Validate.ok($TrackEditorSelection.connect("hide", $CreateMenu/TrackEditor, "grab_focus"))
+	Validate.ok($ScenarioEditorSelection.connect("hide", $CreateMenu/ScenarioEditor, "grab_focus"))
 
 
 func _unhandled_input(event: InputEvent) -> void:

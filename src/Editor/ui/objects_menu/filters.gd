@@ -10,8 +10,8 @@ var show_tween: SceneTreeTween = null
 
 func _ready() -> void:
 	for child in get_children():
-		child.connect("mouse_entered", self, "_on_mouse_entered")
-		child.connect("mouse_exited", self, "_on_mouse_exited")
+		Validate.ok(child.connect("mouse_entered", self, "_on_mouse_entered"))
+		Validate.ok(child.connect("mouse_exited", self, "_on_mouse_exited"))
 
 
 func show_names() -> void:

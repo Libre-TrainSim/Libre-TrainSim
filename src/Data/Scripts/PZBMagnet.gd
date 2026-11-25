@@ -33,7 +33,7 @@ func _ready() -> void:
 			#queue_free()
 			return
 
-	var _unused = attached_signal_node.connect("signal_changed", self, "update_active")
+	Validate.ok(attached_signal_node.connect("signal_changed", self, "update_active"))
 
 	set_to_rail()
 	update_active(attached_signal_node)

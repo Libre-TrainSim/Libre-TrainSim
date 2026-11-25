@@ -8,7 +8,7 @@ var backing_text: String = ""
 
 func _ready() -> void:
 	backing_text = text
-	var _unused = InputHelper.connect("control_type_changed", self, "make_string")
+	Validate.ok(InputHelper.connect("control_type_changed", self, "make_string"))
 	make_string()
 
 

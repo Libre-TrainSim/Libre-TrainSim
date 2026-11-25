@@ -198,7 +198,7 @@ func ready() -> void:
 	# Initiliaze Camera:
 	$Camera.pause_mode = Node.PAUSE_MODE_PROCESS
 	if not ai:
-		$HUD.connect("textbox_closed", self, "_on_textbox_closed")
+		Validate.ok($HUD.connect("textbox_closed", self, "_on_textbox_closed"))
 		cameraZeroTransform = cameraNode.transform
 		cameraX = -$Camera.rotation.x
 		cameraY = $Camera.rotation.y
@@ -624,7 +624,7 @@ func change_to_next_rail() -> void:
 			return
 		else:
 			fail_scenario(tr("FAILED_SCENARIO_DROVE_OVER_LAST_RAIL"))
-			connect("_textbox_closed", self, "_on_scenario_ended", [], CONNECT_ONESHOT)
+			Validate.ok(connect("_textbox_closed", self, "_on_scenario_ended", [], CONNECT_ONESHOT))
 			return
 
 	currentRail = route_information[route_index].rail
@@ -945,7 +945,7 @@ func check_station(delta: float) -> void:
 		# scenario finished if last station
 		if current_station_table_entry.stop_type == StopType.END:
 			show_textbox_message(tr("SCENARIO_FINISHED") + "\n\n" + tr("SCENARIO_SCORE") % score)
-			connect("_textbox_closed", self, "_on_scenario_ended", [], CONNECT_ONESHOT)
+			Validate.ok(connect("_textbox_closed", self, "_on_scenario_ended", [], CONNECT_ONESHOT))
 			leave_current_station()
 			return
 		# else, send "you can depart" message once the time is up
@@ -1715,7 +1715,7 @@ func _on_scenario_ended() -> void:
 			LoadingScreen.load_editor(Root.current_track.get_basename(), screenshot)
 		GameStartContext.ScenarioEditor:
 			Root.Editor = true
-			get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn"))
+			Validate.ok(get_tree().change_scene_to(load("res://Editor/Modules/scenario_editor.tscn")))
 
 
 # rail has to be in baked_route

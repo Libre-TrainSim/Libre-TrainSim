@@ -8,8 +8,8 @@ func get_description() -> String:
 	return "Waypoint: " + rail_name
 
 
-func duplicate(deep: bool = true):
-	var copy = get_script().new()
+func duplicate(deep: bool = true):	
+	var copy = .duplicate() if deep else get_script().new()
 
 	copy.rail_name = rail_name
 

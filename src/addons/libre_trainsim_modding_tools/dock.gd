@@ -28,7 +28,7 @@ func _on_export_mod_pressed() -> void:
 	dir_select_dialog.mode = FileDialog.MODE_OPEN_DIR
 	dir_select_dialog.access = FileDialog.ACCESS_RESOURCES
 	dir_select_dialog.current_dir = "res://Mods"
-	dir_select_dialog.connect("dir_selected", self, "_on_export_dir_selected")
+	Validate.ok(dir_select_dialog.connect("dir_selected", self, "_on_export_dir_selected"))
 	base.add_child(dir_select_dialog)
 	dir_select_dialog.popup_centered_ratio()
 

@@ -10,7 +10,7 @@ signal station_index_selected(station_index)
 
 
 func _ready() -> void:
-	item_list.connect("item_activated", self, "_on_ItemList_item_activated")
+	Validate.ok(item_list.connect("item_activated", self, "_on_ItemList_item_activated"))
 
 
 func show() -> void:

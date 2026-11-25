@@ -10,7 +10,7 @@ var orbit_rotation_helper: Spatial = Spatial.new()
 
 
 func _ready() -> void:
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_shifted"))
 
 
 func _on_world_origin_shifted(delta: Vector3):

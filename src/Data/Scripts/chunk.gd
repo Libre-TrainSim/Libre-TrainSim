@@ -41,7 +41,7 @@ func _ready() -> void:
 			building.generate_collider()
 			building.set_script(old_script)
 
-	Root.connect("world_origin_shifted", self, "_on_world_origin_shifted")
+	Validate.ok(Root.connect("world_origin_shifted", self, "_on_world_origin_shifted"))
 
 
 func update():

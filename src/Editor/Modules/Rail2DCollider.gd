@@ -7,7 +7,7 @@ var input_handling_node: Node
 func _ready():
 	var area_2d = Area2D.new()
 	add_child(area_2d)
-	area_2d.connect("input_event", self, "_on_RailCollider_input_event")
+	Validate.ok(area_2d.connect("input_event", self, "_on_RailCollider_input_event"))
 
 	var line_points = points
 	for i in range(line_points.size() - 1):

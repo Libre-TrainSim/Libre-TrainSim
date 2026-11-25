@@ -22,7 +22,7 @@ func _ready():
 	add_child(world)
 	$ScenarioMap.init(world)
 	$CanvasLayer/ScenarioConfiguration.init()
-	Logger.log("Successfully loaded track data.")
+	Log.info("Successfully loaded track data.")
 
 	Validate.ok(pause_menu.connect("visibility_changed", self, "_on_Pause_visibility_changed"))
 

@@ -176,7 +176,7 @@ func change_to_next_rail() -> void:
 			route_index = 0
 			distance_on_route = 0
 		else:
-			Logger.vlog(name + ": Route no more rail found, despawning me...", self)
+			Log.verbose(name + ": Route no more rail found, despawning me...", self)
 			despawn()
 			return
 
@@ -197,7 +197,7 @@ func check_pantograph() -> void:
 	if not self.has_node("Pantograph"):
 		return
 	if not lastPantographUp and player.pantographUp:
-		Logger.vlog("Started Pantograph Animation")
+		Log.verbose("Started Pantograph Animation")
 		$Pantograph/AnimationPlayer.play("Up")
 	if lastPantograph and not player.pantograph:
 		$Pantograph/AnimationPlayer.play_backwards("Up")
@@ -304,7 +304,7 @@ func register_person(person: Spatial, door: Spatial) -> Array:
 
 	var passenger_route_path: Array = get_path_from_to(door, seat)
 	if passenger_route_path == []:
-		Logger.err("Some seats of "+ name + " are not reachable from every door!!", self)
+		Log.err("Some seats of "+ name + " are not reachable from every door!!", self)
 		return []
 	seats_free.erase(seat)
 
@@ -402,7 +402,7 @@ func get_route_from_seat_to_door(seat: Spatial) -> Array:
 	var closest_door: Spatial = possible_doors[closest_index]
 	var route: Array = get_path_from_to(seat, closest_door)
 	if route.empty():
-		Logger.err("Some doors are not reachable from every door! Check your Path configuration", self)
+		Log.err("Some doors are not reachable from every door! Check your Path configuration", self)
 		assert(false)
 		return []
 

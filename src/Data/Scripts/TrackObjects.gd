@@ -118,7 +118,7 @@ func _ready() -> void:
 
 func make_mesh_unique():
 	if mesh == null:
-		Logger.log("TrackObject: make_mesh_unique(): Mesh is null", self)
+		Log.info("TrackObject: make_mesh_unique(): Mesh is null", self)
 		return
 
 	multimesh = MultiMesh.new()
@@ -134,7 +134,7 @@ func make_mesh_unique():
 func update(_delta := Vector3()) -> void:
 	var _rail_node = world.get_node("Rails").get_node_or_null(attached_rail)
 	if _rail_node == null:
-		Logger.warn("TrackObject could not find attached_rail %s!" % attached_rail, self)
+		Log.warn("TrackObject could not find attached_rail %s!" % attached_rail, self)
 		return
 
 	attach_to_rail(_rail_node)

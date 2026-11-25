@@ -77,7 +77,7 @@ func _on_scenarioList_user_added_entry(entry_name):
 
 	var err = ResourceSaver.save(scenario_file, empty_scenario)
 	if err != OK:
-		Logger.err("Failed to create new scenario at %s. (Reason %s)" % [scenario_file, err], self)
+		Log.err("Failed to create new scenario at %s. (Reason %s)" % [scenario_file, err], self)
 
 
 func _on_scenarioList_user_duplicated_entries(source_entry_names, duplicated_entry_names):

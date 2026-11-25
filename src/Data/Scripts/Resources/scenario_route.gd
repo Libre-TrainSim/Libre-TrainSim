@@ -280,7 +280,7 @@ func connect_points() -> void:
 
 
 func _on_route_changed(changed_point: RoutePoint) -> void:
-	Logger.vlog("I am dirty", changed_point)
+	Log.verbose("I am dirty", changed_point)
 	if dirty:
 		return
 	dirty = route_points.has(changed_point)

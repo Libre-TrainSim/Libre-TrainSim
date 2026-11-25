@@ -65,7 +65,7 @@ func _ready():
 
 	_dir = Directory.new()
 	if _dir.open("res://") != OK:
-		Logger.err("Dir cannot open res://", self)
+		Log.err("Dir cannot open res://", self)
 
 	_order_rails_by_chunk()
 
@@ -84,7 +84,7 @@ func _ready():
 	# get position of active camera
 	var position_provider = get_viewport().get_camera()
 	if position_provider == null:
-		Logger.err("Failed to perform initial move", self)
+		Log.err("Failed to perform initial move", self)
 		return
 
 	# handle world origin
@@ -209,7 +209,7 @@ func add_track_object(track_object: TrackObject):
 	var rail_name = track_object.attached_rail
 	var rail = world.get_node("Rails").get_node_or_null(rail_name)
 	if not is_instance_valid(rail):
-		Logger.err("Your track object is attached to an invalid rail.", self)
+		Log.err("Your track object is attached to an invalid rail.", self)
 		_send_message("Cannot create track object. Rail not found.")
 		return
 
@@ -217,7 +217,7 @@ func add_track_object(track_object: TrackObject):
 	var chunk_name = chunk_to_string(chunk_pos)
 	var chunk = world.get_node("Chunks").get_node_or_null(chunk_name)
 	if not is_instance_valid(chunk):
-		Logger.err("Trying to create track object in unloaded chunk.", self)
+		Log.err("Trying to create track object in unloaded chunk.", self)
 		_send_message("Cannot create track object. Chunk not loaded.")
 		return
 
@@ -274,7 +274,7 @@ func _save_chunk(chunk_name: String, saving: bool = false):
 	# find the chunk
 	var chunk: Chunk = world.get_node("Chunks").get_node_or_null(chunk_name)
 	if not is_instance_valid(chunk):
-		Logger.err("Trying to save chunk that has been free()'d: %s" % chunk_name, self)
+		Log.err("Trying to save chunk that has been free()'d: %s" % chunk_name, self)
 		return
 
 	# add rails to chunk
@@ -306,15 +306,15 @@ func _save_chunk(chunk_name: String, saving: bool = false):
 
 	var packed_chunk = PackedScene.new()
 	if packed_chunk.pack(chunk) != OK:
-		Logger.err("Could not pack chunk to tscn!", self)
+		Log.err("Could not pack chunk to tscn!", self)
 		return
 
 	if ResourceSaver.save(file, packed_chunk) != OK:
-		Logger.err("Could not save chunk tscn!", self)
+		Log.err("Could not save chunk tscn!", self)
 		return
 
 	world.world_origin_on_last_save = world_origin
-	Logger.log("Saved Chunk " + chunk_name)
+	Log.info("Saved Chunk " + chunk_name)
 
 
 func cleanup():
@@ -356,7 +356,7 @@ func _test_position_calc() -> void:
 		Vector3(-700, 0, -700),
 	])
 
-	Logger.warn("Running position test", self)
+	Log.warn("Running position test", self)
 
 	for case in cases:
 		printt(case, position_to_chunk(case))

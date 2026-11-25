@@ -32,7 +32,7 @@ func set_to_rail(skip_in_scenario_editor := false) -> void:
 
 
 	if attached_rail.empty() or not world.has_node("Rails/"+attached_rail):
-		Logger.warn("Cannot set %s '%s' to rail '%s'" % [self.type, name, attached_rail], self)
+		Log.warn("Cannot set %s '%s' to rail '%s'" % [self.type, name, attached_rail], self)
 		return
 	rail = world.get_node("Rails/"+attached_rail)
 

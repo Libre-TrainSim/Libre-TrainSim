@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 	if !is_moving_first_person:
 		in_movement_time = 0
 		return
-	Logger.warn("Hello from editor cam", self)
+	Log.warn("Hello from editor cam", self)
 	var direction = Vector3(\
 		Input.get_action_strength("right") - Input.get_action_strength("left"), \
 		Input.get_action_strength("up") - Input.get_action_strength("down"), \

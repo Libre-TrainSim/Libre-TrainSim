@@ -29,9 +29,9 @@ func save_config() -> void:
 	world_config.editor_notes = $Configuration/Notes.text
 
 	if ResourceSaver.save(save_path, world_config) != OK:
-		Logger.err("Error saving world config at '%s'" % save_path, self)
+		Log.err("Error saving world config at '%s'" % save_path, self)
 		return
-	Logger.log("World Config saved.")
+	Log.info("World Config saved.")
 
 
 func load_stored_config() -> void:

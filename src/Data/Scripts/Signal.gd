@@ -77,7 +77,7 @@ func update() -> void:
 
 	if operation_mode == SignalOperationMode.STATION:
 		if world.get_assigned_station_of_signal(name) == null:
-			Logger.warn("%s should run in station mode, but can't find it's correspondending station. Switching to block mode..." % name, "Signal")
+			Log.warn("%s should run in station mode, but can't find it's correspondending station. Switching to block mode..." % name, "Signal")
 			set_operation_mode(SignalOperationMode.BLOCK)
 
 
@@ -112,10 +112,10 @@ func _ready() -> void:
 # signals necessary for RailMap to work
 func set_status(new_val: int) -> void:
 	if signal_type == SignalType.PRESIGNAL and new_val == SignalStatus.RED:
-		Logger.warn(name + ": Cannot set a presignal to red!", self)
+		Log.warn(name + ": Cannot set a presignal to red!", self)
 		return
 	if signal_type == SignalType.MAIN and new_val == SignalStatus.ORANGE:
-		Logger.warn(name + ": Cannot set a main signal to orange!", self)
+		Log.warn(name + ": Cannot set a main signal to orange!", self)
 		return
 
 	# make sure signal does not become green when it should be orange

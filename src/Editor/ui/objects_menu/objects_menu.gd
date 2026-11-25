@@ -83,7 +83,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func filter(query: String) -> void:
 	var regex := RegEx.new()
 	if regex.compile(query) != OK:
-		Logger.warn("Failed to compile query \"%s\"" % query, self)
+		Log.warn("Failed to compile query \"%s\"" % query, self)
 		regex = null
 
 	for entry in entries.values():

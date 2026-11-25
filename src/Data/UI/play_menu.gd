@@ -203,7 +203,7 @@ func _make_image(path: String) -> Texture:
 	if dir.open("res://") == OK and dir.file_exists(path + ".import"):
 		screenshot_texture = load(path)
 	else:
-		Logger.warn("Cannot find image path", path)
+		Log.warn("Cannot find image path", path)
 		var img := Image.new()
 		img.create(1, 1, false, Image.FORMAT_RGB8)
 		img.fill(Color.black)
@@ -319,7 +319,7 @@ func _on_Trains_item_selected(index):
 	# FIXME: this should not happen in the menu. The trains can get huge, so we should
 	# add a resource holding information about the trains
 	var train: Spatial = load(selected_train).instance()
-	Logger.vlog("Current Train: " + selected_train)
+	Log.verbose("Current Train: " + selected_train)
 
 	$V/Trains/H/V/Information.show()
 	Root.checkAndLoadTranslationsForTrain(selected_train.get_base_dir())

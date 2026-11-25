@@ -47,7 +47,7 @@ func _on_export_dir_selected(dir: String) -> void:
 	var packer = PCKPacker.new()
 	var err = packer.pck_start(mod_path.plus_file(mod_name) + ".pck")
 	if err != OK:
-		Logger.err("Error creating %s! (Reason: %s)" % [mod_path.plus_file(mod_name) + ".pck", err], self)
+		Log.err("Error creating %s! (Reason: %s)" % [mod_path.plus_file(mod_name) + ".pck", err], self)
 		return
 
 	var import_files_to_pack = []
@@ -59,20 +59,20 @@ func _on_export_dir_selected(dir: String) -> void:
 
 		err = packer.add_file(file, file)
 		if err != OK:
-			Logger.err("Could not add file %s to pck! (Reason: %s)" % [file, err], self)
+			Log.err("Could not add file %s to pck! (Reason: %s)" % [file, err], self)
 
 	for file in import_files_to_pack:
 		err = packer.add_file(file, file)
 		if err != OK:
-			Logger.err("Could not add file %s to pck! (Reason: %s)" % [file, err], self)
+			Log.err("Could not add file %s to pck! (Reason: %s)" % [file, err], self)
 
 	err = packer.flush(true)
 	if err != OK:
-		Logger.err("Could not flush pck! (Reason: %s)" % err, self)
+		Log.err("Could not flush pck! (Reason: %s)" % err, self)
 
 	err = directory.copy(dir.plus_file("content.tres"), mod_path.plus_file("content.tres"))
 	if err != OK:
-		Logger.err("Unable to copy content.tres to mod folder! (Reason: %s)" % err, self)
+		Log.err("Unable to copy content.tres to mod folder! (Reason: %s)" % err, self)
 
 	var done_popup = AcceptDialog.new()
 	done_popup.window_title = "Success!"
@@ -84,7 +84,7 @@ func _on_export_dir_selected(dir: String) -> void:
 func _get_imported_paths(file):
 	var cfg = ConfigFile.new()
 	if cfg.load(file) != OK:
-		Logger.err("cannot open .import file", self)
+		Log.err("cannot open .import file", self)
 	var type = cfg.get_value("remap", "type", "")
 
 	if type in IMPORTED_RESOURCE_TYPES:

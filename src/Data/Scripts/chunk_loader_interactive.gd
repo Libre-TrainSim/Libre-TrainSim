@@ -51,7 +51,7 @@ func unload_chunks(old_chunks: Array):
 func _ready() -> void:
 	_dir = Directory.new()
 	if _dir.open("res://") != OK:
-		Logger.err("Cannot open resource directory.", self)
+		Log.err("Cannot open resource directory.", self)
 		return
 
 
@@ -81,7 +81,7 @@ func _process(delta: float) -> void:
 			_currently_loading_chunk = ""
 			break
 		elif err != OK:
-			Logger.err("Cannot load chunk %s (Reason %s)" % [_currently_loading_chunk, err], self)
+			Log.err("Cannot load chunk %s (Reason %s)" % [_currently_loading_chunk, err], self)
 			_loader = null
 			chunk_manager._send_message("Chunk could not be loaded, please check your logs!")
 			break
@@ -89,7 +89,7 @@ func _process(delta: float) -> void:
 
 func _spawn_chunk_from_res(resource):
 	if not resource is PackedScene:
-		Logger.warn("What? Your chunk is not a packed scene! %s" % _currently_loading_chunk, self)
+		Log.warn("What? Your chunk is not a packed scene! %s" % _currently_loading_chunk, self)
 		return
 
 	var chunk = resource.instance()
@@ -114,7 +114,7 @@ func _spawn_empty_chunk():
 func _add_chunk_to_scene_tree(chunk):
 	# This should never happen! If it does, we're hiding a bug.
 	if chunk_manager.world.get_node("Chunks").has_node(chunk.name):
-		Logger.warn("Chunk already loaded: %s" % chunk.name, self)
+		Log.warn("Chunk already loaded: %s" % chunk.name, self)
 		_loaded_chunks.push_back(chunk.name)
 		chunk.free()
 		return

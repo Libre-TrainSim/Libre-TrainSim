@@ -1,15 +1,15 @@
-class_name Logger
+class_name Log
 extends Object
 
 
 const ENABLE_VERBOSE_LOGGING: bool = true # constant for dead code elimination
 
 
-static func log(message, context = null) -> void:
+static func info(message, context = null) -> void:
 	print("[%s][INFO](%s) %s" % [get_time_string(), context, message])
 
 
-static func vlog(message, context = null) -> void:
+static func verbose(message, context = null) -> void:
 	if !ENABLE_VERBOSE_LOGGING:
 		return
 	print("[%s][VERBOSE](%s) %s" % [get_time_string(), context, message])
@@ -34,7 +34,7 @@ static func get_time_string() -> String:
 
 
 static func print_stack_trace() -> void:
-	var skips: int = 2 # We don't want to clutter the stacktrace with logger steps
+	var skips: int = 2 # We don't want to clutter the stacktrace with log steps
 	for entry in get_stack():
 		if skips:
 			skips -= 1

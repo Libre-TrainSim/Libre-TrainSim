@@ -281,7 +281,7 @@ func ready() -> void:
 		insideLight = true
 		frontLight = true
 
-	Logger.log("Train " + name + " spawned sucessfully at " + currentRail.name)
+	Log.info("Train " + name + " spawned sucessfully at " + currentRail.name)
 
 
 var initialSwitchCheck: bool = false
@@ -610,7 +610,7 @@ func change_to_next_rail() -> void:
 		distance_on_rail -= currentRail.length
 
 	if not ai:
-		Logger.vlog("Player: Changing Rail...")
+		Log.verbose("Player: Changing Rail...")
 
 	if reverser == ReverserState.REVERSE:
 		route_index -= 1
@@ -619,7 +619,7 @@ func change_to_next_rail() -> void:
 
 	if route_index >= route_information.size() or route_index < 0:
 		if ai:
-			Logger.log(name + ": Route no more rail found, despawning me...")
+			Log.info(name + ": Route no more rail found, despawning me...")
 			despawn()
 			return
 		else:
@@ -646,7 +646,7 @@ func change_to_next_rail() -> void:
 		new_radius = 1000000000
 	var radius_difference_factor = abs(1/new_radius - 1/old_radius)*2000
 
-	Logger.vlog("New Radius = %s, Old Radius = %s, Difference Factor = %s" % [new_radius, old_radius, radius_difference_factor])
+	Log.verbose("New Radius = %s, Old Radius = %s, Difference Factor = %s" % [new_radius, old_radius, radius_difference_factor])
 	curve_shaking_factor = radius_difference_factor * Math.speed_to_kmh(speed) / 100.0 * camera_shaking_factor
 
 
@@ -784,11 +784,11 @@ func handle_signal(signal_name: String) -> void:
 	nextSpeedLimitNode = null
 	var signal_passed = world.get_node("Signals/"+signal_name)
 
-	Logger.log(name + ": SIGNAL: " + signal_passed.name)
+	Log.info(name + ": SIGNAL: " + signal_passed.name)
 
 	if signal_passed.type == RailLogicTypes.SIGNAL: ## Signal
 		if speed == 0: # Train is standing, and a signal get's activated that only happens at beginning or after jumping
-			Logger.log("Ignoring signal " + signal_name)
+			Log.info("Ignoring signal " + signal_name)
 			return
 		if reverser == ReverserState.FORWARD:
 			if signal_passed.speed != -1:
@@ -818,13 +818,13 @@ func handle_signal(signal_name: String) -> void:
 			return
 		var station_table_index: int = get_station_table_index_of_station_node_name(signal_passed.name)
 		if station_table_index == -1:
-			Logger.warn(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...", self)
+			Log.warn(name + ": Station not found in repository, ingoring station. Maybe you are at the wrong track, or the nodename in the station table of the player is incorrect...", self)
 			return
 		if current_station_table_index < station_table_index: # Train is standing, and a signal get's activated that only happens at beginning or after jumping
 			if speed == 0:
 				return
 			else:
-				Logger.err("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].station_node_name).name], self)
+				Log.err("Route incorrect! Reached station %s but the next_station should be %s." % [signal_passed.name, world.get_signal(station_table[current_station_table_index].station_node_name).name], self)
 
 		current_station_table_index = station_table_index
 		current_station_table_entry = station_table[current_station_table_index]
@@ -844,7 +844,7 @@ func handle_signal(signal_name: String) -> void:
 		else:
 			currentSpeedLimit = signal_passed.speed
 	elif signal_passed.type == RailLogicTypes.SPEED_LIMIT_WARNING:
-		Logger.log(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
+		Log.info(name + ": Next Speed Limit: "+String(signal_passed.warn_speed))
 	elif signal_passed.type == RailLogicTypes.CONTACT_POINT:
 		signal_passed.activateContactPoint(name)
 	elif signal_passed.type == RailLogicTypes.LOGIC:
@@ -854,7 +854,7 @@ func handle_signal(signal_name: String) -> void:
 		# this elif block is only here to prevent the error message
 		pass
 	else:
-		Logger.err("Unrecognised signal type %s passed" % signal_passed.type, self)
+		Log.err("Unrecognised signal type %s passed" % signal_passed.type, self)
 
 	emit_signal("passed_signal", signal_passed)
 
@@ -1031,7 +1031,7 @@ func checkSpeedLimit(delta: float) -> void:
 
 func send_message(string : String, actions := []) -> void:
 	if not ai:
-		Logger.log("Sending Message: " + tr(string) % actions )
+		Log.info("Sending Message: " + tr(string) % actions )
 		$HUD.send_message(string, actions)
 
 
@@ -1350,9 +1350,9 @@ func toggle_automatic_driving() -> void:
 	automaticDriving = !automaticDriving
 	if not automaticDriving:
 		sollSpeedEnabled = false
-		Logger.log("AutomaticDriving disabled")
+		Log.info("AutomaticDriving disabled")
 	else:
-		Logger.log("AutomaticDriving enabled")
+		Log.info("AutomaticDriving enabled")
 
 
 var autoPilotInStation: bool = true
@@ -1530,7 +1530,7 @@ func checkDespawn() -> void:
 
 func despawn() -> void:
 	freeLastSignalBecauseOfDespawn()
-	Logger.log("Despawning Train: " + name)
+	Log.info("Despawning Train: " + name)
 	despawning = true
 
 
@@ -1559,7 +1559,7 @@ func debugLights(node: Node) -> void:
 	if node.has_meta("energy"):
 		node.visible = false
 		node.visible = true
-		Logger.log("Spotlight updated")
+		Log.info("Spotlight updated")
 
 
 func toggle_cabin_light() -> void:

@@ -102,7 +102,7 @@ func create_signal(signal_instance):
 
 func _item_selected(name : String, parent : String):
 	emit_signal("item_selected", parent + "/" + name)
-	Logger.log(name + " in " + parent + " Node selected.")
+	Log.info(name + " in " + parent + " Node selected.")
 
 
 func calculate_2d_points_from_rail(rail) -> Array:

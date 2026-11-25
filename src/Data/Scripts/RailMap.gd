@@ -25,7 +25,7 @@ func _ready() -> void:
 
 func init_map() -> void:
 	if train_world == null:
-		Logger.err("RAILMAP: Could not find world! Despawning!", self)
+		Log.err("RAILMAP: Could not find world! Despawning!", self)
 		queue_free()
 		return
 
@@ -173,7 +173,7 @@ func create_station(signal_instance: Spatial) -> void:
 		if train_world.player.station_table[i].station_node_name == signal_instance.name:
 			index = i
 	if index < 0:
-		Logger.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
+		Log.warn("Station Name not found: " + signal_instance.name + "! Probably not a stop in the current scenario!", self)
 		return
 
 	var node: Node2D = Node2D.new()
@@ -213,7 +213,7 @@ func _on_signal_changed(signal_instance: Spatial) -> void:
 
 
 func _on_world_origin_update(delta: Vector3):
-	Logger.log("Rail Map: Updating world origin")
+	Log.info("Rail Map: Updating world origin")
 	chunk_origin += Vector2(delta.x, delta.z)
 
 

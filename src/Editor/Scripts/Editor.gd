@@ -61,7 +61,7 @@ func _port_to_new_trackinfo():
 	}
 
 	if ResourceSaver.save(new_file, world_config) != OK:
-		Logger.err("Failed to save world config %s" % new_file, self)
+		Log.err("Failed to save world config %s" % new_file, self)
 
 	dir.remove(info_file)
 
@@ -90,7 +90,7 @@ func _port_very_old_trackinfo():
 
 	var new_file = current_track_path.plus_file(current_track_name) + "_config.tres"
 	if ResourceSaver.save(new_file, world_config) != OK:
-		Logger.err("Failed to save world config %s" % new_file, self)
+		Log.err("Failed to save world config %s" % new_file, self)
 
 
 func _port_v1_to_v2_chunks() -> void:
@@ -214,7 +214,7 @@ func _port_v1_to_v2_chunks() -> void:
 	# Move track objects
 	for track_object in track_objects:
 		if not track_object.attached_rail in rails:
-			Logger.err("Rail %s was not found in %s." % \
+			Log.err("Rail %s was not found in %s." % \
 					[track_object.attached_rail, track_object], self)
 			continue
 		var chunk = rails[track_object.attached_rail]
@@ -332,7 +332,7 @@ func _port_to_new_scenario_system():
 	var path = current_track_path.plus_file("scenarios")
 	var dir = Directory.new()
 	if dir.open(path) != OK:
-		Logger.err("Track has no scenarios folder!", self)
+		Log.err("Track has no scenarios folder!", self)
 		return
 
 	var files_to_remove := []
@@ -388,7 +388,7 @@ func _convert_scenario(filename):
 	var new_file = filename.get_basename() + ".tres"
 	var err = ResourceSaver.save(new_file, new_scenario)
 	if err != OK:
-		Logger.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
+		Log.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
 
 
 func _convert_rail_logic_settings(old_settings) -> Dictionary:
@@ -565,7 +565,7 @@ func _port_very_old_scenarios():
 		var new_file = path.plus_file(scenario) + ".tres"
 		var err = ResourceSaver.save(new_file, new_scenario)
 		if err != OK:
-			Logger.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
+			Log.err("Failed to save new scenario at %s. Reason %s" % [new_file, err], self)
 
 	dir.remove(old_file)
 
@@ -784,10 +784,10 @@ func select_object_under_mouse() -> void:
 		return
 
 	while not (obj_to_select is WorldObject or obj_to_select is MeshInstance):
-		Logger.vlog("Trying to find object", obj_to_select)
+		Log.verbose("Trying to find object", obj_to_select)
 		obj_to_select = obj_to_select.get_parent_spatial()
 		if obj_to_select == self or obj_to_select == null:
-			Logger.vlog("No object found", result["collider"])
+			Log.verbose("No object found", result["collider"])
 			clear_selected_object()
 			return
 
@@ -795,11 +795,11 @@ func select_object_under_mouse() -> void:
 		begin_drag_mode()
 
 	set_selected_object(obj_to_select)
-	Logger.vlog("selected!", obj_to_select)
+	Log.verbose("selected!", obj_to_select)
 
 
 func clear_selected_object() -> void:
-	Logger.vlog("Deselect object", selected_object)
+	Log.verbose("Deselect object", selected_object)
 	if is_instance_valid(selected_object):
 		var vis = get_children_of_type_recursive(selected_object, VisualInstance)
 		for vi in vis:
@@ -828,7 +828,7 @@ func get_type_of_object(object: Node) -> String:
 	if object.get_parent().name == "Buildings":
 		return "Building"
 	else:
-		Logger.warn("Unknown object type encountered!", object)
+		Log.warn("Unknown object type encountered!", object)
 		return "Unknown"
 
 
@@ -919,7 +919,7 @@ func save_world(send_message: bool = true) -> void:
 
 
 	if ResourceSaver.save(current_track_path.plus_file("editor_info.tres"), editor_info) != OK:
-		Logger.warn("Failed to save editor info meta data.", self)
+		Log.warn("Failed to save editor info meta data.", self)
 
 	$World.chunk_manager.active_chunk = $World.chunk_manager.position_to_chunk(camera.global_transform.origin)
 	$World.chunk_manager.resume_chunking()
@@ -1071,7 +1071,7 @@ func _on_TestTrack_pressed() -> void:
 func send_message(message: String) -> void:
 	if !$EditorHUD/Message/RichTextLabel.text.empty():
 		return
-	Logger.log("Editor sends message: " + message)
+	Log.info("Editor sends message: " + message)
 	$EditorHUD/Message/RichTextLabel.text = message
 	$EditorHUD/Message.show()
 
@@ -1084,11 +1084,11 @@ func _on_MessageClose_pressed() -> void:
 
 
 func duplicate_selected_object() -> void:
-	Logger.vlog(selected_object_type)
+	Log.verbose(selected_object_type)
 	if selected_object_type != "Building":
 		return
 	else:
-		Logger.vlog("Duplicating " + selected_object.name + " ...")
+		Log.verbose("Duplicating " + selected_object.name + " ...")
 		var new_object: Node = selected_object.duplicate()
 		Root.name_node_appropriate(new_object, new_object.name, $World/Buildings)
 		$World/Buildings.add_child(new_object)
@@ -1177,7 +1177,7 @@ func get_all_station_node_names_in_world() -> Array:
 func jump_to_station(station_node_name: String) -> void:
 	var station_node: Node = $World/Signals.get_node(station_node_name)
 	if station_node == null:
-		Logger.err("Station not found:" + station_node_name, self)
+		Log.err("Station not found:" + station_node_name, self)
 		return
 	camera.transform = station_node.transform.translated(Vector3(0, 5, 0))
 	camera.rotation.y -= (0.5 * PI)
@@ -1187,14 +1187,14 @@ func jump_to_station(station_node_name: String) -> void:
 func get_imported_cache_file_path_of_import_file(file_path: String) -> Array:
 	var config := ConfigFile.new()
 	if config.load(file_path) != OK:
-		Logger.warn("No cached import file found (%s)" % file_path, self)
+		Log.warn("No cached import file found (%s)" % file_path, self)
 		return []
 	var return_values := []
 	var value = config.get_value("remap", "path")
 	if value == "" || value == null:
 		return_values.append(config.get_value("remap", "path.s3tc"))
 		return_values.append(config.get_value("remap", "path.etc2"))
-		Logger.warn("No cached import file found (%s)" % file_path, self)
+		Log.warn("No cached import file found (%s)" % file_path, self)
 		return []
 	return_values.append(value)
 	return return_values

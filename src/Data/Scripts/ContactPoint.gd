@@ -51,10 +51,10 @@ func activateContactPoint(trainName: String) -> void:
 func _on_Timer_timeout() -> void:
 	var signalN: Spatial = get_parent().get_node(affectedSignal)
 	if signalN == null:
-		Logger.err("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...", self)
+		Log.err("Contact Point "+ name + " could not find signal "+affectedSignal+" aborting...", self)
 		return
 	if signalN.type != "Signal":
-		Logger.err("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...", self)
+		Log.err("Contact Point "+ name + ": Specified signal point is no Signal. Aborting...", self)
 		return
 	signalN.set_status(newStatus)
 	signalN.set_speed(newSpeed)

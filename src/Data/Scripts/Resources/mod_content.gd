@@ -55,7 +55,7 @@ func _semver_to_string() -> String:
 func _semver_from_string(version: String) -> Array:
 	var numbers = version.split(".", false)
 	if len(numbers) != 3:
-		Logger.error("Invalid String used for Semver: %s" % version, self)
+		Log.err("Invalid String used for Semver: %s" % version, self)
 		return [float("NaN"), float("NaN"), float("NaN")]
 	return [int(numbers[0]), int(numbers[1]), int(numbers[2])]
 

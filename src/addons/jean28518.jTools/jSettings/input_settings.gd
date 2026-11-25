@@ -85,12 +85,12 @@ func _apply_layout(input_map_resource: InputMapResource):
 
 func _load_layout(path: String):
 	# Load a layout into InputMap from the provided Resource file
-	Logger.log("Loading InputMap from \"" + path + "\".")
+	Log.info("Loading InputMap from \"" + path + "\".")
 	var input_map_resource := ResourceLoader.load(path) as InputMapResource
 	if input_map_resource != null:
 		_apply_layout(input_map_resource)
 	else:
-		Logger.log("Failed to load InputMap from \"" + path + "\".")
+		Log.info("Failed to load InputMap from \"" + path + "\".")
 
 
 func _on_LayoutLTS_pressed():
@@ -115,7 +115,7 @@ func _on_LayoutImport_pressed():
 
 func _on_LayoutExportDialog_file_selected(path: String):
 	# Save current InputMap to selected path
-	Logger.log("Exporting current InputMap to \"" + path + "\".")
+	Log.info("Exporting current InputMap to \"" + path + "\".")
 	var input_map_resource := InputMapResource.new()
 	ResourceSaver.save(path, input_map_resource)
 
@@ -126,10 +126,10 @@ func _on_LayoutImportDialog_file_selected(path: String):
 
 
 func _on_LayoutConfirmationLTS_confirmed():
-	Logger.log("Applying LTS input layout preset.")
+	Log.info("Applying LTS input layout preset.")
 	_apply_layout(preset_lts)
 
 
 func _on_LayoutConfirmationOpenBVE_confirmed():
-	Logger.log("Applying OpenBVE input layout preset.")
+	Log.info("Applying OpenBVE input layout preset.")
 	_apply_layout(preset_openbve)

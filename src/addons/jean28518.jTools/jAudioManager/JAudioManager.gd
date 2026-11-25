@@ -15,7 +15,7 @@ func play(soundPath: String, loop: bool = false, pausable: bool = true, volume_d
 
 	# Return early if soundPath is empty
 	if soundPath.empty() or soundPath in ["res://", "user://"]:
-		Logger.vlog("jAudioManager: soundPath is '" + soundPath + "', returning early")
+		Log.verbose("jAudioManager: soundPath is '" + soundPath + "', returning early")
 		return
 
 	if not resourceTable.has(soundPath) or resourceTable[soundPath] == null:

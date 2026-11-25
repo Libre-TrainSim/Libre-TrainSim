@@ -26,8 +26,8 @@ func _ready():
 		$Buttons/Play.grab_focus()
 
 	updateBottmLabels()
-	Logger.log("Using version: %s" % ProjectSettings["application/version/label"])
-	Logger.vlog("Main menu loaded")
+	Log.info("Using version: %s" % ProjectSettings["application/version/label"])
+	Log.verbose("Main menu loaded")
 
 
 	# Signal connections for UI focus

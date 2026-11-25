@@ -32,7 +32,7 @@ static func load_scenario(path = null) -> TrackScenario:
 
 	var current_scenario = load(path) as TrackScenario
 	if current_scenario == null:
-		Logger.err("Error loading scenario %s!" % Root.current_scenario, "TrackScenario")
+		Log.err("Error loading scenario %s!" % Root.current_scenario, "TrackScenario")
 		return null
 
 	return current_scenario
@@ -44,4 +44,4 @@ func save_scenario(path = null):
 
 	var err = ResourceSaver.save(path, self)
 	if err != OK:
-		Logger.err("Failed saving scenario at %s. Reason: %s" % [path, err], self)
+		Log.err("Failed saving scenario at %s. Reason: %s" % [path, err], self)

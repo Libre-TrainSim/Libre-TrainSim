@@ -43,7 +43,7 @@ func to_file_name(track_name: String) -> String:
 
 func _initialize_editor_directory():
 	if dir.open("user://") != OK:
-		Logger.err("Can't open directory '%s'" % editor_directory, self)
+		Log.err("Can't open directory '%s'" % editor_directory, self)
 		return
 	Validate.ok(dir.make_dir_recursive(editor_directory))
 
@@ -71,21 +71,21 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	chunk_0_0.rails = ["Rail"]
 	var packed_chunk := PackedScene.new()
 	if packed_chunk.pack(chunk_0_0) != OK:
-		Logger.err("Failed to pack default chunk", self)
+		Log.err("Failed to pack default chunk", self)
 	if ResourceSaver.save(mod_path.plus_file(worlds_path).plus_file("chunks").plus_file("chunk_0_0.tscn"), packed_chunk) != OK:
-		Logger.err("Failed to write default chunk to disk", self)
+		Log.err("Failed to write default chunk to disk", self)
 	chunk_0_0.free()
 
 	var authors := Authors.new()
 	if ResourceSaver.save(mod_path.plus_file("authors.tres"), authors) != OK:
-		Logger.err("Can't save authors at path %s" % mod_path + "authors.tres", self)
+		Log.err("Can't save authors at path %s" % mod_path + "authors.tres", self)
 
 	var content := ModContentDefinition.new()
 	content.display_name = entry_name
 	content.unique_name = "%s" % entry_name
 	content.worlds.push_back("res://Mods/%s.tscn" % entry_name.plus_file(worlds_path).plus_file(entry_name))
 	if ResourceSaver.save(mod_path.plus_file("content.tres"), content) != OK:
-		Logger.err("Can't save content at path %s" % mod_path + "content.tres", self)
+		Log.err("Can't save content at path %s" % mod_path + "content.tres", self)
 		return false
 
 	var world_config = WorldConfig.new()
@@ -93,7 +93,7 @@ func _initialize_mod_directory(entry_name: String) -> bool:
 	var path = mod_path.plus_file(worlds_path).plus_file(entry_name + "_config.tres")
 	var err = ResourceSaver.save(path, world_config)
 	if err != OK:
-		Logger.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
+		Log.err("Can't save WorldConfig at %s (Reason %s)" % [path, err], self)
 		return false
 
 	return true
@@ -116,7 +116,7 @@ func _on_TracksList_user_added_entry(entry_name):
 	if !_initialize_mod_directory(entry_name):
 		var msg: String = "Directory " + editor_directory + entry_name + " already exists.\nPlease choose a different name!"
 		track_list.show_error(msg)
-		Logger.warn(msg, self)
+		Log.warn(msg, self)
 		return
 
 

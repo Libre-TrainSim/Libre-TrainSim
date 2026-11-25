@@ -16,7 +16,7 @@ func init() -> void:
 		return
 
 	scenario = Root.current_scenario.get_file().get_basename()
-	Logger.log("Loading scenario %s" % scenario)
+	Log.info("Loading scenario %s" % scenario)
 
 	if world == null:
 		world = find_parent("World")
